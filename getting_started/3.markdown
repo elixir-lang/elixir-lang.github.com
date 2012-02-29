@@ -265,3 +265,5 @@ Finally, in Elixir `::` is simply an operator (like `+`). It is used to concaten
     ::Foo::Bar
     iex> Foo :: Bar
     ::Foo::Bar
+
+> Note: a reference does not actually ensure the reference really exists. For instance, `::FooBarBaz` will return an atom regardless if a `::FooBarBaz` module is defined or not.
