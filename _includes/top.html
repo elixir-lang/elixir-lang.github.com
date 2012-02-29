@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{{ page.title }}</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="shortcut icon" href="/images/logo/drop.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" id="font-bitter-css" href="http://fonts.googleapis.com/css?family=Bitter&amp;ver=1" type="text/css" media="screen">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.tweet.js"></script>
+	<script type="text/javascript">
+	  $(function(){
+    	$("#twitter-feed").tweet({
+        count: 3,
+        username: "elixirlang",
+        template: function(i){ return i["text"] }
+      });
+      $('#menu-primary li:nth-child(' + ({{page.active}} || 0) + ')').attr('class', 'current-menu-item');
+    });
+	</script>
+</head>
+
+<body class="home">
+	<div id="container">
+	  <div class="wrap">
+		<div id="header">
+      <div id="branding">
+      		<h1 id="site-title">
+      			<a href="/" title="Elixir" rel="Home">
+      				<img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+      			</a>
+      		</h1>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+    		<div class="menu">
+    		  <ul id="menu-primary-items">
+          <li class="menu-item"><a href="/">Home</a></li>
+          <li class="menu-item"><a href="/getting_started/1.html">Getting Started</a></li>
+          <li class="menu-item"><a href="https://github.com/elixir-lang/elixir" target="_blank">Source</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 id="site-description">
+        <span>A modern approach to programming for the Erlang VM.</span>
+      </h2>
+		</div>
+
+		<div id="main">

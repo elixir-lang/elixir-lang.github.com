@@ -1,0 +1,35 @@
+{% include top.html %}
+
+<div id="content">
+	<article>
+    {{ content }}
+	</article><!-- .hfeed -->
+
+  <div class="pagination loop-pagination">
+	  {% if page.guide > 1 %}
+		  <a href="/getting_started/{{page.guide | minus:1}}.html" class="previous page-numbers">&larr; Previous</a>
+	  {% endif %}
+		  <a class="page-numbers" href="#container">Top</a>
+	  {% if page.guide < site.total_guides %}
+			<a href="/getting_started/{{page.guide | plus:1}}.html" class="next page-numbers">Next &rarr;</a>
+		{% endif %}
+  </div>
+</div><!-- #content -->
+
+<div id="sidebar-primary" class="sidebar">
+  {% include search.html %}
+
+  <div class="widget">
+    <h3 class="widget-title">Index</h3>
+		<ol style="margin-left: 15px">
+			<li><a href="/getting_started/1.html">Introduction</a></li>
+			<li><a href="/getting_started/2.html">Diving in</a></li>
+			<li><a href="/getting_started/3.html">Modules</a></li>
+			<li><a href="/getting_started/4.html">Protocols &amp; Records</a></li>
+			<li><a href="/getting_started/5.html">Macros</a></li>
+			<li><a href="/getting_started/6.html">Other topics</a></li>
+		</ol>
+  </div>
+</div>
+
+{% include bottom.html %}
