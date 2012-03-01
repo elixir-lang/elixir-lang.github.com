@@ -364,41 +364,41 @@ In the example above, the second clause will only match when x is positive. The 
 * `<>` and `++` as long as the left side is a literal;
 * all the following type check functions:
 
-    is_atom/1
-    is_binary/1
-    is_bitstring/1
-    is_boolean/1
-    is_float/1
-    is_function/1
-    is_function/2
-    is_integer/1
-    is_list/1
-    is_number/1
-    is_pid/1
-    is_port/1
-    is_record/2
-    is_record/3
-    is_reference/1
-    is_tuple/1
-    is_exception/1
+    * is_atom/1
+    * is_binary/1
+    * is_bitstring/1
+    * is_boolean/1
+    * is_float/1
+    * is_function/1
+    * is_function/2
+    * is_integer/1
+    * is_list/1
+    * is_number/1
+    * is_pid/1
+    * is_port/1
+    * is_record/2
+    * is_record/3
+    * is_reference/1
+    * is_tuple/1
+    * is_exception/1
 
 * plus these functions:
 
-    abs(Number)
-    bit_size(Bitstring)
-    byte_size(Bitstring)
-    elem(Tuple, n)
-    float(Term)
-    hd(List)
-    length(List)
-    node()
-    node(Pid|Ref|Port)
-    round(Number)
-    self()
-    size(Tuple|Bitstring)
-    tl(List)
-    trunc(Number)
-    tuple_size(Tuple)
+    * abs(Number)
+    * bit_size(Bitstring)
+    * byte_size(Bitstring)
+    * elem(Tuple, n)
+    * float(Term)
+    * hd(List)
+    * length(List)
+    * node()
+    * node(Pid|Ref|Port)
+    * round(Number)
+    * self()
+    * size(Tuple|Bitstring)
+    * tl(List)
+    * trunc(Number)
+    * tuple_size(Tuple)
 
 Many independent guard clauses can also be given at the same time. For example, consider a function that checks if the first element of a tuple or a list is zero. It could be written as:
 
@@ -582,6 +582,6 @@ In most cases, we don't send messages directly with `<-` nor write `receive` con
 
 Elixir ships with many default functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. [Many of these functions with documentation and examples are available in `Elixir::Builtin`](https://github.com/josevalim/elixir/tree/master/lib/elixir/builtin.ex) and [Elixir special forms are available in `Elixir::SpecialForms`](https://github.com/josevalim/elixir/tree/master/lib/elixir/special_forms.ex).
 
-Besides the functions provided by Elixir, most of the root functions from Erlang are also available. The function `length`, `is_list`, `is_number` and many others we discussed above comes from Erlang. [The full documented list is available on the OTP documentation page](http://www.erlang.org/doc/man/erlang.html).
+Besides the functions provided by Elixir, Elixir imports many of the root function from Erlang. The function `length`, `is_list`, `is_number` and many others we discussed above comes from Erlang. [The full documented list is available on the OTP documentation page](http://www.erlang.org/doc/man/erlang.html).
 
 All those functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily re-used between different components.
