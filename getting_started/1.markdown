@@ -83,6 +83,12 @@ Strings in Elixir are UTF-8 binaries delimited by double quotes. A single-quoted
     iex> 'string'
     'string'
 
+There is also string interpolation:
+
+	iex> name = "world"
+	iex> "hello #{name}"
+	"hello world"
+
 We can use the `is_binary` and `is_list` helpers to detect if a given string is a binary (double-quoted) or a list (single-quoted):
 
     iex> is_binary "string"
