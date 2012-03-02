@@ -562,7 +562,7 @@ In order to exchange messages, each process has a mailbox where the received mes
     # Collect the message
     iex> receive do
     ...> match: { :hello, pid }
-    ...>   IO.puts "Hello from #{pid}"
+    ...>   IO.puts "Hello from #{inspect(pid)}"
     ...> end
     Hello from <0.36.0>
 
