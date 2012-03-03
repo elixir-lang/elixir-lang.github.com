@@ -13,7 +13,23 @@ Keep in mind that Elixir is still in development and sometimes you may get poorl
 
 ## 1.1 Installation
 
-Elixir isn't available in any distribution yet, but you can download and compile it in few steps:
+The only pre-requisite for Elixir is Erlang, version R15B later. You can check your Erlang version by calling `erl` in the command line. You will see some information as follow:
+
+    Erlang R15B (erts-5.8.4) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
+
+After getting Erlang in your machine, you can install Elixir via distributions or manually.
+
+### 1.1.1 Distributions
+
+Elixir is available in some distributions, they are:
+
+* [Homebrew for Mac OS X via this gist](https://gist.github.com/1955470)
+
+If you don't use any of the distributions above, don't worry! Continue reading for manual install steps.
+
+### 1.1.2 Manual install
+
+You can download and compile Elixir in few steps:
 
     $ git clone https://github.com/elixir-lang/elixir.git
     $ cd elixir
@@ -22,20 +38,16 @@ Elixir isn't available in any distribution yet, but you can download and compile
     $ bin/elixir -v
     Elixir 0.4.0.dev
 
-If tests pass, we are ready to go. But if tests fail it is likely you have an outdated Erlang version (Elixir requires Erlang R15B or later). You can check your Erlang version by calling `erl` in the command line. You will see some information as follow:
+If tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
 
-    Erlang R15B (erts-5.8.4) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
-
-If you have the correct version and tests still fail, feel free to open an issue in the issues tracker on Github.
-
-> Note: if you are planning to develop projects with Elixir, we recommend adding the bin directory in Elixir git repository to your PATH for easier access to binaries.
+> Note: if you are planning to develop projects with Elixir and manually installed it, we recommend adding the bin directory in Elixir git repository to your PATH for easier access to binaries.
 >
 >     export PATH="$PATH:/path/to/elixir/bin"
 >
 
 ## 1.2 Interactive mode
 
-We can start Elixir interactive mode by running `bin/iex` in the same directory you compiled Elixir. In interactive mode, we can type any Elixir expression. Let's warm up with some basic arithmetic expressions:
+We can start Elixir interactive mode by running `bin/iex` in the same directory you compiled Elixir or by simply running `iex` if you installed it from a distribution. In interactive mode, we can type any Elixir expression. Let's warm up with some basic arithmetic expressions:
 
     iex> 1 + 1
     2
