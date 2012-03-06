@@ -31,14 +31,14 @@ If you don't use any of the distributions above, don't worry! Continue reading f
 
 You can download and compile Elixir in few steps:
 
-    {% highlight console %}
-    $ git clone https://github.com/elixir-lang/elixir.git
-    $ cd elixir
-    $ make test
+{% highlight console %}
+$ git clone https://github.com/elixir-lang/elixir.git
+$ cd elixir
+$ make test
 
-    $ bin/elixir -v
-    Elixir 0.4.0.dev
-    {% endhighlight %}
+$ bin/elixir -v
+Elixir 0.4.0.dev
+{% endhighlight %}
 
 If tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
 
@@ -51,25 +51,25 @@ If tests pass, you are ready to go. Otherwise, feel free to open an issue [in th
 
 We can start Elixir interactive mode by running `bin/iex` in the same directory you compiled Elixir or by simply running `iex` if you installed it from a distribution. In interactive mode, we can type any Elixir expression. Let's warm up with some basic arithmetic expressions:
 
-    {% highlight iex %}
-    iex> 1 + 1
-    2
-    iex> 10 - 5
-    5
-    iex> 10 / 2
-    5.0
-    {% endhighlight %}
+{% highlight iex %}
+iex> 1 + 1
+2
+iex> 10 - 5
+5
+iex> 10 / 2
+5.0
+{% endhighlight %}
 
 Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected, in Elixir the operator `/` always returns a float. In case you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
-    {% highlight iex %}
-    iex> div(10, 2)
-    5
-    iex> div 10, 2
-    5
-    iex> rem 10, 3
-    1
-    {% endhighlight %}
+{% highlight iex %}
+iex> div(10, 2)
+5
+iex> div 10, 2
+5
+iex> rem 10, 3
+1
+{% endhighlight %}
 
 In the example above, we called two functions called `div` and `rem`. Notice that parenthesis are not required in order to invoke a function. We are going to discuss more about it later. Let's move forward and see which other data types we have in Elixir:
 
@@ -77,84 +77,84 @@ In the example above, we called two functions called `div` and `rem`. Notice tha
 
 Some basic types are:
 
-    {% highlight iex %}
-    iex> 1          # integer
-    iex> 1.0        # float
-    iex> :atom      # atom / symbol
-    iex> {1,2,3}    # tuple
-    iex> [1,2,3]    # list
-    {% endhighlight %}
+{% highlight iex %}
+iex> 1          # integer
+iex> 1.0        # float
+iex> :atom      # atom / symbol
+iex> {1,2,3}    # tuple
+iex> [1,2,3]    # list
+{% endhighlight %}
 
 Elixir also provides functions (note the dot between the variable and arguments when calling a function):
 
-    {% highlight iex %}
-    # function
-    iex> x = fn(a, b) -> a + b end
-    #Fun<erl_eval.12.111823515>
-    iex> x.(1, 2)
-    3
-    {% endhighlight %}
+{% highlight iex %}
+# function
+iex> x = fn(a, b) -> a + b end
+#Fun<erl_eval.12.111823515>
+iex> x.(1, 2)
+3
+{% endhighlight %}
 
 And double-quoted strings:
 
-    {% highlight iex %}
-    iex> "string"
-    "string"
-    {% endhighlight %}
+{% highlight iex %}
+iex> "string"
+"string"
+{% endhighlight %}
 
 Strings in Elixir are UTF-8 binaries delimited by double quotes. A single-quoted string in Elixir is called a char list and is simply a list of characters:
 
-    {% highlight iex %}
-    iex> 'string'
-    'string'
-    {% endhighlight %}
+{% highlight iex %}
+iex> 'string'
+'string'
+{% endhighlight %}
 
 There is also string interpolation:
 
-    {% highlight iex %}
-    iex> name = "world"
-    iex> "hello #{name}"
-    "hello world"
-    {% endhighlight %}
+{% highlight iex %}
+iex> name = "world"
+iex> "hello #{name}"
+"hello world"
+{% endhighlight %}
 
 We can use the `is_binary` and `is_list` helpers to detect if a given string is a binary (double-quoted) or a list (single-quoted):
 
-    {% highlight iex %}
-    iex> is_binary "string"
-    true
-    iex> is_list "string"
-    false
+{% highlight iex %}
+iex> is_binary "string"
+true
+iex> is_list "string"
+false
 
-    iex> is_binary 'string'
-    false
-    iex> is_list 'string'
-    true
-    {% endhighlight %}
+iex> is_binary 'string'
+false
+iex> is_list 'string'
+true
+{% endhighlight %}
 
 Although they represent the same thing, double-quoted and single-quoted strings are different and best suited for different scenarios:
 
-    {% highlight iex %}
-    iex> "string" == 'string'
-    false
-    {% endhighlight %}
+{% highlight iex %}
+iex> "string" == 'string'
+false
+{% endhighlight %}
 
 Most of the cases, developers should use double-quoted strings as their representation is more compact. We are going to discuss this subject with more detail in the next chapter.
 
 Elixir also provides `true` and `false` as booleans:
 
-    {% highlight iex %}
-    iex> true
-    true
-    iex> is_boolean false
-    true
-    {% endhighlight %}
+{% highlight iex %}
+iex> true
+true
+iex> is_boolean false
+true
+{% endhighlight %}
 
 Booleans are represented internally as atoms:
 
-    {% highlight iex %}
-    iex> is_atom(true)
-    true
-    {% endhighlight %}
+{% highlight iex %}
+iex> is_atom(true)
+true
+{% endhighlight %}
 
 Elixir also provides Port, References and PIDs as data types (usually used in process communication) but they are out of the scope of a getting started tutorial. For now, let's take a look at the basic operators in Elixir before we move on to the next chapter.
 
@@ -164,83 +164,83 @@ As we saw earlier, Elixir provides `+`, `-`, `*`, `/` as arithmetic operators.
 
 Elixir also provides `++` and `--` to manipulate lists:
 
-    {% highlight iex %}
-    iex> [1,2,3] ++ [4,5,6]
-    [1,2,3,4,5,6]
-    iex> [1,2,3] -- [2]
-    [1,3]
-    {% endhighlight %}
+{% highlight iex %}
+iex> [1,2,3] ++ [4,5,6]
+[1,2,3,4,5,6]
+iex> [1,2,3] -- [2]
+[1,3]
+{% endhighlight %}
 
 Since single-quoted strings are lists, we can also use `++` and `--` as operators to manipulate them:
 
-    {% highlight iex %}
-    iex> 'some' ++ ' example'
-    'some example'
-    iex> 'some' -- 'oe'
-    'sm'
-    {% endhighlight %}
+{% highlight iex %}
+iex> 'some' ++ ' example'
+'some example'
+iex> 'some' -- 'oe'
+'sm'
+{% endhighlight %}
 
 Notice that `++` and `--` cannot be used to manipulate double quoted strings, as they are binaries. That said, string concatenation is done via `<>`:
 
-    {% highlight iex %}
-    iex> "foo" <> "bar"
-    "foobar"
-    {% endhighlight %}
+{% highlight iex %}
+iex> "foo" <> "bar"
+"foobar"
+{% endhighlight %}
 
 Elixir also provides three boolean operators: `or`, `and` and `not`. Those operators are strict in the sense those operators expects only booleans (true or false) as arguments:
 
-    {% highlight iex %}
-    iex> true and true
-    true
-    iex> false or is_atom(:example)
-    true
-    {% endhighlight %}
+{% highlight iex %}
+iex> true and true
+true
+iex> false or is_atom(:example)
+true
+{% endhighlight %}
 
 Giving a non-boolean as argument will raise an exception:
 
-    {% highlight iex %}
-    iex> 1 and true
-    ** (::ArgumentError) argument error
-    {% endhighlight %}
+{% highlight iex %}
+iex> 1 and true
+** (::ArgumentError) argument error
+{% endhighlight %}
 
 `or` and `and` are short-circuit operators. They just execute the right side in case the left side is not enough to determine the result:
 
-    {% highlight iex %}
-    iex> false and error("This error will never be raised")
-    false
+{% highlight iex %}
+iex> false and error("This error will never be raised")
+false
 
-    iex> true or error("This error will never be raised")
-    true
-    {% endhighlight %}
+iex> true or error("This error will never be raised")
+true
+{% endhighlight %}
 
 > Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
 
 Elixir also provides `==`, `!=`, `===`, `!===`, `<=`, `>=`, `<` and `>` as comparison operators:
 
-    {% highlight iex %}
-    iex> 1 == 1
-    true
-    iex> 1 != 2
-    true
-    iex> 1 < 2
-    true
-    {% endhighlight %}
+{% highlight iex %}
+iex> 1 == 1
+true
+iex> 1 != 2
+true
+iex> 1 < 2
+true
+{% endhighlight %}
 
 The difference between `==` and `===` is that the latter is more strict when comparing integers and floats:
 
-    {% highlight iex %}
-    iex> 1 == 1.0
-    true
-    iex> 1 === 1.0
-    false
-    {% endhighlight %}
+{% highlight iex %}
+iex> 1 == 1.0
+true
+iex> 1 === 1.0
+false
+{% endhighlight %}
 
 In Elixir, we can compare two different data types:
 
-    {% highlight iex %}
-    iex> 1 < :atom
-    true
-    {% endhighlight %}
+{% highlight iex %}
+iex> 1 < :atom
+true
+{% endhighlight %}
 
 The reason we can compare different data types is for pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
 

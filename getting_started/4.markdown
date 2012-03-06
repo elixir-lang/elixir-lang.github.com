@@ -13,59 +13,59 @@ Elixir provides both protocols and records. This section will outline the main f
 
 Records are simple structures that holds values. For example, we can define a `FileInfo` record that is supposed to store information about files as follow:
 
-    {% highlight elixir %}
-    defrecord FileInfo, atime: nil, mtime: nil, accesses: 0
-    {% endhighlight %}
+{% highlight elixir %}
+defrecord FileInfo, atime: nil, mtime: nil, accesses: 0
+{% endhighlight %}
 
 The line above will define a module named `FileInfo` which contain a function named `new` that returns a new record and other functions to read and set the values in the record. Therefore, we can do:
 
-    {% highlight elixir %}
-    file_info = FileInfo.new(atime: now())
-    file_info.atime         #=> Returns the value of atime
-    file_info.atime(now())  #=> Updates the value of atime
-    {% endhighlight %}
+{% highlight elixir %}
+file_info = FileInfo.new(atime: now())
+file_info.atime         #=> Returns the value of atime
+file_info.atime(now())  #=> Updates the value of atime
+{% endhighlight %}
 
 Elixir will also define a `update_#{field}` function that accepts a function as argument that will receive the old value and update the current value with the result of the function:
 
-    {% highlight elixir %}
-    file_info = FileInfo.new(accesses: 10)
-    file_info = file_info.update_accesses(fn(x) -> x + 1 end)
-    file_info.accesses #=> 11
-    {% endhighlight %}
+{% highlight elixir %}
+file_info = FileInfo.new(accesses: 10)
+file_info = file_info.update_accesses(fn(x) -> x + 1 end)
+file_info.accesses #=> 11
+{% endhighlight %}
 
 Internally, a record is simply a tuple where the first element is always the record module name. This can be noticed if we create and print the record in Interactive Elixir (`bin/iex`):
 
-    {% highlight iex %}
-    iex> defrecord FileInfo, atime: nil, mtime: nil
-    iex> FileInfo.new
-    {::FileInfo, nil, nil}
-    {% endhighlight %}
+{% highlight iex %}
+iex> defrecord FileInfo, atime: nil, mtime: nil
+iex> FileInfo.new
+{::FileInfo, nil, nil}
+{% endhighlight %}
 
 ### 4.1.1 Default based functions
 
 Depending on the default value, Elixir will define helpers to interact with the record. For example, the test framework that ships with Elixir, called ExUnit, defines a record which keeps track of how many tests were executed and the failures that happened. The record definition is similar to:
 
-    {% highlight iex %}
-    iex> defrecord Config, counter: 0, failures: []
-    {% endhighlight %}
+{% highlight iex %}
+iex> defrecord Config, counter: 0, failures: []
+{% endhighlight %}
 
 Since `counter` is an integer, Elixir automatically defines a helper named `increment_counter` that will increase the counter value:
 
-    {% highlight iex %}
-    iex> new_config = Config.new.increment_counter
-    {::Config, 1, []}
-    iex> new_config.counter
-    1
-    {% endhighlight %}
+{% highlight iex %}
+iex> new_config = Config.new.increment_counter
+{::Config, 1, []}
+iex> new_config.counter
+1
+{% endhighlight %}
 
 `increment_counter` also accepts a number to increment as argument:
 
-    {% highlight iex %}
-    iex> new_config = Config.new.increment_counter 10
-    {::Config, 10, []}
-    iex> new_config.counter
-    10
-    {% endhighlight %}
+{% highlight iex %}
+iex> new_config = Config.new.increment_counter 10
+{::Config, 10, []}
+iex> new_config.counter
+10
+{% endhighlight %}
 
 On the other hand, if the default value is a list Elixir will define the two following helpers:
 
@@ -80,31 +80,31 @@ In Elixir, only `false` and `nil` are considered falsy values. Everything else e
 
 We could implement this protocol as follow:
 
-    {% highlight elixir %}
-    defprotocol Blank, [ blank?(data) ]
-    {% endhighlight %}
+{% highlight elixir %}
+defprotocol Blank, [ blank?(data) ]
+{% endhighlight %}
 
 The protocol expects a function called `blank?` expecting one argument to be implemented. We can implement this protocol for some Elixir data types as follow:
 
-    {% highlight elixir %}
-    # Numbers are never blank
-    defimpl Blank, for: Number do
-      def blank?(number), do: false
-    end
+{% highlight elixir %}
+# Numbers are never blank
+defimpl Blank, for: Number do
+  def blank?(number), do: false
+end
 
-    # Just empty list is blank
-    defimpl Blank, for: List do
-      def blank?([]), do: true
-      def blank?(_),  do: false
-    end
+# Just empty list is blank
+defimpl Blank, for: List do
+  def blank?([]), do: true
+  def blank?(_),  do: false
+end
 
-    # Just the atoms false and nil are blank
-    defimpl Blank, for: Atom do
-      def blank?(false), do: true
-      def blank?(nil),   do: true
-      def blank?(_),     do: false
-    end
-    {% endhighlight %}
+# Just the atoms false and nil are blank
+defimpl Blank, for: Atom do
+  def blank?(false), do: true
+  def blank?(nil),   do: true
+  def blank?(_),     do: false
+end
+{% endhighlight %}
 
 And we would do so for all native data types. The types available are:
 
@@ -124,17 +124,17 @@ And we would do so for all native data types. The types available are:
 
 Implementing the protocol for all 9 types above can be cumbersome. Even more if you consider that Number, Function, PID, Port and Reference are never going to be blank. For this reason, Elixir allows us to declare that we are going to implement the protocol just for some types, as follows:
 
-    {% highlight elixir %}
-    defprotocol Blank, [blank?(data)], only: [Atom, Tuple, List, BitString, Any]
-    {% endhighlight %}
+{% highlight elixir %}
+defprotocol Blank, [blank?(data)], only: [Atom, Tuple, List, BitString, Any]
+{% endhighlight %}
 
 Since we also specified `Any` as a data type, if the data type is not any of Atom, Tuple, List or BitString, it will automatically fallback to Any:
 
-    {% highlight elixir %}
-    defimpl Blank, for: Any do
-      def blank?(_), do: false
-    end
-    {% endhighlight %}
+{% highlight elixir %}
+defimpl Blank, for: Any do
+  def blank?(_), do: false
+end
+{% endhighlight %}
 
 Now all data types that we have not specified will be automatically considered non blank.
 
@@ -142,11 +142,11 @@ Now all data types that we have not specified will be automatically considered n
 
 The real benefit of protocols comes when mixed with records. For instance, one may implement a custom dictionary as a Red-Black tree and this dictionary should also be considered blank in case it has no items. That said, the developer just needs to implement the protocol for this dictionary:
 
-    {% highlight elixir %}
-    defimpl Blank, for: RedBlack::Dict do
-      def blank?(dict), do: RedBlack.empty?(dict)
-    end
-    {% endhighlight %}
+{% highlight elixir %}
+defimpl Blank, for: RedBlack::Dict do
+  def blank?(dict), do: RedBlack.empty?(dict)
+end
+{% endhighlight %}
 
 In the example above, we have implemented `blank?` for the custom dictionary that simply delegates to `RedBlack.empty?`. Finally, since records are simply tuples, the default implementation for records can be given in the tuple implementation.
 
