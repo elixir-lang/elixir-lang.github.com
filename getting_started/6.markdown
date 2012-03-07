@@ -161,7 +161,17 @@ Elixir does its best to hide the differences between list and bit string generat
     iex> lc inbin(<<n>>, <<1,2,3>>), do: n*2
     [2,4,6]
 
-## 6.5 Native compilation
+## 6.5 Pseudo variables
+
+Elixir provides with some pseudo-variables. Those variables can only be read and never assigned to. They are:
+
+* `__MODULE__` - Returns an atom representing the current module or nil;
+* `__FUNCTION__` - Returns a tuple representing the current function by name and arity or nil;
+* `__LINE__` - Returns an integer representing the current line;
+* `__FILE__` - Returns a string representing the current file;
+* `__LOCAL__` - Works as a proxy to force a function call to resolve locally (and not be expanded as a macro);
+
+## 6.6 Native compilation
 
 Elixir can compile to native code using the Hipe compiler. All you need to do is to export the following before running your code:
 
