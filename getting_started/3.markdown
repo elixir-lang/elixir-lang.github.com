@@ -113,7 +113,7 @@ Notice that giving an argument that does not match any of the clauses raises an 
 
 ## 3.4 Directives
 
-In order to support software-reuse, Elixir supports two directives. As we are going to see below, they are called directives because they are the only functions in Elixir that are **lexical**.
+In order to support software-reuse, Elixir supports two directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
 
 ### 3.4.1 import
 
@@ -133,7 +133,7 @@ If we want to import only `:functions` or `:macros` from a given module, we can 
 
     import :macros, MyMacros
 
-And then we can use `only` or `except` to filter the macros being included. Finally, note that `import` is **lexical**, this means we can import specific macros inside specific functions:
+And then we can use `only` or `except` to filter the macros being included. Finally, note that `import` is **lexically scoped**, this means we can import specific macros inside specific functions:
 
     defmodule Math do
       def some_function do
@@ -164,7 +164,7 @@ In general, a module does not need to be required before usage, except if we wan
       MyMacros.my_if do_something, it_works
     end
 
-An attempt to call a macro that was not loaded will raise an error. Note that, as the `import` directive, `require` is lexical.
+An attempt to call a macro that was not loaded will raise an error. Note that, as the `import` directive, `require` is also lexically scoped.
 
 ## 3.5 Module data
 
