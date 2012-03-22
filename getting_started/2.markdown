@@ -148,19 +148,19 @@ In case you want to pattern match against the value of a variable, you can use t
     iex> x = 2
     2
 
-In Elixir, it is a common practice to assign a variable to underscore `_` if we don't intend to use it. For example, if only the head of the list matters to us, we can assign the tail to underscore:
+In Elixir, it is a common practice to assign a value to underscore `_` if we don't intend to use it. For example, if only the head of the list matters to us, we can assign the tail to underscore:
 
     iex> [h | _] = [1,2,3]
     [1, 2, 3]
     iex> h
     1
 
-The variable `_` in Elixir is special in the sense it can never be assigned. Trying to read from it gives an unbound variable error:
+The variable `_` in Elixir is special in the sense it can never be read from. Trying to read from it gives an unbound variable error:
 
     iex> _
     ** (ErlangError) erlang error {:unbound_var, :_}
 
-Although pattern matching allow powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of the match. The following example is invalid:
+Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of the match. The following example is invalid:
 
     iex> Erlang.lists.flatten([1,[2],3]) = [1,2,3]
     ** (ErlangError) erlang error :illegal_pattern
@@ -231,7 +231,7 @@ Key-value blocks are similar to Ruby blocks. Parenthesis can be added as follows
       10 + 3
     end
 
-Key-value blocks are an important feature that allow developers to create their own control structures as if they were part of the language itself. For instance, none of the control structures we are going to see in the next section are keywords. They are all implemented using key-values blocks.
+Key-value blocks are an important feature that allow developers to create their own control structures as if they were part of the language itself. For instance, none of the control structures we are going to see in the next section are keywords. They are all implemented using key-value blocks.
 
 Elixir supports two syntaxes for key-value blocks: `do`/`end` and `->`/`end`. The first one always binds to the farthest function call, while the latter to the closest. For example, the following expression:
 
@@ -294,13 +294,13 @@ Refreshing from the section above, all these calls are equivalent:
       IO.puts "This won't"
     end
 
-In Elixir, all values except `false` and `nil` evaluates to true. So there is no need to convert them to false.
+In Elixir, all values except `false` and `nil` evaluate to true. So there is no need to convert them to boolean.
 
 ### 2.6.2 Other boolean operators
 
 In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. Those operators are strict in the sense they only accept booleans as arguments.
 
-To work around this limitation, Elixir provides three operators with similar functionality but that accept any argument: `||`, `&&` and `!`. For those operators, all values except `false` and `nil` will evaluate to true.
+To work around this limitation, Elixir provides three operators with similar functionality but that accept arguments of any type: `||`, `&&` and `!`. For those operators, all values except `false` and `nil` will evaluate to true.
 
     # Short-circuit or
     iex> 1 || true
@@ -548,7 +548,7 @@ Custom exceptions can be defined using the `defexception` macro. Check [the exce
 
 ### 2.6.8 Receive
 
-The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, every code run in processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but called so since they do not share state with each other.
+The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
 In order to exchange messages, each process has a mailbox where the received messages are stored. The `receive` mechanism allows us to go through this mailbox searching for a message that matches the given pattern. Here is an example that uses the arrow operator `<-` to send a message to the current process and then collects this message from its mailbox:
 
@@ -582,6 +582,6 @@ In most cases, we don't send messages directly with `<-` nor write `receive` con
 
 Elixir ships with many default functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. [Many of these functions with documentation and examples are available in `Elixir::Builtin`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/builtin.ex) and [Elixir special forms are available in `Elixir::SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
 
-Besides the functions provided by Elixir, Elixir imports many of the root function from Erlang. The function `length`, `is_list`, `is_number` and many others we discussed above comes from Erlang. [The full documented list is available on the OTP documentation page](http://www.erlang.org/doc/man/erlang.html).
+Besides the functions provided by Elixir, Elixir imports many of the root function from Erlang. The functions `length`, `is_list`, `is_number` and many others we discussed above come from Erlang. [The full documented list is available on the OTP documentation page](http://www.erlang.org/doc/man/erlang.html).
 
 All those functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily re-used between different components.
