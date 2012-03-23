@@ -58,7 +58,7 @@ On the other hand, if the default value is a list Elixir will define the two fol
 * `prepend_field` - Receives another list and prepends its values
 * `merge_field` - Receives an orddict (which is a list of tuples) and merges it into the current value;
 
-Keep in mind that objects in Elixir are immutable. Every time you update a record's field, a new record is returned with the corresponding field updated. For example:
+Keep in mind that records (as any other data structure) in Elixir are immutable. Every time you update a record's field, a new record is returned with the corresponding field updated. For example:
 
     iex> new_config = Config.new
     {::Config, 0, []}
@@ -67,14 +67,14 @@ Keep in mind that objects in Elixir are immutable. Every time you update a recor
     iex> new_config.increment_counter
     {::Config, 1, []}
 
-Notice how `increment_counter` returned not simply an updated value of the `counter` field, but a whole new object which has its `counter` field set to the old value plus one. What will happen if we call `increment_counter` multiple times?
+Notice how `increment_counter` returned not simply an updated value of the `counter` field, but a whole new record which has its `counter` field set to the old value plus one. What will happen if we call `increment_counter` multiple times?
 
     iex> new_config.increment_counter
     {::Config, 1, []}
     iex> new_config.increment_counter
     {::Config, 1, []}
 
-Since `new_config` remains unchanged, we get a new object with the `counter` field's value set to `1` every time we call `increment_counter`. In order to keep the new object, we need to assign it to a variable:
+Since `new_config` remains unchanged, we get a new record with the `counter` field's value set to `1` every time we call `increment_counter`. In order to keep the new record, we need to assign it to a variable:
 
     iex> new_config = new_config.increment_counter
     {::Config, 1, []}
