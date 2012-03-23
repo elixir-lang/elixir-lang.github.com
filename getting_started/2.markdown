@@ -45,7 +45,7 @@ Since updating a tuple is expensive, when we want to iterate, add or remove elem
     iex> length [head | tail]
     3
 
-In the example above, we have assigned the head of the list to the variable `head` and the tail of the list to the variable `tail`. The [`Enum` module](https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex) provides several helpers to manipulate lists (and other enumerables in general) while the [List module](https://github.com/elixir-lang/elixir/blob/master/lib/list.ex) provides several helpers specific to lists:
+In the example above, we have assigned the head of the list to the variable `head` and the tail of the list to the variable `tail`. The [`Enum` module](https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](https://github.com/elixir-lang/elixir/blob/master/lib/list.ex) provides several helpers specific to lists:
 
     iex> Enum.map [1,2,3], fn(x) -> x * 2 end
     [2,4,6]
@@ -112,7 +112,7 @@ In Elixir, `=` does not mean assignment as in programming languages like Java an
     iex> { 1, 2, 3 } = { 1, 2, 3 }
     { 1, 2, 3 }
     iex> { 1, 2, 3 } = { 1, 4, 3 }
-    ** (::MatchError) no match of right hand side value: {1,4,3}
+    ** (MatchError) no match of right hand side value: {1,4,3}
 
 If the tuples given on the left and right side do not match, an error is raised. If any of the tuples contain a variable, this variable will always be assigned:
 
