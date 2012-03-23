@@ -18,7 +18,7 @@ Elixir uses the module data described in chapter 3 to drive its documentation sy
       def version, do: 1
     end
 
-In the example above, we are adding a module documentation to MyModule via `@moduledoc` and using `@doc` to document each function. When compiled with the `--docs` option, we will be able to inspect the documentation attributes in runtime (remember to start iex in the same directory you compiled the module):
+In the example above, we are adding a module documentation to MyModule via `@moduledoc` and using `@doc` to document each function. When compiled with the `--docs` option, we will be able to inspect the documentation attributes in runtime (remember to start iex in the same directory you compiled the module in):
 
     $ elixirc my_module.ex --docs
     $ iex
@@ -27,11 +27,11 @@ In the example above, we are adding a module documentation to MyModule via `@mod
     iex> MyModule.__info__(:moduledoc)
     {1,"It does X"}
 
-`__info__(:docs)` returns a list of tuples where each tuple contains the function/arity pair, the line the function was defined, the kind of the function (`def` or `defmacro`, docs applied to `defp` are always ignored) and the comments. The comment should be either a binary or a boolean.
+`__info__(:docs)` returns a list of tuples where each tuple contains a function/arity pair, the line the function was defined on, the kind of the function (`def` or `defmacro`, docs applied to `defp` are always ignored) and the comments. The comment should be either a binary or a boolean.
 
-Similarly, `__info__(:moduledoc)` returns a tuple with the line the module was defined and its comments.
+Similarly, `__info__(:moduledoc)` returns a tuple with the line the module was defined on and its comments.
 
-In case `--docs` is not provided during compilation, both calls would return nil. Elixir promotes the use of markdown in documentation, since it is a widely available format. Consider for example the documentation for `Module.add_doc` which allows us to dynamically add a documentation to a function:
+In case `--docs` was not provided during compilation, both calls would return nil. Elixir promotes the use of markdown in documentation, since it is a widely available format. Consider, for example, the documentation for `Module.add_doc` which allows us to dynamically add documentation to a function:
 
     @doc """
     Attaches documentation to a given function. It expects
@@ -51,11 +51,11 @@ In case `--docs` is not provided during compilation, both calls would return nil
     """
     def add_doc(module, line, kind, tuple, doc)
 
-In the example, we use heredocs to allow the documentation to spawn several lines and markdown to style the documentation.
+In the example, we use heredocs to allow the documentation to span over several lines and markdown to style the documentation.
 
 ## 6.2 Partial application
 
-Elixir also supports partial application. Let's suppose we have a list of strings and we want to calculate the size for each them. We could do it as follow:
+Elixir also supports partial application. Let's suppose we have a list of strings and we want to calculate the size for each of them. We could do it in the following way:
 
     iex> list = ["foo", "bar", "baz"]
     ["foo","bar","baz"]
@@ -140,12 +140,12 @@ Bit string generators are quite useful when you need to organize bit string stre
     iex> lc <<r:8,g:8,b:8>> in pixels, do: {r,g,b}
     [{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
 
-Remember, as strings are binaries and a binary is a bitstring, we can also use strings on comprehensions. For instance, the example below removes all white space characters from a string via bit comprehensions:
+Remember, as strings are binaries and a binary is a bitstring, we can also use strings in comprehensions. For instance, the example below removes all white space characters from a string via bit comprehensions:
 
     iex> bc <<c>> in " hello world ", c != ?\s, do: <<c>>
     "helloworld"
 
-Elixir does its best to hide the differences between list and bit string generators. However, there is a special case due to Erlang limitation that we need to explicitly tell Erlang that a list is being given as argument:
+Elixir does its best to hide the differences between list and bit string generators. However, there is a special case due to Erlang limitation where we need to explicitly tell Erlang that a list is being given as argument:
 
     # This will fail because when Elixir sees that the left side
     # of the in expression is a bit string, it expects the right side
@@ -163,7 +163,7 @@ Elixir does its best to hide the differences between list and bit string generat
 
 ## 6.5 Pseudo variables
 
-Elixir provides with some pseudo-variables. Those variables can only be read and never assigned to. They are:
+Elixir provides a set of pseudo-variables. Those variables can only be read and never assigned to. They are:
 
 * `__MODULE__` - Returns an atom representing the current module or nil;
 * `__FUNCTION__` - Returns a tuple representing the current function by name and arity or nil;
@@ -173,6 +173,6 @@ Elixir provides with some pseudo-variables. Those variables can only be read and
 
 ## 6.6 Native compilation
 
-Elixir can compile to native code using the Hipe compiler. All you need to do is to export the following before running your code:
+Elixir can compile to native code using the Hipe compiler. All you need to do is export the following environment variable before running your code:
 
     export ERL_COMPILER_OPTIONS=native
