@@ -147,7 +147,7 @@ The real benefit of protocols comes when mixed with records. For instance, one m
       def blank?(dict), do: RedBlack.empty?(dict)
     end
 
-In the example above, we have implemented `blank?` for the custom dictionary that simply delegates to `RedBlack.empty?`. Finally, since records are simply tuples, the default implementation for records can be given in the tuple implementation.
+In the example above, we have implemented `blank?` for the custom dictionary that simply delegates to `RedBlack.empty?`. Finally, since records are simply tuples, one can add a default protocol implementation to any record by defining a default implementation for tuples.
 
 ### 4.2.3 Built-in protocols
 
