@@ -168,7 +168,7 @@ In order to support recursion, macros cannot be called locally. For example, one
       delegate [values: 1], to: List
     end
 
-In order to access the macro, it needs to be defined in an outer module:
+In order for us to access the macro, it needs to be defined in an outer module:
 
     defmodule MyMacros::Support
       defmacro delegate([h|t], to: target) do
