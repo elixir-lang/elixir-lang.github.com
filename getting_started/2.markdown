@@ -158,7 +158,7 @@ We have assigned the head of the list to `h` and the tail to `t`. In fact, if we
     iex> [1 | t] = [1,2,3]
     [1, 2, 3]
     iex> [0 | t] = [1,2,3]
-    ** (::MatchError) no match of right hand side value: [1,2,3]
+    ** (MatchError) no match of right hand side value: [1,2,3]
 
 In case you want to pattern match against the value of a variable, you can use the `^` operator:
 
@@ -167,7 +167,7 @@ In case you want to pattern match against the value of a variable, you can use t
     iex> ^x = 1
     1
     iex> ^x = 2
-    ** (::MatchError) no match of right hand side value: 2
+    ** (MatchError) no match of right hand side value: 2
     iex> x = 2
     2
 
@@ -584,7 +584,7 @@ In most cases, we don't send messages directly with `<-` nor write `receive` con
 
 ## 2.8 Built-in functions
 
-Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. [Many of these functions with documentation and examples are available in `Elixir::Builtin`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/builtin.ex) and [Elixir special forms are available in `Elixir::SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
+Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. [Many of these functions with documentation and examples are available in `Elixir.Builtin`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/builtin.ex) and [Elixir special forms are available in `Elixir.SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
 
 Besides the functions provided by Elixir, Elixir imports many of the root function from Erlang. The functions `length`, `is_list`, `is_number` and many others we discussed above come from Erlang. [The full documented list is available on the OTP documentation page](http://www.erlang.org/doc/man/erlang.html).
 
