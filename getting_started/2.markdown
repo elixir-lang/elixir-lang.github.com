@@ -52,7 +52,30 @@ In the example above, we have assigned the head of the list to the variable `hea
     iex> List.flatten [1,[2],3]
     [1,2,3]
 
-## 2.2 Lists and binaries
+## 2.2 Ordered dictionaries
+
+Elixir also provides a special syntax to create ordered dictionaries. They can be created as follow:
+
+    iex> [a: 1, b: 2]
+    [{:a,1},{:b,2}]
+
+Notice in the example above an Ordered dictionary (from now on called Orddict) is nothing more than a list of two element tuples, where the first element of the tuple is an atom. It is important to notice that the dictionary is ordered according to the ordering of the terms and not according to insertion order:
+
+    iex> [foo: 1, bar: 2]
+    [{:bar,2},{:foo,1}]
+
+The reason for such ordering is faster access when reading and updating the dictionary. In order to manipulate Orddicts, we can use the [`Orddict` module](https://github.com/elixir-lang/elixir/blob/master/lib/orddict.ex):
+
+    iex> x = [a: 1, b: 2]
+    [{:a, 1}, {:b, 2}]
+    iex> Orddict.get x, :a
+    1
+    iex> Orddict.get x, :c
+    nil
+
+Check the module for other functions and their respective documentation.
+
+## 2.3 Char lists and binaries
 
 In the previous chapter we have discussed double- and single-quoted strings. Double quoted strings are binaries while single-quoted strings are lists:
 
@@ -82,7 +105,7 @@ Since lists are implemented as linked lists, it means a string represented as li
 
 Currently, Elixir does not ship with any library for doing string manipulation, but this will be amended soon.
 
-## 2.3 Calling Erlang functions
+## 2.4 Calling Erlang functions
 
 Elixir's plans is to provide a small standard library responsible for handling most basic structures (lists, ordered dicts, strings and so forth) and IO. That said, complex applications will require the developer to use Erlang's libraries.
 
@@ -96,7 +119,7 @@ Erlang's OTP is very well documented and a developer should not have problems go
 * [OTP docs](http://www.erlang.org/doc/)
 * [Standard library docs](http://www.erlang.org/doc/man/STDLIB_app.html)
 
-## 2.4 Pattern matching
+## 2.5 Pattern matching
 
 When discussing lists, we saw the following example:
 
@@ -165,7 +188,7 @@ Although pattern matching allows us to build powerful constructs, its usage is l
     iex> Erlang.lists.flatten([1,[2],3]) = [1,2,3]
     ** (ErlangError) erlang error :illegal_pattern
 
-## 2.5 Key-values
+## 2.6 Key-values
 
 One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we can write `if` in these two equivalent ways:
 
@@ -176,26 +199,7 @@ One of the first control flow constructs we usually learn is the conditional `if
     ...> end
     3
 
-Both examples above are simply different ways of expressing key-value arguments. Key-value arguments are a list of two-item tuples, where the first element is an atom representing the key and the second is the value. Elixir provides a syntax-shortcut for creating such key-values:
-
-    iex> [a: 1, b: 2]
-    [{:a, 1}, {:b, 2}]
-
-In order to manipulate those key-value arguments, we can use the [`Orddict` module](https://github.com/elixir-lang/elixir/blob/master/lib/orddict.ex):
-
-    iex> x = [a: 1, b: 2]
-    [{:a, 1}, {:b, 2}]
-    iex> Orddict.get x, :a
-    1
-    iex> Orddict.get x, :c
-    nil
-
-Going back to the `if` example, we invoked it passing a condition (`true`) and a key-value argument (`do: 1 + 2`):
-
-    iex> if true, do: 1 + 2
-    3
-
-Since the key-value argument is the last argument, the brackets are optional. These are all equivalent:
+Both examples above are simply different ways of expressing key-value arguments. Key-value arguments are based on the Ordered dictionaries we just discussed above. Since the key-value argument is the last argument, the brackets are optional. These are all equivalent:
 
     iex> if true, do: 1 + 2
     3
@@ -259,11 +263,11 @@ Which is then parsed as:
 
 A good rule of thumb is: always use `->/end` when defining functions with `fn`, use `do/end` for all other structures. If we follow this rule, everything works transparently.
 
-## 2.6 Control flow structures
+## 2.7 Control flow structures
 
 In this section we are going to describe Elixir main control structures.
 
-### 2.6.1 If
+### 2.7.1 If
 
 Refreshing from the section above, all these calls are equivalent:
 
@@ -296,7 +300,7 @@ Refreshing from the section above, all these calls are equivalent:
 
 In Elixir, all values except `false` and `nil` evaluate to true. So there is no need to convert them to boolean.
 
-### 2.6.2 Other boolean operators
+### 2.7.2 Other boolean operators
 
 In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. Those operators are strict in the sense they only accept booleans as arguments.
 
@@ -322,7 +326,7 @@ To work around this limitation, Elixir provides three operators with similar fun
     iex> !nil
     true
 
-### 2.6.3 Case
+### 2.7.3 Case
 
 In this section we have introduced pattern matching via the `=` operator. Sometimes however it is convenient to match an expression against several expressions until we find a matching one. For such cases, we use `case`:
 
@@ -417,7 +421,7 @@ However, the example above will always fail because, if the argument is a list, 
 
 In such cases, if there is an error in one of the guards, it won't affect the next one.
 
-### 2.6.4 Functions
+### 2.7.4 Functions
 
 Throughout this guide, we have created many functions in examples. The syntax for creating functions is:
 
@@ -437,7 +441,7 @@ As an immutable language, the binding of the function is also immutable. This me
     (fn -> x = 2 end).()
     x #=> 1
 
-### 2.6.5 Loops
+### 2.7.5 Loops
 
 Due to data structure immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
 
@@ -466,7 +470,7 @@ Then, we add the head of the list to the accumulator `h + acc` and call the loop
 
 > Note: `loop/recur` is also a Clojure idiom, although differently from Clojure, `recur` in Elixir does not ensure a tail call was made.
 
-### 2.6.6 Try
+### 2.7.6 Try
 
 The next control-flow mechanism is `try/catch/after`:
 
@@ -513,7 +517,7 @@ The common strategy then is to make explicit all arguments that are required aft
 
     x #=> returns the value of x or nil for failures
 
-### 2.6.7 Rescue
+### 2.7.7 Rescue
 
 While `catch` clauses inside `try` are simply a pattern matching mechanism, `rescue` provides a higher abstraction around exceptions. `rescue` allows a developer to rescue an exception by its name and not by its internal contents. Consider the following examples:
 
@@ -546,7 +550,7 @@ While `catch` clauses inside `try` are simply a pattern matching mechanism, `res
 
 Custom exceptions can be defined using the `defexception` macro. Check [the exceptions file for some examples](https://github.com/elixir-lang/elixir/tree/master/lib/exception.ex).
 
-### 2.6.8 Receive
+### 2.7.8 Receive
 
 The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
@@ -578,9 +582,9 @@ You may not see exactly `<0.36.0>` back, but something similar. If there are no 
 
 In most cases, we don't send messages directly with `<-` nor write `receive` control expressions. Instead, we use many of the abstractions provided by OTP which will be discussed later.
 
-## 2.7 Default functions
+## 2.8 Built-in functions
 
-Elixir ships with many default functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. [Many of these functions with documentation and examples are available in `Elixir::Builtin`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/builtin.ex) and [Elixir special forms are available in `Elixir::SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
+Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. [Many of these functions with documentation and examples are available in `Elixir::Builtin`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/builtin.ex) and [Elixir special forms are available in `Elixir::SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
 
 Besides the functions provided by Elixir, Elixir imports many of the root function from Erlang. The functions `length`, `is_list`, `is_number` and many others we discussed above come from Erlang. [The full documented list is available on the OTP documentation page](http://www.erlang.org/doc/man/erlang.html).
 
