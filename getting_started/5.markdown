@@ -95,7 +95,7 @@ Which would fail because the clause and options variables are not defined in the
 
 In other words, unquote is a mechanism to inject expressions into the tree being quoted and it is an essential tool for meta-programming. Elixir also provides `unquote_splicing` allowing us to inject many expressions at once.
 
-We can define any macro we want, including ones that override the built-in macros provided by Elixir. The only exceptions are Elixir special forms that cannot be overridden, [the full list of special forms is available in `Elixir::SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
+We can define any macro we want, including ones that override the built-in macros provided by Elixir. The only exceptions are Elixir special forms that cannot be overridden, [the full list of special forms is available in `Elixir.SpecialForms`](https://github.com/elixir-lang/elixir/tree/master/lib/elixir/special_forms.ex).
 
 ## 5.3 Macros hygiene
 
@@ -107,11 +107,17 @@ Elixir macros follow Scheme conventions and are hygienic. This means a variable 
       end
     end
 
-    require Hygiene
+    defmodule HygieneTest do
+      def go do
+        require Hygiene
+        a = 13
+        Hygiene.no_interference
+        a
+      end
+    end
 
-    a = 13
-    Hygiene.no_interference
-    a # => 13
+    HygieneTest.go
+    # => 13
 
 In the example above, even if the macro injects `a = 1`, it does not affect the variable `a`. In case the macro wants to explicitly affect the context, it can use `var!`:
 
@@ -121,11 +127,17 @@ In the example above, even if the macro injects `a = 1`, it does not affect the 
       end
     end
 
-    require Hygiene
+    defmodule HygieneTest do
+      def go do
+        require Hygiene
+        a = 13
+        Hygiene.interference
+        a
+      end
+    end
 
-    a = 13
-    Hygiene.interference
-    a # => 1
+    HygieneTest.go
+    # => 1
 
 Macros hygiene only works because Elixir marks a variable as coming from the quote. For example, consider this:
 
@@ -170,14 +182,14 @@ In order to support recursion, macros cannot be called locally. For example, one
 
 In order for us to access the macro, it needs to be defined in an outer module:
 
-    defmodule MyMacros::Support
+    defmodule MyMacros.Support
       defmacro delegate([h|t], to: target) do
         # ...
       end
     end
 
     defmodule MyMacros
-      require MyMacros::Support, import: true
+      require MyMacros.Support, import: true
       delegate [values: 1], to: List
     end
 

@@ -39,7 +39,7 @@ This file can be compiled using `bin/elixirc` (or simply `elixirc` if you instal
 
     bin/elixirc math.ex
 
-Which will then generate a file named `::Math.beam` containing the bytecode for the defined module. Now, if we start `bin/iex` again, our module definition will be available (considering `bin/iex` is being started in the same directory the bytecode file is):
+Which will then generate a file named `Math.beam` containing the bytecode for the defined module. Now, if we start `bin/iex` again, our module definition will be available (considering `bin/iex` is being started in the same directory the bytecode file is):
 
     iex> Math.sum(1, 2)
     3
@@ -113,9 +113,56 @@ Notice that giving an argument that does not match any of the clauses raises an 
 
 ## 3.4 Directives
 
-In order to support software-reuse, Elixir supports two directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
+In order to support software-reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
 
-### 3.4.1 import
+### 3.4.1 refer
+
+`refer` allows you to setup references to a given module. For instance, one can do:
+
+    defmodule Math do
+      refer MyOrddict, as: Orddict
+    end
+
+And now, any reference to `Orddict` will be automatically replaced by `MyOrddict`. In case one wants to access the original `Orddict`, it can be done by accessing the module directly via `__MAIN__`:
+
+    Orddict.values  #=> uses MyOrddict.values
+    Orddict.values  #=> uses __MAIN__.Orddict.values
+
+Calling `refer` without an `as` option sets the reference automatically to the last part of the module name, for example:
+
+    refer Foo.Bar.Baz
+
+Is the same as:
+
+    refer Foo.Bar.Baz, as: Baz
+
+Notice that `refer` is **lexically scoped**, which allows you to set references inside specific functions:
+
+    defmodule Math do
+      def add(a, b) do
+        refer MyOrddict, as: Orddict
+        # ...
+      end
+
+      def minus(a, b) do
+        # ...
+      end
+    end
+
+In the example above, since we are invoking `refer` inside the function `add`, the reference will just be valid inside the function `add`. `minus` won't be affected at all.
+
+### 3.4.2 require
+
+In general, a module does not need to be required before usage, except if we want to use the macros available in that module. For instance, suppose we created our own `my_if` implementation in a module named `MyMacros`. If we want to invoke it, we need to first explicitly require `MyMacros`:
+
+    defmodule Math do
+      require MyMacros
+      MyMacros.my_if do_something, it_works
+    end
+
+An attempt to call a macro that was not loaded will raise an error. Note that, as the `refer` directive, `require` is also lexically scoped.
+
+### 3.4.3 import
 
 We use `import` whenever we want to easily access functions or macros from others modules without using the qualified name. For instance, if we want to use the `values` function from `Orddict` several times in a module and we don't want to always type `Orddict.values`, we can simply import it:
 
@@ -144,27 +191,7 @@ And then we can use `only` or `except` to filter the macros being included. Fina
 
 In the example above, the imported `Orddict.values` is only visible within that specific function. `values` won't be available in any other function in that module (or any other module for that matter).
 
-### 3.4.2 require
-
-`require` ensures that a module is loaded and provides a means to setup reference aliases for a given module. For instance, one can do:
-
-    defmodule Math do
-      require MyOrddict, as: Orddict
-    end
-
-And now, any reference to `Orddict` will be automatically replaced by `MyOrddict`. In case one wants to access the original `Orddict`, it can be done by prefixing the module name with `::`:
-
-    Orddict.values   #=> uses ::MyOrddict.values
-    ::Orddict.values #=> uses ::Orddict.values
-
-In general, a module does not need to be required before usage, except if we want to use the macros available in that module. For instance, suppose we created our own `my_if` implementation in a module named `MyMacros`. If we want to invoke it, we need to first explicitly require `MyMacros`:
-
-    defmodule Math do
-      require MyMacros
-      MyMacros.my_if do_something, it_works
-    end
-
-An attempt to call a macro that was not loaded will raise an error. Note that, as the `import` directive, `require` is also lexically scoped.
+Note that importing a module automatically requires it. Furthermore, `import` also accept `as:` as option which is automatically passed to `refer` in order to create a reference.
 
 ## 3.5 Module data
 
@@ -226,7 +253,7 @@ In Elixir, nesting a module inside the other does not affect its name:
       end
     end
 
-The example above will define two modules `Foo` and `Bar`. Notice that the second module is **not** called `Foo::Bar`. In general, nesting of modules is discouraged in Elixir.
+The example above will define two modules `Foo` and `Bar`. Notice that the second module is **not** called `Foo.Bar`. In general, nesting of modules is discouraged in Elixir.
 
 ## 3.7 References
 
@@ -240,10 +267,10 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Orddict`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `::List`:
+This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Orddict`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `List`:
 
     iex> List
-    ::List
+    List
     iex> is_atom(List)
     true
 
@@ -254,16 +281,16 @@ References are powerful when used with the `require` directive discussed above. 
       # ...
     end
 
-Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by prefixing the module name with `::`:
+Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by prefixing the module name with ``:
 
-    Orddict.values   #=> uses ::FastOrddict.values
-    ::Orddict.values #=> uses ::Orddict.values
+    Orddict.values   #=> uses FastOrddict.values
+    Orddict.values #=> uses Orddict.values
 
-Finally, in Elixir `::` is simply an operator (like `+`). It is used to concatenate two references:
+Finally, in Elixir `` is simply an operator (like `+`). It is used to concatenate two references:
 
-    iex> Foo::Bar
-    ::Foo::Bar
-    iex> Foo :: Bar
-    ::Foo::Bar
+    iex> Foo.Bar
+    Foo.Bar
+    iex> Foo  Bar
+    Foo.Bar
 
-> Note: a reference does not actually ensure the referenced module really exists. For instance, `::FooBarBaz` will return an atom regardless if a `::FooBarBaz` module is defined or not.
+> Note: a reference does not actually ensure the referenced module really exists. For instance, `FooBarBaz` will return an atom regardless if a `FooBarBaz` module is defined or not.

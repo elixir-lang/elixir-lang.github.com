@@ -78,21 +78,21 @@ All functions can be partially applied, except [Elixir's special forms](https://
 
 ## 6.3 Use
 
-`use` is a macro that provides a common API for module extension. For instance, in order to use the `ExUnit` test framework that ships with Elixir, you simply need to use `ExUnit::Case` in your module:
+`use` is a macro that provides a common API for module extension. For instance, in order to use the `ExUnit` test framework that ships with Elixir, you simply need to use `ExUnit.Case` in your module:
 
     defmodule AssertionTest do
-      use ExUnit::Case
+      use ExUnit.Case
 
       def test_always_pass do
         true = true
       end
     end
 
-By calling `use`, a hook called `__using__` will be invoked in `ExUnit::Case` which will then do the proper setup. In general, `use` is simply a translation to:
+By calling `use`, a hook called `__using__` will be invoked in `ExUnit.Case` which will then do the proper setup. In general, `use` is simply a translation to:
 
     defmodule AssertionTest do
-      require ExUnit::Case
-      ExUnit::Case.__using__(::AssertionTest)
+      require ExUnit.Case
+      ExUnit.Case.__using__(AssertionTest)
 
       def test_always_pass do
         true = true
