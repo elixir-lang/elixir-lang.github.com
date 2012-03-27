@@ -328,11 +328,11 @@ Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. 
     Orddict.values   #=> uses FastOrddict.values
     Orddict.values #=> uses Orddict.values
 
-Finally, in Elixir `` is simply an operator (like `+`). It is used to concatenate two references:
+Finally, in Elixir `.` is simply an operator (like `+`). It is used to concatenate two references:
 
     iex> Foo.Bar
     Foo.Bar
-    iex> Foo  Bar
+    iex> Foo . Bar
     Foo.Bar
 
 > Note: a reference does not actually ensure the referenced module really exists. For instance, `FooBarBaz` will return an atom regardless if a `FooBarBaz` module is defined or not.
