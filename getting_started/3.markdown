@@ -111,6 +111,48 @@ Function declarations also support guards and multiple clauses. If a function ha
 
 Notice that giving an argument that does not match any of the clauses raises an error.
 
+Named functions also support default arguments:
+
+    defmodule Funs do
+      def join(a, b, sep // ' ') do
+        List.wrap(a) ++ sep ++ List.wrap(b)
+      end
+    end
+
+    IO.puts Funs.join('Hello', 'world')      #=> Hello world
+    IO.puts Funs.join('Hello', 'world', '_') #=> Hello_world
+
+When using default values, one must be careful and avoid overlapping function definitions. Consider the following example:
+
+    defmodule Funs do
+      def join(a, b) do
+        IO.puts "***First join"
+        List.wrap(a) ++ List.wrap(b)
+      end
+
+      def join(a, b, sep // ' ') do
+        IO.puts "***Second join"
+        List.wrap(a) ++ sep ++ List.wrap(b)
+      end
+    end
+
+If we save the code above in a file named "test_funs.ex" and compile it, Elixir will emit the following warning:
+
+    test_funs.ex:7: this clause cannot match because a previous clause at line 2 always matches
+
+The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
+
+    $ iex test_funs.ex
+
+    iex> Funs.join 'Hello', 'world'
+    ***First join
+    'Helloworld'
+
+    iex> Funs.join 'Hello', 'world', ' '
+    ***Second join
+    'Hello world'
+
+
 ## 3.4 Directives
 
 In order to support software-reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
