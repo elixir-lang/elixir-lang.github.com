@@ -323,7 +323,7 @@ References are powerful when used with the `require` directive discussed above. 
       # ...
     end
 
-Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by accessing the module namw via `__MAIN__`:
+Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by accessing the module name via `__MAIN__`:
 
     Orddict.values           #=> uses FastOrddict.values
     __MAIN__.Orddict.values  #=> uses Orddict.values
