@@ -309,12 +309,12 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Orddict`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `List`:
+This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Orddict`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__.List`:
 
-    iex> List
-    List
     iex> is_atom(List)
     true
+    iex> to_binary(List)
+    "__MAIN__.List"
 
 References are powerful when used with the `require` directive discussed above. For instance, let's imagine that our Math module relies heavily on the `Orddict` module. If, at some point, we find out most algorithms in `Orddict` could be implemented in a much faster way, we could implement `FastOrddict` and use it as a drop-in replacement:
 
@@ -323,16 +323,9 @@ References are powerful when used with the `require` directive discussed above. 
       # ...
     end
 
-Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by prefixing the module name with ``:
+Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by accessing the module namw via `__MAIN__`:
 
-    Orddict.values   #=> uses FastOrddict.values
-    Orddict.values #=> uses Orddict.values
+    Orddict.values           #=> uses FastOrddict.values
+    __MAIN__.Orddict.values  #=> uses Orddict.values
 
-Finally, in Elixir `` is simply an operator (like `+`). It is used to concatenate two references:
-
-    iex> Foo.Bar
-    Foo.Bar
-    iex> Foo  Bar
-    Foo.Bar
-
-> Note: a reference does not actually ensure the referenced module really exists. For instance, `FooBarBaz` will return an atom regardless if a `FooBarBaz` module is defined or not.
+> Note: a reference does not actually ensure the referenced module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
