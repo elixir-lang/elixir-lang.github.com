@@ -219,7 +219,7 @@ However, most of the times `if` clauses are longer than the examples above. In s
     ...>   1 + 2
     ...> end
 
-Internally, this is converted to the same key-value arguments as above. This feature is called key-value blocks. You can pass `else:` as option as well:
+Internally, this is converted to the same key-value arguments as above. This feature is called key-value blocks. Notice how the `do:` option is replaced by the delimiters `do/end`, allowing us to pass `else:` as option as well:
 
     if false do
       1 + 2
@@ -227,7 +227,7 @@ Internally, this is converted to the same key-value arguments as above. This fea
       10 + 3
     end
 
-Key-value blocks are similar to Ruby blocks. Parenthesis can be added as follows:
+Parenthesis can be added to key-value blocks as follows:
 
     if(false) do
       1 + 2
