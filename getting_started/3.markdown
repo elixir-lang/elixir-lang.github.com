@@ -288,14 +288,14 @@ After the module is compiled, the stored custom data can be accessed via `__info
 
 ## 3.6 Module nesting
 
-In Elixir, nesting a module inside the other does not affect its name:
+In Elixir, nesting a module inside the other affects its name:
 
     defmodule Foo do
       defmodule Bar do
       end
     end
 
-The example above will define two modules `Foo` and `Bar`. Notice that the second module is **not** called `Foo.Bar`. In general, nesting of modules is discouraged in Elixir.
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` in the same lexical scope. If the nested module `Bar` is moved to another file, it needs to be referenced via the full name (`Foo.Bar`) or a reference need to be set using the directive `refer` discussed above.
 
 ## 3.7 References
 
