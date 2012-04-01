@@ -162,13 +162,13 @@ In order to support software-reuse, Elixir supports three directives. As we are 
 `refer` allows you to setup references to a given module. For instance, one can do:
 
     defmodule Math do
-      refer MyOrddict, as: Orddict
+      refer MyList, as: List
     end
 
-And now, any reference to `Orddict` will be automatically replaced by `MyOrddict`. In case one wants to access the original `Orddict`, it can be done by accessing the module directly via `__MAIN__`:
+And now, any reference to `List` will be automatically replaced by `MyList`. In case one wants to access the original `List`, it can be done by accessing the module directly via `__MAIN__`:
 
-    Orddict.values  #=> uses MyOrddict.values
-    Orddict.values  #=> uses __MAIN__.Orddict.values
+    List.values           #=> uses MyList.values
+    __MAIN__.List.values  #=> uses List.values
 
 Calling `refer` without an `as` option sets the reference automatically to the last part of the module name, for example:
 
@@ -182,7 +182,7 @@ Notice that `refer` is **lexically scoped**, which allows you to set references 
 
     defmodule Math do
       def add(a, b) do
-        refer MyOrddict, as: Orddict
+        refer MyList, as: List
         # ...
       end
 
@@ -206,17 +206,17 @@ An attempt to call a macro that was not loaded will raise an error. Note that, a
 
 ### 3.4.3 import
 
-We use `import` whenever we want to easily access functions or macros from others modules without using the qualified name. For instance, if we want to use the `values` function from `Orddict` several times in a module and we don't want to always type `Orddict.values`, we can simply import it:
+We use `import` whenever we want to easily access functions or macros from others modules without using the qualified name. For instance, if we want to use the `duplicate` function from `List` several times in a module and we don't want to always type `List.duplicate`, we can simply import it:
 
     defmodule Math do
-      import Orddict, only: [values: 1]
+      import List, only: [duplicate: 2]
 
       def some_function do
-        # call values(orddict)
+        # call duplicate
       end
     end
 
-In this case, we are importing only the function `values` (with arity 1) from `Orddict`. Although `only:` is optional, its usage is recommended. `except` could also be given as an option.
+In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `only:` is optional, its usage is recommended. `except` could also be given as an option.
 
 If we want to import only `:functions` or `:macros` from a given module, we can also pass a first argument selecting the scope:
 
@@ -226,12 +226,12 @@ And then we can use `only` or `except` to filter the macros being included. Fina
 
     defmodule Math do
       def some_function do
-        import Orddict, only: [values: 1]
-        # call values(orddict)
+        import List, only: [duplicate: 2]
+        # call duplicate
       end
     end
 
-In the example above, the imported `Orddict.values` is only visible within that specific function. `values` won't be available in any other function in that module (or any other module for that matter).
+In the example above, the imported `List.duplicate` is only visible within that specific function. `duplicate` won't be available in any other function in that module (or any other module for that matter).
 
 Note that importing a module automatically requires it. Furthermore, `import` also accept `as:` as option which is automatically passed to `refer` in order to create a reference.
 
@@ -276,7 +276,7 @@ Besides the built-in data attributes outlined above, any developer can also add 
       IO.inspect @my_data #=> 13
     end
 
-After the module is compiled, the stored custom data can be accessed via `__info__(:data)` and it will return an `Orddict`:
+After the module is compiled, the stored custom data can be accessed via `__info__(:data)` and it will return a keywords list:
 
     MyServer.__info__(:data) #=> [my_data: 13]
 
@@ -309,23 +309,23 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Orddict`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__.List`:
+This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__.List`:
 
     iex> is_atom(List)
     true
     iex> to_binary(List)
     "__MAIN__.List"
 
-References are powerful when used with the `require` directive discussed above. For instance, let's imagine that our Math module relies heavily on the `Orddict` module. If, at some point, we find out most algorithms in `Orddict` could be implemented in a much faster way, we could implement `FastOrddict` and use it as a drop-in replacement:
+References are powerful when used with the `refer` directive discussed above. For instance, let's imagine that our Math module relies heavily on the `List` module. If, at some point, we find out most algorithms in `List` could be implemented in a much faster way, we could implement `FastList` and use it as a drop-in replacement:
 
     defmodule Math do
-      require FastOrddict, as: Orddict
+      refer FastList, as: List
       # ...
     end
 
-Now any reference to `Orddict` will be automatically replaced by `FastOrddict`. In case one wants to access the original `Orddict`, it can be done by accessing the module name via `__MAIN__`:
+Now any reference to `List` will be automatically replaced by `FastList`. In case one wants to access the original `List`, it can be done by accessing the module name via `__MAIN__`:
 
-    Orddict.values           #=> uses FastOrddict.values
-    __MAIN__.Orddict.values  #=> uses Orddict.values
+    List.values           #=> uses FastList.values
+    __MAIN__.List.values  #=> uses List.values
 
 > Note: a reference does not actually ensure the referenced module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
