@@ -17,12 +17,12 @@
         username: "elixirlang",
         template: function(i){ return i["text"] }
       });
-      $('#menu-primary li:nth-child(' + ({{page.active}} || 0) + ')').attr('class', 'current-menu-item');
+      // $('#menu-primary li:nth-child(' + ({{page.active}} || 0) + ')').attr('class', 'current-menu-item');
     });
   </script>
 </head>
 
-<body class="home">
+<body id="{{ page.section }}" class="home">
   <div id="container">
     <div class="wrap">
     <div id="header">
@@ -37,10 +37,10 @@
       <div id="menu-primary" class="menu-container">
         <div class="menu">
           <ul id="menu-primary-items">
-            <li class="menu-item"><a href="/">Home</a></li>
-            <li class="menu-item"><a href="/getting_started/1.html">Getting Started</a></li>
-            <li class="menu-item"><a href="/blog.html">Blog</a></li>
-            <li class="menu-item"><a href="https://github.com/elixir-lang/elixir" target="_blank">Source</a></li>
+            <li class="menu-item home"><a href="/">Home</a></li>
+            <li class="menu-item getting_started"><a href="/getting_started/1.html">Getting Started</a></li>
+            <li class="menu-item blog"><a href="/blog.html">Blog</a></li>
+            <li class="menu-item source"><a href="https://github.com/elixir-lang/elixir" target="_blank">Source</a></li>
           </ul>
         </div>
       </div>
