@@ -13,7 +13,7 @@ section: blog
       <div class="hentry post">
         <div class="sticky-header">
           <h2 class="entry-title"><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
-          <div class="byline">{{ post.date | date: "%B %d, %Y" }} · by Admin · in <span class="category"><a href="#" rel="tag">Articles</a></span></div>
+          <div class="byline">{{ post.date | date: "%B %d, %Y" }}{% if post.author %} · by {{ post.author}}{% endif %}</div>
         </div><!-- .sticky-header -->
 
         <div class="entry-summary">
