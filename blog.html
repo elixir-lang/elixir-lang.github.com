@@ -1,0 +1,33 @@
+---
+title: Elixir's Blog
+---
+{% include top.html %}
+
+<div id="content">
+  <div class="hfeed">
+
+    {% for post in site.posts %}
+      <div class="hentry post">
+        <div class="sticky-header">
+          <h2 class="entry-title"><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
+          <div class="byline">{{ post.date | date: "%B %d, %Y" }} · by Admin · in <span class="category"><a href="#" rel="tag">Articles</a></span></div>
+        </div><!-- .sticky-header -->
+
+        <div class="entry-summary">
+          {{ post.content | strip_html | truncatewords:80 }}
+        </div><!-- .entry-summary -->
+    </div>
+    {% endfor %}
+  </div><!-- .hfeed -->
+
+  <!--<div class="pagination loop-pagination"><span class="page-numbers current">1</span>
+  <a class="page-numbers" href="http://demo.alienwp.com/origin/page/2/">2</a>
+  <a class="next page-numbers" href="http://demo.alienwp.com/origin/page/2/">Next →</a></div>-->
+</div><!-- #content -->
+
+
+<div id="sidebar-primary" class="sidebar">
+  {% include search.html %}
+</div>
+
+{% include bottom.html %}
