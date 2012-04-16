@@ -10,7 +10,7 @@ section: blog
     <h2>Posts by category:</h2>
     <ul>
     {% for category in site.categories %}
-      <li id="#{{ category | first }}">{{ category | first }}</li>
+      <li id="#{{ category | first }}">{{ category | first | capitalize }}</li>
         <ul>
         {% for posts in category %}
           {% for post in posts %}
