@@ -1,0 +1,32 @@
+<!--<div class="pagination loop-pagination"><span class="page-numbers current">1</span>
+<a class="page-numbers" href="http://demo.alienwp.com/origin/page/2/">2</a>
+<a class="next page-numbers" href="http://demo.alienwp.com/origin/page/2/">Next →</a></div>-->
+
+<div id="post-pagination" class="pagination loop-pagination">
+  {% if paginator.previous_page %}
+    {% if paginator.previous_page == 1 %}
+    <a class="prev page-numbers" href="/blog">Previous</a>
+    {% else %}
+    <a class="prev page-numbers" href="/blog/page{{paginator.previous_page}}">Previous</a>
+    {% endif %}
+  {% endif %}
+
+  
+  {% if paginator.page == 1 %}
+    <span class="page-numbers current">1</span>
+  {% else %}
+    <a class="page-numbers" href="/blog">1</a>
+  {% endif %}
+
+  {% for count in (2..paginator.total_pages) %}
+    {% if count == paginator.page %}
+      <span class="page-numbers current">{{count}}</span>
+    {% else %}
+      <a class="page-numbers" href="/blog/page{{count}}">{{count}}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if paginator.next_page %}
+    <a class="next page-numbers" href="/blog/page{{paginator.next_page}}">Next</a>
+  {% endif %}
+</div>
