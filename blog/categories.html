@@ -1,27 +1,22 @@
 ---
 title: Posts by category
 section: blog
+layout: default
 ---
 
-{% include top.html %}
-
-<div id="content">
-  <div class="hfeed">
-    <h2>Posts by category:</h2>
-    <ul>
-    {% for category in site.categories %}
-      <li id="#{{ category | first }}">{{ category | first | capitalize }}</li>
-        <ul>
-        {% for posts in category %}
-          {% for post in posts %}
-            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-          {% endfor %}
+<div class="hfeed">
+  <h2>Posts by category:</h2>
+  <ul>
+  {% for category in site.categories %}
+    <li id="#{{ category | first }}">{{ category | first | capitalize }}</li>
+      <ul>
+      {% for posts in category %}
+        {% for post in posts %}
+          <li><a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
-    </ul>
-  </div><!-- .hfeed -->
-</div><!-- #content -->
-
-{% include bottom.html %}
+      {% endfor %}
+      </ul>
+    </li>
+  {% endfor %}
+  </ul>
+</div><!-- .hfeed -->
