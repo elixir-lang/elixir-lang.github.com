@@ -1,26 +1,20 @@
 ---
 title: Blog
 section: blog
+layout: default
 ---
 
-{% include top.html %}
+<div class="hfeed">
+  {% for post in site.posts %}
+    <div class="hentry post">
+      <div class="sticky-header">
+        <h2 class="entry-title"><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
+        <div class="byline">{{ post.date | date: "%B %d, %Y" }}{% if post.author %} · by {{ post.author}}{% endif %} . in {% for category in post.categories %}<span class="category"><a href="/blog/categories.html#{{category}}">{{ category | capitalize }}</a>{% endfor %}</div>
+      </div><!-- .sticky-header -->
 
-<div id="content">
-  <div class="hfeed">
-    {% for post in site.posts %}
-      <div class="hentry post">
-        <div class="sticky-header">
-          <h2 class="entry-title"><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
-          <div class="byline">{{ post.date | date: "%B %d, %Y" }}{% if post.author %} · by {{ post.author}}{% endif %} . in {% for category in post.categories %}<span class="category"><a href="/blog/categories.html#{{category}}">{{ category | capitalize }}</a>{% endfor %}</div>
-        </div><!-- .sticky-header -->
-
-        <div class="entry-summary">
-          {{ post.content | strip_html | truncatewords:80 }}
-        </div><!-- .entry-summary -->
-    </div>
-    {% endfor %}
-  </div><!-- .hfeed -->
-</div><!-- #content -->
-
-{% include sidebar.html %}
-{% include bottom.html %}
+      <div class="entry-summary">
+        {{ post.content | strip_html | truncatewords:80 }}
+      </div><!-- .entry-summary -->
+  </div>
+  {% endfor %}
+</div><!-- .hfeed -->
