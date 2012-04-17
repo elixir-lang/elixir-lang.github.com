@@ -1,0 +1,8 @@
+<div class="widget categories-list">
+  <h3 class="widget-title">Blog categories:</h3>
+  <ul>
+  {% for category in site.categories %}
+    <li><a href="/blog/categories.html#{{ category | first }}">{{ category | first | capitalize }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
