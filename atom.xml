@@ -1,0 +1,29 @@
+---
+layout: nil
+elixir_url: http://elixir-lang.org
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+<title>Elixir Lang</title>
+<link href="{{ page.elixir_url }}/atom.xml" rel="self"/>
+<link href="{{ page.elixir_url }}"/>
+<updated>{{ site.time | date_to_xmlschema }}</updated>
+<id>{{ page.elixir_url }}</id>
+
+{% for post in site.posts %}
+<entry>
+  <title>{{ post.title }}</title>
+  <link href="{{ page.elixir_url }}{{ post.url }}"/>
+  {% if post.author %}
+  <author>
+    <name>{{ post.author }}</name>
+  </author>
+  {% endif %}
+  <updated>{{ post.date | date_to_xmlschema }}</updated>
+  <id>{{ post.id }}</id>
+  <content type="html">{{ post.content | xml_escape }}</content>
+</entry>
+{% endfor %}
+ 
+</feed>
