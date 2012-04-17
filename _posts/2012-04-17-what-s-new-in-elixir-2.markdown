@@ -11,40 +11,40 @@ Let's get started with our usual overview. I'm using the latest master (`2851da4
 
 * Literal support for hexadecimal, octal and binary numbers has been added.
 
-    0xFF    #=> 255
-    0o10    #=> 8
-    0b1010  #=> 10
+        0xFF    #=> 255
+        0o10    #=> 8
+        0b1010  #=> 10
 
 * New functions in the [List module](https://github.com/elixir-lang/elixir/blob/master/lib/list.ex): `sort`, `zip`, `unzip`.
 
-    # Charlists are sorted in lexicographic order
-    List.sort ['10', '2', '4', '1', '21']
-    #=> ['1', '10', '2', '21', '4']
+        # Charlists are sorted in lexicographic order
+        List.sort ['10', '2', '4', '1', '21']
+        #=> ['1', '10', '2', '21', '4']
 
-    # Numerical sort for charlists using a custom function
-    List.sort ['10', '2', '4', '1', '21'], fn(a, b) ->
-      {na, _} = :string.to_integer a
-      {nb, _} = :string.to_integer b
-      na <= nb
-    end
-    #=> ['1', '2', '4', '10', '21']
+        # Numerical sort for charlists using a custom function
+        List.sort ['10', '2', '4', '1', '21'], fn(a, b) ->
+          {na, _} = :string.to_integer a
+          {nb, _} = :string.to_integer b
+          na <= nb
+        end
+        #=> ['1', '2', '4', '10', '21']
 
-    List.zip [[1, 2], [:a, :b], ["one", "two"]]
-    #=> [{1,:a,"one"},{2,:b,"two"}]
+        List.zip [[1, 2], [:a, :b], ["one", "two"]]
+        #=> [{1,:a,"one"},{2,:b,"two"}]
 
 * The [System module](https://github.com/elixir-lang/elixir/blob/master/lib/system.ex) has been merged into master. It provides functions for communicating with OS environment, running external commands, getting the stacktrace, etc.
 
-    System.pwd
-    #=> "/Users/alco/Documents/git/elixir"
+        System.pwd
+        #=> "/Users/alco/Documents/git/elixir"
 
-    System.get_env "PAGER"
-    #=> "less"
+        System.get_env "PAGER"
+        #=> "less"
 
-    System.cmd 'date'
-    #=> "Fri Apr 13 19:35:13 EEST 2012\n"
+        System.cmd 'date'
+        #=> "Fri Apr 13 19:35:13 EEST 2012\n"
 
-    System.stacktrace
-    #=> (usually long output)
+        System.stacktrace
+        #=> (usually long output)
 
 * In other news, we're getting closer to having a dedicated site for documentation, JSON parsing/serialization is currently in the works, and there's also work being done on bringing dicts back into Elixir.
 
