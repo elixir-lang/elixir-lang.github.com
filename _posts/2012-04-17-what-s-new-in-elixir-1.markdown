@@ -3,9 +3,10 @@ layout: post
 title: What's New in Elixir  &#35;1
 author: Alexei Sholik
 category: whatsnew
+excerpt: Last week Elixir has seen a lot of new features, improvements, and bug fixes. In this little post I'm going to highlight some of the most prominent ones.
 ---
 
-Last week Elixir has seen a lot of new features, improvements, and bug fixes. In this little post I'm going to highlight some of the most prominent ones. 
+Last week Elixir has seen a lot of new features, improvements, and bug fixes. In this little post I'm going to highlight some of the most prominent ones.
 
 * Access protocol has been added for tuples, lists, strings, and whatnot. It allows us to easily access elements of a collection. We can also use a regex to find the first match in a string or a list. Examples follow: 
 

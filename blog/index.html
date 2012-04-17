@@ -13,8 +13,10 @@ layout: default
       </div><!-- .sticky-header -->
 
       <div class="entry-summary">
-        {{ post.content | strip_html | truncatewords:80 }}
+        {{ post.excerpt }}
       </div><!-- .entry-summary -->
+
+      <p><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">Continue reading...</a></p>
   </div>
   {% endfor %}
 </div><!-- .hfeed -->
