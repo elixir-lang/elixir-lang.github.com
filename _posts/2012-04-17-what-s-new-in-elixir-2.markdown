@@ -3,9 +3,9 @@ layout: post
 title: What's New in Elixir  &#35;2
 author: Alexei Sholik
 category: whatsnew
+excerpt: This week has not seen as many prominent new features as the previous one. Still, more bugs have been fixed and a number of small improvements has been made here and there, so the overall progress is quite noticeable.
 ---
-This week has not seen as many prominent new features as the previous one.
-Still, more bugs have been fixed and a number of small improvements has been made here and there, so the overall progress is quite noticeable.
+This week has not seen as many prominent new features as the previous one. Still, more bugs have been fixed and a number of small improvements has been made here and there, so the overall progress is quite noticeable.
 
 Let's get started with our usual overview. I'm using the latest master (`2851da4186a7e4c8e94c6ddd4e78dc7e883a31e9`) to compile and run the code snippets in this post.
 
