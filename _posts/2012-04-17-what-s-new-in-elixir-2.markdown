@@ -11,15 +11,15 @@ Let's get started with our usual overview. I'm using the latest master (`2851da4
 
 * Literal support for hexadecimal, octal and binary numbers has been added.
 
-```elixir
+{% highlight elixir %}
 0xFF    #=> 255
 0o10    #=> 8
 0b1010  #=> 10
-```
+{% endhighlight %}
 
 * New functions in the [List module](https://github.com/elixir-lang/elixir/blob/master/lib/list.ex): `sort`, `zip`, `unzip`.
 
-```elixir
+{% highlight elixir %}
 # Charlists are sorted in lexicographic order
 List.sort ['10', '2', '4', '1', '21']
 #=> ['1', '10', '2', '21', '4']
@@ -34,11 +34,11 @@ end
 
 List.zip [[1, 2], [:a, :b], ["one", "two"]]
 #=> [{1,:a,"one"},{2,:b,"two"}]
-```
+{% endhighlight %}
 
 * The [System module](https://github.com/elixir-lang/elixir/blob/master/lib/system.ex) has been merged into master. It provides functions for communicating with OS environment, running external commands, getting the stacktrace, etc.
 
-```elixir
+{% highlight elixir %}
 System.pwd
 #=> "/Users/alco/Documents/git/elixir"
 
@@ -50,7 +50,7 @@ System.cmd 'date'
 
 System.stacktrace
 #=> (usually long output)
-```
+{% endhighlight %}
 
 * In other news, we're getting closer to having a dedicated site for documentation, JSON parsing/serialization is currently in the works, and there's also work being done on bringing dicts back into Elixir.
 
