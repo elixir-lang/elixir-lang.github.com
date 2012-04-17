@@ -1,3 +1,7 @@
+---
+section: getting_started
+---
+
 {% include top.html %}
 
 <div id="sidebar-primary" class="sidebar">
@@ -5,31 +9,31 @@
 
   <div class="widget">
     <h3 class="widget-title">Index</h3>
-		<ol>
-			<li><a href="/getting_started/1.html">Introduction</a></li>
-			<li><a href="/getting_started/2.html">Diving in</a></li>
-			<li><a href="/getting_started/3.html">Modules</a></li>
-			<li><a href="/getting_started/4.html">Protocols &amp; Records</a></li>
-			<li><a href="/getting_started/5.html">Macros</a></li>
-			<li><a href="/getting_started/6.html">Other topics</a></li>
-			<li><a href="/getting_started/7.html">Where to go next</a></li>
-		</ol>
+    <ol>
+      <li><a href="/getting_started/1.html">Introduction</a></li>
+      <li><a href="/getting_started/2.html">Diving in</a></li>
+      <li><a href="/getting_started/3.html">Modules</a></li>
+      <li><a href="/getting_started/4.html">Protocols &amp; Records</a></li>
+      <li><a href="/getting_started/5.html">Macros</a></li>
+      <li><a href="/getting_started/6.html">Other topics</a></li>
+      <li><a href="/getting_started/7.html">Where to go next</a></li>
+    </ol>
   </div>
 </div>
 
 <div id="content">
-	<article>
+  <article>
     {{ content }}
-	</article><!-- .hfeed -->
+  </article><!-- .hfeed -->
 
   <div class="pagination loop-pagination">
-	  {% if page.guide > 1 %}
-		  <a href="/getting_started/{{page.guide | minus:1}}.html" class="previous page-numbers">&larr; Previous</a>
-	  {% endif %}
-		  <a class="page-numbers" href="#container">Top</a>
-	  {% if page.guide < site.total_guides %}
-			<a href="/getting_started/{{page.guide | plus:1}}.html" class="next page-numbers">Next &rarr;</a>
-		{% endif %}
+    {% if page.guide > 1 %}
+      <a href="/getting_started/{{page.guide | minus:1}}.html" class="previous page-numbers">&larr; Previous</a>
+    {% endif %}
+      <a class="page-numbers" href="#container">Top</a>
+    {% if page.guide < site.total_guides %}
+      <a href="/getting_started/{{page.guide | plus:1}}.html" class="next page-numbers">Next &rarr;</a>
+    {% endif %}
   </div>
 </div><!-- #content -->
 
