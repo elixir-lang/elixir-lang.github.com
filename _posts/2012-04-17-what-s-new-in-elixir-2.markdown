@@ -1,6 +1,6 @@
 ---
 layout: post
-title: What's New in Elixir #2
+title: What's New in Elixir  &#35;2
 author: Alexei Sholik
 category: whatsnew
 ---
