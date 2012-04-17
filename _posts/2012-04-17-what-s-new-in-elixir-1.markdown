@@ -10,7 +10,7 @@ Last week Elixir has seen a lot of new features, improvements, and bug fixes. In
 
 * Access protocol has been added for tuples, lists, strings, and whatnot. It allows us to easily access elements of a collection. We can also use a regex to find the first match in a string or a list. Examples follow: 
 
-```elixir
+{% highlight elixir %}
 dict = [a: 1, b: 2, c: 3]
 dict[:a]   #=> 1
 dict[:d]   #=> nil
@@ -24,11 +24,11 @@ defrecord TestRec, red: 0, green: 0, blue: 0
 r = TestRec[red: 255, blue: 80]  #=> new record
 s = "The quick brown fox jumps over the lazy dog."
 s[%r/[a-z]+o[a-z]+/]  #=> "brown"
-```
+{% endhighlight %}
 
 * Access protocol also makes it possible to pattern-match records:
 
-```elixir
+{% highlight elixir %}
 defrecord TestRec, red: 0, green: 0, blue: 0
 r = TestRec[red: 255, blue: 80]  #=> new record
 case r do
@@ -39,7 +39,7 @@ match: TestRec[red: red, blue: 80]
 end
 #=> :ok
 red === 255  #=> true
-```
+{% endhighlight %}
 
 * The `Orddict` module is no longer with us, it has been renamed to `Keyword`. The new module only allows atoms to be used as keys. A general purpose module for dicts will be added sooner or later. 
 
@@ -49,7 +49,7 @@ red === 255  #=> true
 
 * Support for nested modules has been added.
 
-```elixir
+{% highlight elixir %}
 defmodule Father do
   defmodule Child do
     def child_fun(str) do
@@ -61,16 +61,16 @@ defmodule Father do
   end
 end
 Father.Child.child_fun "hello!"
-```
+{% endhighlight %}
 
 * The `Regex` module has received new functions, namely, `source` and `opts`. It can also be `inspect`ed now.
 
-```elixir
+{% highlight elixir %}
 reg = %r/[a-z]+o[a-z]+/im
 Regex.source reg  #=> "[a-z]+o[a-z]+"
 Regex.opts reg    #=> "im"
 inspect reg       #=> "%r\"[a-z]+o[a-z]+\"im"
-```
+{% endhighlight %}
 
 * A new `read_info` function has been added to the [`File` module](https://github.com/elixir-lang/elixir/blob/35b22c598defd8be07d46d2e7e8fc0ddf9ec4e80/lib/file.ex) allowing 
 users to query for file attributes.
