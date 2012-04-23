@@ -66,7 +66,7 @@ However, since `unless` is a macro, its arguments are not evaluated when it's in
 
     unless 2 + 2 == 5, do: call_function()
 
-our `unless` macro will receive the following:
+Our `unless` macro will receive the following:
 
     unless({:==, 1, [{:+, 1, [2, 2]}, 5]}, { :call_function, 1, [] })
 
@@ -166,30 +166,29 @@ In the example above, we have defined a macro called `quoted` that returns an un
 
 Summing up: if the third element is a list, it is certainly a function call. If not, it may be a variable (coming from a quote or not) or a function call.
 
-## 5.4 Local functions and macros
+## 5.4 Private macros
 
-In order to support recursion, macros cannot be called locally. For example, one cannot write:
+Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time. A common use case for private macros is to define guards that are frequently used in the same module:
 
-    defmodule MyMacros
-      defmacro delegate([h|t], to: target) do
-        # ...
+    defmodule MyMacros do
+      defmacrop is_even?(x) do
+        quote do
+          rem(unquote(x), 2) == 0
+        end
       end
 
-      # Call the macro delegate just defined above
-      delegate [values: 1], to: List
-    end
-
-In order for us to access the macro, it needs to be defined in an outer module:
-
-    defmodule MyMacros.Support
-      defmacro delegate([h|t], to: target) do
-        # ...
+      def add_even(a, b) when is_even?(a) and is_even?(b) do
+        a + b
       end
     end
 
-    defmodule MyMacros
-      require MyMacros.Support, import: true
-      delegate [values: 1], to: List
+It is important that the macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
+
+    defmodule MyMacros do
+      def four, do: two + two
+      defmacrop two, do: 2
     end
+
+    MyMacros.four #=> ** (UndefinedFunctionError) undefined function: two/0
 
 With this note, we finish our introduction to macros. Next, let's move to the next chapter which will discuss several topics such as native code compilation, partial application and others.
