@@ -45,9 +45,9 @@ Which will then generate a file named `Math.beam` containing the bytecode for th
 
 Elixir projects are usually organized into three directories:
 
-* ebin - holds the compiled bytecode
-* lib - holds elixir code (usually `.ex` files)
-* test - holds tests (usually `.exs` files)
+* ebin - contains the compiled bytecode
+* lib - contains elixir code (usually `.ex` files)
+* test - contains tests (usually `.exs` files)
 
 In many cases, since the bytecode is in `ebin`, you need to explicitly tell Elixir to lookup for code in the `ebin` directory:
 
@@ -279,11 +279,11 @@ After the module is compiled, the stored custom data can be accessed via `__info
 
     MyServer.__info__(:data) #=> [my_data: 13]
 
-> Note: Erlang developers may be wondering why Elixir provides its own data abstraction instead of using Erlang attributes. Erlang attributes are basically lists which also allow duplicated entries. For Elixir, since the same data may be read and updated several times during compilation, it makes more sense to have a dictionary structure instead of a list. Erlang developers wishing to have the attributes functionality have two options:
+> Note: Erlang developers may be wondering why Elixir provides its own data abstraction instead of using Erlang attributes. Erlang attributes are simple lists and therefore also allow duplicated entries. For Elixir, since the same data may be read and updated several times during compilation, it makes more sense to have a dictionary structure instead of a list. Erlang developers wishing to have the attributes functionality have two options:
 >
 > 1) Manually add Erlang attributes via the `Module.add_attribute(module, attribute, value)` API;
 >
-> 2) Register a name as an attribute via the `Module.register_attribute(module, attr)` API; For instance, `@behavior` seen above is registered as Erlang attribute, allowing it to be written to more than once;
+> 2) Register a name as an attribute via the `Module.register_attribute(module, attr)` API; For instance, `@behavior` seen above is registered as Erlang attribute, allowing it to be added more than once to the same module;
 
 ## 3.6 Module nesting
 
@@ -294,7 +294,7 @@ In Elixir, nesting a module inside the other affects its name:
       end
     end
 
-The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` in the same lexical scope. If the nested module `Bar` is moved to another file, it needs to be referenced via the full name (`Foo.Bar`) or a reference need to be set using the directive `refer` discussed above.
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` in the same lexical scope. If the nested module `Bar` is moved to another file, it needs to be referenced via the full name (`Foo.Bar`) or a reference need to be set using the `refer` directive discussed above.
 
 ## 3.7 References
 
