@@ -12,7 +12,7 @@ Today, a parallel compiler just landed in Elixir master. The goal of the paralle
 
 The idea of the parallel compiler is very simple: for each file we want to compile, we will spawn a new process that will be responsible for its compilation. When compilation finishes, the process is going to send a message to the main process (the one responsible for coordinating compilation) that compilation finished so a new file can be compiled.
 
-In Elixir, we could write this code as follow:
+In Elixir, we could write this code as follows:
 
     def spawn_compilers([current|files], output) do
       parent = Process.self()
@@ -44,7 +44,7 @@ After the child process is spawned, we invoke the `receive` macro and start wait
 
 * `{ :compiled, ^child }` - a message sent by the child informing us that compilation finished. Note that use of `^` before the variable `child` to tell Elixir to match the current value of `child` with the one received in the message. If compilation succeeds, we move forward and spawn the next child by calling `spawn_compilers` recursively;
 
-* `{ :EXIT, ^child, { reason, where } }` - this is the message sent by the child process in case it dies. This message is only received if the child is started via `spawn_link`. In the message, we can find the reason while it fails and the stacktrace. We then proceed to call an Erlang internal function to re-raise the error in the main process, effectively stopping compilation.
+* `{ :EXIT, ^child, { reason, where } }` - this is the message sent by the child process in case it dies. This message is only received if the child is started via `spawn_link`. In the message, we can find the reason why it failed and the stacktrace. We then proceed to call an Erlang internal function to re-raise the error in the main process, effectively stopping compilation.
 
 With this code, we were able to compile each file inside a different process. However, notice that we are not yet compiling in parallel. Every time we spawn a child process, we wait until it succeeds (or fails) before moving to the next step. We are going to eventually compile files in parallel, but before we reach to this point, let's understand the problem of dependencies between files.
 
@@ -76,7 +76,7 @@ In order to customize this process, we are going to take a look at Erlang's erro
 
 By default, Elixir (and Erlang) code is autoloaded. This means that, if we invoke `List.delete` and the module `List` was not loaded yet, the Erlang VM is going to look into the `ebin` directory (the directory where we put compiled files) and try to load it. This process is controlled by the [`error_handler` module in Erlang](http://erlang.org/doc/man/error_handler.html) via two callback functions: `undefined_function` and `undefined_lambda`.
 
-As discussed in the previous section, we want to extend the error handler to actually stop the currently running process whenever a module is not found and resume the process only after we ensure the module is compiled. To do that, we can simply define our own error handler and ask Erlang to use it. Our custom error handler is defined as follow:
+As discussed in the previous section, we want to extend the error handler to actually stop the currently running process whenever a module is not found and resume the process only after we ensure the module is compiled. To do that, we can simply define our own error handler and ask Erlang to use it. Our custom error handler is defined as follows:
 
     defmodule Elixir.ErrorHandler do
       def undefined_function(module, fun, args) do
@@ -104,7 +104,7 @@ As discussed in the previous section, we want to extend the error handler to act
       end
     end
 
-Our error handler has the two public functions defined. Both those functions are callbacks required to be implemented by the error handler. They simply call `ensure_loaded(module)` and then delegate the remaining logic to Erlang's original `error_handler`.
+Our error handler defines two public functions. Both those functions are callbacks required to be implemented by the error handler. They simply call `ensure_loaded(module)` and then delegate the remaining logic to Erlang's original `error_handler`.
 
 The private `ensure_loaded` function calls `Code.ensure_loaded(module)` which checks if the given module is loaded and, if not, tries to load it. In case it succeeds, it returns `{ :module, _ }`, which means the module is available and we don't need to stop the current process. However, if it returns `{ :error, _ }`, it means the module cannot be found and we need to wait until it is compiled. For that, we invoke `Process.get(:elixir_parent_compiler)` to get the PID of the main process so we can notify it that we are waiting on a given module. Then we invoke the macro `receive` as a way to stop the current process until we receive a message from the parent saying new modules are available, starting the flow again.
 
@@ -120,7 +120,7 @@ With our error handler code in place, the first thing we need to do is to change
 
 Notice that we have two small additions. First we store the `:elixir_parent_compiler` PID in the process dictionary so we are able to read it from the error handler and then we proceed to configure a flag in our process so our new error handler is invoked whenever a module or function cannot be found.
 
-Second, our main process can now receive a new `{ :waiting, child, module }` message, so we need to extend it to account for those messages. Not only that, we need to control which PIDs we have spawned so we can notify them whenever a new module is compiled, forcing us to add a new argument to the `spawn_compilers` function. `spawn_compilers` would then be rewritten as follow:
+Second, our main process can now receive a new `{ :waiting, child, module }` message, so we need to extend it to account for those messages. Not only that, we need to control which PIDs we have spawned so we can notify them whenever a new module is compiled, forcing us to add a new argument to the `spawn_compilers` function. `spawn_compilers` would then be rewritten as follows:
 
     def spawn_compilers([current|files], output, stack) do
       parent = Process.self()
@@ -141,7 +141,7 @@ Second, our main process can now receive a new `{ :waiting, child, module }` mes
       wait_for_messages([], output, stack)
     end
 
-Notice we added an extra clause to `spawn_compilers` so we can properly handle the case where we don't have more files to spawn but we are still waiting for processes in the stack. We have also moved our `receive` logic to a new private function called `wait_for_messages`, implemented as follow:
+Notice we added an extra clause to `spawn_compilers` so we can properly handle the case where we don't have more files to spawn but we are still waiting for processes in the stack. We have also moved our `receive` logic to a new private function called `wait_for_messages`, implemented as follows:
 
     defp wait_for_messages(files, output, stack) do
       receive do
@@ -162,13 +162,13 @@ Notice we added an extra clause to `spawn_compilers` so we can properly handle t
 
 The implementation for `wait_for_messages` is now broken into 4 clauses:
 
-* `{ :compiled, child }` - Similar as before, it is the notification a child processed finished compilation. Every time we receive such notifications, we remove the child PID from the stack and notify the remaining of the stack that new modules are available. Notice that we no longer match on a specific `^child` PID, since now we can receive messages from different children at the same time;
+* `{ :compiled, child }` - Similar as before, it is the notification a child processed finished compilation. Every time we receive such notifications, we remove the child PID from the stack and notify the remaining PIDs in the stack that new modules are available. Notice that we no longer match on a specific `^child` PID, since now we can receive messages from different children at the same time;
 
-* `{ :waiting, _child, _module }` - A message received every time a child process is waiting on a module to be compiled. In this scenario, all we do is to spawn a new process to compile another file, ensure compilation is never blocked;
+* `{ :waiting, _child, _module }` - A message received every time a child process is waiting on a module to be compiled. In this scenario, all we do is spawn a new process to compile another file, ensure compilation is never blocked;
 
-* `{ :EXIT, _child, { reason, where } }` - The same behavior as before, it simply raises an error if any of the child fails;
+* `{ :EXIT, _child, { reason, where } }` - The same behavior as before, it simply raises an error if any of the child processes fail;
 
-* `after: 10_000` - This clause is going to be invoked whenever the main process does not receive a message for 10 seconds. This means a file depends on a module that does not exist (and therefore waits forever) or if there is a cyclic dependency;
+* `after: 10_000` - This clause is going to be invoked whenever the main process does not receive a message for 10 seconds. This means a file depends on a module that does not exist (and therefore waits forever) or there is a cyclic dependency;
 
 And that's all we need to have a basic version of our parallel compilation working. Notice we start compiling only one file at a time but, as soon as we depend on other files, the number of PIDs in the stack starts to grow. If we wanted, we could modify the code to make use of a head start and compile more than one file since the beginning.
 
