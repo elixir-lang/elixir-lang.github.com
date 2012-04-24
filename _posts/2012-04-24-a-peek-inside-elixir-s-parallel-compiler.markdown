@@ -172,7 +172,7 @@ The implementation for `wait_for_messages` is now broken into 4 clauses:
 
 And that's all we need to have a basic version of our parallel compilation working. Notice we start compiling only one file at a time but, as soon as we depend on other files, the number of PIDs in the stack starts to grow. If we wanted, we could modify the code to make use of a head start and compile more than one file since the beginning.
 
-It is important to notice that this code has room for improvements. First, every time a new module is released, we notify all child process that new modules are available. This is a waste of resource if we consider that the child modules tells us explicitly on which modules they are waiting on. Therefore, the code could be modified to store exactly on which modules each child process is depending on so they can be released just when their dependencies are definitely available.
+It is important to notice that this code has room for improvements. First, every time a new module is compiled, we notify all child process that new modules are available. This is a waste of resource if we consider that the child modules tells us explicitly on which modules they are waiting on. Therefore, the code could be modified to store a mapping from each child process to the module it is waiting for so that when a new module is compiled, only the children that depend on it are notified.
 
 Also, if we start storing which module each process is depending on, we are able to know whenever we have a deadlock or a dependency on an inexistent file, allowing us to get rid of the timeout.
 
