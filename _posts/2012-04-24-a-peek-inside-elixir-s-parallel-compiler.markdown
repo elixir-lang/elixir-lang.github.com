@@ -174,8 +174,8 @@ And that's all we need to have a basic version of our parallel compilation worki
 
 It is important to notice that this code has room for improvements. First, every time a new module is compiled, we notify all child process that new modules are available. This is a waste of resource if we consider that the child modules tells us explicitly on which modules they are waiting on. Therefore, the code could be modified to store a mapping from each child process to the module it is waiting for so that when a new module is compiled, only the children that depend on it are notified.
 
-Also, if we start storing which module each process is depending on, we are able to know whenever we have a deadlock or a dependency on an inexistent file, allowing us to get rid of the timeout.
+Also, if we start storing which module each process is depending on, we are able to know whenever we have a deadlock or a dependency on an nonexistent file, allowing us to get rid of the timeout.
 
-All those improvements and other goodies like callbacks are implemented in Elixir source code and we recommend you take a look at both the [Elixir.ParallelCompiler](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/parallel_compiler.ex) and [Elixir.ErrorHandler](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/error_handler.ex) modules for more information.
+All those improvements and other goodies like callbacks are implemented in Elixir source code and we recommend you take a look at both the [Elixir.ParallelCompiler](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/parallel_compiler.ex) and [Elixir.ErrorHandler](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/error_handler.ex) modules to see all the details firsthand.
 
 Happy coding!
