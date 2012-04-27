@@ -88,16 +88,16 @@ Notice how the first declaration does not have a body, its only purpose is to de
 
 ### Revamped assert with smart guessing ###
 
-Our good old `assert` macro has become a tad smarter and can be now be used in places where `assert_equals`, `assert_operator`, and `assert_access` were used before.
+Our good old `assert` macro has become a tad smarter and can be now be used in places where we had to use `assert_equal`, `assert_operator`, and `assert_access` before.
 
-    # Replaces assert_equals
+    # Replaces assert_equal
     assert "abc" == to_binary('abc')
 
     # Replaces assert_operator
-    assert
+    assert 11 < 13
 
-    # Replaces assert_access
-    assert
+    # Replaces assert_access. Checks that the regexp can access/match the string.
+    assert "foo"[%r(o)]
 
 ### Enum ###
 
