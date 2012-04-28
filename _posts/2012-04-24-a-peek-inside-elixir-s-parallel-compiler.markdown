@@ -152,7 +152,7 @@ Notice we added an extra clause to `spawn_compilers` so we can properly handle t
         end
         spawn_compilers(files, output, new_stack)
       match: { :waiting, _child, _module }
-        spawn_compilers(files, output, new_stack)
+        spawn_compilers(files, output, stack)
       match: { :EXIT, _child, { reason, where } }
         Erlang.erlang.raise(:error, reason, where)
       after: 10_000
@@ -164,7 +164,7 @@ The implementation for `wait_for_messages` is now broken into 4 clauses:
 
 * `{ :compiled, child }` - Similar as before, it is the notification a child processed finished compilation. Every time we receive such notifications, we remove the child PID from the stack and notify the remaining PIDs in the stack that new modules are available. Notice that we no longer match on a specific `^child` PID, since now we can receive messages from different children at the same time;
 
-* `{ :waiting, _child, _module }` - A message received every time a child process is waiting on a module to be compiled. In this scenario, all we do is spawn a new process to compile another file, ensure compilation is never blocked;
+* `{ :waiting, _child, _module }` - A message received every time a child process is waiting on a module to be compiled. In this scenario, all we do is spawn a new process to compile another file, ensuring compilation is never blocked;
 
 * `{ :EXIT, _child, { reason, where } }` - The same behavior as before, it simply raises an error if any of the child processes fail;
 
