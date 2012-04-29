@@ -115,6 +115,40 @@ In such cases, Elixir detects that all characters in the list and in the binary 
 
 Since lists are implemented as linked lists, it means a string represented as list usually takes a lot of space in memory (in ASCII, it would be one byte for each character and another byte to point to the next character). For this reason, binary (double-quoted) strings are preferred unless you want to explicitly iterate over the string as a list.
 
+Although a bit more verbose, it is also possible to head/tail style pattern matching with binaries. A binary is made of a number of parts which must be tagged with their type. Most of the time, Elixir will figure out the part's type and won't require any work from you:
+
+    iex> <<102, "oo">>
+    "foo"
+
+In the example, we have two parts: the first is an integer and the second is a binary. However, if we use any other Elixir expression, Elixir can no longer guess the type:
+
+    iex> rest = "oo"
+    iex> <<102, rest>>
+    ** (ArgumentError) argument error
+
+When a variable or expression is given as a binary part, Elixir defaults the type of that part to integer. In the example above, since we haven't specified a type, Elixir expected an integer but we passed a binary, resulting in `ArgumentError`. We can solve by explicitly tagging it as a binary:
+
+    iex> <<102, rest|:binary>>
+    "foo"
+
+The type can be `:integer`, `:float` or `:binary` (we can also pass endianness and signedness as type specifiers, but we will leave this discussion for later). Not only that, you can also specify the bit size for each part:
+
+    iex> <<102, rest|16>> = "foo"
+    "foo"
+    iex> <<102, rest|32>> = "foo"
+    ** (MatchError) no match of right hand side value: "foo"
+
+In the example above, the first expression matches because the right string "foo" takes 24 bits and we are matching against a binary of 24 bits as well, 8 of these bits are taken by the integer 102 and the remaining 16 bits are specified on the `rest`. On the second example, we expect a `rest` with size 32, which won't match.
+
+If at any moment, you would like to match the top of a binary against any other binary without caring about the size of the rest, you can specify the type as binary (which has an unspecified size):
+
+    iex> <<102, rest|:binary>> = "foobar"
+    "foobar"
+    iex> rest
+    "oobar"
+
+This is equivalent to the head and tail pattern matching we saw in lists. There is much more to binaries and pattern matching in Elixir which allows great flexibility when working with such structures, but they are beyond the scope of a getting started guide.
+
 Currently, Elixir does not ship with any library for doing string manipulation, but this will be amended soon.
 
 ## 2.4 Calling Erlang functions
