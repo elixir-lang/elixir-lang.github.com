@@ -565,17 +565,19 @@ The common strategy then is to make explicit all arguments that are required aft
 
 ### 2.7.7 Rescue
 
-While `catch` clauses inside `try` are simply a pattern matching mechanism, `rescue` provides a higher abstraction around exceptions. `rescue` allows a developer to rescue an exception by its name and not by its internal contents. Consider the following examples:
+For catching exceptions in Elixir, we can use `rescue` instead of `catch`. Besides allowing the same pattern matching rules as `catch`, `rescue` also allows a developer to easily rescue an exception by its name and not by its internal contents. Consider the following examples:
 
+    # rescue only runtime error
     try do
       raise "some error"
     rescue: RuntimeError
       "rescued"
     end
 
+    # rescue runtime and argument errors
     try do
       raise "some error"
-    rescue: [RuntimeError]
+    rescue: [RuntimeError, ArgumentError]
       "rescued"
     end
 
@@ -590,7 +592,7 @@ While `catch` clauses inside `try` are simply a pattern matching mechanism, `res
     # rescue all (discouraged) and assign to x
     try do
       raise ArgumentError, message: "unexpected argument"
-    rescue: x in _
+    rescue: x
       x.message
     end
 
