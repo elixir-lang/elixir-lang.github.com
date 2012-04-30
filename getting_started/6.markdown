@@ -113,10 +113,10 @@ Or, using keywords blocks:
       n * 2
     end
 
-A comprehension accepts several expressions. Those expressions can be generators, as in `x in [1,2,3,4]`, or filters:
+A comprehension accepts many generators and also filters. Filters must be given after the when clause:
 
     # A comprehension with a generator and a filter
-    iex> lc n in [1,2,3,4,5,6], rem(n, 2) == 0, do: n
+    iex> lc n in [1,2,3,4,5,6] when rem(n, 2) == 0, do: n
     [2,4,6]
 
     # A comprehension with two generators
@@ -141,7 +141,7 @@ Bit string generators are quite useful when you need to organize bit string stre
 
 Remember, as strings are binaries and a binary is a bitstring, we can also use strings in comprehensions. For instance, the example below removes all white space characters from a string via bit comprehensions:
 
-    iex> bc <<c>> in " hello world ", c != ?\s, do: <<c>>
+    iex> bc <<c>> in " hello world " when c != ?\s, do: <<c>>
     "helloworld"
 
 Elixir does its best to hide the differences between list and bit string generators. However, there is a special case due to Erlang limitation where we need to explicitly tell Erlang that a list is being given as argument:
@@ -159,6 +159,8 @@ Elixir does its best to hide the differences between list and bit string generat
     # For consistency, inbin is also available:
     iex> lc inbin(<<n>>, <<1,2,3>>), do: n*2
     [2,4,6]
+
+Notice that although comprehensions uses `when` to specify filters, filters are not guards and therefore accept any expression (they are not limited as guards).
 
 ## 6.5 Pseudo variables
 
