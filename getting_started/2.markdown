@@ -348,29 +348,31 @@ In Elixir, all values except `false` and `nil` evaluate to true. So there is no 
 
 ### 2.7.2 Other boolean operators
 
-In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. Those operators are strict in the sense they only accept booleans as arguments.
+In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. Those operators are strict in the sense they only accept booleans as first arguments.
 
-To work around this limitation, Elixir provides three operators with similar functionality but that accept arguments of any type: `||`, `&&` and `!`. For those operators, all values except `false` and `nil` will evaluate to true.
+Elixir provides three operators with similar functionality but that accept arguments of any type: `||`, `&&` and `!`. For those operators, all values except `false` and `nil` will evaluate to true.
 
-    # Short-circuit or
+    # or
     iex> 1 || true
     1
     iex> false || 11
     11
 
-    # Short-circuit and
+    # and
     iex> nil && 13
     nil
     iex> true && 17
     17
 
-    # Short-circuit !
+    # !
     iex> !true
     false
     iex> !1
     false
     iex> !nil
     true
+
+As a rule of thumb, use `and`, `or` and `not` when both arguments are expected to booleans, as in guard clauses. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
 
 ### 2.7.3 Case
 
