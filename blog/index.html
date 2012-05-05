@@ -8,7 +8,7 @@ layout: blog
   {% for post in site.posts %}
     <div class="hentry post">
       <div class="sticky-header">
-        <h2 class="entry-title"><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
+        <h2 class="entry-title"><a class="spec" href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
         <div class="byline">{{ post.date | date: "%B %d, %Y" }}{% if post.author %} · by {{ post.author}}{% endif %} . in {% for category in post.categories %}<span class="category"><a href="/blog/categories.html#{{category}}">{{ category }}</a>{% endfor %}</div>
       </div><!-- .sticky-header -->
 
@@ -16,7 +16,7 @@ layout: blog
         {{ post.excerpt }}
       </div><!-- .entry-summary -->
 
-      <p><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">Continue reading...</a></p>
+      <p><a href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">Continue reading →</a></p>
   </div>
   {% endfor %}
 </div><!-- .hfeed -->
