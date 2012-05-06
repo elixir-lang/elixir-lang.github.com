@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Building a Web Framework. Part I
-subtitle: Hello Macros
 author: Alexei Sholik
 category: "Web dev"
 excerpt: Since we haven't seen much new stuff in the Elixir land this week, I've decided to do something a little different. We'll build our own web framework to get a feel of the Elixir power. In this first part we'll take a closer look at macros and we'll see how they can be useful when it comes to building a friendly syntax for our users.
