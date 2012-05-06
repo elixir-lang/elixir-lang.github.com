@@ -6,16 +6,62 @@ category: "Web dev"
 excerpt: Last time we learned how to write macros that provide a useful abstraction for building a web server on top of the language. The server we built was able to serve static files and handle user's GET and POST requests. This week we're going to further extend our web framework, fix a couple of rough edges, and experiment with networking.
 ---
 
-[Last time][1] we learned how to write macros that provide a useful abstraction for building a web server on top of the language. The server we built was able to serve static files and handle user's GET and POST requests.
+[Last time][1] we learned how to write macros that provide a useful abstraction on top of the language which we used for building a web server. The server we built was able to serve static files and handle user's GET and POST requests. Here's what it looked like:
 
-This week we're going to further extend our web framework, fix a couple of rough edges, and experiment with networking. Specifically, we're going to
+    defmodule HelloServer do
+      use Feb, root: "assets"
 
- * implement URL query parsing;
- * add a generic `handle` method;
- * write an API to simplify testing the framework;
- * examine various choice to be made when designing your own framework (not necessarily a web framework).
+      get "/" do
+        { :ok, "Hello world!" }
+      end
 
-The code for this and the past articles is available over at [GitHub][2]. To follow along with the post, I recommend keeping the code from the first directory (_1-macros_) open in a side window. I will be explaining the new stuff off of it.
+      get "/demo", file: "demo.html"
+
+      post "/" do
+        { :ok, "You're posted!\nYour data: #{inspect _data}" }
+      end
+    end
+
+If you missed the previous post, I encourage you to [go back][1] to it and make sure you understand the concepts explained there.
+
+In this post we're going to fix a couple of rough edges and further extend our web framework. Specifically, we're going to implement URL query parsing and add a generic `multi_handle` macro that will complete our syntactic abstraction. From that point on we'll start looking at how to add networking to the framework to eventually be able to build a real website. This is what the code for our `HelloServer` is going to turn into by the end of this post:
+
+    defmodule HelloServer do
+      use Feb, root: "assets"
+
+      get "/" do
+        { :ok, "Hello world!" }
+      end
+
+      get "/demo", file: "demo.html"
+
+      post "/" do
+        { :ok, "You're posted!\nYour data: #{inspect _data}" }
+      end
+
+      ## New stuff below this line ##
+
+      multi_handle "/kvstore" do
+      post:
+        IO.puts "Got a POST request with data: #{inspect _data}"
+        :ok
+
+      get:
+        IO.puts "Got a GET request with query: #{inspect _query}"
+        :ok
+      end
+
+      get "/search", query do
+        search = Dict.get query, "q"
+        if search do
+          { :ok, "No items found for the query '#{search}'" }
+        else:
+          { :ok, "No query" }
+        end
+      end
+    end
+
+The entire source code for this and the past articles is available over at [GitHub][2]. To recap, we have two files in the _src_ directory: _feb.ex_ which contains the code for our `Feb` framework and _server.ex_ which is a simple server implementation (named `HelloServer`) based on the framework. To follow along with the post, I recommend keeping the code from the _1-macros_ directory open in a side window. I will be explaining the new stuff based on the code we have seen so far.
 
   [1]: http://elixir-lang.org/blog/2012/04/21/hello-macros/
   [2]: https://github.com/alco/web-framework
@@ -23,19 +69,19 @@ The code for this and the past articles is available over at [GitHub][2]. To fol
 
 ## Unexpected Requests ##
 
-Our server can currently handle only those requests that we have explicitly coded. If we try to send it a different kind of request, it'll crash:
+Our server can currently handle only those requests that are explicitly coded. If we try to send it a different kind of request, it'll crash:
 
     iex> HelloServer.handle :oops, "/", nil
     ** (FunctionClauseError) no function clause matching: HelloServer.handle(:oops, "/", nil)
 
 To avoid this, we'll add a catch-all default handler to _feb.ex_:
 
-    defmacro default_handle do
+    defmacro default_handle(_) do
       quote do
         def handle(method, path, data // "")
         def handle(method, path, data) do
           # Allow only the listed methods
-          if not (method in [:get, :post, :delete]) do
+          if not (method in [:get, :post]) do
             format_error(400)
 
           # Path should always start with a slash (/)
@@ -51,7 +97,7 @@ To avoid this, we'll add a catch-all default handler to _feb.ex_:
       end
     end
 
-I've also introduced a new function that automates error reporting a bit. Here's how it's implemented:
+I'll explain the ignored argument to this macro shortly. I've also introduced a new function that automates error reporting a bit. Here's how it's implemented in _feb.ex_:
 
     # Return a { :error, <binary> } tuple with error description
     def format_error(code) do
@@ -65,15 +111,22 @@ I've also introduced a new function that automates error reporting a bit. Here's
       end }
     end
 
-Lastly, I've changed the `import` statement in the `__using__` macro to the following:
+Lastly, I've changed the `import` statement in the `__using__` macro (again in _feb.ex_) to the following one:
 
     import Feb
     # was
     # import Feb, only: [get: 2, post: 2]
 
-This will allow us to add new functions and make them available to the client code automatically.
+This will allow us to add new functions and macros and make them available to the client code automatically.
 
-We'll add a call to the `default_handle` method at the end of our server definition in _server.ex_. This will make sure that this handler is going to be invoked only after every other clause was tried and failed to match the arguments.
+To include the `default_handle` function in `HelloServer` we can add a call to it at the end of the module definition. But there is a better way, an automatic one. Elixir provides the function `Module.add_compile_callback/1` which is exactly what we need to set up our default handler and ensure that it is going to be invoked only after every other clause was tried and failed to match the arguments.
+
+We'll add the following line at the beginning the `__using__` macro definition in _feb.ex_:
+
+    defmacro __using__(module, opts) do
+      Module.add_compile_callback module, __MODULE__, :default_handle
+
+Elixir will call the `default_handle` macro as if it were placed right at the end of `HelloServer` definition and it will pass the module name as an argument (which we're not using here, so we're simply ignoring it).
 
 Now let's test the new handler.
 
@@ -85,51 +138,108 @@ Now let's test the new handler.
     iex> HelloServer.handle :get, "wrong_path"
     {:error,"400 Bad Request"}
 
+    iex> HelloServer.handle :get, "/404"
+    {:error,"404 Not Found"}
+
 That's better.
+
+
+## Generic Handle ##
+
+Let's add one more piece of sugar to our framework by allowing the users to write one function that will handle several HTTP methods, useful for defining various interactions with a single path spec. For instance:
+
+    multi_handle "/kvstore" do
+    post:
+      IO.puts "Got a POST request with data: #{_data}"
+      :ok
+
+    get:
+      IO.puts "Got a GET request with query: #{_query}"
+      :ok
+    end
+
+You can see how this approach allows us to express the fact that "/kvstore" provides some kind of service with support for multiple methods. This skeleton could be used to build a REST API, for example. This time around we'll be using implicit variables for POST data and GET query.
+
+Let's think for a moment what the `multi_handle` macro should expand to. So far we've been expanding our `post` and `get` macros into one `handle` function that uses pattern-matching to dispatch to the appropriate handler based on the incoming request. There's no reason not to use the same approach for `multi_handle`. So here's what its implementation looks like:
+
+    defmacro multi_handle(path, blocks) do
+      # Remove the entry for `:do` which is nil in this case
+      blocks = Keyword.delete blocks, :do
+
+      # Iterate over each block in `blocks` and produce a separate `handle`
+      # clause for it
+      Enum.map blocks, fn ->
+      match: {:get, code}
+        quote hygiene: false do
+          def handle(:get, unquote(path), _query) do
+            unquote(code)
+          end
+        end
+
+      match: {:post, code}
+        quote hygiene: false do
+          def handle(:post, unquote(path), _data) do
+            unquote(code)
+          end
+        end
+      end
+    end
+
+When this macro is called, it'll get a list of the following form as its `blocks` argument:
+
+    [{:do, nil}, {:get, <user code>}, {:post, <user code>}]
+
+Because the `get:` block immediately follows the `do`, the latter gets no code and we can safely discard it. This is what we do at the beginning of our `multi_handle` macro. Next, we pick each code block in turn and emit a function definition with corresponding arguments. The code for each of the code blocks is similar to the GET and POST handlers we have defined earlier.
+
+Finally, let's test it in `iex`:
+
+    $ make
+    $ iex
+    iex> import HelloServer
+    []
+
+    iex> handle :get, "/kvstore"
+    Got a GET request with query: ""
+    :ok
+
+    iex> handle :post, "/kvstore"
+    Got a POST request with data: ""
+    :ok
+
+    iex> handle :post, "/kvstore", "secret"
+    Got a POST request with data: "secret"
+    :ok
+
+So far so good. Now let's add the ability to get the query from a URL.
 
 
 ## URL Queries ##
 
-We'd like our server to be able to handle URL queries of the form `/search?q=donut`. Let's implement the `split_path` method that will return a tuple of the form `{ path, query }` where `query` is going to be an orddict. If the path does not contain a query, an empty orddict will be returned.
+We'd like our server to be able to handle queries of the form `/search?q=donut`. The `URI` module which ships with Elixir has the right tools for the task: `parse` and `decode_query`. The first one parses a URI and stores it in a `URI.Info` record. The second one accepts a query string and returns a dict.
+
+We'll implement a `split_path` function in `Feb` that will return a tuple of the form `{ path, query }` where `query` is going to be an orddict. If the path does not contain a query, an empty orddict will be returned.
 
     # Return { path, query } where `query` is an orddict.
     def split_path(path_with_query) do
-      case Regex.split %r/\?/, path_with_query do
-      match: [ path, query ]
-        { path, dict_from_query(query) }
-
-      # No query in the path. Return an empty orddict.
-      match: [ path ]
-        { path, Orddict.new }
-      end
+      uri_info = URI.parse path_with_query
+      { uri_info.path, URI.decode_query(uri_info.query || "") }
     end
 
-    # Split the query of the form `key1=value1&key2=value2...` into separate
-    # key-value pairs and put them in an orddict
-    defp dict_from_query(query) do
-      parts = Regex.split %r/&/, query
-      Enum.reduce parts, Orddict.new, fn(kvstr, dict) ->
-        [ key, value ] = Regex.split %r/=/, kvstr
-        Dict.put dict, key, value
-      end
-    end
-
-The code is pretty straightforward. We're using regular expressions to split the string into components and then populate an empty orddict with one entry for each `key=value` pair in the query.
-
-Let's make sure that it works:
+The code is pretty straightforward. Let's make sure that it works:
 
     $ make
     $ iex
     iex> Feb.split_path "/search"
     {"/search",{Orddict.Record,[]}}
 
-    iex> Feb.split_path "/search?q=hello&r=world"
-    {"/search",{Orddict.Record,[{"q","hello"},{"r","world"}]}}
+    iex> Feb.split_path "/search?q=hello&find=chuck%20norris"
+    {"/search",{Orddict.Record,[{"find","chuck norris"},{"q","hello"}]}}
 
-OK, so that's done. But we have no way of passing the query to the server. This is solved by adding another clause to the `get` macro that looks as follows:
+OK, so that's done. But we have no way of passing the query to the server. This is solved by adding another clause to the `get` macro as follows:
 
     # feb.ex
 
+    # A 2-argument handler that also receives a query along with the path
     defmacro get(path, query, [do: code]) do
       quote do
         def handle(:get, unquote(path), unquote(query)) do
@@ -138,202 +248,50 @@ OK, so that's done. But we have no way of passing the query to the server. This 
       end
     end
 
-With this new clause in place we can rewrite our `get` request definition in the `HelloServer` module:
+The only difference between this handler and the basic query-less GET handler is that we include the `query` argument provided by the user in the generated function definition. Remember that in our [POST handler](https://github.com/alco/web-framework/blob/master/1-macros/src/feb.ex#L49) we used a `quote` form with hygiene turned off in order to define an implicit `_data` variable. Our GET handlers could also receive such implicit argument if we turned the hygiene off for them. The reason I've chosen to handle the query explicitly in this case is to show you that there are multiple options available. You may choose whichever you like most.
+
+With this new clause in place we can add another `get` request definition in the `HelloServer` module:
 
     # server.ex
 
-    get "/", query do
-      search = Dict.get query, "search"
+    get "/search", query do
+      search = Dict.get query, "q"
       if search do
         { :ok, "No items found for the query '#{search}'" }
       else:
-        { :ok, "Hello world!" }
+        { :ok, "No query" }
       end
     end
-
-    # When we're not interested in the query, we can still write the simple
-    # form.
-    get "/idontcare" do
-      :ok
-    end
-
 
 All that's left is to test the code:
 
     $ make
     $ iex
-    iex> { path, query } = Feb.split_path "/?search=donut"
-    {"/",{Orddict.Record,[{"search","donut"}]}}
+    iex> { path, query } = Feb.split_path "/search?q=donut"
+    {"/search",{Orddict.Record,[{"q","donut"}]}}
 
-    iex> HelloServer.handle :get, path, query
+    iex> import HelloServer
+    []
+
+    iex> handle :get, path, query
     {:ok,"No items found for the query 'donut'"}
 
-    iex> HelloServer.handle :get, "/idontcare"
+    iex> handle :get, "/search", Orddict.new
+    {:ok,"No query"}
+
+    # Let's also test our generic handler with a query
+    iex> handle :get, "/kvstore", URI.decode_query("key=value")
+    Got a GET request with query: {Orddict.Record,[{"key","value"}]}
     :ok
 
-
-## Building a Client API ##
-
-Up until now we have been calling the `HelloServer.handle` method manually. This kind of defeats the purpose of having a useful abstraction for our web framework. Let's take a brief detour and build a client API that'll provide a more natural way for sending requests to the server. Plus, we'll run the server in a separate Erlang process so all communication with it is going to be performed via message passing. The exact messaging protocol is what we'll hide behind a few methods in our API (one for each HTTP verb).
-
-Before we do that, let's implement the messaging part first. Remember that at the very beginning we have defined a `start` method. Now it's time to review it and put it to use. Here's what the new implementation looks like:
-
-    # feb.ex
-
-    def start(module) do
-      IO.puts "Executing Feb.start"
-      pid = spawn __MODULE__, :init, [module]
-      Process.register module, pid
-      pid
-    end
-
-    def init(module) do
-      msg_loop module
-    end
-
-
-We're spawning a new process and register it with the module name (`HelloServer` in our case). The `init` method is called when the process is spawned. This method passes control to the message loop which we're going to look at next.
-
-    defp msg_loop(module) do
-      receive do
-      match: { from, { :get, path_with_query } }
-        { path, query } = split_path(path_with_query)
-        from <- module.handle(:get, path, query)
-        msg_loop module
-
-This handles the GET request. The routine is as follows: process the message, invoked the appropriate method (we did this step manually before), send the return value to the client and recurse back into the message loop waiting for a new message to come in.
-
-The code for POST and DELETE requests looks similar:
-
-      match: { from, { :post, path, body } }
-        from <- module.handle(:post, path, body)
-        msg_loop module
-
-      match: { from, { :delete, path } }
-        from <- module.handle(:delete, path)
-        msg_loop module
-      end
-    end  # defp msg_loop
-
-The only difference between the three is that 1) we allow queries to be included in the path only for the GET method and 2) the POST method requires a request body even if its empty. With those methods in place, we can test our server process.
-
-    $ make
-    $ iex
-    iex> HelloServer.start
-    Executing Feb.start
-    <0.36.0>
-
-    iex> HelloServer <- { Process.self(), { :get, "/?search=empty" } }
-    {<0.35.0>,{:get,"/?search=empty"}}
-
-    iex> receive do
-    ...> match: x
-    ...> x
-    ...> end
-    {:ok,"No items found for the query 'empty'"}
-
-It works! Now we can start abstracting away the implementation details of our messaging protocol. Let's first define a general-purpose `call` method that will send the message and wait for a reply. We'll put it inside the `Feb.API` submodule by adding the following code at the bottom of the `Feb` module definition:
-
-    defmodule API do
-      # Client API
-
-      def call(target, msg) do
-        target <- { Process.self(), msg }
-        receive do
-        match: x
-          x
-        after: 1000
-          :timeout
-        end
-      end
-    end
-
-The code is straightforward enough. It sends the message, waits for a reply and returns it back to the caller.
-
-    $ make
-    $ iex
-    iex> HelloServer.start
-    Executing Feb.start
-    <0.36.0>
-
-    iex> Feb.API.call HelloServer, { :post, "/", "my data" }
-    {:ok,"You're posted!\nYour data: \"my data\""}
-
-The last touch is to add specific methods representing the HTTP verbs our framework supports, namely GET, POST, and DELETE.
-
-    # Inside Feb.API
-
-    def get(target, path_with_query) do
-      call target, { :get, path_with_query }
-    end
-
-    def post(target, path, body // "") do
-      call target, { :post, path, body }
-    end
-
-    def delete(target, path) do
-      call target, { :delete, path }
-    end
-
-Now we can run our final test.
-
-    $ make
-    $ iex
-    iex> HelloServer.start
-    Executing Feb.start
-    <0.36.0>
-
-    iex> Feb.API.get HelloServer, "/?search=none"
-    {:ok,"No items found for the query 'none'"}
-
-    iex> Feb.API.post HelloServer, "/"
-    {:ok,"You're posted!\nYour data: \"\""}
-
-    iex> Feb.API.delete HelloServer, "/something"
-    {:error,"404 Not Found"}
-
-
-## Bonus: Generic Handle ##
-
-Before we finish, let's add one new piece of sugar to our framework by allowing the users to write one method that will handle several HTTP verbs. It can be useful to define various interactions with a single path specification. For this example, we'll build a basic NoSQL store shared among all clients. Here's what it's going to look like:
-
-    handle "/kvstore" do
-    post:
-      query = parse_query _body
-      Enum.each query, fn({k, v}) ->
-        Erlang.ets.insert :simple_table, {k, v}
-      end
-      :ok
-
-    get:
-      key = Dict.get _query, "key"
-      if key do
-        [val] = Erlang.ets.lookup :simple_table, key
-        { :ok, val }
-      else:
-        { :error, 404 }
-      end
-
-    delete:
-      key = Dict.get _query, "key"
-      if key do
-        Erlang.ets.delete :simple_table, key
-        :ok
-      else:
-        { :error, 404 }
-      end
-    end
+Great! With this we have completed the implementation of our simplistic DSL. Let's wrap up for this week and do a quick review of what we have learned.
 
 
 ## Conclusion ##
 
-Let's recap what we've done and learned:
+By this time you know how to use macros to your advantage by defining appropriate abstractions that allow writing code that's easy to grasp. Another benefit of this approach is that it hides implementation details so that they can be changed without touching the application-level code. We'll see an example of this in a future post.
 
- * we've finished the web framework API;
- * we've built an API for clients that allows us to test the server easily;
- * we've built a messaging layer
-
-Next time, we'll look at how to replace the current messaging layer with real TCP networking and how to handle multiple independent connections. After that, we'll add support for the HTTP protocol. At that point we'll have everything ready to build a real website and put it up on Heroku for everyone to try it out. See you next time!
+Next time, we'll implement a basic networking layer for our framework. It will serve as a basis for testing and adding support for the real HTTP protocol later on.
 
 ---
 
