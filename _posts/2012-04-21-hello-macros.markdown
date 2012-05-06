@@ -47,7 +47,7 @@ Let's forget about the `root` option for now, we'll deal with it later. Here's h
       end
     end
 
-One important thing to understand here is that this macro is called inside the module which invokes the `use` directive (**HelloServer** in our case). When the macro is called, its return value is then evaluated inside the calling module. Thus, our **HelloServer** ends up with a definition for the `start` method which will in turn call `Feb.start`. Too see this in action, let's first define the `start` method in **Feb**:
+One important thing to understand here is that this macro is called inside the module which invokes the `use` directive (**HelloServer** in our case). When the macro is called, its return value is then evaluated inside the calling module. Thus, our **HelloServer** ends up with a definition for the `start` function which will in turn call `Feb.start`. Too see this in action, let's first define the `start` function in **Feb**:
 
     def start(_) do
       IO.puts "Executing Feb.start"
@@ -96,7 +96,7 @@ OK, so now that when we understand what's actually going on, let's look at the d
       end
     end
 
-Our `get` macro accepts two arguments, the second one is pattern-matched to extract the block of code between `do` and `end`. The macro produces a definition of the `handle` method with three arguments. The `_data` argument is not used here, it will be used in the `post` method later. So, basically, instead of calling `get` we could write the following definition in **HelloServer** to achieve the same effect:
+Our `get` macro accepts two arguments, the second one is pattern-matched to extract the block of code between `do` and `end`. The macro produces a definition of the `handle` function with three arguments. The `_data` argument is not used here, it will be used in the `post` macro later. So, basically, instead of calling `get` we could write the following definition in **HelloServer** to achieve the same effect:
 
     def handle(:get, "/", _data) do
       { :ok, "Hello world!" }
@@ -136,7 +136,7 @@ Good. We're almost done with the basics. I haven't covered the second `get` defi
 
     get "/demo", file: "demo.html"
 
-By using this method we're letting the framework know that we want to send the contents of the _demo.html_ file back to the client. In order to support this second form we need to define another clause for our `get` macro:
+By using this macro we're letting the framework know that we want to send the contents of the _demo.html_ file back to the client. In order to support this second form we need to define another clause for our `get` macro:
 
     defmacro get(path, [file: bin]) when is_binary(bin) do
       quote do
@@ -161,7 +161,7 @@ I haven't yet provided the definition for `static_root`, let me fix this. It has
     # In module HelloServer
     use Feb, root: "assets"
 
-The `[root: "assets"]` Keyword is what ends up in the `_opts` argument of our `__using__` macro. So let's rewrite that macro to include the definition for the `static_root` method.
+The `[root: "assets"]` Keyword is what ends up in the `_opts` argument of our `__using__` macro. So let's rewrite that macro to include the definition for the `static_root` function.
 
     # In module Feb
     defmacro __using__(module, opts) do
