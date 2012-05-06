@@ -263,6 +263,13 @@ With this new clause in place we can add another `get` request definition in the
       end
     end
 
+Let's take a step back and look again at the definition for this `get` macro in _feb.ex_. It takes its second argument (the `query`) and puts it in place of the third argument in the definition of `handle`. The reason we're unquoting it (instead of simply writing `query`) is to allow the user to choose an arbitrary name for this argument. So, for instance, the following definition in `HelloServer` will work the same way:
+
+    get "/search", my_query do
+      # the query dict is now stored in `my_query`
+      IO.inspect my_query
+    end
+
 All that's left is to test the code:
 
     $ make
