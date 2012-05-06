@@ -295,8 +295,10 @@ Next time, we'll implement a basic networking layer for our framework. It will s
 
 ---
 
-This concludes the second part in the series. Don't forget to grab the code [from GitHub][2]. If you have any questions or corrections, send a message to the [mailing list][3] or join the the **#elixir-lang** channel on **irc.freenode.net**.
+This concludes the second part in the series. Don't forget to grab the code [from GitHub][2]. I'd like to thank [@rafaelfranca][4] and [@josevalim][5] for their valuable suggestions. If you have any questions or corrections, send a message to the [mailing list][3] or join the the **#elixir-lang** channel on **irc.freenode.net**.
 
 See you there.
 
   [3]: http://groups.google.com/group/elixir-lang-core
+  [4]: https://github.com/rafaelfranca
+  [5]: https://github.com/josevalim
