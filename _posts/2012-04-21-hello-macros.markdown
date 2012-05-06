@@ -209,7 +209,7 @@ Now let's try that again:
     iex> handle :get, "/demo", nil
     {:ok,"<html>\n<head>\n  <title>Demo</title>\n</head>\n<body>\n  <h1>Hello world!</h1>\n</body>\n</html>\n\n\n"}
 
-Awesome! This concludes the first part in the series. Don't forget to grab the code [from GitHub][3].If you have any questions or corrections, send a message to the [mailing list][4] or stop by the **#elixir-lang** channel on **irc.freenode.net**.
+Awesome! This concludes the first part in the series. Don't forget to grab the code [from GitHub][3]. If you have any questions or corrections, send a message to the [mailing list][4] or stop by the **#elixir-lang** channel on **irc.freenode.net**.
 
 See you there.
 
