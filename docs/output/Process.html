@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Process</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Process
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module provides convenience functions around processes and
+the process dictionary. In Erlang, most of these functions are
+auto-imported, but in Elixir they are grouped in a module for
+convenience. Notice that these functions, different from Erlang&#39;s,
+always return nil instead of undefined. You can use their Erlang
+version if you want the undefined value.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#alive?/1">alive?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete/0">delete/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete/1">delete/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#demonitor/2">demonitor/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#flag/2">flag/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#flag/3">flag/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/0">get/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/2">get/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get_keys/1">get_keys/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#info/2">info/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#link/1">link/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#list/0">list/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#monitor/1">monitor/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put/2">put/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#register/2">register/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#registered/0">registered/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#self/0">self/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn/1">spawn/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn/2">spawn/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn/3">spawn/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn/4">spawn/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn_link/1">spawn_link/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn_link/2">spawn_link/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn_link/3">spawn_link/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn_link/4">spawn_link/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unlink/1">unlink/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unregister/1">unregister/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#whereis/1">whereis/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="alive?/1">
+    <strong>alive?/1</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the process exists and is alive, that is,
+is not exiting and has not exited. Otherwise, returns false.</p>
+
+<p><code>pid</code> must refer to a process at the local node.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L17" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="delete/0">
+    <strong>delete/0</strong>
+  </p>
+  <div class="docstring"><p>Deletes all items in the dictionary.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L64" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="delete/1">
+    <strong>delete/1</strong>
+  </p>
+  <div class="docstring"><p>Deletes the given key from the dictionary.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L71" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="demonitor/2">
+    <strong>demonitor/2</strong>
+  </p>
+  <div class="docstring"><p>If monitor_ref is a reference which the calling process
+obtained by calling monitor/1, this monitoring is turned off.
+If the monitoring is already turned off, nothing happens.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#demonitor-2 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L153" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="flag/2">
+    <strong>flag/2</strong>
+  </p>
+  <div class="docstring"><p>Sets certain flags for the process which calls this function.
+Returns the old value of the flag.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#process_flag-2 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L225" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="flag/3">
+    <strong>flag/3</strong>
+  </p>
+  <div class="docstring"><p>Sets certain flags for the process Pid, in the same manner as flag/2.
+Returns the old value of the flag. The allowed values for Flag are
+only a subset of those allowed in flag/2, namely: save_calls.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#process_flag-3 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L236" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get/0">
+    <strong>get/0</strong>
+  </p>
+  <div class="docstring"><p>Returns all key-values in the dictionary
+with no specific ordering (i.e. they are
+not a keywords list).</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L33" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get/2">
+    <strong>get/2</strong>
+  </p>
+  <div class="docstring"><p>Returns the value for the given key.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L40" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get_keys/1">
+    <strong>get_keys/1</strong>
+  </p>
+  <div class="docstring"><p>Returns all keys that have the given <code>value</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L52" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="info/2">
+    <strong>info/2</strong>
+  </p>
+  <div class="docstring"><p>Returns information about the process identified by pid
+or undefined if the process is not alive.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#process_info-2 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L246" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="link/1">
+    <strong>link/1</strong>
+  </p>
+  <div class="docstring"><p>Creates a link between the calling process and another process
+(or port) <code>pid</code>, if there is not such a link already.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#link-1 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L177" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="list/0">
+    <strong>list/0</strong>
+  </p>
+  <div class="docstring"><p>Returns a list of process identifiers corresponding to all the
+processes currently existing on the local node.</p>
+
+<p>Note that a process that is exiting, exists but is not alive, i.e.,
+alive?/1 will return false for a process that is exiting,
+but its process identifier will be part of the result returned.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#processes-0 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L167" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="monitor/1">
+    <strong>monitor/1</strong>
+  </p>
+  <div class="docstring"><p>The calling process starts monitoring the item given.
+It returns the monitor reference.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#monitor-2 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L142" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="put/2">
+    <strong>put/2</strong>
+  </p>
+  <div class="docstring"><p>Stores the given key-value in the process dictionary.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L57" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="register/2">
+    <strong>register/2</strong>
+  </p>
+  <div class="docstring"><p>Associates the name with a pid or a port identifier. name, which must
+be an atom, can be used instead of the pid / port identifier in the
+send operator (name &lt;- message).</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#register-2 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L195" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="registered/0">
+    <strong>registered/0</strong>
+  </p>
+  <div class="docstring"><p>Returns a list of names which have been registered using register/2.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L215" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="self/0">
+    <strong>self/0</strong>
+  </p>
+  <div class="docstring"><p>Returns the current process.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L24" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn/1">
+    <strong>spawn/1</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of <code>fun</code> to the
+empty list []. Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L79" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn/2">
+    <strong>spawn/2</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of <code>fun</code> to the
+empty list [] on <code>node</code>. If <code>node</code> does not exist, a useless pid is returned.
+Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L86" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn/3">
+    <strong>spawn/3</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of
+<code>module.function</code> to <code>args</code>. The new process created will be placed in the system
+scheduler queue and be run some time later.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#spawn-3 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L95" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn/4">
+    <strong>spawn/4</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of
+<code>module.function</code> to <code>args</code> on <code>node</code>. If <code>node</code> does not exists, a useless
+pid is returned. Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L102" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn_link/1">
+    <strong>spawn_link/1</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of <code>fun</code> to the
+empty list []. A link is created between the calling process and the new
+process, atomically. Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L109" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn_link/2">
+    <strong>spawn_link/2</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of <code>fun</code> to the
+empty list [] on <code>node</code>. A link is created between the calling process and the
+new process, atomically. If <code>node</code> does not exist, a useless pid is returned
+(and due to the link, an exit signal with exit reason :noconnection will be
+received). Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L118" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn_link/3">
+    <strong>spawn_link/3</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of
+<code>module.function</code> to <code>args</code>. A link is created between the calling process
+and the new process, atomically. Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L125" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn_link/4">
+    <strong>spawn_link/4</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of
+<code>module.function</code> to <code>args</code> on <code>node</code>. A link is created between the calling
+process and the new process, atomically. If <code>node</code> does not exist, a useless
+pid is returned (and due to the link, an exit signal with exit reason
+:noconnection will be received). Otherwise works like spawn/3.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L134" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unlink/1">
+    <strong>unlink/1</strong>
+  </p>
+  <div class="docstring"><p>Removes the link, if there is one, between the calling process and
+the process or port referred to by <code>pid</code>. Returns true and does not
+fail, even if there is no link or <code>id</code> does not exist</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#unlink-1 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L186" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unregister/1">
+    <strong>unregister/1</strong>
+  </p>
+  <div class="docstring"><p>Removes the registered name, associated with a pid or a port identifier.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#unregister-1 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L202" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="whereis/1">
+    <strong>whereis/1</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid or port identifier with the registered name.
+Returns undefined if the name is not registered.</p>
+
+<p>See http://www.erlang.org/doc/man/erlang.html#whereis-1 for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/process.ex#L210" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

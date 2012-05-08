@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Enum</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Enum
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Provides a set of algorithms that enumerate over collections according to the
+<code>Enum.Iterator</code> protocol. Most of the functions in this module have two
+flavours. If a given collection implements the mentioned protocol (like
+list, for instance), you can do</p>
+
+<pre><code>Enum.map [1,2,3], fn(x, do: x * 2)
+</code></pre>
+
+<p>Depending on the type of the collection, the user-provided function will
+accept a certain type of argument. For dicts, the argument is always a
+<code>{ key, value }</code> tuple.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L80" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#all?/2">all?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#any?/2">any?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#drop/2">drop/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#drop_while/2">drop_while/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#each/2">each/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#empty?/1">empty?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#filter/2">filter/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#filter_map/3">filter_map/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#find/3">find/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#find_value/3">find_value/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#join/2">join/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#map/2">map/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#map_join/3">map_join/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#map_reduce/3">map_reduce/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#partition/2">partition/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#qsort/1">qsort/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#reduce/3">reduce/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#split/2">split/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#split_with/2">split_with/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#take/2">take/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#take_while/2">take_while/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#times/2">times/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#times/3">times/3</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="all?/2">
+    <strong>all?/2</strong>
+  </p>
+  <div class="docstring"><p>Invokes the given <code>fun</code> for each item in the <code>collection</code> and returns true if
+each invocation returns true as well, otherwise it shirt-circuits and returns
+false.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.all? [2,4,6], fn(x, do: rem(x, 2) == 0)
+#=&gt; true
+
+Enum.all? [2,3,4], fn(x, do: rem(x, 2) == 0)
+#=&gt; false
+</code></pre>
+
+<p>If no function is given, it defaults to checking if
+all items in the collection evaluate to true.</p>
+
+<pre><code>Enum.all? [1,2,3]   #=&gt; true
+Enum.all? [1,nil,3] #=&gt; false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L117" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="any?/2">
+    <strong>any?/2</strong>
+  </p>
+  <div class="docstring"><p>Invokes the given <code>fun</code> for each item in the <code>collection</code> and returns true if
+at least one invocation returns true. Returns false otherwise.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.any? [2,4,6], fn(x, do: rem(x, 2) == 1)
+#=&gt; false
+
+Enum.any? [2,3,4], fn(x, do: rem(x, 2) == 1)
+#=&gt; true
+</code></pre>
+
+<p>If no function is given, it defaults to checking if
+at least one item in the collection evaluates to true.</p>
+
+<pre><code>Enum.any? [false,false,false] #=&gt; false
+Enum.any? [false,true,false]  #=&gt; true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L141" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="drop/2">
+    <strong>drop/2</strong>
+  </p>
+  <div class="docstring"><p>Drops the first <code>count</code> items from the collection. Expects an ordered
+collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.drop [1,2,3], 2  #=&gt; [3]
+Enum.drop [1,2,3], 10 #=&gt; []
+Enum.drop [1,2,3], 0  #=&gt; [1,2,3]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L157" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="drop_while/2">
+    <strong>drop_while/2</strong>
+  </p>
+  <div class="docstring"><p>Drops items at the beginning of <code>collection</code> while <code>fun</code> returns true.
+Expects an ordered collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.drop_while [1,2,3,4,5], fn(x, do: x &lt; 3)
+#=&gt; [3,4,5]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L170" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="each/2">
+    <strong>each/2</strong>
+  </p>
+  <div class="docstring"><p>Invokes the given <code>fun</code> for each item in the <code>collection</code>.
+Returns the <code>collection</code> itself.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.each [&#39;some&#39;, &#39;example&#39;], fn(x, do: IO.puts x)
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L185" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="empty?/1">
+    <strong>empty?/1</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the collection is empty, otherwise false.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.empty? []      #=&gt; true
+Enum.empty? [1,2,3] #=&gt; false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L200" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="filter/2">
+    <strong>filter/2</strong>
+  </p>
+  <div class="docstring"><p>Filters the collection, i.e. returns only those elements
+for which <code>fun</code> returns true.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.filter [1, 2, 3], fn(x, do: rem(x, 2) == 0)
+#=&gt; [2]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L219" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="filter_map/3">
+    <strong>filter_map/3</strong>
+  </p>
+  <div class="docstring"><p>Filters the collection and maps its values in one pass.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.filter_map [1, 2, 3], fn(x, do: rem(x, 2) == 0), &amp;1 * 2
+#=&gt; [4]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L233" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="find/3">
+    <strong>find/3</strong>
+  </p>
+  <div class="docstring"><p>Returns the first item for which <code>fun</code> returns a truthy value. If no such
+item is found, returns <code>ifnone</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.find [2,4,6], fn(x, do: rem(x, 2) == 1)
+# =&gt; nil
+
+Enum.find [2,4,6], 0, fn(x, do: rem(x, 2) == 1)
+# =&gt; 0
+
+Enum.find [2,3,4], fn(x, do: rem(x, 2) == 1)
+# =&gt; 3
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L254" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="find_value/3">
+    <strong>find_value/3</strong>
+  </p>
+  <div class="docstring"><p>Similar to find, but returns the value of the function
+invocation instead of the element itself.</p>
+
+<p>## Examples</p>
+
+<pre><code>  Enum.find_value [2,4,6], fn(x, do: rem(x, 2) == 1)
+  # =&gt; nil
+
+  Enum.find_value [2,4,6], 0, fn(x, do: rem(x, 2) == 1)
+  # =&gt; 0
+
+  Enum.find_value [2,3,4], fn(x, do: rem(x, 2) == 1)
+  # =&gt; true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L275" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="join/2">
+    <strong>join/2</strong>
+  </p>
+  <div class="docstring"><p>Joins the given <code>collection</code> according to <code>joiner</code>.
+Joiner can be either a binary or a list and the
+result will be of the same type as joiner. If
+joiner is not passed at all, it defaults to an
+empty binary.</p>
+
+<p>All items in the collection must be convertible
+to binary, otherwise an error is raised.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.join([1,2,3])        #=&gt; &quot;123&quot;
+Enum.join([1,2,3], &quot; = &quot;) #=&gt; &quot;1 = 2 = 3&quot;
+Enum.join([1,2,3], &#39; = &#39;) #=&gt; &#39;1 = 2 = 3&#39;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L297" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="map/2">
+    <strong>map/2</strong>
+  </p>
+  <div class="docstring"><p>Returns a new collection, where each item is the result
+of invoking <code>fun</code> on each corresponding item of <code>collection</code>.
+For dicts, the function accepts a key-value tuple.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.map [1, 2, 3], fn(x, do: x * 2)
+#=&gt; [2, 4, 6]
+
+Enum.map [a: 1, b: 2], fn({k, v}, do: { k, -v })
+#=&gt; [a: -1, b: -2]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L324" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="map_join/3">
+    <strong>map_join/3</strong>
+  </p>
+  <div class="docstring"><p>Maps and joins the given <code>collection</code> in one pass.
+Joiner can be either a binary or a list and the
+result will be of the same type as joiner. If
+joiner is not passed at all, it defaults to an
+empty binary.</p>
+
+<p>All items in the collection must be convertible
+to binary, otherwise an error is raised.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.map_join([1,2,3], &amp;1 * 2)        #=&gt; &quot;246&quot;
+Enum.map_join([1,2,3], &amp;1 * 2, &quot; = &quot;) #=&gt; &quot;2 = 4 = 6&quot;
+Enum.map_join([1,2,3], &amp;1 * 2, &#39; = &#39;) #=&gt; &#39;2 = 4 = 6&#39;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L350" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="map_reduce/3">
+    <strong>map_reduce/3</strong>
+  </p>
+  <div class="docstring"><p>Invokes the given <code>fun</code> for each item in the <code>collection</code>
+while also keeping an accumulator. Returns a tuple where
+the first element is the mapped collection and the second
+one is the final accumulator.</p>
+
+<p>For dicts, the first tuple element has to be a { key, value }
+tuple itself.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.map_reduce [1, 2, 3], 0, fn(x, acc, do: { x * 2, x + acc })
+#=&gt; { [2, 4, 6], 6 }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L378" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="partition/2">
+    <strong>partition/2</strong>
+  </p>
+  <div class="docstring"><p>Partitions <code>collection</code> into two where the first one contains elements
+for which <code>fun</code> returns a truthy value, and the second one -- for which <code>fun</code>
+returns false or nil.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.partition [1, 2, 3], fn(x, do: rem(x, 2) == 0)
+#=&gt; { [2], [1,3] }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L398" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="qsort/1">
+    <strong>qsort/1</strong>
+  </p>
+  <div class="docstring"><p>Sorts the collection according to the quick sort algorithm.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.qsort [3,2,1] #=&gt; [1,2,3]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L431" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="reduce/3">
+    <strong>reduce/3</strong>
+  </p>
+  <div class="docstring"><p>Invokes <code>fun</code> for each element in the collection passing the accumulator
+<code>acc</code> and the element as arguments. The return value is stored in <code>acc</code>.
+Returns the accumulator.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.reduce [1, 2, 3], 0, fn(x, acc, do: x + acc)
+#=&gt; 6
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L414" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="split/2">
+    <strong>split/2</strong>
+  </p>
+  <div class="docstring"><p>Splits the enumerable into two collections, leaving <code>count</code> elements in the
+first one. Expects an ordered collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.split [1,2,3], 2  #=&gt; { [1,2], [3] }
+Enum.split [1,2,3], 10 #=&gt; { [1,2,3], [] }
+Enum.split [1,2,3], 0  #=&gt; { [], [1,2,3] }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L451" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="split_with/2">
+    <strong>split_with/2</strong>
+  </p>
+  <div class="docstring"><p>Splits <code>collection</code> at the first element, for which <code>fun</code> returns true.
+Expects an ordered collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.split_with [1,2,3,4], fn(x) -&gt; x == 2 end
+#=&gt; { [1], [2, 3, 4] }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L466" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="take/2">
+    <strong>take/2</strong>
+  </p>
+  <div class="docstring"><p>Takes the first <code>count</code> items from the collection. Expects an ordered
+collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.take [1,2,3], 2  #=&gt; [1,2]
+Enum.take [1,2,3], 10 #=&gt; [1,2,3]
+Enum.take [1,2,3], 0  #=&gt; []
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L483" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="take_while/2">
+    <strong>take_while/2</strong>
+  </p>
+  <div class="docstring"><p>Takes the items at the beginning of <code>collection</code> while <code>fun</code> returns true.
+Expects an ordered collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.take_while [1,2,3], fn(x, do: x &lt; 3)
+#=&gt; [1, 2]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L497" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="times/2">
+    <strong>times/2</strong>
+  </p>
+  <div class="docstring"><p>Iterates the given function n times, passing values from 1
+to n.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.times 3, fn(x, do: IO.puts x)
+1
+2
+3
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L514" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="times/3">
+    <strong>times/3</strong>
+  </p>
+  <div class="docstring"><p>Iterates the given function n times, passing values from 1
+to n. Also has an accumulator similar to reduce to store the
+value between computations.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Enum.times 5, 0, fn(x, acc, do: acc + x)
+#=&gt; 15
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L535" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

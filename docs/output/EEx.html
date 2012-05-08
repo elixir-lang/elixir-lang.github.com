@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EEx</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        EEx
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>EEx stands for Embedded Elixir. It allows you to embed
+Elixir code inside a string in a robust way:</p>
+
+<pre><code>EEx.eval_string &quot;foo &lt;%= bar %&gt;&quot;, [bar: &quot;baz&quot;]
+#=&gt; &quot;foo baz&quot;
+</code></pre>
+
+<h2>API</h2>
+
+<p>This module provides 3 main APIs for you to use:</p>
+
+<p>1) Evaluate a string (<code>eval_string</code>) or a file (<code>eval_file</code>)
+   directly. This is the simplest API to use but also the
+   slowest, since the code is evaluated and not compiled before;</p>
+
+<p>2) Define a function from a string (<code>function_from_string</code>)
+   or a file (<code>function_from_file</code>). This allows you to embed
+   the template as a function inside a module which will then
+   be compiled. This is the preferred API;</p>
+
+<p>3) Compile a string (<code>compile_string</code>) or a file (<code>compile_file</code>)
+   into Elixir syntax tree. This is the API used by both functions
+   above and is available to you if you want to provide your own
+   ways of handling the compiled template.</p>
+
+<h2>Engine</h2>
+
+<p>EEx has the concept of engines which allows you to modify or
+transform the code extracted from the given string or file.</p>
+
+<p>By default, <code>EEx</code> uses the <code>EEx.SmartEngine</code> that provides some
+conveniences on top of the simple <code>EEx.Engine</code>.</p>
+
+<h3>Tags</h3>
+
+<p><code>EEx.SmartEngine</code> supports the following tags:</p>
+
+<pre><code>&lt;% Elixir expression - inline with output %&gt;
+&lt;%= Elixir expression - replace with result %&gt;
+</code></pre>
+
+<p>All expressions that output something to the template
+<em>must</em> use the equals sign (<code>=</code>). Since everything in
+Elixir is a macro, there are no exceptions for this rule.
+For example, while some template languages would special-
+case <code>if</code> clauses, they are treated the same in EEx and
+also requires <code>=</code> in order to have their result printed:</p>
+
+<pre><code>&lt;%= if true do %&gt;
+  It is obviously true
+&lt;% else: %&gt;
+  This will never appear
+&lt;% end %&gt;
+</code></pre>
+
+<p>Notice that different engines may have different rules
+for each tag. Other tags may be added in future versions.</p>
+
+<h3>Macros</h3>
+
+<p><code>EEx.SmartEngine</code> also adds two macros to your template.
+The first one is the <code>for</code> macro, which allows you to easily
+loop a variable:</p>
+
+<pre><code>EEx.eval_string &quot;&lt;%= for x in [1,2,3] do %&gt;&lt;%= x %&gt;\n&lt;% end %&gt;&quot;, []
+# =&gt; &quot;1\n2\n3\n&quot;
+</code></pre>
+
+<p>It also adds defines a macro named <code>@</code> that allows easy access:</p>
+
+<pre><code>EEx.eval_string &quot;&lt;%= @foo %&gt;&quot;, assigns: [foo: 1]
+# =&gt; 1
+</code></pre>
+
+<p>In other words, &lt;%= @foo %&gt; is simply translated to:</p>
+
+<pre><code>&lt;%= Keyword.get assigns, :foo %&gt;
+</code></pre>
+
+<p>The assigns extension is useful when the number of variables
+required by the template is not specified at compilation time.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L3" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#compile_file/2">compile_file/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#compile_string/2">compile_string/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#eval_file/3">eval_file/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#eval_string/3">eval_string/3</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <h2>Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#function_from_file/5">function_from_file/5</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#function_from_string/5">function_from_string/5</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="compile_file/2">
+    <strong>compile_file/2</strong>
+  </p>
+  <div class="docstring"><p>Get a <code>filename</code> and generate a quoted expression
+that can be evaluated by Elixir or compiled to a function.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L148" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="compile_string/2">
+    <strong>compile_string/2</strong>
+  </p>
+  <div class="docstring"><p>Get a string <code>source</code> and generate a quoted expression
+that can be evaluated by Elixir or compiled to a function.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L140" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="eval_file/3">
+    <strong>eval_file/3</strong>
+  </p>
+  <div class="docstring"><p>Get a <code>filename</code> and evaluate the values using the <code>bindings</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code># sample.ex
+foo &lt;%= bar %&gt;
+
+# iex
+EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
+#=&gt; &quot;foo baz&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L180" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="eval_string/3">
+    <strong>eval_string/3</strong>
+  </p>
+  <div class="docstring"><p>Get a string <code>source</code> and evaluate the values using the <code>bindings</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>EEx.eval_string &quot;foo &lt;%= bar %&gt;&quot;, [bar: &quot;baz&quot;]
+#=&gt; &quot;foo baz&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L162" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="function_from_file/5">
+    <strong>function_from_file/5</strong>
+  </p>
+  <div class="docstring"><p>Generates a function definition from the file contents.
+The kind (<code>:def</code> or <code>:defp</code>) must be given, the
+function name, its arguments and the compilation options.</p>
+
+<p>This function is useful in case you have templates but
+you want to precompile inside a module for speed.</p>
+
+<h2>Examples</h2>
+
+<pre><code># sample.eex
+&lt;%= a + b %&gt;
+
+# sample.ex
+defmodule Sample do
+  require EEx
+  EEx.function_from_file :def, :sample, &quot;sample.eex&quot;, [:a, :b]
+end
+
+# iex
+Sample.sample(1, 2) #=&gt; &quot;3&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L128" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="function_from_string/5">
+    <strong>function_from_string/5</strong>
+  </p>
+  <div class="docstring"><p>Generates a function definition from the string.
+The kind (<code>:def</code> or <code>:defp</code>) must be given, the
+function name, its arguments and the compilation options.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Sample do
+  require EEx
+  EEx.function_from_string :def, :sample, &quot;&lt;%= a + b %&gt;&quot;, [:a, :b]
+end
+
+Sample.sample(1, 2) #=&gt; &quot;3&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L97" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+    </div>
+  </body>
+</html>

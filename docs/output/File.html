@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        File
+        
+      </h1>
+
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#basename/1">basename/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#basename/2">basename/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#dir?/1">dir?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#exists?/1">exists?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#expand_path/1">expand_path/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#expand_path/2">expand_path/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#join/1">join/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#join/2">join/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#read/1">read/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#read!/1">read!/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#read_info/2">read_info/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#read_info!/2">read_info!/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#regular?/1">regular?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#split/1">split/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#wildcard/1">wildcard/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="basename/1">
+    <strong>basename/1</strong>
+  </p>
+  <div class="docstring"><p>Returns the last component of the path or the path
+itself if it does not contain any directory separators.</p>
+
+<h2>Examples</h2>
+
+<pre><code>File.basename(&quot;foo&quot;)
+#=&gt; &quot;foo&quot;
+
+File.basename(&quot;foo/bar&quot;)
+#=&gt; &quot;bar&quot;
+
+File.basename(&quot;/&quot;)
+#=&gt; &quot;&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L127" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="basename/2">
+    <strong>basename/2</strong>
+  </p>
+  <div class="docstring"><p>Returns the last component of <code>path</code> with the <code>extension</code>
+stripped. This function should be used to remove a specific
+extension which might, or might not, be there.</p>
+
+<h2>Examples</h2>
+
+<pre><code>File.basename(&quot;~/foo/bar.ex&quot;, &quot;.ex&quot;)
+#=&gt; &quot;bar&quot;
+File.basename(&quot;~/foo/bar.exs&quot;, &quot;.ex&quot;)
+#=&gt; &quot;bar.exs&quot;
+File.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
+#=&gt; &quot;bar.old&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L146" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="dir?/1">
+    <strong>dir?/1</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the path is a directory.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L86" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="exists?/1">
+    <strong>exists?/1</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the given argument exists.
+It can be regular file, directory, socket,
+symbolic link, named pipe or device file.</p>
+
+<h2>Examples</h2>
+
+<p>File.exists?(&quot;test/&quot;)
+  #=&gt; true</p>
+
+<p>File.exists?(&quot;missing.txt&quot;)
+  #=&gt; false</p>
+
+<p>File.exists?(&quot;/dev/null&quot;)
+  #=&gt; true</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L107" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="expand_path/1">
+    <strong>expand_path/1</strong>
+  </p>
+  <div class="docstring"><p>Expands the path by returning its absolute name and expanding
+any <code>.</code> and <code>..</code> characters.</p>
+
+<h2>Examples</h2>
+
+<p>File.expand_path(&quot;/foo/bar/../bar&quot;) == &quot;/foo/bar&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L53" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="expand_path/2">
+    <strong>expand_path/2</strong>
+  </p>
+  <div class="docstring"><p>Expands the path to the relative location and expanding
+any <code>.</code> and <code>..</code> characters. If the path is already an
+absolute path, the relative location is ignored.</p>
+
+<h2>Examples</h2>
+
+<p>File.expand<em>path(&quot;foo/bar/../bar&quot;, &quot;/baz&quot;) == &quot;/baz/foo/bar&quot;
+  File.expand</em>path(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;) == &quot;/foo/bar&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L68" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="join/1">
+    <strong>join/1</strong>
+  </p>
+  <div class="docstring"><p>Returns a string with one or more paths components joint by the path separator.
+This function should be used to convert a list of strings in a path.</p>
+
+<h2>Examples</h2>
+
+<pre><code>File.join([&quot;~&quot;, &quot;foo&quot;])
+#=&gt; &quot;~/foo&quot;
+File.join([&quot;foo&quot;])
+#=&gt; &quot;foo&quot;
+File.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
+#=&gt; &quot;/foo/bar&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L163" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="join/2">
+    <strong>join/2</strong>
+  </p>
+  <div class="docstring"><p>Join two paths.</p>
+
+<h2>Examples</h2>
+
+<pre><code>File.join(&quot;foo&quot;, &quot;bar&quot;)
+#=&gt; &quot;foo/bar&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L176" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="read/1">
+    <strong>read/1</strong>
+  </p>
+  <div class="docstring"><p>Returns <code>{:ok, binary}</code>, where <code>binary</code> is a binary data object that contains the contents
+of <code>filename</code>, or <code>{:error, reason}</code> if an error occurs.</p>
+
+<p>Typical error reasons:</p>
+
+<ul>
+<li>:enoent - The file does not exist.</li>
+<li>:eacces - Missing permission for reading the file,
+        or for searching one of the parent directories.</li>
+<li>:eisdir - The named file is a directory.</li>
+<li>:enotdir - A component of the file name is not a directory.
+         On some platforms, enoent is returned instead.</li>
+<li>:enomem - There is not enough memory for the contents of the file.</li>
+</ul>
+
+<p>You can use <code>Erlang.file.format_error(reason)</code> to get a descriptive string of the error.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L196" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="read!/1">
+    <strong>read!/1</strong>
+  </p>
+  <div class="docstring"><p>Returns binary with the contents of the given filename or raises
+File.Error if an error occurs.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L204" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="read_info/2">
+    <strong>read_info/2</strong>
+  </p>
+  <div class="docstring"><p>Returns information about a file. If the file exists, it
+returns a <code>{ :ok, info }</code> tuple, where info is  as a
+<code>File.Info</code> record. Retuns <code>{ :error, reason }</code> with
+the same reasons as <code>File.read</code> if a failure occurs.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L279" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="read_info!/2">
+    <strong>read_info!/2</strong>
+  </p>
+  <div class="docstring"><p>Same as <code>read_info</code> but returns the <code>File.Info</code> directly and
+throws <code>File.Error</code> if an error is returned.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L292" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="regular?/1">
+    <strong>regular?/1</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the path is a regular file.</p>
+
+<h2>Examples</h2>
+
+<pre><code>File.regular? __FILE__ #=&gt; true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L79" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="split/1">
+    <strong>split/1</strong>
+  </p>
+  <div class="docstring"><p>Returns a list with the path splitted by the path separator.
+If an empty string is given, then it returns the root path.</p>
+
+<h2>Examples</h2>
+
+<p>File.split(&quot;&quot;)
+   #=&gt; [&quot;/&quot;]
+   File.split(&quot;foo&quot;)
+   #=&gt; [&quot;foo&quot;]
+   File.split(&quot;/foo/bar&quot;)
+   #=&gt; [&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;]</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L227" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="wildcard/1">
+    <strong>wildcard/1</strong>
+  </p>
+  <div class="docstring"><p>Traverses files and directories according to the given glob expression.</p>
+
+<p>The wildcard string looks like an ordinary filename, except that certain
+&quot;wildcard characters&quot; are interpreted in a special way. The following
+characters are special:</p>
+
+<ul>
+<li><code>?</code> - Matches one character.</li>
+<li><code>*</code> - Matches any number of characters up to the end of
+    the filename, the next dot, or the next slash.</li>
+<li><code>**</code> - Two adjacent <c>*</c>&#39;s used as a single pattern will
+     match all files and zero or more directories and subdirectories.</li>
+<li><code>[char1,char2,...]</code> - Matches any of the characters listed. Two characters
+                    separated by a hyphen will match a range of characters.</li>
+<li><code>{item1,item2,...}</code> - Matches one of the alternatives.</li>
+</ul>
+
+<p>Other characters represent themselves. Only filenames that have exactly
+the same character in the same position will match. Note that matching
+is case-sensitive; i.e. &quot;a&quot; will not match &quot;A&quot;.</p>
+
+<h2>Examples</h2>
+
+<p>Imagine you have a directory called <code>projects</code> with three Elixir projects
+inside of it: <code>elixir</code>, <code>exdoc</code> and <code>dynamo</code>. You can find all <code>.beam</code> files
+inside their ebin directories all projects as follows:</p>
+
+<pre><code>File.wildcard(&quot;projects/*/ebin/**/*.beam&quot;)
+</code></pre>
+
+<p>If you want to search for both <code>.beam</code> and <code>.app</code> files, you could do:</p>
+
+<pre><code>File.wildcard(&quot;projects/*/ebin/**/*.{beam,app}&quot;)
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L264" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

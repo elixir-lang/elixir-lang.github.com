@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Elixir.Builtin</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Elixir.Builtin
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p><code>Elixir.Builtin</code> provides the default macros and functions
+Elixir imports to your environment. Those macros and functions
+can be skipped or cherry-picked via the import function. For
+instance, if you want to tell Elixir to not import the <code>case</code>
+macro, you can do:</p>
+
+<pre><code>import Elixir.Builtin, except: [case: 2]
+</code></pre>
+
+<p>Elixir also has special forms that are always imported and
+cannot be skipped. These are described in <code>Elixir.SpecialForms</code>.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L3" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#apply/2">apply/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#apply/3">apply/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#raise/1">raise/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#raise/2">raise/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <h2>Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#!/1">!/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&&/2">&&/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#<>/2"><>/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#__B__/2">__B__/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#__C__/2">__C__/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#__b__/2">__b__/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#__c__/2">__c__/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#__r__/2">__r__/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#access/2">access/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#atom_to_binary/1">atom_to_binary/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#binary_to_atom/1">binary_to_atom/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#binary_to_existing_atom/1">binary_to_existing_atom/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#case/2">case/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#def/2">def/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#def/4">def/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defdelegate/2">defdelegate/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defexception/4">defexception/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defimpl/3">defimpl/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defmodule/2">defmodule/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defoverridable/1">defoverridable/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defp/2">defp/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defp/4">defp/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defprotocol/2">defprotocol/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defrecord/4">defrecord/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#destructure/2">destructure/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#div/2">div/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#elem/2">elem/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#if/2">if/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#in/2">in/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#inspect/1">inspect/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#is_exception/1">is_exception/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#is_record/2">is_record/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#is_regex/1">is_regex/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#match?/2">match?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#receive/1">receive/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#rem/2">rem/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#setelem/3">setelem/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_binary/1">to_binary/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_char_list/1">to_char_list/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#try/1">try/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unless/2">unless/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#use/2">use/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#||/2">||/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="apply/2">
+    <strong>apply/2</strong>
+  </p>
+  <div class="docstring"><p>Invokes the given <code>fun</code> with the array of arguments <code>args</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>apply fn(x) -&gt; x * 2 end, [2]
+#=&gt; 4
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L872" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="apply/3">
+    <strong>apply/3</strong>
+  </p>
+  <div class="docstring"><p>Invokes the given <code>fun</code> from <code>module</code> with the array of arguments <code>args</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>apply List, reverse, [[1,2,3]]
+#=&gt; [3,2,1]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L883" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="raise/1">
+    <strong>raise/1</strong>
+  </p>
+  <div class="docstring"><p>Raises an error.</p>
+
+<p>If the argument is a binary, it raises RuntimeError with the message.
+If anything else, becomes a call to raise(argument, []).</p>
+
+<h2>Examples</h2>
+
+<pre><code>raise &quot;Given values do not match&quot;
+
+try do
+  1 + :foo
+rescue: x in [BadargError]
+  IO.puts &quot;that was expected&quot;
+  raise x
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1204" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="raise/2">
+    <strong>raise/2</strong>
+  </p>
+  <div class="docstring"><p>Raises an error.</p>
+
+<p>It calls <code>.exception</code> on the given argument passing
+the args in order to retrieve the appropriate exception
+structure.</p>
+
+<p>Any module defined via <code>defexception</code> automatically
+defines <code>exception(args)</code> that returns a new instance
+of the record and a <code>exception(args, current)</code> that
+works as no-op.</p>
+
+<h2>Examples</h2>
+
+<pre><code>raise ArgumentError, message: &quot;Sample&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1229" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="!/1">
+    <strong>!/1</strong>
+  </p>
+  <div class="docstring"><p>Implements the unary operator ! as a macro. It receives any
+argument and returns true if it is false or nil. Returns false
+otherwise.</p>
+
+<h2>Examples</h2>
+
+<p>!1        #=&gt; false
+  ![1,2,3]  #=&gt; false
+  !false    #=&gt; true
+  !nil      #=&gt; true</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1160" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="&&/2">
+    <strong>&&/2</strong>
+  </p>
+  <div class="docstring"><p>Provides a short-circuit operator that executes the second
+expression only if the first one evalutes to true (i.e. it is
+not nil nor false). Returns the first expression otherwise.</p>
+
+<h2>Examples</h2>
+
+<pre><code>true &amp;&amp; true         #=&gt; true
+nil &amp;&amp; true          #=&gt; nil
+true &amp;&amp; 1            #=&gt; 1
+false &amp;&amp; error(:bad) #=&gt; false
+</code></pre>
+
+<p>Notice that, differently from Erlang <code>and</code> operator,
+this operator accepts any expression as arguments,
+not only booleans, however it is not allowed in guards.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1086" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="<>/2">
+    <strong><>/2</strong>
+  </p>
+  <div class="docstring"><p>Concatenates two binaries.</p>
+
+<h2>Examples</h2>
+
+<pre><code>&quot;foo&quot; &lt;&gt; &quot;bar&quot; #=&gt; &quot;foobar&quot;
+</code></pre>
+
+<p>The <code>&lt;&gt;</code> operator can also be used in guard clauses as
+long as the first part is a literal binary:</p>
+
+<pre><code>&quot;foo&quot; &lt;&gt; x = &quot;foobar&quot;
+x #=&gt; &quot;bar&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1065" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="__B__/2">
+    <strong>__B__/2</strong>
+  </p>
+  <div class="docstring"><p>Handles the sigil %B. It simples returns a binary
+without escaping characters and without interpolations.</p>
+
+<h2>Examples</h2>
+
+<pre><code>%B(foo)      #=&gt; &quot;foo&quot;
+%B(f#{o}o)  #=&gt; &quot;f\#{o}o&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1243" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="__C__/2">
+    <strong>__C__/2</strong>
+  </p>
+  <div class="docstring"><p>Handles the sigil %C. It simples returns a char list
+without escaping characters and without interpolations.</p>
+
+<h2>Examples</h2>
+
+<pre><code>%C(foo)      #=&gt; &#39;foo&#39;
+%C(f#{o}o)  #=&gt; &#39;f\#{o}o&#39;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1271" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="__b__/2">
+    <strong>__b__/2</strong>
+  </p>
+  <div class="docstring"><p>Handles the sigil %b. It returns a binary as if it was double quoted
+string, unescaping characters and replacing interpolations.</p>
+
+<h2>Examples</h2>
+
+<pre><code>%b(foo)       #=&gt; &quot;foo&quot;
+%b(f#{:o}o)  #=&gt; &quot;foo&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1257" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="__c__/2">
+    <strong>__c__/2</strong>
+  </p>
+  <div class="docstring"><p>Handles the sigil %c. It returns a char list as if it was a single
+quoted string, unescaping characters and replacing interpolations.</p>
+
+<h2>Examples</h2>
+
+<pre><code>%c(foo)       #=&gt; &#39;foo&#39;
+%c(f#{:o}o)  #=&gt; &#39;foo&#39;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1288" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="__r__/2">
+    <strong>__r__/2</strong>
+  </p>
+  <div class="docstring"><p>handles the sigil %r. It returns a Regex pattern.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Regex.match? %r(foo), &quot;foo&quot;  #=&gt; true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1305" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="access/2">
+    <strong>access/2</strong>
+  </p>
+  <div class="docstring"><p>Access the given element according the qualifier according
+to the <code>Access</code> protocol. Many types implement the access
+protocol, so check the protocol documentation for more
+information.</p>
+
+<p>It is important to notice the access protocol is also
+allowed in function signatures when applying to references.
+This is useful when working with records to allow to match
+against an specific part of a record:</p>
+
+<pre><code>def uri_parse(Uri.Config[schema: :http])
+</code></pre>
+
+<p>In the example above, the schema clause will only match if
+the config schema is <code>:http</code>. Using the access protocol with
+a reference that does not point to a record module will
+generate a compilation exception.</p>
+
+<h2>Examples</h2>
+
+<pre><code>a = { :a, :b, :c }
+a[1] #=&gt; :a
+access a, 1 #=&gt; :a
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L553" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="atom_to_binary/1">
+    <strong>atom_to_binary/1</strong>
+  </p>
+  <div class="docstring"><p>Returns a binary which corresponds to the text representation
+of <code>some_atom</code> in UTF8 encoding.</p>
+
+<h2>Examples</h2>
+
+<pre><code>atom_to_binary :my_atom #=&gt; &quot;my_atom&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1045" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="binary_to_atom/1">
+    <strong>binary_to_atom/1</strong>
+  </p>
+  <div class="docstring"><p>Returns the atom whose text representation is
+<code>some_binary</code> in UTF8 encoding.</p>
+
+<h2>Examples</h2>
+
+<pre><code>binary_to_atom &quot;my_atom&quot; #=&gt; :my_atom
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1015" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="binary_to_existing_atom/1">
+    <strong>binary_to_existing_atom/1</strong>
+  </p>
+  <div class="docstring"><p>Works like <code>binary_to_atom</code> but the atom must exist.</p>
+
+<h2>Examples</h2>
+
+<pre><code>:my_atom                          #=&gt; :my_atom
+binary_to_existing_atom &quot;my_atom&quot; #=&gt; :my_atom
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1030" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="case/2">
+    <strong>case/2</strong>
+  </p>
+  <div class="docstring"><p>Matches the given condition against the match clauses.</p>
+
+<h2>Examples</h2>
+
+<pre><code>case thing do
+match: { :selector, i, value } when is_integer(i)
+  value
+match: value
+  value
+end
+</code></pre>
+
+<p>In the example above, we compare <code>thing</code> with each given
+match clause and execute the first one that matches. If no
+clause matches, an error is raised.</p>
+
+<p>Since Elixir variables can be assigned more than once, variables
+in a match clause will always be assigned instead of matching with
+its previous values. For example:</p>
+
+<pre><code>i = 1
+case 10 do
+match: i
+  i * 2
+end
+</code></pre>
+
+<p>The example above will return 20, because <code>i</code> is assgined to 10
+and then multiplied by 2. If you desire to match the value of <code>i</code>
+against the given condition, you need to use the <code>^</code> operator:</p>
+
+<pre><code>i = 1
+case 10 do
+match: ^i
+  i * 2
+end
+</code></pre>
+
+<p>The example above will actually fail because 10 does not match 1.</p>
+
+<p>Finally, <code>case</code> accepts an <code>else:</code> branch as a fallback if none
+of the clauses match:</p>
+
+<pre><code>case thing do
+match: { :selector, i, value } when is_integer(i)
+  value
+else:
+  thing
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L724" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="def/2">
+    <strong>def/2</strong>
+  </p>
+  <div class="docstring"><p>Defines a function with the given name and contents.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Foo do
+  def bar, do: :baz
+end
+
+Foo.bar #=&gt; :baz
+</code></pre>
+
+<p>A function that expects arguments can be defined as follow:</p>
+
+<pre><code>defmodule Foo do
+  def sum(a, b) do
+    a + b
+  end
+end
+</code></pre>
+
+<p>In the example above, we defined a function <code>sum</code> that receives
+two arguments and sum them.</p>
+
+<h2>Dynamic generation with atoms</h2>
+
+<p>Elixir follows the same rule as Erlang when it comes to
+function invocations. Calling a function is the same thing
+as &quot;invoking at atom&quot;. That said, we could invoke a function
+named sum in these two equivalent ways:</p>
+
+<pre><code>sum(1, 2)
+:sum.(1, 2)
+</code></pre>
+
+<p>We can also use the atom format to define functions:</p>
+
+<pre><code>defmodule Foo do
+  def :sum.(a, b) do
+    a + b
+  end
+end
+</code></pre>
+
+<p>In general, a developer never needs to use the format above
+except when he wants to dynamically define functions with macros.
+In such scenarios, the name needs to be given dynamically via
+the unquoting mechanism.</p>
+
+<p>Imagine a macro that receives keywords and defines a function
+for each entry in the keyword, using the key as function name
+and the value as the value returned by the function:</p>
+
+<pre><code>defmacro defkv(keywords) do
+  Enum.map keywords, fn({k,v}) -&gt;
+    quote do
+      def unquote(k).() do
+        unquote(v)
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>This macro could be invoked as:</p>
+
+<pre><code>defkv one: 1, two: 2
+</code></pre>
+
+<p>Notice in the example above, we define the function as <code>def unquote(k).()</code>
+because each entry <code>k</code> is a an atom and invoking <code>def unquote(k)()</code>
+would be invalid Elixir syntax.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L124" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="def/4">
+    <strong>def/4</strong>
+  </p>
+  <div class="docstring"><p>This macro allows a function to be defined more explicitly
+by accepting the name, args and guards as different entries.</p>
+
+<p>Differently from <code>def/2</code>, the macro arguments are evaluated
+and therefore requires quoting.</p>
+
+<p>The <code>name</code> must be an atom, the <code>arguments</code> a list where each
+element represents another argument and <code>guards</code> a list of
+clauses, where each clause is disjunct.</p>
+
+<h2>Examples</h2>
+
+<p>The most common mistake when using this macro is to pass the
+arguments without quoting:</p>
+
+<pre><code>def :some_function, [first_arg, second_arg], is_list(first_arg) do
+  # ...
+end
+</code></pre>
+
+<p>However, the example above will fail because it will attempt to
+evaluate <code>[first_arg, second_arg]</code> and fail because the variable
+<code>first_arg</code> is not defined. Therefore, we need to use quote:</p>
+
+<pre><code>name   = :some_function
+args   = quote(do: [first_arg, second_arg])
+guards = quote(do: is_list(first_arg))
+
+def name, args, guards do
+  # ...
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L159" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defdelegate/2">
+    <strong>defdelegate/2</strong>
+  </p>
+  <div class="docstring"><p>Defines the given functions in the current module that will
+delegate to the given <code>target</code>. Functions defined with defdelegate
+are public and should be purposedly allowed to be invoked from
+external. If you find yourself wishing to define a delegation
+as private, you should likely use import instead.</p>
+
+<p>Delegation only works with functions, delegating to macros
+is not supported.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule MyList do
+  defdelegate [reverse: 1], to: Erlang.lists
+end
+
+MyList.reverse([1,2,3])
+#=&gt; [3,2,1]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L460" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defexception/4">
+    <strong>defexception/4</strong>
+  </p>
+  <div class="docstring"><p>Defines an exception. It follows exactly the same API as record.
+The defined record must implement <code>message/1</code> as API, otherwise
+an error is raised. Check exception.ex for examples.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L249" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defimpl/3">
+    <strong>defimpl/3</strong>
+  </p>
+  <div class="docstring"><p>Defines an implementation for the given protocol. See
+<code>defprotocol/2</code> for examples.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L436" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defmodule/2">
+    <strong>defmodule/2</strong>
+  </p>
+  <div class="docstring"><p>Defines a module given by name with the given contents.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Foo do
+  def bar, do: :baz
+end
+
+Foo.bar #=&gt; :baz
+</code></pre>
+
+<h2>Nesting</h2>
+
+<p>Nesting a module inside the other affects its name:</p>
+
+<pre><code>defmodule Foo do
+  defmodule Bar do
+  end
+end
+</code></pre>
+
+<p>In the example above, two modules <code>Foo</code> and <code>Foo.Bar</code>. The
+second can be accessed as <code>Bar</code> inside <code>Foo</code> in the same
+lexical scope. If the module Bar is moved away to another
+file, it needs to be referenced via the full name or a
+reference need to be set with the help of <code>refer/2</code>.</p>
+
+<h2>Dynamic names</h2>
+
+<p>Elixir module names can be dynamically generated. This is very
+useful for macros. For instance, one could write:</p>
+
+<pre><code>defmodule binary_to_atom(&quot;Foo#{1}&quot;, :utf8) do
+  # contents ...
+end
+</code></pre>
+
+<p>Elixir will accept any module name as long as the expression
+returns an atom.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L55" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defoverridable/1">
+    <strong>defoverridable/1</strong>
+  </p>
+  <div class="docstring"><p>Makes the given functions in the current module overridable.
+An overridable function is lazily defined, allowing a
+developer to customize it.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L479" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defp/2">
+    <strong>defp/2</strong>
+  </p>
+  <div class="docstring"><p>Defines a function that is private. Private functions
+can only be accessible from the same module it is defined.</p>
+
+<p>Check <code>def/2</code> for more information</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Foo do
+  def bar do
+    sum(1, 2)
+  end
+
+  defp sum(a, b), do: a + b
+end
+</code></pre>
+
+<p>In the example above, <code>sum</code> is private and accessing it
+through <code>Foo.sum</code> will raise an error.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L180" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defp/4">
+    <strong>defp/4</strong>
+  </p>
+  <div class="docstring"><p>The same as <code>def/4</code> but generates a private function.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L185" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defprotocol/2">
+    <strong>defprotocol/2</strong>
+  </p>
+  <div class="docstring"><p>Defines the current module as a protocol and specifies the API
+that should be implemented.</p>
+
+<h2>Examples</h2>
+
+<p>In Elixir, only <code>false</code> and <code>nil</code> are considered falsy values.
+Everything else evaluates to true in <code>if</code> clauses. Depending
+on the application, it may be important to specify a <code>blank?</code>
+protocol that returns a boolean for other data types that should
+be considered <code>blank?</code>. For instance, an empty list or an empty
+binary could be considered blanks.</p>
+
+<p>We could implement this protocol as follow:</p>
+
+<pre><code>defprotocol Blank do
+  @doc &quot;Returns true if data is considered blank/empty&quot;
+  def blank?(data)
+end
+</code></pre>
+
+<p>Now that the protocol is defined, we can implement it. We need
+to implement the protocol for each Elixir type. For example:</p>
+
+<pre><code># Numbers are never blank
+defimpl Blank, for: Number do
+  def blank?(number), do: false
+end
+
+# Just empty list is blank
+defimpl Blank, for: List do
+  def blank?([]), do: true
+  def blank?(_),  do: false
+end
+
+# Just the atoms false and nil are blank
+defimpl Blank, for: Atom do
+  def blank?(false), do: true
+  def blank?(nil),   do: true
+  def blank?(_),     do: false
+end
+</code></pre>
+
+<p>And we would have to define the implementation for all types.
+The types available are:</p>
+
+<ul>
+<li>Record</li>
+<li>Tuple</li>
+<li>Atom</li>
+<li>List</li>
+<li>BitString</li>
+<li>Number</li>
+<li>Function</li>
+<li>PID</li>
+<li>Port</li>
+<li>Reference</li>
+<li>Any</li>
+</ul>
+
+<h2>Selecting implementations</h2>
+
+<p>Implementing the protocol for all default types can be cumbersome.
+Even more, if you consider that Number, Function, PID, Port and
+Reference are never going to be blank, it would be easier if we
+could simply provide a default implementation.</p>
+
+<p>This can be achieved with Elixir as follows:</p>
+
+<pre><code>defprotocol Blank do
+  @only [Atom, Tuple, List, BitString, Any]
+  def blank?(data)
+end
+</code></pre>
+
+<p>If the protocol is invoked with a data type that is not an Atom,
+nor Tuple, nor List, nor BitString, Elixir will now dispatch to
+Any. That said, the default behavior could be implemented as:</p>
+
+<pre><code>defimpl Blank, for: Any do
+  def blank?(_), do: false
+end
+</code></pre>
+
+<p>Now, all data types that we have not specified will be
+automatically considered non blank.</p>
+
+<h2>Protocols + Records</h2>
+
+<p>The real benefit of protocols comes when mixed with records. For instance,
+imagine we have a module called <code>RedBlack</code> that provides an API to create
+and manipulate Red-Black trees. This module represents such trees via a
+record named <code>RedBlack.Tree</code> and we want this tree to be considered blank
+in case it has no items. To achieve this, the developer just needs to
+implement the protocol for <code>RedBlack.Tree</code>:</p>
+
+<pre><code>defimpl Blank, for: RedBlack.Tree do
+  def blank?(tree), do: RedBlack.empty?(tree)
+end
+</code></pre>
+
+<p>In the example above, we have implemented <code>blank?</code> for <code>RedBlack.Tree</code>
+that simply delegates to <code>RedBlack.empty?</code> passing the tree as argument.
+This implementation doesn&#39;t need to be defined inside the <code>RedBlack</code>
+tree or inside the record, but anywhere in the code.</p>
+
+<p>Finally, since records are simply tuples, one can add a default protocol
+implementation to any record by defining a default implementation for tuples.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L428" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defrecord/4">
+    <strong>defrecord/4</strong>
+  </p>
+  <div class="docstring"><p>Define a record given by name and values.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defrecord FileInfo, atime: nil, mtime: nil
+</code></pre>
+
+<p>The line above will define a module named <code>FileInfo</code> which
+contains a function named <code>new</code> that returns a new record
+and other functions to read and set the values in the
+record. Therefore, we can do:</p>
+
+<pre><code>file_info = FileInfo.new(atime: now())
+file_info.atime         #=&gt; Returns the value of atime
+file_info.atime(now())  #=&gt; Updates the value of atime
+</code></pre>
+
+<p>Internally, a record is simply a tuple where the first element is
+the record module name. This can be noticed if we print the record:</p>
+
+<pre><code>IO.puts FileInfo.new
+{ FileInfo, nil, nil }
+</code></pre>
+
+<h2>Default based functions</h2>
+
+<p>Depending on the default value, Elixir will define helpers to interact
+with the record. For example, ExUnit defines a record which keeps
+track of how many tests were executed and the failures that happened
+The record definition is similar to:</p>
+
+<pre><code>defrecord Config, counter: 0, failures: []
+</code></pre>
+
+<p>Since <code>counter</code> is an integer, Elixir automatically defines a helper
+named <code>increment_counter</code> that will increase the counter value:</p>
+
+<pre><code>Config.new.increment_counter.counter #=&gt; 1
+</code></pre>
+
+<p><code>increment_counter</code> also accepts a number of increment as argument:</p>
+
+<pre><code>Config.new.increment_counter(10).counter #=&gt; 10
+</code></pre>
+
+<p>Besides, if the default is a list, Elixir will define three helpers:</p>
+
+<ul>
+<li><code>merge_field</code> - Receives keywords and merge it into the current value;</li>
+<li><code>prepend_field</code> - Receives another list and prepend its values</li>
+</ul>
+
+<h2>Documentation</h2>
+
+<p>By default records are not documented and have @moduledoc set to false.
+This can be changed by passing a moduledoc option after values:</p>
+
+<pre><code>defrecord Config, [counter: 0, failures: []], moduledoc: &quot;A simple record&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L240" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="destructure/2">
+    <strong>destructure/2</strong>
+  </p>
+  <div class="docstring"><p>Allows you to destructure two lists, assigning each
+term in the right to the left. Differently from pattern
+matching via <code>=</code>, if the sizes of the left and right
+lists don&#39;t match,, structuring simply stops instead
+of raising an error.</p>
+
+<h2>Examples</h2>
+
+<pre><code>destructure [x,y,z], [1,2,3,4,5]
+x #=&gt; 1
+y #=&gt; 2
+z #=&gt; 3
+</code></pre>
+
+<p>Notice in the example above, even though the right
+size has more entries than the left, structuring works
+fine. If the right size is smaller, the remaining items
+are simply assigned to nil:</p>
+
+<pre><code>destructure [x,y,z], [1]
+x #=&gt; 1
+y #=&gt; nil
+z #=&gt; nil
+</code></pre>
+
+<p>The left side supports any expression you would use
+on the left side of a match:</p>
+
+<pre><code>x = 1
+destructure [^x,y,z], [1,2,3]
+</code></pre>
+
+<p>The example above will only work if x matches
+the first value from the right side. Otherwise,
+it will raise a CaseClauseError.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L993" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="div/2">
+    <strong>div/2</strong>
+  </p>
+  <div class="docstring"><p>Provides an integer division macro according to Erlang semantics.
+Raises an error if one of the arguments is not an integer.
+Can be used in guard tests.</p>
+
+<h2>Examples</h2>
+
+<pre><code>5 div 2 #=&gt; 2
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L620" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="elem/2">
+    <strong>elem/2</strong>
+  </p>
+  <div class="docstring"><p>Define elem to get Tuple element according to Elixir conventions.
+We need to implement it as a macro to it can be used in guards.</p>
+
+<h2>Example</h2>
+
+<p>tuple = { :foo, :bar, 3 }
+   elem(tuple, 1) #=&gt; :foo</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L592" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="if/2">
+    <strong>if/2</strong>
+  </p>
+  <div class="docstring"><p>Provides an <code>if</code> macro. The macro expects the first argument to
+be a condition and the rest are keywords arguments.</p>
+
+<h2>One-liner examples</h2>
+
+<pre><code>if(foo, do: bar)
+</code></pre>
+
+<p>In the example above, bar will be returned if foo evalutes to
+true (i.e. it is not false nor nil). Otherwise, nil will be returned.</p>
+
+<p>An else option can be given to specify the opposite:</p>
+
+<pre><code>if(foo, do: bar, else: bar)
+</code></pre>
+
+<h2>Key-value blocks examples</h2>
+
+<p>When several expressions must be passed to if, the most appropriate
+form is thorugh keywords blocks. The first example above would then
+be translated to:</p>
+
+<pre><code>if foo do
+  bar
+end
+</code></pre>
+
+<p>Notice that do/end becomes delimiters. The value given between
+do/end becomes the expression given to as <code>do:</code>. The second example
+would then translate do:</p>
+
+<pre><code>if foo do
+  bar
+else:
+  baz
+end
+</code></pre>
+
+<p>Notice that extra keys follows the regular <code>else:</code> form. You can also
+add extra <code>elsif:</code> clauses:</p>
+
+<pre><code>if foo do
+  bar
+elsif: some_condition
+  bar + baz
+else:
+  baz
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L933" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="in/2">
+    <strong>in/2</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the element on the left is equal (==) to
+any of the items in the right. For now, it only accepts
+a list as the right argument. Useful in guard clauses.</p>
+
+<h2>Examples</h2>
+
+<pre><code>x = 1
+x in [1,2,3] #=&gt; true
+</code></pre>
+
+<p>This macro simply translates the expression above to:</p>
+
+<pre><code>x == 1 or x == 2 or x == 3
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1139" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="inspect/1">
+    <strong>inspect/1</strong>
+  </p>
+  <div class="docstring"><p>Inspect the given arguments according to the Binary.Inspect protocol.</p>
+
+<h2>Examples</h2>
+
+<pre><code>inspect(:foo)
+#=&gt; &quot;:foo&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L524" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="is_exception/1">
+    <strong>is_exception/1</strong>
+  </p>
+  <div class="docstring"><p>Check if the given structure is an exception.</p>
+
+<h2>Examples</h2>
+
+<pre><code>is_exception(Error.new) #=&gt; true
+is_exception(1)         #=&gt; false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L285" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="is_record/2">
+    <strong>is_record/2</strong>
+  </p>
+  <div class="docstring"><p>Check if the given structure is a record. It is basically
+a convenient macro that checks the structure is a tuple and
+the first element matches the given kind.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defrecord Config, sample: nil
+
+is_record(Config.new, Config) #=&gt; true
+is_record(Config.new, List)   #=&gt; false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L309" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="is_regex/1">
+    <strong>is_regex/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L320" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="match?/2">
+    <strong>match?/2</strong>
+  </p>
+  <div class="docstring"><p>A convenient macro that checks if the right side matches
+the left side. The left side is allowed to be a match pattern.</p>
+
+<h2>Examples</h2>
+
+<pre><code>match?(1, 1) #=&gt; true
+match?(1, 2) #=&gt; false
+match?({1,_}, {1,2}) #=&gt; true
+</code></pre>
+
+<p>Match can also be used to filter or find a value in an enumerable:</p>
+
+<pre><code>list = [{:a,1},{:b,2},{:a,3}]
+Enum.filter list, match?({:a, _}, _)
+</code></pre>
+
+<p>Guard clauses can also be given to the match:</p>
+
+<pre><code>list = [{:a,1},{:b,2},{:a,3}]
+Enum.filter list, match?({:a, x } when x &lt; 2, &amp;1)
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L659" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="receive/1">
+    <strong>receive/1</strong>
+  </p>
+  <div class="docstring"><p>The current process will hang until it receives a message
+from other processes that matches the given clauses.</p>
+
+<h2>Examples</h2>
+
+<pre><code>receive do
+match: { :selector, i, value } when is_integer(i)
+  value
+match: value when is_atom(value)
+  value
+else:
+  IO.puts :standard_error, &quot;Unexpected message received&quot;
+end
+</code></pre>
+
+<p>The match clauses above follows the same rules as <code>case/2</code>.</p>
+
+<p>An optional after clause can be given in case the message was not
+received after the specified period of time:</p>
+
+<pre><code>receive do
+match: { :selector, i, value } when is_integer(i)
+  value
+match: value when is_atom(value)
+  value
+else:
+  IO.puts :standard_error, &quot;Unexpected message received&quot;
+after: 5000
+  IO.puts :standard_error, &quot;No message in 5 seconds&quot;
+end
+</code></pre>
+
+<p>The <code>after</code> clause can be specified even if there are no match clauses.
+There are two special cases for the timout value given to after:</p>
+
+<ul>
+<li><p><code>:infinity</code> - The process should wait indefinitely for a matching
+message, this is the same as not using a timeout.</p></li>
+<li><p>0 - if there is no matching message in the mailbox, the timeout
+will occur immediately.</p></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L861" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="rem/2">
+    <strong>rem/2</strong>
+  </p>
+  <div class="docstring"><p>Provides an integer remainder macro according to Erlang semantics.
+Raises an error if one of the arguments is not an integer.
+Can be used in guard tests.</p>
+
+<h2>Examples</h2>
+
+<pre><code>5 rem 2 #=&gt; 1
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L634" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="setelem/3">
+    <strong>setelem/3</strong>
+  </p>
+  <div class="docstring"><p>Define setelem to set Tuple element according to Elixir conventions.
+We need to implement it as a macro to it can be used in guards.</p>
+
+<h2>Example</h2>
+
+<p>tuple = { :foo, :bar, 3 }
+   setelem(tuple, 1, :baz) #=&gt; { :baz, :bar, 3 }</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L606" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="to_binary/1">
+    <strong>to_binary/1</strong>
+  </p>
+  <div class="docstring"><p>Convert the argument to a string according to the Binary.Chars protocol.
+This is the function invoked when there is string interpolation.</p>
+
+<h2>Examples</h2>
+
+<pre><code>to_binary(:foo)
+#=&gt; &quot;foo&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L565" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="to_char_list/1">
+    <strong>to_char_list/1</strong>
+  </p>
+  <div class="docstring"><p>Convert the argument to a list according to the List.Chars protocol.</p>
+
+<h2>Examples</h2>
+
+<pre><code>to_char_list(:foo)
+#=&gt; &#39;foo&#39;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L578" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="try/1">
+    <strong>try/1</strong>
+  </p>
+  <div class="docstring"><p>Execute the given expressions and catch any error, exit
+or throw that may have happened.</p>
+
+<h2>Examples</h2>
+
+<pre><code>try do
+  do_something_that_may_fail(some_arg)
+rescue: ArgumentError
+  IO.puts &quot;Invalid argument given&quot;
+catch: value
+  IO.puts &quot;caught #{value}&quot;
+after:
+  IO.puts &quot;This is printed regardless if it failed or succeed&quot;
+end
+</code></pre>
+
+<p>The rescue clause is used to handle errors, while the catch clause
+can be used to catch throw values. Both catch and rescue clauses
+accepts the same pattern matching rules as match.</p>
+
+<p>Note that calls inside <code>try</code> are not tail recursive since the VM
+needs to keep the stacktrace in case an exception happens.</p>
+
+<h2>Rescue clauses</h2>
+
+<p>Besides accepting the same pattern matching rules as <code>match</code>
+clauses, rescue provides some conveniences around exceptions
+that allows one to rescue an exception by its name and not by
+its internal contents. All the following formats are valid
+rescue expressions:</p>
+
+<pre><code>try do
+  UndefinedModule.undefined_function
+rescue: UndefinedFunctionError
+end
+
+try do
+  UndefinedModule.undefined_function
+rescue: [UndefinedFunctionError]
+end
+
+# rescue and assign to x
+try do
+  UndefinedModule.undefined_function
+rescue: x in [UndefinedFunctionError]
+end
+
+# rescue all and assign to x
+try do
+  UndefinedModule.undefined_function
+rescue: x
+end
+</code></pre>
+
+<h2>Variable visibility</h2>
+
+<p>Since an expression inside <code>try</code> may not have been evaluted
+due to an exception, any variable created inside <code>try</code> cannot
+be accessed externaly.
+For instance:</p>
+
+<pre><code>try do
+  x = 1
+  do_something_that_may_fail(same_arg)
+  :ok
+catch: _, _
+  :failed
+end
+
+x #=&gt; Cannot access `x`
+</code></pre>
+
+<p>In the example above, <code>x</code> cannot be accessed since it was defined
+inside the <code>try</code> clause.</p>
+
+<h2>Catching exits and Erlang errors</h2>
+
+<p>The catch clause works exactly the same as in Erlang. Therefore,
+one can also handle exits/errors coming from Erlang as below:</p>
+
+<pre><code>try do
+  exit(1)
+catch: :exit, 1
+  IO.puts &quot;Exited with 1&quot;
+end
+
+try do
+  error(:sample)
+catch: :error, :sample
+  IO.puts &quot;sample error&quot;
+end
+</code></pre>
+
+<p>Although the second form should be avoided in favor of raise/rescue
+control mechanisms.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L819" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unless/2">
+    <strong>unless/2</strong>
+  </p>
+  <div class="docstring"><p>Provides a unless macro that executes the expression
+unless a value evalutes to true. Check <code>if</code> for examples
+and documentation.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L955" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="use/2">
+    <strong>use/2</strong>
+  </p>
+  <div class="docstring"><p><code>use</code> is a simple mechanism for extending the current module with the
+given module.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule AssertionTest do
+  use ExUnit.Case
+
+  def test_always_pass do
+    true = true
+  end
+end
+</code></pre>
+
+<p>By calling <code>use</code>, a hook called <code>__using__</code> will be invoked in
+<code>ExUnit.Case</code> which will then do the proper setup. In other words,
+<code>use</code> is simply a translation to:</p>
+
+<pre><code>defmodule AssertionTest do
+  require ExUnit.Case
+  ExUnit.Case.__using__(AssertionTest)
+
+  def test_always_pass do
+    true = true
+  end
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L513" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="||/2">
+    <strong>||/2</strong>
+  </p>
+  <div class="docstring"><p>Provides a short-circuit operator that executes the second
+expression only if the first one does not evalute to true (i.e. it
+is not nil nor false). Returns the first expression otherwise.</p>
+
+<h2>Examples</h2>
+
+<pre><code>false || false       #=&gt; false
+nil || true          #=&gt; true
+false || 1           #=&gt; 1
+true || error(:bad)  #=&gt; true
+</code></pre>
+
+<p>Notice that, differently from Erlang <code>or</code> operator,
+this operator accepts any expression as arguments,
+not only booleans, however it is not allowed in guards.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1113" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+    </div>
+  </body>
+</html>
