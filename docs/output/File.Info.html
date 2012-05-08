@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File.Info</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        File.Info
+        
+          <small>record</small>
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A record responsible to hold file information. Its fields are:</p>
+
+<ul>
+<li><code>size</code> - Size of file in bytes.</li>
+<li><code>type</code> - <code>:device</code>, <code>:directory</code>, <code>:regular</code>, <code>:other</code>. The type of the file.</li>
+<li><code>access</code> - <code>:read</code>, <code>:write</code>, <code>:read_write</code>, <code>:none</code>. The current system access to
+          the file.</li>
+<li><code>atime</code> - The last time the file was read.</li>
+<li><code>mtime</code> - The last time the file was written.</li>
+<li><code>ctime</code> - The interpretation of this time field depends on the operating
+        system. On Unix, it is the last time the file or the inode was
+        changed. In Windows, it is the create time.</li>
+<li><code>mode</code> - The file permissions.</li>
+<li><code>links</code> - The number of links to this file. This is always 1 for file
+        systems which have no concept of links.</li>
+<li><code>major_device</code> - Identifies the file system where the file is located.
+               In windows, the number indicates a drive as follows:
+               0 means A:, 1 means B:, and so on.</li>
+<li><code>minor_device</code> - Only valid for character devices on Unix. In all other
+               cases, this field is zero.</li>
+<li><code>inode</code> - Gives the inode number. On non-Unix file systems, this field
+        will be zero.</li>
+<li><code>uid</code> - Indicates the owner of the file.</li>
+<li><code>gid</code> - Gives the group that the owner of the file belongs to. Will be
+      zero for non-Unix file systems.</li>
+</ul>
+
+<p>The time type returned in <code>atime</code>, <code>mtime</code>, and <code>ctime</code> is dependent on the
+time type set in options. <code>{:time, type}</code> where type can be <code>:local</code>,
+<code>:universal</code>, or <code>:posix</code>. Default is <code>:local</code>.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L6" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+        <h2>Fields <small>(and defaults)</small></h2>
+        <ul class="summary">
+          
+            <li>
+              <span class="summary_signature">
+                <strong>size:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>type:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>access:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>atime:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>mtime:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>ctime:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>mode:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>links:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>major_device:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>minor_device:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>inode:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>uid:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>gid:</strong> nil
+              </span>
+            </li>
+          
+        </ul>
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#access/1">access/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#access/2">access/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#atime/1">atime/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#atime/2">atime/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#ctime/1">ctime/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#ctime/2">ctime/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#gid/1">gid/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#gid/2">gid/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#inode/1">inode/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#inode/2">inode/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#links/1">links/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#links/2">links/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#major_device/1">major_device/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#major_device/2">major_device/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#minor_device/1">minor_device/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#minor_device/2">minor_device/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#mode/1">mode/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#mode/2">mode/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#mtime/1">mtime/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#mtime/2">mtime/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#new/0">new/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#new/1">new/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#size/1">size/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#size/2">size/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#type/1">type/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#type/2">type/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#uid/1">uid/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#uid/2">uid/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_access/2">update_access/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_atime/2">update_atime/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_ctime/2">update_ctime/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_gid/2">update_gid/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_inode/2">update_inode/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_links/2">update_links/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_major_device/2">update_major_device/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_minor_device/2">update_minor_device/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_mode/2">update_mode/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_mtime/2">update_mtime/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_size/2">update_size/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_type/2">update_type/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_uid/2">update_uid/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="access/1">
+    <strong>access/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="access/2">
+    <strong>access/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="atime/1">
+    <strong>atime/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="atime/2">
+    <strong>atime/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="ctime/1">
+    <strong>ctime/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="ctime/2">
+    <strong>ctime/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="gid/1">
+    <strong>gid/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="gid/2">
+    <strong>gid/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="inode/1">
+    <strong>inode/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="inode/2">
+    <strong>inode/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="links/1">
+    <strong>links/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="links/2">
+    <strong>links/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="major_device/1">
+    <strong>major_device/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="major_device/2">
+    <strong>major_device/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="minor_device/1">
+    <strong>minor_device/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="minor_device/2">
+    <strong>minor_device/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="mode/1">
+    <strong>mode/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="mode/2">
+    <strong>mode/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="mtime/1">
+    <strong>mtime/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="mtime/2">
+    <strong>mtime/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="new/0">
+    <strong>new/0</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="new/1">
+    <strong>new/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="size/1">
+    <strong>size/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="size/2">
+    <strong>size/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="type/1">
+    <strong>type/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="type/2">
+    <strong>type/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="uid/1">
+    <strong>uid/1</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="uid/2">
+    <strong>uid/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_access/2">
+    <strong>update_access/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_atime/2">
+    <strong>update_atime/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_ctime/2">
+    <strong>update_ctime/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_gid/2">
+    <strong>update_gid/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_inode/2">
+    <strong>update_inode/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_links/2">
+    <strong>update_links/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_major_device/2">
+    <strong>update_major_device/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_minor_device/2">
+    <strong>update_minor_device/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_mode/2">
+    <strong>update_mode/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_mtime/2">
+    <strong>update_mtime/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_size/2">
+    <strong>update_size/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_type/2">
+    <strong>update_type/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_uid/2">
+    <strong>update_uid/2</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

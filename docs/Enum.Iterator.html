@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Enum.Iterator</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Enum.Iterator
+        
+          <small>protocol</small>
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This is the protocol used by the <code>Enum</code> module.
+Usually, when you invoke a function in the module <code>Enum</code>,
+the first argument passed to <code>Enum</code> is a collection which
+is forwarded to this protocol in order to retrieve information
+on how to iterate the collection. That said, when:</p>
+
+<pre><code>Enum.map [1,2,3], &amp;1 * 2
+</code></pre>
+
+<p>Is invoked, it invokes Enum.Iterator.iterator([1,2,3])
+which returns all the information required by Enum.
+Read each function documentation below for more information.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+        <h2>Implementations</h2>
+        <ul class="summary">
+          
+            <li>
+              <span class="summary_signature">
+                <a href="Enum.Iterator.HashDict.Record.html">HashDict.Record</a>
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <a href="Enum.Iterator.List.html">List</a>
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <a href="Enum.Iterator.Orddict.Record.html">Orddict.Record</a>
+              </span>
+            </li>
+          
+        </ul>
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#iterator/1">iterator/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="iterator/1">
+    <strong>iterator/1</strong>
+  </p>
+  <div class="docstring"><p>Iteration in Elixir happens with the help of a iterator
+function. Every time this function is called, it must
+return a tuple with two elements. The first element
+is the next item and the second can be any Elixir term
+which the function is going to receive as argument the
+next time it is invoked.</p>
+
+<p>When there are no more items to be iterated, the function
+must return the atom <code>:stop</code>.</p>
+
+<p>In order to retrieve this iterator function, Elixir invokes
+<code>Enum.Iterator.iterator(collection)</code> which should return a
+tuple with two elements: the first element is the iterator
+function and the second is the first step of iteration.</p>
+
+<p>As an example, here is the implementation of iterator for lists:</p>
+
+<pre><code>def iterator(list),   do: { iterate(&amp;1), iterate(list) }
+defp iterate([h|t]),  do: { h, t }
+defp iterate([]),     do: :stop
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L41" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

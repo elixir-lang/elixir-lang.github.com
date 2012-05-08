@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ExUnit.Assertions</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        ExUnit.Assertions
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module contains a set of assertions functions that are
+imported by default into your test cases.</p>
+
+<p>In general, a developer will want to use the general
+<code>assert</code> macro in tests. The macro tries to be smart
+and provide good reporting whenever there is a failure.
+For example, <code>assert some_fun() == 10</code> will fail (assuming
+<code>some_fun()</code> returns 13):</p>
+
+<pre><code>Expected 10 to be equal to 13
+</code></pre>
+
+<p>This module also provides other small convenient functions
+like <code>assert_match</code>, <code>assert_member</code> and <code>assert_raise</code> to
+easily handle other common cases as, respectively, asserting
+if two terms match, asserting if an item belongs to a list or
+if a function raises an exception.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L3" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#assert/2">assert/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_empty/2">assert_empty/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_error/2">assert_error/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_exit/2">assert_exit/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_in_delta/4">assert_in_delta/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_member/3">assert_member/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_nil/2">assert_nil/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_raise/2">assert_raise/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_raise/3">assert_raise/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_throw/2">assert_throw/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#flunk/1">flunk/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refute/2">refute/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refute_empty/2">refute_empty/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refute_in_delta/4">refute_in_delta/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refute_member/3">refute_member/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refute_nil/2">refute_nil/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <h2>Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#assert/1">assert/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assert_match/2">assert_match/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refute_match/2">refute_match/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="assert/2">
+    <strong>assert/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>expected</code> value is true.
+If it fails, raises the given message.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert false, &quot;it will never be true&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L50" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_empty/2">
+    <strong>assert_empty/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>enum</code> collection is empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_empty []
+assert_empty [1, 2]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L223" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_error/2">
+    <strong>assert_error/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the error <code>expected</code> during <code>function</code> execution.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_error :function_clause, fn -&gt;
+  List.flatten(1)
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L291" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_exit/2">
+    <strong>assert_exit/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the exit <code>expected</code> during <code>function</code> execution.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_exit 1, fn -&gt;
+  exit 1
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L277" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_in_delta/4">
+    <strong>assert_in_delta/4</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>expected</code> and <code>received</code> are within <code>delta</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_in_delta 1.1, 1.5, 0.2
+assert_in_delta 10, 15, 4
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L246" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_member/3">
+    <strong>assert_member/3</strong>
+  </p>
+  <div class="docstring"><p>Asserts the value is a member of the given enumerable.
+Used to check if an item belongs to a list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_member &quot;foo&quot;, [&quot;foo&quot;, &quot;bar&quot;]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L170" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_nil/2">
+    <strong>assert_nil/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>value</code> is nil.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L232" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_raise/2">
+    <strong>assert_raise/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>exception</code> is raised during <code>function</code> execution.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_raise ArithmeticError, fn -&gt;
+  1 + &quot;test&quot;
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L199" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_raise/3">
+    <strong>assert_raise/3</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>exception</code> is raised during <code>function</code> execution with the expected message.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_raise ArithmeticError, &quot;bad argument in arithmetic expression&quot;, fn -&gt;
+  1 + &quot;test&quot;
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L184" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_throw/2">
+    <strong>assert_throw/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the throw <code>expected</code> during <code>function</code> execution.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_throw 1, fn -&gt;
+  throw 1
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L263" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="flunk/1">
+    <strong>flunk/1</strong>
+  </p>
+  <div class="docstring"><p>Fails with a message.</p>
+
+<h2>Examples</h2>
+
+<pre><code>flunk &quot;This should raise an error&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L397" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refute/2">
+    <strong>refute/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>not_expected</code> value is false.</p>
+
+<h2>Examples</h2>
+
+<pre><code>refute false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L312" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refute_empty/2">
+    <strong>refute_empty/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>enum</code> collection is not empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>refute_empty []
+refute_empty [1, 2]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L346" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refute_in_delta/4">
+    <strong>refute_in_delta/4</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>expected</code> and <code>received</code> are not within <code>delta</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>refute_in_delta 1.1, 1.2, 0.2
+refute_in_delta 10, 11, 2
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L368" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refute_member/3">
+    <strong>refute_member/3</strong>
+  </p>
+  <div class="docstring"><p>Asserts the value is not a member of the given enumerable.
+Used to check if an item belongs to a list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>refute_member &quot;baz&quot;, [&quot;foo&quot;, &quot;bar&quot;]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L384" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refute_nil/2">
+    <strong>refute_nil/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>value</code> is not nil.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L354" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="assert/1">
+    <strong>assert/1</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>expected</code> value is true.</p>
+
+<p><code>assert</code> in general tries to be smart and provide a good
+reporting whenever there is a failure. For example,
+<code>assert 10 &gt; 15</code> is going to fail with a message:</p>
+
+<pre><code>Expected 10 to be more than 15
+</code></pre>
+
+<h2>Examples</h2>
+
+<pre><code>assert true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L37" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="assert_match/2">
+    <strong>assert_match/2</strong>
+  </p>
+  <div class="docstring"><p>Asserts the <code>expected</code> value matches <code>received</code>. This relies
+on Elixir&#39;s pattern match instead of simply comparing terms.</p>
+
+<h2>Examples</h2>
+
+<pre><code>assert_match { 1, _, 3 }, { 1, 2, 3 }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L150" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refute_match/2">
+    <strong>refute_match/2</strong>
+  </p>
+  <div class="docstring"><p>Assets the <code>expected</code> value does not match <code>received</code>. This uses
+Elixir&#39;s pattern matching instead of simply comparing terms.</p>
+
+<h2>Examples</h2>
+
+<pre><code>refute_match { 1, _, 3 }, { 1, 2, 3 }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/assertions.ex#L326" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+    </div>
+  </body>
+</html>
