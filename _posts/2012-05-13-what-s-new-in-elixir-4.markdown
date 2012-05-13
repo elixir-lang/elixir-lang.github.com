@@ -60,7 +60,13 @@ Overridable is no longer a data attribute, but a macro. This makes it more strai
     InheritMod.test :z
     #=> This is Z
 
-As you can see, all clauses are being overriden with one new clause. If you wanted to keep the default clauses, you would do away with the `defoverridable` line. This would then result in the following:
+As you can see, all clauses are being overriden with one new clause. If you want to keep the default clauses, you can use the `super` keyword that is available inside an overriden function definition. So, if we add the following definition
+
+    def test(_) do
+      super
+    end
+
+at the end of `InheritMod`, it would result in the following:
 
     InheritMod.test :x
     #=> This is X
@@ -71,6 +77,7 @@ As you can see, all clauses are being overriden with one new clause. If you want
     InheritMod.test :z
     #=> This is Z
 
+Alternatively, if you wanted to keep your function extensible but not overridable, you would do away with the `defoverridable` line altogether. In this case, any new clause defined in `InheritMod` would be just that -- a new clause for the function that already has some number of clauses defined.
 
 ## Misc. Stuff ##
 
