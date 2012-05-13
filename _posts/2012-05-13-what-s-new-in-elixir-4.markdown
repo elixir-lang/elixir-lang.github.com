@@ -62,13 +62,13 @@ Overridable is no longer a data attribute, but a macro. This makes it more strai
 
 As you can see, all clauses are being overriden with one new clause. If you wanted to keep the default clauses, you would do away with the `defoverridable` line. This would then result in the following:
 
-    OverMod.test :x
+    InheritMod.test :x
     #=> This is X
 
-    OverMod.test :y
+    InheritMod.test :y
     #=> This is Y
 
-    OverMod.test :z
+    InheritMod.test :z
     #=> This is Z
 
 
