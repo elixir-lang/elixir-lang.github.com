@@ -42,20 +42,20 @@ In this post we're going to fix a couple of rough edges and further extend our w
       ## New stuff below this line ##
 
       multi_handle "/kvstore" do
-      post:
-        IO.puts "Got a POST request with data: #{inspect _data}"
-        :ok
+        :post ->
+          IO.puts "Got a POST request with data: #{inspect _data}"
+          :ok
 
-      get:
-        IO.puts "Got a GET request with query: #{inspect _query}"
-        :ok
+        :get ->
+          IO.puts "Got a GET request with query: #{inspect _query}"
+          :ok
       end
 
       get "/search", query do
         search = Dict.get query, "q"
         if search do
           { :ok, "No items found for the query '#{search}'" }
-        else:
+        else
           { :ok, "No query" }
         end
       end
@@ -80,19 +80,16 @@ To avoid this, we'll add a catch-all default handler to _feb.ex_:
       quote do
         def handle(method, path, data // "")
         def handle(method, path, data) do
-          # Allow only the listed methods
-          if not (method in [:get, :post]) do
-            format_error(400)
-
-          # Path should always start with a slash (/)
-          elsif: not match?("/" <> _, path)
-            format_error(400)
-
-          # Otherwise, the request is assumed to be valid but the requested
-          # resource cannot be found
-          else:
-            format_error(404)
-          end
+          cond do
+            # Allow only the listed methods
+            not (method in [:get, :post]) -> format_error(400)
+            
+            # Path should always start with a slash (/)
+            not match?("/" <> _, path) -> format_error(400)
+            
+            # Otherwise, the request is assumed to be valid but the requested
+            # resource cannot be found
+            _ -> format_error(404)
         end
       end
     end
@@ -102,12 +99,9 @@ I'll explain the ignored argument to this macro shortly. I've also introduced a 
     # Return a { :error, <binary> } tuple with error description
     def format_error(code) do
       { :error, case code do
-      match: 400
-        "400 Bad Request"
-      match: 404
-        "404 Not Found"
-      else:
-        "503 Internal Server Error"
+        400 -> "400 Bad Request"
+        404 -> "404 Not Found"
+        _   -> "503 Internal Server Error"
       end }
     end
 
@@ -149,47 +143,42 @@ That's better.
 Let's add one more piece of sugar to our framework by allowing the users to write one function that will handle several HTTP methods, useful for defining various interactions with a single path spec. For instance:
 
     multi_handle "/kvstore" do
-    post:
-      IO.puts "Got a POST request with data: #{_data}"
-      :ok
-
-    get:
-      IO.puts "Got a GET request with query: #{_query}"
-      :ok
+      :post ->
+        IO.puts "Got a POST request with data: #{_data}"
+        :ok
+      :get ->
+        IO.puts "Got a GET request with query: #{_query}"
+        :ok
     end
 
 You can see how this approach allows us to express the fact that "/kvstore" provides some kind of service with support for multiple methods. This skeleton could be used to build a REST API, for example. This time around we'll be using implicit variables for POST data and GET query.
 
 Let's think for a moment what the `multi_handle` macro should expand to. So far we've been expanding our `post` and `get` macros into one `handle` function that uses pattern-matching to dispatch to the appropriate handler based on the incoming request. There's no reason not to use the same approach for `multi_handle`. So here's what its implementation looks like:
 
-    defmacro multi_handle(path, blocks) do
-      # Remove the entry for `:do` which is nil in this case
-      blocks = Keyword.delete blocks, :do
-
-      # Iterate over each block in `blocks` and produce a separate `handle`
-      # clause for it
-      Enum.map blocks, fn ->
-      match: {:get, code}
-        quote hygiene: false do
-          def handle(:get, unquote(path), _query) do
-            unquote(code)
+    defmacro multi_handle(path, { :"->", _line, blocks }) do
+      # Iterate over each block in `blocks` and
+      # produce a separate `handle` clause for it
+      Enum.map blocks, (fn do
+        { [:get], code } ->
+          quote hygiene: false do
+            def handle(:get, unquote(path), _query) do
+              unquote(code)
+            end
           end
-        end
-
-      match: {:post, code}
-        quote hygiene: false do
-          def handle(:post, unquote(path), _data) do
-            unquote(code)
+        { [:post], code } ->
+          quote hygiene: false do
+            def handle(:post, unquote(path), _data) do
+              unquote(code)
+            end
           end
-        end
-      end
+      end)
     end
 
-When this macro is called, it'll get a list of the following form as its `blocks` argument:
+When the macro is called, we receive all clauses with the verb and their implementation inside the syntax node -> in the order they are specified. Each clause is a tuple with two elements, the first one is a list of parameters given on the left side and the second one is the implementation, for example:
 
-    [{:do, nil}, {:get, <user code>}, {:post, <user code>}]
+    { :"=>", line, [{[:get], <user code>}, {[:post], <user code>}] }
 
-Because the `get:` block immediately follows the `do`, the latter gets no code and we can safely discard it. This is what we do at the beginning of our `multi_handle` macro. Next, we pick each code block in turn and emit a function definition with corresponding arguments. The code for each of the code blocks is similar to the GET and POST handlers we have defined earlier.
+In our `multo_handle` macro signature, we pattern match against the expression above and get all blocks of code, which then we emit a function definition with the corresponding arguments. The code for each of the code blocks is similar to the GET and POST handlers we have defined earlier.
 
 Finally, let's test it in `iex`:
 
@@ -258,7 +247,7 @@ With this new clause in place we can add another `get` request definition in the
       search = Dict.get query, "q"
       if search do
         { :ok, "No items found for the query '#{search}'" }
-      else:
+      else
         { :ok, "No query" }
       end
     end
