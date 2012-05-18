@@ -233,7 +233,7 @@ function is invoked to solve conflicts.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Dict.merge [a: 1, b: 2], [a: 3, d: 4], fn(_k, v1, v2) -&gt;
+<pre><code>Dict.merge [a: 1, b: 2], [a: 3, d: 4], fn _k, v1, v2 -&gt;
   v1 + v2
 end
 #=&gt; [a: 4, b: 2, d: 4]
@@ -283,7 +283,7 @@ value. An exception is generated if <code>key</code> is not present in the dict.
 
 <h2>Examples</h2>
 
-<pre><code>Dict.update [a: 1, b: 2], :a, fn(val) -&gt; -val end
+<pre><code>Dict.update [a: 1, b: 2], :a, fn val -&gt; -val end
 #=&gt; [a: -1, b: 2]
 </code></pre>
 </div>
@@ -298,7 +298,7 @@ value.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Dict.update [a: 1, b: 2], :c, 3, fn(val) -&gt; -val end
+<pre><code>Dict.update [a: 1, b: 2], :c, 3, fn val -&gt; -val end
 #=&gt; [a: 1, b: 2, c: 3]
 </code></pre>
 </div>

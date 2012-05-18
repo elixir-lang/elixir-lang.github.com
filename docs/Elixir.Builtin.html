@@ -560,6 +560,11 @@ at http://www.erlang.org/doc/man/erlang.html.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#cond/1">cond/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#def/2">def/2</a>
   </span>
 </li>
@@ -758,11 +763,11 @@ abs(-3)    #=&gt; 3
 
 <h2>Examples</h2>
 
-<pre><code>apply fn(x) -&gt; x * 2 end, [2]
+<pre><code>apply fn x -&gt; x * 2 end, [2]
 #=&gt; 4
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1785" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1789" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="apply/3">
     <strong>apply/3</strong>
@@ -775,7 +780,7 @@ abs(-3)    #=&gt; 3
 #=&gt; [3,2,1]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1796" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1800" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="atom_to_binary/2">
     <strong>atom_to_binary/2</strong>
@@ -1408,13 +1413,14 @@ If anything else, becomes a call to raise(argument, []).</p>
 
 try do
   1 + :foo
-rescue: x in [BadargError]
-  IO.puts &quot;that was expected&quot;
-  raise x
+rescue
+  x in [BadargError] -&gt;
+    IO.puts &quot;that was expected&quot;
+    raise x
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2119" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2128" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="raise/2">
     <strong>raise/2</strong>
@@ -1435,7 +1441,7 @@ works as no-op.</p>
 <pre><code>raise ArgumentError, message: &quot;Sample&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2144" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2153" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="round/1">
     <strong>round/1</strong>
@@ -1471,12 +1477,11 @@ process, including spawning functions in nodes.</p>
 child   = spawn(fn -&gt; current &lt;- { Process.self, 1 + 2 } end)
 
 receive
-match: { ^child, 3 }
-  IO.puts &quot;Received 3 back&quot;
+  { ^child, 3 } -&gt; IO.puts &quot;Received 3 back&quot;
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L826" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L825" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="spawn/3">
     <strong>spawn/3</strong>
@@ -1492,7 +1497,7 @@ process, including spawning functions in nodes.</p>
 <pre><code>spawn(SomeModule, :function, [1,2,3])
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L840" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L839" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="spawn_link/1">
     <strong>spawn_link/1</strong>
@@ -1507,12 +1512,12 @@ process, including spawning functions in nodes.</p>
 child   = spawn_link(fn -&gt; current &lt;- { Process.self, 1 + 2 } end)
 
 receive
-match: { ^child, 3 }
-  IO.puts &quot;Received 3 back&quot;
+  { ^child, 3 } -&gt;
+    IO.puts &quot;Received 3 back&quot;
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L858" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L857" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="spawn_link/3">
     <strong>spawn_link/3</strong>
@@ -1528,7 +1533,7 @@ process, including spawning functions in nodes.</p>
 <pre><code>spawn_link(SomeModule, :function, [1,2,3])
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L872" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L871" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="term_to_binary/1">
     <strong>term_to_binary/1</strong>
@@ -1540,7 +1545,7 @@ according to the Erlang external term format.</p>
 to a file in an efficient way, or sending an Erlang term to some type
 of communications channel not supported by distributed Erlang.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L882" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L881" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="term_to_binary/2">
     <strong>term_to_binary/2</strong>
@@ -1554,21 +1559,21 @@ please read http://www.erlang.org/doc/man/erlang.html#term</em>to_binary-2
 for more details</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L894" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L893" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="throw/1">
     <strong>throw/1</strong>
   </p>
   <div class="docstring"><p>A non-local return from a function. Check try/2 for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L899" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L898" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="tl/1">
     <strong>tl/1</strong>
   </p>
   <div class="docstring"><p>Returns the tail of a list. Raises ArgumentError if the list is empty.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L904" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L903" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="trunc/1">
     <strong>trunc/1</strong>
@@ -1581,21 +1586,21 @@ Allowed in guard clauses.</p>
 <pre><code>trunc(5.5) #=&gt; 5
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L915" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L914" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="tuple_size/1">
     <strong>tuple_size/1</strong>
   </p>
   <div class="docstring"><p>Returns the size of a tuple.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L920" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L919" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="tuple_to_list/1">
     <strong>tuple_to_list/1</strong>
   </p>
   <div class="docstring"><p>Converts a tuple to a list.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L925" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L924" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -1618,7 +1623,7 @@ otherwise. Not allowed in guard clauses.</p>
   !false    #=&gt; true
   !nil      #=&gt; true</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2075" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2089" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="!=/2">
     <strong>!=/2</strong>
@@ -1676,7 +1681,7 @@ false &amp;&amp; error(:bad) #=&gt; false
 this operator accepts any expression as arguments,
 not only booleans, however it is not allowed in guards.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2001" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2015" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="*/2">
     <strong>*/2</strong>
@@ -1822,7 +1827,7 @@ long as the first part is a literal binary:</p>
 x #=&gt; &quot;bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1980" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1994" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="==/2">
     <strong>==/2</strong>
@@ -1902,7 +1907,7 @@ without escaping characters and without interpolations.</p>
 %B(f#{o}o)  #=&gt; &quot;f\#{o}o&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2158" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2167" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__C__/2">
     <strong>__C__/2</strong>
@@ -1916,7 +1921,7 @@ without escaping characters and without interpolations.</p>
 %C(f#{o}o)  #=&gt; &#39;f\#{o}o&#39;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2186" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2195" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__b__/2">
     <strong>__b__/2</strong>
@@ -1930,7 +1935,7 @@ string, unescaping characters and replacing interpolations.</p>
 %b(f#{:o}o)  #=&gt; &quot;foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2172" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2181" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__c__/2">
     <strong>__c__/2</strong>
@@ -1944,7 +1949,7 @@ quoted string, unescaping characters and replacing interpolations.</p>
 %c(f#{:o}o)  #=&gt; &#39;foo&#39;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2203" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2212" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__r__/2">
     <strong>__r__/2</strong>
@@ -1956,7 +1961,7 @@ quoted string, unescaping characters and replacing interpolations.</p>
 <pre><code>Regex.match? %r(foo), &quot;foo&quot;  #=&gt; true
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2220" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2229" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="access/2">
     <strong>access/2</strong>
@@ -1986,7 +1991,7 @@ a[1] #=&gt; :a
 access a, 1 #=&gt; :a
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1466" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1465" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="and/2">
     <strong>and/2</strong>
@@ -2013,7 +2018,7 @@ of <code>some_atom</code> in UTF8 encoding. Allowed in guard clauses.</p>
 <pre><code>atom_to_binary :my_atom #=&gt; &quot;my_atom&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1960" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1974" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="binary_to_atom/1">
     <strong>binary_to_atom/1</strong>
@@ -2027,7 +2032,7 @@ Allowed in guard clauses.</p>
 <pre><code>binary_to_atom &quot;my_atom&quot; #=&gt; :my_atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1929" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1943" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="binary_to_existing_atom/1">
     <strong>binary_to_existing_atom/1</strong>
@@ -2041,7 +2046,7 @@ Allowed in guard clauses.</p>
 binary_to_existing_atom &quot;my_atom&quot; #=&gt; :my_atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1945" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1959" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="case/2">
     <strong>case/2</strong>
@@ -2051,10 +2056,9 @@ binary_to_existing_atom &quot;my_atom&quot; #=&gt; :my_atom
 <h2>Examples</h2>
 
 <pre><code>case thing do
-match: { :selector, i, value } when is_integer(i)
-  value
-match: value
-  value
+  { :selector, i, value } when is_integer(i) -&gt;
+    value
+  value -&gt; value
 end
 </code></pre>
 
@@ -2068,8 +2072,7 @@ its previous values. For example:</p>
 
 <pre><code>i = 1
 case 10 do
-match: i
-  i * 2
+  i -&gt; i * 2
 end
 </code></pre>
 
@@ -2079,8 +2082,7 @@ against the given condition, you need to use the <code>^</code> operator:</p>
 
 <pre><code>i = 1
 case 10 do
-match: ^i
-  i * 2
+  ^i -&gt; i * 2
 end
 </code></pre>
 
@@ -2090,14 +2092,34 @@ end
 of the clauses match:</p>
 
 <pre><code>case thing do
-match: { :selector, i, value } when is_integer(i)
-  value
-else:
-  thing
+  { :selector, i, value } when is_integer(i) -&gt;
+    value
+  _ -&gt;
+    thing
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1637" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1633" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="cond/1">
+    <strong>cond/1</strong>
+  </p>
+  <div class="docstring"><p>Execute the first clause where the condition returns true,
+raises an error otherwise.</p>
+
+<h2>Examples</h2>
+
+<pre><code>cond do
+  1 + 1 == 2 -&gt;
+    &quot;This will never match&quot;
+  2 * 2 != 4 -&gt;
+    &quot;Nor this&quot;
+  true -&gt;
+    &quot;This will&quot;
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1865" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="def/2">
     <strong>def/2</strong>
@@ -2155,7 +2177,7 @@ for each entry in the keyword, using the key as function name
 and the value as the value returned by the function:</p>
 
 <pre><code>defmacro defkv(keywords) do
-  Enum.map keywords, fn({k,v}) -&gt;
+  Enum.map keywords, fn {k,v} -&gt;
     quote do
       def unquote(k).() do
         unquote(v)
@@ -2174,7 +2196,7 @@ end
 because each entry <code>k</code> is a an atom and invoking <code>def unquote(k)()</code>
 would be invalid Elixir syntax.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1034" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1033" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="def/4">
     <strong>def/4</strong>
@@ -2212,7 +2234,7 @@ def name, args, guards do
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1069" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1068" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defdelegate/2">
     <strong>defdelegate/2</strong>
@@ -2236,7 +2258,7 @@ MyList.reverse([1,2,3])
 #=&gt; [3,2,1]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1373" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1372" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defexception/4">
     <strong>defexception/4</strong>
@@ -2245,7 +2267,7 @@ MyList.reverse([1,2,3])
 The defined record must implement <code>message/1</code> as API, otherwise
 an error is raised. Check exception.ex for examples.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1159" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1158" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defimpl/3">
     <strong>defimpl/3</strong>
@@ -2253,7 +2275,7 @@ an error is raised. Check exception.ex for examples.</p>
   <div class="docstring"><p>Defines an implementation for the given protocol. See
 <code>defprotocol/2</code> for examples.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1349" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1348" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defmodule/2">
     <strong>defmodule/2</strong>
@@ -2298,7 +2320,7 @@ end
 <p>Elixir will accept any module name as long as the expression
 returns an atom.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L965" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L964" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defoverridable/1">
     <strong>defoverridable/1</strong>
@@ -2307,7 +2329,7 @@ returns an atom.</p>
 An overridable function is lazily defined, allowing a
 developer to customize it.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1392" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1391" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defp/2">
     <strong>defp/2</strong>
@@ -2331,14 +2353,14 @@ end
 <p>In the example above, <code>sum</code> is private and accessing it
 through <code>Foo.sum</code> will raise an error.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1090" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1089" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defp/4">
     <strong>defp/4</strong>
   </p>
   <div class="docstring"><p>The same as <code>def/4</code> but generates a private function.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1095" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1094" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defprotocol/2">
     <strong>defprotocol/2</strong>
@@ -2451,7 +2473,7 @@ tree or inside the record, but anywhere in the code.</p>
 <p>Finally, since records are simply tuples, one can add a default protocol
 implementation to any record by defining a default implementation for tuples.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1341" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1340" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defrecord/4">
     <strong>defrecord/4</strong>
@@ -2516,7 +2538,7 @@ This can be changed by passing a moduledoc option after values:</p>
 <pre><code>defrecord Config, [counter: 0, failures: []], moduledoc: &quot;A simple record&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1150" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1149" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="destructure/2">
     <strong>destructure/2</strong>
@@ -2557,7 +2579,7 @@ destructure [^x,y,z], [1,2,3]
 the first value from the right side. Otherwise,
 it will raise a CaseClauseError.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1906" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1920" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="div/2">
     <strong>div/2</strong>
@@ -2571,7 +2593,7 @@ Can be used in guard tests.</p>
 <pre><code>5 div 2 #=&gt; 2
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1533" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1532" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="elem/2">
     <strong>elem/2</strong>
@@ -2584,12 +2606,12 @@ We need to implement it as a macro to it can be used in guards.</p>
 <p>tuple = { :foo, :bar, 3 }
    elem(tuple, 1) #=&gt; :foo</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1505" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1504" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="if/2">
     <strong>if/2</strong>
   </p>
-  <div class="docstring"><p>Provides an <code>if</code> macro. The macro expects the first argument to
+  <div class="docstring"><p>Provides an <code>if</code> macro. This macro expects the first argument to
 be a condition and the rest are keywords arguments.</p>
 
 <h2>One-liner examples</h2>
@@ -2605,41 +2627,30 @@ true (i.e. it is not false nor nil). Otherwise, nil will be returned.</p>
 <pre><code>if(foo, do: bar, else: bar)
 </code></pre>
 
-<h2>Key-value blocks examples</h2>
+<h2>Blocks examples</h2>
 
-<p>When several expressions must be passed to if, the most appropriate
-form is thorugh keywords blocks. The first example above would then
-be translated to:</p>
+<p>Elixir also allows you to pass a block to the if macro. The first
+example above would be translated to:</p>
 
 <pre><code>if foo do
   bar
 end
 </code></pre>
 
-<p>Notice that do/end becomes delimiters. The value given between
-do/end becomes the expression given to as <code>do:</code>. The second example
-would then translate do:</p>
+<p>Notice that do/end becomes delimiters. The second example would
+then translate do:</p>
 
 <pre><code>if foo do
   bar
-else:
+else
   baz
 end
 </code></pre>
 
-<p>Notice that extra keys follows the regular <code>else:</code> form. You can also
-add extra <code>elsif:</code> clauses:</p>
-
-<pre><code>if foo do
-  bar
-elsif: some_condition
-  bar + baz
-else:
-  baz
-end
-</code></pre>
+<p>If you want to compare more than two clauses, you can use the <code>cond/1</code>
+macro.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1846" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1838" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="in/2">
     <strong>in/2</strong>
@@ -2659,7 +2670,7 @@ x in [1,2,3] #=&gt; true
 <pre><code>x == 1 or x == 2 or x == 3
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2054" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2068" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="inspect/1">
     <strong>inspect/1</strong>
@@ -2672,7 +2683,7 @@ x in [1,2,3] #=&gt; true
 #=&gt; &quot;:foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1437" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1436" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="is_exception/1">
     <strong>is_exception/1</strong>
@@ -2685,7 +2696,7 @@ x in [1,2,3] #=&gt; true
 is_exception(1)         #=&gt; false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1195" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1194" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="is_record/2">
     <strong>is_record/2</strong>
@@ -2702,14 +2713,14 @@ is_record(Config.new, Config) #=&gt; true
 is_record(Config.new, List)   #=&gt; false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1219" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1218" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="is_regex/1">
     <strong>is_regex/1</strong>
   </p>
   <div class="docstring"><p>Check if the given argument is a regex.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1233" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1232" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="match?/2">
     <strong>match?/2</strong>
@@ -2736,7 +2747,7 @@ Enum.filter list, match?({:a, _}, _)
 Enum.filter list, match?({:a, x } when x &lt; 2, &amp;1)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1572" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1571" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="not/1">
     <strong>not/1</strong>
@@ -2775,12 +2786,12 @@ from other processes that matches the given clauses.</p>
 <h2>Examples</h2>
 
 <pre><code>receive do
-match: { :selector, i, value } when is_integer(i)
-  value
-match: value when is_atom(value)
-  value
-else:
-  IO.puts :standard_error, &quot;Unexpected message received&quot;
+  { :selector, i, value } when is_integer(i) -&gt;
+    value
+  value when is_atom(value) -&gt;
+    value
+  _ -&gt;
+    IO.puts :standard_error, &quot;Unexpected message received&quot;
 end
 </code></pre>
 
@@ -2790,19 +2801,20 @@ end
 received after the specified period of time:</p>
 
 <pre><code>receive do
-match: { :selector, i, value } when is_integer(i)
-  value
-match: value when is_atom(value)
-  value
-else:
-  IO.puts :standard_error, &quot;Unexpected message received&quot;
-after: 5000
-  IO.puts :standard_error, &quot;No message in 5 seconds&quot;
+  { :selector, i, value } when is_integer(i) -&gt;
+    value
+  value when is_atom(value) -&gt;
+    value
+  _ -&gt;
+    IO.puts :standard_error, &quot;Unexpected message received&quot;
+after
+  5000 -&gt;
+    IO.puts :standard_error, &quot;No message in 5 seconds&quot;
 end
 </code></pre>
 
 <p>The <code>after</code> clause can be specified even if there are no match clauses.
-There are two special cases for the timout value given to after:</p>
+There are two special cases for the timout value given to after</p>
 
 <ul>
 <li><p><code>:infinity</code> - The process should wait indefinitely for a matching
@@ -2811,7 +2823,7 @@ message, this is the same as not using a timeout.</p></li>
 will occur immediately.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1774" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1778" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="rem/2">
     <strong>rem/2</strong>
@@ -2825,7 +2837,7 @@ Can be used in guard tests.</p>
 <pre><code>5 rem 2 #=&gt; 1
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1547" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1546" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="setelem/3">
     <strong>setelem/3</strong>
@@ -2838,7 +2850,7 @@ We need to implement it as a macro to it can be used in guards.</p>
 <p>tuple = { :foo, :bar, 3 }
    setelem(tuple, 1, :baz) #=&gt; { :baz, :bar, 3 }</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1519" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1518" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
     <strong>to_binary/1</strong>
@@ -2852,7 +2864,7 @@ This is the function invoked when there is string interpolation.</p>
 #=&gt; &quot;foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1478" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1477" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_char_list/1">
     <strong>to_char_list/1</strong>
@@ -2865,7 +2877,7 @@ This is the function invoked when there is string interpolation.</p>
 #=&gt; &#39;foo&#39;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1491" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1490" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="try/1">
     <strong>try/1</strong>
@@ -2877,11 +2889,13 @@ or throw that may have happened.</p>
 
 <pre><code>try do
   do_something_that_may_fail(some_arg)
-rescue: ArgumentError
-  IO.puts &quot;Invalid argument given&quot;
-catch: value
-  IO.puts &quot;caught #{value}&quot;
-after:
+rescue
+  ArgumentError -&gt;
+    IO.puts &quot;Invalid argument given&quot;
+catch
+  value -&gt;
+    IO.puts &quot;caught #{value}&quot;
+after
   IO.puts &quot;This is printed regardless if it failed or succeed&quot;
 end
 </code></pre>
@@ -2903,24 +2917,28 @@ rescue expressions:</p>
 
 <pre><code>try do
   UndefinedModule.undefined_function
-rescue: UndefinedFunctionError
+rescue
+  UndefinedFunctionError -&gt; nil
 end
 
 try do
   UndefinedModule.undefined_function
-rescue: [UndefinedFunctionError]
+rescue
+  [UndefinedFunctionError] -&gt; nil
 end
 
 # rescue and assign to x
 try do
   UndefinedModule.undefined_function
-rescue: x in [UndefinedFunctionError]
+rescue
+  x in [UndefinedFunctionError] -&gt; nil
 end
 
 # rescue all and assign to x
 try do
   UndefinedModule.undefined_function
-rescue: x
+rescue
+  x -&gt; nil
 end
 </code></pre>
 
@@ -2935,8 +2953,8 @@ For instance:</p>
   x = 1
   do_something_that_may_fail(same_arg)
   :ok
-catch: _, _
-  :failed
+catch
+  _ | _ -&gt; :failed
 end
 
 x #=&gt; Cannot access `x`
@@ -2952,21 +2970,22 @@ one can also handle exits/errors coming from Erlang as below:</p>
 
 <pre><code>try do
   exit(1)
-catch: :exit, 1
-  IO.puts &quot;Exited with 1&quot;
+catch
+  :exit, 1 -&gt; IO.puts &quot;Exited with 1&quot;
 end
 
 try do
   error(:sample)
-catch: :error, :sample
-  IO.puts &quot;sample error&quot;
+catch
+  :error, :sample -&gt;
+    IO.puts &quot;sample error&quot;
 end
 </code></pre>
 
 <p>Although the second form should be avoided in favor of raise/rescue
 control mechanisms.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1732" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1735" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unless/2">
     <strong>unless/2</strong>
@@ -2975,7 +2994,7 @@ control mechanisms.</p>
 unless a value evalutes to true. Check <code>if</code> for examples
 and documentation.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1868" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1882" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="use/2">
     <strong>use/2</strong>
@@ -3008,7 +3027,7 @@ end
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1426" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L1425" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="var!/1">
     <strong>var!/1</strong>
@@ -3052,7 +3071,7 @@ true || error(:bad)  #=&gt; true
 this operator accepts any expression as arguments,
 not only booleans, however it is not allowed in guards.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2028" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/builtin.ex#L2042" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
