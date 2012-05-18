@@ -123,7 +123,7 @@ binary.</p>
 
 <p>For compiling many files at once, check <code>Elixir.ParallelCompiler</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L132" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L131" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/0">
     <strong>compiler_options/0</strong>
@@ -131,7 +131,7 @@ binary.</p>
   <div class="docstring"><p>Loads the compilation options from the code server.
 Check compiler_options/1 for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L105" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L104" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/1">
     <strong>compiler_options/1</strong>
@@ -148,7 +148,7 @@ Notice debug information can be used to reconstruct the source code;</li>
 <li>ignore<em>module</em>conflict - when true, override modules that were already defined;</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L121" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L120" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_loaded/1">
     <strong>ensure_loaded/1</strong>
@@ -159,7 +159,7 @@ it works as no-op. If the module was not loaded yet, it tries to load it.</p>
 <p>If it succeeds loading the module anyhow, it returns <code>{ :module, module }</code>.
 If not, returns <code>{ :error, reason }</code> with the error reason.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L143" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L142" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval/3">
     <strong>eval/3</strong>
@@ -178,7 +178,7 @@ otherwise functions are evaluated inside Erlang&#39;s default scope.</li>
 <h2>Examples</h2>
 
 <pre><code>Code.eval &quot;a + b&quot;, [a: 1, b: 2], file: __FILE__, line: __LINE__
-# =&gt; { 3, [ {:a, 1}, {:b, 2} ] }
+#=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L44" target="_blank" class="view_source">Source</a>
@@ -192,7 +192,7 @@ otherwise functions are evaluated inside Erlang&#39;s default scope.</li>
 
 <pre><code>contents = quote hygiene: false, do: a + b
 Code.eval_quoted contents, [a: 1, b: 2], file: __FILE__, line: __LINE__
-# =&gt; { 3, [ {:a, 1}, {:b, 2} ] }
+#=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L60" target="_blank" class="view_source">Source</a>

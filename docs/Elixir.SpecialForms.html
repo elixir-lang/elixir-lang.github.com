@@ -227,7 +227,7 @@ spaces from a string:</p>
 
 <h2>Examples</h2>
 
-<pre><code>sum = fn(x, y, do: x + y)
+<pre><code>sum = fn(x, y) -&gt; x + y end
 sum.(1, 2) #=&gt; 3
 </code></pre>
 
@@ -238,7 +238,7 @@ the function and the arguments.</p>
 it is recommend to use it only with the stab operator in order to
 avoid ambiguity. For example, consider this case:</p>
 
-<pre><code>Enum.map [1,2,3], fn(x) -&gt;
+<pre><code>Enum.map [1,2,3], fn x -&gt;
   x * 2
 end
 </code></pre>
@@ -260,10 +260,10 @@ function call.</p>
 as all clauses expects the same number of arguments:</p>
 
 <pre><code>fun = fn do
-match: x, y when y &lt; 0
-  x - y
-match: x, y
-  x + y
+  x, y when y &lt; 0 -&gt;
+    x - y
+  x, y -&gt;
+    x + y
 end
 
 fun.(10, -10) #=&gt; 20
@@ -353,9 +353,9 @@ still hold some characteristics.</p>
 
 <pre><code> defmacro is_exception(thing) do
    quote do
-     in_guard do
+     quote do
        is_tuple(unquote(thing)) and elem(unquote(thing), 2) == :__exception__
-     else:
+     else
        result = unquote(thing)
        is_tuple(result) and elem(result, 2) == :__exception__
      end
@@ -447,10 +447,10 @@ guards and therefore accept any expression (they are not limited as guards).</p>
 <pre><code>list = [1,2,3]
 
 loop list, [] do
-match: [h|t], acc
-  recur t, [h*2|acc]
-match: [], acc
-  acc
+  [h|t], acc -&gt;
+    recur t, [h*2|acc]
+  [], acc -&gt;
+    acc
 end
 #=&gt; [6,4,2]
 </code></pre>
@@ -507,7 +507,7 @@ when quoted return themselves. They are:</p>
 2.0          #=&gt; Floats
 [1,2]        #=&gt; Lists
 &quot;binaries&quot;   #=&gt; Binaries
-{key, value} #=&gt; Key-value pairs (i.e. a tuple with two elements)
+{key, value} #=&gt; Tuple with two elements
 </code></pre>
 
 <h2>Hygiene</h2>
@@ -526,7 +526,7 @@ require Hygiene
 
 a = 10
 Hygiene.no_interference
-a # =&gt; 10
+a #=&gt; 10
 </code></pre>
 
 <p>In the example above, <code>a</code> returns 10 even if the macro
@@ -545,15 +545,15 @@ require NoHygiene
 
 a = 10
 NoHygiene.interference
-a # =&gt; 11
+a #=&gt; 11
 </code></pre>
 
 <p>Notice that references are not hygienic in Elixir unless
 you explicitly access it via <strong>MAIN</strong> to the reference name.</p>
 
 <pre><code>quote do
-  __MAIN__.Foo # =&gt; Access the root Foo
-  Foo   # =&gt; Access the Foo reference in the current
+  __MAIN__.Foo #=&gt; Access the root Foo
+  Foo   #=&gt; Access the Foo reference in the current
              module (if any is set), then fallback to root
 end
 </code></pre>
