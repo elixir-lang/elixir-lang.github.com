@@ -65,6 +65,7 @@ conveniences on top of the simple <code>EEx.Engine</code>.</p>
 <p><code>EEx.SmartEngine</code> supports the following tags:</p>
 
 <pre><code>&lt;% Elixir expression - inline with output %&gt;
+&lt;&amp; Elxir matching expression - not printed &amp;&gt;
 &lt;%= Elixir expression - replace with result %&gt;
 </code></pre>
 
@@ -77,8 +78,17 @@ also requires <code>=</code> in order to have their result printed:</p>
 
 <pre><code>&lt;%= if true do %&gt;
   It is obviously true
-&lt;% else: %&gt;
+&lt;% else %&gt;
   This will never appear
+&lt;% end %&gt;
+</code></pre>
+
+<p>The <code>&lt;&amp; ... &amp;&gt;</code> expression is only used in matching clauses.
+For example, the <code>cond</code> macro would be written as:</p>
+
+<pre><code>&lt;%= cond do %&gt;
+  &lt;&amp; false -&gt; &amp;&gt; Never printed
+  &lt;&amp; true  -&gt; &amp;&gt; always printed
 &lt;% end %&gt;
 </code></pre>
 
@@ -92,13 +102,13 @@ The first one is the <code>for</code> macro, which allows you to easily
 loop a variable:</p>
 
 <pre><code>EEx.eval_string &quot;&lt;%= for x in [1,2,3] do %&gt;&lt;%= x %&gt;\n&lt;% end %&gt;&quot;, []
-# =&gt; &quot;1\n2\n3\n&quot;
+#=&gt; &quot;1\n2\n3\n&quot;
 </code></pre>
 
 <p>It also adds defines a macro named <code>@</code> that allows easy access:</p>
 
 <pre><code>EEx.eval_string &quot;&lt;%= @foo %&gt;&quot;, assigns: [foo: 1]
-# =&gt; 1
+#=&gt; 1
 </code></pre>
 
 <p>In other words, &lt;%= @foo %&gt; is simply translated to:</p>
@@ -172,7 +182,7 @@ required by the template is not specified at compilation time.</p>
   <div class="docstring"><p>Get a <code>filename</code> and generate a quoted expression
 that can be evaluated by Elixir or compiled to a function.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L148" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L157" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compile_string/2">
     <strong>compile_string/2</strong>
@@ -180,7 +190,7 @@ that can be evaluated by Elixir or compiled to a function.</p>
   <div class="docstring"><p>Get a string <code>source</code> and generate a quoted expression
 that can be evaluated by Elixir or compiled to a function.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L140" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L149" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_file/3">
     <strong>eval_file/3</strong>
@@ -197,7 +207,7 @@ EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
 #=&gt; &quot;foo baz&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L180" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L189" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_string/3">
     <strong>eval_string/3</strong>
@@ -210,7 +220,7 @@ EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
 #=&gt; &quot;foo baz&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L162" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L171" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -244,7 +254,7 @@ end
 Sample.sample(1, 2) #=&gt; &quot;3&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L128" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L137" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="function_from_string/5">
     <strong>function_from_string/5</strong>
@@ -263,7 +273,7 @@ end
 Sample.sample(1, 2) #=&gt; &quot;3&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L97" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex.ex#L106" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
