@@ -178,7 +178,7 @@ When the macro is called, we receive all clauses under the `do` key with each HT
 
     { :"->", line, [{[:get], <user code>}, {[:post], <user code>}] }
 
-In our `multo_handle` macro signature, we pattern match against the expression above and get all blocks of code, which then we emit a function definition with the corresponding arguments. The code for each of the code blocks is similar to the GET and POST handlers we have defined earlier.
+In our `multi_handle` macro signature, we pattern match against the expression above and get a list with the blocks of code. Then we loop through this list emitting a function definition with the corresponding arguments. The code for each of the code blocks is similar to the GET and POST handlers we have defined earlier.
 
 Finally, let's test it in `iex`:
 
