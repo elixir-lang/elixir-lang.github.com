@@ -32,7 +32,7 @@
 flavours. If a given collection implements the mentioned protocol (like
 list, for instance), you can do</p>
 
-<pre><code>Enum.map [1,2,3], fn(x, do: x * 2)
+<pre><code>Enum.map [1,2,3], fn(x) -&gt; x * 2 end
 </code></pre>
 
 <p>Depending on the type of the collection, the user-provided function will
@@ -185,10 +185,10 @@ false.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.all? [2,4,6], fn(x, do: rem(x, 2) == 0)
+<pre><code>Enum.all? [2,4,6], fn(x) -&gt; rem(x, 2) == 0 end
 #=&gt; true
 
-Enum.all? [2,3,4], fn(x, do: rem(x, 2) == 0)
+Enum.all? [2,3,4], fn(x) -&gt; rem(x, 2) == 0 end
 #=&gt; false
 </code></pre>
 
@@ -209,10 +209,10 @@ at least one invocation returns true. Returns false otherwise.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.any? [2,4,6], fn(x, do: rem(x, 2) == 1)
+<pre><code>Enum.any? [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
 #=&gt; false
 
-Enum.any? [2,3,4], fn(x, do: rem(x, 2) == 1)
+Enum.any? [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
 #=&gt; true
 </code></pre>
 
@@ -248,7 +248,7 @@ Expects an ordered collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.drop_while [1,2,3,4,5], fn(x, do: x &lt; 3)
+<pre><code>Enum.drop_while [1,2,3,4,5], fn(x) -&gt; x &lt; 3 end
 #=&gt; [3,4,5]
 </code></pre>
 </div>
@@ -262,7 +262,7 @@ Returns the <code>collection</code> itself.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.each [&#39;some&#39;, &#39;example&#39;], fn(x, do: IO.puts x)
+<pre><code>Enum.each [&#39;some&#39;, &#39;example&#39;], fn(x) -&gt; IO.puts x end
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L185" target="_blank" class="view_source">Source</a>
@@ -288,7 +288,7 @@ for which <code>fun</code> returns true.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.filter [1, 2, 3], fn(x, do: rem(x, 2) == 0)
+<pre><code>Enum.filter [1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end
 #=&gt; [2]
 </code></pre>
 </div>
@@ -301,7 +301,7 @@ for which <code>fun</code> returns true.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.filter_map [1, 2, 3], fn(x, do: rem(x, 2) == 0), &amp;1 * 2
+<pre><code>Enum.filter_map [1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end, &amp;1 * 2
 #=&gt; [4]
 </code></pre>
 </div>
@@ -315,14 +315,14 @@ item is found, returns <code>ifnone</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.find [2,4,6], fn(x, do: rem(x, 2) == 1)
-# =&gt; nil
+<pre><code>Enum.find [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; nil
 
-Enum.find [2,4,6], 0, fn(x, do: rem(x, 2) == 1)
-# =&gt; 0
+Enum.find [2,4,6], 0, fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; 0
 
-Enum.find [2,3,4], fn(x, do: rem(x, 2) == 1)
-# =&gt; 3
+Enum.find [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; 3
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L254" target="_blank" class="view_source">Source</a>
@@ -335,14 +335,14 @@ invocation instead of the element itself.</p>
 
 <p>## Examples</p>
 
-<pre><code>  Enum.find_value [2,4,6], fn(x, do: rem(x, 2) == 1)
-  # =&gt; nil
+<pre><code>  Enum.find_value [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+  #=&gt; nil
 
-  Enum.find_value [2,4,6], 0, fn(x, do: rem(x, 2) == 1)
-  # =&gt; 0
+  Enum.find_value [2,4,6], 0, fn(x) -&gt; rem(x, 2) == 1 end
+  #=&gt; 0
 
-  Enum.find_value [2,3,4], fn(x, do: rem(x, 2) == 1)
-  # =&gt; true
+  Enum.find_value [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+  #=&gt; true
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/enum.ex#L275" target="_blank" class="view_source">Source</a>
@@ -377,10 +377,10 @@ For dicts, the function accepts a key-value tuple.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.map [1, 2, 3], fn(x, do: x * 2)
+<pre><code>Enum.map [1, 2, 3], fn(x) -&gt; x * 2 end
 #=&gt; [2, 4, 6]
 
-Enum.map [a: 1, b: 2], fn({k, v}, do: { k, -v })
+Enum.map [a: 1, b: 2], fn({k, v}) -&gt; { k, -v } end
 #=&gt; [a: -1, b: -2]
 </code></pre>
 </div>
@@ -420,7 +420,7 @@ tuple itself.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.map_reduce [1, 2, 3], 0, fn(x, acc, do: { x * 2, x + acc })
+<pre><code>Enum.map_reduce [1, 2, 3], 0, fn(x, acc) -&gt; { x * 2, x + acc } end
 #=&gt; { [2, 4, 6], 6 }
 </code></pre>
 </div>
@@ -435,7 +435,7 @@ returns false or nil.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.partition [1, 2, 3], fn(x, do: rem(x, 2) == 0)
+<pre><code>Enum.partition [1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end
 #=&gt; { [2], [1,3] }
 </code></pre>
 </div>
@@ -462,7 +462,7 @@ Returns the accumulator.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.reduce [1, 2, 3], 0, fn(x, acc, do: x + acc)
+<pre><code>Enum.reduce [1, 2, 3], 0, fn(x, acc) -&gt; x + acc end
 #=&gt; 6
 </code></pre>
 </div>
@@ -491,7 +491,7 @@ Expects an ordered collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.split_with [1,2,3,4], fn(x) -&gt; x == 2 end
+<pre><code>Enum.split_with [1,2,3,4], fn x -&gt; x == 2 end
 #=&gt; { [1], [2, 3, 4] }
 </code></pre>
 </div>
@@ -520,7 +520,7 @@ Expects an ordered collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.take_while [1,2,3], fn(x, do: x &lt; 3)
+<pre><code>Enum.take_while [1,2,3], fn(x) -&gt; x &lt; 3 end
 #=&gt; [1, 2]
 </code></pre>
 </div>
@@ -534,7 +534,7 @@ to n.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.times 3, fn(x, do: IO.puts x)
+<pre><code>Enum.times 3, fn(x) -&gt; IO.puts x end
 1
 2
 3
@@ -551,7 +551,7 @@ value between computations.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.times 5, 0, fn(x, acc, do: acc + x)
+<pre><code>Enum.times 5, 0, fn(x, acc) -&gt; acc + x end
 #=&gt; 15
 </code></pre>
 </div>
