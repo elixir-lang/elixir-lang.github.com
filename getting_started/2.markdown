@@ -76,16 +76,14 @@ The [`Keyword` module](http://elixir-lang.org/docs/Keyword.html) contains severa
     iex> Keyword.get_values keywords, :foo
     [1,3]
 
-Finally, keywords lists implement the so-called access protocol, which allows a developer to quickly access an entry:
+Since keywords lists are very frequently passed as arguments, they do not require brackets when given as last argument in a function call. For instance, all the examples below are valid and equivalent:
 
-    iex> x = [a: 1, b: 2]
-    [{:a, 1}, {:b, 2}]
-    iex> x[:a]
-    1
-    iex> x[:b]
-    2
-
-But don't worry about protocols for now, we are going to discuss them with more details on chapter 4.
+    iex> if(2 + 2 == 4, [do: "OK"])
+    "OK"
+    iex> if(2 + 2 == 4, do: "OK")
+    "OK"
+    iex> if 2 + 2 == 4, do: "OK"
+    "OK"
 
 ## 2.3 Char lists and binaries
 
@@ -234,9 +232,9 @@ Although pattern matching allows us to build powerful constructs, its usage is l
     iex> Erlang.lists.flatten([1,[2],3]) = [1,2,3]
     ** (ErlangError) erlang error :illegal_pattern
 
-## 2.6 Keywords arguments
+## 2.6 Blocks
 
-One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we can write `if` in these two equivalent ways:
+One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we can write `if` in these two ways:
 
     iex> if true, do: 1 + 2
     3
@@ -245,45 +243,23 @@ One of the first control flow constructs we usually learn is the conditional `if
     ...> end
     3
 
-In both examples, we are invoking the function `if` passing keywords lists as arguments. Since the keywords are the last argument, the brackets are optional. These are all equivalent:
-
-    iex> if true, do: 1 + 2
-    3
-    iex> if true, [do: 1 + 2]
-    3
-    iex> if(true, [do: 1 + 2])
-    3
-
-Besides, we can also pass an `else` option to `if`:
-
-    iex> if false, do: 1 + 2, else: 10 + 3
-    13
-
-However, most of the times `if` clauses are longer than the examples above. In such cases, we usually use the block format:
-
-    iex> if true do
-    ...>   1 + 2
-    ...> end
-
-Internally, this is converted to the same keywords arguments as above. This feature is called keywords blocks. Notice how the `do:` option is replaced by the delimiters `do/end`, allowing us to pass `else:` as option as well:
+The second example uses the block syntax. We can also use `else` in the block syntax:
 
     if false do
       1 + 2
-    else:
+    else
       10 + 3
     end
 
-Parenthesis can be added to keywords blocks as follows:
+Elixir blocks work similarly to Ruby blocks. For example, a developer could add parenthesis as follow:
 
     if(false) do
       1 + 2
-    else:
+    else
       10 + 3
     end
 
-Keywords blocks are an important feature that allow developers to create their own control structures as if they were part of the language itself. For instance, none of the control structures we are going to see in the next section are special cased in Elixir parser. They are all implemented using keywords blocks.
-
-Elixir supports two syntaxes for keywords blocks: `do`/`end` and `->`/`end`. The first one always binds to the farthest function call, while the latter to the closest. For example, the following expression:
+It is also important to notice that `do`/`end` always binds to the farthest function call. For example, the following expression:
 
     Enum.map [1,2,3], fn(x) do
       x * 2
@@ -295,7 +271,7 @@ Would be parsed as:
       x * 2
     end
 
-Which is not what we want since `do` is binding to the farthest function call, in this case: `Enum.map`. We can fix this by using `->`, forcing the keyword block to bind to the `fn`:
+Which is not what we want since `do` is binding to the farthest function call, in this case: `Enum.map`. For this reason, we always use the `->` syntax for functions and reserve `do/end` to the remaining control structures:
 
     Enum.map [1,2,3], fn(x) ->
       x * 2
@@ -307,46 +283,40 @@ Which is then parsed as:
       x * 2
     end)
 
-A good rule of thumb is: always use `->/end` when defining functions with `fn`, use `do/end` for all other structures. If we follow this rule, everything works transparently.
-
 ## 2.7 Control flow structures
 
 In this section we are going to describe Elixir main control structures.
 
 ### 2.7.1 If
 
-Refreshing from the section above, all these calls are equivalent:
+Refreshing from the section above, all these calls behave the same:
 
     if false, do: 1 + 2, else: 10 + 3
 
     if false do
       1 + 2
-    else:
+    else
       10 + 3
     end
 
-    # Although this is valid, its usage is discouraged.
-    if(false) ->
-      1 + 2
-    else:
-      10 + 3
+In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicit convert the if argument a boolean. In case you want to check if one of many conditions are true, you can use the `cond` macro.
+
+### 2.7.2 Cond
+
+`cond` allows you to check many expressions and executes the first one that evaluates to true:
+
+    cond do
+      2 + 2 == 5 ->
+        "This will never match"
+      2 * 2 == 3 ->
+        "Nor this"
+      1 + 1 == 2 ->
+        "But this will"
     end
 
-`if` also accepts many `elsif:` clauses:
+If none of the expressions above return true, an error would be raised.
 
-    if 1 + 1 == 3 do
-      IO.puts "Impossible"
-    elsif: 1 + 1 == 2
-      IO.puts "This will match"
-    elsif: true
-      IO.puts "This won't because the one above matched"
-    else:
-      IO.puts "This won't"
-    end
-
-In Elixir, all values except `false` and `nil` evaluate to true. So there is no need to convert them to boolean.
-
-### 2.7.2 Other boolean operators
+### 2.7.3 Other boolean operators
 
 In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. Those operators are strict in the sense they only accept booleans as first arguments.
 
@@ -374,38 +344,36 @@ Elixir provides three operators with similar functionality but that accept argum
 
 As a rule of thumb, use `and`, `or` and `not` when both arguments are expected to booleans, as in guard clauses. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
 
-### 2.7.3 Case
+### 2.7.4 Case
 
-In this section we have introduced pattern matching via the `=` operator. Sometimes however it is convenient to match an expression against several expressions until we find a matching one. For such cases, we use `case`:
+In section 2.5, we have introduced pattern matching via the `=` operator. Sometimes however it is convenient to compare an expression against several expressions until we find a matching one. In such scenario, we use `case`:
 
     case { 1, 2, 3 } do
-    match: { 4, 5, 6 }
-      IO.puts "This won't match"
-    match: { 1, x, 3 }
-      IO.puts "This will match and assign x"
-    else:
-      IO.puts "No match"
+      { 4, 5, 6 } ->
+        "This won't match"
+      { 1, x, 3 } ->
+        "This will match and assign x to 2"
+      _ ->
+        "This is a match any clause"
     end
 
 As in the `=` operator, any assigned variable will be overridden in the match clause. In case you want to pattern match against a variable, you need to use the `^` operator:
 
     x = 1
     case 10 do
-    match: ^x
-      IO.puts "Won't match"
-    else:
-      IO.puts "Will match"
+      ^x -> "Won't match"
+      _  -> "Will match"
     end
 
-Each match clause also supports special conditions to be given via guards:
+Each match clause also supports special conditions to be specified via guards:
 
     case { 1, 2, 3 } do
-    match: { 4, 5, 6 }
-      IO.puts "This won't match"
-    match: { 1, x, 3 } when x > 0
-      IO.puts "This will match and assign x"
-    else:
-      IO.puts "No match"
+      { 4, 5, 6 } ->
+        "This won't match"
+      { 1, x, 3 } when x > 0 ->
+        "This will match and assign x"
+      _ ->
+        "No match"
     end
 
 In the example above, the second clause will only match when x is positive. The Erlang VM only allows few expressions as guards, they are:
@@ -469,27 +437,29 @@ However, the example above will always fail because, if the argument is a list, 
 
 In such cases, if there is an error in one of the guards, it won't affect the next one.
 
-### 2.7.4 Functions
+### 2.7.5 Functions
 
-Throughout this guide, we have created many functions in examples. The syntax for creating functions is:
+In Elixir, creating a function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
 
-    fn(a, b) -> a + b end
-
-But it could also be written as (the previous example is preferred though):
-
-    fn(a, b, do: a + b)
-
-    fn(a, b) do
-      a + b
+    function = fn do
+      x, y when x > 0 -> x + y
+      x, y -> x * y
     end
 
-As an immutable language, the binding of the function is also immutable. This means that setting a variable inside the function does not affect its outer scope:
+    function.(1, 3)  #=> 4
+    function.(-1, 3) #=> -3
+
+A function with one clause can be define with a shortcut syntax as follow:
+
+    function = fn x, y -> x + y end
+
+As Elixir is an immutable language, the binding of the function is also immutable. This means that setting a variable inside the function does not affect its outer scope:
 
     x = 1
     (fn -> x = 2 end).()
     x #=> 1
 
-### 2.7.5 Loops
+### 2.7.6 Loops
 
 Due to data structure immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
 
@@ -500,10 +470,10 @@ Due to data structure immutability, loops in Elixir (and in functional programmi
 In the example above, we are mutating the array which is not possible in Elixir. Therefore, in functional languages recursion happens by calling an anonymous or a named function recursively, until we reach a condition. Consider the example below that manually sums all the items in the list:
 
     iex> loop [1,2,3], 0 do
-    ...> match: [h|t], acc
-    ...>   recur(t, h + acc)
-    ...> match: [], acc
-    ...>   acc
+    ...>   [h|t], acc ->
+    ...>     recur(t, h + acc)
+    ...>   [], acc ->
+    ...>     acc
     ...> end
     6
 
@@ -518,14 +488,14 @@ Then, we add the head of the list to the accumulator `h + acc` and call the loop
 
 > Note: `loop/recur` is also a Clojure idiom, although differently from Clojure, `recur` in Elixir does not ensure a tail call was made.
 
-### 2.7.6 Try
+### 2.7.7 Try
 
 The next control-flow mechanism is `try/catch/after`:
 
     iex> try do
     ...>   throw 13
-    ...> catch: number
-    ...>   number
+    ...> catch
+    ...>   number -> number
     ...> end
     13
 
@@ -533,9 +503,9 @@ The next control-flow mechanism is `try/catch/after`:
 
     iex> try do
     ...>   throw 13
-    ...> catch: nan when not is_number(nan)
-    ...>   nan
-    ...> after:
+    ...> catch
+    ...>   nan when not is_number(nan) -> nan
+    ...> after
     ...>   IO.puts "Didn't catch"
     ...> end
     Didn't catch
@@ -546,8 +516,8 @@ There is one particularity that applies to `try/catch/after` when compared to ot
 
     iex> try do
     ...>   new_var = 1
-    ...> catch: value
-    ...>   value
+    ...> catch
+    ...>   value -> value
     ...> end
     1
     iex> new_var
@@ -559,48 +529,49 @@ The common strategy then is to make explicit all arguments that are required aft
       x = calculate_some_value()
       y = some_other_value()
       { x, y }
-    catch: _
-      { nil, nil }
+    catch
+      _ -> { nil, nil }
     end
 
     x #=> returns the value of x or nil for failures
 
-### 2.7.7 Rescue
+### 2.7.8 Rescue
 
 For catching exceptions in Elixir, we can use `rescue` instead of `catch`. Besides allowing the same pattern matching rules as `catch`, `rescue` also allows a developer to easily rescue an exception by its name and not by its internal contents. Consider the following examples:
 
     # rescue only runtime error
     try do
       raise "some error"
-    rescue: RuntimeError
-      "rescued"
+    rescue
+      RuntimeError -> "rescued"
     end
 
     # rescue runtime and argument errors
     try do
       raise "some error"
-    rescue: [RuntimeError, ArgumentError]
-      "rescued"
+    rescue
+      [RuntimeError, ArgumentError] -> "rescued"
     end
 
     # rescue and assign to x
     try do
       raise "some error"
-    rescue: x in [RuntimeError]
-      # all exceptions respond to message
-      x.message
+    rescue
+      x in [RuntimeError] ->
+        # all exceptions respond to message
+        x.message
     end
 
     # rescue all (discouraged) and assign to x
     try do
       raise ArgumentError, message: "unexpected argument"
-    rescue: x
-      x.message
+    rescue
+      x -> x.message
     end
 
 Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](http://elixir-lang.org/docs/), by clicking "Records" in the upper left corner.
 
-### 2.7.8 Receive
+### 2.7.9 Receive
 
 The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
@@ -615,18 +586,19 @@ In order to exchange messages, each process has a mailbox where the received mes
 
     # Collect the message
     iex> receive do
-    ...> match: { :hello, pid }
-    ...>   IO.puts "Hello from #{inspect(pid)}"
+    ...>   { :hello, pid } ->
+    ...>     IO.puts "Hello from #{inspect(pid)}"
     ...> end
     Hello from <0.36.0>
 
 You may not see exactly `<0.36.0>` back, but something similar. If there are no messages in the mailbox, the current process will hang until a matching message arrives, unless an after clause is given:
 
     iex> receive do
-    ...> match: :waiting
-    ...>   IO.puts "This may never come"
-    ...> after: 1000 # 1 second
-    ...>   IO.puts "Too late"
+    ...>   :waiting ->
+    ...>     IO.puts "This may never come"
+    ...> after
+    ...>   1000 -> # 1 second
+    ...>     IO.puts "Too late"
     ...> end
     Too late
 

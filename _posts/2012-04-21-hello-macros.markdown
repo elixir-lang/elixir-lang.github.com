@@ -142,10 +142,8 @@ By using this macro we're letting the framework know that we want to send the co
         def handle(:get, unquote(path), _data) do
           full_path = File.join([static_root(), unquote(bin)])
           case File.read(full_path) do
-          match: { :ok, data }
-            { :ok, data }
-          else:
-            { :error, "404 Not Found" }
+            { :ok, data } -> { :ok, data }
+            _ -> { :error, "404 Not Found" }
           end
         end
       end

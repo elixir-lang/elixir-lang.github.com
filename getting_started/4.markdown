@@ -160,7 +160,15 @@ Finally, since records are simply tuples, one can add a default protocol impleme
 
 Elixir ships with three built-in protocols, they are:
 
-* Access - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example `list[1]`;
+* Access - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example:
+
+        iex> x = [a: 1, b: 2]
+        [{:a, 1}, {:b, 2}]
+        iex> x[:a]
+        1
+        iex> x[:b]
+        2
+
 * Enum.Iterator - specifies an iteration contract for any data structure. Exposed via the `Enum` module;
 * List.Chars - specifies how to convert a data structures with characters to lists. Exposed via the `to_char_list` function;
 * Binary.Chars - specifies how to convert a data structure with characters to binary. Exposed via the `to_binary` function. For instance, interpolation calls `to_binary` in the interpolated content before adding it to the binary;
