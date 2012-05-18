@@ -21,10 +21,10 @@ In Elixir, we could write this code as follows:
         parent <- { :compiled, Process.self() }
       end)
       receive do
-      match: { :compiled, ^child }
-        spawn_compilers(files, output)
-      match: { :EXIT, ^child, { reason, where } }
-        Erlang.erlang.raise(:error, reason, where)
+        { :compiled, ^child } ->
+          spawn_compilers(files, output)
+        { :EXIT, ^child, { reason, where } } ->
+          Erlang.erlang.raise(:error, reason, where)
       end
     end
     
@@ -91,15 +91,14 @@ As discussed in the previous section, we want to extend the error handler to act
 
       defp ensure_loaded(module) do
         case Code.ensure_loaded(module) do
-        match: { :module, _ }
-          []
-        match: { :error, _ }
-          parent = Process.get(:elixir_parent_compiler)
-          parent <- { :waiting, Process.self, module }
-          receive do
-          match: { :release, ^parent }
-            ensure_loaded(module)
-          end
+          { :module, _ } ->
+            []
+          { :error, _ } ->
+            parent = Process.get(:elixir_parent_compiler)
+            parent <- { :waiting, Process.self, module }
+            receive do
+              { :release, ^parent } -> ensure_loaded(module)
+            end
         end
       end
     end
@@ -145,18 +144,19 @@ Notice we added an extra clause to `spawn_compilers` so we can properly handle t
 
     defp wait_for_messages(files, output, stack) do
       receive do
-      match: { :compiled, child }
-        new_stack = List.delete(stack, child)
-        Enum.each new_stack, fn(pid) ->
-          pid <- { :release, Process.self }
-        end
-        spawn_compilers(files, output, new_stack)
-      match: { :waiting, _child, _module }
-        spawn_compilers(files, output, stack)
-      match: { :EXIT, _child, { reason, where } }
-        Erlang.erlang.raise(:error, reason, where)
-      after: 10_000
-        raise "dependency on unexesting module or possible deadlock"
+        { :compiled, child } ->
+          new_stack = List.delete(stack, child)
+          Enum.each new_stack, fn(pid) ->
+            pid <- { :release, Process.self }
+          end
+          spawn_compilers(files, output, new_stack)
+        { :waiting, _child, _module } ->
+          spawn_compilers(files, output, stack)
+        { :EXIT, _child, { reason, where } } ->
+          Erlang.erlang.raise(:error, reason, where)
+      after
+        10_000 ->
+          raise "dependency on unexesting module or possible deadlock"
       end
     end
 

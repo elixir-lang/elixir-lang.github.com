@@ -84,30 +84,23 @@ Alternatively, if you wanted to keep your function extensible but not overridabl
 * The new `in` keyword has been added to simplify some common patterns. For instance, if you wanted to check for a falsey value, you had to write
 
       case val do
-      match: nil
-        # code
-      match: false
-        # code
-      match: other
-        # other_code
+        nil ->   # code
+        false -> # code
+        other -> # other_code
       end
 
       # or
 
       case val do
-      match: x when x == nil or x == false
-        # code
-      match: other
-        # other_code
+        x when x == nil or x == false -> # code
+        other -> # other_code
       end
 
   Now you can write
 
       case val do
-      match: x in [nil, false]
-        # code
-      match: other
-        # other_code
+        x in [nil, false] -> # code
+        other -> # other_code
       end
 
   This new syntax can be used in guards, ordinary conditions, and pattern matching.
