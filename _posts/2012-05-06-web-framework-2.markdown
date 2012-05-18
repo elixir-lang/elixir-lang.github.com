@@ -155,7 +155,7 @@ You can see how this approach allows us to express the fact that "/kvstore" prov
 
 Let's think for a moment what the `multi_handle` macro should expand to. So far we've been expanding our `post` and `get` macros into one `handle` function that uses pattern-matching to dispatch to the appropriate handler based on the incoming request. There's no reason not to use the same approach for `multi_handle`. So here's what its implementation looks like:
 
-    defmacro multi_handle(path, { :"->", _line, blocks }) do
+    defmacro multi_handle(path, [do: { :"->", _line, blocks }]) do
       # Iterate over each block in `blocks` and
       # produce a separate `handle` clause for it
       Enum.map blocks, (fn do
@@ -174,9 +174,9 @@ Let's think for a moment what the `multi_handle` macro should expand to. So far 
       end)
     end
 
-When the macro is called, we receive all clauses with the verb and their implementation inside the syntax node -> in the order they are specified. Each clause is a tuple with two elements, the first one is a list of parameters given on the left side and the second one is the implementation, for example:
+When the macro is called, we receive all clauses under the `do` key with each HTTP verb and its implementation inside the syntax node `->`, in the order they are specified. Each clause is a tuple with two elements, the first one is a list of parameters given on the left side and the second one is the implementation, for example:
 
-    { :"=>", line, [{[:get], <user code>}, {[:post], <user code>}] }
+    { :"->", line, [{[:get], <user code>}, {[:post], <user code>}] }
 
 In our `multo_handle` macro signature, we pattern match against the expression above and get all blocks of code, which then we emit a function definition with the corresponding arguments. The code for each of the code blocks is similar to the GET and POST handlers we have defined earlier.
 
