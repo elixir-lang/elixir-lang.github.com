@@ -238,7 +238,7 @@ entries, the given function is invoked to solve conflicts.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Keyword.merge [a: 1, b: 2], [a: 3, d: 4], fn(_k, v1, v2) -&gt;
+<pre><code>Keyword.merge [a: 1, b: 2], [a: 3, d: 4], fn _k, v1, v2 -&gt;
   v1 + v2
 end
 #=&gt; [a:4, b:2, d: 4]
@@ -276,7 +276,7 @@ entries are removed, the latest one prevails.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Keyword.new [:a, :b], fn(x) -&gt; {x,x} end
+<pre><code>Keyword.new [:a, :b], fn x -&gt; {x,x} end
 #=&gt; [a: :a, b: :b]
 </code></pre>
 </div>
