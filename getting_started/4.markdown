@@ -32,7 +32,24 @@ Internally, a record is simply a tuple where the first element is always the rec
     iex> FileInfo.new
     {FileInfo, nil, nil}
 
-### 4.1.1 Default based functions
+### 4.1.1 Pattern matching
+
+Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `File.Info` record above, we could implement is as follow:
+
+    def was_accessed?(File.Info[accesses: 0]), do: true
+    def was_accessed?(File.Info[]),            do: false
+
+The first clause will only match if a `File.Info` record is given and the `accesses` field is equal to zero. If instead we would like to assign the value of `accesses` to a variable, we could write:
+
+    def was_accessed?(File.Info[accesses: accesses]), do: accesses == 0
+
+This syntax can also be used to create new records:
+
+    file_info = File.Info[accesses: 0]
+
+As we are going to see in the next section (4.2), this "brackets syntax" is powered by the access protocol and, in the records case, it is handled at compilation time which provides faster access and creation times compared to `file_info.accesses` and `File.Info.new`.
+
+### 4.1.2 Default based functions
 
 Depending on the default value, Elixir will define helpers to interact with the record. For example, the test framework that ships with Elixir, called ExUnit, defines a record which keeps track of how many tests were executed and the failures that happened. The record definition is similar to:
 
