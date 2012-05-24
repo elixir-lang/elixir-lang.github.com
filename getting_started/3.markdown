@@ -34,11 +34,11 @@ Most of the times it is convenient to write modules into files so they can be co
       end
     end
 
-This file can be compiled using `bin/elixirc` (or simply `elixirc` if you installed Elixir via a distribution):
+This file can be compiled using `elixirc` (remember, if you installed Elixir from a packaged or compiled it, `elixirc` will be inside the bin directory):
 
-    bin/elixirc math.ex
+    elixirc math.ex
 
-Which will then generate a file named `Math.beam` containing the bytecode for the defined module. Now, if we start `bin/iex` again, our module definition will be available (considering `bin/iex` is being started in the same directory the bytecode file is):
+Which will then generate a file named `Math.beam` containing the bytecode for the defined module. Now, if we start `iex` again, our module definition will be available (considering `iex` is being started in the same directory the bytecode file is):
 
     iex> Math.sum(1, 2)
     3
@@ -51,9 +51,9 @@ Elixir projects are usually organized into three directories:
 
 In many cases, since the bytecode is in `ebin`, you need to explicitly tell Elixir to lookup for code in the `ebin` directory:
 
-    bin/iex -pa ebin
+    iex -pa ebin
 
-Where `-pa` stands for `path append`. The same option can also be passed to `elixir` and `elixirc` executables. You can execute `bin/elixir` and `bin/elixirc` without arguments to get a list with all options.
+Where `-pa` stands for `path append`. The same option can also be passed to `elixir` and `elixirc` executables. You can execute `elixir` and `elixirc` without arguments to get a list with all options.
 
 ## 3.2 Scripted mode
 
@@ -69,7 +69,7 @@ Besides the Elixir file `.ex`, Elixir also supports `.exs` files for scripting. 
 
 And execute it as:
 
-    bin/elixir math.exs
+    elixir math.exs
 
 The file will be compiled in memory and executed, printing 3 as result. No bytecode file will be created.
 
