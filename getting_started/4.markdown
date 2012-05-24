@@ -26,7 +26,7 @@ Elixir will also define an `update_#{field}` function that accepts a function of
     file_info = file_info.update_accesses(fn(x) -> x + 1 end)
     file_info.accesses #=> 11
 
-Internally, a record is simply a tuple where the first element is always the record module name. We can check this by creating and printing a record in Interactive Elixir (`bin/iex`):
+Internally, a record is simply a tuple where the first element is always the record module name. We can check this by creating and printing a record in Interactive Elixir (`iex`):
 
     iex> defrecord FileInfo, atime: nil, mtime: nil
     iex> FileInfo.new
