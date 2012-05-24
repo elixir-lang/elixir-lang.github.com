@@ -36,7 +36,7 @@ You may keep the shell running while you're editing the file. Just don't forget 
 
 Elixir too has an interactive shell called `iex`. Compiling Elixir code can be done with `elixirc` (which is similar to Erlang's `erlc`). Elixir also provides an executable named `elixir` to run Elixir code. The module defined above can be written in Elixir as:
 
-{% highlight elixir %}
+{% highlight ruby %}
 # module_name.ex
 defmodule ModuleName do
   def hello do
@@ -47,7 +47,7 @@ end
 
 And compiled from `iex`:
 
-{% highlight iex %}
+{% highlight ruby %}
 Interactive Elixir
 iex> c("module_name.ex")
 [ModuleName]
@@ -90,7 +90,7 @@ X + Y.
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 x = 2; y = 3
 x + y
 {% endhighlight %}
@@ -123,7 +123,7 @@ ok
 
 **Elixir**
 
-{% highlight iex %}
+{% highlight ruby %}
 iex> a = 1
 1
 iex> a = 2
@@ -149,13 +149,13 @@ orddict:new().
 
 to invoke the `new` function from the `orddict` module. In Elixir, use the dot `.` in place of the colon `:`
 
-{% highlight elixir %}
+{% highlight ruby %}
 Process.self
 {% endhighlight %}
 
 **Note**. You may invoke Erlang functions in Elixir in one of two ways:
 
-{% highlight elixir %}
+{% highlight ruby %}
 Erlang.lists.sort [3, 2, 1]
 :lists.sort [3, 2,1]
 {% endhighlight %}
@@ -183,7 +183,7 @@ X = 10.
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 :im_an_atom
 :me_too
 
@@ -206,7 +206,7 @@ is_atom('').                %=> true
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 is_atom :ok                 #=> true
 is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
@@ -225,7 +225,7 @@ is_binary(<<"Hello">>).  %=> true
 {% endhighlight %}
 
 **Elixir**
-{% highlight elixir %}
+{% highlight ruby %}
 is_list 'Hello'          #=> true
 is_binary "Hello"        #=> true
 is_binary <<"Hello">>    #=> true
@@ -250,7 +250,7 @@ Dict = orddict:from_list([{key, 10}, {another_key, 20}]).
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 dict = [key: 10, another_key: 20]
 #=> [{:another_key,20},{:key,10}]
 {% endhighlight %}
@@ -287,7 +287,7 @@ Here we create a module named ``hello_module``. In it we define three functions,
 
 An equivalent code in Elixir:
 
-{% highlight elixir %}
+{% highlight ruby %}
 defmodule HelloModule do
   # A "Hello world" function
   def fun do
@@ -308,7 +308,7 @@ end
 
 In Elixir, it is also possible to have multiple modules in one file, as well as nested modules:
 
-{% highlight elixir %}
+{% highlight ruby %}
 defmodule HelloModule do
   defmodule Utils do
     def util do
@@ -367,7 +367,7 @@ loop_through([]) ->
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 def loop_through([h|t]) do
   IO.inspect h
   loop_through t
@@ -397,7 +397,7 @@ sum(a, b, c) -> a + b + c.
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 def sum, do: 0
 def sum(a), do: a
 def sum(a, b), do: a + b
@@ -430,7 +430,7 @@ sum("a", "b").
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 def sum(a, b) when is_integer(a) and is_integer(b) do
   a + b
 end
@@ -455,7 +455,7 @@ sum "a", "b"
 
 In addition, Elixir provides default values for arguments whereas Erlang does not.
 
-{% highlight elixir %}
+{% highlight ruby %}
 def mul_by(x, n // 2) do
   x * n
 end
@@ -482,7 +482,7 @@ lists:map(Square, [1, 2, 3, 4]).
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 sum = fn(a, b) -> a + b end
 sum 4, 3
 #=> 7
@@ -512,7 +512,7 @@ F({a, b}).
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 f = fn do
       {:a, :b} = tuple ->
         IO.puts "All your #{inspect tuple} are belong to us"
@@ -543,7 +543,7 @@ lists:map(fun square/1, [1, 2, 3]).
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 def square(x) do
   x * x
 end
@@ -555,7 +555,7 @@ Enum.map [1,2,3], fn(:square, 1)
 
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
 
-{% highlight elixir %}
+{% highlight ruby %}
 Enum.map [1, 2, 3, 4], &1 * 2
 #=> [2, 4, 6, 8]
 
@@ -565,7 +565,7 @@ List.foldl [1, 2, 3, 4], 0, &1 + &2
 
 Partials also allow us to pass named functions as arguments.
 
-{% highlight elixir %}
+{% highlight ruby %}
 def square(x) do
   x * x
 end
@@ -607,7 +607,7 @@ Test_fun(10).
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 test_fun = fn(x) ->
   cond do
     x > 10 ->
@@ -633,7 +633,7 @@ test_fun.(10)
 
 Elixir also provides a `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:
 
-{% highlight elixir %}
+{% highlight ruby %}
 if x > 10 do
   :greater_than_ten
 else
@@ -657,7 +657,7 @@ end
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 case { x, y } do
   { :a, :b } -> :ok
   { :b, :c } -> :good
@@ -671,7 +671,7 @@ Elixir provides a convenient construct for loops which Erlang does not have. In
 general, it is better to use one of the function provided by the ``Enum`` module
 or a list comprehension.
 
-{% highlight elixir %}
+{% highlight ruby %}
 loop [1, 2, 3, 4, 5], [] do
   [h|t], acc ->
     recur t, [h*h|acc]
@@ -708,7 +708,7 @@ end.
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 pid = Process.self
 
 pid <- { :hello }
@@ -746,7 +746,7 @@ uglify(bin) ->
 
 **Elixir**
 
-{% highlight elixir %}
+{% highlight ruby %}
 defmodule Contrived do
   def pretty_binary(bin) do
     "Pretty " <> bin
