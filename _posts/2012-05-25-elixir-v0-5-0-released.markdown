@@ -9,7 +9,7 @@ excerpt: We have finally released Elixir v0.5.0! This marks the first release si
 
 We have finally released [Elixir](http://elixir-lang.org/) v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
 
-If you don't care about any of these and just want to get started with Elixir, [click here](http://elixir-lang.org/getting_started/1.html)!
+If you don't care about any of these, you can go straight to our [Getting Started guide](http://elixir-lang.org/getting_started/1.html). If you do, keep on reading!
 
 ## Looking back
 
