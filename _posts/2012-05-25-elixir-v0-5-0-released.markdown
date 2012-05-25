@@ -19,7 +19,7 @@ At that time, Elixir attempted to be a considerable departure from Erlang and th
 
 After not feeling productive enough with that Elixir version, I have decided to take a break from Elixir to study old, new and emerging languages. The challenge was to not re-invent Erlang as a language, but how to provide the productivity and flexibility I expect from Elixir while staying a 100% compatible with Erlang.
 
-It was around October 2011, in a short stay during San Francisco, that I was able to come up with Yehuda Katz what would be [the foundation of Elixir's current version](http://github.com/josevalim/lego-lang). Development of the new Elixir version started a few days before 2012 and continued steady when the new year came in.
+It was around October 2011, during a short stay in San Francisco, that I came up with what would be [the foundation of Elixir's current version](http://github.com/josevalim/lego-lang) with the help of Yehuda Katz. Development of the new Elixir version started a few days before 2012 and continued steady when the new year came in.
 
 Around February of that year, feeling confident enough about the direction the language was moving (and initial benchmarks I had made at that point), I have pitched Elixir to [my company, Plataformatec](http://plataformatec.com.br/), and they have accepted to sponsor Elixir. With their help, Elixir developed even faster and that's what we are going to take a look next.
 
@@ -41,7 +41,7 @@ There are still many, many things to do! In the next months, we will continue wo
 
 We will also work on better integration and documentation on building Erlang systems. Erlang ships with the [Open Telecom Platform](http://en.wikipedia.org/wiki/Open_Telecom_Platform) which provides many tools to build distributed applications. In v0.5.0, all these tools are already available but we want to make the build process even simpler.
 
-In parallel, we will improve our [documentation generation tool](https://github.com/elixir-lang/exdoc) and [build tool tool](https://github.com/elixir-lang/mix) which will likely be merged into core when they are solid enough.
+In parallel, we will improve our [documentation generation tool](https://github.com/elixir-lang/exdoc) and [build tool](https://github.com/elixir-lang/mix) which will likely be merged into core when they are solid enough.
 
 Finally, we will continue improving the Standard Library. Although Elixir's goal is to rely on Erlang the most as possible, we also want to provide a small Standard Library which makes better use of Elixir semantics. For the next weeks, we will focus on improving the IO and File manipulation modules. New data types may also appear, for example, ranges come to my mind.
 
