@@ -2,6 +2,10 @@
 
 It is automatically transformed by [Jekyll](http://github.com/mojombo/jekyll) into a static site.
 
+## Development
+
+Development is done in the `next` branch, while `master` contains the docs and guides for the latest stable release.
+
 ## Contributing with the blog
 
   Create a new file inside `_posts/YYYY-MM-DD-post-title.markdown` following the template:
