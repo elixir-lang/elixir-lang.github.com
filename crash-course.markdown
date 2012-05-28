@@ -139,8 +139,6 @@ Elixir allows you to omit parentheses in function calls, Erlang does not.
     | some_function().  | some_function  |
     | sum(a, b)         | sum a, b       |
 
-### Module References
-
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
 {% highlight erlang %}
@@ -169,7 +167,7 @@ Erlang and Elixir have the same data types for the most part, but there is a num
 
 ### Atoms
 
-In Erlang, an `atom` is any identifier that starts with a small letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letters are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as module references. Atoms in Elixir always start with a colon `:`.
+In Erlang, an `atom` is any identifier that starts with a small letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letters are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as atom aliases. Atoms in Elixir always start with a colon `:`.
 
 **Erlang**
 
