@@ -156,12 +156,12 @@ The compiler is telling us that invoking the `join` function with two arguments 
 
 In order to support software-reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
 
-### 3.4.1 refer
+### 3.4.1 alias
 
-`refer` allows you to setup references to a given module. For instance, one can do:
+`alias` allows you to setup aliases for any given module name. For instance, one can do:
 
     defmodule Math do
-      refer MyList, as: List
+      alias MyList, as: List
     end
 
 And now, any reference to `List` will be automatically replaced by `MyList`. In case one wants to access the original `List`, it can be done by accessing the module directly via `__MAIN__`:
@@ -169,19 +169,19 @@ And now, any reference to `List` will be automatically replaced by `MyList`. In 
     List.values           #=> uses MyList.values
     __MAIN__.List.values  #=> uses List.values
 
-Calling `refer` without an `as` option sets the reference automatically to the last part of the module name, for example:
+Calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
 
-    refer Foo.Bar.Baz
+    alias Foo.Bar.Baz
 
 Is the same as:
 
-    refer Foo.Bar.Baz, as: Baz
+    alias Foo.Bar.Baz, as: Baz
 
-Notice that `refer` is **lexically scoped**, which allows you to set references inside specific functions:
+Notice that `alias` is **lexically scoped**, which allows you to set aliases inside specific functions:
 
     defmodule Math do
       def add(a, b) do
-        refer MyList, as: List
+        alias MyList, as: List
         # ...
       end
 
@@ -190,7 +190,7 @@ Notice that `refer` is **lexically scoped**, which allows you to set references 
       end
     end
 
-In the example above, since we are invoking `refer` inside the function `add`, the reference will just be valid inside the function `add`. `minus` won't be affected at all.
+In the example above, since we are invoking `alias` inside the function `add`, the alias will just be valid inside the function `add`. `minus` won't be affected at all.
 
 ### 3.4.2 require
 
@@ -201,7 +201,7 @@ In general, a module does not need to be required before usage, except if we wan
       MyMacros.my_if do_something, it_works
     end
 
-An attempt to call a macro that was not loaded will raise an error. Note that, as the `refer` directive, `require` is also lexically scoped.
+An attempt to call a macro that was not loaded will raise an error. Note that, as the `alias` directive, `require` is also lexically scoped.
 
 ### 3.4.3 import
 
@@ -232,7 +232,7 @@ And then we can use `only` or `except` to filter the macros being included. Fina
 
 In the example above, the imported `List.duplicate` is only visible within that specific function. `duplicate` won't be available in any other function in that module (or any other module for that matter).
 
-Note that importing a module automatically requires it. Furthermore, `import` also accept `as:` as option which is automatically passed to `refer` in order to create a reference.
+Note that importing a module automatically requires it. Furthermore, `import` also accepts `as:` as option which is automatically passed to `alias` in order to create an alias.
 
 ## 3.5 Module data
 
@@ -294,9 +294,9 @@ In Elixir, nesting a module inside the other affects its name:
       end
     end
 
-The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` in the same lexical scope. If the nested module `Bar` is moved to another file, it needs to be referenced via the full name (`Foo.Bar`) or a reference need to be set using the `refer` directive discussed above.
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` in the same lexical scope. If the nested module `Bar` is moved to another file, it needs to be referenced via the full name (`Foo.Bar`) or an alias need to be set using the `alias` directive discussed above.
 
-## 3.7 References
+## 3.7 Aliases
 
 In Erlang (and consequently in the Erlang VM), modules and functions are represented by atoms. For instance, this is valid Erlang code:
 
@@ -308,23 +308,23 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir references. A reference in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__.List`:
+This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__.List`:
 
     iex> is_atom(List)
     true
     iex> to_binary(List)
     "__MAIN__.List"
 
-References are powerful when used with the `refer` directive discussed above. For instance, let's imagine that our Math module relies heavily on the `List` module. If, at some point, we find out most algorithms in `List` could be implemented in a much faster way, we could implement `FastList` and use it as a drop-in replacement:
+Aliases are powerful when used with the `alias` directive discussed above. For instance, let's imagine that our `Math` module relies heavily on the `HashDict` module. If, at some point, we find out most algorithms in `HashDict` could be implemented in a much faster way, we could implement `FastHashDict` and use it as a drop-in replacement:
 
     defmodule Math do
-      refer FastList, as: List
+      alias FastHashDict, as: HashDict
       # ...
     end
 
-Now any reference to `List` will be automatically replaced by `FastList`. In case one wants to access the original `List`, it can be done by accessing the module name via `__MAIN__`:
+Now any reference to `HashDict` will be automatically replaced by `FastHashDict`. In case one wants to access the original `FastHashDict`, it can be done by accessing the module name via `__MAIN__`:
 
-    List.values           #=> uses FastList.values
-    __MAIN__.List.values  #=> uses List.values
+    HashDict.values           #=> uses FastHashDict.values
+    __MAIN__.HashDict.values  #=> uses HashDict.values
 
-> Note: a reference does not actually ensure the referenced module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
+> Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
