@@ -97,7 +97,9 @@ x + y
 
 ### Variable Names
 
-Variables in Erlang can only be assigned once. The Erlang shell provides a special command `f` that allows you to erase the binding of a variable or all variables at once. Elixir does not have this limitation.
+Variables in Erlang can only be assigned once. The Erlang shell provides a special command `f` that allows you to erase the binding of a variable or all variables at once.
+
+Elixir allows you to assign to a variable more than once. If you want to match against the value of a previously assigned variable, you should use `^`:
 
 **Erlang**
 
@@ -128,6 +130,8 @@ iex> a = 1
 1
 iex> a = 2
 2
+iex> ^a = 3
+** (MatchError) no match of right hand side value 11
 {% endhighlight %}
 
 ### Calling Functions
@@ -225,7 +229,7 @@ is_binary(<<"Hello">>).  %=> true
 {% endhighlight %}
 
 **Elixir**
-{% highlight ruby %}
+{% highlight text %}
 is_list 'Hello'          #=> true
 is_binary "Hello"        #=> true
 is_binary <<"Hello">>    #=> true
@@ -455,7 +459,7 @@ sum "a", "b"
 
 In addition, Elixir provides default values for arguments whereas Erlang does not.
 
-{% highlight ruby %}
+{% highlight text %}
 def mul_by(x, n // 2) do
   x * n
 end
