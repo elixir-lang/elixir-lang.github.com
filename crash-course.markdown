@@ -64,12 +64,12 @@ This section goes over some of the syntactic differences between the two languag
 
 Some operators are spelled differently.
 
-    | Erlang         | Elixir         | Meaning                                 | 
+    | Erlang         | Elixir         | Meaning                                 |
     -----------------------------------------------------------------------------
     | and            | NOT AVAILABLE  | Logical 'and', evaluates both arguments |
     | andalso        | and            | Logical 'and', short-circuits           |
     | or             | NOT AVAILABLE  | Logical 'or', evaluates both arguments  |
-    | orelse         | or             | Logical 'or', shirt-circuits            |
+    | orelse         | or             | Logical 'or', short-circuits            |
     | =:=            | ===            | A match operator                        |
     | =/=            | !==            | A negative match                        |
     | /=             | !=             | Not equals                              |
@@ -194,7 +194,7 @@ X = 10.
 im_a_var
 x = 10
 
-Module  # this is called a ref; Erlang does not have those
+Module  # this is called an atom alias; it expands to :'__MAIN__.Module'
 {% endhighlight %}
 
 It is also possible to create atoms that start with a character other than a lowercase letter. The syntax is different between the two languages:
@@ -261,10 +261,10 @@ dict = [key: 10, another_key: 20]
 
 ### Records
 
-The syntax for records differs significantly between Erlang and Elixir. Please refer to [this section][0] in the Erlang book to read a detailed introduction to records in Erlang. And [this chapter][1] from Elixir's Getting Started guide provides a description of records in Elixir.
+The syntax for records differs significantly between Erlang and Elixir. Please refer to [this section][1] in the Erlang book to read a detailed introduction to records in Erlang. And [this chapter][2] from Elixir's Getting Started guide provides a description of records in Elixir.
 
-[0]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
-[1]: http://elixir-lang.org/getting_started/4.html
+[1]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
+[2]: http://elixir-lang.org/getting_started/4.html
 
 ## Modules
 
@@ -350,9 +350,9 @@ HelloModule.State.new
 
 ## Function Syntax
 
-[This chapter][0] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, I'm briefly covering the main points and provide sample code both in Erlang and Elixir.
+[This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, I'm briefly covering the main points and provide sample code both in Erlang and Elixir.
 
-[0]: http://learnyousomeerlang.com/syntax-in-functions
+[3]: http://learnyousomeerlang.com/syntax-in-functions
 
 ### Pattern Matching
 
@@ -386,7 +386,7 @@ When defining a function with the same name multiple times, each such definition
 
 Elixir doesn't require punctuation to separate clause, each one looks like a standalone definition in Elixir.
 
-### Function Overloading 
+### Function Overloading
 
 Functions in Erlang and Elixir can be overloaded based on arity and guard expressions.
 
@@ -405,10 +405,10 @@ sum(a, b, c) -> a + b + c.
 def sum, do: 0
 def sum(a), do: a
 def sum(a, b), do: a + b
-def sum(a, b, c), do : a + b + c
+def sum(a, b, c), do: a + b + c
 {% endhighlight %}
 
-Guard expressions provide a concise way to define functions the accept a limited set of values based on some condition.
+Guard expressions provide a concise way to define functions that accept a limited set of values based on some condition.
 
 **Erlang**
 
@@ -468,7 +468,7 @@ mul_by 4, 3 #=> 12
 mul_by 4    #=> 8
 {% endhighlight %}
 
-### Anonymous Functions 
+### Anonymous Functions
 
 Anonymous functions are defined in the following way:
 
@@ -533,8 +533,7 @@ f.({:a, :b})
 
 ### First-Class Functions
 
-Anonymous functions are simply variables, so they can be passed as arguments to
-other functions and also can serve as a return value. There is a special syntax to allow named functions be treated in the same manner.
+Anonymous functions are first-class values, so they can be passed as arguments to other functions and also can serve as a return value. There is a special syntax to allow named functions be treated in the same manner.
 
 **Erlang**
 
@@ -582,7 +581,7 @@ Enum.map [1, 2, 3], square &1
 
 The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow like in imperative languages.
 
-### If 
+### If
 
 **Erlang**
 
@@ -647,7 +646,7 @@ end
 
 ### Case
 
-The ``case`` construct provides flow control based purely on pattern matching.
+The ``case`` construct provides control flow based purely on pattern matching.
 
 **Erlang**
 
@@ -672,7 +671,7 @@ end
 ### Loop
 
 Elixir provides a convenient construct for loops which Erlang does not have. In
-general, it is better to use one of the function provided by the ``Enum`` module
+general, it is better to use one of the functions provided by the ``Enum`` module
 or a list comprehension.
 
 {% highlight ruby %}
@@ -766,11 +765,11 @@ An example of calling Erlang code from Elixir is shown in the Notable Difference
 
 ## Further Reading
 
-Erlang's official documentation site has a nice [collection][0] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][1] offers even more useful code examples.
+Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples.
 
-Elixir also provides a [Getting Started Guide][2] and has [documentation available online][3].
+Elixir also provides a [Getting Started Guide][6] and has [documentation available online][7].
 
-[0]: http://www.erlang.org/doc/programming_examples/users_guide.html
-[1]: http://schemecookbook.org/Erlang/TOC
-[2]: http://elixir-lang.org/getting_started/1.html
-[3]: http://elixir-lang.org/docs
+[4]: http://www.erlang.org/doc/programming_examples/users_guide.html
+[5]: http://schemecookbook.org/Erlang/TOC
+[6]: http://elixir-lang.org/getting_started/1.html
+[7]: http://elixir-lang.org/docs
