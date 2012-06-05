@@ -619,7 +619,7 @@ test_fun = fn(x) ->
       :less_than_ten_positive
     x < 0 or x === 0 ->
       :zero_or_negative
-    _ ->
+    true ->
       :exactly_ten
   end
 end
