@@ -234,16 +234,16 @@ In the example above, the imported `List.duplicate` is only visible within that 
 
 Note that importing a module automatically requires it. Furthermore, `import` also accepts `as:` as option which is automatically passed to `alias` in order to create an alias.
 
-## 3.5 Module data
+## 3.5 Module attributes
 
-Elixir also allows modules to store their own data. The canonical example for such data is annotating that a module implements the OTP behavior called `gen_server`:
+Elixir brings the concept of module attributes from Erlang. The canonical example for attributes is annotating that a module implements the OTP behavior called `gen_server`:
 
     defmodule MyServer do
       @behavior :gen_server
       # ... callbacks ...
     end
 
-Now if the module above does not implement any of the callbacks required by `gen_server`, a warning will be raised. Another data used internally by Elixir is is the `@vsn`:
+Now if the module above does not implement any of the callbacks required by `:gen_server`, a warning will be raised. Another attribute used internally by Elixir is `@vsn`:
 
     defmodule MyServer do
       @vsn 2
@@ -251,7 +251,7 @@ Now if the module above does not implement any of the callbacks required by `gen
 
 `@vsn` refers to the version and is used by the code reloading mechanism to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
 
-Elixir has a handful of reserved data attributes. The following are currently functional in Elixir:
+Elixir has a handful of reserved attributes. The following are currently functional in Elixir:
 
 * `@behaviour` and `@behavior` - used for specifying an OTP or user-defined behavior;
 * `@vsn` - used for specifying the module version;
@@ -268,22 +268,14 @@ The following ones are also reserved by Elixir (as they have special semantics t
 * `@type` - provides a type to be used in @spec;
 * `@export_type` - provides a type to be used in @spec that can be accessed from external specs;
 
-Besides the built-in data attributes outlined above, any developer can also add custom data:
+Besides the built-in attributes outlined above, any developer can also add custom attributes:
 
     defmodule MyServer do
       @my_data 13
       IO.inspect @my_data #=> 13
     end
 
-After the module is compiled, the stored custom data can be accessed via `__info__(:data)` and it will return a keywords list:
-
-    MyServer.__info__(:data) #=> [my_data: 13]
-
-> Note: Erlang developers may be wondering why Elixir provides its own data abstraction instead of using Erlang attributes. Erlang attributes are simple lists and therefore also allow duplicated entries. For Elixir, since the same data may be read and updated several times during compilation, it makes more sense to have a dictionary structure instead of a list. Erlang developers wishing to have the attributes functionality have two options:
->
-> 1) Manually add Erlang attributes via the `Module.add_attribute(module, attribute, value)` API;
->
-> 2) Register a name as an attribute via the `Module.register_attribute(module, attr)` API; For instance, `@behavior` seen above is registered as Erlang attribute, allowing it to be added more than once to the same module;
+Differently from Erlang, such attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](http://elixir-lang.org/docs/Module.html#register_attribute/2).
 
 ## 3.6 Module nesting
 
