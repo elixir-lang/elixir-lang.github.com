@@ -317,12 +317,12 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__.List`:
+This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__-List`:
 
     iex> is_atom(List)
     true
     iex> to_binary(List)
-    "__MAIN__.List"
+    "__MAIN__-List"
 
 Aliases are powerful when used with the `alias` directive discussed above. For instance, let's imagine that our `Math` module relies heavily on the `HashDict` module. If, at some point, we find out most algorithms in `HashDict` could be implemented in a much faster way, we could implement `FastHashDict` and use it as a drop-in replacement:
 
@@ -337,3 +337,5 @@ Now any reference to `HashDict` will be automatically replaced by `FastHashDict`
     __MAIN__.HashDict.values  #=> uses HashDict.values
 
 > Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
+
+> Note: preferably, the alias List would be convert to the atom `__MAIN__.List` instead of `__MAIN__-List`, however there is currently a limitation in Erlang that does not allow us to use such atoms.
