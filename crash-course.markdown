@@ -702,28 +702,9 @@ end
 
 ## A Few Notes On Interoperability
 
-Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. What follows is a number of observations with regard to the syntax in both cases.
+Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. In order to avoid conflicts with Erlang, Elixir modules are prefixed by the word `__MAIN__` and separated using `-` instead of `.`.
 
-**Erlang**
-
-{% highlight erlang %}
-% Suppose we have compiled the module written in Elixir below.
-
-% Elixir modules live in the __MAIN__ namespace. We can save typing
-% by assigning the module name to a variable or defining a macro.
--module(erlang_contrived).
--export([prettify/1]).
--define(ExContrived, __MAIN__.Contrived).
-
-pretiffy(bin) ->
-  ?ExContrived:pretty_binary(bin).
-
-uglify(bin) ->
-  Contrived = '__MAIN__.Contrived',
-  Contrived:ugly_binary(bin).
-{% endhighlight %}
-
-**Elixir**
+Consider the following module in Elixir:
 
 {% highlight ruby %}
 defmodule Contrived do
@@ -735,6 +716,22 @@ defmodule Contrived do
     "Ugly " <> bin
   end
 end
+{% endhighlight %}
+
+It can be called from Erlang as follow:
+
+{% highlight erlang %}
+-module(erlang_contrived).
+-compile(export_all).
+
+uglify(bin) ->
+  '__MAIN__-Contrived':ugly_binary(bin).
+
+-define(Contrived, '__MAIN__-Contrived').
+
+%% Wrapping the module name in a macro is often convenient
+pretiffy(bin) ->
+  ?Contrived:pretty_binary(bin).
 {% endhighlight %}
 
 An example of calling Erlang code from Elixir is shown in the Notable Differences section above.
