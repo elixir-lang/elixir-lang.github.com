@@ -107,8 +107,8 @@ Alternatively, if you wanted to keep your function extensible but not overridabl
 
 * The new [File.exists?][2] function allows you to check if a file object exists in the file system. It can be a regular file, a directory, a socket, etc. If want to check for existence of a regular file, use [File.regular?][3] instead.
 
-  [2]: http://elixir-lang.org/docs/File.html#exists?/1
-  [3]: http://elixir-lang.org/docs/File.html#regular?/1
+  [2]: http://elixir-lang.org/docs/latest/File.html#exists?/1
+  [3]: http://elixir-lang.org/docs/latest/File.html#regular?/1
 
 * The [URI][4] module has got a new function for URL query parsing: [decode_query][5].
 
@@ -127,15 +127,15 @@ Alternatively, if you wanted to keep your function extensible but not overridabl
       Dict.get d, "find"
       #=> "a place to live"
 
-  [4]: http://elixir-lang.org/docs/URI.html
-  [5]: http://elixir-lang.org/docs/URI.html#decode_query/2
+  [4]: http://elixir-lang.org/docs/latest/URI.html
+  [5]: http://elixir-lang.org/docs/latest/URI.html#decode_query/2
 
 * [OptionParser][6] now supports argument aliases:
 
       OptionParser.Simple.parse(["-d"], [d: :debug])
       #=> { [debug: true], [] }
 
-  [6]: http://elixir-lang.org/docs/OptionParser.Simple.html
+  [6]: http://elixir-lang.org/docs/latest/OptionParser.Simple.html
 
 * Node names are now valid atoms:
 
