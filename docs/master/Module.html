@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Module</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Module
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module provides many functions to deal with modules during
+compilation time. It allows a developer to dynamically attach
+documentation, add, delete and register attributes and so forth.</p>
+
+<p>After the module is compiled, using many of the functions in
+this module will raise errors, since it is out of their purpose
+to inspect runtime data. Most of the runtime data can be inspected
+via the <code>__info__(attr)</code> function attached to each compiled module.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#add_attribute/3">add_attribute/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#add_compile_callback/3">add_compile_callback/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#add_doc/6">add_doc/6</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#concat/1">concat/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#concat/2">concat/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defined_functions/1">defined_functions/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defined_functions/2">defined_functions/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete_attribute/2">delete_attribute/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#eval_quoted/4">eval_quoted/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#function_defined?/2">function_defined?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#function_defined?/3">function_defined?/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#make_overridable/2">make_overridable/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#read_attribute/2">read_attribute/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#register_attribute/3">register_attribute/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#safe_concat/1">safe_concat/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#safe_concat/2">safe_concat/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="add_attribute/3">
+    <strong>add_attribute(module, key, value)</strong>
+  </p>
+  <div class="docstring"><p>Adds an Erlang attribute to the given module with the given
+key and value. The semantics of adding the attribute depends
+if the attribute was registered or not via <code>register_attribute/2</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule MyModule do
+  Module.add_attribute __MODULE__, :custom_threshold_for_lib, 10
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L347" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="add_compile_callback/3">
+    <strong>add_compile_callback(module, target, fun // :__compiling__)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L328" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="add_doc/6">
+    <strong>add_doc(module, line, kind, tuple, signature, doc)</strong>
+  </p>
+  <div class="docstring"><p>Attaches documentation to a given function. It expects
+the module the function belongs to, the line (a non negative
+integer), the kind (def or defmacro), a tuple representing
+the function and its arity and the documentation, which should
+be either a binary or a boolean.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule MyModule do
+  Module.add_doc(__MODULE__, __ENV__.line + 1, :def, { :version, 0 }, [], &quot;Manually added docs&quot;)
+  def version, do: 1
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L151" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="concat/1">
+    <strong>concat(list)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates the list of aliases and returns a new alias.
+It handles char lists, binaries and atoms.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Module.concat [Foo, Bar]    #=&gt; Foo.Bar
+Module.concat [Foo, &quot;Bar&quot;]  #=&gt; Foo.Bar
+Module.concat [Foo, &#39;Bar&#39;]  #=&gt; Foo.Bar
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L79" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="concat/2">
+    <strong>concat(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates the two given aliases and returns a new alias.
+It handles char lists, binaries and atoms.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Module.concat Foo, Bar    #=&gt; Foo.Bar
+Module.concat Foo, &quot;Bar&quot;  #=&gt; Foo.Bar
+Module.concat Foo, &#39;Bar&#39;  #=&gt; Foo.Bar
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L94" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defined_functions/1">
+    <strong>defined_functions(module)</strong>
+  </p>
+  <div class="docstring"><p>Return all functions defined in the given module.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Example do
+  def version, do: 1
+  Module.defined_functions __MODULE__ #=&gt; [{:version,1}]
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L278" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defined_functions/2">
+    <strong>defined_functions(module, kind)</strong>
+  </p>
+  <div class="docstring"><p>Returns all functions defined in te given module according
+to its kind.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Example do
+  def version, do: 1
+  Module.defined_functions __MODULE__, :def  #=&gt; [{:version,1}]
+  Module.defined_functions __MODULE__, :defp #=&gt; []
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L297" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="delete_attribute/2">
+    <strong>delete_attribute(module, key)</strong>
+  </p>
+  <div class="docstring"><p>Deletes all attributes that matches the given key.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule MyModule do
+  Module.add_attribute __MODULE__, :custom_threshold_for_lib, 10
+  Module.delete_attribute __MODULE__, :custom_threshold_for_lib
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L406" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="eval_quoted/4">
+    <strong>eval_quoted(env, quoted, binding // [], opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Evalutes the quotes contents in the given module context.
+Raises an error if the module was already compiled.</p>
+
+<h2>Options</h2>
+
+<p>This function accepts a list of options. The supported
+options are:</p>
+
+<ul>
+<li><p><code>:file</code> - The filename to be used in stacktraces
+and the file reported in the <strong>ENV</strong> variable.</p></li>
+<li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Foo do
+  contents = quote do: (def sum(a, b), do: a + b)
+  Module.eval_quoted __MODULE__, contents, []
+end
+
+Foo.sum(1, 2) #=&gt; 3
+</code></pre>
+
+<p>This function also accepts a <code>Macro.Env</code> as first argument. This
+is useful to evalute the quoted contents inside an existing environment:</p>
+
+<pre><code>defmodule Foo do
+  contents = quote do: (def sum(a, b), do: a + b)
+  Module.eval_quoted __ENV__, contents, []
+end
+
+Foo.sum(1, 2) #=&gt; 3
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L49" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="function_defined?/2">
+    <strong>function_defined?(module, tuple)</strong>
+  </p>
+  <div class="docstring"><p>Checks if a function was defined, regardless if it is
+a macro or a private function. Use <code>function_defined?/3</code>
+to assert for an specific type.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Example do
+  Module.function_defined? __MODULE__, { :version, 0 } #=&gt; false
+  def version, do: 1
+  Module.function_defined? __MODULE__, { :version, 0 } #=&gt; true
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L244" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="function_defined?/3">
+    <strong>function_defined?(module, tuple, kind)</strong>
+  </p>
+  <div class="docstring"><p>Checks if a function was defined and also for its <code>kind</code>.
+<code>kind</code> can be either :def, :defp or :defmacro.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Example do
+  Module.function_defined? __MODULE__, { :version, 0 }, :defp #=&gt; false
+  def version, do: 1
+  Module.function_defined? __MODULE__, { :version, 0 }, :defp #=&gt; false
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L263" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="make_overridable/2">
+    <strong>make_overridable(module, tuples)</strong>
+  </p>
+  <div class="docstring"><p>Makes the given functions in the given module overridable.
+An overridable function is lazily defined, allowing a
+developer to customize it.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L308" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="read_attribute/2">
+    <strong>read_attribute(module, key)</strong>
+  </p>
+  <div class="docstring"><p>Reads the given attribute from a module. If the attribute
+was marked as accumulate with <code>Module.register_attribute</code>,
+a list is always returned.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Foo do
+  Module.add_attribute __MODULE__, :value, 1
+  Module.read_attribute __MODULE__, :value #=&gt; 1
+
+  Module.register_attribute __MODULE__, :value, accumulate: true
+  Module.add_attribute __MODULE__, :value, 1
+  Module.read_attribute __MODULE__, :value #=&gt; [1]
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L383" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="register_attribute/3">
+    <strong>register_attribute(module, new, opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Registers an attribute. By registering an attribute, a developer
+is able to customize how Elixir will store and accumulate the
+attribute values.</p>
+
+<h2>Options</h2>
+
+<p>When registering an attribute, two options can be given:</p>
+
+<ul>
+<li><p><code>:accumulate</code> - Several calls to the same attribute will
+accumulate instead of override the previous one;</p></li>
+<li><p><code>:persist</code> - The attribute will be persisted in the Erlang
+Abstract Format. Useful when interfacing with Erlang libraries.</p></li>
+</ul>
+
+<p>By default, both options are true. Which means that registering
+an attribute without passing any options will revert the attribute
+behavior to exactly the same expected in Erlang.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule MyModule do
+  Module.register_attribute __MODULE__,
+    :custom_threshold_for_lib,
+    accumulate: true, persist: false
+
+  @custom_threshold_for_lib 10
+  @custom_threshold_for_lib 20
+  @custom_threshold_for_lib #=&gt; [20, 10]
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L444" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="safe_concat/1">
+    <strong>safe_concat(list)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates the list aliases and returns a new alias only
+if the alias was already referenced. If the alias was not
+referenced yet, fails with ArgumentError.
+It handles char lists, binaries and atoms.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Module.safe_concat [Unknown, Module]
+#=&gt; ArgumentError
+
+Module.safe_concat [List, Chars]
+#=&gt; List.Chars
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L113" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="safe_concat/2">
+    <strong>safe_concat(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates the two aliases and returns a new alias only
+if the alias was already referenced. If the alias was not
+referenced yet, fails with ArgumentError.
+It handles char lists, binaries and atoms.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Module.safe_concat Unknown, Module
+#=&gt; ArgumentError
+
+Module.safe_concat List, Chars
+#=&gt; List.Chars
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/module.ex#L132" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>
