@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Macro</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Macro
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module provides conveniences for working with macros.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#escape/1">escape/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#expand/2">expand/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_binary/1">to_binary/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <h2>Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#binary_ops/0">binary_ops/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unary_ops/0">unary_ops/0</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="escape/1">
+    <strong>escape(tuple)</strong>
+  </p>
+  <div class="docstring"><p>Recursively escapes the given value so it can be inserted
+into a syntax tree. Structures that are valid syntax nodes
+(like atoms, integers, binaries) are represented by themselves.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Macro.escape(:foo)
+#=&gt; :foo
+
+Macro.escape({ :a, :b, :c })
+#=&gt; { :{}, 0, [:a, :b, :c] }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L44" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="expand/2">
+    <strong>expand(aliases, env)</strong>
+  </p>
+  <div class="docstring"><p>Receives an expression representation and expands it. The following
+contents are expanded:</p>
+
+<ul>
+<li>Macros (local or remote);</li>
+<li>Aliases are expanded (if possible) and return atoms;</li>
+<li>All pseudo-variables (<strong>FILE</strong>, <strong>MODULE</strong>, etc);</li>
+</ul>
+
+<p>In case the expression cannot be expanded, it returns the expression itself.</p>
+
+<h2>Examples</h2>
+
+<p>In the example below, we have a macro that generates a module
+with a function named <code>name_length</code> that returns the length
+of the module name. The value of this function will be calculated
+at compilation time and not at runtime.</p>
+
+<p>Consider the implementation below:</p>
+
+<pre><code>defmacro defmodule_with_length(name, do: block) do
+  length = length(atom_to_list(name))
+
+  quote do
+    defmodule unquote(name) do
+      def name_length, do: unquote(length)
+      unquote(block)
+    end
+  end
+end
+</code></pre>
+
+<p>When invoked like this:</p>
+
+<pre><code>defmodule_with_length My.Module do
+  def other_function, do: ...
+end
+</code></pre>
+
+<p>The compilation will fail because <code>My.Module</code> when quoted
+is not an atom, but a syntax tree as follow:</p>
+
+<pre><code>{:__aliases__, 0, [:My, :Module] }
+</code></pre>
+
+<p>That said, we need to expand the aliases node above to an
+atom, so we can retrieve its length. Expanding the node is
+not straight-forward because we also need to expand the
+caller aliases. For example:</p>
+
+<pre><code>alias MyHelpers, as: My
+
+defmodule_with_length My.Module do
+  def other_function, do: ...
+end
+</code></pre>
+
+<p>The final module name will be <code>MyHelpers.Module</code> and not
+<code>My.Module</code>. With <code>Macro.expand</code>, such aliases are taken
+into consideration. Local and remote macros are also
+expanded. We could rewrite our macro above to use this
+function as:</p>
+
+<pre><code>defmacro defmodule_with_length(name, do: block) do
+  expanded = Macro.expand(name, __CALLER__)
+  length   = length(atom_to_list(expanded))
+
+  quote do
+    defmodule unquote(name) do
+      def name_length, do: unquote(length)
+      unquote(block)
+    end
+  end
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L265" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="to_binary/1">
+    <strong>to_binary(tree)</strong>
+  </p>
+  <div class="docstring"><p>Converts the given expression to a binary.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Macro.to_binary(quote do: foo.bar(1, 2, 3))
+#=&gt; &quot;foo.bar(1, 2, 3)&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L67" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="binary_ops/0">
+    <strong>binary_ops()</strong>
+  </p>
+  <div class="docstring"><p>Returns a list of binary operators. This is available
+as a macro so it can be used in guard clauses.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unary_ops/0">
+    <strong>unary_ops()</strong>
+  </p>
+  <div class="docstring"><p>Returns a list of unary operators. This is available
+as a macro so it can be used in guard clauses.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L27" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+    </div>
+  </body>
+</html>
