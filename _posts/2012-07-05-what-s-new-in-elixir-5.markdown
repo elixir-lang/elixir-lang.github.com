@@ -8,7 +8,7 @@ excerpt: The series is back after the first, official 0.5.0 release and we are p
 
 This is our first post from the What's New in Elixir series after [Elixir v0.5.0 was released](http://elixir-lang.org/blog/2012/05/25/elixir-v0-5-0-released/) and we have great improvements to share with you.
 
-Many of these improvements are related to how Elixir handle macros, but we also have the addition of ranges, some performance improvements and other minor changes.
+Many of these improvements are related to how Elixir handles macros, but we also have the addition of ranges, some performance improvements and other minor changes.
 
 ## API Changes ##
 
@@ -21,9 +21,9 @@ The syntax for list and bit comprehensions was changed slightly to be more expli
 
 ### The `__ENV__` pseudo-variable ###
 
-Elixir provides many pseudo-variables that allows you get information from the source code. For example, with `__MODULE__` you can get the current module name.
+Elixir provides many pseudo-variables that allow you to get information from the source code. For example, with `__MODULE__` you can get the current module name.
 
-In Elixir master, two pseudo-variables were deprecated (`__LINE__` and `__FUNCTION__`) in favor of the `__ENV__` variable. The `__ENV__` variable returns a [`Macro.Env` record](http://elixir-lang.org/docs/master/Macro.Env.html) that contains not only the current line and function but extra information as the aliases set, macros imported and modules required:
+In Elixir master, two pseudo-variables were deprecated (`__LINE__` and `__FUNCTION__`) in favor of the `__ENV__` variable. The `__ENV__` variable returns a [`Macro.Env` record](http://elixir-lang.org/docs/master/Macro.Env.html) that contains not only the current line and function but extra information such as the aliases set, macros imported and modules required:
 
     iex> __ENV__.aliases
     []
@@ -31,7 +31,7 @@ In Elixir master, two pseudo-variables were deprecated (`__LINE__` and `__FUNCTI
     []
     iex> L.flatten([1,[2],3])
     [1,2,3]
-    iex> __ENV__.aliases  
+    iex> __ENV__.aliases
     [{L,List}]
 
 Besides the `__ENV__` variable, all macros can also access a `__CALLER__` pseudo-variable that contains the environment information about the caller. With such information, Elixir programmers can create more robust macros, as showed [in this commit which rewrites the `access` macro from Erlang to Elixir](https://github.com/elixir-lang/elixir/commit/088eff4c19614101cea55dfef9966d4de89181e3).
@@ -58,7 +58,7 @@ Many tools in the Erlang community, as [dialyzer](http://www.erlang.org/doc/man/
 
 ### Ranges ###
 
-Elixir master has initial support to ranges. Ranges can be created with the operator `..` and integrate nicely with guard clauses. For example, a function that converts a student score to a message could be written as:
+Elixir master has initial support for ranges. Ranges can be created with the operator `..` and integrate nicely with guard clauses. For example, a function that converts a student score to a message could be written as:
 
     def score_to_message(x) when x in 0..40,   do: "Fail"
     def score_to_message(x) when x in 41..60,  do: "Pass"
@@ -86,8 +86,8 @@ In the example above, we use `Macro.expand` to expand the expression `!foo` and 
 
 ## Community ##
 
-Besides improvements to Elixir itself, Elixir's community is also working on tools to make their day-to-day life easier. One of such examples is [genx](https://github.com/yrashk/genx), which provides helpers to work with Erlang OTP behaviors as `application`, `gen_event` and others.
+Besides improvements to Elixir itself, Elixir's community is also working on tools to make their day-to-day life easier. One of such examples is [genx](https://github.com/yrashk/genx), which provides helpers to work with Erlang OTP behaviors such as `application`, `gen_event` and others.
 
 More importantly, [rebar_elixir_plugin](https://github.com/yrashk/rebar_elixir_plugin) was also released to allow existing Erlang developers to compile Elixir source code using [Rebar](https://github.com/basho/rebar). For those not familar with Rebar, it is a build tool for Erlang projects created by [the good folks at Basho, from Riak fame](http://basho.com/).
 
-Finally, our documentation generation tool [ExDoc](https://github.com/elixir-lang/exdoc) was improved to include the function signatures and arguments, making it more friendly to developers. [The documentation for Elixir master with such improvements is available here](http://elixir-lang.org/docs/master/). Enjoy!
+Finally, our documentation generation tool [ExDoc](https://github.com/elixir-lang/exdoc) was improved to include the function signatures and arguments, making it more friendly to developers. [The documentation for Elixir master with those improvements is available here](http://elixir-lang.org/docs/master/). Enjoy!
