@@ -53,19 +53,19 @@ As we are going to see in the next section (4.2), this "brackets syntax" is powe
 
 Depending on the default value, Elixir will define helpers to interact with the record. For example, the test framework that ships with Elixir, called ExUnit, defines a record which keeps track of how many tests were executed and the failures that happened. The record definition is similar to:
 
-    iex> defrecord Config, counter: 0, failures: []
+    iex> defrecord Config, counter: 0, failures: [], active: false
 
 Since `counter` is an integer, Elixir automatically defines a helper named `increment_counter` that will increase the counter value:
 
     iex> new_config = Config.new.increment_counter
-    {Config, 1, []}
+    {Config, 1, [], false}
     iex> new_config.counter
     1
 
 `increment_counter` also accepts a number to increment as argument:
 
     iex> new_config = Config.new.increment_counter 10
-    {Config, 10, []}
+    {Config, 10, [], false}
     iex> new_config.counter
     10
 
@@ -74,28 +74,42 @@ On the other hand, if the default value is a list Elixir will define the two fol
 * `prepend_field` - Receives another list and prepends its values
 * `merge_field` - Receives a keywords list and merges it into the current value;
 
+    iex> new_config = Config.new.prepend_failures(["Second"]).prepend_failures(["First"])
+	{Config, 0, ["First","Second"], false}
+	iex> new_config = Config.new.merge_failures([type: :warning])
+	{Config, 0. [{:type, :warning}], false}
+
+And if the default value is boolean Elixir will define a toggle helper:
+
+* `toggle_field` - Inverts true and false for false and true, respectively;
+
+    iex> new_config = Config.new.toggle_active
+	{Config, 0, [], true}
+	iex> new_config = Config.new.toggle_active.toggle_active
+	{Config, 0, [], false}
+
 Keep in mind that records (as any other data structure) in Elixir are immutable. Every time you update a record's field, a new record is returned with the corresponding field updated. For example:
 
     iex> new_config = Config.new
-    {Config, 0, []}
+    {Config, 0, [], false}
     iex> new_config.counter
     0
     iex> new_config.increment_counter
-    {Config, 1, []}
+    {Config, 1, [], false}
 
 Notice how `increment_counter` returned not simply an updated value of the `counter` field, but a whole new record which has its `counter` field set to the old value plus one. What will happen if we call `increment_counter` multiple times?
 
     iex> new_config.increment_counter
-    {Config, 1, []}
+    {Config, 1, [], false}
     iex> new_config.increment_counter
-    {Config, 1, []}
+    {Config, 1, [], false}
 
 Since `new_config` remains unchanged, we get a new record with the `counter` field's value set to `1` every time we call `increment_counter`. In order to keep the new record, we need to assign it to a variable:
 
     iex> new_config = new_config.increment_counter
-    {Config, 1, []}
+    {Config, 1, [], false}
     iex> new_config.increment_counter
-    {Config, 2, []}
+    {Config, 2, [], false}
 
 ## 4.2 Protocols
 
