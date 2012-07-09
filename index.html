@@ -7,15 +7,127 @@ layout: default
   <div class="hentry post">
     <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
 
-    <div class="sticky-header">
-      <h2 class="entry-title">What is Elixir?</h2>
+    <div class="entry-summary">
+      <p>Elixir is a functional meta-programming aware language built on top of the Erlang VM. It is a dynamic language with flexible and homoiconic syntax that leverages Erlang's abilities to build concurrent, distributed, fault-tolerant applications with hot code upgrades.</p>
+      <p>Elixir also supports polymorphism via protocols (similar to Clojure's), dynamic records, aliases and first-class support to associative data structures (usually known as dicts or hashes in other programming languages).</p>
+      <p>Finally, Elixir and Erlang share the same bytecode and data types. This means you can invoke Erlang code from Elixir (and vice-versa) without any conversion or performance hit. This allows a developer to mix the expressiveness of Elixir with the robustness and performance of Erlang.</p>
+      <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
     </div>
+  </div>
+
+  <div class="hentry post">
+    <h3>Main features</h3>
+  </div>
+
+  <div class="hentry post">
+    <h4>Everything is an expression</h4>
+    <div class="entry-summary">
+{% highlight ruby %}
+defmodule Hello do
+  IO.puts "Defining the function world"
+
+  def world do
+    IO.puts "Hello World"
+  end
+
+  IO.puts "Function world defined"
+end
+
+Hello.world
+{% endhighlight %}
+
+      <p>Running the program above will print:</p>
+
+<pre>
+Defining the function world
+Function world defined
+Hello World
+</pre>
+
+      <p>This allows a module to be defined in terms of many expressions, programmable by the developer, being the basic foundation for meta-programming. This is similar to what Joe Armstrong (creator of Erlang) proposes with his <a href="https://github.com/joearms/erl2" target="_blank">erl2 project</a>.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Meta-programming and DSLs</h4>
 
     <div class="entry-summary">
-      <p>Elixir is a programming language built on top of the Erlang VM. As Erlang, it is a functional language built to support distributed, fault-tolerant, non-stop applications with hot code swapping.</p>
-      <p>Elixir is also dynamic typed but, differently from Erlang, it is also homoiconic, allowing meta-programming via macros. Elixir also supports polymorphism via protocols (similar to Clojure's), dynamic records and provides a reference mechanism.</p>
-      <p>Finally, Elixir and Erlang share the same bytecode and data types. This means you can invoke Erlang code from Elixir (and vice-versa) without any conversion or performance hit. This allows a developer to mix the expressiveness of Elixir with the robustness and performance of Erlang.</p>
-      <p>If you want to install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
+      <p>With expressions and meta-programming, Elixir developers can easily create <a href="http://en.wikipedia.org/wiki/Domain-specific_language">Domain Specific Languages</a>:</p>
+
+{% highlight ruby %}
+defmodule MathTest do
+  use ExUnit.Case
+
+  test "can add two numbers" do
+    assert 1 + 1 == 2
+  end
+end
+{% endhighlight %}
+
+      <p>DSLs allow a developer to better to write abstractions for specific domains, often getting rid of boilerplate code.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Polymorphism via protocols</h4>
+
+    <div class="entry-summary">
+      <p>Protocols allow developers to provide type-specific functionality at chosen extension points. For example, the <code>Enum</code> module in Elixir is commonly used to iterate collections:</p>
+
+{% highlight ruby %}
+Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
+{% endhighlight %}
+
+      <p>Since the `Enum` module is built on top of protocols, it is not only limited to the data types that ships with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enum.Iterator</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
+
+{% highlight ruby %}
+file  = File.iterator("README.md")
+lines = Enum.map(file, fn(line) -> Regex.replace_all(%r/"/, line, "'") end)
+File.write("README.md", lines)
+{% endhighlight %}
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Pattern matching</h4>
+
+    <div class="entry-summary">
+      <p>Pattern matching allow developer to easily destructure data and access its contents:</p>
+
+{% highlight ruby %}
+{ User, name, age } = User.get("John Doe")
+{% endhighlight %}
+
+      <p>When mixed with guards, it allows us to easily express our problem:</p>
+      
+{% highlight ruby %}
+def serve_drinks({ User, name, age }) when age < 21 do
+  raise "No way!"
+end
+
+def serve_drinks({ User, name, age }) do
+  # Code that serves drinks!
+end
+
+serve_drinks User.get("John Doe")
+#=> Raises No way! if John is under 21
+{% endhighlight %}
+    </div>
+  </div>
+  
+  <div class="hentry post">
+    <h4>Erlang all the way down</h4>
+
+    <div class="entry-summary">
+      <p>After all, Elixir is still Erlang. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+
+{% highlight ruby %}
+:lists.flatten([1,[2],3]) #=> [1,2,3]
+{% endhighlight %}
+
+      <p>Since Elixir generates the same bytecode, Elixir is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and doesn't try to break any of those battle-field tested techniques Erlang is familiar for. Erlang type specifications, behaviors and module attributes are also supported. And <a href="https://github.com/yrashk/rebar_elixir_plugin" target="_blank">rebar</a> too!</p>
+      <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
     </div>
   </div>
 </div>
+
