@@ -64,7 +64,7 @@ defmodule MathTest do
 end
 {% endhighlight %}
 
-      <p>DSLs allow a developer to better to write abstractions for specific domains, often getting rid of boilerplate code.</p>
+      <p>DSLs allow a developer to write abstractions for specific domains, often getting rid of boilerplate code.</p>
     </div>
   </div>
 
@@ -78,7 +78,7 @@ end
 Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 {% endhighlight %}
 
-      <p>Since the `Enum` module is built on top of protocols, it is not only limited to the data types that ships with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enum.Iterator</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
+      <p>Since the <code>Enum</code> module is built on top of protocols, it is not only limited to the data types that ships with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enum.Iterator</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
 
 {% highlight ruby %}
 file  = File.iterator("README.md")
