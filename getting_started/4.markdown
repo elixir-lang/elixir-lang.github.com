@@ -75,18 +75,18 @@ On the other hand, if the default value is a list Elixir will define the two fol
 * `merge_field` - Receives a keywords list and merges it into the current value;
 
     iex> new_config = Config.new.prepend_failures(["Second"]).prepend_failures(["First"])
-	{Config, 0, ["First","Second"], false}
-	iex> new_config = Config.new.merge_failures([type: :warning])
-	{Config, 0. [{:type, :warning}], false}
+    {Config, 0, ["First","Second"], false}
+    iex> new_config = Config.new.merge_failures([type: :warning])
+    {Config, 0. [{:type, :warning}], false}
 
 And if the default value is boolean Elixir will define a toggle helper:
 
 * `toggle_field` - Inverts true and false for false and true, respectively;
 
     iex> new_config = Config.new.toggle_active
-	{Config, 0, [], true}
-	iex> new_config = Config.new.toggle_active.toggle_active
-	{Config, 0, [], false}
+    {Config, 0, [], true}
+    iex> new_config = Config.new.toggle_active.toggle_active
+    {Config, 0, [], false}
 
 Keep in mind that records (as any other data structure) in Elixir are immutable. Every time you update a record's field, a new record is returned with the corresponding field updated. For example:
 
