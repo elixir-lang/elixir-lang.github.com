@@ -459,36 +459,7 @@ As Elixir is an immutable language, the binding of the function is also immutabl
     (fn -> x = 2 end).()
     x #=> 1
 
-### 2.7.6 Loops
-
-Due to data structure immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
-
-    for(i = 0; i < array.length; i++) {
-      array[i] = array[i] * 2
-    }
-
-In the example above, we are mutating the array which is not possible in Elixir. Therefore, in functional languages recursion happens by calling an anonymous or a named function recursively, until we reach a condition. Consider the example below that manually sums all the items in the list:
-
-    iex> loop [1,2,3], 0 do
-    ...>   [h|t], acc ->
-    ...>     recur(t, h + acc)
-    ...>   [], acc ->
-    ...>     acc
-    ...> end
-    6
-
-In the example above, we pass  a list `[1,2,3]` and the initial value `0` as arguments to loop. The list `[1,2,3]` is then matched against `[h|t]` which assigns `h = 1` and `t = [2,3]` and 0 is assigned to `acc`.
-
-Then, we add the head of the list to the accumulator `h + acc` and call the loop again using the `recur` function, passing the tail of the list as argument. The tail will once again match the `[h|t]` until the list is empty, matching the final clause which returns the final result of `6`. In other words, the loop is called 4 times until the list is empty and the recursion stops:
-
-    loop [1,2,3], 0
-    loop [2,3], 1
-    loop [3], 3
-    loop [], 6
-
-> Note: `loop/recur` is also a Clojure idiom, although differently from Clojure, `recur` in Elixir does not ensure a tail call was made.
-
-### 2.7.7 Try
+### 2.7.6 Try
 
 The next control-flow mechanism is `try/catch/after`:
 
@@ -535,7 +506,7 @@ The common strategy then is to make explicit all arguments that are required aft
 
     x #=> returns the value of x or nil for failures
 
-### 2.7.8 Rescue
+### 2.7.7 Rescue
 
 For catching exceptions in Elixir, we can use `rescue` instead of `catch`. Besides allowing the same pattern matching rules as `catch`, `rescue` also allows a developer to easily rescue an exception by its name and not by its internal contents. Consider the following examples:
 
@@ -571,7 +542,7 @@ For catching exceptions in Elixir, we can use `rescue` instead of `catch`. Besid
 
 Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](http://elixir-lang.org/docs/latest/), by clicking "Records" in the upper left corner.
 
-### 2.7.9 Receive
+### 2.7.8 Receive
 
 The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 

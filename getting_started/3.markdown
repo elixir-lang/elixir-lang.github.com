@@ -90,7 +90,7 @@ Inside a module, we can define functions with `def` and private functions with `
     Math.sum(1, 2)    #=> 3
     Math.do_sum(1, 2) #=> ** (UndefinedFunctionError)
 
-Function declarations also support guards and multiple clauses. If a function has several clauses, Elixir will try each clause until it finds one that matches. For example, here is the implementation for a function that checks if the given number is zero or not:
+Function declarations also support guards and multiple clauses. If a function has several clauses, Elixir will try each clause until it finds one that matches. Here is the implementation of a function that checks if the given number is zero or not:
 
     defmodule Math do
       def zero?(0) do
@@ -108,7 +108,7 @@ Function declarations also support guards and multiple clauses. If a function ha
     Math.zero?([1,2,3])
     #=> ** (FunctionClauseError)
 
-Notice that giving an argument that does not match any of the clauses raises an error.
+Giving an argument that does not match any of the clauses raises an error.
 
 Named functions also support default arguments:
 
@@ -151,12 +151,48 @@ The compiler is telling us that invoking the `join` function with two arguments 
     ***Second join
     'Hello world'
 
+### 3.4 Recursion
 
-## 3.4 Directives
+Due to data structure immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
 
-In order to support software-reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
+    for(i = 0; i < array.length; i++) {
+      array[i] = array[i] * 2
+    }
 
-### 3.4.1 alias
+In the example above, we are mutating the array which is not possible here. Therefore, in functional languages recursion happens by calling a function recursively until we reach a condition. Consider the example below that manually sums all the items in the list:
+
+    defmodule Math do
+      def sum_list([h|t], acc) do
+        sum_list(t, h + acc)
+      end
+
+      def sum_list([], acc) do
+        acc
+      end
+    end
+
+    Math.sum_list([1,2,3], 0) #=> 6
+
+In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. As we saw in the previous section, when a function has many clauses, we will try each clause until find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to 0.
+
+Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
+
+    sum_list [1,2,3], 0
+    sum_list [2,3], 1
+    sum_list [3], 3
+    sum_list [], 6
+
+When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stacktrace (a stack which keeps our execution path) would grown until it reaches a limit. Erlang however does last call optimization in which the stack does not grow when a function exits by calling another function.
+
+Recursion and last call optimization are an important part of Erlang and are commonly used to create loops, specially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](http://elixir-lang.org/docs/latest/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
+
+    Enum.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
+
+## 3.5 Directives
+
+In order to facilitate software-reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
+
+### 3.5.1 alias
 
 `alias` allows you to setup aliases for any given module name. For instance, one can do:
 
@@ -192,7 +228,7 @@ Notice that `alias` is **lexically scoped**, which allows you to set aliases ins
 
 In the example above, since we are invoking `alias` inside the function `add`, the alias will just be valid inside the function `add`. `minus` won't be affected at all.
 
-### 3.4.2 require
+### 3.5.2 require
 
 In general, a module does not need to be required before usage, except if we want to use the macros available in that module. For instance, suppose we created our own `my_if` implementation in a module named `MyMacros`. If we want to invoke it, we need to first explicitly require `MyMacros`:
 
@@ -203,7 +239,7 @@ In general, a module does not need to be required before usage, except if we wan
 
 An attempt to call a macro that was not loaded will raise an error. Note that, as the `alias` directive, `require` is also lexically scoped.
 
-### 3.4.3 import
+### 3.5.3 import
 
 We use `import` whenever we want to easily access functions or macros from others modules without using the qualified name. For instance, if we want to use the `duplicate` function from `List` several times in a module and we don't want to always type `List.duplicate`, we can simply import it:
 
@@ -234,22 +270,22 @@ In the example above, the imported `List.duplicate` is only visible within that 
 
 Note that importing a module automatically requires it. Furthermore, `import` also accepts `as:` as option which is automatically passed to `alias` in order to create an alias.
 
-## 3.5 Module attributes
+## 3.6 Module attributes
 
-Elixir brings the concept of module attributes from Erlang with some differences. The canonical example for attributes is annotating that a module implements the OTP behavior called `gen_server`:
+Elixir brings the concept of module attributes from Erlang with some differences. The canonical example for attributes is annotating that a module implements an OTP behavior, for example `gen_server`:
 
     defmodule MyServer do
       @behavior :gen_server
       # ... callbacks ...
     end
 
-Now if the module above does not implement any of the callbacks required by `:gen_server`, a warning will be raised. Another attribute used internally by Elixir is `@vsn`:
+Now if the module above does not implement any of the callbacks required by the `:gen_server` behavior, a warning will be raised. Another attribute used internally by Elixir is `@vsn`:
 
     defmodule MyServer do
       @vsn 2
     end
 
-`@vsn` refers to the version and is used by the code reloading mechanism to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
+`@vsn` refers to the module version and is used by the code reloading mechanism to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
 
 Elixir has a handful of reserved attributes. The following are currently functional in Elixir:
 
@@ -278,7 +314,7 @@ Besides the built-in attributes outlined above, any developer can also add custo
       IO.inspect @my_data #=> 13
     end
 
-Differently from Erlang, such attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](http://elixir-lang.org/docs/Module.html#register_attribute/2).
+Differently from Erlang, user defined attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](http://elixir-lang.org/docs/Module.html#register_attribute/2).
 
 Finally notice that attributes can also be read inside functions:
 
@@ -292,18 +328,18 @@ Finally notice that attributes can also be read inside functions:
     MyServer.first_data #=> 11
     MyServer.second_data #=> 13
 
-It is important to note that reading an attribute takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. Check [the documentation for the module `Module` documentation](http://elixir-lang.org/docs/Module.html) for other functions to manipulate module attributes.
+From the example above we can notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. Check [the documentation for the module `Module` documentation](http://elixir-lang.org/docs/Module.html) for other functions to manipulate module attributes.
 
-## 3.6 Module nesting
+## 3.7 Nesting
 
-In Elixir, nesting a module inside the other affects its name:
+Modules in Elixir can be nested too:
 
     defmodule Foo do
       defmodule Bar do
       end
     end
 
-The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` in the same lexical scope. If the nested module `Bar` is moved to another file, it needs to be referenced via the full name (`Foo.Bar`) or an alias need to be set using the `alias` directive discussed above.
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same scope. If later the developer decides to move `Bar` to another file, it needs to be referenced by its full name (`Foo.Bar`) or an alias need to be set using the `alias` directive discussed above.
 
 ## 3.7 Aliases
 
@@ -324,17 +360,11 @@ This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a 
     iex> to_binary(List)
     "__MAIN__-List"
 
-Aliases are powerful when used with the `alias` directive discussed above. For instance, let's imagine that our `Math` module relies heavily on the `HashDict` module. If, at some point, we find out most algorithms in `HashDict` could be implemented in a much faster way, we could implement `FastHashDict` and use it as a drop-in replacement:
+Given a scope, aliases can also be set using the `alias` directive discussed above. For instance, it is particularly useful when interacting with Erlang code:
 
-    defmodule Math do
-      alias FastHashDict, as: HashDict
-      # ...
-    end
+    alias Erlang.application, as: Application
 
-Now any reference to `HashDict` will be automatically replaced by `FastHashDict`. In case one wants to access the original `FastHashDict`, it can be done by accessing the module name via `__MAIN__`:
-
-    HashDict.values           #=> uses FastHashDict.values
-    __MAIN__.HashDict.values  #=> uses HashDict.values
+This allows you to write code transparently without using the Erlang notation to access the `application` module.
 
 > Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
 
