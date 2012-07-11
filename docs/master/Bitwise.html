@@ -27,22 +27,28 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module provide macros for bitwise operators
-provided by Erlang. These macros can be used in guards.</p>
+          <p>This module provide macros and operators for bitwise operators.
+These macros can be used in guards.</p>
 
 <p>The easiest way to use is to simply import them into
 your module:</p>
 
-<pre><code>import Bitwise
+<pre><code>use Bitwise
 
-bnot 1      # -2
-band(1, 1) #=&gt; 1
+bnot 1   #=&gt; -2
+1 &amp;&amp;&amp; 1  #=&gt; 1
+</code></pre>
+
+<p>You can select to include only or skip operators by passing options:</p>
+
+<pre><code>use Bitwise, only_operators: true
+1 &amp;&amp;&amp; 1 #=&gt; 1
 </code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -54,6 +60,31 @@ band(1, 1) #=&gt; 1
         <h2>Macros summary</h2>
         <ul class="summary">
           <li>
+  <span class="summary_signature">
+    <a href="#&amp;&amp;&amp;/2">&amp;&amp;&amp;/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&lt;&lt;&lt;/2">&lt;&lt;&lt;/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&gt;&gt;&gt;/2">&gt;&gt;&gt;/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#^^^/2">^^^/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#__using__/1">__using__/1</a>
+  </span>
+</li>
+<li>
   <span class="summary_signature">
     <a href="#band/2">band/2</a>
   </span>
@@ -83,6 +114,16 @@ band(1, 1) #=&gt; 1
     <a href="#bxor/2">bxor/2</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#|||/2">|||/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#~~~/1">~~~/1</a>
+  </span>
+</li>
 
         </ul>
       
@@ -93,47 +134,102 @@ band(1, 1) #=&gt; 1
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
+  <p class="signature" id="&amp;&amp;&amp;/2">
+    <strong>&amp;&amp;&amp;(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Bitwise and as operator.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L67" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="&lt;&lt;&lt;/2">
+    <strong>&lt;&lt;&lt;(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Arithmetic bitshift left as operator.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L109" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="&gt;&gt;&gt;/2">
+    <strong>&gt;&gt;&gt;(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Arithmetic bitshift right as operator.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L123" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="^^^/2">
+    <strong>^^^(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Bitwise xor as operator.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L95" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="__using__/1">
+    <strong>__using__(options)</strong>
+  </p>
+  <div class="docstring"><p>Allow a developer to use this module in their programs with
+the following options:</p>
+
+<ul>
+<li><code>:only_operators</code> - Include only operators;</li>
+<li><code>:skip_operators</code> - Skip operators;</li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L29" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="band/2">
     <strong>band(left, right)</strong>
   </p>
   <div class="docstring"><p>Bitwise and.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L26" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L60" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bnot/1">
     <strong>bnot(expr)</strong>
   </p>
   <div class="docstring"><p>Bitwise not.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L19" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L46" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bor/2">
     <strong>bor(left, right)</strong>
   </p>
   <div class="docstring"><p>Bitwise or.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L33" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L74" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bsl/2">
     <strong>bsl(left, right)</strong>
   </p>
   <div class="docstring"><p>Arithmetic bitshift left.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L47" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L102" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bsr/2">
     <strong>bsr(left, right)</strong>
   </p>
   <div class="docstring"><p>Arithmetic bitshift right.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L54" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L116" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bxor/2">
     <strong>bxor(left, right)</strong>
   </p>
   <div class="docstring"><p>Bitwise xor.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/bitwise.ex#L40" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L88" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="|||/2">
+    <strong>|||(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Bitwise or as operator.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L81" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="~~~/1">
+    <strong>~~~(expr)</strong>
+  </p>
+  <div class="docstring"><p>Bitwise not as operator.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/bitwise.ex#L53" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

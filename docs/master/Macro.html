@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -97,7 +97,7 @@ Macro.escape({ :a, :b, :c })
 #=&gt; { :{}, 0, [:a, :b, :c] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L44" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L45" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="expand/2">
     <strong>expand(aliases, env)</strong>
@@ -112,6 +112,21 @@ contents are expanded:</p>
 </ul>
 
 <p>In case the expression cannot be expanded, it returns the expression itself.</p>
+
+<p>Notice that <code>Macro.expand</code> is not recursive and it does not
+expand child expressions. For example, <code>!some_macro</code> will expand as:</p>
+
+<pre><code>iex&gt; IO.puts Macro.to_binary Macro.expand(quote(do: !some_macro), __ENV__)
+case some_macro do
+  false -&gt; true
+  nil   -&gt; true
+  _     -&gt; false
+end
+</code></pre>
+
+<p>Notice that the <code>!</code> operator is a macro that expands to a case.
+Even though <code>some_macro</code> is also a macro, it is not expanded
+because it is a child expression given to <code>!</code> as argument.</p>
 
 <h2>Examples</h2>
 
@@ -178,7 +193,7 @@ function as:</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L265" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L280" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
     <strong>to_binary(tree)</strong>
@@ -191,7 +206,7 @@ end
 #=&gt; &quot;foo.bar(1, 2, 3)&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L67" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L68" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -206,7 +221,7 @@ end
   <div class="docstring"><p>Returns a list of binary operators. This is available
 as a macro so it can be used in guard clauses.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unary_ops/0">
     <strong>unary_ops()</strong>
@@ -214,7 +229,7 @@ as a macro so it can be used in guard clauses.</p>
   <div class="docstring"><p>Returns a list of unary operators. This is available
 as a macro so it can be used in guard clauses.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/macro.ex#L27" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L28" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
