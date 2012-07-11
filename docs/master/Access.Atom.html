@@ -29,7 +29,7 @@
 
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/access.ex#L123" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/access.ex#L44" target="_blank" class="view_source">Source</a>
 
       
 
@@ -54,18 +54,13 @@
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="access/2">
-    <strong>access(atom, keywords)</strong>
+    <strong>access(atom, arg2)</strong>
   </p>
-  <div class="docstring"><p>Access the atom via keywords which simply dispatches
-to the function new of the record passing the keywords
-as arguments.</p>
-
-<p>Notice that the access macro special-cases atoms to
-provide compilation time expansion for faster read
-and write access for records. For more information,
-check <code>Elxiir.Builtin.access/2</code>.</p>
+  <div class="docstring"><p>The access protocol can only be accessed by atoms
+at compilation time. If we reach this, we should raise
+an exception.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/access.ex#L134" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/access.ex#L50" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

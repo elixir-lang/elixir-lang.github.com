@@ -33,7 +33,7 @@ code evaluation and code loading.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -97,6 +97,16 @@ code evaluation and code loading.</p>
     <a href="#require_file/2">require_file/2</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#string_to_ast/2">string_to_ast/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#string_to_ast!/2">string_to_ast!/2</a>
+  </span>
+</li>
 
         </ul>
       
@@ -112,7 +122,7 @@ code evaluation and code loading.</p>
   </p>
   <div class="docstring"><p>Appends a path to Erlang VM code path.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L17" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L17" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compile_string/2">
     <strong>compile_string(string, file // &quot;nofile&quot;)</strong>
@@ -123,7 +133,7 @@ binary.</p>
 
 <p>For compiling many files at once, check <code>Elixir.ParallelCompiler</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L154" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L201" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/0">
     <strong>compiler_options()</strong>
@@ -131,7 +141,7 @@ binary.</p>
   <div class="docstring"><p>Loads the compilation options from the code server.
 Check compiler_options/1 for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L127" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L174" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/1">
     <strong>compiler_options(opts)</strong>
@@ -148,7 +158,7 @@ Notice debug information can be used to reconstruct the source code;</li>
 <li>ignore<em>module</em>conflict - when true, override modules that were already defined;</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L143" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L190" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_loaded/1">
     <strong>ensure_loaded(module)</strong>
@@ -159,7 +169,7 @@ it works as no-op. If the module was not loaded yet, it tries to load it.</p>
 <p>If it succeeds loading the module anyhow, it returns <code>{ :module, module }</code>.
 If not, returns <code>{ :error, reason }</code> with the error reason.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L165" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L212" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval/3">
     <strong>eval(string, binding // [], opts // [])</strong>
@@ -188,7 +198,7 @@ the location which already returns both fields as a keywords lists:</p>
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L50" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L50" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_quoted/3">
     <strong>eval_quoted(quoted, binding // [], opts // [])</strong>
@@ -221,7 +231,7 @@ the location which already returns both fields as a keywords lists:</p>
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L83" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="load_file/2">
     <strong>load_file(file, relative_to // nil)</strong>
@@ -233,21 +243,21 @@ loads it again. It returns the full path of the loaded file.</p>
 <p>When loading a file, you may skip passing .exs as extension as Elixir
 automatically adds it for you.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L97" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L144" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="loaded_files/0">
     <strong>loaded_files()</strong>
   </p>
   <div class="docstring"><p>Returns all the loaded files.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L10" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L10" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="prepend_path/1">
     <strong>prepend_path(path)</strong>
   </p>
   <div class="docstring"><p>Prepends a path to Erlang VM code path.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L24" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L24" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="require_file/2">
     <strong>require_file(file, relative_to // nil)</strong>
@@ -259,7 +269,41 @@ returns nil, otherwise the full path of the loaded file.</p>
 <p>When requiring a file, you may skip passing .exs as extension as
 Elixir automatically adds it for you.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/code.ex#L112" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L159" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="string_to_ast/2">
+    <strong>string_to_ast(string, opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Converts the given string to AST. It returns { :ok, ast }
+if it succeeds, { :error, { line, error, token } } otherwise.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>:file</code> - The filename to be used in stacktraces
+and the file reported in the <strong>ENV</strong> variable.</p></li>
+<li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L101" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="string_to_ast!/2">
+    <strong>string_to_ast!(string, opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Converts the given string to AST. It returns the ast if it succeeds,
+raises an exception otherwise. The exception is a TokenMissingError
+in case a token is missing (usually because the expression is incomplete),
+SyntaxError otherwise.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>:file</code> - The filename to be used in stacktraces
+and the file reported in the <strong>ENV</strong> variable.</p></li>
+<li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L125" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
