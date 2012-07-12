@@ -176,6 +176,6 @@ It is important to notice that this code has room for improvements. First, every
 
 Also, if we start storing which module each process is depending on, we are able to know whenever we have a deadlock or a dependency on an nonexistent file, allowing us to get rid of the timeout.
 
-All those improvements and other goodies like callbacks are implemented in Elixir source code and we recommend you take a look at both the [Elixir.ParallelCompiler](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/parallel_compiler.ex) and [Elixir.ErrorHandler](https://github.com/elixir-lang/elixir/blob/master/lib/elixir/error_handler.ex) modules to see all the details firsthand.
+All those improvements and other goodies like callbacks are implemented in Elixir source code and we recommend you take a look at both the [Elixir.ParallelCompiler](https://github.com/elixir-lang/elixir/blob/6182602f1205e2d9fc54666e0721270a27226fbc/lib/elixir/parallel_compiler.ex) and [Elixir.ErrorHandler](https://github.com/elixir-lang/elixir/blob/6182602f1205e2d9fc54666e0721270a27226fbc/lib/elixir/error_handler.ex) modules to see all the details firsthand.
 
 Happy coding!
