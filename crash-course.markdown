@@ -5,9 +5,24 @@ layout: default
 
 # Erlang/Elixir Syntax: A Crash Course
 
-This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, read the docs, sample code, etc.
+This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, support interoperability, read the docs, sample code, etc.
 
-## Running Erlang code
+This page is divided into sections:
+
+1. [Running Code](#running_code)
+2. [Notable Differences](#notable_differences)
+3. [Data Types](#data_types)
+4. [Modules](#modules)
+5. [Function Syntax](#function_syntax)
+6. [Control Flow](#control_flow)
+7. [Adding Elixir to existing Erlang programs](#interop)
+8. [Further reading](#further_reading)
+
+<div id="running_code"></div>
+
+## 1 Running Code
+
+### Erlang
 
 The fastest way to run some code is to launch the Erlang shell -- `erl`. Many code snippets on this page can be pasted directly into the shell. However, when you want to define a named function, Erlang expects it to be inside of a module, and modules have to be compiled. Here's a skeleton for a module:
 
@@ -32,7 +47,7 @@ ok
 
 You may keep the shell running while you're editing the file. Just don't forget to execute `c(module_name)` to load the latest changes. Note that the filename has to be the same as the one declared in the `-module()` directive, plus an extension `.erl`.
 
-## Running Elixir code
+### Elixir
 
 Elixir too has an interactive shell called `iex`. Compiling Elixir code can be done with `elixirc` (which is similar to Erlang's `erlc`). Elixir also provides an executable named `elixir` to run Elixir code. The module defined above can be written in Elixir as:
 
@@ -56,7 +71,9 @@ Hello world!
 :ok
 {% endhighlight %}
 
-## Notable differences
+<div id="notable_differences"></div>
+
+## 2 Notable Differences
 
 This section goes over some of the syntactic differences between the two languages.
 
@@ -74,7 +91,7 @@ Some operators are spelled differently.
     | =/=            | !==            | A negative match                        |
     | /=             | !=             | Not equals                              |
     | =<             | <=             | Less than or equals                     |
-    | !              | <-             | Send. See section _Processes_ below     |
+    | !              | <-             | Send messages                           |
 
 
 ### Delimiters
@@ -165,7 +182,9 @@ Erlang.lists.sort [3, 2, 1]
 All of the Erlang's modules can be accessed in this manner. All of the Erlang built-ins reside in the `Erlang.erlang` (or `:erlang`) module.
 
 
-## Data Types
+<div id="data_types"></div>
+
+## 3 Data Types
 
 Erlang and Elixir have the same data types for the most part, but there is a number of differences.
 
@@ -192,7 +211,7 @@ X = 10.
 im_a_var
 x = 10
 
-Module  # this is called an atom alias; it expands to :'__MAIN__.Module'
+Module  # this is called an atom alias; it expands to :'__MAIN__-Module'
 {% endhighlight %}
 
 It is also possible to create atoms that start with a character other than a lowercase letter. The syntax is different between the two languages:
@@ -214,7 +233,7 @@ is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
 {% endhighlight %}
 
-### Binaries
+### Lists and Binaries
 
 Elixir has a shortcut syntax for binaries.
 
@@ -236,7 +255,7 @@ is_binary <<"Hello">>    #=> true
 
 ### Orddicts
 
-Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1`. Elixir has a special syntax for this purpose:
+Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax:
 
 **Erlang**
 
@@ -264,7 +283,9 @@ The syntax for records differs significantly between Erlang and Elixir. Please r
 [1]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
 [2]: http://elixir-lang.org/getting_started/4.html
 
-## Modules
+<div id="modules"></div>
+
+## 4 Modules
 
 Each Erlang module lives in its own file which has the following structure:
 
@@ -280,7 +301,7 @@ fun() ->
 fun(list) when is_list(list) ->
   io:format('~s~n', list).
 
-% A private function
+% Non-exported functions are private
 priv() ->
   secret_info.
 {% endhighlight %}
@@ -346,7 +367,9 @@ HelloModule.State.new
 #=> { HelloModule.State, [:sally] }
 {% endhighlight %}
 
-## Function Syntax
+<div id="function_syntax"></div>
+
+## 5 Function Syntax
 
 [This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, I'm briefly covering the main points and provide sample code both in Erlang and Elixir.
 
@@ -382,11 +405,11 @@ end
 
 When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side, separated by a semi-colon ``;``, the last clause is terminated by a dot ``.``.
 
-Elixir doesn't require punctuation to separate clause, each one looks like a standalone definition in Elixir.
+Elixir doesn't require punctuation to separate clause, although the must be grouped together.
 
 ### Function Overloading
 
-Functions in Erlang and Elixir can be overloaded based on arity and guard expressions.
+In both Erlang and Elixir, a function is not identified only by its name, but by its name and arity. In both examples above, we are defining four different functions (all named `sum`, but with different arity):
 
 **Erlang**
 
@@ -575,9 +598,35 @@ Enum.map [1, 2, 3], square &1
 #=> [1, 4, 9]
 {% endhighlight %}
 
-## Control Flow
+<div id="control_flow"></div>
+
+## 6 Control Flow
 
 The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow like in imperative languages.
+
+### Case
+
+The ``case`` construct provides control flow based purely on pattern matching.
+
+**Erlang**
+
+{% highlight erlang %}
+case { X, Y } of
+{ a, b } -> ok;
+{ b, c } -> good;
+Else -> Else
+end
+{% endhighlight %}
+
+**Elixir**
+
+{% highlight ruby %}
+case { x, y } do
+  { :a, :b } -> :ok
+  { :b, :c } -> :good
+  other -> other
+end
+{% endhighlight %}
 
 ### If
 
@@ -632,6 +681,12 @@ test_fun.(10)
 #=> :exactly_ten
 {% endhighlight %}
 
+There are two important differences between Elixir's `cond` and Erlang's `if`:
+
+1) `cond` allows any expression on the left side while Erlang allow only the subset valid in guard clauses;
+
+2) `cond` uses Elixir's concepts of truthy and falsy values (everything is truthy except `nil` and `false`), Erlang's `if` expects strictly a boolean;
+
 Elixir also provides a `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:
 
 {% highlight ruby %}
@@ -639,30 +694,6 @@ if x > 10 do
   :greater_than_ten
 else
   :not_greater_than_ten
-end
-{% endhighlight %}
-
-### Case
-
-The ``case`` construct provides control flow based purely on pattern matching.
-
-**Erlang**
-
-{% highlight erlang %}
-case { X, Y } of
-{ a, b } -> ok;
-{ b, c } -> good;
-Else -> Else
-end
-{% endhighlight %}
-
-**Elixir**
-
-{% highlight ruby %}
-case { x, y } do
-  { :a, :b } -> :ok
-  { :b, :c } -> :good
-  other -> other
 end
 {% endhighlight %}
 
@@ -700,9 +731,13 @@ after
 end
 {% endhighlight %}
 
-## A Few Notes On Interoperability
+<div id="interop"></div>
 
-Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. In order to avoid conflicts with Erlang, Elixir modules are prefixed by the word `__MAIN__` and separated using `-` instead of `.`.
+## 7 Adding Elixir to existing Erlang programs
+
+### Parse transform
+
+Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. In order to avoid conflicts with Erlang, Elixir modules are prefixed by the word `__MAIN__` and separated using `-`:
 
 Consider the following module in Elixir:
 
@@ -726,17 +761,43 @@ It can be called from Erlang as follow:
 
 uglify(bin) ->
   '__MAIN__-Contrived':ugly_binary(bin).
-
--define(Contrived, '__MAIN__-Contrived').
-
-%% Wrapping the module name in a macro is often convenient
-pretiffy(bin) ->
-  ?Contrived:pretty_binary(bin).
 {% endhighlight %}
 
-An example of calling Erlang code from Elixir is shown in the Notable Differences section above.
+However this syntax is suboptimal. For this reason, Elixir ships with a parse transform that allows you to write the module names in a more convenient way:
 
-## Further Reading
+{% highlight erlang %}
+-module(erlang_improved).
+-compile(export_all).
+-compile({parse_transform, elixir_transform}).
+
+pretiffy(bin) ->
+  'Elixir.Contrived':pretty_binary(bin).
+{% endhighlight %}
+
+### Rebar integration
+
+If you are using rebar, you should be able to include Elixir git repository as a dependency:
+
+    https://github.com/elixir-lang/elixir.git
+
+Elixir is structured similarly to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen on the [source code repository](https://github.com/elixir-lang/elixir). Since rebar is not familiar with such structure, you will to tell explicitly which Elixir apps you want to load, for example, you may add the following to your `rebar.config`:
+
+{% highlight erlang %}
+{lib_dirs, [
+  "deps/elixir/lib/elixir/ebin",
+  "deps/elixir/lib/ex_unit/ebin"
+]}.
+{% endhighlight %}
+
+This should be enough to invoke Elixir functions straight from your Erlang code. If you are also going to write Elixir code, you can [install Elixir's rebar plugin for automatic compilation](https://github.com/yrashk/rebar_elixir_plugin).
+
+### Manual integration
+
+If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](http://elixir-lang.org/getting_started/1.html) and add the `lib` directory in your checkout to `ERL_LIBS`.
+
+<div id="further_reading"></div>
+
+## 8 Further Reading
 
 Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples.
 
