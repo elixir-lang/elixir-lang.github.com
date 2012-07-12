@@ -5,7 +5,7 @@ layout: default
 
 # Erlang/Elixir Syntax: A Crash Course
 
-This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Erlang code, read the docs, sample code, etc.
+This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, read the docs, sample code, etc.
 
 ## Running Erlang code
 
@@ -666,28 +666,6 @@ case { x, y } do
   { :b, :c } -> :good
   other -> other
 end
-{% endhighlight %}
-
-### Loop
-
-Elixir provides a convenient construct for loops which Erlang does not have. In
-general, it is better to use one of the functions provided by the ``Enum`` module
-or a list comprehension.
-
-{% highlight ruby %}
-loop [1, 2, 3, 4, 5], [] do
-  [h|t], acc ->
-    recur t, [h*h|acc]
-  [], acc ->
-    List.reverse acc
-end
-#=> [1, 4, 9, 16, 25]
-
-Enum.map [1, 2, 3, 4, 5], &1 * &1
-#=> [1, 4, 9, 16, 25]
-
-lc x in [1, 2, 3, 4, 5], do: x * x
-#=> [1, 4, 9, 16, 25]
 {% endhighlight %}
 
 ### Sending and Receiving Messages
