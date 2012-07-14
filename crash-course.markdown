@@ -780,7 +780,7 @@ If you are using rebar, you should be able to include Elixir git repository as a
 
     https://github.com/elixir-lang/elixir.git
 
-Elixir is structured similarly to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen on the [source code repository](https://github.com/elixir-lang/elixir). Since rebar is not familiar with such structure, you will to tell explicitly which Elixir apps you want to load, for example, you may add the following to your `rebar.config`:
+Elixir is structured similarly to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen in its [source code repository](https://github.com/elixir-lang/elixir). Since rebar does not recognize such structure, we need to explicitly add to our `rebar.config` which Elixir apps we want to use, for example:
 
 {% highlight erlang %}
 {lib_dirs, [
