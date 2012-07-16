@@ -60,42 +60,85 @@ Elixir uses module attributes described in chapter 3 to drive its documentation 
       def version, do: 1
     end
 
-In the example above, we are adding a module documentation to MyModule via `@moduledoc` and using `@doc` to document each function. When compiled with the `--docs` option, we will be able to inspect the documentation attributes in runtime (remember to start iex in the same directory you compiled the module in):
+In the example above, we are adding a module documentation to `MyModule` via `@moduledoc` and using `@doc` to document each function. When compiled, we are able to inspect the documentation attributes in runtime (remember to start iex in the same directory you compiled the module in):
 
-    $ elixirc my_module.ex --docs
+    $ elixirc my_module.ex
     $ iex
     iex> MyModule.__info__(:docs)
-    [{ { :version, 0 }, 5, :def, "Returns the version" }]
+    [{ { :version, 0 }, 5, :def, [], "Returns the version" }]
     iex> MyModule.__info__(:moduledoc)
     {1,"It does X"}
 
-`__info__(:docs)` returns a list of tuples where each tuple contains a function/arity pair, the line the function was defined on, the kind of the function (`def` or `defmacro`, docs applied to `defp` are always ignored) and the comments. The comment should be either a binary or a boolean.
+`__info__(:docs)` returns a list of tuples where each tuple contains a function/arity pair, the line the function was defined on, the kind of the function (`def` or `defmacro`, private functions cannot be documented), the function arguments and its documentation. The comment will be either a binary or `nil` (not given) or `false` (explicit no doc).
 
-Similarly, `__info__(:moduledoc)` returns a tuple with the line the module was defined on and its comments.
+Similarly, `__info__(:moduledoc)` returns a tuple with the line the module was defined on and its documentation.
 
-In case `--docs` was not provided during compilation, both calls would return nil. Elixir promotes the use of markdown in documentation, since it is a widely available format. Consider, for example, the documentation for `Module.add_doc` which allows us to dynamically add documentation to a function:
+Elixir promotes the use of markdown with heredocs to write readable documentation:
 
-    @doc """
-    Attaches documentation to a given function. It expects
-    the module the function belongs to, the line (a non negative
-    integer), the kind (`:def` or `:defmacro`), a tuple representing
-    the function and its arity and the documentation, which should
-    be either a binary or a boolean.
+    defmodule Math do
+      @moduledoc """
+      This module provides mathematical functions
+      as sin, cos and constants like pi.
+
+      ## Examples
+
+          Math.pi
+          #=> 3.1415...
+
+      """
+    end
+
+## 6.4 IEx Helpers
+
+Elixir's interactive console (IEx) ships with many functions to make developers life easier. One of these functions is called `d`, which shows documentation directly in the command line:
+
+    iex> d()
+    # IEx.Helpers
+
+    A bunch of helpers available in IEx.
+
+    ## Functions and Macros
+
+    * def c(files, path // ".")
+    * def d(module // IEx.Helpers, print_functions // true)
+    * def d(module, function, arity)
+    * def h()
+    * def m()
+    * def m(mod)
+    * def v(n)
+    :ok
+
+As you can see, invoking `d()` prints the documentation of `IEx.Helpers`, from there, we can navigate to any of the other helpers by giving its name and arity to get more information:
+
+    iex> d(:c, 2)
+    * def c(files, path // ".")
+
+    Expects a list of files to compile and a path
+    to write their object code to. It returns the name
+    of the compiled modules.
 
     ## Examples
 
-        defmodule MyModule do
-          Module.add_doc(__MODULE__, __LINE__ + 1,
-            :def, { :version, 0}, "Manually added docs")
-          def version, do: 1
-        end
+        c ["foo.ex"], "ebin"
+        #=> Foo
 
-    """
-    def add_doc(module, line, kind, tuple, doc)
+Now, we got the documentation for the `c/2` helper which can be used to compile files from IEx.
 
-In the example, we use heredocs to allow the documentation to span over several lines and use markdown to style the documentation.
+This functionality can also be used to print the documentation for any Elixir module in the system:
 
-## 6.4 Partial application
+    iex> d(Enum)
+    ...
+    iex> d(Enum, :each, 2)
+    ...
+
+The documentation for built-in functions can also be accessed directly or directly in the built-in module:
+
+    iex> d(:is_atom, 1)
+    ...
+    iex> d(Elixir.Builtin, :is_atom, 1)
+    ...
+
+## 6.5 Partial application
 
 Elixir also supports partial application. Let's suppose we have a list of strings and we want to calculate the size for each of them. We could do it in the following way:
 
@@ -118,12 +161,12 @@ Since operators are also function calls they can also be partially applied:
 
 All functions can be partially applied, except [Elixir's special forms](http://elixir-lang.org/docs/latest/Elixir.SpecialForms.html).
 
-## 6.5 Use
+## 6.6 Use
 
 `use` is a macro that provides a common API for extension. For instance, in order to use the `ExUnit` test framework that ships with Elixir, you simply need to use `ExUnit.Case` in your module:
 
     defmodule AssertionTest do
-      use ExUnit.Case, sync: true
+      use ExUnit.Case, async: true
 
       def test_always_pass do
         true = true
@@ -134,7 +177,7 @@ By calling `use`, a hook called `__using__` will be invoked in `ExUnit.Case` whi
 
     defmodule AssertionTest do
       require ExUnit.Case
-      ExUnit.Case.__using__(sync: true)
+      ExUnit.Case.__using__(async: true)
 
       def test_always_pass do
         true = true
@@ -143,7 +186,7 @@ By calling `use`, a hook called `__using__` will be invoked in `ExUnit.Case` whi
 
 In general, we recommend APIs to provide a `__using__` hook in case they want to expose functionality to developers.
 
-## 6.6 Comprehensions
+## 6.7 Comprehensions
 
 Elixir also provides list and bit comprehensions. List comprehensions allow you to quickly build a list from another list:
 
@@ -187,7 +230,7 @@ Remember, as strings are binaries and a binary is a bitstring, we can also use s
     iex> bc <<c>> inbits " hello world ", c != ?\s, do: <<c>>
     "helloworld"
 
-## 6.7 Pseudo variables
+## 6.8 Pseudo variables
 
 Elixir provides a set of pseudo-variables. Those variables can only be read and never assigned to. They are:
 
@@ -197,7 +240,7 @@ Elixir provides a set of pseudo-variables. Those variables can only be read and 
 * `__CALLER__` - Also returns a [Macro.Env](http://elixir-lang.org/docs/Macro.Env.html) record but with information of the calling site. `__CALLER__` is available only inside macros;
 * `__MAIN__` - The main namespace where modules are stored. A module `List` can also be accessed as `__MAIN__.List`;
 
-## 6.8 Native compilation
+## 6.9 Native compilation
 
 Elixir can compile to native code using the Hipe compiler. All you need to do is export the following environment variable before running your code:
 
