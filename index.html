@@ -89,6 +89,40 @@ File.write("README.md", lines)
   </div>
 
   <div class="hentry post">
+    <h4>Documentation as first-class citizen</h4>
+
+    <div class="entry-summary">
+      <p>Documentation is written in markdown using Elixir data structures for accessibility:</p>
+
+{% highlight ruby %}
+defmodule MyModule do
+  @moduledoc """
+  Documentation for my module
+  """
+
+  @doc "Hello"
+  def world do
+    "World"
+  end
+end
+{% endhighlight %}
+
+      <p>Different tools can easily access the documentation. For instance, IEx (Elixir's interactive shell) can show the documentation for any module or function with the help of the function <code>d</code>:</p>
+
+{% highlight text %}
+iex> d(MyModule)
+# MyModule
+
+Documentation for my module
+
+## Functions and macros
+
+* def world()
+{% endhighlight %}
+    </div>
+  </div>
+
+  <div class="hentry post">
     <h4>Pattern matching</h4>
 
     <div class="entry-summary">
@@ -102,15 +136,15 @@ File.write("README.md", lines)
       
 {% highlight ruby %}
 def serve_drinks({ User, name, age }) when age < 21 do
-  raise "No way!"
+  raise "No way #{name}!"
 end
 
 def serve_drinks({ User, name, age }) do
   # Code that serves drinks!
 end
 
-serve_drinks User.get("John Doe")
-#=> Raises No way! if John is under 21
+serve_drinks User.get("John")
+#=> Raises "No way John!" if John is under 21
 {% endhighlight %}
     </div>
   </div>
@@ -125,7 +159,7 @@ serve_drinks User.get("John Doe")
 :lists.flatten([1,[2],3]) #=> [1,2,3]
 {% endhighlight %}
 
-      <p>Since Elixir generates the same bytecode, Elixir is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and doesn't try to break any of those battle-field tested techniques Erlang is familiar for. Erlang type specifications, behaviors and module attributes are also supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
+      <p>Since Elixir generates the same bytecode, Elixir is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and doesn't try to break any of those battle-field tested techniques Erlang is familiar for. Erlang type specifications, behaviors and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
       <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
     </div>
   </div>
