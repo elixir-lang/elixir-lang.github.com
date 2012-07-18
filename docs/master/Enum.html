@@ -138,7 +138,7 @@ accept a certain type of argument. For dicts, the argument is always a
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#nth/2">nth/2</a>
+    <a href="#nth!/2">nth!/2</a>
   </span>
 </li>
 <li>
@@ -491,8 +491,8 @@ tuple itself.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L537" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="nth/2">
-    <strong>nth(collection, n)</strong>
+  <p class="signature" id="nth!/2">
+    <strong>nth!(collection, n)</strong>
   </p>
   <div class="docstring"><p>Finds the element at the nth index. Returns nil in case
 the given index is outside the range of the collection.</p>
@@ -501,9 +501,9 @@ the given index is outside the range of the collection.</p>
 
 <p>## Examples</p>
 
-<pre><code>  Enum.nth [2,4,6], 1 #=&gt; 2
-  Enum.nth [2,4,6], 3 #=&gt; 6
-  Enum.nth [2,4,6], 5 #=&gt; nil
+<pre><code>  Enum.nth! [2,4,6], 1 #=&gt; 2
+  Enum.nth! [2,4,6], 3 #=&gt; 6
+  Enum.nth! [2,4,6], 5 #=&gt; raises Enum.OutOfBoundsError
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L563" target="_blank" class="view_source">Source</a>

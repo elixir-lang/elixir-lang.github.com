@@ -33,9 +33,9 @@ as a way to configure and prepare them for testing.</p>
 <p>When used, it allows the following options:</p>
 
 <ul>
-<li>:sync - by default, ExUnit run test cases in parallel
-to each other. If this test case needs to run in sync,
-set sync to true.</li>
+<li>:async - configure Elixir to run that specific test case
+       in parallel with others. Must be used for performance
+       when your test cases do not change any global state;</li>
 </ul>
 
 <h2>Callbacks</h2>
@@ -48,7 +48,7 @@ tests should not be run.</p>
 <h2>Examples</h2>
 
 <pre><code>defmodule AssertionTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   def test_always_pass
     assert true
@@ -102,7 +102,7 @@ therefore avoiding hiding lines from the backtrace.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L65" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L67" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

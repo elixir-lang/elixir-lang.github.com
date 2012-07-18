@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>File.Error</title>
+    <title>File.CopyError</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,7 +21,7 @@
 
     <div id="content">
       <h1>
-        File.Error
+        File.CopyError
         
           <small>exception</small>
         
@@ -29,7 +29,7 @@
 
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 
       
 
@@ -45,13 +45,19 @@
           
             <li>
               <span class="summary_signature">
-                <strong>path:</strong> nil
+                <strong>destination:</strong> nil
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
                 <strong>reason:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>source:</strong> nil
               </span>
             </li>
           
@@ -69,6 +75,16 @@
 <li>
   <span class="summary_signature">
     <a href="#action/2">action/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#destination/1">destination/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#destination/2">destination/2</a>
   </span>
 </li>
 <li>
@@ -98,22 +114,22 @@
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#path/1">path/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#path/2">path/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#reason/1">reason/1</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
     <a href="#reason/2">reason/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#source/1">source/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#source/2">source/2</a>
   </span>
 </li>
 <li>
@@ -128,12 +144,17 @@
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#update_path/2">update_path/2</a>
+    <a href="#update_destination/2">update_destination/2</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
     <a href="#update_reason/2">update_reason/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_source/2">update_source/2</a>
   </span>
 </li>
 
@@ -150,91 +171,109 @@
     <strong>action(record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="action/2">
     <strong>action(value, record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="destination/1">
+    <strong>destination(record)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="destination/2">
+    <strong>destination(value, record)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="exception/1">
     <strong>exception(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="exception/2">
     <strong>exception(args, self)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="message/1">
     <strong>message(exception)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L33" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L40" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/0">
     <strong>new()</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/1">
     <strong>new(opts)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="path/1">
-    <strong>path(record)</strong>
-  </p>
-  <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="path/2">
-    <strong>path(value, record)</strong>
-  </p>
-  <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="reason/1">
     <strong>reason(record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="reason/2">
     <strong>reason(value, record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="source/1">
+    <strong>source(record)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="source/2">
+    <strong>source(value, record)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_keywords/1">
     <strong>to_keywords(record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="update_action/2">
     <strong>update_action(function, record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="update_path/2">
-    <strong>update_path(function, record)</strong>
+  <p class="signature" id="update_destination/2">
+    <strong>update_destination(function, record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="update_reason/2">
     <strong>update_reason(function, record)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_source/2">
+    <strong>update_source(function, record)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L39" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

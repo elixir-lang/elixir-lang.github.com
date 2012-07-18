@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Enum.OrdIterator.List</title>
+    <title>Mix.Tasks.Compile</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,15 +21,39 @@
 
     <div id="content">
       <h1>
-        Enum.OrdIterator.List
-        
-          <small>impl</small>
+        Mix.Tasks.Compile
         
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p>A meta task that compile source files. It simply runs the
+compilers registered in your project.</p>
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1237" target="_blank" class="view_source">Source</a>
+<h2>Configuration</h2>
+
+<ul>
+<li><p><code>:compilers</code> - compilers to be run, defaults to:</p>
+
+<p>[:elixir, :app]</p></li>
+</ul>
+
+<p>Can be configured in your projects as:</p>
+
+<pre><code>[compilers: [:elixir, :erlang, :app]]
+</code></pre>
+
+<h2>Command line options</h2>
+
+<ul>
+<li><code>--list</code> List all enabled compilers.
+       <code>mix help</code> should give you the full list.</li>
+</ul>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -40,12 +64,7 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#iterator/1">iterator/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#to_list/2">to_list/2</a>
+    <a href="#run/1">run/1</a>
   </span>
 </li>
 
@@ -58,17 +77,11 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="iterator/1">
-    <strong>iterator(list)</strong>
+  <p class="signature" id="run/1">
+    <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1238" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="to_list/2">
-    <strong>to_list(arg1, _)</strong>
-  </p>
-  <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1239" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.ex#L26" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
