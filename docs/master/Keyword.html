@@ -62,17 +62,17 @@ are equal or not.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#fetch/2">fetch/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#from_enum/1">from_enum/1</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
     <a href="#get/3">get/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get!/2">get!/2</a>
   </span>
 </li>
 <li>
@@ -151,20 +151,6 @@ Keyword.delete [b: 2], :a         #=&gt; [b: 2]
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L153" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="fetch/2">
-    <strong>fetch(list1, key)</strong>
-  </p>
-  <div class="docstring"><p>Gets the value for specific key. If key does not exist,
-an error is raised.</p>
-
-<h2>Examples</h2>
-
-<pre><code>Keyword.fetch [a: 1], :a      #=&gt; 1
-Keyword.fetch [a: 1], :b      #=&gt; raises KeyError[key: :b]
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L99" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
   <p class="signature" id="from_enum/1">
     <strong>from_enum(enum)</strong>
   </p>
@@ -193,6 +179,20 @@ Keyword.get [a: 1], :b, 3   #=&gt; 3
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L84" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get!/2">
+    <strong>get!(list1, key)</strong>
+  </p>
+  <div class="docstring"><p>Gets the value for specific key. If key does not exist,
+an error is raised.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Keyword.get! [a: 1], :a      #=&gt; 1
+Keyword.get! [a: 1], :b      #=&gt; raises KeyError[key: :b]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L99" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_values/2">
     <strong>get_values(list1, key)</strong>

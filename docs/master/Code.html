@@ -133,7 +133,7 @@ binary.</p>
 
 <p>For compiling many files at once, check <code>Elixir.ParallelCompiler</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L201" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L202" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/0">
     <strong>compiler_options()</strong>
@@ -141,7 +141,7 @@ binary.</p>
   <div class="docstring"><p>Loads the compilation options from the code server.
 Check compiler_options/1 for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L174" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L172" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/1">
     <strong>compiler_options(opts)</strong>
@@ -152,13 +152,16 @@ since they are stored by Elixir&#39;s Code Server.</p>
 <p>Available options are:</p>
 
 <ul>
-<li>docs       - when true, retain documentation in the compiled module;</li>
+<li>docs       - when true, retain documentation in the compiled module.
+           True by default;</li>
 <li>debug_info - when true, retain debug information in the compiled module.
-Notice debug information can be used to reconstruct the source code;</li>
-<li>ignore<em>module</em>conflict - when true, override modules that were already defined;</li>
+           This allows a developer to reconstruct the original source
+           code, for such reasons, false by default;</li>
+<li>ignore<em>module</em>conflict - when true, override modules that were already defined
+                       without raising errors, false by default;</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L190" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L191" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_loaded/1">
     <strong>ensure_loaded(module)</strong>
@@ -169,7 +172,7 @@ it works as no-op. If the module was not loaded yet, it tries to load it.</p>
 <p>If it succeeds loading the module anyhow, it returns <code>{ :module, module }</code>.
 If not, returns <code>{ :error, reason }</code> with the error reason.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L212" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L213" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval/3">
     <strong>eval(string, binding // [], opts // [])</strong>
