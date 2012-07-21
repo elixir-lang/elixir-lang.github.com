@@ -421,7 +421,6 @@ In the example above, the second clause will only match when x is positive. The 
     * tl(List)
     * trunc(Number)
     * tuple_size(Tuple)
-    * super?
 
 Many independent guard clauses can also be given at the same time. For example, consider a function that checks if the first element of a tuple or a list is zero. It could be written as:
 
@@ -444,17 +443,19 @@ In such cases, if there is an error in one of the guards, it won't affect the ne
 
 In Elixir, creating a function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
 
-    function = fn do
+    f = function do
       x, y when x > 0 -> x + y
       x, y -> x * y
     end
 
-    function.(1, 3)  #=> 4
-    function.(-1, 3) #=> -3
+    f.(1, 3)  #=> 4
+    f.(-1, 3) #=> -3
 
-A function with one clause can be define with a shortcut syntax as follow:
+A function with one clause can be defined with a (preferred) shortcut syntax as follow:
 
     function = fn x, y -> x + y end
+
+This is the syntax that's going to be used throughout this guide.
 
 As Elixir is an immutable language, the binding of the function is also immutable. This means that setting a variable inside the function does not affect its outer scope:
 
