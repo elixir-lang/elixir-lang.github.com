@@ -211,7 +211,7 @@ X = 10.
 im_a_var
 x = 10
 
-Module  # this is called an atom alias; it expands to :'__MAIN__-Module'
+Module  # this is called an atom alias; it expands to :'Elixir-Module'
 {% endhighlight %}
 
 It is also possible to create atoms that start with a character other than a lowercase letter. The syntax is different between the two languages:
@@ -737,7 +737,7 @@ end
 
 ### Parse transform
 
-Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. In order to avoid conflicts with Erlang, Elixir modules are prefixed by the word `__MAIN__` and separated using `-`:
+Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. In order to avoid conflicts with Erlang, Elixir modules are prefixed by the word `Elixir` and separated using `-`:
 
 Consider the following module in Elixir:
 
@@ -760,7 +760,7 @@ It can be called from Erlang as follow:
 -compile(export_all).
 
 uglify(bin) ->
-  '__MAIN__-Contrived':ugly_binary(bin).
+  'Elixir-Contrived':ugly_binary(bin).
 {% endhighlight %}
 
 However this syntax is suboptimal. For this reason, Elixir ships with a parse transform that allows you to write the module names in a more convenient way:
