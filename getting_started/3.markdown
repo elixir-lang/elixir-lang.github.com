@@ -200,10 +200,10 @@ In order to facilitate software-reuse, Elixir supports three directives. As we a
       alias MyList, as: List
     end
 
-And now, any reference to `List` will be automatically replaced by `MyList`. In case one wants to access the original `List`, it can be done by accessing the module directly via `__MAIN__`:
+And now, any reference to `List` will be automatically replaced by `MyList`. In case one wants to access the original `List`, it can be done by accessing the module directly via `Elixir`:
 
-    List.values           #=> uses MyList.values
-    __MAIN__.List.values  #=> uses List.values
+    List.values         #=> uses MyList.values
+    Elixir.List.values  #=> uses List.values
 
 Calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
 
@@ -353,12 +353,12 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `__MAIN__-List`:
+This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `Elixir-List`:
 
     iex> is_atom(List)
     true
     iex> to_binary(List)
-    "__MAIN__-List"
+    "Elixir-List"
 
 Given a scope, aliases can also be set using the `alias` directive discussed above. For instance, it is particularly useful when interacting with Erlang code:
 
@@ -368,4 +368,4 @@ This allows you to write code transparently without using the Erlang notation to
 
 > Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
 
-> Note: preferably, the alias List would be convert to the atom `__MAIN__.List` instead of `__MAIN__-List`, however there is currently a limitation in Erlang that does not allow us to use such atoms.
+> Note: preferably, the alias `List` would be convert to the atom `Elixir.List` instead of `Elixir-List`, however there is currently a limitation in Erlang that does not allow us to use such atoms.
