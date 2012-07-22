@@ -17,7 +17,7 @@ Sigils starting with uppercase letter never escaper characters nor interpret int
 
     %b-another binary-
 
-Internally, `%b` is translated as a function call to `__b__`. For instance, the docs for `%b` are available [in the function `__b__/1` defined in Elixir.Builtin module](http://elixir-lang.org/docs/Elixir.Builtin.html#__b__/1).
+Internally, `%b` is translated as a function call to `__b__`. For instance, the docs for `%b` are available [in the function `__b__/1` defined in `Kernel` module](http://elixir-lang.org/docs/Kernel.html#__b__/1).
 
 The sigils defined in Elixir by default are:
 
@@ -135,7 +135,7 @@ The documentation for built-in functions can also be accessed directly or direct
 
     iex> d(:is_atom, 1)
     ...
-    iex> d(Elixir.Builtin, :is_atom, 1)
+    iex> d(Kernel, :is_atom, 1)
     ...
 
 ## 6.5 Partial application
@@ -159,7 +159,7 @@ Since operators are also function calls they can also be partially applied:
     iex> Enum.map [1,2,3], &1 * 2
     [2,4,6]
 
-All functions can be partially applied, except [Elixir's special forms](http://elixir-lang.org/docs/latest/Elixir.SpecialForms.html).
+All functions can be partially applied, except [Elixir's special forms](http://elixir-lang.org/docs/latest/Kernel.SpecialForms.html).
 
 ## 6.6 Use
 
