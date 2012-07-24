@@ -197,6 +197,76 @@ Now you'll have two different tasks under the modules `Mix.Tasks.Riak.Dostuff` a
 
 You should use this feature when you have a bunch of related tasks that would be unwieldly if named completely independently of each other. If you have a few unrelated tasks, go ahead and name them however you like.
 
-## 5 Lots To Do
+## 5 Dependencies
+
+Mix is also able to manage git (so far) dependencies. Dependencies should be listed in project settings, as follow:
+
+{% highlight ruby %}
+def project do
+  [
+    deps: [
+      { :some_project, "0.3.0", git: "https://github.com/some_project/other.git" }
+    ]
+  ]
+end
+{% endhighlight %}
+
+Besides `:git`, it accepts two other options:
+
+* `:ref` - the reference (a commit, branch or tag) to checkout in the repository;
+* `:compile` - how to compile the dependency. If the project contains a `mix.exs` file, or `rebar.config` or a `Makefile`, Elixir will invoke one of them. If not, you can specify a command directly:
+
+      compile: "./configure && make"
+
+  You could also pass an atom to `:compile`, in such cases, a function with the name of the atom will be invoked in your current project passing the app name, allowing you to further customize its compilation:
+
+      def project do
+        [
+          deps: [
+            { :some_project, "0.3.0",
+              git: "https://github.com/some_project/other.git", compile: :using_foo }
+          ]
+        ]
+      end
+
+      def using_foo(app) do
+        # ...
+      end
+
+  Finally, if `:noop` is given to `:compile` nothing is done.
+
+Finally, Elixir has many tasks to manage such dependencies:
+
+* `mix deps` - List all dependencies and their status;
+* `mix deps.get` - Get all unavailable dependencies;
+* `mix deps.compile` - Compile dependencies;
+* `mix deps.update` - Update dependencies;
+* `mix deps.clean` - Remove dependencies
+
+Use `mix help` to get more information.
+
+## 6 Local tasks
+
+Elixir also ships with the ability of providing local tasks. Local tasks can be install from any URL and are available from anywhere within Elixir:
+
+    $ mix local.install http://elixir-lang/hello.beam
+
+If everything works as expected, the task will be installed on your machine and you can then successfully invoke it:
+
+    $ mix hello
+
+You can use `mix local` to show all available local tasks and their path. Removing a task is as easy as:
+
+    $ mix local.uninstall hello
+
+## 7 Do
+
+In some situations, it is desired to execute more than one task at once. For this purpose, Elixir also ships with a `do` task that simply executes all the given commands separated by comma:
+
+    $ mix do help compile, compile --list
+
+For instance, the command above will show help information for the compile task and then print the list of available compilers.
+
+## 8 Lots To Do
 
 Mix is still very much a work in progress. Feel free to visit [our issues tracker](https://github.com/elixir-lang/elixir/issues) to add issues for anything you'd like to see in Mix and feel free to contribute.
