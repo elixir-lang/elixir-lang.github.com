@@ -19,6 +19,13 @@ section: getting_started
       <li><a class="spec" href="/getting_started/7.html">Where to go next</a></li>
     </ol>
   </div>
+  <div class="widget">
+    <h3 class="widget-title">Applications</h3>
+    <ul>
+      <li><a class="spec" href="/getting_started/mix.html">Mix - a build tool for Elixir</a></li>
+      <li><a class="spec" href="/getting_started/ex_unit.html">ExUnit - an unit test framework</a></li>
+    </ul>
+  </div>
 </div>
 
 <div id="content">
@@ -26,6 +33,7 @@ section: getting_started
     {{ content }}
   </article><!-- .hfeed -->
 
+  {% if page.guide %}
   <div class="pagination loop-pagination">
     {% if page.guide > 1 %}
       <a href="/getting_started/{{page.guide | minus:1}}.html" class="previous page-numbers spec">&larr; Previous</a>
@@ -35,6 +43,7 @@ section: getting_started
       <a href="/getting_started/{{page.guide | plus:1}}.html" class="next page-numbers spec">Next &rarr;</a>
     {% endif %}
   </div>
+  {% endif %}
 </div><!-- #content -->
 
 {% include bottom.html %}
