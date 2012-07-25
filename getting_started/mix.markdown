@@ -39,7 +39,11 @@ defmodule MyProject.MixFile do
   def project do
     [
       app: :my_project,
-      version: "0.0.1"
+      version: "0.0.1",
+      deps: [
+        # Add dependencies here
+        # { :foo_bar, "0.1", git: "https://github.com/foo/bar.git" }
+      ]
     ]
   end
 
@@ -93,7 +97,7 @@ It is important to note a couple things:
 
 Since this file is a script file (`.exs`) and it also requires `test_helper.exs`, responsible for setting up the test framework, we can execute this file directly from the command line, which is very useful when you want to run a specific test and not the whole test suite, try it:
 
-    $ elixir test/my_project_test.exs
+    $ elixir -pa ebin test/my_project_test.exs
 
 ### 1.4 test/test_helper.exs
 
