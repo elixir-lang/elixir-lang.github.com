@@ -5,7 +5,7 @@ title: ExUnit
 
 # ExUnit
 
-ExUnit is an unit test framework that ships with Elixir.
+ExUnit is a unit test framework that ships with Elixir.
 
 ## 1 Getting started
 
