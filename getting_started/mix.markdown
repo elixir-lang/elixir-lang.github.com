@@ -273,4 +273,4 @@ For instance, the command above will show help information for the compile task 
 
 ## 8 Lots To Do
 
-Mix is still very much a work in progress. Feel free to visit [our issues tracker](https://github.com/elixir-lang/elixir/issues) to add issues for anything you'd like to see in Mix and feel free to contribute.
+Mix is still a work in progress. Feel free to visit [our issues tracker](https://github.com/elixir-lang/elixir/issues) to add issues for anything you'd like to see in Mix and feel free to contribute.
