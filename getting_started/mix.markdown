@@ -35,7 +35,7 @@ This is the file with your projects configuration. It looks like this:
 {% highlight ruby %}
 defmodule MyProject.MixFile do
   use Mix.Project
-  
+
   def project do
     [ app: :my_project,
       version: "0.0.1",
@@ -81,7 +81,7 @@ Code.require_file "../test_helper", __FILE__
 
 defmodule MyProjectTest do
   use ExUnit.Case
-  
+
   test "the truth" do
     assert true
   end
@@ -137,7 +137,7 @@ You can also note that, after you compile for the first time, Mix generates an `
 
 ## 4 Tasks
 
-In Mix, a task is simply an Elixir module named with a `Mix.Tasks` prefix and a `run/1` function. For example, the `compile` task is a module named `Mix.Tasks.Compile`.
+In Mix, a task is simply an Elixir module inside the `Mix.Tasks` namespace and a `run/1` function. For example, the `compile` task is a module named `Mix.Tasks.Compile`.
 
 Here is a simple example task:
 
@@ -162,7 +162,7 @@ When you invoke `mix hello`, this task will run and print `Hello, World!`. Mix u
 
 You're probably wondering why we have a `@moduledoc` and `@shortdoc`. Both are used by the `help` task for listing tasks and providing documentation of them. The former is used when `mix help TASK` is invoked, the latter in the general listing with `mix help`.
 
-Besides those two, there is also `@hidden` that, when set to true, marks the task as hidden so it does not show up on `mix help Task`. Any task without `@shortdoc` also won't show up.
+Besides those two, there is also `@hidden` attribute that, when set to true, marks the task as hidden so it does not show up on `mix help Task`. Any task without `@shortdoc` also won't show up.
 
 ### 4.1 Common API
 
@@ -265,7 +265,7 @@ Elixir has many tasks to manage such dependencies:
 * `mix deps.compile` - Compile dependencies;
 * `mix deps.update` - Update dependencies;
 * `mix deps.clean` - Remove dependencies files;
-* `mix deps.unlock` - Remove specific locks;
+* `mix deps.unlock` - Unlock the given dependencies;
 
 Use `mix help` to get more information.
 
@@ -291,6 +291,22 @@ In some situations, it is desired to execute more than one task at once. For thi
 
 For instance, the command above will show help information for the compile task and then print the list of available compilers.
 
-## 8 Lots To Do
+## 8 OptionParser
+
+Although not a Mix feature, Elixir ships with an `OptionParser` which is quite useful when creating mix tasks that accepts options. The `OptionParser` receives the argv and returns a tuple with parsed options and the remaining arguments:
+
+
+    OptionParser.parse(["--debug"])
+    #=> { [debug: true], [] }
+
+    OptionParser.parse(["--source", "lib"])
+    #=> { [source: "lib"], [] }
+
+    OptionParser.parse(["--source", "lib", "test/enum_test.exs", "--verbose"])
+    #=> { [source: "lib", verbose: true], ["test/enum_test.exs"] }
+
+Check [`OptionParser`](/docs/latest/OptionParser.html) documentation for more information.
+
+## 9 Lots To Do
 
 Mix is still a work in progress. Feel free to visit [our issues tracker](https://github.com/elixir-lang/elixir/issues) to add issues for anything you'd like to see in Mix and feel free to contribute.
