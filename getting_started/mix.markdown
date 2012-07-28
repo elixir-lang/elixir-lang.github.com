@@ -247,11 +247,11 @@ Besides `:git`, it accepts two other options:
 
 ### 5.1 Repeatability
 
-An important feature in any dependency management tool is repeatability. For this reason, when you first get your dependencies, Mix will create a file called `mix.lock`, which contains information about in which reference each dependency is checked out.
+An important feature in any dependency management tool is repeatability. For this reason when you first get your dependencies, Mix will create a file called `mix.lock` that contains in which reference each dependency is checked out.
 
 When another developer gets a copy of the same project, Mix will checkout exactly the same references, ensuring other developers can "repeat" the same setup.
 
-Locks is automatically updated when `deps.update` is called and can be removed when `deps.unlock` is called.
+Locks are automatically updated when `deps.update` is called and can be removed with `deps.unlock`.
 
 ### 5.2 Tasks
 
@@ -262,7 +262,7 @@ Elixir has many tasks to manage such dependencies:
 * `mix deps.compile` - Compile dependencies;
 * `mix deps.update` - Update dependencies;
 * `mix deps.clean` - Remove dependencies files;
-* `mix deps.unlock` - Remove all or specific locks;
+* `mix deps.unlock` - Remove specific locks;
 
 Use `mix help` to get more information.
 
