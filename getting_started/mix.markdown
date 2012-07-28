@@ -37,18 +37,19 @@ defmodule MyProject.MixFile do
   use Mix.Project
   
   def project do
-    [
-      app: :my_project,
+    [ app: :my_project,
       version: "0.0.1",
-      deps: [
-        # Add dependencies here
-        # { :foo_bar, "0.1", git: "https://github.com/foo/bar.git" }
-      ]
-    ]
+      deps: deps ]
   end
 
   # Configuration for the OTP application
   def application do
+    []
+  end
+
+  # Returns the list of dependencies in the format:
+  # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
+  defp deps do
     []
   end
 end
@@ -207,13 +208,18 @@ Mix is also able to manage git (so far) dependencies. Dependencies should be lis
 
 {% highlight ruby %}
 def project do
-  [
-    deps: [
-      { :some_project, "0.3.0", git: "https://github.com/some_project/other.git" }
-    ]
-  ]
+  [ app: :my_project,
+    version: "0.0.1",
+    deps: deps ]
+end
+
+defp deps do
+  [ { :some_project, "0.3.0", git: "https://github.com/some_project/other.git" },
+    { :another_project, "1.0.2", git: "https://github.com/another/main.git" } ]
 end
 {% endhighlight %}
+
+**Note:** Although not required, it is common to split dependencies into their own function;
 
 Besides `:git`, it accepts two other options:
 
@@ -239,13 +245,24 @@ Besides `:git`, it accepts two other options:
 
   Finally, if `:noop` is given to `:compile` nothing is done.
 
-Finally, Elixir has many tasks to manage such dependencies:
+### 5.1 Repeatability
+
+An important feature in any dependency management tool is repeatability. For this reason, when you first get your dependencies, Mix will create a file called `mix.lock`, which contains information about in which reference each dependency is checked out.
+
+When another developer gets a copy of the same project, Mix will checkout exactly the same references, ensuring other developers can "repeat" the same setup.
+
+Locks is automatically updated when `deps.update` is called and can be removed when `deps.unlock` is called.
+
+### 5.2 Tasks
+
+Elixir has many tasks to manage such dependencies:
 
 * `mix deps` - List all dependencies and their status;
 * `mix deps.get` - Get all unavailable dependencies;
 * `mix deps.compile` - Compile dependencies;
 * `mix deps.update` - Update dependencies;
-* `mix deps.clean` - Remove dependencies
+* `mix deps.clean` - Remove dependencies files;
+* `mix deps.unlock` - Remove all or specific locks;
 
 Use `mix help` to get more information.
 
