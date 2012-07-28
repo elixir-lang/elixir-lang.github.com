@@ -221,9 +221,12 @@ end
 
 **Note:** Although not required, it is common to split dependencies into their own function;
 
-Besides `:git`, it accepts two other options:
+Besides `:git`, it accepts other options:
 
-* `:ref` - the reference (a commit, branch or tag) to checkout in the repository;
+* `:ref` - an optional reference (a commit) to checkout the git repository;
+* `:tag` - an optional tag to checkout the git repository;
+* `:branch` - an optional branch to checkout the git repository;
+* `:submodules` - when true, initializes submodules recursively in the dependency;
 * `:compile` - how to compile the dependency. If the project contains a `mix.exs` file, or `rebar.config` or a `Makefile`, Elixir will invoke one of them. If not, you can specify a command directly:
 
       compile: "./configure && make"
