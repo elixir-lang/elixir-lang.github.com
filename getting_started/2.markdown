@@ -581,7 +581,9 @@ In order to exchange messages, each process has a mailbox where the received mes
     iex> current_pid = Process.self
 
     # Spawn another process that will send a message to current_pid
-    iex> spawn fn(do: current_pid <- { :hello, Process.self })
+    iex> spawn fn ->
+      current_pid <- { :hello, Process.self }
+    end
     <0.36.0>
 
     # Collect the message
@@ -602,10 +604,10 @@ You may not see exactly `<0.36.0>` back, but something similar. If there are no 
     ...> end
     Too late
 
-In most cases, we don't send messages directly with `<-` nor write `receive` control expressions. Instead, we use many of the abstractions provided by OTP which will be discussed later.
+Notice we spawned a new function using the `spawn` function passing another function as argument. Elixir also supports `spawn_link`, which spawns a child process but keeps the parent and child connected. This way, if the child dies unexpectedly, the parent receives a notification. [`Process`](/docs/latest/Process.html) and [`Node`](/docs/latest/Node.html) modules contains many functions to manage processes, including spawning and get information about processes running in other nodes in the network.
 
 ## 2.8 Built-in functions
 
-Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. All these functions imported by default are available in `Elixir.Builtin`](http://elixir-lang.org/docs/latest/Elixir.Builtin.html) and [Elixir special forms are available in `Elixir.SpecialForms`](http://elixir-lang.org/docs/latest/Elixir.SpecialForms.html).
+Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. All these functions imported by default are available in [`Elixir.Builtin`](http://elixir-lang.org/docs/latest/Elixir.Builtin.html) and [Elixir special forms are available in `Elixir.SpecialForms`](http://elixir-lang.org/docs/latest/Elixir.SpecialForms.html).
 
 All those functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily re-used between different components.

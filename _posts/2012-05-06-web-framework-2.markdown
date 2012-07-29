@@ -158,7 +158,7 @@ Let's think for a moment what the `multi_handle` macro should expand to. So far 
     defmacro multi_handle(path, [do: { :"->", _line, blocks }]) do
       # Iterate over each block in `blocks` and
       # produce a separate `handle` clause for it
-      Enum.map blocks, (fn do
+      Enum.map blocks, fn ->
         { [:get], code } ->
           quote hygiene: false do
             def handle(:get, unquote(path), _query) do
@@ -171,7 +171,7 @@ Let's think for a moment what the `multi_handle` macro should expand to. So far 
               unquote(code)
             end
           end
-      end)
+      end
     end
 
 When the macro is called, we receive all clauses under the `do` key with each HTTP verb and its implementation inside the syntax node `->`, in the order they are specified. Each clause is a tuple with two elements, the first one is a list of parameters given on the left side and the second one is the implementation, for example:
