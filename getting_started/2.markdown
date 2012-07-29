@@ -44,7 +44,7 @@ Since updating a tuple is expensive, when we want to add or remove elements, we 
     iex> length [head | tail]
     3
 
-In the example above, we have assigned the head of the list to the variable `head` and the tail of the list to the variable `tail`. The [`Enum` module](http://elixir-lang.org/docs/latest/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](http://elixir-lang.org/docs/latest/List.html) provides several helpers specific to lists:
+In the example above, we have assigned the head of the list to the variable `head` and the tail of the list to the variable `tail`. The [`Enum` module](/docs/latest/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](/docs/latest/List.html) provides several helpers specific to lists:
 
     iex> Enum.map [1,2,3], fn(x) -> x * 2 end
     [2,4,6]
@@ -68,7 +68,7 @@ The reason for such ordering is faster access. Differently from dictionaries, ke
     iex> [foo: 1, bar: 2, foo: 3]
     [{:bar,2},{:foo,1},{:foo,3}]
 
-The [`Keyword` module](http://elixir-lang.org/docs/latest/Keyword.html) contains several functions that allows a developer to manipulate a keywords list ignoring such duplicated entries or not. For example:
+The [`Keyword` module](/docs/latest/Keyword.html) contains several functions that allows a developer to manipulate a keywords list ignoring such duplicated entries or not. For example:
 
     iex> keywords = [foo: 1, bar: 2, foo: 3]
     iex> Keyword.get keywords, :foo
@@ -544,7 +544,7 @@ For catching exceptions in Elixir, we can use `rescue` instead of `catch`. Besid
       x -> x.message
     end
 
-Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](http://elixir-lang.org/docs/latest/), by clicking "Records" in the upper left corner.
+Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](/docs/latest/), by clicking "Records" in the upper left corner.
 
 ### 2.7.8 Receive
 
@@ -583,6 +583,6 @@ Notice we spawned a new function using the `spawn` function passing another func
 
 ## 2.8 Built-in functions
 
-Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. All these functions imported by default are available in `Kernel`](http://elixir-lang.org/docs/latest/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](http://elixir-lang.org/docs/latest/Kernel.SpecialForms.html).
+Elixir ships with many built-in functions automatically available in the current scope. Besides all the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as string and many others. All these functions imported by default are available in [`Kernel`](/docs/latest/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/latest/Kernel.SpecialForms.html).
 
 All those functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily re-used between different components.
