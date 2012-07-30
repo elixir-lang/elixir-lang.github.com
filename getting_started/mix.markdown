@@ -221,17 +221,34 @@ end
 
 **Note:** Although not required, it is common to split dependencies into their own function;
 
-Besides `:git`, it accepts other options:
+### 5.1 Source Code Management (SCM)
+
+In the example above, we have used `git` to specify our dependency.  Mix was designed in a way it can support multiple SCM tools, by default it ships with `:git` and `:raw`. The most common options are:
+
+* `:git` - the dependency is a git repository that is retrieved and updated by Mix;
+* `:raw` - the dependency is simply a raw path in the filesystem;
+* `:compile` - how to compile the dependency, more information in the next section;
+
+Each SCM may support custom options. `:git` supports the following:
 
 * `:ref` - an optional reference (a commit) to checkout the git repository;
 * `:tag` - an optional tag to checkout the git repository;
 * `:branch` - an optional branch to checkout the git repository;
 * `:submodules` - when true, initializes submodules recursively in the dependency;
-* `:compile` - how to compile the dependency. If the project contains a `mix.exs` file, or `rebar.config` or a `Makefile`, Elixir will invoke one of them. If not, you can specify a command directly:
+
+### 5.2 Compiling dependencies
+
+In order to compile a dependency, Mix looks into the repository for the best way to proceed. If the dependency contains one of the files below, it will proceed as follows:
+
+1. `mix.exs` - compiles the dependency directly with Mix;
+2. `rebar.config` or `rebar.config.script` - compiles using `rebar compile deps_dir=DEPS`, where `DEPS` is the directory where Mix install by default the project dependencies;
+3. `Makefile` - simply invokes `make`
+
+If the dependency does not contain any of the above, you can specify a command directly with the `:compile` option
 
       compile: "./configure && make"
 
-  You could also pass an atom to `:compile`, in such cases, a function with the name of the atom will be invoked in your current project passing the app name, allowing you to further customize its compilation:
+You could also pass an atom to `:compile` and, in such cases, a function with the name of the atom will be invoked in your current project with the app name as argument, allowing you to customize its compilation:
 
       def project do
         [
@@ -246,9 +263,9 @@ Besides `:git`, it accepts other options:
         # ...
       end
 
-  Finally, if `:noop` is given to `:compile` nothing is done.
+Finally, if `:noop` is given to `:compile`, nothing is done.
 
-### 5.1 Repeatability
+### 5.3 Repeatability
 
 An important feature in any dependency management tool is repeatability. For this reason when you first get your dependencies, Mix will create a file called `mix.lock` that contains in which reference each dependency is checked out.
 
@@ -256,7 +273,7 @@ When another developer gets a copy of the same project, Mix will checkout exactl
 
 Locks are automatically updated when `deps.update` is called and can be removed with `deps.unlock`.
 
-### 5.2 Tasks
+### 5.4 Tasks
 
 Elixir has many tasks to manage such dependencies:
 
@@ -271,7 +288,7 @@ Use `mix help` to get more information.
 
 ## 6 Local tasks
 
-Elixir also ships with the ability of providing local tasks. Local tasks can be install from any URL and are available from anywhere within Elixir:
+Elixir also ships with the ability to manage local tasks. Local tasks can be installed from any URL and are available from anywhere within Elixir:
 
     $ mix local.install http://elixir-lang/hello.beam
 
