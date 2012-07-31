@@ -66,16 +66,15 @@ conveniences on top of the simple <code>EEx.Engine</code>.</p>
 <p><code>EEx.SmartEngine</code> supports the following tags:</p>
 
 <pre><code>&lt;% Elixir expression - inline with output %&gt;
-&lt;&amp; Elxir matching expression - not printed &amp;&gt;
 &lt;%= Elixir expression - replace with result %&gt;
 </code></pre>
 
 <p>All expressions that output something to the template
-<em>must</em> use the equals sign (<code>=</code>). Since everything in
+<strong>must</strong> use the equals sign (<code>=</code>). Since everything in
 Elixir is a macro, there are no exceptions for this rule.
 For example, while some template languages would special-
 case <code>if</code> clauses, they are treated the same in EEx and
-also requires <code>=</code> in order to have their result printed:</p>
+also require <code>=</code> in order to have their result printed:</p>
 
 <pre><code>&lt;%= if true do %&gt;
   It is obviously true
@@ -84,29 +83,14 @@ also requires <code>=</code> in order to have their result printed:</p>
 &lt;% end %&gt;
 </code></pre>
 
-<p>The <code>&lt;&amp; ... &amp;&gt;</code> expression is only used in matching clauses.
-For example, the <code>cond</code> macro would be written as:</p>
-
-<pre><code>&lt;%= cond do %&gt;
-  &lt;&amp; false -&gt; &amp;&gt; Never printed
-  &lt;&amp; true  -&gt; &amp;&gt; always printed
-&lt;% end %&gt;
-</code></pre>
-
 <p>Notice that different engines may have different rules
 for each tag. Other tags may be added in future versions.</p>
 
 <h3>Macros</h3>
 
-<p><code>EEx.SmartEngine</code> also adds two macros to your template.
-The first one is the <code>for</code> macro, which allows you to easily
-loop a variable:</p>
-
-<pre><code>EEx.eval_string &quot;&lt;%= for x in [1,2,3] do %&gt;&lt;%= x %&gt;\n&lt;% end %&gt;&quot;, []
-#=&gt; &quot;1\n2\n3\n&quot;
-</code></pre>
-
-<p>It also adds defines a macro named <code>@</code> that allows easy access:</p>
+<p><code>EEx.SmartEngine</code> also adds some macros to your template.
+An example is the <code>@</code> macro which allows easy data access
+in a template:</p>
 
 <pre><code>EEx.eval_string &quot;&lt;%= @foo %&gt;&quot;, assigns: [foo: 1]
 #=&gt; 1
@@ -183,7 +167,7 @@ required by the template is not specified at compilation time.</p>
   <div class="docstring"><p>Get a <code>filename</code> and generate a quoted expression
 that can be evaluated by Elixir or compiled to a function.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L161" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L148" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compile_string/2">
     <strong>compile_string(source, options // [])</strong>
@@ -191,7 +175,7 @@ that can be evaluated by Elixir or compiled to a function.</p>
   <div class="docstring"><p>Get a string <code>source</code> and generate a quoted expression
 that can be evaluated by Elixir or compiled to a function.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L153" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L140" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_file/3">
     <strong>eval_file(filename, bindings // [], options // [])</strong>
@@ -208,7 +192,7 @@ EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
 #=&gt; &quot;foo baz&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L193" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L180" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_string/3">
     <strong>eval_string(source, bindings // [], options // [])</strong>
@@ -221,7 +205,7 @@ EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
 #=&gt; &quot;foo baz&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L175" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L162" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -255,7 +239,7 @@ end
 Sample.sample(1, 2) #=&gt; &quot;3&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L138" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L125" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="function_from_string/5">
     <strong>function_from_string(kind, name, source, args // [], options // [])</strong>
@@ -274,7 +258,7 @@ end
 Sample.sample(1, 2) #=&gt; &quot;3&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L107" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/eex/lib/eex.ex#L93" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
