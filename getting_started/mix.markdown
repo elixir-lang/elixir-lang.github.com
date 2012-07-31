@@ -28,6 +28,16 @@ Mix will create a directory named `my_project` with few files in it:
 
 Let's take a brief look at some of these.
 
+> Mix is an Elixir executable. This means that in order to run `mix`, you need to have elixir's executable in your PATH. If not, you can run it by passing the script as argument to elixir:
+>
+>     bin/elixir bin/mix new ./my_project
+>
+> Note that you can also execute any script in your PATH from Elixir via the -S option:
+>
+>     bin/elixir -S mix new ./my_project
+>
+> When using -S, elixir finds the script wherever it is in your PATH and executes it.
+
 ### 1.1 mix.exs
 
 This is the file with your projects configuration. It looks like this:
