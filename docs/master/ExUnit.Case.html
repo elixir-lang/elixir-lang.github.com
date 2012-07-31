@@ -40,10 +40,11 @@ as a way to configure and prepare them for testing.</p>
 
 <h2>Callbacks</h2>
 
-<p>This module defines two callbacks. <code>setup_all</code> and <code>teardown_all</code>
-which are executed before and after all tests respectively.
-Those callbacks needs to return :ok, otherwise we assume
-tests should not be run.</p>
+<p>This module defines four callbacks. <code>setup_all()</code> and
+<code>teardown_all()</code> which are executed before and after
+all tests respectively and <code>setup(test)</code> and <code>teardown(test)</code>
+which are executed before and after each test, receiving
+the test name as argument.</p>
 
 <h2>Examples</h2>
 
@@ -102,7 +103,7 @@ therefore avoiding hiding lines from the backtrace.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L67" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L68" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

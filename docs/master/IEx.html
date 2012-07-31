@@ -51,17 +51,22 @@ down version.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#simple/2">simple/2</a>
+    <a href="#cli/0">cli/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#start/2">start/2</a>
+    <a href="#run/1">run/1</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#tty/2">tty/2</a>
+    <a href="#simple/1">simple/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#tty/1">tty/1</a>
   </span>
 </li>
 
@@ -74,28 +79,34 @@ down version.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="simple/2">
-    <strong>simple(binding // [], io // IEx.UnicodeIO)</strong>
+  <p class="signature" id="cli/0">
+    <strong>cli()</strong>
   </p>
-  <div class="docstring"><p>Starts IEx simply using stdio. It requires the initial
-binding an the IO mechanism as argument.</p>
+  <div class="docstring"><p>Interface to start IEx from CLI.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L64" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L21" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="start/2">
-    <strong>start(binding // [], io // IEx.UnicodeIO)</strong>
+  <p class="signature" id="run/1">
+    <strong>run(opts // [])</strong>
   </p>
-  <div class="docstring"><p>Starts IEx checking if tty is available or not.
+  <div class="docstring"><p>Runs IEx checking if tty is available or not.
 If so, invoke tty, otherwise go with the simple iex.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L22" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L33" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="tty/2">
-    <strong>tty(binding // [], io // IEx.UnicodeIO)</strong>
+  <p class="signature" id="simple/1">
+    <strong>simple(opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Starts IEx simply using the current stdio.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L89" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="tty/1">
+    <strong>tty(opts // [])</strong>
   </p>
   <div class="docstring"><p>Starts IEx using a tty server.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L33" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L43" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
