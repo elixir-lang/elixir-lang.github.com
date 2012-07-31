@@ -43,7 +43,7 @@ Let's take a brief look at some of these.
 This is the file with your projects configuration. It looks like this:
 
 {% highlight ruby %}
-defmodule MyProject.MixFile do
+defmodule MyProject.Mixfile do
   use Mix.Project
 
   def project do
