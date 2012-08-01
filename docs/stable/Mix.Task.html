@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mix.Task</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mix.Task
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A simple module that provides conveniences for creating tasks.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#all_modules/0">all_modules/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#behaviour_info/1">behaviour_info/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#clear/0">clear/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/1">get/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#hidden?/1">hidden?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#load_all/0">load_all/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#moduledoc/1">moduledoc/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#reenable/1">reenable/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#run/2">run/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#shortdoc/1">shortdoc/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#task_name/1">task_name/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="all_modules/0">
+    <strong>all_modules()</strong>
+  </p>
+  <div class="docstring"><p>Returns all loaded modules. Modules that were not yet loaded
+won&#39;t show up. Check <code>load_all/0</code> if you want to preload all tasks.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L36" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="behaviour_info/1">
+    <strong>behaviour_info(atom1)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L8" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="clear/0">
+    <strong>clear()</strong>
+  </p>
+  <div class="docstring"><p>Clears all invoked tasks, allowing them to be reinvoked.
+Returns an ordset with all the tasks invoked thus far.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L135" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get/1">
+    <strong>get(task)</strong>
+  </p>
+  <div class="docstring"><p>Receives a task name and retrives the task module.</p>
+
+<h2>Exceptions</h2>
+
+<ul>
+<li><code>Mix.NoTaskError</code> - raised if the task could not be found;</li>
+<li><code>Mix.InvalidTaskError</code> - raised if the task is not a valid <code>Mix.Task</code></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L94" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="hidden?/1">
+    <strong>hidden?(module)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the task is hidden or not. Returns a boolean.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L72" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="load_all/0">
+    <strong>load_all()</strong>
+  </p>
+  <div class="docstring"><p>Loads all tasks in all code paths.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L25" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="moduledoc/1">
+    <strong>moduledoc(module)</strong>
+  </p>
+  <div class="docstring"><p>Gets the moduledoc for the given module.
+Returns the moduledoc or <code>nil</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L51" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="reenable/1">
+    <strong>reenable(task)</strong>
+  </p>
+  <div class="docstring"><p>Reenables a given task so it can be executed again down the stack.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L142" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="run/2">
+    <strong>run(task, args // [])</strong>
+  </p>
+  <div class="docstring"><p>Runs a <code>task</code> with the given <code>args</code>.</p>
+
+<p>If the task was not yet invoked, it returns <code>:ok</code>.</p>
+
+<p>If the task was already invoked, it does not run the task
+again and simply aborts with <code>:noop</code>.</p>
+
+<p>It may raise an exception if the task was not found
+or it is invalid. Check <code>get/2</code> for more information.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L118" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="shortdoc/1">
+    <strong>shortdoc(module)</strong>
+  </p>
+  <div class="docstring"><p>Gets the shortdoc for the given module.
+Returns the shortdoc or <code>nil</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L62" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="task_name/1">
+    <strong>task_name(module)</strong>
+  </p>
+  <div class="docstring"><p>Returns the task name for the given module.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L82" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

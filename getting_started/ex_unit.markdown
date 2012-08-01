@@ -31,7 +31,7 @@ In this chapter, we will discuss the most common features available in ExUnit an
 
 ## 2 ExUnit
 
-ExUnit is started using `ExUnit.start`. This function accepts a couple options, so [check its documentation](/docs/latest/ExUnit.html) for more details. For now, we will just detail the most common ones:
+ExUnit is started using `ExUnit.start`. This function accepts a couple options, so [check its documentation](/docs/stable/ExUnit.html) for more details. For now, we will just detail the most common ones:
 
 * `:formatter` - When you run tests with ExUnit, all the IO is done by [the formatter](https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/formatter.ex). Developers can define their own formatters and this is the configuration that tells ExUnit to use a custom formatter;
 
@@ -79,7 +79,7 @@ Which is more legible. The test macro accepts either a binary or an atom as name
 
 ### 3.3 Assertions
 
-Another convenience provided by `ExUnit.Case` is to automatically import a set of assertion macros and functions, available in [`ExUnit.Assertions`](/docs/latest/ExUnit.Assertions.html).
+Another convenience provided by `ExUnit.Case` is to automatically import a set of assertion macros and functions, available in [`ExUnit.Assertions`](/docs/stable/ExUnit.Assertions.html).
 
 In the majority of tests, the only assertion macros you will need to use are `assert` and `refute`:
 
@@ -106,7 +106,7 @@ assert_raise ArithmeticError, "bad argument in arithmetic expression", fn ->
 end
 {% endhighlight %}
 
-So don't forget to check [`ExUnit.Assertions`' documentation](/docs/latest/ExUnit.Assertions.html) for more examples.
+So don't forget to check [`ExUnit.Assertions`' documentation](/docs/stable/ExUnit.Assertions.html) for more examples.
 
 ### 3.4 Callbacks
 

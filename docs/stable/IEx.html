@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IEx</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        IEx
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module implements interactive Elixir. It provides a main
+function, <code>start</code> which will either delegate to <code>tty</code> or <code>simple</code>.
+The former is meant for systems where tty is available and relies
+on it in order to work properly. This makes all control commands
+available in tty available to the developer.</p>
+
+<p>In case <code>tty</code> is not available (for example, Windows), a
+developer may invoke <code>simple</code> which starts a stripped
+down version.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L3" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#cli/0">cli/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#run/1">run/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#simple/1">simple/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#tty/1">tty/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="cli/0">
+    <strong>cli()</strong>
+  </p>
+  <div class="docstring"><p>Interface to start IEx from CLI.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L21" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="run/1">
+    <strong>run(opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Runs IEx checking if tty is available or not.
+If so, invoke tty, otherwise go with the simple iex.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L33" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="simple/1">
+    <strong>simple(opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Starts IEx simply using the current stdio.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L89" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="tty/1">
+    <strong>tty(opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Starts IEx using a tty server.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L43" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Binary.Inspect.List</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Binary.Inspect.List
+        
+          <small>impl</small>
+        
+      </h1>
+
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L136" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#container_join/3">container_join/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#inspect/1">inspect/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="container_join/3">
+    <strong>container_join(list1, acc, last)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L169" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="inspect/1">
+    <strong>inspect(thing)</strong>
+  </p>
+  <div class="docstring"><p>Represents a list checking if it can be printed or not.
+If so, a single-quoted representation is returned,
+otherwise the brackets syntax is used.</p>
+
+<p>Inspecting a list is conservative as it does not try
+to guess how the list is encoded. That said, <code>&#39;josé&#39;</code>
+will likely be inspected as <code>[106,111,115,195,169]</code>
+because we can&#39;t know if it is encoded in utf-8
+or iso-5569-1, which is common in Erlang libraries.</p>
+
+<h2>Examples</h2>
+
+<pre><code>inspect(&#39;bar&#39;)       #=&gt; &#39;bar&#39;
+inspect([0|&#39;bar&#39;])   #=&gt; &quot;[0,98,97,114]&quot;
+inspect([:foo,:bar]) #=&gt; &quot;[:foo, :bar]&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L157" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

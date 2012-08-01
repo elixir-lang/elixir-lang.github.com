@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mix.Project</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mix.Project
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A module that provides conveniences for defining and working
+with projects.</p>
+
+<h2>Examples</h2>
+
+<p>In order to configure Mix, a developer needs to use
+<code>Mix.Project</code> in a module and define a function named
+<code>project</code> that returns a keywords list with configuration.</p>
+
+<pre><code>defmodule MyApp do
+  use Mix.Project
+
+  def project do
+    [
+      app: :my_app,
+      vsn: &quot;0.6.0&quot;
+    ]
+  end
+end
+</code></pre>
+
+<p>After defined, the configuration for this project can be read
+as <code>Mix.project/0</code>. Notice that config won&#39;t fail if a
+project is not defined, this allows many of mix tasks to work
+even without a project.</p>
+
+<p>In case the developer needs a project or want to access a special
+function in the project, he can access <code>Mix.Project.current/0</code>
+which fails with <code>Mix.NoProjectError</code> in case a project is not
+defined.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#behaviour_info/1">behaviour_info/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#current/0">current/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defined?/0">defined?/0</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="behaviour_info/1">
+    <strong>behaviour_info(atom1)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L34" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="current/0">
+    <strong>current()</strong>
+  </p>
+  <div class="docstring"><p>Retrieves the current project, raises an error
+if there is no project set.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L88" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defined?/0">
+    <strong>defined?()</strong>
+  </p>
+  <div class="docstring"><p>Returns true if a current project is defined.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L98" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>
