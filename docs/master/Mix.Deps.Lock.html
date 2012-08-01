@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mix.Deps.Lock</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mix.Deps.Lock
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This is the module responsible to manage mix.lock file.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#read/0">read/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_lock/2">update_lock/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#write/1">write/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="read/0">
+    <strong>read()</strong>
+  </p>
+  <div class="docstring"><p>Read the file, returns a keywords list containing
+the app name and its current lock information.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L10" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_lock/2">
+    <strong>update_lock(deps, callback)</strong>
+  </p>
+  <div class="docstring"><p>Loop the given dependencies triggering the callback.
+The callback receives the dependency and its current lock
+(may be nil). The callback must return a lock or nil in
+case a lock could not be retrieved.</p>
+
+<p>This function returns a list with the app names in the
+given dependencies that got a lock.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L40" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="write/1">
+    <strong>write(dict)</strong>
+  </p>
+  <div class="docstring"><p>Receives a keywords list and writes it to the disk.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L23" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

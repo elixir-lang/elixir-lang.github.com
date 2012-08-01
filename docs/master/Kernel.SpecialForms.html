@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Elixir.SpecialForms</title>
+    <title>Kernel.SpecialForms</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,7 +21,7 @@
 
     <div id="content">
       <h1>
-        Elixir.SpecialForms
+        Kernel.SpecialForms
         
       </h1>
 
@@ -31,19 +31,20 @@
 special forms because they cannot be overridden by the developer
 and sometimes have lexical scope (like <code>alias</code>, <code>import</code>, etc).</p>
 
-<p>This module also documents Elixir&#39;s pseudo variable (<code>__MODULE__</code>,
-<code>__FILE__</code>, <code>__ENV__</code> and <code>__CALLER__</code>) which return information
-about Elixir&#39;s compilation environment.</p>
+<p>This module also documents Elixir&#39;s pseudo variables (<code>__MODULE__</code>,
+<code>__FILE__</code>, <code>__ENV__</code> and <code>__CALLER__</code>). Pseudo variables return
+information about Elixir&#39;s compilation environment and can only
+be read, never assigned to.</p>
 
 <p>Finally, it also documents 3 special forms (<code>__block__</code>,
 <code>__scope__</code> and <code>__aliases__</code>), which are not intended to be
 called directly by the developer but they appear in quoted
-contents since they are important for Elixir&#39;s functioning.</p>
+contents since they are essential in Elixir&#39;s constructions.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -106,11 +107,6 @@ contents since they are important for Elixir&#39;s functioning.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#fn/1">fn/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#import/2">import/2</a>
   </span>
 </li>
@@ -165,7 +161,7 @@ contents since they are important for Elixir&#39;s functioning.</p>
 &lt;&lt; 1, 2, 3 &gt;&gt;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L45" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L46" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="[]/1">
     <strong>[](args)</strong>
@@ -178,7 +174,7 @@ contents since they are important for Elixir&#39;s functioning.</p>
 [ 1, 2, 3 ]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L35" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L36" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__ENV__/0">
     <strong>__ENV__()</strong>
@@ -187,7 +183,7 @@ contents since they are important for Elixir&#39;s functioning.</p>
 record. In the environment you can access the current filename,
 line numbers, set up aliases, the current function and others.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L181" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L182" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__FILE__/0">
     <strong>__FILE__()</strong>
@@ -196,7 +192,7 @@ line numbers, set up aliases, the current function and others.</p>
 Although the file can be accessed in the <strong>ENV</strong>, this macro
 is a convenient shortcut.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L195" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L196" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__MODULE__/0">
     <strong>__MODULE__()</strong>
@@ -205,7 +201,7 @@ is a convenient shortcut.</p>
 Although the module can be accessed in the <strong>ENV</strong>, this macro
 is a convenient shortcut.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L188" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L189" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__aliases__/1">
     <strong>__aliases__(args)</strong>
@@ -217,7 +213,7 @@ At compilation time, it is usually compiled to an atom:</p>
 { :__aliases__, 0, [:Foo,:Bar] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L495" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L449" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__block__/1">
     <strong>__block__(args)</strong>
@@ -230,7 +226,7 @@ and should not be invoked directly:</p>
 #=&gt; { :__block__, 0, [1,2,3] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L472" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L426" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__scope__/2">
     <strong>__scope__(opts, args)</strong>
@@ -246,7 +242,7 @@ it belonged to another file.</p>
 
 <p>Check <code>quote/1</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L485" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L439" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="alias/2">
     <strong>alias(module, opts)</strong>
@@ -267,10 +263,10 @@ as <code>Keyword</code>. So now, any reference to <code>Keyword</code> will be
 automatically replaced by <code>MyKeyword</code>.</p>
 
 <p>In case one wants to access the original <code>Keyword</code>, it can be done
-by accessing <strong>MAIN</strong>:</p>
+by accessing Elixir:</p>
 
 <pre><code>Keyword.values   #=&gt; uses MyKeyword.values
-__MAIN__.Keyword.values #=&gt; uses Keyword.values
+Elixir.Keyword.values #=&gt; uses Keyword.values
 </code></pre>
 
 <p>Notice that calling <code>alias</code> without the <code>as:</code> option automatically
@@ -290,7 +286,7 @@ sets an alias based on the last part of the module. For example:</p>
 have lexical scope. This means you can set up aliases inside
 specific functions and it won&#39;t affect the overall scope.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L84" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bc/1">
     <strong>bc(args)</strong>
@@ -304,59 +300,7 @@ spaces from a string:</p>
 &quot;helloworld&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L461" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="fn/1">
-    <strong>fn(args)</strong>
-  </p>
-  <div class="docstring"><p>Returns an anonymous function based on the given arguments.</p>
-
-<h2>Examples</h2>
-
-<pre><code>sum = fn(x, y) -&gt; x + y end
-sum.(1, 2) #=&gt; 3
-</code></pre>
-
-<p>Notice that a function needs to be invoked using the dot between
-the function and the arguments.</p>
-
-<p>A function could also be defined using the <code>end</code> syntax, although
-it is recommend to use it only with the stab operator in order to
-avoid ambiguity. For example, consider this case:</p>
-
-<pre><code>Enum.map [1,2,3], fn x -&gt;
-  x * 2
-end
-</code></pre>
-
-<p>The example works fine because <code>-&gt;</code> binds to the closest function call,
-which is <code>fn</code>, but if we replace it by <code>do/end</code>, it will fail:</p>
-
-<pre><code>Enum.map [1,2,3], fn(x) do
-  x * 2
-end
-</code></pre>
-
-<p>The reason it fails is because do/end always bind to the farthest
-function call.</p>
-
-<h2>Function with multiple clauses</h2>
-
-<p>One may define a function which expects different clauses as long
-as all clauses expects the same number of arguments:</p>
-
-<pre><code>fun = fn do
-  x, y when y &lt; 0 -&gt;
-    x - y
-  x, y -&gt;
-    x + y
-end
-
-fun.(10, -10) #=&gt; 20
-fun.(10, 10)  #=&gt; 20
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L406" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L415" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="import/2">
     <strong>import(module, opts)</strong>
@@ -400,8 +344,8 @@ can import specific macros inside specific functions:</p>
 
 <pre><code>defmodule Math do
   def some_function do
-    # 1) Disable `if/2` from Elixir.Builtin
-    import Elixir.Builtin, except: [if: 2]
+    # 1) Disable `if/2` from Kernel
+    import Kernel, except: [if: 2]
 
     # 2) Require the new `if` macro from MyMacros
     import MyMacros
@@ -423,7 +367,7 @@ be able to use the original one.</p>
 also accepts <code>as:</code> as an option so it automatically sets up
 an alias. Please check <code>alias</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L174" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L175" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="lc/1">
     <strong>lc(args)</strong>
@@ -471,7 +415,7 @@ iex&gt; lc &lt;&lt;r:8,g:8,b:8&gt;&gt; inbits pixels, do: {r,g,b}
 [{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L449" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L403" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="quote/2">
     <strong>quote(opts, list2)</strong>
@@ -558,12 +502,12 @@ a #=&gt; 11
 </code></pre>
 
 <p>Notice that aliases are not hygienic in Elixir, ambiguity
-must be solved by prepending <strong>MAIN</strong>:</p>
+must be solved by prepending Elixir:</p>
 
 <pre><code>quote do
-  __MAIN__.Foo #=&gt; Access the root Foo
-  Foo          #=&gt; Access the Foo alias in the current module
-                   (if any is set), then fallback to __MAIN__.Foo
+  Elixir.Foo #=&gt; Access the root Foo
+  Foo        #=&gt; Access the Foo alias in the current module
+                 (if any is set), then fallback to Elixir.Foo
 end
 </code></pre>
 
@@ -611,7 +555,7 @@ code as if it was defined inside <code>GenServer.Behavior</code> file, in
 particular, the macro <code>__FILE__</code> will always point to
 <code>GenServer.Behavior</code> file.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L321" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L322" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="require/2">
     <strong>require(module, opts)</strong>
@@ -642,7 +586,7 @@ end
 <p><code>require</code> also accepts <code>as:</code> as an option so it automatically sets
 up an alias. Please check <code>alias</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L112" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L113" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unquote/1">
     <strong>unquote(expr)</strong>
@@ -671,7 +615,7 @@ quote do: sum(1, unquote(value), 3)
 #=&gt; { :sum, 0, [1, 13, 3] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L346" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L347" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unquote_splicing/1">
     <strong>unquote_splicing(expr)</strong>
@@ -686,7 +630,7 @@ quote do: sum(1, unquote_splicing(values), 5)
 #=&gt; { :sum, 0, [1, 2, 3, 4, 5] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L359" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L360" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="{}/1">
     <strong>{}(args)</strong>
@@ -699,7 +643,7 @@ quote do: sum(1, unquote_splicing(values), 5)
 { 1, 2, 3 }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/elixir/special_forms.ex#L25" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L26" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

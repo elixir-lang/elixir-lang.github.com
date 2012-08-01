@@ -159,6 +159,11 @@ def unescape_map(e), do: e
 <p>If the <code>unescape_map</code> function returns false. The char is
 not escaped and <code>\</code> is kept in the char list.</p>
 
+<h2>Octals</h2>
+
+<p>Octals will by default be escaped unless the map function
+returns false for ?0.</p>
+
 <h2>Examples</h2>
 
 <p>Using the unescape_map defined above is easy:</p>
@@ -166,7 +171,7 @@ not escaped and <code>\</code> is kept in the char list.</p>
 <pre><code>Binary.unescape &quot;example\\n&quot;, unescape_map(&amp;1)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L156" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L161" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/1">
     <strong>unescape_tokens(tokens)</strong>
@@ -176,9 +181,9 @@ Check <code>unescape/1</code> and <code>unescape/2</code> for more information
 about unescaping. Only tokens that are char lists are
 unescaped, all others are ignored. This method is useful
 when implementing your own sigils. Check the implementation
-of <code>Elixir.Builtin.__b__</code> for examples.</p>
+of <code>Kernel.__b__</code> for examples.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L168" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L173" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/2">
     <strong>unescape_tokens(tokens, map)</strong>
@@ -186,7 +191,7 @@ of <code>Elixir.Builtin.__b__</code> for examples.</p>
   <div class="docstring"><p>Unescape the given tokens according to the given map.
 Check <code>unescape_tokens/1</code> and <code>unescaped/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L176" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L181" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
