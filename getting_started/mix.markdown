@@ -186,7 +186,7 @@ When writing tasks, there are some common mix functionality we would like to acc
 
 * `Mix.Task.run(task, args)` - This is how you invoke a task from another task in Mix; Notice that if the task was already invoked, it works as no-op;
 
-There is more to the Mix API, so feel free to [check the documentation](/docs/latest/Mix.html), with special attention to [`Mix.Task`](/docs/latest/Mix.Task.html) and [`Mix.Project`](/docs/latest/Mix.Project.html).
+There is more to the Mix API, so feel free to [check the documentation](/docs/stable/Mix.html), with special attention to [`Mix.Task`](/docs/stable/Mix.Task.html) and [`Mix.Project`](/docs/stable/Mix.Project.html).
 
 ### 4.2 Namespaced Tasks
 
@@ -332,7 +332,7 @@ Although not a Mix feature, Elixir ships with an `OptionParser` which is quite u
     OptionParser.parse(["--source", "lib", "test/enum_test.exs", "--verbose"])
     #=> { [source: "lib", verbose: true], ["test/enum_test.exs"] }
 
-Check [`OptionParser`](/docs/latest/OptionParser.html) documentation for more information.
+Check [`OptionParser`](/docs/stable/OptionParser.html) documentation for more information.
 
 ## 9 Lots To Do
 
