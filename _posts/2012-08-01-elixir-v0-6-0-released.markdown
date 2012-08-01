@@ -3,11 +3,11 @@ layout: post
 title: Elixir v0.6.0 released
 author: José Valim
 category: Releases
-excerpt: We have finally released Elixir v0.6.0! This release includes a build tool called Mix, support to Erlang typespecs, many improvements to IEx and improved IO, File and Macro support.
+excerpt: We have finally released Elixir v0.6.0! This release includes a build tool called Mix, support for Erlang typespecs, many improvements to IEx and improved IO, File and Macro support.
 
 ---
 
-We have finally released [Elixir](http://elixir-lang.org/) v0.6.0! This release includes a build tool called Mix, support to Erlang typespecs, many improvements to IEx and improved IO, File and Macro support.
+We have finally released [Elixir](http://elixir-lang.org/) v0.6.0! This release includes a build tool called Mix, support for Erlang typespecs, many improvements to IEx and improved IO, File and Macro support.
 
 ## What's new
 
