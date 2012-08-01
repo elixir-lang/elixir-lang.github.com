@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mix.Generator</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mix.Generator
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Conveniences for working with paths and generating content.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/generator.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#create_directory/1">create_directory/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#create_file/2">create_file/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <h2>Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#embed_template/2">embed_template/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#embed_text/2">embed_text/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#from_file/1">from_file/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="create_directory/1">
+    <strong>create_directory(path)</strong>
+  </p>
+  <div class="docstring"><p>Creates a directory if one does not exist yet.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/generator.ex#L21" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="create_file/2">
+    <strong>create_file(path, contents)</strong>
+  </p>
+  <div class="docstring"><p>Creates a file with the given contents.
+If the file already exists, asks for user confirmation.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/generator.ex#L10" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="embed_template/2">
+    <strong>embed_template(name, contents)</strong>
+  </p>
+  <div class="docstring"><p>Embed a template given by <code>contents</code> into the current module.</p>
+
+<p>It will define a private function with the <code>name</code> followed by
+<code>_template</code> that expects assigns as arguments.</p>
+
+<p>This function must be invoked passing a keywords list.
+Each key in the keyword list can be accessed in the
+template using the <code>@</code> macro.</p>
+
+<p>For more information, check <code>EEx.SmartEngine</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/generator.ex#L61" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="embed_text/2">
+    <strong>embed_text(name, contents)</strong>
+  </p>
+  <div class="docstring"><p>Embeds a text given by <code>contents</code> into the current module.</p>
+
+<p>It will define a private function with the <code>name</code> followed by
+<code>_text</code> that expects no argument.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/generator.ex#L74" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="from_file/1">
+    <strong>from_file(path)</strong>
+  </p>
+  <div class="docstring"><p>Reads the content from a file relative to the current
+file and not relative to the cwd. Useful when used with
+embed macros:</p>
+
+<pre><code>embed_template :lib, from_file(&quot;../templates/lib.eex&quot;)
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/generator.ex#L43" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+    </div>
+  </body>
+</html>

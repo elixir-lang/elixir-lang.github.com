@@ -184,7 +184,7 @@ Then, we add the head of the list to the accumulator `h + acc` and call `sum_lis
 
 When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stacktrace (a stack which keeps our execution path) would grown until it reaches a limit. Erlang however does last call optimization in which the stack does not grow when a function exits by calling another function.
 
-Recursion and last call optimization are an important part of Erlang and are commonly used to create loops, specially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/latest/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
+Recursion and last call optimization are an important part of Erlang and are commonly used to create loops, specially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
 
     Enum.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
 

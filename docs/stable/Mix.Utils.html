@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mix.Utils</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mix.Utils
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Utilities used throughout Mix and tasks.</p>
+
+<h2>Conversions</h2>
+
+<p>This module handles two types of conversions:</p>
+
+<ul>
+<li><p>From command names to module names, i.e. how the command
+<code>deps.get</code> translates to <code>Deps.Get</code> and vice-versa;</p></li>
+<li><p>From underscore to camelize, i.e. how the file path
+<code>my_project</code> translates to <code>MyProject</code>;</p></li>
+</ul>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#camelize/1">camelize/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#command_to_module/2">command_to_module/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#command_to_module_name/1">command_to_module_name/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#config_merge/2">config_merge/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#module_name_to_command/2">module_name_to_command/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#source/1">source/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#stale?/2">stale?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#underscore/1">underscore/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#user_home/0">user_home/0</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="camelize/1">
+    <strong>camelize(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Converts the given string to camelize format.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Utils.camelize &quot;foo_bar&quot; #=&gt; &quot;FooBar&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L166" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="command_to_module/2">
+    <strong>command_to_module(command, at // Elixir)</strong>
+  </p>
+  <div class="docstring"><p>Takes a <code>command</code> name and try to load a module
+with the command name converted to a module name
+in the given <code>at</code> scope.</p>
+
+<p>Returns <code>{ :module, module }</code> in case a module
+exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Utils.command_to_module(&quot;compile&quot;, Mix.Tasks)
+#=&gt; { :module, Mix.Tasks.Compile }
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L62" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="command_to_module_name/1">
+    <strong>command_to_module_name(s)</strong>
+  </p>
+  <div class="docstring"><p>Takes a command and converts it to a module name format.</p>
+
+<h2>Examples</h2>
+
+<pre><code>command_to_module_name(&quot;compile.elixir&quot;)
+#=&gt; &quot;Compile.Elixir&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L228" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="config_merge/2">
+    <strong>config_merge(old, new)</strong>
+  </p>
+  <div class="docstring"><p>Merges two configs recursively, merging keywords lists
+and concatenating normal lists.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L102" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="module_name_to_command/2">
+    <strong>module_name_to_command(module, nesting // 0)</strong>
+  </p>
+  <div class="docstring"><p>Takes a module and converts it to a command. The nesting
+argument can be given in order to remove the nesting of
+module.</p>
+
+<h2>Examples</h2>
+
+<pre><code>module_name_to_command(Mix.Tasks.Compile, 2)
+#=&gt; &quot;compile&quot;
+
+module_name_to_command(&quot;Mix.Tasks.Compile.Elixir&quot;, 2)
+#=&gt; &quot;compile.elixir&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L208" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="source/1">
+    <strong>source(module)</strong>
+  </p>
+  <div class="docstring"><p>Gets the source location of a module as a binary.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L28" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="stale?/2">
+    <strong>stale?(source, target)</strong>
+  </p>
+  <div class="docstring"><p>Returns true if any of <code>target</code> is stale compared to <code>source</code>.
+If <code>target</code> or <code>source</code> is a binary, it is expanded using <code>File.wildcard</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L71" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="underscore/1">
+    <strong>underscore(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Converts the given string to underscore format.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Utils.underscore &quot;FooBar&quot; #=&gt; &quot;foo_bar&quot;
+</code></pre>
+
+<p>In general, underscore can be thought as the reverse of
+camelize, however, in some cases formatting may be lost:</p>
+
+<pre><code>Mix.Utils.underscore &quot;SAPExample&quot;  #=&gt; &quot;sap_example&quot;
+Mix.Utils.camelize   &quot;sap_example&quot; #=&gt; &quot;SapExample&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L134" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="user_home/0">
+    <strong>user_home()</strong>
+  </p>
+  <div class="docstring"><p>Gets the user home attempting to consider OS system diferences.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L20" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

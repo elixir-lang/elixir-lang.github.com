@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mix.Deps</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mix.Deps
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A module with common functions to work with dependencies.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L12" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#all/0">all/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#all/1">all/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#by_name/1">by_name/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#check_lock/2">check_lock/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#deps_path/0">deps_path/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#deps_path/1">deps_path/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#format_dep/1">format_dep/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#format_status/1">format_status/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#out_of_date?/1">out_of_date?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_status/1">update_status/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="all/0">
+    <strong>all()</strong>
+  </p>
+  <div class="docstring"><p>Returns all dependencies in as <code>Mix.Dep</code> record.</p>
+
+<h2>Exceptions</h2>
+
+<p>This function raises an exception in case the developer
+provides a dependency in the wrong format.</p>
+
+<h2>Statuses</h2>
+
+<p>The <code>status</code> element in the tuple returns the current
+situation of the repository. Check <code>format_status/1</code>
+for more information.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L31" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="all/1">
+    <strong>all(status)</strong>
+  </p>
+  <div class="docstring"><p>Get all dependencies that match the specific <code>status</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L40" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="by_name/1">
+    <strong>by_name(given)</strong>
+  </p>
+  <div class="docstring"><p>Receives a list of deps names and returns deps records.
+Raises an error if the dependency does not exist.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L48" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="check_lock/2">
+    <strong>check_lock(dep, lock)</strong>
+  </p>
+  <div class="docstring"><p>Checks the lock for the given dependency and update its status accordingly.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L81" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="deps_path/0">
+    <strong>deps_path()</strong>
+  </p>
+  <div class="docstring"><p>The default path for dependencies.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L130" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="deps_path/1">
+    <strong>deps_path(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Returns the path for the given dependency.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L123" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="format_dep/1">
+    <strong>format_dep(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Format the dependency for printing.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L110" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="format_status/1">
+    <strong>format_status(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Formats the status of a dependency.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L63" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="out_of_date?/1">
+    <strong>out_of_date?(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Check if a dependency is out of date or not, considering its
+lock status. Therefore, be sure to call <code>check_lock</code> before
+invoking this function.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L102" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update_status/1">
+    <strong>update_status(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Receives a dependency and update its status</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps.ex#L74" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        List
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Implements functions that only make sense for lists
+and cannot be part of the Enum protocol. In general,
+favor using the Enum API instead of List.</p>
+
+<p>A decision was taken to delegate most functions to
+Erlang&#39;s standard lib but following Elixir&#39;s convention
+of receiving the target (in this case, a list) as the
+first argument.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#concat/1">concat/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#concat/2">concat/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete/2">delete/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#duplicate/2">duplicate/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#flatten/1">flatten/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#flatten/2">flatten/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#foldl/3">foldl/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#foldr/3">foldr/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#keydelete/3">keydelete/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#keyfind/4">keyfind/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#keymember?/3">keymember?/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#last/1">last/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#member?/2">member?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#range/3">range/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#reverse/1">reverse/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#sort/1">sort/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#sort/2">sort/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#uniq/1">uniq/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unzip/1">unzip/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#wrap/1">wrap/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#zip/1">zip/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#zip/2">zip/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="concat/1">
+    <strong>concat(list)</strong>
+  </p>
+  <div class="docstring"><p>Given a list of lists, concatenates the sublists into a single list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.concat [[1,[2],3], [4], [5,6]]
+#=&gt; [1,[2],3,4,5,6]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L22" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="concat/2">
+    <strong>concat(list, elements)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates the list on the right with the list on the left.</p>
+
+<p>This function produces the same result the <code>++</code> operator. The only difference
+is a minor optimization: when the first list contains only one element, we
+simply add it as a head to the second list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.concat [1,2,3], [4,5,6]
+#=&gt; [1,2,3,4,5,6]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L39" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="delete/2">
+    <strong>delete(list, item)</strong>
+  </p>
+  <div class="docstring"><p>Deletes the given item from the list. Returns a list without the item.
+If the item occurs more than once in the list, just the first occurrence
+is removed.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.delete([1,2,3], 1)
+#=&gt; [2,3]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L54" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="duplicate/2">
+    <strong>duplicate(elem, n)</strong>
+  </p>
+  <div class="docstring"><p>Duplicates the given element n times in a list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.duplicate &quot;hello&quot;, 3
+#=&gt; [&quot;hello&quot;,&quot;hello&quot;,&quot;hello&quot;]
+
+List.duplicate [1,2], 2
+#=&gt; [[1,2],[1,2]]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L317" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="flatten/1">
+    <strong>flatten(list)</strong>
+  </p>
+  <div class="docstring"><p>Flattens the given <code>list</code> of nested lists. An optional
+tail can be given that will be added at the end of
+the flattened list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.flatten [1,[[2],3]]
+#=&gt; [1,2,3]
+
+List.flatten [1,[[2],3]], [4,5]
+#=&gt; [1,2,3,4,5]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L72" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="flatten/2">
+    <strong>flatten(list, tail)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L76" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="foldl/3">
+    <strong>foldl(list, acc, function)</strong>
+  </p>
+  <div class="docstring"><p>Folds (reduces) the given list to the left with
+a function. Requires an accumulator.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.foldl [5,5], 10, fn x, acc -&gt; x + acc end
+#=&gt; 20
+
+List.foldl [1,2,3,4], 0, fn x, acc -&gt; x - acc end
+#=&gt; 2
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="foldr/3">
+    <strong>foldr(list, acc, function)</strong>
+  </p>
+  <div class="docstring"><p>Folds (reduces) the given list to the right with
+a function. Requires an accumulator.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.foldr [1,2,3,4], 0, fn x, acc -&gt; x - acc end
+#=&gt; -2
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L107" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="keydelete/3">
+    <strong>keydelete(list, item, position)</strong>
+  </p>
+  <div class="docstring"><p>Receives a list of tuples and deletes the first tuple
+where the item at position <code>posistion</code> matches with the
+given <code>item</code>. Returns the new tuple.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.keydelete([a: 1, b: 2], :a, 1)
+#=&gt; [{ :b, 2 }]
+
+List.keydelete([a: 1, b: 2], 2, 2)
+#=&gt; [{ :a, 1 }]
+
+List.keydelete([a: 1, b: 2], :c, 1)
+#=&gt; [{ :a, 1 }, { :b, 2 }]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L221" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="keyfind/4">
+    <strong>keyfind(list, item, position, default // nil)</strong>
+  </p>
+  <div class="docstring"><p>Receives a list of tuples and returns the first tuple
+where the item at position <code>posistion</code> matches with the
+given <code>item</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.keyfind([a: 1, b: 2], :a, 1)
+#=&gt; { :a, 1 }
+
+List.keyfind([a: 1, b: 2], 2, 2)
+#=&gt; { :b, 2 }
+
+List.keyfind([a: 1, b: 2], :c, 1)
+#=&gt; nil
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L179" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="keymember?/3">
+    <strong>keymember?(list, item, position)</strong>
+  </p>
+  <div class="docstring"><p>Receives a list of tuples and returns true if there is
+a tuple where the item at position <code>posistion</code> matches
+with the given <code>item</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.keymember?([a: 1, b: 2], :a, 1)
+#=&gt; true
+
+List.keymember?([a: 1, b: 2], 2, 2)
+#=&gt; true
+
+List.keymember?([a: 1, b: 2], :c, 1)
+#=&gt; false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L200" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="last/1">
+    <strong>last(list)</strong>
+  </p>
+  <div class="docstring"><p>Returns the last element in <code>list</code> or nil if the <code>list</code> is empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.last []
+#=&gt; nil
+List.last [1]
+#=&gt; 1
+List.last [1, 2, 3]
+#=&gt; 3
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L138" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="member?/2">
+    <strong>member?(list, term)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the given <code>term</code> is included in the list.
+This function simply delegates to <code>lists:member</code>
+which is implemented in C for performance.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.member? [1,2,3], 1
+#=&gt; true
+
+List.member? [1,2,3], 0
+#=&gt; false
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L158" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="range/3">
+    <strong>range(first, last, step // nil)</strong>
+  </p>
+  <div class="docstring"><p>Returns a list of integers in the given range (both ends included when
+possible). An optional step can be provided as well (defaults to 1).</p>
+
+<p>If first &gt; last and no step is provided, the numbers will be in descending
+order.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.range 1, 3     #=&gt; [1,2,3]
+List.range 1, 8, 2  #=&gt; [1,3,5,7]
+List.range 1, 0     #=&gt; []
+List.range 3, 1     #=&gt; [3,2,1]
+List.range 5, 1, -2 #=&gt; [5, 3, 1]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L241" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="reverse/1">
+    <strong>reverse(list)</strong>
+  </p>
+  <div class="docstring"><p>Reverses the given list. This function simply delegates
+to <code>lists:reverse</code> which is implemented in C for performance.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.reverse [1,2,3]
+#=&gt; [3,2,1]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L121" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="sort/1">
+    <strong>sort(list)</strong>
+  </p>
+  <div class="docstring"><p>Sorts the list by comparing each term. For an alternative
+sorting algorithm, check <code>Enum.qsort</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.sort [3, 4, 2, 1, 7]
+#=&gt; [1, 2, 3, 4, 7]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L275" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="sort/2">
+    <strong>sort(list, fun)</strong>
+  </p>
+  <div class="docstring"><p>Sorts the list according to an ordering function. fun(a, b) should
+return true if <code>a</code> compares less than or equal to <code>b</code>, <code>false</code> otherwise.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.sort [3, 4, 2, 1, 7], fn a, b -&gt; b &lt;= a end
+#=&gt; [7, 4, 3, 2, 1]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L289" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="uniq/1">
+    <strong>uniq(list)</strong>
+  </p>
+  <div class="docstring"><p>Returns a list without duplicated items.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.uniq [1,2,3,2,1]
+#=&gt; [1,2,3]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L302" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unzip/1">
+    <strong>unzip(list)</strong>
+  </p>
+  <div class="docstring"><p>Unzips the given list of lists or tuples into separate lists and returns a
+list of lists.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.unzip [{1, 2}, {3, 4}]
+#=&gt; [[1, 3], [2, 4]]
+
+List.unzip [{1, :a, &quot;apple&quot;}, {2, :b, &quot;banana&quot;}, {3, :c}]
+#=&gt; [[1, 2, 3], [:a, :b, :c]]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L390" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="wrap/1">
+    <strong>wrap(list)</strong>
+  </p>
+  <div class="docstring"><p>Wraps the argument in a list.
+If the argument is already a list, returns the list.
+If the argument is nil, returns an empty list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.wrap [1,2,3] #=&gt; [1,2,3]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L331" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="zip/1">
+    <strong>zip(list_of_lists)</strong>
+  </p>
+  <div class="docstring"><p>Zips corresponding elements from each list in <code>list_of_lists</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.zip [[1, 2], [3, 4], [5, 6]]
+#=&gt; [{1, 3, 5}, {2, 4, 6}]
+
+List.zip [[1, 2], [3], [5, 6]]
+#=&gt; [{1, 3, 5}]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L373" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="zip/2">
+    <strong>zip(item1, item2)</strong>
+  </p>
+  <div class="docstring"><p>Zips corresponding elements from two lists (or tuples) into one list of tuples. The
+number of elements in the resulting list is equal to the length of the
+shortest list among the given ones.</p>
+
+<h2>Examples</h2>
+
+<pre><code>List.zip [1, 2, 3], [4, 5, 6]
+#=&gt; [{1, 4}, {2, 5}, {3, 6}]
+
+List.zip [1, 2], [4, 5, 6]
+#=&gt; [{1, 4}, {2, 5}]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L357" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>
