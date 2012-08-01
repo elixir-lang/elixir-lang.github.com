@@ -3015,7 +3015,7 @@ from other processes that matches the given clauses.</p>
   value when is_atom(value) -&gt;
     value
   _ -&gt;
-    IO.puts :standard_error, &quot;Unexpected message received&quot;
+    IO.puts :stderr, &quot;Unexpected message received&quot;
 end
 </code></pre>
 
@@ -3030,10 +3030,10 @@ received after the specified period of time:</p>
   value when is_atom(value) -&gt;
     value
   _ -&gt;
-    IO.puts :standard_error, &quot;Unexpected message received&quot;
+    IO.puts :stderr, &quot;Unexpected message received&quot;
 after
   5000 -&gt;
-    IO.puts :standard_error, &quot;No message in 5 seconds&quot;
+    IO.puts :stderr, &quot;No message in 5 seconds&quot;
 end
 </code></pre>
 
