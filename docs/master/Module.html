@@ -75,12 +75,22 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#defined_functions/1">defined_functions/1</a>
+    <a href="#defines?/2">defines?/2</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#defined_functions/2">defined_functions/2</a>
+    <a href="#defines?/3">defines?/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#definitions_in/1">definitions_in/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#definitions_in/2">definitions_in/2</a>
   </span>
 </li>
 <li>
@@ -91,16 +101,6 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
 <li>
   <span class="summary_signature">
     <a href="#eval_quoted/4">eval_quoted/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#function_defined?/2">function_defined?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#function_defined?/3">function_defined?/3</a>
   </span>
 </li>
 <li>
@@ -152,13 +152,13 @@ if the attribute was registered or not via <code>register_attribute/2</code>.</p
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L346" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L375" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="add_compile_callback/3">
     <strong>add_compile_callback(module, target, fun // :__compiling__)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L327" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L356" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="add_doc/6">
     <strong>add_doc(module, line, kind, tuple, signature, doc)</strong>
@@ -209,8 +209,43 @@ Module.concat Foo, &#39;Bar&#39;  #=&gt; Foo.Bar
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L94" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="defined_functions/1">
-    <strong>defined_functions(module)</strong>
+  <p class="signature" id="defines?/2">
+    <strong>defines?(module, tuple)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the module defines the given function or macro.
+Use <code>defines?/3</code> to assert for an specific type.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Example do
+  Module.defines? __MODULE__, { :version, 0 } #=&gt; false
+  def version, do: 1
+  Module.defines? __MODULE__, { :version, 0 } #=&gt; true
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L242" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defines?/3">
+    <strong>defines?(module, tuple, kind)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the module defines a function or macro with the
+given <code>kind</code>. <code>kind</code> can be either <code>:def</code>, <code>:defp</code>,
+<code>:defmacro</code> or <code>:defmacrop</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Example do
+  Module.defines? __MODULE__, { :version, 0 }, :defp #=&gt; false
+  def version, do: 1
+  Module.defines? __MODULE__, { :version, 0 }, :defp #=&gt; false
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L262" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="definitions_in/1">
+    <strong>definitions_in(module)</strong>
   </p>
   <div class="docstring"><p>Return all functions defined in the given module.</p>
 
@@ -218,14 +253,14 @@ Module.concat Foo, &#39;Bar&#39;  #=&gt; Foo.Bar
 
 <pre><code>defmodule Example do
   def version, do: 1
-  Module.defined_functions __MODULE__ #=&gt; [{:version,1}]
+  Module.definitions_in __MODULE__ #=&gt; [{:version,1}]
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L277" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L306" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="defined_functions/2">
-    <strong>defined_functions(module, kind)</strong>
+  <p class="signature" id="definitions_in/2">
+    <strong>definitions_in(module, kind)</strong>
   </p>
   <div class="docstring"><p>Returns all functions defined in te given module according
 to its kind.</p>
@@ -234,12 +269,12 @@ to its kind.</p>
 
 <pre><code>defmodule Example do
   def version, do: 1
-  Module.defined_functions __MODULE__, :def  #=&gt; [{:version,1}]
-  Module.defined_functions __MODULE__, :defp #=&gt; []
+  Module.definitions_in __MODULE__, :def  #=&gt; [{:version,1}]
+  Module.definitions_in __MODULE__, :defp #=&gt; []
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L296" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L325" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="delete_attribute/2">
     <strong>delete_attribute(module, key)</strong>
@@ -254,7 +289,7 @@ end
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L405" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L434" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_quoted/4">
     <strong>eval_quoted(env, quoted, binding // [], opts // [])</strong>
@@ -296,41 +331,6 @@ Foo.sum(1, 2) #=&gt; 3
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L49" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="function_defined?/2">
-    <strong>function_defined?(module, tuple)</strong>
-  </p>
-  <div class="docstring"><p>Checks if a function was defined, regardless if it is
-a macro or a private function. Use <code>function_defined?/3</code>
-to assert for an specific type.</p>
-
-<h2>Examples</h2>
-
-<pre><code>defmodule Example do
-  Module.function_defined? __MODULE__, { :version, 0 } #=&gt; false
-  def version, do: 1
-  Module.function_defined? __MODULE__, { :version, 0 } #=&gt; true
-end
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L243" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="function_defined?/3">
-    <strong>function_defined?(module, tuple, kind)</strong>
-  </p>
-  <div class="docstring"><p>Checks if a function was defined and also for its <code>kind</code>.
-<code>kind</code> can be either :def, :defp or :defmacro.</p>
-
-<h2>Examples</h2>
-
-<pre><code>defmodule Example do
-  Module.function_defined? __MODULE__, { :version, 0 }, :defp #=&gt; false
-  def version, do: 1
-  Module.function_defined? __MODULE__, { :version, 0 }, :defp #=&gt; false
-end
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L262" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
   <p class="signature" id="make_overridable/2">
     <strong>make_overridable(module, tuples)</strong>
   </p>
@@ -338,7 +338,7 @@ end
 An overridable function is lazily defined, allowing a
 developer to customize it.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L307" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L336" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="read_attribute/2">
     <strong>read_attribute(module, key)</strong>
@@ -359,7 +359,7 @@ a list is always returned.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L382" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L411" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="register_attribute/3">
     <strong>register_attribute(module, new, opts // [])</strong>
@@ -396,7 +396,7 @@ behavior to exactly the same expected in Erlang.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L443" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L472" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="safe_concat/1">
     <strong>safe_concat(list)</strong>

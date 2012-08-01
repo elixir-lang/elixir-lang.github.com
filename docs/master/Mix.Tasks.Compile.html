@@ -28,7 +28,8 @@
       
         <div id="moduledoc" class="docstring">
           <p>A meta task that compile source files. It simply runs the
-compilers registered in your project.</p>
+compilers registered in your project. At the end of compilation
+it ensures load paths are set.</p>
 
 <h2>Configuration</h2>
 
@@ -38,16 +39,16 @@ compilers registered in your project.</p>
 <p>[:elixir, :app]</p></li>
 </ul>
 
-<p>Can be configured in your projects as:</p>
+<p>It can be configured to handle custom compilers, for example:</p>
 
-<pre><code>[compilers: [:elixir, :erlang, :app]]
+<pre><code>[compilers: [:elixir, :mycompiler, :app]]
 </code></pre>
 
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--list</code> List all enabled compilers.
-       <code>mix help</code> should give you the full list.</li>
+<li><code>--list</code>     - List all enabled compilers.</li>
+<li><code>--no-check</code> - Skip dependencies check before compilation.</li>
 </ul>
 
         </div>
@@ -81,7 +82,7 @@ compilers registered in your project.</p>
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.ex#L26" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.ex#L27" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

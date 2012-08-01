@@ -41,7 +41,7 @@ with projects.</p>
 
   def project do
     [
-      app: &quot;my_app&quot;,
+      app: :my_app,
       vsn: &quot;0.6.0&quot;
     ]
   end
@@ -49,7 +49,7 @@ end
 </code></pre>
 
 <p>After defined, the configuration for this project can be read
-as <code>Mix.Project.config/0</code>. Notice that config won&#39;t fail if a
+as <code>Mix.project/0</code>. Notice that config won&#39;t fail if a
 project is not defined, this allows many of mix tasks to work
 even without a project.</p>
 
@@ -72,7 +72,7 @@ defined.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#config/0">config/0</a>
+    <a href="#behaviour_info/1">behaviour_info/1</a>
   </span>
 </li>
 <li>
@@ -95,16 +95,11 @@ defined.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="config/0">
-    <strong>config()</strong>
+  <p class="signature" id="behaviour_info/1">
+    <strong>behaviour_info(atom1)</strong>
   </p>
-  <div class="docstring"><p>Retrieves the current project configuration. If there
-isn&#39;t a project defined, this function will simply
-return a keywords list with default values. This allows
-many mix functions to work without a need for an
-underlying project.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L67" target="_blank" class="view_source">Source</a>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L34" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="current/0">
     <strong>current()</strong>
@@ -112,14 +107,14 @@ underlying project.</p>
   <div class="docstring"><p>Retrieves the current project, raises an error
 if there is no project set.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L78" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L88" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defined?/0">
     <strong>defined?()</strong>
   </p>
   <div class="docstring"><p>Returns true if a current project is defined.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L88" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L98" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

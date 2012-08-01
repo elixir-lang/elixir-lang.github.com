@@ -30,6 +30,9 @@
           <p>The Code module is responsible to manage code compilation,
 code evaluation and code loading.</p>
 
+<p>It complements (Erlang&#39;s code module)<a href="(www.erlang.org/doc/man/code.html)">1</a> to add behavior
+which is specific to Elixir.</p>
+
         </div>
       
 
@@ -60,6 +63,11 @@ code evaluation and code loading.</p>
 <li>
   <span class="summary_signature">
     <a href="#compiler_options/1">compiler_options/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#ensure_compiled/1">ensure_compiled/1</a>
   </span>
 </li>
 <li>
@@ -120,9 +128,10 @@ code evaluation and code loading.</p>
   <p class="signature" id="append_path/1">
     <strong>append_path(path)</strong>
   </p>
-  <div class="docstring"><p>Appends a path to Erlang VM code path.</p>
+  <div class="docstring"><p>Appends a path to Erlang VM code path.
+The path is expanded with <code>File.expand_path</code> before added.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L17" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L24" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compile_string/2">
     <strong>compile_string(string, file // &quot;nofile&quot;)</strong>
@@ -131,9 +140,9 @@ code evaluation and code loading.</p>
 the first element is the module name and the second one is its
 binary.</p>
 
-<p>For compiling many files at once, check <code>Elixir.ParallelCompiler</code>.</p>
+<p>For compiling many files at once, check <code>Kernel.ParallelCompiler</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L202" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L210" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/0">
     <strong>compiler_options()</strong>
@@ -141,7 +150,7 @@ binary.</p>
   <div class="docstring"><p>Loads the compilation options from the code server.
 Check compiler_options/1 for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L172" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L180" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/1">
     <strong>compiler_options(opts)</strong>
@@ -161,18 +170,66 @@ since they are stored by Elixir&#39;s Code Server.</p>
                        without raising errors, false by default;</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L191" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L199" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="ensure_compiled/1">
+    <strong>ensure_compiled(module)</strong>
+  </p>
+  <div class="docstring"><p>Ensures the given module is compiled and loaded. If the module
+is already loaded, it works as no-op. If the module was not
+loaded yet, it checks if it needs to be compiled first and just
+then tries to load it.</p>
+
+<p>If it succeeds loading the module anyhow, it returns
+<code>{ :module, module }</code>. If not, returns <code>{ :error, reason }</code> with
+the error reason.</p>
+
+<p>Check <code>ensure_loaded/1</code> for more information on module loading
+and when to use <code>ensure_loaded/1</code> or <code>ensure_compiled/1</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L269" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_loaded/1">
     <strong>ensure_loaded(module)</strong>
   </p>
-  <div class="docstring"><p>Ensure if the given module is loaded. If the module is already loaded,
-it works as no-op. If the module was not loaded yet, it tries to load it.</p>
+  <div class="docstring"><p>Ensures the given module is loaded. If the module is already
+loaded, it works as no-op. If the module was not loaded yet,
+it tries to load it.</p>
 
-<p>If it succeeds loading the module anyhow, it returns <code>{ :module, module }</code>.
-If not, returns <code>{ :error, reason }</code> with the error reason.</p>
+<p>If it succeeds loading the module anyhow, it returns
+<code>{ :module, module }</code>. If not, returns <code>{ :error, reason }</code> with
+the error reason.</p>
+
+<h2>Code loading on the Erlang VM</h2>
+
+<p>Erlang has two modes to load code: interactive and embedded.</p>
+
+<p>By default, the Erlang VM runs on interactive mode, where modules
+are loaded as needed. In embedded mode the opposite happens, as all
+modules need to be loaded upfront or explicitly.</p>
+
+<p>Therefore, this function is useful to check if a module is loaded
+before using it and react accordingly. For example, the <code>URI</code> module
+uses this function to check if a specific parser exists and is for the
+given URI scheme.</p>
+
+<h2>Code.ensure_compiled</h2>
+
+<p>Elixir also contains an <code>ensure_compiled/1</code> function that is a
+superset of <code>ensure_loaded/1</code>.</p>
+
+<p>Since Elixir&#39;s compilation happens in parallel, in some situations
+you may need to use a module but it was not compiled yet, therefore
+it can&#39;t even be loaded.</p>
+
+<p><code>ensure_compiled/1</code> puts a halt in the current process until the
+module we are depending on is available.</p>
+
+<p>In most of the cases, <code>ensure_loaded</code> is enough. <code>ensure_compiled</code>
+must be used just in same rare conditions, usually involving macros
+that needs to invoke a module for callback information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L213" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L252" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval/3">
     <strong>eval(string, binding // [], opts // [])</strong>
@@ -201,7 +258,7 @@ the location which already returns both fields as a keywords lists:</p>
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L50" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L58" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_quoted/3">
     <strong>eval_quoted(quoted, binding // [], opts // [])</strong>
@@ -234,7 +291,7 @@ the location which already returns both fields as a keywords lists:</p>
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L91" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="load_file/2">
     <strong>load_file(file, relative_to // nil)</strong>
@@ -246,21 +303,22 @@ loads it again. It returns the full path of the loaded file.</p>
 <p>When loading a file, you may skip passing .exs as extension as Elixir
 automatically adds it for you.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L144" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L152" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="loaded_files/0">
     <strong>loaded_files()</strong>
   </p>
   <div class="docstring"><p>Returns all the loaded files.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L10" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L16" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="prepend_path/1">
     <strong>prepend_path(path)</strong>
   </p>
-  <div class="docstring"><p>Prepends a path to Erlang VM code path.</p>
+  <div class="docstring"><p>Prepends a path to Erlang VM code path.
+The path is expanded with <code>File.expand_path</code> before added.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L24" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L32" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="require_file/2">
     <strong>require_file(file, relative_to // nil)</strong>
@@ -272,7 +330,7 @@ returns nil, otherwise the full path of the loaded file.</p>
 <p>When requiring a file, you may skip passing .exs as extension as
 Elixir automatically adds it for you.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L159" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L167" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="string_to_ast/2">
     <strong>string_to_ast(string, opts // [])</strong>
@@ -288,7 +346,7 @@ and the file reported in the <strong>ENV</strong> variable.</p></li>
 <li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L101" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L109" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="string_to_ast!/2">
     <strong>string_to_ast!(string, opts // [])</strong>
@@ -306,7 +364,7 @@ and the file reported in the <strong>ENV</strong> variable.</p></li>
 <li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L125" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L133" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
