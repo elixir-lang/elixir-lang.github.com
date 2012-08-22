@@ -133,11 +133,16 @@ This functionality can also be used to print the documentation for any Elixir mo
     iex> d(Enum, :each, 2)
     ...
 
+Or, with the shortcut:
+
+    iex> d(Enum.each/2)
+    ...
+
 The documentation for built-in functions can also be accessed directly or directly in the built-in module:
 
     iex> d(:is_atom, 1)
     ...
-    iex> d(Kernel, :is_atom, 1)
+    iex> d(Kernel.is_atom/1)
     ...
 
 ## 6.5 Partial application
