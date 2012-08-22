@@ -145,6 +145,19 @@ In general, Mix tries to be smart and compile only when necessary.
 
 You can also note that, after you compile for the first time, Mix generates an `my_project.app` file inside your `ebin` directory. This file specifies an Erlang application and it holds information about your application, for example, what are its dependencies, which modules it defines and so forth. In our `MyProject.start` function, when we call `:application.start(:my_project)`, Erlang will load the `my_project.app` file and process it. For instance, if there are any dependencies missing, it will let us now.
 
+### 3.1 Running the application
+
+Generally, the application starts by calling `MyProject.start` function.
+It's the entry point to your application, so besides the call to
+`:application.start(:my_project)`, you might want to do actual app job
+here.
+
+There are a few ways to start an application:
+
+* `mix run "MyProject.start"`
+* `mix iex`, and then you get into IEx. You can `MyProject.start` here,
+  play with exported application functions, and more.
+
 ## 4 Tasks
 
 In Mix, a task is simply an Elixir module inside the `Mix.Tasks` namespace and a `run/1` function. For example, the `compile` task is a module named `Mix.Tasks.Compile`.
