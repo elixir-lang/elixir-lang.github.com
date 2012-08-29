@@ -191,4 +191,54 @@ It is important that the macro is defined before its usage. Failing to define a 
 
     MyMacros.four #=> ** (UndefinedFunctionError) undefined function: two/0
 
-With this note, we finish our introduction to macros. Next, let's move to the next chapter which will discuss several topics such as native code compilation, partial application and others.
+## 5.5 Code execution
+
+To finish our discussion about macros, we are going to briefly discuss how code execution works in Elixir. Code execution in Elixir is done in two steps:
+
+1) All the macros in the code are expanded recursively;
+2) The expanded code is compiled to Erlang bytecode and executed
+
+This behavior is important to understand because it affects how we think about our code structure. Consider the following code:
+
+    defmodule Sample do
+      case System.get_env("FULL") do
+        "true" ->
+          def full?(), do: true
+        _ ->
+          def full?(), do: false
+      end
+    end
+
+The code above will define a function `full?` which will return true or false depending on the value of the environment variable `FULL` at **compilation time**. In order to execute this code, Elixir will first expand all macros. Considering that `defmodule` and `def` are macros, the code will expand to something like:
+
+    :elixir_module.store Sample, fn ->
+      case System.get_env("FULL") do
+        "true" ->
+          :elixir_def.store(Foo, :def, :full?, [], true)
+        _ ->
+          :elixir_def.store(Foo, :def, :full?, [], false)
+    end
+
+This code will then be executed, define a module `Foo` and store the appropriate function based on the value of the environment variable `FULL`. We achieve this by using the modules `:elixir_module` and `:elixir_def`, which are Elixir internal modules written in Erlang.
+
+There are two lessons to take away from this example:
+
+1) a macro is always expanded, regardless if it is inside a `case` branch that won't actually match;
+
+2) we cannot invoke a function or macro just after it is defined in a module. For example, consider:
+
+      defmodule Sample do
+        def full?, do: true
+        IO.puts full?
+      end
+
+  The example above will fail because it translates to:
+
+    :elixir_module.store Sample, fn ->
+      :elixir_def.store(Foo, :def, :full?, [], true)
+      IO.puts full?
+    end
+
+  At the moment this code is compiled to Erlang bytecode, there **isn't** a function `full?` defined in the module, which will lead to a compilation error.
+
+With those lessons, we finish our introduction to macros. Next, let's move to the next chapter which will discuss several topics such as native code compilation, partial application and others.

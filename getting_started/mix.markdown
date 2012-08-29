@@ -152,11 +152,7 @@ It's the entry point to your application, so besides the call to
 `:application.start(:my_project)`, you might want to do actual app job
 here.
 
-There are a few ways to start an application:
-
-* `mix run "MyProject.start"`
-* `mix iex`, and then you get into IEx. You can `MyProject.start` here,
-  play with exported application functions, and more.
+There are a few ways to start an application. You can use the `mix run` task or run `mix iex` to start an Elixir interactive shell and then type `MyProject.start` to play with exported application functions and more.
 
 ## 4 Tasks
 
