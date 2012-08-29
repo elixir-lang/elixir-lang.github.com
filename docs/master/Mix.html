@@ -51,6 +51,16 @@ in Elixir, as the shell and the current project configuration.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#env/0">env/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#env/1">env/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#loadpaths/0">loadpaths/0</a>
   </span>
 </li>
@@ -84,13 +94,28 @@ in Elixir, as the shell and the current project configuration.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="env/0">
+    <strong>env()</strong>
+  </p>
+  <div class="docstring"><p>Returns the mix environment.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L26" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="env/1">
+    <strong>env(env)</strong>
+  </p>
+  <div class="docstring"><p>Changes the current mix env. Project configuration loaded
+per environment is not going to be reloaded.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L34" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="loadpaths/0">
     <strong>loadpaths()</strong>
   </p>
   <div class="docstring"><p>Starts mix and loads the project and dependencies into
 one step. Useful when invoking mix from an external tool.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L27" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L50" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="project/0">
     <strong>project()</strong>
@@ -100,7 +125,7 @@ isn&#39;t a project defined, this function will simply
 return an empty keywords list. This allows many mix
 tasks to work without a need for an underlying project.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L57" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L80" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="shell/0">
     <strong>shell()</strong>
@@ -112,14 +137,14 @@ printing status and so forth. The fact it is also swappable
 allow developers to use a test shell, that simply sends the
 messages to the current process.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L40" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L63" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="shell/1">
     <strong>shell(shell)</strong>
   </p>
   <div class="docstring"><p>Sets the current shell.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L47" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix.ex#L70" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="start/0">
     <strong>start()</strong>

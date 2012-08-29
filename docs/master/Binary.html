@@ -48,7 +48,22 @@
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#part/2">part/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#part/3">part/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#printable?/1">printable?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#split/3">split/3</a>
   </span>
 </li>
 <li>
@@ -96,10 +111,54 @@ the whole char list given.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L17" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
+  <p class="signature" id="part/2">
+    <strong>part(binary, arg2)</strong>
+  </p>
+  <div class="docstring"><p>Extracts a part from the binary according the given <code>range</code>.</p>
+
+<p>The range first and last must refer to positions in the binary.
+If first or last are negative, they are counted from the end of
+the binary.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Binary.part(&quot;foo&quot;, 1..2)      #=&gt; &quot;oo&quot;
+Binary.part(&quot;foobar&quot;, 2..4)   #=&gt; &quot;oba&quot;
+Binary.part(&quot;foobar&quot;, 0..0)   #=&gt; &quot;f&quot;
+Binary.part(&quot;foobar&quot;, 0..-1)  #=&gt; &quot;foobar&quot;
+Binary.part(&quot;foobar&quot;, 1..-2)  #=&gt; &quot;ooba&quot;
+Binary.part(&quot;foobar&quot;, -3..-1) #=&gt; &quot;bar&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L75" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="part/3">
+    <strong>part(binary, start, length)</strong>
+  </p>
+  <div class="docstring"><p>Extracts a part from the binary according the given <code>start</code> and <code>length</code>.</p>
+
+<p>If a negative length is given, it takes the length counting back from
+the given start.</p>
+
+<p>If length is out of bounds (i.e. the binary is too short for the given
+length), it returns the available part.</p>
+
+<p>If start is out of bounds, it simply returns nil.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Binary.part(&quot;foobar&quot;, 1, 2)  #=&gt; &quot;oo&quot;
+Binary.part(&quot;foobar&quot;, 3, -3) #=&gt; &quot;foo&quot;
+Binary.part(&quot;foobar&quot;, 3, 6)  #=&gt; &quot;bar&quot;
+Binary.part(&quot;foobar&quot;, 0, -3) #=&gt; &quot;&quot;
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L40" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="printable?/1">
     <strong>printable?(arg1)</strong>
   </p>
-  <div class="docstring"><p>Check if a binary is printable considering it is encoded
+  <div class="docstring"><p>Checks if a binary is printable considering it is encoded
 as UTF-8. Returns true if so, false otherwise.</p>
 
 <h2>Examples</h2>
@@ -107,7 +166,35 @@ as UTF-8. Returns true if so, false otherwise.</p>
 <pre><code>Binary.printable?(&quot;abc&quot;) #=&gt; true
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L32" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L139" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="split/3">
+    <strong>split(binary, pattern // &quot; &quot;, options // [])</strong>
+  </p>
+  <div class="docstring"><p>Divides a binary into sub binaries based on a pattern,
+returning a list of these sub binaries. The pattern can
+be another binary, a list of binaries or a regular expression.</p>
+
+<p>The binary is split into two parts by default, unless
+<code>global</code> option is true. If a pattern is not specified,
+the binary is split on whitespace occurrences.</p>
+
+<p>It returns a list with the original binary if the pattern can&#39;t be matched.</p>
+
+<h2>Examples</h2>
+
+<p>Binary.split(&quot;a,b,c&quot;, &quot;,&quot;)  #=&gt; [&quot;a&quot;, &quot;b,c&quot;]
+  Binary.split(&quot;a,b,c&quot;, &quot;,&quot;, global: true)  #=&gt; [&quot;a&quot;, &quot;b,c&quot;]
+  Binary.split(&quot;foo bar&quot;)     #=&gt; [&quot;foo&quot;, &quot;bar&quot;]
+  Binary.split(&quot;1,2 3,4&quot;, [&quot; &quot;, &quot;,&quot;]) #=&gt; [&quot;1&quot;, &quot;2 3,4&quot;]
+  Binary.split(&quot;1,2 3,4&quot;, [&quot; &quot;, &quot;,&quot;], global: true) #=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;]
+  Binary.split(&quot;a,b&quot;, &quot;.&quot;)    #=&gt; [&quot;a,b&quot;]</p>
+
+<p>Binary.split(&quot;a,b,c&quot;, %r{,})  #=&gt; [&quot;a&quot;, &quot;b,c&quot;]
+  Binary.split(&quot;a,b,c&quot;, %r{,}, global: true) #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+  Binary.split(&quot;a,b&quot;, %r{.})   #=&gt; [&quot;a,b&quot;]</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L113" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unescape/1">
     <strong>unescape(chars)</strong>
@@ -129,7 +216,7 @@ escaped according to the latin1 set they represent.</p>
 <p>In the example above, we pass a string with <code>\n</code> escaped
 and we return a version with it unescaped.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L120" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L227" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unescape/2">
     <strong>unescape(chars, map)</strong>
@@ -171,7 +258,7 @@ returns false for ?0.</p>
 <pre><code>Binary.unescape &quot;example\\n&quot;, unescape_map(&amp;1)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L161" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L268" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/1">
     <strong>unescape_tokens(tokens)</strong>
@@ -183,7 +270,7 @@ unescaped, all others are ignored. This method is useful
 when implementing your own sigils. Check the implementation
 of <code>Kernel.__b__</code> for examples.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L173" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L280" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/2">
     <strong>unescape_tokens(tokens, map)</strong>
@@ -191,7 +278,7 @@ of <code>Kernel.__b__</code> for examples.</p>
   <div class="docstring"><p>Unescape the given tokens according to the given map.
 Check <code>unescape_tokens/1</code> and <code>unescaped/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L181" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary.ex#L288" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

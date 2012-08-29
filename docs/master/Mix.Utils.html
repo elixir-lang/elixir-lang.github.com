@@ -117,7 +117,7 @@
 <pre><code>Mix.Utils.camelize &quot;foo_bar&quot; #=&gt; &quot;FooBar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L166" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L181" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="command_to_module/2">
     <strong>command_to_module(command, at // Elixir)</strong>
@@ -148,7 +148,7 @@ exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
 #=&gt; &quot;Compile.Elixir&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L228" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L247" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="config_merge/2">
     <strong>config_merge(old, new)</strong>
@@ -174,7 +174,7 @@ module_name_to_command(&quot;Mix.Tasks.Compile.Elixir&quot;, 2)
 #=&gt; &quot;compile.elixir&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L208" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L227" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="source/1">
     <strong>source(module)</strong>
@@ -192,13 +192,18 @@ If <code>target</code> or <code>source</code> is a binary, it is expanded using 
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L71" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="underscore/1">
-    <strong>underscore(arg1)</strong>
+    <strong>underscore(atom)</strong>
   </p>
-  <div class="docstring"><p>Converts the given string to underscore format.</p>
+  <div class="docstring"><p>Converts the given atom or binary to underscore format.</p>
+
+<p>If an atom is given, it is assumed to be an Elixir module,
+so it is converted to a binary and then processed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Mix.Utils.underscore &quot;FooBar&quot; #=&gt; &quot;foo_bar&quot;
+<pre><code>Mix.Utils.underscore &quot;FooBar&quot;  #=&gt; &quot;foo_bar&quot;
+Mix.Utils.underscore &quot;Foo.Bar&quot; #=&gt; &quot;foo/bar&quot;
+Mix.Utils.underscore Foo.Bar   #=&gt; &quot;foo/bar&quot;
 </code></pre>
 
 <p>In general, underscore can be thought as the reverse of
@@ -208,7 +213,7 @@ camelize, however, in some cases formatting may be lost:</p>
 Mix.Utils.camelize   &quot;sap_example&quot; #=&gt; &quot;SapExample&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L134" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L139" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="user_home/0">
     <strong>user_home()</strong>
