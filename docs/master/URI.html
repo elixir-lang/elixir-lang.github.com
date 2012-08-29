@@ -66,6 +66,11 @@
     <a href="#parse/1">parse/1</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#query_decoder/1">query_decoder/1</a>
+  </span>
+</li>
 
         </ul>
       
@@ -81,7 +86,7 @@
   </p>
   <div class="docstring"><p>Unpercent (URL) decodes a URI.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L87" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L97" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="decode_query/2">
     <strong>decode_query(q, dict // Orddict.new())</strong>
@@ -90,7 +95,7 @@
 orddict with one entry for each key-value pair. Each key and value will be a
 binary. It also does percent-unescaping of both keys and values.</p>
 
-<p>Returns nil if the query string is malformed.</p>
+<p>Use decoder/1 if you want to customize or iterate each value manually.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L31" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
@@ -99,7 +104,7 @@ binary. It also does percent-unescaping of both keys and values.</p>
   </p>
   <div class="docstring"><p>Percent (URL) encodes a URI.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L60" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L70" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="encode_query/1">
     <strong>encode_query(l)</strong>
@@ -132,7 +137,15 @@ which takes 0 arguments and returns the default port
 for that particular scheme. Take a look at URI.HTTPS for an
 example of one of these extension modules.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L121" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L131" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="query_decoder/1">
+    <strong>query_decoder(q)</strong>
+  </p>
+  <div class="docstring"><p>Returns an iterator function over the query string that decodes
+the query string in steps.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/uri.ex#L39" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

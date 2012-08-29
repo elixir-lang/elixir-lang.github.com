@@ -98,6 +98,21 @@ version if you want the undefined value.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#group_leader/0">group_leader/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#group_leader/2">group_leader/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#info/1">info/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#info/2">info/2</a>
   </span>
 </li>
@@ -261,7 +276,7 @@ Returns the old value of the flag.</p>
 
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_flag-2">http://www.erlang.org/doc/man/erlang.html#process_flag-2</a> for more info.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L263" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L278" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="flag/3">
     <strong>flag(pid, flag, value)</strong>
@@ -272,7 +287,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
 
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_flag-3">http://www.erlang.org/doc/man/erlang.html#process_flag-3</a> for more info.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L274" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L289" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get/0">
     <strong>get()</strong>
@@ -297,6 +312,31 @@ not a keywords list).</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L52" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
+  <p class="signature" id="group_leader/0">
+    <strong>group_leader()</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of the group leader for the process which evaluates the function.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L253" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="group_leader/2">
+    <strong>group_leader(leader, pid)</strong>
+  </p>
+  <div class="docstring"><p>Sets the group leader of Pid to GroupLeader. Typically, this is used when a processes
+started from a certain shell should have another group leader than <code>:init</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L261" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="info/1">
+    <strong>info(pid)</strong>
+  </p>
+  <div class="docstring"><p>Returns information about the process identified by pid.
+Use this only for debugging information.</p>
+
+<p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_info-1">http://www.erlang.org/doc/man/erlang.html#process_info-1</a> for more info.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L299" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="info/2">
     <strong>info(pid, spec)</strong>
   </p>
@@ -305,7 +345,7 @@ or undefined if the process is not alive.</p>
 
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_info-2">http://www.erlang.org/doc/man/erlang.html#process_info-2</a> for more info.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L284" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L309" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="link/1">
     <strong>link(pid)</strong>
@@ -364,7 +404,7 @@ send operator (name &lt;- message).</p>
   </p>
   <div class="docstring"><p>Returns a list of names which have been registered using register/2.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L253" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/process.ex#L268" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="self/0">
     <strong>self()</strong>

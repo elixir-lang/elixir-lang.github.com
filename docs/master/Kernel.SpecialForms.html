@@ -532,14 +532,14 @@ expressions is expanded, 0 is replaced by the line of the call site.</p>
 is defining new functions. Consider this example:</p>
 
 <pre><code>defmodule MyServer do
-  use GenServer.Behavior
+  use GenServer.Behaviour
 end
 </code></pre>
 
-<p><code>GenServer.Behavior</code> defines new functions in our <code>MyServer</code> module.
+<p><code>GenServer.Behaviour</code> defines new functions in our <code>MyServer</code> module.
 However, if there is an exception in any of these functions, we want
-the stacktrace to point to the <code>GenServer.Behavior</code> and not the line
-that calls <code>use GenServer.Behavior</code>. For this reason, there is an
+the stacktrace to point to the <code>GenServer.Behaviour</code> and not the line
+that calls <code>use GenServer.Behaviour</code>. For this reason, there is an
 option called <code>:location</code> that when set to <code>:keep</code> keeps these proper
 semantics:</p>
 
@@ -551,9 +551,9 @@ end
 </code></pre>
 
 <p>It is important to warn though that <code>location: :keep</code> evaluates the
-code as if it was defined inside <code>GenServer.Behavior</code> file, in
+code as if it was defined inside <code>GenServer.Behaviour</code> file, in
 particular, the macro <code>__FILE__</code> will always point to
-<code>GenServer.Behavior</code> file.</p>
+<code>GenServer.Behaviour</code> file.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L322" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
