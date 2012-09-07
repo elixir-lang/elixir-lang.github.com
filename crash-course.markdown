@@ -3,7 +3,7 @@ section: home
 layout: default
 ---
 
-# Erlang/Elixir Syntax: A Crash Course
+# Erlang/Elixir Syntax: A Crash Course 
 
 This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, support interoperability, read the docs, sample code, etc.
 
