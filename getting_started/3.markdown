@@ -6,7 +6,7 @@ guide: 3
 
 # 3 Modules
 
-In Elixir, you can group several functions into a module. In the previous chapter, for example, we have invoked functions from the module List:
+In Elixir, you can group several functions into a module. In the previous chapter, for example, we invoked functions from the module List:
 
     iex> List.flatten [1,[2],3]
     [1, 2, 3]
@@ -26,7 +26,7 @@ Before diving into modules, let's first have a brief overview about compilation.
 
 ## 3.1 Compilation
 
-Most of the times it is convenient to write modules into files so they can be compiled and re-used. Let's assume we have a file named `math.ex` with the following contents:
+Most of the time it is convenient to write modules into files so they can be compiled and reused. Let's assume we have a file named `math.ex` with the following contents:
 
     defmodule Math do
       def sum(a, b) do
@@ -49,15 +49,15 @@ Elixir projects are usually organized into three directories:
 * lib - contains elixir code (usually `.ex` files)
 * test - contains tests (usually `.exs` files)
 
-In many cases, since the bytecode is in `ebin`, you need to explicitly tell Elixir to lookup for code in the `ebin` directory:
+In many cases, since the bytecode is in `ebin`, you need to explicitly tell Elixir to look for code in the `ebin` directory:
 
     iex -pa ebin
 
-Where `-pa` stands for `path append`. The same option can also be passed to `elixir` and `elixirc` executables. You can execute `elixir` and `elixirc` without arguments to get a list with all options.
+Where `-pa` stands for `path append`. The same option can also be passed to `elixir` and `elixirc` executables. You can execute `elixir` and `elixirc` without arguments to get a list of options.
 
 ## 3.2 Scripted mode
 
-Besides the Elixir file `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting, without a need for compilation. For instance, one can create a file called `math.exs`:
+In addition to the Elixir file `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting, without the need for compilation. For instance, one can create a file called `math.exs`:
 
     defmodule Math do
       def sum(a, b) do
@@ -71,7 +71,7 @@ And execute it as:
 
     elixir math.exs
 
-The file will be compiled in memory and executed, printing 3 as result. No bytecode file will be created.
+The file will be compiled in memory and executed, printing 3 as the result. No bytecode file will be created.
 
 ## 3.3 Functions and private functions
 
@@ -121,7 +121,7 @@ Named functions also support default arguments:
     IO.puts Funs.join('Hello', 'world')      #=> Hello world
     IO.puts Funs.join('Hello', 'world', '_') #=> Hello_world
 
-When using default values, one must be careful and avoid overlapping function definitions. Consider the following example:
+When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 
     defmodule Funs do
       def join(a, b) do
@@ -159,7 +159,7 @@ Due to data structure immutability, loops in Elixir (and in functional programmi
       array[i] = array[i] * 2
     }
 
-In the example above, we are mutating the array which is not possible here. Therefore, in functional languages recursion happens by calling a function recursively until we reach a condition. Consider the example below that manually sums all the items in the list:
+In the example above, we are mutating the array which is not possible here. Therefore, in functional languages we use recursion; a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
 
     defmodule Math do
       def sum_list([h|t], acc) do
@@ -173,7 +173,7 @@ In the example above, we are mutating the array which is not possible here. Ther
 
     Math.sum_list([1,2,3], 0) #=> 6
 
-In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. As we saw in the previous chapter, when a function has many clauses, we will try each clause until find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to 0.
+In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. As we saw in the previous chapter, when a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to 0.
 
 Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
 
@@ -182,15 +182,15 @@ Then, we add the head of the list to the accumulator `h + acc` and call `sum_lis
     sum_list [3], 3
     sum_list [], 6
 
-When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stacktrace (a stack which keeps our execution path) would grown until it reaches a limit. Erlang however does last call optimization in which the stack does not grow when a function exits by calling another function.
+When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stack (in which our execution path is kept) would grown until it reaches a limit. Erlang, however, does last call optimization in which the stack does not grow when a function exits by calling another function.
 
-Recursion and last call optimization are an important part of Erlang and are commonly used to create loops, specially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
+Recursion and last call optimization are an important part of Erlang and are commonly used to create loops, especially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
 
     Enum.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
 
 ## 3.5 Directives
 
-In order to facilitate software-reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
+In order to facilitate software reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
 
 ### 3.5.1 alias
 
@@ -237,7 +237,7 @@ In general, a module does not need to be required before usage, except if we wan
       MyMacros.my_if do_something, it_works
     end
 
-An attempt to call a macro that was not loaded will raise an error. Note that, as the `alias` directive, `require` is also lexically scoped.
+An attempt to call a macro that was not loaded will raise an error. Note that likes the `alias` directive, `require` is also lexically scoped.
 
 ### 3.5.3 import
 
@@ -257,7 +257,7 @@ If we want to import only `:functions` or `:macros` from a given module, we can 
 
     import :macros, MyMacros
 
-And then we can use `only` or `except` to filter the macros being included. Finally, note that `import` is **lexically scoped**, this means we can import specific macros inside specific functions:
+We can then use `only` or `except` to filter the macros being included. Finally, note that `import` is **lexically scoped**, this means we can import specific macros inside specific functions:
 
     defmodule Math do
       def some_function do
@@ -268,7 +268,7 @@ And then we can use `only` or `except` to filter the macros being included. Fina
 
 In the example above, the imported `List.duplicate` is only visible within that specific function. `duplicate` won't be available in any other function in that module (or any other module for that matter).
 
-Note that importing a module automatically requires it. Furthermore, `import` also accepts `as:` as option which is automatically passed to `alias` in order to create an alias.
+Note that importing a module automatically requires it. Furthermore, `import` also accepts the `as:` option which is automatically passed to `alias` in order to create an alias.
 
 ## 3.6 Module attributes
 
@@ -294,7 +294,7 @@ Elixir has a handful of reserved attributes. The following are currently functio
 * `@compile` - provides options for the module compilation;
 * `@moduledoc` - provides documentation for the current module;
 * `@doc` - provides documentation for the function that follows it;
-* `@file` - changes the filename that the next defined function will appear in stacktraces;
+* `@file` - changes the filename in stacktraces of the next defined function;
 * `@on_load` - expects a function name that will be invoked whenever the module is loaded. The function must have arity 0 and has to return `:ok`, otherwise the loading of the module is aborted;
 * `@before_compile` - expects a `{ module, function }` that will be invoked with the module name before the module is compiled. The function may be a macro, allowing you to inject functions inside the module exactly before compilation;
 * `@after_compile` - expects a `{ module, function }` that will be invoked with the module name and its object code right after the module is compiled and loaded;
@@ -307,16 +307,16 @@ The following attributes are part of [typespecs](http://www.erlang.org/doc/refer
 * `@export_type` - informs which types can be exported;
 * `@opaque` - defines an opaque type to be used in @spec;
 
-Besides the built-in attributes outlined above, any developer can also add custom attributes:
+In addition to the built-in attributes outlined above, customer attributes may also be added:
 
     defmodule MyServer do
       @my_data 13
       IO.inspect @my_data #=> 13
     end
 
-Differently from Erlang, user defined attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](/docs/Module.html#register_attribute/2).
+Unlike Erlang, user defined attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](/docs/Module.html#register_attribute/2).
 
-Finally notice that attributes can also be read inside functions:
+Finally, notice that attributes can also be read inside functions:
 
     defmodule MyServer do
       @my_data 11
@@ -328,7 +328,7 @@ Finally notice that attributes can also be read inside functions:
     MyServer.first_data #=> 11
     MyServer.second_data #=> 13
 
-From the example above we can notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. Check [the documentation for the module `Module` documentation](/docs/Module.html) for other functions to manipulate module attributes.
+Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. Check [the documentation for the module `Module` documentation](/docs/Module.html) for other functions to manipulate module attributes.
 
 ## 3.7 Nesting
 
@@ -339,7 +339,7 @@ Modules in Elixir can be nested too:
       end
     end
 
-The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same scope. If later the developer decides to move `Bar` to another file, it needs to be referenced by its full name (`Foo.Bar`) or an alias need to be set using the `alias` directive discussed above.
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same scope. If later the developer decides to move `Bar` to another file, it needs to be referenced by its full name (`Foo.Bar`) or an alias needs to be set using the `alias` directive discussed above.
 
 ## 3.7 Aliases
 
@@ -348,7 +348,7 @@ In Erlang (and consequently in the Erlang VM), modules and functions are represe
     Mod = lists,
     Mod:flatten([1,[2],3]).
 
-In the example above, we store the atom `lists` in the variable `Mod` and then invoke the function `flatten` in it. In Elixir, exactly the same idiom is allowed. In fact, we could call the same function `flatten` in `lists` as:
+In the example above, we store the atom `lists` in the variable `Mod` and then invoke the function `flatten` in it. In Elixir, the same idiom is allowed. In fact, we could call the same function `flatten` in `lists` as:
 
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
@@ -368,4 +368,4 @@ This allows you to write code transparently without using the Erlang notation to
 
 > Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
 
-> Note: preferably, the alias `List` would be convert to the atom `Elixir.List` instead of `Elixir-List`, however there is currently a limitation in Erlang that does not allow us to use such atoms.
+> Note: preferably, the alias `List` would be converted to the atom `Elixir.List` instead of `Elixir-List`, however there is currently a limitation in Erlang that does not allow us to use such atoms.
