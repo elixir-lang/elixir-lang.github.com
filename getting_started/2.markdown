@@ -126,24 +126,24 @@ In the example, we have two parts: the first is an integer and the second is a b
 
 When a variable or expression is given as a binary part, Elixir defaults the type of that part to an integer. In the example above, since we haven't specified a type, Elixir expected an integer but we passed a binary, resulting in `ArgumentError`. We can solve this by explicitly tagging it as a binary:
 
-    iex> <<102, rest // binary>>
+    iex> <<102, rest :: binary>>
 
 The type can be `integer`, `float` or `binary` (we can pass endianness and signedness as specifiers too, but we will leave this discussion for later). When passing more than one option, we use a list:
 
-    iex> <<102, rest // [binary, signed]>>
+    iex> <<102, rest :: [binary, signed]>>
 
 Not only that, we can also specify the bit size for each part:
 
-    iex> <<102, rest // size(16)>> = "foo"
+    iex> <<102, rest :: size(16)>> = "foo"
     "foo"
-    iex> <<102, rest // size(32)>> = "foo"
+    iex> <<102, rest :: size(32)>> = "foo"
     ** (MatchError) no match of right hand side value: "foo"
 
 In the example above, the first expression matches because the right string "foo" takes 24 bits and we are matching against a binary of 24 bits as well, 8 of which are taken by the integer 102 and the remaining 16 bits are specified on the `rest`. On the second example, we expect a `rest` with size 32, which won't match.
 
 If at any moment, you would like to match the top of a binary against any other binary without caring about the size of the rest, you can use binary (which has an unspecified size):
 
-    iex> <<102, rest // binary>> = "foobar"
+    iex> <<102, rest :: binary>> = "foobar"
     "foobar"
     iex> rest
     "oobar"
