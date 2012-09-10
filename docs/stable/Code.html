@@ -252,7 +252,7 @@ otherwise functions are evaluated inside Erlang&#39;s default scope.</li>
 </code></pre>
 
 <p>When passing the <strong>ENV</strong>&#39;s file and line, we could simply get
-the location which already returns both fields as a keywords lists:</p>
+the location which already returns both fields as a keyword lists:</p>
 
 <pre><code>Code.eval &quot;a + b&quot;, [a: 1, b: 2], __ENV__.location
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
@@ -285,7 +285,7 @@ Code.eval_quoted contents, [a: 1, b: 2], file: __ENV__.file, line: __ENV__.line
 </code></pre>
 
 <p>When passing the <strong>ENV</strong>&#39;s file and line, we could simply get
-the location which already returns both fields as a keywords lists:</p>
+the location which already returns both fields as a keyword lists:</p>
 
 <pre><code>Code.eval_quoted contents, [a: 1, b: 2], __ENV__.location
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
