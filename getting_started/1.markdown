@@ -6,17 +6,17 @@ guide: 1
 
 # 1 Introduction
 
-Welcome! In this tutorial we are going to show you how to get started with Elixir. We will start with how to install Elixir, how to use its interactive shell, basic data types and operators. In later chapters, we are even going to discuss more advanced subjects as macros, protocols and other features provided by Elixir.
+Welcome! In this tutorial we are going to show you how to get started with Elixir. We will start with how to install Elixir, how to use its interactive shell, and basic data types and operators. In later chapters, we are even going to discuss more advanced subjects such as macros, protocols and other features provided by Elixir.
 
-Keep in mind that Elixir is still in development so if at any point you receive an error message and you are not sure on how to proceed, [please let us know in the issues tracker](https://github.com/elixir-lang/elixir/issues). Having explanative and consistent error messages is one of the many features we aim for Elixir.
+Keep in mind that Elixir is still in development so if at any point you receive an error message and you are not sure how to proceed, [please let us know in the issues tracker](https://github.com/elixir-lang/elixir/issues). Having explanative and consistent error messages is one of the many features we aim for Elixir.
 
 ## 1.1 Installation
 
-The only pre-requisite for Elixir is Erlang, version R15B later. You can find the source code for [Erlang here](http://www.erlang.org/download.html) or use one of the [precompiled packages](http://www.erlang-solutions.com/section/132/erlang-otp-packages).
+The only prerequisite for Elixir is Erlang, version R15B later. You can find the source code for [Erlang here](http://www.erlang.org/download.html) or use one of the [precompiled packages](http://www.erlang-solutions.com/section/132/erlang-otp-packages).
 
 For Windows developers, we recommend the precompiled package. Those on the UNIX platform can probably get Erlang installed via one of the many package management tools.
 
-After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follow:
+After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:
 
     Erlang R15B (erts-5.8.4) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
 
@@ -26,7 +26,7 @@ After Erlang is up and running, it is time to install Elixir. You can do that vi
 
 ### 1.1.1 Distributions
 
-Elixir is available in some distributions, they are:
+Elixir is available in some distributions:
 
 * [Homebrew for Mac OS X via this gist](https://gist.github.com/1968046)
 * Fedora 17+ and Fedora Rawhide: `sudo yum -y install elixir`
@@ -37,7 +37,7 @@ If you don't use any of the distributions above, don't worry! We also provide a 
 
 Elixir provides a package file with its compiled source for every release. You can grab the latest [in the downloads page](https://github.com/elixir-lang/elixir/downloads) (make sure to download one of the versioned packages under the "Download packages" section and not the "Download as zip/tar.gz" buttons which will rather download Elixir's master branch).
 
-After unzip-ing the package, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you also add Elixir's bin path to your PATH environment variable to ease development. In a Unix system, that can be achieved with:
+After unzip-ing the package, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you also add Elixir's `bin` path to your PATH environment variable to ease development. In a Unix system, that can be achieved with:
 
     export PATH="$PATH:/path/to/elixir/bin"
 
@@ -51,11 +51,11 @@ In case you are feeling a bit more adventurous, you can also compile from master
     $ cd elixir
     $ make test
 
-If tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
+If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
 
 ## 1.2 Interactive mode
 
-When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or you are using a packaged version, can find these inside the `bin` directory.
+When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or you are using a packaged version, you can find these inside the `bin` directory.
 
 For now, let's start by running `iex` which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result straight away. Let's warm up with some basic arithmetic expressions:
 
@@ -66,7 +66,7 @@ For now, let's start by running `iex` which stands for Interactive Elixir. In in
     iex> 10 / 2
     5.0
 
-Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected, in Elixir the operator `/` always returns a float. In case you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
+Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir the operator `/` always returns a float. In case you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
     iex> div(10, 2)
     5
@@ -75,7 +75,7 @@ Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected, 
     iex> rem 10, 3
     1
 
-In the example above, we called two functions called `div` and `rem`. Notice that parenthesis are not required in order to invoke a function. We are going to discuss more about it later. Let's move forward and see which other data types we have in Elixir:
+In the example above, we called two functions called `div` and `rem`. Notice that parentheses are not required in order to invoke a function. We are going to discuss more about it later. Let's move forward and see which other data types we have in Elixir:
 
 ## 1.3 Basic types
 
@@ -128,7 +128,7 @@ Although they represent the same thing, double-quoted and single-quoted strings 
     iex> "string" == 'string'
     false
 
-Most of the cases, developers should use double-quoted strings as their representation is more compact. We are going to discuss this subject with more detail in the next chapter.
+In most cases, developers should use double-quoted strings as their representation is more compact. We'll discuss this subject with more detail in the next chapter.
 
 Elixir also provides `true` and `false` as booleans:
 
@@ -167,7 +167,7 @@ Notice that `++` and `--` cannot be used to manipulate double quoted strings, as
     iex> "foo" <> "bar"
     "foobar"
 
-Elixir also provides three boolean operators: `or`, `and` and `not`. Those operators are strict in the sense they expect a boolean (true or false) as first argument:
+Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense they expect a boolean (true or false) as their first argument:
 
     iex> true and true
     true
@@ -214,6 +214,6 @@ The reason we can compare different data types is for pragmatism. Sorting algori
 
     number < atom < reference < functions < port < pid < tuple < list < bit string
 
-You actually don't need to memorize this ordering, it is important just to know an order exists.
+You actually don't need to memorize this ordering, but it is important just to know an order exists.
 
 Well, that is it for the introduction. In the next chapter, we are going to discuss some basic functions, data types conversions and a bit of control-flow.
