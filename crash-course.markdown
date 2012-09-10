@@ -231,6 +231,29 @@ is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
 {% endhighlight %}
 
+### Tuples
+
+The syntax for tuples is the same in both language, but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
+
+1. The `subject` of the function is always the first argument and
+2. All data structures functions employ zero-based access.
+
+That said, to avoid confusion, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `setelem`:
+
+**Erlang**
+
+{% highlight erlang %}
+element(1, { a, b, c })       % => a
+setelement(1, { a, b, c }, d) % => { d, b, c }
+{% endhighlight %}
+
+**Elixir**
+
+{% highlight ruby %}
+elem({ :a, :b, :c }, 0)        % => :a
+setelem({ :a, :b, :c }, 0, :d) % => { :d, :b, :c }
+{% endhighlight %}
+
 ### Lists and Binaries
 
 Elixir has a shortcut syntax for binaries.

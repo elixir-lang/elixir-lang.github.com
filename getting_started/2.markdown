@@ -21,17 +21,15 @@ While both are used to store items, they differ on how those items are stored in
 
 This means that accessing a tuple element is very fast (constant time) and can be achieved using the `elem` function:
 
-    iex> elem { :a, :b, :c }, 1
+    iex> elem { :a, :b, :c }, 0
     :a
-
-> Note: In the upcoming Elixir version 0.7.0, we have normalized all functions to employ zero-based access. Therefore `elem` and `setelem` functions used in this section will also be zero-based.
 
 On the other hand, updating a tuple is expensive as it needs to duplicate the tuple contents in memory. Updating a tuple can be done with the `setelem` function:
 
-    iex> setelem { :a, :b, :c }, 1, :d
+    iex> setelem { :a, :b, :c }, 0, :d
     {:d,:b,:c}
 
-> Note: If you are an Erlang developer, you will notice that we used the `elem` and `setelem` functions instead of Erlang's `element` and `setelement`. The reason for this choice is that Elixir attempts to normalize Erlang API's to always receive the `subject` of the function as the first argument.
+> Note: If you are an Erlang developer, you will notice that we used the `elem` and `setelem` functions instead of Erlang's `element` and `setelement`. The reason for this choice is that Elixir attempts to normalize Erlang API's to always receive the `subject` of the function as the first argument and employ zero-based access.
 
 Since updating a tuple is expensive, when we want to add or remove elements, we use lists. Since lists are linked, it means accessing the first element of the list is very cheap. Accessing the n-th element, however, will require the algorithm to pass through n-1 nodes before reaching the n-th. We can access the `head` of the list as follows:
 
