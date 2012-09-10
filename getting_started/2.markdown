@@ -19,10 +19,12 @@ Elixir provides both lists and tuples:
 
 While both are used to store items, they differ on how those items are stored in memory. Lists are implemented as linked lists (where each item in the list points to the next item) while tuples are stored contiguously in memory.
 
-This means that accessing a tuple element is very fast (constant time) and can be achieved using the `elem` function (notice that indexes in Elixir data-types start with `1`):
+This means that accessing a tuple element is very fast (constant time) and can be achieved using the `elem` function:
 
     iex> elem { :a, :b, :c }, 1
     :a
+
+> Note: In the upcoming Elixir version 0.7.0, we have normalized all functions to employ zero-based access. Therefore `elem` and `setelem` functions used in this section will also be zero-based.
 
 On the other hand, updating a tuple is expensive as it needs to duplicate the tuple contents in memory. Updating a tuple can be done with the `setelem` function:
 
