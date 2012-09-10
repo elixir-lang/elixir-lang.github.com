@@ -6,7 +6,7 @@ guide: 4
 
 # 4 Records & Protocols
 
-Elixir provides both protocols and records. This chapter will outline the main features on both and provide some examples. More specifically, we will learn how to use `defrecord`, `defprotocol` and `defimpl`.
+Elixir provides both records and protocols. This chapter will outline the main features of both and provide some examples. More specifically, we will learn how to use `defrecord`, `defprotocol` and `defimpl`.
 
 ## 4.1 Records
 
@@ -20,13 +20,13 @@ The line above defines a module named `FileInfo` which contains a function named
     file_info.atime         #=> Returns the value of atime
     file_info.atime(now())  #=> Updates the value of atime
 
-Elixir will also define an `update_#{field}` function that accepts a function of one argument. When we invoke the update function, it calls the function we have provided passing it the current value of the field and updates the field with the value returned from our function:
+Elixir will also define an `update_#{field}` function that accepts a function of one argument. When we invoke the update function, it calls the function we have provided, passing it the current value of the field and updating the field with the value returned from our function:
 
     file_info = FileInfo.new(accesses: 10)
     file_info = file_info.update_accesses(fn(x) -> x + 1 end)
     file_info.accesses #=> 11
 
-Internally, a record is simply a tuple where the first element is always the record module name. We can check this by creating and printing a record in Interactive Elixir (`iex`):
+Internally, a record is simply a tuple where the first element is always the record module name. In Interactive Elixir (`iex`) (or using IO.inspect), we can get all of the fields of a record:
 
     iex> defrecord FileInfo, atime: nil, mtime: nil
     iex> FileInfo.new
