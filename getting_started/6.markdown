@@ -6,16 +6,16 @@ guide: 6
 
 # 6 Other topics
 
-This chapter holds different small topics that are part of Elixir's day to day work. We will learn about writing documentation, list and binary comprehensions, partial function application and others!
+This chapter contains different small topics that are part of Elixir's day to day work. We will learn about writing documentation, list and binary comprehensions, partial function application and more!
 
 ## 6.1 String sigils
 
 Elixir provides string sigils via the token `%`:
 
-    %b(Binary with escaping an interpolation)
+    %b(Binary with escaping and interpolation)
     %B(Binary without escaping \n and without #{interpolation})
 
-Sigils starting with uppercase letter never escaper characters nor interpret interpolations. Notice the separators are not necessarily parenthesis, but any non-alphanumeric character:
+Sigils starting with an uppercase letter never escape characters or do interpolation. Notice the separators are not necessarily parenthesis, but any non-alphanumeric character:
 
     %b-another binary-
 
@@ -62,7 +62,7 @@ Elixir uses module attributes described in chapter 3 to drive its documentation 
       def version, do: 1
     end
 
-In the example above, we are adding a module documentation to `MyModule` via `@moduledoc` and using `@doc` to document each function. When compiled, we are able to inspect the documentation attributes in runtime (remember to start iex in the same directory you compiled the module in):
+In the example above, we are adding a module documentation to `MyModule` via `@moduledoc` and using `@doc` to document each function. When compiled, we are able to inspect the documentation attributes at runtime (remember to start iex in the same directory in which you compiled the module):
 
     $ elixirc my_module.ex
     $ iex
@@ -92,7 +92,7 @@ Elixir promotes the use of markdown with heredocs to write readable documentatio
 
 ## 6.4 IEx Helpers
 
-Elixir's interactive console (IEx) ships with many functions to make developers life easier. One of these functions is called `d`, which shows documentation directly in the command line:
+Elixir's interactive console (IEx) ships with many functions to make the developer's life easier. One of these functions is called `d`, which shows documentation directly at the command line:
 
     iex> d()
     # IEx.Helpers
@@ -110,7 +110,7 @@ Elixir's interactive console (IEx) ships with many functions to make developers 
     * def v(n)
     :ok
 
-As you can see, invoking `d()` prints the documentation of `IEx.Helpers`, from there, we can navigate to any of the other helpers by giving its name and arity to get more information:
+As you can see, invoking `d()` prints the documentation of `IEx.Helpers`. From there, we can navigate to any of the other helpers by giving its name and arity to get more information:
 
     iex> d(:c, 2)
     * def c(files, path // ".")
@@ -124,7 +124,7 @@ As you can see, invoking `d()` prints the documentation of `IEx.Helpers`, from t
         c ["foo.ex"], "ebin"
         #=> Foo
 
-Now, we got the documentation for the `c/2` helper which can be used to compile files from IEx.
+Now, we get the documentation for the `c/2` helper which can be used to compile files from IEx.
 
 This functionality can also be used to print the documentation for any Elixir module in the system:
 
@@ -159,7 +159,7 @@ However, with partial application, we could also do:
     iex> Enum.map list, size(&1)
     [3,3,3]
 
-In the example above, we have invoked the function `size` passing `&1` as argument asking Elixir to generate a function that expects one argument and that argument will be passed to `size`.
+In the example above, we have invoked the function `size` passing `&1` as an argument asking Elixir to generate a function that expects one argument and that argument will be passed to `size`.
 
 Since operators are also function calls they can also be partially applied:
 
@@ -206,7 +206,7 @@ Or, using keywords blocks:
       n * 2
     end
 
-A comprehension accepts many generators (given by `inlist` or `inbits` operators) and also filters:
+A comprehension accepts many generators (given by `inlist` or `inbits` operators) as well as filters:
 
     # A comprehension with a generator and a filter
     iex> lc n inlist [1,2,3,4,5,6], rem(n, 2) == 0, do: n
@@ -239,7 +239,7 @@ Remember, as strings are binaries and a binary is a bitstring, we can also use s
 
 ## 6.8 Pseudo variables
 
-Elixir provides a set of pseudo-variables. Those variables can only be read and never assigned to. They are:
+Elixir provides a set of pseudo-variables. These variables can only be read and never assigned to. They are:
 
 * `__MODULE__` - Returns an atom representing the current module or nil;
 * `__FILE__` - Returns a string representing the current file;
