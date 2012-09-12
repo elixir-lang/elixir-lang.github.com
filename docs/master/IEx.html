@@ -40,7 +40,7 @@ down version.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -51,7 +51,17 @@ down version.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#after_spawn/1">after_spawn/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#cli/0">cli/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#preload/0">preload/0</a>
   </span>
 </li>
 <li>
@@ -76,15 +86,35 @@ down version.</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="after_spawn/1">
+    <strong>after_spawn(fun)</strong>
+  </p>
+  <div class="docstring"><p>Registers a function to be invoked after IEx
+process is spawned. Requires IEx.preload to
+be invoked.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L31" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="cli/0">
     <strong>cli()</strong>
   </p>
   <div class="docstring"><p>Interface to start IEx from CLI.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L19" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L38" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="preload/0">
+    <strong>preload()</strong>
+  </p>
+  <div class="docstring"><p>Simply loads IEx application. Most of the times it is
+preloaded on demand, but if you want to pre-configure
+IEx, you need to preload it.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L21" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="run/1">
     <strong>run(opts // [])</strong>
@@ -92,23 +122,25 @@ down version.</p>
   <div class="docstring"><p>Runs IEx checking if tty is available or not.
 If so, invoke tty, otherwise go with the simple iex.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L31" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L50" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="simple/1">
     <strong>simple(opts // [])</strong>
   </p>
   <div class="docstring"><p>Starts IEx simply using the current stdio.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L82" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L101" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="tty/1">
     <strong>tty(opts // [])</strong>
   </p>
   <div class="docstring"><p>Starts IEx using a tty server.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/iex.ex#L41" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L60" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

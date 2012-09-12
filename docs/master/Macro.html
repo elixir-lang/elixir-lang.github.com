@@ -56,6 +56,26 @@
     <a href="#to_binary/1">to_binary/1</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#unescape_binary/1">unescape_binary/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unescape_binary/2">unescape_binary/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unescape_tokens/1">unescape_tokens/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#unescape_tokens/2">unescape_tokens/2</a>
+  </span>
+</li>
 
         </ul>
       
@@ -75,6 +95,8 @@
 </li>
 
         </ul>
+      
+
       
 
       
@@ -193,7 +215,7 @@ function as:</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L292" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L378" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
     <strong>to_binary(tree)</strong>
@@ -206,7 +228,95 @@ end
 #=&gt; &quot;foo.bar(1, 2, 3)&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L68" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L154" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unescape_binary/1">
+    <strong>unescape_binary(chars)</strong>
+  </p>
+  <div class="docstring"><p>Unescape the given chars. This is the unescaping behavior
+used by default in Elixir single- and double-quoted strings.
+Check <code>unescape_binary/2</code> for information on how to customize
+the escaping map.</p>
+
+<p>In this setup, Elixir will escape the following: <code>\b</code>, <code>\d</code>,
+<code>\e</code>, <code>\f</code>, <code>\n</code>, <code>\r</code>, <code>\s</code>, <code>\t</code> and <code>\v</code>. Octals are also
+escaped according to the latin1 set they represent.</p>
+
+<p>This function is commonly used on sigil implementations
+(like <code>%r</code>, <code>%b</code> and others).</p>
+
+<h2>Examples</h2>
+
+<pre><code>Macro.unescape_binary &quot;example\\n&quot;
+#=&gt; &quot;example\n&quot;
+</code></pre>
+
+<p>In the example above, we pass a string with <code>\n</code> escaped
+and we return a version with it unescaped.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L80" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unescape_binary/2">
+    <strong>unescape_binary(chars, map)</strong>
+  </p>
+  <div class="docstring"><p>Unescape the given chars according to the map given.
+Check <code>unescape/1</code> if you want to use the same map as
+Elixir single- and double-quoted strings.</p>
+
+<h2>Map</h2>
+
+<p>The map must be a function. The function receives an integer
+representing the number of the characters it wants to unescape.
+Here is the default mapping function implemented by Elixir:</p>
+
+<pre><code>def unescape_map(?b), do: ?\b
+def unescape_map(?d), do: ?\d
+def unescape_map(?e), do: ?\e
+def unescape_map(?f), do: ?\f
+def unescape_map(?n), do: ?\n
+def unescape_map(?r), do: ?\r
+def unescape_map(?s), do: ?\s
+def unescape_map(?t), do: ?\t
+def unescape_map(?v), do: ?\v
+def unescape_map(e),  do: e
+</code></pre>
+
+<p>If the <code>unescape_map</code> function returns false. The char is
+not escaped and <code>\</code> is kept in the char list.</p>
+
+<h2>Octals</h2>
+
+<p>Octals will by default be escaped unless the map function
+returns false for ?0.</p>
+
+<h2>Examples</h2>
+
+<p>Using the unescape_map defined above is easy:</p>
+
+<pre><code>Macro.unescape_binary &quot;example\\n&quot;, unescape_map(&amp;1)
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L121" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unescape_tokens/1">
+    <strong>unescape_tokens(tokens)</strong>
+  </p>
+  <div class="docstring"><p>Unescape the given tokens according to the default map.
+Check <code>unescape/1</code> and <code>unescape/2</code> for more information
+about unescaping. Only tokens that are binaries are
+unescaped, all others are ignored. This method is useful
+when implementing your own sigils. Check the implementation
+of <code>Kernel.__b__</code> for examples.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L133" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="unescape_tokens/2">
+    <strong>unescape_tokens(tokens, map)</strong>
+  </p>
+  <div class="docstring"><p>Unescape the given tokens according to the given map.
+Check <code>unescape_tokens/1</code> and <code>unescaped/2</code> for more information.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L141" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -232,6 +342,8 @@ as a macro so it can be used in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L28" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
     </div>
   </body>

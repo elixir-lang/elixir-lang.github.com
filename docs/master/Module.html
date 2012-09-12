@@ -133,8 +133,15 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
     <a href="#safe_concat/2">safe_concat/2</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#split/1">split/1</a>
+  </span>
+</li>
 
         </ul>
+      
+
       
 
       
@@ -157,7 +164,7 @@ if the attribute was registered or not via <code>register_attribute/2</code>.</p
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L353" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L363" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="add_doc/6">
     <strong>add_doc(module, line, kind, tuple, signature, doc)</strong>
@@ -223,7 +230,7 @@ Use <code>defines?/3</code> to assert for an specific type.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L243" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L253" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defines?/3">
     <strong>defines?(module, tuple, kind)</strong>
@@ -241,7 +248,7 @@ given <code>kind</code>. <code>kind</code> can be either <code>:def</code>, <cod
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L263" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L273" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="definitions_in/1">
     <strong>definitions_in(module)</strong>
@@ -256,7 +263,7 @@ end
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L283" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L293" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="definitions_in/2">
     <strong>definitions_in(module, kind)</strong>
@@ -273,7 +280,7 @@ to its kind.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L302" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L312" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="delete_attribute/2">
     <strong>delete_attribute(module, key)</strong>
@@ -288,7 +295,7 @@ end
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L412" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L422" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_quoted/4">
     <strong>eval_quoted(env, quoted, binding // [], opts // [])</strong>
@@ -337,7 +344,7 @@ Foo.sum(1, 2) #=&gt; 3
 An overridable function is lazily defined, allowing a
 developer to customize it.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L313" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L323" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="open?/1">
     <strong>open?(module)</strong>
@@ -352,7 +359,7 @@ and its attributes and functions can be modified.</p>
   </p>
   <div class="docstring"><p>Returns true if the given tuple in module is marked as overridable.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L336" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L346" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="read_attribute/2">
     <strong>read_attribute(module, key)</strong>
@@ -373,7 +380,7 @@ a list is always returned.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L389" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L399" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="register_attribute/3">
     <strong>register_attribute(module, new, opts // [])</strong>
@@ -410,7 +417,7 @@ behavior to exactly the same expected in Erlang.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L450" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L460" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="safe_concat/1">
     <strong>safe_concat(list)</strong>
@@ -449,8 +456,23 @@ Module.safe_concat List, Chars
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L133" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="split/1">
+    <strong>split(module)</strong>
+  </p>
+  <div class="docstring"><p>Split the given module name into binary parts.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Module.split Very.Long.Module.Name.And.Even.Longer
+#=&gt; [&quot;Very&quot;, &quot;Long&quot;, &quot;Module&quot;, &quot;Name&quot;, &quot;And&quot;, &quot;Even&quot;, &quot;Longer&quot;]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L484" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

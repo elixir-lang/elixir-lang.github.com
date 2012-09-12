@@ -74,6 +74,21 @@
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#exclude_files/1">exclude_files/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#extract_files/2">extract_files/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#extract_files/3">extract_files/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#module_name_to_command/2">module_name_to_command/2</a>
   </span>
 </li>
@@ -104,6 +119,8 @@
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
@@ -117,7 +134,7 @@
 <pre><code>Mix.Utils.camelize &quot;foo_bar&quot; #=&gt; &quot;FooBar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L181" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L218" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="command_to_module/2">
     <strong>command_to_module(command, at // Elixir)</strong>
@@ -148,7 +165,7 @@ exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
 #=&gt; &quot;Compile.Elixir&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L247" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L284" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="config_merge/2">
     <strong>config_merge(old, new)</strong>
@@ -156,7 +173,34 @@ exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
   <div class="docstring"><p>Merges two configs recursively, merging keyword lists
 and concatenating normal lists.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L102" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L139" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="exclude_files/1">
+    <strong>exclude_files(files)</strong>
+  </p>
+  <div class="docstring"><p>Filtering out files which start with &quot;.&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L130" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="extract_files/2">
+    <strong>extract_files(paths, exts)</strong>
+  </p>
+  <div class="docstring"><p>Extract the files from the given paths with
+the given extension.
+It ignores files which start with &quot;.&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L103" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="extract_files/3">
+    <strong>extract_files(paths, files, exts)</strong>
+  </p>
+  <div class="docstring"><p>Extract the files from the given paths with
+the given extension in case <code>files</code> is an empty
+array. If not, get the common subset between
+<code>files</code> and the extracted files.
+It ignores files which start with &quot;.&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L118" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="module_name_to_command/2">
     <strong>module_name_to_command(module, nesting // 0)</strong>
@@ -174,7 +218,7 @@ module_name_to_command(&quot;Mix.Tasks.Compile.Elixir&quot;, 2)
 #=&gt; &quot;compile.elixir&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L227" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L264" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="source/1">
     <strong>source(module)</strong>
@@ -213,7 +257,7 @@ camelize, however, in some cases formatting may be lost:</p>
 Mix.Utils.camelize   &quot;sap_example&quot; #=&gt; &quot;SapExample&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L139" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L176" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="user_home/0">
     <strong>user_home()</strong>
@@ -223,6 +267,8 @@ Mix.Utils.camelize   &quot;sap_example&quot; #=&gt; &quot;SapExample&quot;
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/utils.ex#L20" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

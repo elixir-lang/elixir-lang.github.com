@@ -27,10 +27,13 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>A convenient module for defining behaviors.
-It provides a <code>defcallback</code> macro for defining
-the callbacks and automatically generates a
-<code>behaviour_info</code> function before compilation.</p>
+          <p>A convenience module for defining behaviours.
+Behaviours can be referenced by other modules
+in order to ensure they implement the proper
+callbacks.</p>
+
+<p>For example, you can specify the <code>URI.Parser</code>
+behaviour as follow:</p>
 
 <pre><code>defmodule URI.Parser do
   use Behaviour
@@ -42,6 +45,27 @@ the callbacks and automatically generates a
   defcallback default_port(arg)
 end
 </code></pre>
+
+<p>And then a specific protocol may use it as:</p>
+
+<pre><code>defmodule URI.HTTP do
+  @behaviour URI.Parser
+  def default_port(), do: 80
+  def parse(info), do: info
+end
+</code></pre>
+
+<p>In case the behaviour changes or URI.HTTP does
+not implement one of the callbacks, a warning
+will be raised.</p>
+
+<h2>Implementation</h2>
+
+<p>Internally, Erlang call <code>behaviour_info(:callbacks)</code>
+to obtain all functions that a behaviour should
+implemented. Therefore, all this module does is
+to define <code>behaviour_info(:callbacks)</code> with the
+<code>defcallback</code> definitions.</p>
 
         </div>
       
@@ -69,6 +93,8 @@ end
       
 
       
+
+      
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
@@ -80,9 +106,11 @@ slightly different than simple using <code>def</code> because, even if
 <code>defcallback</code> contains default values, a default function
 won&#39;t be generated, which would happen with <code>def</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/behaviour.ex#L26" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/behaviour.ex#L48" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
     </div>
   </body>

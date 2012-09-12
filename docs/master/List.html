@@ -170,6 +170,8 @@ first argument.</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
@@ -232,7 +234,7 @@ List.duplicate [1,2], 2
 #=&gt; [[1,2],[1,2]]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L338" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L69" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="flatten/1">
     <strong>flatten(list)</strong>
@@ -250,13 +252,13 @@ List.flatten [1,[[2],3]], [4,5]
 #=&gt; [1,2,3,4,5]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L72" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L87" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="flatten/2">
     <strong>flatten(list, tail)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L76" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L91" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="foldl/3">
     <strong>foldl(list, acc, function)</strong>
@@ -273,7 +275,7 @@ List.foldl [1,2,3,4], 0, fn x, acc -&gt; x - acc end
 #=&gt; 2
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L93" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L108" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="foldr/3">
     <strong>foldr(list, acc, function)</strong>
@@ -287,7 +289,7 @@ a function. Requires an accumulator.</p>
 #=&gt; -2
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L107" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L122" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keydelete/3">
     <strong>keydelete(list, key, position)</strong>
@@ -298,17 +300,17 @@ given <code>item</code>. Returns the new tuple.</p>
 
 <h2>Examples</h2>
 
-<pre><code>List.keydelete([a: 1, b: 2], :a, 1)
+<pre><code>List.keydelete([a: 1, b: 2], :a, 0)
 #=&gt; [{ :b, 2 }]
 
-List.keydelete([a: 1, b: 2], 2, 2)
+List.keydelete([a: 1, b: 2], 2, 1)
 #=&gt; [{ :a, 1 }]
 
-List.keydelete([a: 1, b: 2], :c, 1)
+List.keydelete([a: 1, b: 2], :c, 0)
 #=&gt; [{ :a, 1 }, { :b, 2 }]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L242" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L257" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keyfind/4">
     <strong>keyfind(list, key, position, default // nil)</strong>
@@ -319,17 +321,17 @@ given <code>item</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>List.keyfind([a: 1, b: 2], :a, 1)
+<pre><code>List.keyfind([a: 1, b: 2], :a, 0)
 #=&gt; { :a, 1 }
 
-List.keyfind([a: 1, b: 2], 2, 2)
+List.keyfind([a: 1, b: 2], 2, 1)
 #=&gt; { :b, 2 }
 
-List.keyfind([a: 1, b: 2], :c, 1)
+List.keyfind([a: 1, b: 2], :c, 0)
 #=&gt; nil
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L171" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L186" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keymember?/3">
     <strong>keymember?(list, key, position)</strong>
@@ -340,17 +342,17 @@ with the given <code>item</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>List.keymember?([a: 1, b: 2], :a, 1)
+<pre><code>List.keymember?([a: 1, b: 2], :a, 0)
 #=&gt; true
 
-List.keymember?([a: 1, b: 2], 2, 2)
+List.keymember?([a: 1, b: 2], 2, 1)
 #=&gt; true
 
-List.keymember?([a: 1, b: 2], :c, 1)
+List.keymember?([a: 1, b: 2], :c, 0)
 #=&gt; false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L192" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L207" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keyreplace/4">
     <strong>keyreplace(list, key, position, new_tuple)</strong>
@@ -360,11 +362,11 @@ identified by <code>key</code> at position <code>pos</code> if it exists.</p>
 
 <h2>Examples</h2>
 
-<pre><code>List.keyreplace([a: 1, b: 2], :a, 1, { :a, 3 })
+<pre><code>List.keyreplace([a: 1, b: 2], :a, 0, { :a, 3 })
 #=&gt; [a: 3, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L206" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L221" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keystore/4">
     <strong>keystore(list, key, position, new_tuple)</strong>
@@ -375,11 +377,11 @@ does not exist, it is added to the end of the list.</p>
 
 <h2>Examples</h2>
 
-<pre><code>List.keystore([a: 1, b: 2], :a, 1, { :a, 3 })
+<pre><code>List.keystore([a: 1, b: 2], :a, 0, { :a, 3 })
 #=&gt; [a: 3, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L221" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L236" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="last/1">
     <strong>last(list)</strong>
@@ -396,7 +398,7 @@ List.last [1, 2, 3]
 #=&gt; 3
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L130" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L145" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="member?/2">
     <strong>member?(list, term)</strong>
@@ -414,7 +416,7 @@ List.member? [1,2,3], 0
 #=&gt; false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L150" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L165" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="range/3">
     <strong>range(first, last, step // nil)</strong>
@@ -434,7 +436,7 @@ List.range 3, 1     #=&gt; [3,2,1]
 List.range 5, 1, -2 #=&gt; [5, 3, 1]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L262" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L277" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="sort/1">
     <strong>sort(list)</strong>
@@ -448,7 +450,7 @@ sorting algorithm, check <code>Enum.qsort</code>.</p>
 #=&gt; [1, 2, 3, 4, 7]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L296" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L311" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="sort/2">
     <strong>sort(list, fun)</strong>
@@ -462,7 +464,7 @@ return true if <code>a</code> compares less than or equal to <code>b</code>, <co
 #=&gt; [7, 4, 3, 2, 1]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L310" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L325" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="uniq/1">
     <strong>uniq(list)</strong>
@@ -475,7 +477,7 @@ return true if <code>a</code> compares less than or equal to <code>b</code>, <co
 #=&gt; [1,2,3]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L323" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L338" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unzip/1">
     <strong>unzip(list)</strong>
@@ -543,6 +545,8 @@ List.zip [1, 2], [4, 5, 6]
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L378" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       
