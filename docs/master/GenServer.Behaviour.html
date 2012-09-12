@@ -26,6 +26,54 @@
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p>By using this module, you get default GenServer callbacks
+for <code>handle_call</code>, <code>handle_info</code>, <code>handle_cast</code>, <code>terminate</code>
+and <code>code_change</code>. <code>init</code> still needs to be implemented by the
+developer. Since these functions are defined as overridable,
+they can be partially customized and have a general clause
+that simply invokes <code>super</code>.</p>
+
+<p>This module also tags the behavior as :gen<em>server. For more
+information on gen</em>server, please refer to the Erlang
+documentation:</p>
+
+<p><a href="http://www.erlang.org/doc/man/gen_server.html">http://www.erlang.org/doc/man/gen_server.html</a>
+<a href="http://www.erlang.org/doc/design_principles/gen_server_concepts.html">http://www.erlang.org/doc/design_principles/gen_server_concepts.html</a></p>
+
+<h2>Example</h2>
+
+<pre><code>defmodule MyServer do
+  use GenServer.Behaviour
+
+  # Callbacks
+
+  def init(state) do
+    { :ok, state }
+  end
+
+  def handle_call(:peek, _from, [h|_] = state) do
+    { :reply, h, state }
+  end
+
+  # Default behaviour
+  def handle_call(request, from, config) do
+    super(request, from, config)
+  end
+
+  def handle_cast({ :push, item }, state) do
+    { :noreply, [item|state] }
+  end
+
+  # Default cast behaviour
+  def handle_cast(request, config) do
+    super(request, config)
+  end
+end
+</code></pre>
+
+        </div>
+      
 
       <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/gen_server/behaviour.ex#L12" target="_blank" class="view_source">Source</a>
 
@@ -36,44 +84,13 @@
       
 
       
-        <h2>Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#__using__/1">__using__/1</a>
-  </span>
-</li>
 
-        </ul>
       
 
       
 
       
-        <div id="macros_details" class="details_list">
-          <h2>Macros</h2>
-          <div class="detail">
-  <p class="signature" id="__using__/1">
-    <strong>__using__(_)</strong>
-  </p>
-  <div class="docstring"><p>By using this module, you get default GenServer callbacks
-for <code>handle_call</code>, <code>handle_info</code>, <code>handle_cast</code>, <code>terminate</code>
-and <code>code_change</code>. <code>init</code> still needs to be implemented by the
-developer. Since these functions are defined as overridable,
-they can be partially customized and have a global clause
-that simply invokes <code>super</code>. See <code>ExUnit.Server</code> for some
-code examples.</p>
 
-<p>This module also tags the behavior as :gen<em>server. For more
-information on gen</em>server, please refer to the Erlang
-documentation:</p>
-
-<p><a href="http://www.erlang.org/doc/man/gen_server.html">http://www.erlang.org/doc/man/gen_server.html</a>
-<a href="http://www.erlang.org/doc/design_principles/gen_server_concepts.html">http://www.erlang.org/doc/design_principles/gen_server_concepts.html</a></p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/gen_server/behaviour.ex#L30" target="_blank" class="view_source">Source</a>
-</div>
-        </div>
       
     </div>
   </body>
