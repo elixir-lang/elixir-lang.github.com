@@ -314,7 +314,7 @@ In addition to the built-in attributes outlined above, customer attributes may a
       IO.inspect @my_data #=> 13
     end
 
-Unlike Erlang, user defined attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](/docs/Module.html#register_attribute/2).
+Unlike Erlang, user defined attributes are not stored in the module by default since it is common in Elixir to use such attributes to store temporary data. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/2`](/docs/stable/Module.html#register_attribute/2).
 
 Finally, notice that attributes can also be read inside functions:
 
@@ -328,7 +328,7 @@ Finally, notice that attributes can also be read inside functions:
     MyServer.first_data #=> 11
     MyServer.second_data #=> 13
 
-Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. Check [the documentation for the module `Module` documentation](/docs/Module.html) for other functions to manipulate module attributes.
+Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. Check [the documentation for the module `Module` documentation](/docs/stable/Module.html) for other functions to manipulate module attributes.
 
 ## 3.7 Nesting
 
