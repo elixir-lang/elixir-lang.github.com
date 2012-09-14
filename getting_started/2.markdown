@@ -512,43 +512,7 @@ The common strategy is to explicitly make all arguments that are required after 
 
     x #=> returns the value of x or nil for failures
 
-### 2.7.7 Rescue
-
-For catching exceptions in Elixir, we can use `rescue` instead of `catch`. In addition to allowing the same pattern matching rules as `catch`, `rescue` also allows a developer to easily rescue an exception by its name and not by its internal contents. Consider the following examples:
-
-    # rescue only runtime error
-    try do
-      raise "some error"
-    rescue
-      RuntimeError -> "rescued"
-    end
-
-    # rescue runtime and argument errors
-    try do
-      raise "some error"
-    rescue
-      [RuntimeError, ArgumentError] -> "rescued"
-    end
-
-    # rescue and assign to x
-    try do
-      raise "some error"
-    rescue
-      x in [RuntimeError] ->
-        # all exceptions respond to message
-        x.message
-    end
-
-    # rescue all (discouraged) and assign to x
-    try do
-      raise ArgumentError, message: "unexpected argument"
-    rescue
-      x -> x.message
-    end
-
-Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](/docs/stable/), by clicking "Records" in the upper left corner.
-
-### 2.7.8 Receive
+### 2.7.7 Receive
 
 The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
@@ -582,6 +546,56 @@ You may not see exactly `<0.36.0>` back, but something similar. If there are no 
     Too late
 
 Notice we spawned a new function using the `spawn` function passing another function as argument. Elixir also supports `spawn_link`, which spawns a child process but keeps the parent and child connected. This way, if the child dies unexpectedly, the parent receives a notification. [`Process`](/docs/stable/Process.html) and [`Node`](/docs/stable/Node.html) modules contains many functions to manage processes, including spawning and get information about processes running in other nodes in the network.
+
+## 2.8 Exceptions
+
+Elixir provides the concept of exceptions. An exception can be raised using the function `raise` and rescued inside a `try` block with the `rescue` keyword:
+
+    # rescue only runtime error
+    try do
+      raise "some error"
+    rescue
+      RuntimeError -> "rescued"
+    end
+
+    # rescue runtime and argument errors
+    try do
+      raise "some error"
+    rescue
+      [RuntimeError, ArgumentError] -> "rescued"
+    end
+
+    # rescue and assign to x
+    try do
+      raise "some error"
+    rescue
+      x in [RuntimeError] ->
+        # all exceptions respond to message
+        x.message
+    end
+
+In general, idiomatic Elixir avoids raising exceptions unless you are truly in an exceptional scenario. In such cases, your code nor anyone integrating with your code can recover from the exception and continue.
+
+For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
+
+    case File.read(file) do
+      { :ok, contents }  ->
+        # we could access the file
+        # proceed as expected
+      { :error, reason } ->
+        # Ops, something went wrong
+        # We need to handle the error accordingly
+    end
+
+Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `:ok` in case of success and `{ :error, reason }` in case of failures. This is approach is commonly called **sideband data** as we annotate the result.
+
+On the other hand, a CLI interface that needs to access or manipulate a file given by the user, you may necessarily expect a file to be there, if it isn't there is nothing you can do then fail. Then you may use `File.read!` which raises an exception:
+
+    contents = File.read!(file)
+
+We can sum this up in few words: don't use exceptions for control-flow. If you feel like you need to rescue an exception in order to change how the code behaves, you should probably be using sideband data.
+
+Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](/docs/stable/), by clicking "Records" in the upper left corner.
 
 ## 2.8 Built-in functions
 
