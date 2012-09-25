@@ -145,28 +145,33 @@ The documentation for built-in functions can also be accessed directly or direct
     iex> d(Kernel.is_atom/1)
     ...
 
-## 6.5 Partial application
+## 6.5 Function retrieval and partial application
 
-Elixir also supports partial application. Let's suppose we have a list of strings and we want to calculate the size for each of them. We could do it in the following way:
+Elixir supports a convenient syntax for retrieving functions. Let's suppose we have a list of binaries and we want to calculate the size of each of them. We could do it in the following way:
 
     iex> list = ["foo", "bar", "baz"]
     ["foo","bar","baz"]
     iex> Enum.map list, fn(x) -> size(x) end
     [3,3,3]
 
-However, with partial application, we could also do:
+We could also write this as:
 
     iex> Enum.map list, size(&1)
     [3,3,3]
 
-In the example above, we have invoked the function `size` passing `&1` as an argument asking Elixir to generate a function that expects one argument and that argument will be passed to `size`.
+The example above works as if `size(&1)` translates directly to `fn(x) -> size(x) end`. Since operators are also function calls, they can also benefit of the same syntax:
 
-Since operators are also function calls they can also be partially applied:
+    iex> Enum.reduce [1,2,3], 0, &1 * &2
+    6
+
+In this case, `&1 * &2` translates to `fn(x, y) -> x * y end`. The values `&1` and `&2` maps to the argument order in the generated function.
+
+This syntax can also be used to do partial application in Elixir. For instance, if we want to multiply each item in a list per two, we could write it as:
 
     iex> Enum.map [1,2,3], &1 * 2
     [2,4,6]
 
-All functions can be partially applied, except [Elixir's special forms](/docs/stable/Kernel.SpecialForms.html).
+All functions and macros can be retrieved and partially applied, except [Elixir's special forms](/docs/stable/Kernel.SpecialForms.html).
 
 ## 6.6 Use
 
