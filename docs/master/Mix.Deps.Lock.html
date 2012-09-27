@@ -43,12 +43,12 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#read/1">read/1</a>
+    <a href="#lockfile/0">lockfile/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#update_lock/3">update_lock/3</a>
+    <a href="#read/1">read/1</a>
   </span>
 </li>
 <li>
@@ -68,33 +68,27 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="lockfile/0">
+    <strong>lockfile()</strong>
+  </p>
+  <div class="docstring"><p>Returns the lockfile path.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L9" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="read/1">
-    <strong>read(file // access(Mix.project(), :lockfile))</strong>
+    <strong>read(file // lockfile)</strong>
   </p>
   <div class="docstring"><p>Read the file, returns a keyword list containing
 the app name and its current lock information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L10" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="update_lock/3">
-    <strong>update_lock(file // access(Mix.project(), :lockfile), deps, callback)</strong>
-  </p>
-  <div class="docstring"><p>Loop the given dependencies triggering the callback.
-The callback receives the dependency and its current lock
-(may be nil). The callback must return a lock or nil in
-case a lock could not be retrieved.</p>
-
-<p>This function returns a list with the app names in the
-given dependencies that got a lock.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L40" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L17" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="write/2">
-    <strong>write(file // access(Mix.project(), :lockfile), dict)</strong>
+    <strong>write(file // lockfile, dict)</strong>
   </p>
   <div class="docstring"><p>Receives a keyword list and writes it to the disk.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L23" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/deps/lock.ex#L30" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

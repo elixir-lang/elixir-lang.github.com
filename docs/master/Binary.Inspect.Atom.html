@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Enum.OrdIterator.Orddict</title>
+    <title>Binary.Inspect.Atom</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,15 +21,32 @@
 
     <div id="content">
       <h1>
-        Enum.OrdIterator.Orddict
+        Binary.Inspect.Atom
         
           <small>impl</small>
         
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p>Represents the atom as an Elixir term. The atoms false, true
+and nil are simply quoted. Modules are properly represented
+as modules using the dot notation.</p>
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/orddict.ex#L80" target="_blank" class="view_source">Source</a>
+<p>Notice that in Elixir, all operators can be represented using
+literal atoms (<code>:+</code>, <code>:-</code>, etc).</p>
+
+<h2>Examples</h2>
+
+<pre><code>inspect(:foo)    #=&gt; &quot;:foo&quot;
+inspect(nil)     #=&gt; &quot;nil&quot;
+inspect(Foo.Bar) #=&gt; &quot;Foo.Bar&quot;
+</code></pre>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L94" target="_blank" class="view_source">Source</a>
 
       
 

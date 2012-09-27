@@ -28,11 +28,10 @@
       
         <div id="moduledoc" class="docstring">
           <p>By using this module, you get default GenServer callbacks
-for <code>handle_call</code>, <code>handle_info</code>, <code>handle_cast</code>, <code>terminate</code>
-and <code>code_change</code>. <code>init</code> still needs to be implemented by the
-developer. Since these functions are defined as overridable,
-they can be partially customized and have a general clause
-that simply invokes <code>super</code>.</p>
+for <code>init</code>, <code>handle_call</code>, <code>handle_info</code>, <code>handle_cast</code>,
+<code>terminate</code> and <code>code_change</code>. Since these functions are
+defined as overridable, they can be customized and fallback
+to the default behaviour by calling <code>super</code>.</p>
 
 <p>This module also tags the behavior as :gen<em>server. For more
 information on gen</em>server, please refer to the Erlang
@@ -47,10 +46,6 @@ documentation:</p>
   use GenServer.Behaviour
 
   # Callbacks
-
-  def init(state) do
-    { :ok, state }
-  end
 
   def handle_call(:peek, _from, [h|_] = state) do
     { :reply, h, state }

@@ -56,7 +56,7 @@ project is not defined, this allows many of mix tasks to work
 even without a project.</p>
 
 <p>In case the developer needs a project or want to access a special
-function in the project, he can access <code>Mix.Project.current/0</code>
+function in the project, he can access <code>Mix.Project.get!/0</code>
 which fails with <code>Mix.NoProjectError</code> in case a project is not
 defined.</p>
 
@@ -79,12 +79,17 @@ defined.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#current/0">current/0</a>
+    <a href="#get/0">get/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#defined?/0">defined?/0</a>
+    <a href="#get!/0">get!/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refresh/0">refresh/0</a>
   </span>
 </li>
 
@@ -105,10 +110,10 @@ defined.</p>
   <div class="docstring"><p>Returns the project configuration already
 considering the current environment.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L127" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L104" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="current/0">
-    <strong>current()</strong>
+  <p class="signature" id="get/0">
+    <strong>get()</strong>
   </p>
   <div class="docstring"><p>Retrieves the current project.</p>
 
@@ -118,17 +123,24 @@ tasks usually depends on a project to be defined, this
 function raises <code>Mix.NoProjectError</code> in case no project
 is available.</p>
 
-<p>Use <code>defined?/0</code> if you need to check if a project is
-defined or not without raising an exception.</p>
+<p>Returns nil if no project./</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L106" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L86" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="defined?/0">
-    <strong>defined?()</strong>
+  <p class="signature" id="get!/0">
+    <strong>get!()</strong>
   </p>
-  <div class="docstring"><p>Returns true if a current project is defined.</p>
+  <div class="docstring"><p>Same as <code>get/0</code> but raises an exception if no project.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L116" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L96" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refresh/0">
+    <strong>refresh()</strong>
+  </p>
+  <div class="docstring"><p>Refresh the project configuration. Usually required
+when the environment changes during a task.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L71" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

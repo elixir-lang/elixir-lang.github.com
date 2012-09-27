@@ -93,7 +93,7 @@ end
   <p class="signature" id="defmacros/3">
     <strong>defmacros(env, name, values)</strong>
   </p>
-  <div class="docstring"><p>Defines two macros for reading and writing records values.
+  <div class="docstring"><p>Defines three macros for reading and writing records values.
 These macros are private to the current module and are
 basically a simple mechanism for manipulating tuples when
 there isn&#39;t an interest in exposing the record as a whole.
@@ -112,10 +112,27 @@ only available at compilation time.</p>
   def name(user, name) do
     _user(user, name: name)
   end
+
+  def age(user) do
+    _user(user, :age)
+  end
+
+  def to_keywords(user) do
+    _user(user)
+  end
+
+  def name_and_age(user) do
+   _user(user, [:name, :age])
+  end
+
+  def age_and_name(user) do
+   _user(user, [:age, :name])
+  end
+
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L105" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L122" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
     <strong>defrecord(name, values, opts)</strong>
