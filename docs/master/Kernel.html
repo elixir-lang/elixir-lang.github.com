@@ -450,7 +450,7 @@ at <a href="http://www.erlang.org/doc/man/erlang.html">http://www.erlang.org/doc
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#inspect/1">inspect/1</a>
+    <a href="#inspect/2">inspect/2</a>
   </span>
 </li>
 <li>
@@ -640,6 +640,11 @@ at <a href="http://www.erlang.org/doc/man/erlang.html">http://www.erlang.org/doc
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#nil?/1">nil?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#node/0">node/0</a>
   </span>
 </li>
@@ -819,7 +824,7 @@ rescue
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2443" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2467" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="raise/2">
     <strong>raise(exception, args)</strong>
@@ -840,7 +845,7 @@ works as no-op.</p>
 <pre><code>raise ArgumentError, message: &quot;Sample&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2469" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2493" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -921,7 +926,7 @@ false &amp;&amp; error(:bad) #=&gt; false
 this operator accepts any expression as arguments,
 not only booleans, however it is not allowed in guards.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2292" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2316" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="*/2">
     <strong>*(left, right)</strong>
@@ -1006,7 +1011,7 @@ Includes both ends.</p>
 3 in 1..3 #=&gt; true
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2272" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2296" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="//2">
     <strong>/(left, right)</strong>
@@ -1042,7 +1047,7 @@ argument to the expression on the right.</p>
 <pre><code>Enum.map(List.flatten([1,[2],3]), &amp;1 * 2)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2399" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2423" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&lt;/2">
     <strong>&lt;(left, right)</strong>
@@ -1104,7 +1109,7 @@ long as the first part is a literal binary:</p>
 x #=&gt; &quot;bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2255" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2279" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="==/2">
     <strong>==(left, right)</strong>
@@ -1157,7 +1162,7 @@ first match otherwise.</p>
 &quot;abcd&quot; =~ %r/e/     #=&gt; nil
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2377" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2401" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&gt;/2">
     <strong>&gt;(left, right)</strong>
@@ -1233,7 +1238,7 @@ its current value. In other words, the value is read at compilation
 time and not at runtime. Check the module <code>Module</code> for other functions
 to manipulate module attributes.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2037" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2061" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__B__/2">
     <strong>__B__(string, list2)</strong>
@@ -1247,7 +1252,7 @@ without escaping characters and without interpolations.</p>
 %B(f#{o}o)  #=&gt; &quot;f\#{o}o&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2660" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2684" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__C__/2">
     <strong>__C__(arg1, list2)</strong>
@@ -1261,7 +1266,7 @@ without escaping characters and without interpolations.</p>
 %C(f#{o}o)  #=&gt; &#39;f\#{o}o&#39;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2688" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2712" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__R__/2">
     <strong>__R__(arg1, options)</strong>
@@ -1274,7 +1279,7 @@ nor interpreating interpolations.</p>
 <pre><code>Regex.match? %R(f#{1,3}o), &quot;f#o&quot;  #=&gt; true
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2743" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2767" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__b__/2">
     <strong>__b__(arg1, list2)</strong>
@@ -1288,7 +1293,7 @@ string, unescaping characters and replacing interpolations.</p>
 %b(f#{:o}o)  #=&gt; &quot;foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2674" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2698" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__c__/2">
     <strong>__c__(arg1, list2)</strong>
@@ -1302,7 +1307,7 @@ quoted string, unescaping characters and replacing interpolations.</p>
 %c(f#{:o}o)  #=&gt; &#39;foo&#39;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2705" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2729" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__r__/2">
     <strong>__r__(arg1, options)</strong>
@@ -1314,7 +1319,7 @@ quoted string, unescaping characters and replacing interpolations.</p>
 <pre><code>Regex.match? %r(foo), &quot;foo&quot;  #=&gt; true
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2723" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2747" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="abs/1">
     <strong>abs(number)</strong>
@@ -1403,7 +1408,7 @@ a[1] #=&gt; :a
 access a, 1 #=&gt; :a
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2536" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2560" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="and/2">
     <strong>and(left, right)</strong>
@@ -1456,7 +1461,7 @@ of <code>some_atom</code> in UTF8 encoding. Allowed in guard clauses.</p>
 <pre><code>atom_to_binary :my_atom #=&gt; &quot;my_atom&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2235" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2259" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="atom_to_binary/2">
     <strong>atom_to_binary(atom, encoding)</strong>
@@ -1521,7 +1526,7 @@ Allowed in guard clauses.</p>
 <pre><code>binary_to_atom &quot;my_atom&quot; #=&gt; :my_atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2204" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2228" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="binary_to_atom/2">
     <strong>binary_to_atom(binary, encoding)</strong>
@@ -1550,7 +1555,7 @@ Allowed in guard clauses.</p>
 binary_to_existing_atom &quot;my_atom&quot; #=&gt; :my_atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2220" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2244" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="binary_to_existing_atom/2">
     <strong>binary_to_existing_atom(binary, encoding)</strong>
@@ -1704,7 +1709,7 @@ of the clauses match:</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1849" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1873" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cond/1">
     <strong>cond(list1)</strong>
@@ -1724,7 +1729,7 @@ raises an error otherwise.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2117" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2141" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="def/2">
     <strong>def(name, list2)</strong>
@@ -1884,7 +1889,7 @@ MyList.other_reverse([1,2,3])
 #=&gt; [3,2,1]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2617" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2641" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defexception/4">
     <strong>defexception(name, values, opts // [], do_block // [])</strong>
@@ -2225,7 +2230,7 @@ destructure [^x,y,z], [1,2,3]
 the first value from the right side. Otherwise,
 it will raise a CaseClauseError.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2181" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2205" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="div/2">
     <strong>div(left, right)</strong>
@@ -2239,7 +2244,7 @@ Can be used in guard tests.</p>
 <pre><code>div 5, 2 #=&gt; 2
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1675" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1685" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="elem/2">
     <strong>elem(tuple, index)</strong>
@@ -2254,7 +2259,7 @@ Can be used in guard tests.</p>
 <p>tuple = { :foo, :bar, 3 }
    elem(tuple, 1) #=&gt; :bar</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1637" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1647" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="exit/1">
     <strong>exit(reason)</strong>
@@ -2371,7 +2376,7 @@ f = function(List, :flatten, 1)
 f.([1,[2],3]) #=&gt; [1,2,3]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1801" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1825" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="function_exported?/3">
     <strong>function_exported?(module, function, arity)</strong>
@@ -2383,7 +2388,7 @@ public <code>function</code> with the given <code>arity</code>, otherwise false.
 it is not loaded. Check <code>Code.ensure_loaded/1</code> for more
 information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2048" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2072" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="halt/0">
     <strong>halt()</strong>
@@ -2479,7 +2484,7 @@ end
 <p>If you want to compare more than two clauses, you can use the <code>cond/1</code>
 macro.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2090" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2114" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="in/2">
     <strong>in(left, right)</strong>
@@ -2521,12 +2526,23 @@ end
 <p>In this case, Elixir will automatically expand it and define
 the variable for us.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2364" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2388" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="inspect/1">
-    <strong>inspect(arg)</strong>
+  <p class="signature" id="inspect/2">
+    <strong>inspect(arg, opts // [])</strong>
   </p>
-  <div class="docstring"><p>Inspect the given arguments according to the String.Inspect protocol.</p>
+  <div class="docstring"><p>Inspect the given arguments according to the Binary.Inspect protocol.</p>
+
+<h2>Options</h2>
+
+<p>The following options are supported:</p>
+
+<ul>
+<li><p>:raw - tuples are not formatted as the inspect protocol, they are
+always shown as tuples, defaults to false;</p></li>
+<li><p>:limit - the limit of items that are shown in tuples, bitstrings and
+lists. Do not apply to strings;</p></li>
+</ul>
 
 <h2>Examples</h2>
 
@@ -2534,7 +2550,7 @@ the variable for us.</p>
 #=&gt; &quot;:foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1594" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1604" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="integer_to_list/1">
     <strong>integer_to_list(number)</strong>
@@ -2948,7 +2964,7 @@ Enum.filter list, match?({:a, _}, _)
 Enum.filter list, match?({:a, x } when x &lt; 2, &amp;1)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1714" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1738" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="max/2">
     <strong>max(first, second)</strong>
@@ -2977,6 +2993,20 @@ first one is returned.</p>
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L891" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="nil?/1">
+    <strong>nil?(x)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the given argument is nil or not.
+Allowed in guard clauses.</p>
+
+<h2>Examples</h2>
+
+<pre><code>nil? 1    #=&gt; false
+nil? nil  #=&gt; true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1713" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="node/0">
     <strong>node()</strong>
@@ -3089,7 +3119,7 @@ message, this is the same as not using a timeout.</p></li>
 will occur immediately.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1994" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2018" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="rem/2">
     <strong>rem(left, right)</strong>
@@ -3103,7 +3133,7 @@ Can be used in guard tests.</p>
 <pre><code>rem 5, 2 #=&gt; 1
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1689" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1699" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="round/1">
     <strong>round(number)</strong>
@@ -3139,7 +3169,7 @@ Allowed in guard clauses.</p>
 <p>tuple = { :foo, :bar, 3 }
    setelem(tuple, 0, :baz) #=&gt; { :baz, :bar, 3 }</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1657" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1667" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="size/1">
     <strong>size(arg)</strong>
@@ -3274,7 +3304,7 @@ This is the function invoked when there is string interpolation.</p>
 #=&gt; &quot;foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1608" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1618" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_char_list/1">
     <strong>to_char_list(arg)</strong>
@@ -3287,7 +3317,7 @@ This is the function invoked when there is string interpolation.</p>
 #=&gt; &#39;foo&#39;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1621" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1631" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="trunc/1">
     <strong>trunc(number)</strong>
@@ -3408,7 +3438,7 @@ end
 <p>Although the second form should be avoided in favor of raise/rescue
 control mechanisms.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1951" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1975" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="tuple_size/1">
     <strong>tuple_size(tuple)</strong>
@@ -3431,7 +3461,7 @@ control mechanisms.</p>
 unless a value evalutes to true. Check <code>if</code> for examples
 and documentation.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2143" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2167" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="use/2">
     <strong>use(module, args // [])</strong>
@@ -3508,7 +3538,7 @@ true || error(:bad)  #=&gt; true
 this operator accepts any expression as arguments,
 not only booleans, however it is not allowed in guards.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2319" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2343" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

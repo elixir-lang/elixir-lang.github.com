@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>String.Inspect.Atom</title>
+    <title>Binary.Inspect.Tuple</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,7 +21,7 @@
 
     <div id="content">
       <h1>
-        String.Inspect.Atom
+        Binary.Inspect.Tuple
         
           <small>impl</small>
         
@@ -29,24 +29,19 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Represents the atom as an Elixir term. The atoms false, true
-and nil are simply quoted. Modules are properly represented
-as modules using the dot notation.</p>
-
-<p>Notice that in Elixir, all operators can be represented using
-literal atoms (<code>:+</code>, <code>:-</code>, etc).</p>
+          <p>Inspect tuples. If the tuple represents a record,
+it shows it nicely formatted using the access syntax.</p>
 
 <h2>Examples</h2>
 
-<pre><code>inspect(:foo)    #=&gt; &quot;:foo&quot;
-inspect(nil)     #=&gt; &quot;nil&quot;
-inspect(Foo.Bar) #=&gt; &quot;Foo.Bar&quot;
+<pre><code>inspect({1,2,3})            #=&gt; &quot;{1,2,3}&quot;
+inspect(ArgumentError.new)  #=&gt; ArgumentError[message: &quot;argument error&quot;]
 </code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string/inspect.ex#L80" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L286" target="_blank" class="view_source">Source</a>
 
       
 

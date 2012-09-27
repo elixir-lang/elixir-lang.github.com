@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>String.Inspect.BitString</title>
+    <title>Binary.Inspect.List</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,7 +21,7 @@
 
     <div id="content">
       <h1>
-        String.Inspect.BitString
+        Binary.Inspect.List
         
           <small>impl</small>
         
@@ -29,19 +29,27 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Represents the string as itself escaping
-all necessary characters.</p>
+          <p>Represents a list checking if it can be printed or not.
+If so, a single-quoted representation is returned,
+otherwise the brackets syntax is used.</p>
+
+<p>Inspecting a list is conservative as it does not try
+to guess how the list is encoded. That said, <code>&#39;josé&#39;</code>
+will likely be inspected as <code>[106,111,115,195,169]</code>
+because we can&#39;t know if it is encoded in utf-8
+or iso-5569-1, which is common in Erlang libraries.</p>
 
 <h2>Examples</h2>
 
-<pre><code>inspect(&quot;bar&quot;)   #=&gt; &quot;bar&quot;
-inspect(&quot;f\&quot;oo&quot;) #=&gt; &quot;f\&quot;oo&quot;
+<pre><code>inspect(&#39;bar&#39;)       #=&gt; &#39;bar&#39;
+inspect([0|&#39;bar&#39;])   #=&gt; &quot;[0,98,97,114]&quot;
+inspect([:foo,:bar]) #=&gt; &quot;[:foo, :bar]&quot;
 </code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string/inspect.ex#L164" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L240" target="_blank" class="view_source">Source</a>
 
       
 

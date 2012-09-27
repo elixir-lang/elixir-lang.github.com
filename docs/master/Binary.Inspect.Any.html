@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>String.Inspect.List</title>
+    <title>Binary.Inspect.Any</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,7 +21,7 @@
 
     <div id="content">
       <h1>
-        String.Inspect.List
+        Binary.Inspect.Any
         
           <small>impl</small>
         
@@ -29,27 +29,18 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Represents a list checking if it can be printed or not.
-If so, a single-quoted representation is returned,
-otherwise the brackets syntax is used.</p>
-
-<p>Inspecting a list is conservative as it does not try
-to guess how the list is encoded. That said, <code>&#39;josé&#39;</code>
-will likely be inspected as <code>[106,111,115,195,169]</code>
-because we can&#39;t know if it is encoded in utf-8
-or iso-5569-1, which is common in Erlang libraries.</p>
+          <p>For all other terms not implemented, we use the default
+Erlang representation.</p>
 
 <h2>Examples</h2>
 
-<pre><code>inspect(&#39;bar&#39;)       #=&gt; &#39;bar&#39;
-inspect([0|&#39;bar&#39;])   #=&gt; &quot;[0,98,97,114]&quot;
-inspect([:foo,:bar]) #=&gt; &quot;[:foo, :bar]&quot;
+<pre><code>inspect Process.self #=&gt; &quot;&lt;0.35.0&gt;&quot;
 </code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string/inspect.ex#L219" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/binary/inspect.ex#L407" target="_blank" class="view_source">Source</a>
 
       
 
