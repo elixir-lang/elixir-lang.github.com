@@ -17,14 +17,14 @@ In Elixir, we could write this code as follows:
     def spawn_compilers([current|files], output) do
       parent = Process.self()
       child  = spawn_link(fn ->
-        Erlang.elixir_compiler.file_to_path(current, output)
+        :elixir_compiler.file_to_path(current, output)
         parent <- { :compiled, Process.self() }
       end)
       receive do
         { :compiled, ^child } ->
           spawn_compilers(files, output)
         { :EXIT, ^child, { reason, where } } ->
-          Erlang.erlang.raise(:error, reason, where)
+          :erlang.raise(:error, reason, where)
       end
     end
     
@@ -38,7 +38,7 @@ Inside `spawn_compilers`, we first retrieve the PID of the current process with 
 
 The `spawn_link` function starts a new process and automatically links the current (parent) process with the spawned (child) one, returning the child PID. By linking the process we ensure that, if the child process dies, a message will be sent to the parent process which then can act on it.
 
-The function given to `spawn_link` is quite straight-forward. It simply invokes an Erlang function as `Erlang.elixir_compiler.file_to_path` and then proceeds to send a message to the parent process notifying that compilation finished.
+The function given to `spawn_link` is quite straight-forward. It simply invokes an Erlang function as `:elixir_compiler.file_to_path` and then proceeds to send a message to the parent process notifying that compilation finished.
 
 After the child process is spawned, we invoke the `receive` macro and start waiting for messages. At this point, we are expecting two types of messages:
 
@@ -81,12 +81,12 @@ As discussed in the previous section, we want to extend the error handler to act
     defmodule Elixir.ErrorHandler do
       def undefined_function(module, fun, args) do
         ensure_loaded(module)
-        Erlang.error_handler.undefined_function(module, fun, args)
+        :error_handler.undefined_function(module, fun, args)
       end
 
       def undefined_lambda(module, fun, args) do
         ensure_loaded(module)
-        Erlang.error_handler.undefined_lambda(module, fun, args)
+        :error_handler.undefined_lambda(module, fun, args)
       end
 
       defp ensure_loaded(module) do
@@ -113,7 +113,7 @@ With our error handler code in place, the first thing we need to do is to change
       Process.put(:elixir_parent_compiler, parent)
       Process.flag(:error_handler, Elixir.ErrorHandler)
 
-      Erlang.elixir_compiler.file_to_path(current, output)
+      :elixir_compiler.file_to_path(current, output)
       parent <- { :compiled, Process.self() }
     end)
 
@@ -124,7 +124,7 @@ Second, our main process can now receive a new `{ :waiting, child, module }` mes
     def spawn_compilers([current|files], output, stack) do
       parent = Process.self()
       child  = spawn_link(fn ->
-        Erlang.elixir_compiler.file_to_path(current, output)
+        :elixir_compiler.file_to_path(current, output)
         parent <- { :compiled, Process.self() }
       end)
       wait_for_messages(files, output, [child|stack])
@@ -153,7 +153,7 @@ Notice we added an extra clause to `spawn_compilers` so we can properly handle t
         { :waiting, _child, _module } ->
           spawn_compilers(files, output, stack)
         { :EXIT, _child, { reason, where } } ->
-          Erlang.erlang.raise(:error, reason, where)
+          :erlang.raise(:error, reason, where)
       after
         10_000 ->
           raise "dependency on unexesting module or possible deadlock"
