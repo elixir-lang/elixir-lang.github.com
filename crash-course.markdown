@@ -172,15 +172,13 @@ to invoke the `new` function from the `orddict` module. In Elixir, use the dot `
 Process.self
 {% endhighlight %}
 
-**Note**. You may invoke Erlang functions in Elixir in one of two ways:
+**Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follow:
 
 {% highlight ruby %}
-Erlang.lists.sort [3, 2, 1]
 :lists.sort [3, 2,1]
 {% endhighlight %}
 
-All of the Erlang's modules can be accessed in this manner. All of the Erlang built-ins reside in the `Erlang.erlang` (or `:erlang`) module.
-
+All of the Erlang built-ins reside in the `:erlang` module.
 
 <div id="data_types"></div>
 

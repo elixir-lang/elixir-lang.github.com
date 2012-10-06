@@ -153,11 +153,11 @@ Currently, Elixir does not ship with any library for doing string manipulation, 
 
 ## 2.4 Calling Erlang functions
 
-Elixir's plan is to provide a small standard library responsible for handling most basic structures (lists, ordered dicts, strings and so forth) and IO. That said, complex applications will require the developer to use Erlang's libraries.
+One of Elixir assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
 
-Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant. Invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) as follows:
+Since an Erlang module is nothing more than an atom, invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) as follows:
 
-    iex> Erlang.lists.flatten [1,[2],3]
+    iex> :lists.flatten [1,[2],3]
     [1,2,3]
 
 Erlang's OTP is very well documented and easily navigable:
@@ -231,7 +231,7 @@ The variable `_` in Elixir is special in that it can never be read from. Trying 
 
 Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of the match. The following example is invalid:
 
-    iex> Erlang.lists.flatten([1,[2],3]) = [1,2,3]
+    iex> :lists.flatten([1,[2],3]) = [1,2,3]
     ** (ErlangError) erlang error :illegal_pattern
 
 ## 2.6 Blocks

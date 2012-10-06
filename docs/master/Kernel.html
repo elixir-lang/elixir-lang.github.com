@@ -1877,9 +1877,9 @@ while in Erlang the convention is to pass it as the last argument</p></li>
 <h2>Examples</h2>
 
 <pre><code>defmodule MyList do
-  defdelegate reverse(list), to: Erlang.lists
-  defdelegate [reverse(list), map(callback, list)], to: Erlang.lists
-  defdelegate other_reverse(list), to: Erlang.lists, as: :reverse
+  defdelegate reverse(list), to: :lists
+  defdelegate [reverse(list), map(callback, list)], to: :lists
+  defdelegate other_reverse(list), to: :lists, as: :reverse
 end
 
 My:lists.reverse([1,2,3])
