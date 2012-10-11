@@ -128,7 +128,7 @@ When a variable or expression is given as a binary part, Elixir defaults the typ
 
     iex> <<102, rest :: binary>>
 
-The type can be `integer`, `float` or `binary` (we can pass endianness and signedness as specifiers too, but we will leave this discussion for later). When passing more than one option, we use a list:
+The type can be `integer`, `float`, `binary`, `bytes`, `bitstring`, `bits`, `utf8`, `utf16` or `utf32` (we can also pass endianness and signedness as specifiers too, but we will leave this discussion for later). When passing more than one option, we use a list:
 
     iex> <<102, rest :: [binary, signed]>>
 
