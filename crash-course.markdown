@@ -71,6 +71,16 @@ Hello world!
 :ok
 {% endhighlight %}
 
+However notice that in Elixir you don't need to create a file only to create a new module, Elixir modules can be defined directly in the shell:
+
+{% highlight ruby %}
+defmodule MyModule do
+  def hello do
+    IO.puts "Another Hello"
+  end
+end
+{% endhighlight %}
+
 <div id="notable_differences"></div>
 
 ## 2 Notable Differences
@@ -233,12 +243,12 @@ is_atom :"Multiple words"   #=> true
 
 ### Tuples
 
-The syntax for tuples is the same in both language, but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
+The syntax for tuples is the same in both languages but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
 
 1. The `subject` of the function is always the first argument and
 2. All data structures functions employ zero-based access.
 
-That said, to avoid confusion, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `setelem`:
+That said, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `setelem`:
 
 **Erlang**
 
@@ -256,7 +266,7 @@ setelem({ :a, :b, :c }, 0, :d) % => { :d, :b, :c }
 
 ### Lists and Binaries
 
-Elixir has a shortcut syntax for binaries.
+Elixir has a shortcut syntax for binaries:
 
 **Erlang**
 
@@ -267,6 +277,7 @@ is_binary(<<"Hello">>).  %=> true
 {% endhighlight %}
 
 **Elixir**
+
 {% highlight text %}
 is_list 'Hello'          #=> true
 is_binary "Hello"        #=> true
@@ -274,9 +285,50 @@ is_binary <<"Hello">>    #=> true
 <<"Hello">> === "Hello"  #=> true
 {% endhighlight %}
 
-### Orddicts
+In Elixir, the word **string** means a utf-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be utf-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module, that's not utf-8 aware and works mostly with char lists.
 
-Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax:
+Elixir also supports multiline strings (also called heredocs):
+
+{% highlight ruby %}
+is_binary """
+This is a binary
+spawning several
+lines.
+"""
+{% endhighlight %}
+
+### Regular expressions
+
+Elixir supports a literal syntax for regular expressions. Such syntax allows regexes to be compiled at compilation time instead of runtime and does not require you to double escape special regex characters:
+
+**Erlang**
+
+{% highlight erlang %}
+{ ok, Pattern } = re:compile("abc\\s").
+re:run("abc ", Pattern).
+#=> { match, ["abc "] }
+{% endhighlight %}
+
+**Elixir**
+
+{% highlight ruby %}
+Regex.run %r/abc\s/, "abc "
+#=> ["abc "]
+{% endhighlight %}
+
+Regexes are also supported in heredocs, which is convenient to define multiline regexes:
+
+{% highlight ruby %}
+is_regex %r"""
+This is a regex
+spawning several
+lines.
+"""
+{% endhighlight %}
+
+### Keyword list (Orddict)
+
+Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax and call them keyword list:
 
 **Erlang**
 
@@ -294,8 +346,10 @@ Dict = orddict:from_list([{key, 10}, {another_key, 20}]).
 
 {% highlight ruby %}
 dict = [key: 10, another_key: 20]
-#=> [{:another_key,20},{:key,10}]
+#=> [another_key: 20, key: 10]
 {% endhighlight %}
+
+Their internal representation is the same though. Both are made of a list of tuples.
 
 ### Records
 
@@ -538,7 +592,7 @@ Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 {% endhighlight %}
 
-Is is possible to use pattern matching when defining anonymous functions too.
+Is is possible to use pattern matching when defining anonymous functions too. In Elixir, `fn` is a shortcut, so we need to use `function` when we want many clauses:
 
 **Erlang**
 
@@ -559,7 +613,7 @@ F({a, b}).
 **Elixir**
 
 {% highlight ruby %}
-f = fn do
+f = function do
       {:a, :b} = tuple ->
         IO.puts "All your #{inspect tuple} are belong to us"
       [] ->
@@ -593,7 +647,7 @@ def square(x) do
   x * x
 end
 
-Enum.map [1,2,3], fn(:square, 1)
+Enum.map [1,2,3], function(:square, 1)
 {% endhighlight %}
 
 ### Partials in Elixir
@@ -704,7 +758,7 @@ test_fun.(10)
 
 There are two important differences between Elixir's `cond` and Erlang's `if`:
 
-1) `cond` allows any expression on the left side while Erlang allow only the subset valid in guard clauses;
+1) `cond` allows any expression on the left side while Erlang allows only guard clauses;
 
 2) `cond` uses Elixir's concepts of truthy and falsy values (everything is truthy except `nil` and `false`), Erlang's `if` expects strictly a boolean;
 
