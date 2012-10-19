@@ -56,17 +56,12 @@ In the example above, we have assigned the head of the list to the variable `hea
 Elixir also provides a special syntax to create a list of keywords. They can be created as follows:
 
     iex> [a: 1, b: 2]
-    [{:a,1},{:b,2}]
+    [a: 1, b: 2]
 
-Keyword lists are nothing more than a list of two element tuples, where the first element of the tuple is an atom. Keyword lists are ordered according to the first element of the tuple and not according to insertion order:
+Keyword lists are nothing more than a list of two element tuples, where the first element of the tuple is an atom, and hold their definition order:
 
-    iex> [foo: 1, bar: 2]
-    [{:bar,2},{:foo,1}]
-
-The reason for such ordering is faster access. Unlike dictionaries, keyword lists also allow duplicated entries:
-
-    iex> [foo: 1, bar: 2, foo: 3]
-    [{:bar,2},{:foo,1},{:foo,3}]
+    iex> hd [a: 1, b: 2]
+    { :a, 1 }
 
 The [`Keyword` module](/docs/stable/Keyword.html) contains several functions that allow you to manipulate a keyword list ignoring duplicated entries or not. For example:
 
