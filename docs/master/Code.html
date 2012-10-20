@@ -164,7 +164,7 @@ binary.</p>
 
 <p>For compiling many files at once, check <code>Kernel.ParallelCompiler</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L243" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L248" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/0">
     <strong>compiler_options()</strong>
@@ -172,7 +172,7 @@ binary.</p>
   <div class="docstring"><p>Loads the compilation options from the code server.
 Check compiler_options/1 for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L213" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L218" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="compiler_options/1">
     <strong>compiler_options(opts)</strong>
@@ -192,7 +192,7 @@ since they are stored by Elixir&#39;s Code Server.</p>
                        without raising errors, false by default;</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L232" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L237" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="delete_path/1">
     <strong>delete_path(path)</strong>
@@ -217,7 +217,7 @@ the error reason.</p>
 <p>Check <code>ensure_loaded/1</code> for more information on module loading
 and when to use <code>ensure_loaded/1</code> or <code>ensure_compiled/1</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L310" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L315" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_compiled?/1">
     <strong>ensure_compiled?(module)</strong>
@@ -225,7 +225,7 @@ and when to use <code>ensure_loaded/1</code> or <code>ensure_compiled/1</code>.<
   <div class="docstring"><p>Similar to <code>ensure_compiled/1</code>, but returns a boolean in case
 it could be ensured or not.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L331" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L336" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_loaded/1">
     <strong>ensure_loaded(module)</strong>
@@ -267,7 +267,7 @@ module we are depending on is available.</p>
 must be used just in same rare conditions, usually involving macros
 that needs to invoke a module for callback information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L285" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L290" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="ensure_loaded?/1">
     <strong>ensure_loaded?(module)</strong>
@@ -275,7 +275,7 @@ that needs to invoke a module for callback information.</p>
   <div class="docstring"><p>Similar to <code>ensure_loaded/1</code>, but returns a boolean in case
 it could be ensured or not.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L293" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L298" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval/3">
     <strong>eval(string, binding // [], opts // [])</strong>
@@ -330,10 +330,10 @@ Code.eval_quoted contents, [a: 1, b: 2], file: __ENV__.file, line: __ENV__.line
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 
-<p>When passing the <strong>ENV</strong>&#39;s file and line, we could simply get
-the location which already returns both fields as a keyword list:</p>
+<p>For convenience, you can also pass the current <strong>ENV</strong> and
+the proper information will be extracted:</p>
 
-<pre><code>Code.eval_quoted contents, [a: 1, b: 2], __ENV__.location
+<pre><code>Code.eval_quoted contents, [a: 1, b: 2], __ENV__
 #=&gt; { 3, [ {:a, 1}, {:b, 2} ] }
 </code></pre>
 </div>
@@ -353,7 +353,7 @@ in many times. I.e. if <code>load_file</code> is called N times with
 a given file, the given file will be loaded N times. Check
 <code>require_file</code> if you don&#39;t want a file to be loaded concurrently.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L174" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L178" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="loaded_files/0">
     <strong>loaded_files()</strong>
@@ -385,7 +385,7 @@ available. I.e. if <code>require_file</code> is called N times with a given
 file, the given file will be loaded only once. Check <code>load_file</code>
 if you want a file to be loaded concurrently.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L195" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L199" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="string_to_ast/2">
     <strong>string_to_ast(string, opts // [])</strong>
@@ -399,9 +399,11 @@ if it succeeds, { :error, { line, error, token } } otherwise.</p>
 <li><p><code>:file</code> - The filename to be used in stacktraces
 and the file reported in the <strong>ENV</strong> variable.</p></li>
 <li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
+<li><p><code>:existing_atoms_only</code> - When true, raises an error
+when non-existing atoms are found by the tokenizer.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L127" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L136" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="string_to_ast!/2">
     <strong>string_to_ast!(string, opts // [])</strong>
@@ -411,15 +413,9 @@ raises an exception otherwise. The exception is a TokenMissingError
 in case a token is missing (usually because the expression is incomplete),
 SyntaxError otherwise.</p>
 
-<h2>Options</h2>
-
-<ul>
-<li><p><code>:file</code> - The filename to be used in stacktraces
-and the file reported in the <strong>ENV</strong> variable.</p></li>
-<li><p><code>:line</code> - The line reported in the <strong>ENV</strong> variable.</p></li>
-</ul>
+<p>Check <code>Code.string_to_ast/2</code> for options information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L151" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/code.ex#L155" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unload_files/1">
     <strong>unload_files(files)</strong>

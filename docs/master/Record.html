@@ -74,7 +74,7 @@
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="deffunctions/3">
-    <strong>deffunctions(env, values, opts)</strong>
+    <strong>deffunctions(values, opts // [], env)</strong>
   </p>
   <div class="docstring"><p>Defines record functions skipping the module definition.
 This is called directly by <code>defrecord</code>. It expects the
@@ -84,14 +84,14 @@ of options.</p>
 <h2>Examples</h2>
 
 <pre><code>defmodule CustomRecord do
-  Record.deffunctions __ENV__, [:name, :age]
+  Record.deffunctions [:name, :age], __ENV__
 end
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L51" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defmacros/3">
-    <strong>defmacros(env, name, values)</strong>
+    <strong>defmacros(name, values, env)</strong>
   </p>
   <div class="docstring"><p>Defines three macros for reading and writing records values.
 These macros are private to the current module and are
@@ -103,7 +103,7 @@ only available at compilation time.</p>
 <h2>Examples</h2>
 
 <pre><code>defmodule CustomModule do
-  Record.defmacros __ENV__, :_user, [:name, :age]
+  Record.defmacros :_user, [:name, :age], __ENV__
 
   def new(name, age) do
     _user(name: name, age: age)
@@ -128,11 +128,10 @@ only available at compilation time.</p>
   def age_and_name(user) do
    _user(user, [:age, :name])
   end
-
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L122" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L115" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
     <strong>defrecord(name, values, opts)</strong>

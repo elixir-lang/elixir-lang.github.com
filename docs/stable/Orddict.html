@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Orddict</title>
+    <title>OrdDict</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,21 +21,23 @@
 
     <div id="content">
       <h1>
-        Orddict
+        OrdDict
         
       </h1>
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module implements a dictionary based that stores items
+          <p>This module implements a dictionary type that stores items
 as a list of tuples. It is a simple wrapper around
 <a href="http://www.erlang.org/doc/man/orddict.html">Erlang&#39;s orddict module</a>
-and exposed via the <code>Dict</code> protocol.</p>
+and exposed via the <code>Dict</code> module.</p>
+
+<p>Check the <code>Dict</code> module for examples and documentation.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/orddict.ex#L76" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/ord_dict.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -66,6 +68,8 @@ and exposed via the <code>Dict</code> protocol.</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
@@ -74,7 +78,7 @@ and exposed via the <code>Dict</code> protocol.</p>
   </p>
   <div class="docstring"><p>Creates a new empty dict.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/orddict.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/ord_dict.ex#L11" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/1">
     <strong>new(pairs)</strong>
@@ -83,11 +87,11 @@ and exposed via the <code>Dict</code> protocol.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Orddict.new [{:b,1},{:a,2}]
+<pre><code>OrdDict.new [{:b,1},{:a,2}]
 #=&gt; [a: 1, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/orddict.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/ord_dict.ex#L11" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/2">
     <strong>new(list, transform)</strong>
@@ -97,13 +101,15 @@ help of the transformation function.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Orddict.new [&quot;a&quot;, &quot;b&quot;], fn x -&gt; {x, x} end
+<pre><code>OrdDict.new [&quot;a&quot;, &quot;b&quot;], fn x -&gt; {x, x} end
 #=&gt; [&quot;a&quot;: &quot;a&quot;, &quot;b&quot;: &quot;b&quot;]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/orddict.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/ord_dict.ex#L11" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

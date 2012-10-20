@@ -40,11 +40,22 @@ as a way to configure and prepare them for testing.</p>
 
 <h2>Callbacks</h2>
 
-<p>This module defines four callbacks. <code>setup_all()</code> and
-<code>teardown_all()</code> which are executed before and after
-all tests respectively and <code>setup(test)</code> and <code>teardown(test)</code>
-which are executed before and after each test, receiving
-the test name as argument.</p>
+<p><code>ExUnit.Case</code> defines four callbacks:</p>
+
+<ul>
+<li><code>setup_all()</code> and <code>teardown_all(context)</code> which are executed
+before and after all tests respectively;</li>
+<li><code>setup(context, test)</code> and <code>teardown(context, test)</code> which are
+executed before and after each test, receiving the test name
+as argument;</li>
+</ul>
+
+<p>Such callbacks are useful to clean up any side-effect a test may cause,
+as for example, state in genservers, data on filesystem, or entries in
+a database. Data can be passed in between such callbacks as context,
+the context value returned by <code>setup_all</code> is passed down to all other
+callbacks. The value can then be updated in <code>setup</code> which is passed
+down to <code>teardown</code>.</p>
 
 <h2>Examples</h2>
 
@@ -83,6 +94,8 @@ end
       
 
       
+
+      
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
@@ -103,9 +116,11 @@ therefore avoiding hiding lines from the backtrace.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L68" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L70" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
     </div>
   </body>

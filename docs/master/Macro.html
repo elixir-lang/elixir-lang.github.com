@@ -43,12 +43,22 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#do_safe_term/1">do_safe_term/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#escape/1">escape/1</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
     <a href="#expand/2">expand/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#safe_term/1">safe_term/1</a>
   </span>
 </li>
 <li>
@@ -103,6 +113,12 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="do_safe_term/1">
+    <strong>do_safe_term(terms)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L477" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="escape/1">
     <strong>escape(tuple)</strong>
   </p>
@@ -216,6 +232,16 @@ end
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L378" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="safe_term/1">
+    <strong>safe_term(terms)</strong>
+  </p>
+  <div class="docstring"><p>Recurs the quoted expression checking if all sub terms are
+safe (i.e. they represented data structured and don&#39;t actually
+evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
+which is returned as <code>{ :unsafe, term }</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L473" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
     <strong>to_binary(tree)</strong>

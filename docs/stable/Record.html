@@ -27,7 +27,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Functions to define and interact with Erlang records</p>
+          <p>Functions to define Elixir records</p>
 
         </div>
       
@@ -43,7 +43,12 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#access/4">access/4</a>
+    <a href="#deffunctions/3">deffunctions/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#defmacros/3">defmacros/3</a>
   </span>
 </li>
 <li>
@@ -63,26 +68,80 @@
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="access/4">
-    <strong>access(caller, atom, fields, keyword)</strong>
+  <p class="signature" id="deffunctions/3">
+    <strong>deffunctions(values, opts // [], env)</strong>
   </p>
-  <div class="docstring"><p>Implements the access macro used by records.
-It returns a quoted expression that represents
-the access given by the keywords.</p>
+  <div class="docstring"><p>Defines record functions skipping the module definition.
+This is called directly by <code>defrecord</code>. It expects the
+module environment, the module values and a keyword list
+of options.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule CustomRecord do
+  Record.deffunctions [:name, :age], __ENV__
+end
+</code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L24" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L51" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defmacros/3">
+    <strong>defmacros(name, values, env)</strong>
+  </p>
+  <div class="docstring"><p>Defines three macros for reading and writing records values.
+These macros are private to the current module and are
+basically a simple mechanism for manipulating tuples when
+there isn&#39;t an interest in exposing the record as a whole.
+In some ways, it is similar to Erlang records, since it is
+only available at compilation time.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule CustomModule do
+  Record.defmacros :_user, [:name, :age], __ENV__
+
+  def new(name, age) do
+    _user(name: name, age: age)
+  end
+
+  def name(user, name) do
+    _user(user, name: name)
+  end
+
+  def age(user) do
+    _user(user, :age)
+  end
+
+  def to_keywords(user) do
+    _user(user)
+  end
+
+  def name_and_age(user) do
+   _user(user, [:name, :age])
+  end
+
+  def age_and_name(user) do
+   _user(user, [:age, :name])
+  end
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L115" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
     <strong>defrecord(name, values, opts)</strong>
   </p>
-  <div class="docstring"><p>Main entry point for records definition.
-This is invoked directly by <code>Kernel.defrecord</code>.
-Returns the quoted expression of a module given by name.</p>
+  <div class="docstring"><p>Main entry point for records definition. It defines a module
+with the given <code>name</code> and the fields specified in <code>modules</code>.
+This is invoked directly by <code>Kernel.defrecord</code>, so check it
+for more information and documentation.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L71" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L25" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="extract/2">
     <strong>extract(name, opts)</strong>
@@ -98,6 +157,8 @@ return the fields as a list of tuples.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L15" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

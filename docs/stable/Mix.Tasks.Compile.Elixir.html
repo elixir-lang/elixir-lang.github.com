@@ -41,24 +41,16 @@ time and date at the end of each compilation. You can
 force compilation regardless of mod times by passing
 the <code>--force</code> option.</p>
 
+<p>A list of files can be given after the task
+name in order to select the files to compile.</p>
+
 <h2>Configuration</h2>
 
 <ul>
-<li><p><code>:source_paths</code> - directories to find source files.
-Defaults to <code>[&quot;lib&quot;]</code>, can be configured as:</p>
-
-<p>[source_paths: [&quot;lib&quot;, &quot;other&quot;]]</p></li>
-<li><p><code>:compile_path</code> - directory to output compiled files.
-Defaults to <code>&quot;ebin&quot;</code>, can be configured as:</p>
-
-<p>[compile_path: &quot;ebin&quot;]</p></li>
-<li><p><code>:compile_first</code> - which files need to be compiled first.
-Defaults to an empty list, can be configured as:</p>
-
-<p>[compile_first: [&quot;lib/foo.ex&quot; &quot;lib/bar.ex&quot;]]</p></li>
-<li><p><code>:elixirc_options</code> - compilation options that applies
+<li><code>:elixirc_options</code> - compilation options that applies
 to Elixir&#39;s compiler, they are: <code>:ignore_module_conflict</code>,
-<code>:docs</code> and <code>:debug_info</code>. They all default to false.</p></li>
+<code>:docs</code> and <code>:debug_info</code>. By default, uses the same
+behaviour as Elixir</li>
 </ul>
 
 <h2>Command line options</h2>
@@ -91,6 +83,8 @@ to Elixir&#39;s compiler, they are: <code>:ignore_module_conflict</code>,
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
@@ -98,9 +92,11 @@ to Elixir&#39;s compiler, they are: <code>:ignore_module_conflict</code>,
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.elixir.ex#L48" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.elixir.ex#L37" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

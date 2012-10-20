@@ -23,6 +23,8 @@
       <h1>
         Mix.Project
         
+          <small>behaviour</small>
+        
       </h1>
 
       
@@ -34,7 +36,7 @@ with projects.</p>
 
 <p>In order to configure Mix, a developer needs to use
 <code>Mix.Project</code> in a module and define a function named
-<code>project</code> that returns a keywords list with configuration.</p>
+<code>project</code> that returns a keyword list with configuration.</p>
 
 <pre><code>defmodule MyApp do
   use Mix.Project
@@ -54,7 +56,7 @@ project is not defined, this allows many of mix tasks to work
 even without a project.</p>
 
 <p>In case the developer needs a project or want to access a special
-function in the project, he can access <code>Mix.Project.current/0</code>
+function in the project, he can access <code>Mix.Project.get!/0</code>
 which fails with <code>Mix.NoProjectError</code> in case a project is not
 defined.</p>
 
@@ -72,17 +74,22 @@ defined.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#behaviour_info/1">behaviour_info/1</a>
+    <a href="#config/0">config/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#current/0">current/0</a>
+    <a href="#get/0">get/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#defined?/0">defined?/0</a>
+    <a href="#get!/0">get!/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#refresh/0">refresh/0</a>
   </span>
 </li>
 
@@ -92,31 +99,52 @@ defined.</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="behaviour_info/1">
-    <strong>behaviour_info(atom1)</strong>
+  <p class="signature" id="config/0">
+    <strong>config()</strong>
   </p>
-  <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L34" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="current/0">
-    <strong>current()</strong>
-  </p>
-  <div class="docstring"><p>Retrieves the current project, raises an error
-if there is no project set.</p>
+  <div class="docstring"><p>Returns the project configuration already
+considering the current environment.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L88" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L104" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="defined?/0">
-    <strong>defined?()</strong>
+  <p class="signature" id="get/0">
+    <strong>get()</strong>
   </p>
-  <div class="docstring"><p>Returns true if a current project is defined.</p>
+  <div class="docstring"><p>Retrieves the current project.</p>
+
+<p>This is usually called by tasks that needs additional
+functions on the project to be defined. Since such
+tasks usually depends on a project to be defined, this
+function raises <code>Mix.NoProjectError</code> in case no project
+is available.</p>
+
+<p>Returns nil if no project./</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L98" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L86" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get!/0">
+    <strong>get!()</strong>
+  </p>
+  <div class="docstring"><p>Same as <code>get/0</code> but raises an exception if no project.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L96" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="refresh/0">
+    <strong>refresh()</strong>
+  </p>
+  <div class="docstring"><p>Refresh the project configuration. Usually required
+when the environment changes during a task.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L71" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       
