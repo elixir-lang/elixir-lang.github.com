@@ -29,8 +29,7 @@
         <div id="moduledoc" class="docstring">
           <p>A keyword is a list of tuples where the first element
 of the tuple is an atom and the second element can be
-any value. The list is sorted by the first element of
-each tuple.</p>
+any value. </p>
 
 <p>A keyword may have duplicated keys, so it is not strictly
 a dictionary. However most of the functions in this module
@@ -39,9 +38,6 @@ allows it to behave exactly as a dictionary. For example,
 key, regardless if duplicated entries exist. Similarly,
 <code>Keyword.put</code> and <code>Keyword.delete</code> ensure all duplicated
 entries for a given key are removed when invoked.</p>
-
-<p>This module uses <code>==</code> as operator to check if two keys
-are equal or not.</p>
 
         </div>
       
@@ -58,6 +54,11 @@ are equal or not.</p>
           <li>
   <span class="summary_signature">
     <a href="#delete/2">delete/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#equal?/2">equal?/2</a>
   </span>
 </li>
 <li>
@@ -82,7 +83,7 @@ are equal or not.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#key?/2">key?/2</a>
+    <a href="#has_key?/2">has_key?/2</a>
   </span>
 </li>
 <li>
@@ -122,11 +123,23 @@ are equal or not.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#update/3">update/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update/4">update/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#values/1">values/1</a>
   </span>
 </li>
 
         </ul>
+      
+
       
 
       
@@ -149,16 +162,30 @@ duplicated keys.</p>
 Keyword.delete [b: 2], :a         #=&gt; [b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L153" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L160" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="equal?/2">
+    <strong>equal?(left, right)</strong>
+  </p>
+  <div class="docstring"><p>Checks if two keywords are equal. I.e. they contain
+the same keys and those keys contain the same values.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Keyword.equal? [a: 1, b: 2], [b: 2, a: 1]
+#=&gt; true
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L190" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="from_enum/1">
     <strong>from_enum(enum)</strong>
   </p>
   <div class="docstring"><p>Creates a Keyword from enum. Differently from <code>Keyword.new</code>
-that behaves as a dict, <code>Keyword.from_enum</code> do not remove
+which behaves as a dict, <code>Keyword.from_enum</code> do not remove
 duplicated entries.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L25" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L21" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get/3">
     <strong>get(keywords, key, default // nil)</strong>
@@ -178,10 +205,10 @@ Keyword.get [a: 1], :b      #=&gt; nil
 Keyword.get [a: 1], :b, 3   #=&gt; 3
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L84" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L86" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get!/2">
-    <strong>get!(list1, key)</strong>
+    <strong>get!(keywords, key)</strong>
   </p>
   <div class="docstring"><p>Gets the value for specific key. If key does not exist,
 an error is raised.</p>
@@ -192,10 +219,10 @@ an error is raised.</p>
 Keyword.get! [a: 1], :b      #=&gt; raises KeyError[key: :b]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L99" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L103" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_values/2">
-    <strong>get_values(list1, key)</strong>
+    <strong>get_values(keywords, key)</strong>
   </p>
   <div class="docstring"><p>Gets all values for a specific key.</p>
 
@@ -205,22 +232,22 @@ Keyword.get! [a: 1], :b      #=&gt; raises KeyError[key: :b]
 #=&gt; [1,2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L113" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L119" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="key?/2">
-    <strong>key?(list1, key)</strong>
+  <p class="signature" id="has_key?/2">
+    <strong>has_key?(keywords, key)</strong>
   </p>
   <div class="docstring"><p>Returns whether a given key exists in the given keywords.</p>
 
-<h3>Examples</h3>
+<h2>Examples</h2>
 
-<pre><code>Keyword.key?([a: 1], :a)
+<pre><code>Keyword.has_key?([a: 1], :a)
 #=&gt; true
-Keyword.key?([a: 1], :b)
+Keyword.has_key?([a: 1], :b)
 #=&gt; false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L236" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L249" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keys/1">
     <strong>keys(keywords)</strong>
@@ -233,7 +260,7 @@ keys appear duplicated in the final list of keys.</p>
 <pre><code>Keyword.keys [a: 1, b: 2] #=&gt; [:a,:b]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L127" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L132" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="merge/2">
     <strong>merge(d1, d2)</strong>
@@ -247,7 +274,7 @@ entries, the one given as second argument wins.</p>
 #=&gt; [a:3, b:2, d: 4]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L197" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L204" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="merge/3">
     <strong>merge(d1, d2, fun)</strong>
@@ -263,7 +290,7 @@ end
 #=&gt; [a:4, b:2, d: 4]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L212" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L220" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/0">
     <strong>new()</strong>
@@ -299,18 +326,15 @@ entries are removed, the latest one prevails.</p>
 #=&gt; [a: :a, b: :b]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L62" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L63" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put/3">
-    <strong>put(list1, key, value)</strong>
+    <strong>put(list, key, value)</strong>
   </p>
   <div class="docstring"><p>Sets the given <code>value</code> under <code>key</code>.</p>
 
 <p>If a previous value is already stored, all entries are
 removed and the value is overriden.</p>
-
-<p>Use <code>put_other/3</code> to add a new value for an existing key
-without removing previous ones.</p>
 
 <h2>Examples</h2>
 
@@ -318,7 +342,39 @@ without removing previous ones.</p>
 #=&gt; [a: 3, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L172" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L176" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update/3">
+    <strong>update(list1, key, fun)</strong>
+  </p>
+  <div class="docstring"><p>Updates the key with the given function. If the key does
+not exist, raises <code>Keyword.KeyError</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Keyword.update([a: 1], :a, &amp;1 * 2)
+#=&gt; [a: 2]
+Keyword.update([a: 1], :b, &amp;1 * 2)
+#=&gt; Keyword.KeyError
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L265" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update/4">
+    <strong>update(list1, key, initial, fun)</strong>
+  </p>
+  <div class="docstring"><p>Updates the key with the given function. If the key does
+not exist, inserts the given <code>initial</code> value.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Keyword.update([a: 1], :a, 13, &amp;1 * 2)
+#=&gt; [a: 2]
+Keyword.update([a: 1], :b, 11, &amp;1 * 2)
+#=&gt; [a: 1, b: 11]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L289" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="values/1">
     <strong>values(keywords)</strong>
@@ -330,9 +386,11 @@ without removing previous ones.</p>
 <pre><code>Keyword.values [a: 1, b: 2] #=&gt; [1,2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L138" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/keyword.ex#L144" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

@@ -33,7 +33,11 @@
 should do all testing setup and then require all files
 that matches the given <code>test_pattern</code> in parallel.</p>
 
-<p>It ensures the project is compiled before executing.</p>
+<p>Before running tests, it invokes the prepare task
+which defaults to compile and load your project.</p>
+
+<p>A list of files can be given after the task name in
+order to select the files to compile.</p>
 
 <h2>Configuration</h2>
 
@@ -68,16 +72,20 @@ for testing. Defaults to <code>test/test_helper.exs</code>.</p></li>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="run/1">
-    <strong>run(_)</strong>
+    <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/test.ex#L24" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/test.ex#L28" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

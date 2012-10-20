@@ -44,11 +44,37 @@ it ensures load paths are set.</p>
 <pre><code>[compilers: [:elixir, :mycompiler, :app]]
 </code></pre>
 
+<h2>Common configuration</h2>
+
+<p>The following options are usually shared by different compilers:</p>
+
+<ul>
+<li><p><code>:source_paths</code> - directories to find source files.
+Defaults to <code>[&quot;lib&quot;]</code>, can be configured as:</p>
+
+<p>[source_paths: [&quot;lib&quot;, &quot;other&quot;]]</p></li>
+<li><p><code>:compile_path</code> - directory to output compiled files.
+Defaults to <code>&quot;ebin&quot;</code>, can be configured as:</p>
+
+<p>[compile_path: &quot;ebin&quot;]</p></li>
+<li><p><code>:compile_first</code> - which files need to be compiled first.
+They need to be a subset of the files found in <code>source_paths</code>.</p>
+
+<p>[compile_first: [&quot;lib/foo.ex&quot;, &quot;lib/bar.ex&quot;]]</p></li>
+<li><p><code>:watch_exts</code> - extensions to watch in order to trigger
+a compilation:</p>
+
+<p>[watch_exts: [:ex, :eex]]</p></li>
+<li><p><code>:compile_exts</code> - extensions to compile whenever there
+is a change:</p>
+
+<p>[compile_exts: [:ex]]</p></li>
+</ul>
+
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--list</code>     - List all enabled compilers.</li>
-<li><code>--no-check</code> - Skip dependencies check before compilation.</li>
+<li><code>--list</code> - List all enabled compilers.</li>
 </ul>
 
         </div>
@@ -75,6 +101,8 @@ it ensures load paths are set.</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
@@ -82,9 +110,11 @@ it ensures load paths are set.</p>
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.ex#L27" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.ex#L55" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       

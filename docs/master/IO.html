@@ -27,19 +27,24 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Module responsible for doing IO. The function in this
-module expects an iodata as argument encoded in UTF-8.
-An iodata can be:</p>
+          <p>Module responsible for doing IO. Many functions in this
+module expects an IO device and an io data encoded in UTF-8.</p>
+
+<p>An IO device must be a pid is an atom representing a process.
+For convenience, Elixir provides <code>:stdio</code> and <code>:stderr</code> as
+shortcut to Erlang&#39;s <code>:standard_io</code> and <code>:standard_error</code>.</p>
+
+<p>An io data can be:</p>
 
 <ul>
-<li>A list of integers representing a string. Any unicode
+<li><p>A list of integers representing a string. Any unicode
 character must be represented with one entry in the list,
-this entry being an integer with the codepoint value;</li>
-<li>A binary in which unicode characters are represented
-with many bytes (Elixir&#39;s default representation);</li>
-<li>A list of binaries or a list of char lists (as described above);</li>
-<li>If none of the above, <code>to_binary</code> is invoked in the
-given argument;</li>
+this entry being an integer with the codepoint value;</p></li>
+<li><p>A binary in which unicode characters are represented
+with many bytes (Elixir&#39;s default representation);</p></li>
+<li><p>A list of binaries or a list of char lists (as described above);</p></li>
+<li><p>If none of the above, <code>to_binary</code> is invoked in the
+given argument;</p></li>
 </ul>
 
         </div>
@@ -114,7 +119,7 @@ for instance {:error, :estale} if reading from an
 NFS file system.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L103" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L111" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="gets/2">
     <strong>gets(device // :stdio, prompt)</strong>
@@ -130,7 +135,7 @@ for instance {:error, :estale} if reading from an
 NFS file system.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L119" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L127" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="inspect/3">
     <strong>inspect(device // :stdio, item, opts // [])</strong>
@@ -138,7 +143,7 @@ NFS file system.</p></li>
   <div class="docstring"><p>Inspects and writes the given argument to the device
 followed by a new line. Returns the item given.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L87" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L95" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="puts/2">
     <strong>puts(device // :stdio, item)</strong>
@@ -147,7 +152,7 @@ followed by a new line. Returns the item given.</p>
 but adds a new line at the end. The argument is expected
 to be a chardata.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L77" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L85" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="read/2">
     <strong>read(device // :stdio, count)</strong>
@@ -162,7 +167,7 @@ for instance {:error, :estale} if reading from an
 NFS file system.</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L29" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L37" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="readline/1">
     <strong>readline(device // :stdio)</strong>
@@ -180,7 +185,7 @@ NFS file system.</p></li>
 <p>This function does the same as <code>gets/2</code>,
 except the prompt is not required as argument.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L47" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L55" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="write/2">
     <strong>write(device // :stdio, item)</strong>
@@ -201,7 +206,7 @@ IO.write :stderr, &quot;error&quot;
 #=&gt; &quot;error&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L68" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L76" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

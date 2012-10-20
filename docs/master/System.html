@@ -120,7 +120,7 @@ with the VM or the host system.</p>
   </p>
   <div class="docstring"><p>Returns the list of command-line arguments passed to the program.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L42" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="at_exit/1">
     <strong>at_exit(fun)</strong>
@@ -132,17 +132,14 @@ invoking a hook on scripted mode.</p>
 <p>The function must expect the exit status code
 as argument.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L54" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L51" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="build_info/0">
     <strong>build_info()</strong>
   </p>
-  <div class="docstring"><p>Returns a tuple { Elixir version, commit sha-1, build date }.</p>
-
-<p>The format of the return value may change in a future release. Please
-make sure your code doesn&#39;t depend on it.</p>
+  <div class="docstring"><p>Returns a keywords list with version, git tag info and date.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L35" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L32" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cmd/1">
     <strong>cmd(command)</strong>
@@ -154,7 +151,7 @@ the result as a binary.</p>
 <p>If <code>command</code> is a char list, a char list is returned.
 Returns a binary otherwise.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L66" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L63" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="find_executable/1">
     <strong>find_executable(command)</strong>
@@ -166,7 +163,7 @@ and Windows.</p>
 <p>If <code>command</code> is a char list, a char list is returned.
 Returns a binary otherwise.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L82" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L79" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_env/0">
     <strong>get_env()</strong>
@@ -175,7 +172,7 @@ Returns a binary otherwise.</p>
 given as a single string of the format &quot;VarName=Value&quot;, where VarName is the
 name of the variable and Value its value.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L98" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L95" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_env/1">
     <strong>get_env(varname)</strong>
@@ -184,7 +181,7 @@ name of the variable and Value its value.</p>
 <code>varname</code> as a binary, or nil if the environment
 variable is undefined.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L107" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L104" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_pid/0">
     <strong>get_pid()</strong>
@@ -194,7 +191,7 @@ in the format most commonly used by the operating system environment.</p>
 
 <p>See <a href="http://www.erlang.org/doc/man/os.html#getpid-0">http://www.erlang.org/doc/man/os.html#getpid-0</a> for more info.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L120" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L117" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put_env/1">
     <strong>put_env(dict)</strong>
@@ -202,21 +199,21 @@ in the format most commonly used by the operating system environment.</p>
   <div class="docstring"><p>Sets a new value for each environment variable corresponding
 to each key in <code>dict</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L133" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L130" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put_env/2">
     <strong>put_env(varname, value)</strong>
   </p>
   <div class="docstring"><p>Sets a new <code>value</code> for the environment variable <code>varname</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L125" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L122" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="stacktrace/0">
     <strong>stacktrace()</strong>
   </p>
   <div class="docstring"><p>Get the stacktrace.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L140" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L137" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="version/0">
     <strong>version()</strong>

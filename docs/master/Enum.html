@@ -196,6 +196,11 @@ accept a certain type of argument. For dicts, the argument is always a
     <a href="#times/3">times/3</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#zip/2">zip/2</a>
+  </span>
+</li>
 
         </ul>
       
@@ -408,13 +413,13 @@ of the item instead of the element itself.</p>
 
 <p>Expects an ordered collection.</p>
 
-<p>## Examples</p>
+<h2>Examples</h2>
 
-<pre><code>  Enum.find_index [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
-  #=&gt; nil
+<pre><code>Enum.find_index [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; nil
 
-  Enum.find_index [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
-  #=&gt; 2
+Enum.find_index [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; 2
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L395" target="_blank" class="view_source">Source</a>
@@ -425,13 +430,13 @@ of the item instead of the element itself.</p>
   <div class="docstring"><p>Similar to find, but returns the value of the function
 invocation instead of the element itself.</p>
 
-<p>## Examples</p>
+<h2>Examples</h2>
 
-<pre><code>  Enum.find_value [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
-  #=&gt; nil
+<pre><code>Enum.find_value [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; nil
 
-  Enum.find_value [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
-  #=&gt; true
+Enum.find_value [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+#=&gt; true
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L365" target="_blank" class="view_source">Source</a>
@@ -651,15 +656,15 @@ Expects an ordered collection.</p>
   <p class="signature" id="times/2">
     <strong>times(times, function)</strong>
   </p>
-  <div class="docstring"><p>Iterates the given function n times, passing values from 1
-to n.</p>
+  <div class="docstring"><p>Iterates the given function n times, passing values
+from 0 to n - 1.</p>
 
 <h2>Examples</h2>
 
 <pre><code>Enum.times 3, fn(x) -&gt; IO.inspect x end
+0
 1
 2
-3
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L760" target="_blank" class="view_source">Source</a>
@@ -678,6 +683,16 @@ value between computations.</p>
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L781" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="zip/2">
+    <strong>zip(coll1, coll2)</strong>
+  </p>
+  <div class="docstring"><p>Zips corresponding elements from two collections into one list
+of tuples. The number of elements in the resulting list is
+dictated by the first enum. In case the second list is shorter,
+values are filled with nil.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L791" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

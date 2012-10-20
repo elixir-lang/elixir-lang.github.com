@@ -50,16 +50,6 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#add_attribute/3">add_attribute/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#add_compile_callback/3">add_compile_callback/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#add_doc/6">add_doc/6</a>
   </span>
 </li>
@@ -71,6 +61,11 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
 <li>
   <span class="summary_signature">
     <a href="#concat/2">concat/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#create/3">create/3</a>
   </span>
 </li>
 <li>
@@ -105,12 +100,27 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#get_attribute/2">get_attribute/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#make_overridable/2">make_overridable/2</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#read_attribute/2">read_attribute/2</a>
+    <a href="#open?/1">open?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#overridable?/2">overridable?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put_attribute/3">put_attribute/3</a>
   </span>
 </li>
 <li>
@@ -128,8 +138,15 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
     <a href="#safe_concat/2">safe_concat/2</a>
   </span>
 </li>
+<li>
+  <span class="summary_signature">
+    <a href="#split/1">split/1</a>
+  </span>
+</li>
 
         </ul>
+      
+
       
 
       
@@ -138,28 +155,6 @@ via the <code>__info__(attr)</code> function attached to each compiled module.</
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="add_attribute/3">
-    <strong>add_attribute(module, key, value)</strong>
-  </p>
-  <div class="docstring"><p>Adds an Erlang attribute to the given module with the given
-key and value. The semantics of adding the attribute depends
-if the attribute was registered or not via <code>register_attribute/2</code>.</p>
-
-<h2>Examples</h2>
-
-<pre><code>defmodule MyModule do
-  Module.add_attribute __MODULE__, :custom_threshold_for_lib, 10
-end
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L375" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="add_compile_callback/3">
-    <strong>add_compile_callback(module, target, fun // :__compiling__)</strong>
-  </p>
-  <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L356" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
   <p class="signature" id="add_doc/6">
     <strong>add_doc(module, line, kind, tuple, signature, doc)</strong>
   </p>
@@ -177,7 +172,7 @@ be either a binary or a boolean.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L151" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L194" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="concat/1">
     <strong>concat(list)</strong>
@@ -192,7 +187,7 @@ Module.concat [Foo, &quot;Bar&quot;]  #=&gt; Foo.Bar
 Module.concat [Foo, &#39;Bar&#39;]  #=&gt; Foo.Bar
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L79" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L122" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="concat/2">
     <strong>concat(left, right)</strong>
@@ -207,7 +202,42 @@ Module.concat Foo, &quot;Bar&quot;  #=&gt; Foo.Bar
 Module.concat Foo, &#39;Bar&#39;  #=&gt; Foo.Bar
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L94" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L137" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="create/3">
+    <strong>create(module, quoted, opts // [])</strong>
+  </p>
+  <div class="docstring"><p>Creates a module with the given name and given by
+the given quoted expressions. The line where the module
+is defined and its file can be given as options.</p>
+
+<h2>Examples</h2>
+
+<pre><code>contents =
+  quote do
+    def world, do: true
+  end
+
+Module.create(Hello, contents, __ENV__)
+
+Hello.world #=&gt; true
+</code></pre>
+
+<h2>Differences with <code>defmodule</code></h2>
+
+<p><code>Module.create</code> works similarly to <code>defmodule</code> and
+return the same results. While one could also use
+<code>defmodule</code> to define modules dynamically, this
+function is preferred when the module body is given
+by a quoted expression.</p>
+
+<p>Another important distinction is that <code>defmodule</code>
+blends into the scope it is invoked, allowing you
+to access all variables, imports and requires from
+the module. <code>Module.create</code>, on the other hand, creates
+a new scope so imports, requires, etc are not inherited.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L100" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defines?/2">
     <strong>defines?(module, tuple)</strong>
@@ -224,7 +254,7 @@ Use <code>defines?/3</code> to assert for an specific type.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L242" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L295" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defines?/3">
     <strong>defines?(module, tuple, kind)</strong>
@@ -242,7 +272,7 @@ given <code>kind</code>. <code>kind</code> can be either <code>:def</code>, <cod
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L262" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L315" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="definitions_in/1">
     <strong>definitions_in(module)</strong>
@@ -257,7 +287,7 @@ end
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L306" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L335" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="definitions_in/2">
     <strong>definitions_in(module, kind)</strong>
@@ -274,7 +304,7 @@ to its kind.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L325" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L354" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="delete_attribute/2">
     <strong>delete_attribute(module, key)</strong>
@@ -284,12 +314,12 @@ end
 <h2>Examples</h2>
 
 <pre><code>defmodule MyModule do
-  Module.add_attribute __MODULE__, :custom_threshold_for_lib, 10
+  Module.put_attribute __MODULE__, :custom_threshold_for_lib, 10
   Module.delete_attribute __MODULE__, :custom_threshold_for_lib
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L434" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L476" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="eval_quoted/4">
     <strong>eval_quoted(env, quoted, binding // [], opts // [])</strong>
@@ -319,7 +349,8 @@ Foo.sum(1, 2) #=&gt; 3
 </code></pre>
 
 <p>This function also accepts a <code>Macro.Env</code> as first argument. This
-is useful to evalute the quoted contents inside an existing environment:</p>
+is useful to evalute the quoted contents inside an existing
+environment (considering the environemnt module, line and file):</p>
 
 <pre><code>defmodule Foo do
   contents = quote do: (def sum(a, b), do: a + b)
@@ -329,7 +360,28 @@ end
 Foo.sum(1, 2) #=&gt; 3
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L49" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L59" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get_attribute/2">
+    <strong>get_attribute(module, key)</strong>
+  </p>
+  <div class="docstring"><p>Gets the given attribute from a module. If the attribute
+was marked as accumulate with <code>Module.register_attribute</code>,
+a list is always returned.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Foo do
+  Module.put_attribute __MODULE__, :value, 1
+  Module.get_attribute __MODULE__, :value #=&gt; 1
+
+  Module.register_attribute __MODULE__, :value, accumulate: true
+  Module.put_attribute __MODULE__, :value, 1
+  Module.get_attribute __MODULE__, :value #=&gt; [1]
+end
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L447" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="make_overridable/2">
     <strong>make_overridable(module, tuples)</strong>
@@ -338,28 +390,38 @@ Foo.sum(1, 2) #=&gt; 3
 An overridable function is lazily defined, allowing a
 developer to customize it.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L336" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L365" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="read_attribute/2">
-    <strong>read_attribute(module, key)</strong>
+  <p class="signature" id="open?/1">
+    <strong>open?(module)</strong>
   </p>
-  <div class="docstring"><p>Reads the given attribute from a module. If the attribute
-was marked as accumulate with <code>Module.register_attribute</code>,
-a list is always returned.</p>
+  <div class="docstring"><p>Check if a module is open, i.e. it is currently being defined
+and its attributes and functions can be modified.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L19" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="overridable?/2">
+    <strong>overridable?(module, tuple)</strong>
+  </p>
+  <div class="docstring"><p>Returns true if the given tuple in module is marked as overridable.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L388" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="put_attribute/3">
+    <strong>put_attribute(module, key, value)</strong>
+  </p>
+  <div class="docstring"><p>Puts an Erlang attribute to the given module with the given
+key and value. The semantics of putting the attribute depends
+if the attribute was registered or not via <code>register_attribute/2</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>defmodule Foo do
-  Module.add_attribute __MODULE__, :value, 1
-  Module.read_attribute __MODULE__, :value #=&gt; 1
-
-  Module.register_attribute __MODULE__, :value, accumulate: true
-  Module.add_attribute __MODULE__, :value, 1
-  Module.read_attribute __MODULE__, :value #=&gt; [1]
+<pre><code>defmodule MyModule do
+  Module.put_attribute __MODULE__, :custom_threshold_for_lib, 10
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L411" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L405" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="register_attribute/3">
     <strong>register_attribute(module, new, opts // [])</strong>
@@ -381,7 +443,7 @@ Abstract Format. Useful when interfacing with Erlang libraries.</p></li>
 
 <p>By default, both options are true. Which means that registering
 an attribute without passing any options will revert the attribute
-behavior to exactly the same expected in Erlang.</p>
+behavior to exactly the same expected in :</p>
 
 <h2>Examples</h2>
 
@@ -396,7 +458,7 @@ behavior to exactly the same expected in Erlang.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L472" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L514" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="safe_concat/1">
     <strong>safe_concat(list)</strong>
@@ -415,7 +477,7 @@ Module.safe_concat [List, Chars]
 #=&gt; List.Chars
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L113" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L156" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="safe_concat/2">
     <strong>safe_concat(left, right)</strong>
@@ -434,9 +496,24 @@ Module.safe_concat List, Chars
 #=&gt; List.Chars
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L132" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L175" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="split/1">
+    <strong>split(module)</strong>
+  </p>
+  <div class="docstring"><p>Split the given module name into binary parts.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Module.split Very.Long.Module.Name.And.Even.Longer
+#=&gt; [&quot;Very&quot;, &quot;Long&quot;, &quot;Module&quot;, &quot;Name&quot;, &quot;And&quot;, &quot;Even&quot;, &quot;Longer&quot;]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/module.ex#L538" target="_blank" class="view_source">Source</a>
 </div>
         </div>
+      
+
       
 
       
