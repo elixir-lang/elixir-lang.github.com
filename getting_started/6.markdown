@@ -92,57 +92,32 @@ Elixir promotes the use of markdown with heredocs to write readable documentatio
 
 ## 6.4 IEx Helpers
 
-Elixir's interactive console (IEx) ships with many functions to make the developer's life easier. One of these functions is called `d`, which shows documentation directly at the command line:
+Elixir's interactive console (IEx) ships with many functions to make the developer's life easier. One of these functions is called `h`, which shows documentation directly at the command line:
 
-    iex> d()
+    iex> h()
     # IEx.Helpers
-
-    A bunch of helpers available in IEx.
-
-    ## Functions and Macros
-
-    * def c(files, path // ".")
-    * def d(module // IEx.Helpers, print_functions // true)
-    * def d(module, function, arity)
-    * def h()
-    * def m()
-    * def m(mod)
-    * def v(n)
+    ...
     :ok
 
-As you can see, invoking `d()` prints the documentation of `IEx.Helpers`. From there, we can navigate to any of the other helpers by giving its name and arity to get more information:
+As you can see, invoking `h()` prints the documentation of `IEx.Helpers`. From there, we can navigate to any of the other helpers by giving its name and arity to get more information:
 
-    iex> d(:c, 2)
+    iex> h(c/2)
     * def c(files, path // ".")
-
-    Expects a list of files to compile and a path
-    to write their object code to. It returns the name
-    of the compiled modules.
-
-    ## Examples
-
-        c ["foo.ex"], "ebin"
-        #=> Foo
-
-Now, we get the documentation for the `c/2` helper which can be used to compile files from IEx.
+    ...
+    :ok
 
 This functionality can also be used to print the documentation for any Elixir module in the system:
 
-    iex> d(Enum)
+    iex> h(Enum)
     ...
-    iex> d(Enum, :each, 2)
-    ...
-
-Or, with the shortcut:
-
-    iex> d(Enum.each/2)
+    iex> h(Enum.each/2)
     ...
 
-The documentation for built-in functions can also be accessed directly or directly in the built-in module:
+The documentation for built-in functions can also be accessed directly or directly in the `Kernel` module:
 
-    iex> d(:is_atom, 1)
+    iex> h(is_atom/1)
     ...
-    iex> d(Kernel.is_atom/1)
+    iex> h(Kernel.is_atom/1)
     ...
 
 ## 6.5 Function retrieval and partial application
