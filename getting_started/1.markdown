@@ -95,15 +95,15 @@ Elixir also provides functions (note the dot between the variable and arguments 
     iex> x.(1, 2)
     3
 
-And double-quoted strings:
+And strings:
 
     iex> "string"
     "string"
 
 Strings in Elixir are UTF-8 binaries delimited by double quotes. A single-quoted string in Elixir is called a char list and is simply a list of characters:
 
-    iex> 'string'
-    'string'
+    iex> 'a char list'
+    'a char list'
 
 There is also string interpolation:
 
@@ -111,16 +111,16 @@ There is also string interpolation:
 	iex> "hello #{name}"
 	"hello world"
 
-We can use the `is_binary` and `is_list` helpers to detect if a given string is a binary (double-quoted) or a list (single-quoted):
+We can use the `is_binary` and `is_list` helpers to detect if a given argument is a binary (double-quoted) or a list (single-quoted):
 
     iex> is_binary "string"
     true
     iex> is_list "string"
     false
 
-    iex> is_binary 'string'
+    iex> is_binary 'char list'
     false
-    iex> is_list 'string'
+    iex> is_list 'char list'
     true
 
 Although they represent the same thing, double-quoted and single-quoted strings are different and best suited for different scenarios:
