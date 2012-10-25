@@ -16,9 +16,9 @@ Records are simple structures that hold values. For example, we can define a `Fi
 
 The line above defines a module named `FileInfo` which contains a function named `new` (that returns a new record) and other functions to read and set the values in the record. Therefore, we can do:
 
-    file_info = FileInfo.new(atime: now())
-    file_info.atime         #=> Returns the value of atime
-    file_info.atime(now())  #=> Updates the value of atime
+    file_info = FileInfo.new(atime: { 2010, 4, 17 })
+    file_info.atime                   #=> Returns the value of atime
+    file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
 
 Elixir will also define an `update_#{field}` function that accepts a function of one argument. When we invoke the update function, it calls the function we have provided, passing it the current value of the field and updating the field with the value returned from our function:
 
