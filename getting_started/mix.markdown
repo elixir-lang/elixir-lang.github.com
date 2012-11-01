@@ -233,8 +233,8 @@ def project do
 end
 
 defp deps do
-  [ { :some_project, "0.3.0", git: "https://github.com/some_project/other.git" },
-    { :another_project, "1.0.2", git: "https://github.com/another/main.git" } ]
+  [ { :some_project, "0.3.0", github: "some_project/other" },
+    { :another_project, "1.0.2", git: "https://example.com/another/main.git" } ]
 end
 {% endhighlight %}
 
@@ -270,12 +270,10 @@ If the dependency does not contain any of the above, you can specify a command d
 You could also pass an atom to `:compile` and, in such cases, a function with the name of the atom will be invoked in your current project with the app name as argument, allowing you to customize its compilation:
 
       def project do
-        [
-          deps: [
+        [ deps: [
             { :some_project, "0.3.0",
               git: "https://github.com/some_project/other.git", compile: :using_foo }
-          ]
-        ]
+          ] ]
       end
 
       def using_foo(app) do
@@ -305,7 +303,28 @@ Elixir has many tasks to manage such dependencies:
 
 Use `mix help` to get more information.
 
-## 6 Local tasks
+## 6. Environments
+
+Mix has the concept of environments that allows a developer to customize compilation and other options based on an external setting. By default, Mix understands three environments:
+
+* `dev` - the one in which mix tasks are run by default
+* `test` - the one used by `mix test`
+* `prod` - used to specify dependencies that should be available to parent projects, i.e. when a project has another Mix project as a dependency, only the `prod` dependencies are imported into the parent project
+
+By default, those environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done using the `env:` option:
+
+{% highlight ruby %}
+def project do
+  [ env: [
+    prod: [compile_path: "prod_ebin"] ] ]
+end
+{% endhighlight %}
+
+By default, Mix runs on `dev` environment (except for tests). The environment can be changed via the `MIX_ENV` environment option:
+
+    MIX_ENV=prod mix compile
+
+## 7 Local tasks
 
 Elixir also ships with the ability to manage local tasks. Local tasks can be installed from any URL and are available from anywhere within Elixir:
 
@@ -319,7 +338,7 @@ You can use `mix local` to show all available local tasks and their path. Removi
 
     $ mix local.uninstall hello
 
-## 7 Do
+## 8 Do
 
 In some situations, it is desired to execute more than one task at once. For this purpose, Elixir also ships with a `do` task that simply executes all the given commands separated by comma:
 
@@ -327,7 +346,7 @@ In some situations, it is desired to execute more than one task at once. For thi
 
 For instance, the command above will show help information for the compile task and then print the list of available compilers.
 
-## 8 OptionParser
+## 9 OptionParser
 
 Although not a Mix feature, Elixir ships with an `OptionParser` which is quite useful when creating mix tasks that accepts options. The `OptionParser` receives the argv and returns a tuple with parsed options and the remaining arguments:
 
@@ -342,7 +361,3 @@ Although not a Mix feature, Elixir ships with an `OptionParser` which is quite u
     #=> { [source: "lib", verbose: true], ["test/enum_test.exs"] }
 
 Check [`OptionParser`](/docs/stable/OptionParser.html) documentation for more information.
-
-## 9 Lots To Do
-
-Mix is still a work in progress. Feel free to visit [our issues tracker](https://github.com/elixir-lang/elixir/issues) to add issues for anything you'd like to see in Mix and feel free to contribute.
