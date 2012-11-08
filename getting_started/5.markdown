@@ -12,11 +12,15 @@ An Elixir program can be represented by its own data structures. This chapter wi
 
 The building block of Elixir is a tuple with three elements, for example:
 
-    { :sum, 1, [1, 2, 3] }
+{% highlight ruby %}
+{ :sum, 1, [1, 2, 3] }
+{% endhighlight %}
 
 The tuple above represents a function call to sum passing 1, 2 and 3 as arguments. The tuple elements are:
 
-    { Tuple | Atom, Integer, List | Atom }
+{% highlight ruby %}
+{ tuple | atom, integer, list | atom }
+{% endhighlight %}
 
 * The first element of the tuple is always an atom or another tuple in the same representation;
 * The second element of the tuple is always an integer representing the line number;
@@ -39,11 +43,13 @@ Even a tuple is represented as a call to `{}`:
 
 The only exception to this rule are the five Elixir literals below. Literals are data types that when quoted return themselves. They are:
 
-    :sum         #=> Atoms
-    1.0          #=> Numbers
-    [1,2]        #=> Lists
-    "binaries"   #=> Binaries
-    {key, value} #=> Tuples with two elements
+{% highlight ruby %}
+:sum         #=> Atoms
+1.0          #=> Numbers
+[1,2]        #=> Lists
+"binaries"   #=> Binaries
+{key, value} #=> Tuples with two elements
+{% endhighlight %}
 
 With those basic structures in mind, we are ready to define our own macro.
 
@@ -51,46 +57,62 @@ With those basic structures in mind, we are ready to define our own macro.
 
 A macro can be defined using `defmacro`. For instance, in just a few lines of code we can define a macro called `unless` which works the same way Ruby's `unless` does:
 
-    defmodule MyMacro do
-      defmacro unless(clause, options) do
-        quote do: if(!unquote(clause), unquote(options))
-      end
-    end
+{% highlight ruby %}
+defmodule MyMacro do
+  defmacro unless(clause, options) do
+    quote do: if(!unquote(clause), unquote(options))
+  end
+end
+{% endhighlight %}
 
 Similarly to `if`, `unless` expects two arguments: a `clause` and `options`:
 
-    require MyMacro
-    MyMacro.unless var, do: IO.puts "false"
+{% highlight ruby %}
+require MyMacro
+MyMacro.unless var, do: IO.puts "false"
+{% endhighlight %}
 
 However, since `unless` is a macro, its arguments are not evaluated when it's invoked but are instead passed literally. For example, if one calls:
 
-    unless 2 + 2 == 5, do: call_function()
+{% highlight ruby %}
+unless 2 + 2 == 5, do: call_function()
+{% endhighlight %}
 
 Our `unless` macro will receive the following:
 
-    unless({:==, 1, [{:+, 1, [2, 2]}, 5]}, { :call_function, 1, [] })
+{% highlight ruby %}
+unless({:==, 1, [{:+, 1, [2, 2]}, 5]}, { :call_function, 1, [] })
+{% endhighlight %}
 
 Then our `unless` macro will call `quote`, to return a tree representation of the `if` clause. This means we are transforming our `unless` into an `if`!
 
 There is a common mistake when quoting expressions which is that developers usually forget to `unquote` the proper expression. In order to understand what `unquote` does, let's simply remove it:
 
-    defmacro unless(clause, options) do
-      quote do: if(!clause, options)
-    end
+{% highlight ruby %}
+defmacro unless(clause, options) do
+  quote do: if(!clause, options)
+end
+{% endhighlight %}
 
 When called as `unless 2 + 2 == 5, do: call_function()`, our `unless` would then literally return:
 
-    if(!clause, options)
+{% highlight ruby %}
+if(!clause, options)
+{% endhighlight %}
 
 Which would fail because the clause and options variables are not defined in the current scope. If we add `unquote` back:
 
-    defmacro unless(clause, options) do
-      quote do: if(!unquote(clause), unquote(options))
-    end
+{% highlight ruby %}
+defmacro unless(clause, options) do
+  quote do: if(!unquote(clause), unquote(options))
+end
+{% endhighlight %}
 
 `unless` will then return:
 
-    if(!(2 + 2 == 5), do: call_function())
+{% highlight ruby %}
+if(!(2 + 2 == 5), do: call_function())
+{% endhighlight %}
 
 In other words, unquote is a mechanism to inject expressions into the tree being quoted and it is an essential tool for meta-programming. Elixir also provides `unquote_splicing` allowing us to inject many expressions at once.
 
@@ -100,69 +122,79 @@ We can define any macro we want, including ones that override the built-in macro
 
 Elixir macros follow Scheme conventions and are hygienic. This means a variable defined inside a macro won't conflict with a variable defined in the context the macro is inserted. For example:
 
-    defmodule Hygiene do
-      defmacro no_interference do
-        quote do: a = 1
-      end
-    end
+{% highlight ruby %}
+defmodule Hygiene do
+  defmacro no_interference do
+    quote do: a = 1
+  end
+end
 
-    defmodule HygieneTest do
-      def go do
-        require Hygiene
-        a = 13
-        Hygiene.no_interference
-        a
-      end
-    end
+defmodule HygieneTest do
+  def go do
+    require Hygiene
+    a = 13
+    Hygiene.no_interference
+    a
+  end
+end
 
-    HygieneTest.go
-    # => 13
+HygieneTest.go
+# => 13
+{% endhighlight %}
 
 In the example above, even if the macro injects `a = 1`, it does not affect the variable `a`. In case the macro wants to explicitly affect the context, it can use `var!`:
 
-    defmodule Hygiene do
-      defmacro interference do
-        quote do: var!(a) = 1
-      end
-    end
+{% highlight ruby %}
+defmodule Hygiene do
+  defmacro interference do
+    quote do: var!(a) = 1
+  end
+end
 
-    defmodule HygieneTest do
-      def go do
-        require Hygiene
-        a = 13
-        Hygiene.interference
-        a
-      end
-    end
+defmodule HygieneTest do
+  def go do
+    require Hygiene
+    a = 13
+    Hygiene.interference
+    a
+  end
+end
 
-    HygieneTest.go
-    # => 1
+HygieneTest.go
+# => 1
+{% endhighlight %}
 
 Macros hygiene only works because Elixir marks a variable as coming from the quote. For example, consider this:
 
-    iex> quote do: x
-    { :x, 0, :quoted }
+{% highlight ruby %}
+iex> quote do: x
+{ :x, 0, :quoted }
+{% endhighlight %}
 
 Notice that the third element is `:quoted`. It means that x may be a function call with 0 arguments or a variable coming from a quote. On the other hand, an unquoted variable would have the third element equal to nil. Let's consider this final example:
 
-    defmodule Hygiene do
-      defmacro quoted(x) do
-        quote do
-          { unquote(x), x, x() }
-        end
-      end
+{% highlight ruby %}
+defmodule Hygiene do
+  defmacro quoted(x) do
+    quote do
+      { unquote(x), x, x() }
     end
+  end
+end
+{% endhighlight %}
 
 In the example above, we have defined a macro called `quoted` that returns an unquoted variable, a quoted variable and a function call. Calling this macro will return:
 
-    require Hygiene
+{% highlight ruby %}
+require Hygiene
 
-    Hygiene.quoted(x)
-    #=> {
-      { :x, 1, nil },
-      { :x, 1, :quoted },
-      { :x, 1, [] }
-    }
+Hygiene.quoted(x)
+#=> {
+  { :x, 1, nil },
+  { :x, 1, :quoted },
+  { :x, 1, [] }
+}
+{% endhighlight %}
 
 Summing up: if the third element is a list, it is certainly a function call. If not, it may be a variable (coming from a quote or not) or a function call.
 
@@ -170,26 +202,30 @@ Summing up: if the third element is a list, it is certainly a function call. If 
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time. A common use case for private macros is to define guards that are frequently used in the same module:
 
-    defmodule MyMacros do
-      defmacrop is_even?(x) do
-        quote do
-          rem(unquote(x), 2) == 0
-        end
-      end
-
-      def add_even(a, b) when is_even?(a) and is_even?(b) do
-        a + b
-      end
+{% highlight ruby %}
+defmodule MyMacros do
+  defmacrop is_even?(x) do
+    quote do
+      rem(unquote(x), 2) == 0
     end
+  end
+
+  def add_even(a, b) when is_even?(a) and is_even?(b) do
+    a + b
+  end
+end
+{% endhighlight %}
 
 It is important that the macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
 
-    defmodule MyMacros do
-      def four, do: two + two
-      defmacrop two, do: 2
-    end
+{% highlight ruby %}
+defmodule MyMacros do
+  def four, do: two + two
+  defmacrop two, do: 2
+end
 
-    MyMacros.four #=> ** (UndefinedFunctionError) undefined function: two/0
+MyMacros.four #=> ** (UndefinedFunctionError) undefined function: two/0
+{% endhighlight %}
 
 ## 5.5 Code execution
 
@@ -200,24 +236,28 @@ To finish our discussion about macros, we are going to briefly discuss how code 
 
 This behavior is important to understand because it affects how we think about our code structure. Consider the following code:
 
-    defmodule Sample do
-      case System.get_env("FULL") do
-        "true" ->
-          def full?(), do: true
-        _ ->
-          def full?(), do: false
-      end
-    end
+{% highlight ruby %}
+defmodule Sample do
+  case System.get_env("FULL") do
+    "true" ->
+      def full?(), do: true
+    _ ->
+      def full?(), do: false
+  end
+end
+{% endhighlight %}
 
 The code above will define a function `full?` which will return true or false depending on the value of the environment variable `FULL` at **compilation time**. In order to execute this code, Elixir will first expand all macros. Considering that `defmodule` and `def` are macros, the code will expand to something like:
 
-    :elixir_module.store Sample, fn ->
-      case System.get_env("FULL") do
-        "true" ->
-          :elixir_def.store(Foo, :def, :full?, [], true)
-        _ ->
-          :elixir_def.store(Foo, :def, :full?, [], false)
-    end
+{% highlight ruby %}
+:elixir_module.store Sample, fn ->
+  case System.get_env("FULL") do
+    "true" ->
+      :elixir_def.store(Foo, :def, :full?, [], true)
+    _ ->
+      :elixir_def.store(Foo, :def, :full?, [], false)
+end
+{% endhighlight %}
 
 This code will then be executed, define a module `Foo` and store the appropriate function based on the value of the environment variable `FULL`. We achieve this by using the modules `:elixir_module` and `:elixir_def`, which are Elixir internal modules written in Erlang.
 
@@ -227,18 +267,26 @@ There are two lessons to take away from this example:
 
 2) we cannot invoke a function or macro just after it is defined in a module. For example, consider:
 
-      defmodule Sample do
-        def full?, do: true
-        IO.puts full?
-      end
+{% highlight ruby %}
+defmodule Sample do
+  def full?, do: true
+  IO.puts full?
+end
+{% endhighlight %}
 
   The example above will fail because it translates to:
 
-    :elixir_module.store Sample, fn ->
-      :elixir_def.store(Foo, :def, :full?, [], true)
-      IO.puts full?
-    end
+{% highlight ruby %}
+:elixir_module.store Sample, fn ->
+  :elixir_def.store(Foo, :def, :full?, [], true)
+  IO.puts full?
+end
+{% endhighlight %}
 
-  At the moment this code is compiled to Erlang bytecode, there **isn't** a function `full?` defined in the module, which will lead to a compilation error.
+At the moment the module is being defined, there isn't **yet** a function named `full?` defined in the module, so `IO.puts full?` will cause the compilation to fail.
+
+## 5.6 Don't write macros
+
+Although macros are a powerful construct, the first rule of the macro club is **don't write macros**. Macros are harder to write than ordinary Elixir functions, and it's considered to be bad style to use them when they're not necessary.
 
 With those lessons, we finish our introduction to macros. Next, let's move to the next chapter which will discuss several topics such as native code compilation, partial application and others.
