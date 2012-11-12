@@ -358,6 +358,23 @@ The syntax for records differs significantly between Erlang and Elixir. Please r
 [1]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
 [2]: http://elixir-lang.org/getting_started/4.html
 
+In order to translate Erlang records into Elixir records, use Record.extract(). For example, to use the `ec2_instance_spec` record from [erlcloud][1]:
+
+{% highlight ruby %}
+defrecord :ec2_instance_spec, Record.extract(:ec2_instance_spec,
+                                from: "deps/erlcloud/include/erlcloud_ec2.hrl")
+
+new_host = :ec2_instance_spec.new(
+    image_id:          "ami-6d3f9704",
+    instance_type:     "t1.micro",
+    availability_zone: "us-east-1b"
+)
+
+IO.puts inspect(new_host)
+{% endhighlight %}
+
+[1]: https://github.com/gleber/erlcloud/blob/master/include/erlcloud_ec2.hrl#L11
+
 <div id="modules"></div>
 
 ## 4 Modules
