@@ -66,51 +66,6 @@ behavior required by any SCM used by mix.</p>
       
 
       
-        <h2>Callbacks summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#available?/2">available?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#check?/2">check?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#checkout/2">checkout/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#clean/2">clean/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#consumes?/1">consumes?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#key/0">key/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#match?/2">match?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#update/2">update/2</a>
-  </span>
-</li>
-
-        </ul>
-      
 
       
         <div id="functions_details" class="details_list">
@@ -121,119 +76,27 @@ behavior required by any SCM used by mix.</p>
   </p>
   <div class="docstring"><p>Returns all available SCM.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L82" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L90" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="register/1">
     <strong>register(mod)</strong>
   </p>
   <div class="docstring"><p>Register the scm repository with the given <code>key</code> and <code>mod</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L89" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L97" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="register_builtin/0">
     <strong>register_builtin()</strong>
   </p>
   <div class="docstring"><p>Register builtin SCMs.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L96" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L104" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
 
       
 
-      
-        <div id="callbacks_details" class="details_list">
-          <h2>Callbacks</h2>
-          <div class="detail">
-  <p class="signature" id="available?/2">
-    <strong>available?(path, opts)</strong>
-  </p>
-  <div class="docstring"><p>This behavior function receives a <code>path</code>, <code>opts</code> and returns
-a boolean if the dependency is available.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L36" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="check?/2">
-    <strong>check?(path, opts)</strong>
-  </p>
-  <div class="docstring"><p>This behavior function checks if the dependency is locked and
-the current repository version matches the lock. Note that some
-SCMs do not require a lock, for such, this function can simply
-return true.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L66" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="checkout/2">
-    <strong>checkout(path, opts)</strong>
-  </p>
-  <div class="docstring"><p>This behavior function checks out dependencies.</p>
-
-<p>If the dependency is locked, a lock is received in <code>opts</code>
-and the repository must be check out at the lock. Otherwise,
-no lock is given and the repository can be checked out
-to the latest version.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L46" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="clean/2">
-    <strong>clean(path, opts)</strong>
-  </p>
-  <div class="docstring"><p>This behavior function should clean the given dependency.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L77" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="consumes?/1">
-    <strong>consumes?(opts)</strong>
-  </p>
-  <div class="docstring"><p>This behavior function receives a keyword list of <code>opts</code>
-and should return an updated list in case the SCM consumes
-the available options. For example, when a developer specifies
-a dependency:</p>
-
-<pre><code>{ &quot;foo&quot;, &quot;0.1.0&quot;, github: &quot;foo/bar&quot; }
-</code></pre>
-
-<p>Each registered SCM will be asked if they consume this dependency,
-receiving [github: &quot;foo/bar&quot;] as argument. Since this option makes
-sense for the Git SCM, it will return an update list of options
-while other SCMs would simply return nil.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L30" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="key/0">
-    <strong>key()</strong>
-  </p>
-  <div class="docstring"><p>This behavior function should retrieve an atom representing
-the SCM key. In the dependency opts, a value for the given
-must be found since it is used to print information about
-the requested dependency.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L15" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="match?/2">
-    <strong>match?(opts1, opts2)</strong>
-  </p>
-  <div class="docstring"><p>Receives two options and must return true if the refer to the
-same repository.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L72" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="update/2">
-    <strong>update(path, opts)</strong>
-  </p>
-  <div class="docstring"><p>This behavior function updates dependencies. It may be
-called by <code>deps.get</code> or <code>deps.update</code>.</p>
-
-<p>In the first scenario, a lock is received in <code>opts</code> and
-the repository must be updated to the lock. In the second,
-no lock is given and the repository can be updated freely.</p>
-
-<p>It must return the current lock.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/scm.ex#L58" target="_blank" class="view_source">Source</a>
-</div>
-        </div>
       
     </div>
   </body>

@@ -111,7 +111,7 @@
   <div class="docstring"><p>Returns all loaded modules. Modules that were not yet loaded
 won&#39;t show up. Check <code>load_all/0</code> if you want to preload all tasks.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L37" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L39" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="clear/0">
     <strong>clear()</strong>
@@ -119,7 +119,7 @@ won&#39;t show up. Check <code>load_all/0</code> if you want to preload all task
   <div class="docstring"><p>Clears all invoked tasks, allowing them to be reinvoked.
 Returns an ordset with all the tasks invoked thus far.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L136" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L138" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get/1">
     <strong>get(task)</strong>
@@ -133,21 +133,21 @@ Returns an ordset with all the tasks invoked thus far.</p>
 <li><code>Mix.InvalidTaskError</code> - raised if the task is not a valid <code>Mix.Task</code></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L95" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L97" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="hidden?/1">
     <strong>hidden?(module)</strong>
   </p>
   <div class="docstring"><p>Checks if the task is hidden or not. Returns a boolean.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L73" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L75" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="load_all/0">
     <strong>load_all()</strong>
   </p>
   <div class="docstring"><p>Loads all tasks in all code paths.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L26" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L28" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="moduledoc/1">
     <strong>moduledoc(module)</strong>
@@ -155,14 +155,14 @@ Returns an ordset with all the tasks invoked thus far.</p>
   <div class="docstring"><p>Gets the moduledoc for the given module.
 Returns the moduledoc or <code>nil</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L52" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L54" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="reenable/1">
     <strong>reenable(task)</strong>
   </p>
   <div class="docstring"><p>Reenables a given task so it can be executed again down the stack.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L143" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L145" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="run/2">
     <strong>run(task, args // [])</strong>
@@ -177,7 +177,7 @@ again and simply aborts with <code>:noop</code>.</p>
 <p>It may raise an exception if the task was not found
 or it is invalid. Check <code>get/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L119" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L121" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="shortdoc/1">
     <strong>shortdoc(module)</strong>
@@ -185,14 +185,14 @@ or it is invalid. Check <code>get/2</code> for more information.</p>
   <div class="docstring"><p>Gets the shortdoc for the given module.
 Returns the shortdoc or <code>nil</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L63" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L65" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="task_name/1">
     <strong>task_name(module)</strong>
   </p>
   <div class="docstring"><p>Returns the task name for the given module.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L85" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

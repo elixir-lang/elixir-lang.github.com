@@ -116,7 +116,7 @@ assertion_test.exs, you can run it as:</p>
   <div class="docstring"><p>Register a callback to be invoked every time a
 new ExUnit process is spawned.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L74" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L107" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="configure/1">
     <strong>configure(options)</strong>
@@ -132,7 +132,7 @@ new ExUnit process is spawned.</p>
 <li><code>:max_cases</code> - Maximum number of cases to run in parallel</li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L66" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L99" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="run/0">
     <strong>run()</strong>
@@ -140,7 +140,7 @@ new ExUnit process is spawned.</p>
   <div class="docstring"><p>API used to run the tests. A developer does not
 need to call it directly.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L82" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L115" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="start/1">
     <strong>start(options // [])</strong>
@@ -148,8 +148,26 @@ need to call it directly.</p>
   <div class="docstring"><p>Start ExUnit. Required to be invoked before loading
 any file that uses ExUnit.Case. Check <code>configure/1</code>
 to see the supported options.</p>
+
+<p>This function will also try to read a user config from the following
+locations, in this order:</p>
+
+<ul>
+<li>$EXUNIT_CONFIG environment variable</li>
+<li>$HOME/.ex_unit.exs</li>
+</ul>
+
+<p>If none found, no user config will be read. </p>
+
+<p>User config is an elixir file which should return a keyword list
+with ex_unit options. Please note that explicit options passed to start/1 
+will take precedence over user options.</p>
+
+<h1>User config example (~/.ex_unit.exs)</h1>
+
+<p>[formatter: ExUnit.Formatter.ANSI]</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L47" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L64" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
