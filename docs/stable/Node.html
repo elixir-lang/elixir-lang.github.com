@@ -78,7 +78,17 @@
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#spawn/2">spawn/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#spawn/3">spawn/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#spawn/4">spawn/4</a>
   </span>
 </li>
 <li>
@@ -174,28 +184,51 @@ option to be given, namely :allow</em>passive_connect.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L9" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="spawn/3">
-    <strong>spawn(node, fun, opts // [])</strong>
+  <p class="signature" id="spawn/2">
+    <strong>spawn(node, fun)</strong>
   </p>
   <div class="docstring"><p>Returns the pid of a new process started by the application of <code>fun</code>
 on <code>node</code>. If <code>node</code> does not exist, a useless pid is returned.</p>
 
-<p>Check <a href="http://www.erlang.org/doc/man/erlang.html#spawn_opt-4">http://www.erlang.org/doc/man/erlang.html#spawn_opt-4</a> for
+<p>Check <a href="http://www.erlang.org/doc/man/erlang.html#spawn-2">http://www.erlang.org/doc/man/erlang.html#spawn-2</a> for
 the list of available options.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L79" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="spawn/5">
-    <strong>spawn(node, module, fun, args, opts // [])</strong>
+  <p class="signature" id="spawn/3">
+    <strong>spawn(node, fun, opts)</strong>
   </p>
-  <div class="docstring"><p>Returns the pid of a new process started by the application of
-<code>module.function(args)</code> on <code>node</code>. If <code>node</code> does not exists, a useless
-pid is returned.</p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of <code>fun</code>
+on <code>node</code>. If <code>node</code> does not exist, a useless pid is returned.</p>
 
-<p>Check <a href="http://www.erlang.org/doc/man/erlang.html#spawn_opt-4">http://www.erlang.org/doc/man/erlang.html#spawn_opt-4</a> for
+<p>Check <a href="http://www.erlang.org/doc/man/erlang.html#spawn_opt-3">http://www.erlang.org/doc/man/erlang.html#spawn_opt-3</a> for
 the list of available options.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L91" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L90" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn/4">
+    <strong>spawn(node, module, fun, args)</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of
+<code>module.function(args)</code> on <code>node</code>. If <code>node</code> does not exists,
+a useless pid is returned.</p>
+
+<p>Check <a href="http://www.erlang.org/doc/man/erlang.html#spawn-4">http://www.erlang.org/doc/man/erlang.html#spawn-4</a> for
+the list of available options.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L102" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="spawn/5">
+    <strong>spawn(node, module, fun, args, opts)</strong>
+  </p>
+  <div class="docstring"><p>Returns the pid of a new process started by the application of
+<code>module.function(args)</code> on <code>node</code>. If <code>node</code> does not exists,
+a useless pid is returned.</p>
+
+<p>Check <a href="http://www.erlang.org/doc/man/erlang.html#spawn_opt-5">http://www.erlang.org/doc/man/erlang.html#spawn_opt-5</a> for
+the list of available options.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L114" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="spawn_link/2">
     <strong>spawn_link(node, fun)</strong>
@@ -206,7 +239,7 @@ new process, atomically. If <code>node</code> does not exist, a useless pid is r
 (and due to the link, an exit signal with exit reason :noconnection will be
 received).</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L102" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L125" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="spawn_link/4">
     <strong>spawn_link(node, module, fun, args)</strong>
@@ -217,7 +250,7 @@ process and the new process, atomically. If <code>node</code> does not exist, a 
 pid is returned (and due to the link, an exit signal with exit reason
 :noconnection will be received).</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L113" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L136" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

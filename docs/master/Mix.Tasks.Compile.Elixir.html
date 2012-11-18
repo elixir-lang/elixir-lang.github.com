@@ -41,8 +41,12 @@ time and date at the end of each compilation. You can
 force compilation regardless of mod times by passing
 the <code>--force</code> option.</p>
 
-<p>A list of files can be given after the task
-name in order to select the files to compile.</p>
+<p>Note it is important to recompile all files because
+often there are compilation time dependencies between
+the files (macros and etc). However, in some cases it
+is useful to compile just the changed files for quick
+development cycles, for such, a developer can pass
+the <code>--quick</code> otion.</p>
 
 <h2>Configuration</h2>
 
@@ -56,7 +60,8 @@ behaviour as Elixir</li>
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--force</code> - forces compilation regardless of mod times;</li>
+<li><code>--force</code> - forces compilation regardless of module times;</li>
+<li><code>--quick</code>, <code>-q</code> - only compile files that changed;</li>
 </ul>
 
         </div>
@@ -92,7 +97,7 @@ behaviour as Elixir</li>
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.elixir.ex#L37" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.elixir.ex#L42" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

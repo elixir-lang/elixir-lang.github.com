@@ -39,14 +39,14 @@ behaviour as follow:</p>
   use Behaviour
 
   @doc &quot;Parses the given URL&quot;
-  defcallback parse(arg)
+  defcallback parse(uri_info :: URI.Info.t), do: URI.Info.t
 
   @doc &quot;Defines a default port&quot;
-  defcallback default_port()
+  defcallback default_port(), do: integer
 end
 </code></pre>
 
-<p>And then a specific protocol may use it as:</p>
+<p>And then a specific module may use it as:</p>
 
 <pre><code>defmodule URI.HTTP do
   @behaviour URI.Parser
@@ -61,11 +61,14 @@ will be raised.</p>
 
 <h2>Implementation</h2>
 
-<p>Internally, Erlang call <code>behaviour_info(:callbacks)</code>
-to obtain all functions that a behaviour should
-implemented. Therefore, all this module does is
-to define <code>behaviour_info(:callbacks)</code> with the
-<code>defcallback</code> definitions.</p>
+<p>Behaviours since Erlang R15 must be defined via
+<code>@callback</code> attributes. <code>defcallback</code> is a simple
+mechanism that defines the <code>@callback</code> attribute
+according to the type specification and also allows
+docs and defines a custom function signature.</p>
+
+<p>The callbacks and their documentation can be retrieved
+via the <code>__behaviour__</code> callback function.</p>
 
         </div>
       
@@ -83,7 +86,7 @@ to define <code>behaviour_info(:callbacks)</code> with the
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#defcallback/1">defcallback/1</a>
+    <a href="#defcallback/2">defcallback/2</a>
   </span>
 </li>
 
@@ -98,13 +101,10 @@ to define <code>behaviour_info(:callbacks)</code> with the
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
-  <p class="signature" id="defcallback/1">
-    <strong>defcallback(fun)</strong>
+  <p class="signature" id="defcallback/2">
+    <strong>defcallback(fun, list2)</strong>
   </p>
-  <div class="docstring"><p>Annotates the given function is a callback. <code>defcallback</code> is
-slightly different than simple using <code>def</code> because, even if
-<code>defcallback</code> contains default values, a default function
-won&#39;t be generated, which would happen with <code>def</code>.</p>
+  <div class="docstring"><p>Defines a callback according to the given type specification.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/behaviour.ex#L48" target="_blank" class="view_source">Source</a>
 </div>

@@ -209,13 +209,44 @@ is a convenient shortcut.</p>
     <strong>__aliases__(args)</strong>
   </p>
   <div class="docstring"><p>This is the special form used to hold aliases information.
-At compilation time, it is usually compiled to an atom:</p>
+It is usually compiled to an atom:</p>
 
 <pre><code>quote do: Foo.Bar
 { :__aliases__, 0, [:Foo,:Bar] }
 </code></pre>
+
+<p>Elixir represents <code>Foo.Bar</code> as <code>__aliases__</code> so calls can be
+unambiguously identified by the operator <code>:.</code>. For example:</p>
+
+<pre><code>quote do: Foo.bar
+{{:.,0,[{:__aliases__,0,[:Foo]},:bar]},0,[]}
+</code></pre>
+
+<p>Whenever an expression iterator sees a <code>:.</code> as the tuple key,
+it can be sure that it represents a call and the second element
+of the arguments list is an atom.</p>
+
+<p>On the other hand, aliases holds some properties:</p>
+
+<p>1) The head element of aliases can be any term;</p>
+
+<p>2) The tail elements of aliases are guaranteed to always be atoms;</p>
+
+<p>3) When the head element of aliases is the atom :Elixir, no expansion happen;</p>
+
+<p>4) When the head element of aliases is not an atom, it is expanded at runtime:</p>
+
+<pre><code>  quote do: some_var.Foo
+  {:__aliases__,0,[{:some_var,0,:quoted},:Bar]}
+</code></pre>
+
+<p>Since <code>some_var</code> is not available at compilation time, the compiler
+   expands such expression to:</p>
+
+<pre><code>  Module.concat [some_var, Foo]
+</code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L457" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L485" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__block__/1">
     <strong>__block__(args)</strong>
@@ -239,7 +270,7 @@ invoked with <code>location: :keep</code> to execute a given block as if
 it belonged to another file.</p>
 
 <pre><code>quote location: :keep, do: 1
-#=&gt; { :__scope__, 1,[[file: &quot;iex&quot;], 1] }
+#=&gt; { :__scope__, 1,[[file: &quot;iex&quot;],[do: 1]] }
 </code></pre>
 
 <p>Check <code>quote/1</code> for more information.</p>
@@ -336,8 +367,8 @@ functions, regardless if it starts with underscore, by passing
 <pre><code>import :all, List
 </code></pre>
 
-<p>It can also be customized to import only functions or only
-macros:</p>
+<p>It can also be customized to import only all functions or
+all macros:</p>
 
 <pre><code>import :functions, List
 import :macros, List

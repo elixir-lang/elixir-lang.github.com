@@ -58,6 +58,16 @@
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#defrecordp/2">defrecordp/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#deftypes/4">deftypes/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#extract/2">extract/2</a>
   </span>
 </li>
@@ -77,71 +87,61 @@
     <strong>deffunctions(values, opts // [], env)</strong>
   </p>
   <div class="docstring"><p>Defines record functions skipping the module definition.
-This is called directly by <code>defrecord</code>. It expects the
-module environment, the module values and a keyword list
-of options.</p>
+This is called directly by <code>defrecord</code>. It expects the record
+values, a set of options and the module environment.</p>
 
 <h2>Examples</h2>
 
 <pre><code>defmodule CustomRecord do
   Record.deffunctions [:name, :age], __ENV__
+  Record.deftypes [:name, :age], __ENV__
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L51" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L68" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defmacros/3">
     <strong>defmacros(name, values, env)</strong>
   </p>
-  <div class="docstring"><p>Defines three macros for reading and writing records values.
-These macros are private to the current module and are
-basically a simple mechanism for manipulating tuples when
-there isn&#39;t an interest in exposing the record as a whole.
-In some ways, it is similar to Erlang records, since it is
-only available at compilation time.</p>
+  <div class="docstring"><p>Defines macros for manipulating records. This is called
+directly by <code>defrecordp</code>. It expects the macro name, the
+record values and the environment.</p>
 
 <h2>Examples</h2>
 
-<pre><code>defmodule CustomModule do
-  Record.defmacros :_user, [:name, :age], __ENV__
-
-  def new(name, age) do
-    _user(name: name, age: age)
-  end
-
-  def name(user, name) do
-    _user(user, name: name)
-  end
-
-  def age(user) do
-    _user(user, :age)
-  end
-
-  def to_keywords(user) do
-    _user(user)
-  end
-
-  def name_and_age(user) do
-   _user(user, [:name, :age])
-  end
-
-  def age_and_name(user) do
-   _user(user, [:age, :name])
-  end
+<pre><code>defmodule CustomRecord do
+  Record.defmacros :user, [:name, :age], __ENV__
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L115" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L129" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
     <strong>defrecord(name, values, opts)</strong>
   </p>
   <div class="docstring"><p>Main entry point for records definition. It defines a module
-with the given <code>name</code> and the fields specified in <code>modules</code>.
+with the given <code>name</code> and the fields specified in <code>values</code>.
 This is invoked directly by <code>Kernel.defrecord</code>, so check it
 for more information and documentation.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L25" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="defrecordp/2">
+    <strong>defrecordp(name, fields)</strong>
+  </p>
+  <div class="docstring"><p>Main entry point for private records definition. It defines
+a set of macros with the given <code>name</code> and the fields specified
+in <code>values</code>. This is invoked directly by <code>Kernel.defrecordp</code>,
+so check it for more information and documentation.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L49" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="deftypes/4">
+    <strong>deftypes(values, types, opts // [], env)</strong>
+  </p>
+  <div class="docstring"><p>Defines types and specs for the record.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L96" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="extract/2">
     <strong>extract(name, opts)</strong>

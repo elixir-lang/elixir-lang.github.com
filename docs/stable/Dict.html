@@ -83,6 +83,11 @@ same dict type as the input one.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#get!/2">get!/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#has_key?/2">has_key?/2</a>
   </span>
 </li>
@@ -158,14 +163,14 @@ d = new [b: 2]
 Dict.delete d, :a      #=&gt; [b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L135" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L170" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="empty/1">
     <strong>empty(dict)</strong>
   </p>
   <div class="docstring"><p>Returns an empty dict of the same type as <code>dict</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L209" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L249" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get/3">
     <strong>get(dict, key, default // nil)</strong>
@@ -181,7 +186,22 @@ Dict.get d, :b     #=&gt; nil
 Dict.get d, :b, 3  #=&gt; 3
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L103" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L120" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get!/2">
+    <strong>get!(dict, key)</strong>
+  </p>
+  <div class="docstring"><p>Returns the value associated with <code>key</code> in <code>dict</code>. If <code>dict</code> does not
+contain <code>key</code>, it raises <code>KeyError</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>d = new [a: 1]
+Dict.get d, :a     #=&gt; 1
+Dict.get d, :b     #=&gt; raises KeyError[key: :b]
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L136" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="has_key?/2">
     <strong>has_key?(dict, key)</strong>
@@ -195,7 +215,7 @@ Dict.has_key?(d, :a)  #=&gt; true
 Dict.has_key?(d, :b)  #=&gt; false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L87" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L102" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="keys/1">
     <strong>keys(dict)</strong>
@@ -210,7 +230,7 @@ the underlying dict implementation defines so.</p>
 Dict.keys d  #=&gt; [:a,:b]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L47" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L59" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="merge/2">
     <strong>merge(dict1, dict2)</strong>
@@ -228,7 +248,7 @@ Dict.merge d1, d2
 #=&gt; [a: 3, b: 2, d: 4]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L153" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L189" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="merge/3">
     <strong>merge(dict1, dict2, fun)</strong>
@@ -246,7 +266,7 @@ end
 #=&gt; [a: 4, b: 2, d: 4]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L171" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L208" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put/3">
     <strong>put(dict, key, val)</strong>
@@ -261,7 +281,7 @@ Dict.put d, :a, 3
 #=&gt; [a: 3, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L118" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L152" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="size/1">
     <strong>size(dict)</strong>
@@ -274,7 +294,7 @@ Dict.put d, :a, 3
 Dict.size d  #=&gt; 2
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L73" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L87" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="to_list/1">
     <strong>to_list(dict)</strong>
@@ -282,7 +302,7 @@ Dict.size d  #=&gt; 2
   <div class="docstring"><p>Returns a list of key-value pairs stored in <code>dict</code>.
 No particular order is enforced.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L217" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L258" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="update/3">
     <strong>update(dict, key, fun)</strong>
@@ -297,7 +317,7 @@ Dict.update d, :a, fn val -&gt; -val end
 #=&gt; [a: -1, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L186" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L224" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="update/4">
     <strong>update(dict, key, initial, fun)</strong>
@@ -313,7 +333,7 @@ Dict.update d, :c, 3, fn val -&gt; -val end
 #=&gt; [a: 1, b: 2, c: 3]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L202" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L241" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="values/1">
     <strong>values(dict)</strong>
@@ -326,7 +346,7 @@ Dict.update d, :c, 3, fn val -&gt; -val end
 Dict.values d  #=&gt; [1,2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L60" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/dict.ex#L73" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

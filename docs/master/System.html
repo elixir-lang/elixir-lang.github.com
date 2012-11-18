@@ -85,6 +85,11 @@ with the VM or the host system.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#halt/2">halt/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#put_env/1">put_env/1</a>
   </span>
 </li>
@@ -192,6 +197,40 @@ in the format most commonly used by the operating system environment.</p>
 <p>See <a href="http://www.erlang.org/doc/man/os.html#getpid-0">http://www.erlang.org/doc/man/os.html#getpid-0</a> for more info.</p>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L117" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="halt/2">
+    <strong>halt(status // 0, options // [])</strong>
+  </p>
+  <div class="docstring"><p>Halts the Erlang runtime system where the first argument status must be a
+non-negative integer, the atom <code>:abort</code> or any type that can be converted
+to a char list.</p>
+
+<ul>
+<li><p>If an integer, the runtime system exits with the integer value which
+is returned to the Operating System;</p></li>
+<li><p>If <code>:abort</code>, the runtime system aborts producing a core dump, if that is
+enabled in the operating system;</p></li>
+<li><p>If a char list, an erlang crash dump is produced with status as slogan,
+and then the runtime system exits with status code 1;</p></li>
+</ul>
+
+<p>Note that on many platforms, only the status codes 0-255 are supported
+by the operating system.</p>
+
+<p>For integer status, Erlang runtime system closes all ports and allows async
+threads to finish their operations before exiting. To exit without such
+flushing, pass options [flush: false] instead.</p>
+
+<p>For more information, check: <a href="http://www.erlang.org/doc/man/erlang.html#halt-2">http://www.erlang.org/doc/man/erlang.html#halt-2</a></p>
+
+<h2>Examples</h2>
+
+<pre><code>System.halt(0)
+System.halt(1, flush: false)
+System.halt(:abort)
+</code></pre>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L172" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put_env/1">
     <strong>put_env(dict)</strong>
