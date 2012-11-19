@@ -12,44 +12,14 @@ layout: blog
         <h2>{{ page.subtitle }}</h2>
         {% endif %}
         <div class="byline">{{ page.date | date: "%B %d, %Y" }}{% if page.author %} · by {{ page.author}}{% endif %} . in {% for category in page.categories %}<span class="category"><a href="/blog/categories.html#{{category}}">{{ category }}</a>{% endfor %}</div>
-      </div><!-- .sticky-header -->
+      </div>
 
       <div class="entry-content">
         {{ content }}
       </div>
 
-      <div class="entry-meta">
-        <div class="share-buttons">
-          <span class="twitter">
-            <a href="https://twitter.com/share" class="twitter-share-button" data-via="elixirlang">Tweet</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-          </span>
-
-          <span class="google-plus">
-            <!-- Place this render call where appropriate -->
-            <script type="text/javascript">
-              (function() {
-                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                po.src = 'https://apis.google.com/js/plusone.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-              })();
-            </script>
-            <g:plusone size="medium"></g:plusone>
-          </span>
-
-          <span class="facebook">
-            <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-            <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false"></div>
-          </span>
-        </div>
-      </div>
+      <!-- <div class="entry-meta">
+      </div> -->
     </div>
   </div>
-</div><!-- .hfeed -->
+</div>
