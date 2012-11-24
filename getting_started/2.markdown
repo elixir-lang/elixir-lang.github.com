@@ -232,21 +232,33 @@ Although pattern matching allows us to build powerful constructs, its usage is l
 
 ## 2.6 Blocks
 
-One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we can write `if` in these two ways:
+One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we could write `if` as follow:
 
     iex> if true, do: 1 + 2
     3
-    iex> if true do
-    ...>   1 + 2
-    ...> end
-    3
 
-The second example uses the block syntax. We can also use `else` in the block syntax:
+The `if` expression can also be written using the block syntax:
+
+    iex> if true do
+    ...>   a = 1 + 2
+    ...>   a + 10
+    ...> end
+    13
+
+You can think of `do`/`end` blocks as a convenience for passing a group of expressions to `do:`. It is exactly the same as:
+
+    iex> if true, do: (
+    ...>   a = 1 + 2
+    ...>   a + 10
+    ...> )
+    13
+
+We can pass an `else` clause in the block syntax:
 
     if false do
-      1 + 2
+      :this
     else
-      10 + 3
+      :that
     end
 
 It is important to notice that `do`/`end` always binds to the farthest function call. For example, the following expression:
