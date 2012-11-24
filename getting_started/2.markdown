@@ -172,7 +172,7 @@ When discussing lists earlier we saw the following example:
     iex> t
     [2, 3]
 
-In Elixir, `=` does not mean assignment as in programming languages like Java and Ruby. `=` is actually a match operator which will check if the expressions on both left and right side match. Consider this example:
+In Elixir, `=` is not an assignment as in programming languages like Java, Ruby, Python, etc. `=` is actually a match operator which will check if the expressions on both left and right side match. Consider this example:
 
     iex> { 1, 2, 3 } = { 1, 2, 3 }
     { 1, 2, 3 }
@@ -249,36 +249,22 @@ The second example uses the block syntax. We can also use `else` in the block sy
       10 + 3
     end
 
-Elixir blocks work similarly to Ruby blocks. For example, a developer could add parentheses as follow:
+It is important to notice that `do`/`end` always binds to the farthest function call. For example, the following expression:
 
-    if(false) do
+    is_number if true do
       1 + 2
-    else
-      10 + 3
-    end
-
-It is also important to notice that `do`/`end` always binds to the farthest function call. For example, the following expression:
-
-    Enum.map [1,2,3], fn(x) do
-      x * 2
     end
 
 Would be parsed as:
 
-    Enum.map([1,2,3], fn(x)) do
-      x * 2
+    is_number(if true) do
+      1 + 2
     end
 
-Which is not what we want since `do` is binding to the farthest function call; in this case `Enum.map`. For this reason, we always use the `->` syntax for functions and reserve `do/end` for the remaining control structures:
+Which is not what we want since `do` is binding to the farthest function call, in this case `is_number`. Adding explicit parenthesis is enough to resolve the ambiguity:
 
-    Enum.map [1,2,3], fn(x) ->
-      x * 2
-    end
-
-Which is then parsed as:
-
-    Enum.map([1,2,3], fn(x) ->
-      x * 2
+    is_number(if true do
+      1 + 2
     end)
 
 ## 2.7 Control flow structures
@@ -451,7 +437,11 @@ In Elixir, creating a function is similar to the `case` mechanism we have just s
 
 A function with one clause can be defined with a (preferred) shortcut syntax as follows:
 
-    function = fn x, y -> x + y end
+    f = fn x, y -> x + y end
+
+    f = fn x, y ->
+      x + y
+    end
 
 This is the syntax that's going to be used throughout this guide.
 
