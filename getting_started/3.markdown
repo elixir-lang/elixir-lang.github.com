@@ -237,11 +237,11 @@ In general, a module does not need to be required before usage, except if we wan
       MyMacros.my_if do_something, it_works
     end
 
-An attempt to call a macro that was not loaded will raise an error. Note that likes the `alias` directive, `require` is also lexically scoped.
+An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped.
 
 ### 3.5.3 import
 
-We use `import` whenever we want to easily access functions or macros from others modules without using the qualified name. For instance, if we want to use the `duplicate` function from `List` several times in a module and we don't want to always type `List.duplicate`, we can simply import it:
+We use `import` whenever we want to easily access functions or macros from other modules without using the qualified name. For instance, if we want to use the `duplicate` function from `List` several times in a module and we don't want to always type `List.duplicate`, we can simply import it:
 
     defmodule Math do
       import List, only: [duplicate: 2]

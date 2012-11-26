@@ -34,7 +34,7 @@ Internally, a record is simply a tuple where the first element is always the rec
 
 ### 4.1.1 Pattern matching
 
-Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement is as follow:
+Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follow:
 
     def was_accessed?(FileInfo[accesses: 0]), do: true
     def was_accessed?(FileInfo[]),            do: false
@@ -175,7 +175,7 @@ Finally, since records are simply tuples, one can add a default protocol impleme
 
 ### 4.2.3 Built-in protocols
 
-Elixir ships with three built-in protocols, they are:
+Elixir ships with five built-in protocols, they are:
 
 * Access - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example:
 
