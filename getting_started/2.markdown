@@ -585,7 +585,7 @@ For example, if you write a software that does log partitioning and log rotation
         # We need to handle the error accordingly
     end
 
-Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `:ok` in case of success and `{ :error, reason }` in case of failures. This is approach is commonly called **sideband data** as we annotate the result.
+Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `:ok` in case of success and `{ :error, reason }` in case of failures. This approach is commonly called **sideband data** as we annotate the result.
 
 On the other hand, a CLI interface that needs to access or manipulate a file given by the user, you may necessarily expect a file to be there, if it isn't there is nothing you can do then fail. Then you may use `File.read!` which raises an exception:
 
