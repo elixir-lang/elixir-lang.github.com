@@ -69,7 +69,7 @@ Since `counter` is an integer, Elixir automatically defines a helper named `incr
     iex> new_config.counter
     10
 
-On the other hand, if the default value is a list Elixir will define the two following helpers:
+On the other hand if the default value is a list Elixir will define the two following helpers:
 
 * `prepend_field` - Receives another list and prepends its values
 * `merge_field` - Receives a keywords list and merges it into the current value;
@@ -96,6 +96,8 @@ Since `new_config` remains unchanged, we get a new record with the `counter` fie
     Config[counter: 1, failures: []]
     iex> new_config.increment_counter
     Config[counter: 2, failures: []]
+
+For more information on records, [check out the documentation for the `defrecord` macro](http://elixir-lang.org/docs/master/Kernel.html#defrecord/4)
 
 ## 4.2 Protocols
 
