@@ -190,10 +190,10 @@ require Hygiene
 
 Hygiene.quoted(x)
 #=> {
-  { :x, 1, nil },
-  { :x, 1, :quoted },
-  { :x, 1, [] }
-}
+#     { :x, 1, nil },
+#     { :x, 1, :quoted },
+#     { :x, 1, [] }
+#   }
 {% endhighlight %}
 
 Summing up: if the third element is a list, it is certainly a function call. If not, it may be a variable (coming from a quote or not) or a function call.
