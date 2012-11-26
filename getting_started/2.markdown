@@ -82,7 +82,7 @@ Since keyword lists are very frequently passed as arguments, they do not require
 
 ## 2.3 Char lists and binaries
 
-In the previous chapter we have discussed double- and single- representations. Double-quoted are binary strings while single-quoted are char lists:
+In the previous chapter we have discussed double- and single- representations:
 
     iex> "sample" == 'sample'
     false
@@ -91,7 +91,7 @@ In the previous chapter we have discussed double- and single- representations. D
     iex> is_list 'char list'
     true
 
-In fact, both double-quoted and single-quoted representations are just a shorter representation of binaries and lists. Given that `?a` in Elixir returns the ASCII integer for the letter `a`, we could also write:
+In fact, both double-quoted and single-quoted representations are just a shorter representation of binaries and lists respectively. Given that `?a` in Elixir returns the ASCII integer for the letter `a`, we could also write:
 
     iex> <<?a, ?b, ?c>>
     "abc"
@@ -145,7 +145,7 @@ If at any moment, you would like to match the top of a binary against any other 
 
 This is equivalent to the head and tail pattern matching we saw in lists. There is much more to binaries and pattern matching in Elixir that allows great flexibility when working with such structures, but they are beyond the scope of a getting started guide.
 
-Currently, Elixir does not ship with any library for doing string manipulation, but this will be amended soon.
+In order to work with binaries, one can use [Erlang's binary module](http://www.erlang.org/doc/man/binary.html) or [Elixir's String module](http://elixir-lang.org/docs/stable/String.html) which is meant to work on UTF-8 data.
 
 ## 2.4 Calling Erlang functions
 
