@@ -34,7 +34,7 @@ Internally, a record is simply a tuple where the first element is always the rec
 
 ### 4.1.1 Pattern matching
 
-Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement is as follow:
+Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follow:
 
     def was_accessed?(FileInfo[accesses: 0]), do: true
     def was_accessed?(FileInfo[]),            do: false
