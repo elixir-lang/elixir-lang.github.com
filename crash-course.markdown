@@ -665,6 +665,7 @@ def square(x) do
 end
 
 Enum.map [1,2,3], function(:square, 1)
+#=> [1, 4, 9]
 {% endhighlight %}
 
 ### Partials in Elixir
