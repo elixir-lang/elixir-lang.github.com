@@ -182,7 +182,7 @@ to invoke the `new` function from the `orddict` module. In Elixir, use the dot `
 Process.self
 {% endhighlight %}
 
-**Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follow:
+**Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
 
 {% highlight ruby %}
 :lists.sort [3, 2,1]
@@ -194,7 +194,7 @@ All of the Erlang built-ins reside in the `:erlang` module.
 
 ## 3 Data Types
 
-Erlang and Elixir have the same data types for the most part, but there is a number of differences.
+Erlang and Elixir have the same data types for the most part, but there are a number of differences.
 
 ### Atoms
 
@@ -306,7 +306,7 @@ Elixir supports a literal syntax for regular expressions. Such syntax allows reg
 {% highlight erlang %}
 { ok, Pattern } = re:compile("abc\\s").
 re:run("abc ", Pattern).
-#=> { match, ["abc "] }
+%=> { match, ["abc "] }
 {% endhighlight %}
 
 **Elixir**
@@ -328,7 +328,7 @@ lines.
 
 ### Keyword list (Orddict)
 
-Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax and call them keyword list:
+Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax and calls them keyword lists:
 
 **Erlang**
 
@@ -358,7 +358,7 @@ The syntax for records differs significantly between Erlang and Elixir. Please r
 [1]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
 [2]: http://elixir-lang.org/getting_started/4.html
 
-In order to translate Erlang records into Elixir records, use Record.extract(). For example, to use the `ec2_instance_spec` record from [erlcloud][1]:
+In order to translate Erlang records into Elixir records, use Record.extract(). For example, to use the `ec2_instance_spec` record from [erlcloud][8]:
 
 {% highlight ruby %}
 defrecord :ec2_instance_spec, Record.extract(:ec2_instance_spec,
@@ -373,7 +373,7 @@ new_host = :ec2_instance_spec.new(
 IO.puts inspect(new_host)
 {% endhighlight %}
 
-[1]: https://github.com/gleber/erlcloud/blob/master/include/erlcloud_ec2.hrl#L11
+[8]: https://github.com/gleber/erlcloud/blob/master/include/erlcloud_ec2.hrl#L11
 
 <div id="modules"></div>
 
@@ -400,7 +400,7 @@ priv() ->
 
 Here we create a module named ``hello_module``. In it we define three functions, the first two of which are made available for other modules to call via the ``export`` directive at the top. It contains a list of functions, each of which is written in the format ``<function name>/<arity>``. Arity stands for the number of arguments.
 
-An equivalent code in Elixir:
+An Elixir equivalent to the Erlang above:
 
 {% highlight ruby %}
 defmodule HelloModule do
@@ -456,7 +456,7 @@ HelloModule.Utils.priv
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
 
 HelloModule.State.new
-#=> { HelloModule.State, [:sally] }
+#=> HelloModule.State[ponies: [:sally]] 
 {% endhighlight %}
 
 <div id="function_syntax"></div>
@@ -469,7 +469,7 @@ HelloModule.State.new
 
 ### Pattern Matching
 
-Pattern matching in Elixir is based on Erlang implementation and in general very similar:
+Pattern matching in Elixir is based on Erlang's implementation and in general very similar:
 
 **Erlang**
 
@@ -495,9 +495,9 @@ def loop_through([]) do
 end
 {% endhighlight %}
 
-When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side, separated by a semi-colon ``;``, the last clause is terminated by a dot ``.``.
+When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side and are separated by a semi-colon ``;``. The last clause is terminated by a dot ``.``.
 
-Elixir doesn't require punctuation to separate clause, although the must be grouped together.
+Elixir doesn't require punctuation to separate clauses, but they must be grouped together.
 
 ### Function Overloading
 
@@ -609,7 +609,7 @@ Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 {% endhighlight %}
 
-Is is possible to use pattern matching when defining anonymous functions too. In Elixir, `fn` is a shortcut, so we need to use `function` when we want many clauses:
+It is possible to use pattern matching when defining anonymous functions too. In Elixir, `fn` is a shortcut, so we need to use `function` when we want many clauses:
 
 **Erlang**
 
@@ -665,6 +665,7 @@ def square(x) do
 end
 
 Enum.map [1,2,3], function(:square, 1)
+#=> [1, 4, 9]
 {% endhighlight %}
 
 ### Partials in Elixir
