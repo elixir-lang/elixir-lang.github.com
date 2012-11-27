@@ -400,7 +400,7 @@ priv() ->
 
 Here we create a module named ``hello_module``. In it we define three functions, the first two of which are made available for other modules to call via the ``export`` directive at the top. It contains a list of functions, each of which is written in the format ``<function name>/<arity>``. Arity stands for the number of arguments.
 
-An equivalent code in Elixir:
+An Elixir equivalent to the Erlang above:
 
 {% highlight ruby %}
 defmodule HelloModule do
