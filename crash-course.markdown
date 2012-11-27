@@ -469,7 +469,7 @@ HelloModule.State.new
 
 ### Pattern Matching
 
-Pattern matching in Elixir is based on Erlang implementation and in general very similar:
+Pattern matching in Elixir is based on Erlang's implementation and in general very similar:
 
 **Erlang**
 
