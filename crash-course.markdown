@@ -495,7 +495,7 @@ def loop_through([]) do
 end
 {% endhighlight %}
 
-When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side, separated by a semi-colon ``;``, the last clause is terminated by a dot ``.``.
+When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side and are separated by a semi-colon ``;``. The last clause is terminated by a dot ``.``.
 
 Elixir doesn't require punctuation to separate clause, although the must be grouped together.
 
