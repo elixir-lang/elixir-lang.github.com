@@ -328,7 +328,7 @@ lines.
 
 ### Keyword list (Orddict)
 
-Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax and call them keyword list:
+Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax and calls them keyword lists:
 
 **Erlang**
 
