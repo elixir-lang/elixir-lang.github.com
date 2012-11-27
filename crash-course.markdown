@@ -456,7 +456,7 @@ HelloModule.Utils.priv
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
 
 HelloModule.State.new
-#=> { HelloModule.State, [:sally] }
+#=> HelloModule.State[ponies: [:sally]] 
 {% endhighlight %}
 
 <div id="function_syntax"></div>
