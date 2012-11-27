@@ -306,7 +306,7 @@ Elixir supports a literal syntax for regular expressions. Such syntax allows reg
 {% highlight erlang %}
 { ok, Pattern } = re:compile("abc\\s").
 re:run("abc ", Pattern).
-#=> { match, ["abc "] }
+%=> { match, ["abc "] }
 {% endhighlight %}
 
 **Elixir**
