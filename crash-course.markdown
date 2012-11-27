@@ -194,7 +194,7 @@ All of the Erlang built-ins reside in the `:erlang` module.
 
 ## 3 Data Types
 
-Erlang and Elixir have the same data types for the most part, but there is a number of differences.
+Erlang and Elixir have the same data types for the most part, but there are a number of differences.
 
 ### Atoms
 
