@@ -609,7 +609,7 @@ Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 {% endhighlight %}
 
-Is is possible to use pattern matching when defining anonymous functions too. In Elixir, `fn` is a shortcut, so we need to use `function` when we want many clauses:
+It is possible to use pattern matching when defining anonymous functions too. In Elixir, `fn` is a shortcut, so we need to use `function` when we want many clauses:
 
 **Erlang**
 
