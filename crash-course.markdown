@@ -588,11 +588,11 @@ Anonymous functions are defined in the following way:
 **Erlang**
 
 {% highlight erlang %}
-Sum = fun(a, b) -> a + b end.
+Sum = fun(A, B) -> A + B end.
 Sum(4, 3).
 %=> 7
 
-Square = fun(x) -> x * x end.
+Square = fun(X) -> X * X end.
 lists:map(Square, [1, 2, 3, 4]).
 %=> [1, 4, 9, 16]
 {% endhighlight %}
@@ -601,7 +601,7 @@ lists:map(Square, [1, 2, 3, 4]).
 
 {% highlight ruby %}
 sum = fn(a, b) -> a + b end
-sum 4, 3
+sum.(4, 3)
 #=> 7
 
 square = fn(x) -> x * x end
