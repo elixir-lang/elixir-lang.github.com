@@ -40,13 +40,15 @@ arguments).</p>
 
 <ul>
 <li><code>c/2</code> - compiles a file in the given path</li>
-<li><code>h/0</code>,<code>h/1</code>, <code>h/2</code> - prints help/documentation</li>
-<li><code>t/1</code>, <code>t/3</code> — prints type information</li>
-<li><code>s/1</code>, <code>s/3</code> — prints spec information</li>
+<li><code>h/0</code>, <code>h/1</code> - prints help/documentation</li>
+<li><code>t/1</code> — prints type information</li>
+<li><code>s/1</code> — prints spec information</li>
 <li><code>m/0</code> - prints loaded modules</li>
-<li><code>r/0</code> - recompiles and reloads the given module&#39;s source file</li>
+<li><code>r/0</code>, <code>r/1</code> - recompiles and reloads the given module&#39;s source file</li>
+<li><code>l/1</code> - loads given module beam code by purging the current version</li>
 <li><code>v/0</code> - prints all commands and values</li>
 <li><code>v/1</code> - retrieves nth value from console</li>
+<li><code>flush/0</code> — flush all messages sent to the shell</li>
 </ul>
 
 <p>Help for functions in this module can be consulted
@@ -81,17 +83,17 @@ h(Enum.reverse/1)
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#flush/0">flush/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#h/0">h/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#h/2">h/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#h/3">h/3</a>
+    <a href="#l/1">l/1</a>
   </span>
 </li>
 <li>
@@ -107,11 +109,6 @@ h(Enum.reverse/1)
 <li>
   <span class="summary_signature">
     <a href="#r/1">r/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#s/3">s/3</a>
   </span>
 </li>
 <li>
@@ -169,45 +166,35 @@ of the compiled modules.</p>
 #=&gt; Foo
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L47" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L49" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="flush/0">
+    <strong>flush()</strong>
+  </p>
+  <div class="docstring"><p>Flushes all messages sent to the shell and prints them out</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L454" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="h/0">
     <strong>h()</strong>
   </p>
   <div class="docstring"><p>Shows the documentation for IEx.Helpers.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L81" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L83" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="h/2">
-    <strong>h(function, arity)</strong>
+  <p class="signature" id="l/1">
+    <strong>l(module)</strong>
   </p>
-  <div class="docstring"><p>Prints the documentation for the given function and arity.</p>
-
-<p>The function may either be a function defined inside <code>IEx.Helpers</code>
-or in <code>Kernel</code>. To see functions from other module, use
-<code>h/3</code> instead.</p>
-
-<h2>Examples</h2>
-
-<pre><code>h(:h, 2)
-#=&gt; Prints documentation for this function
-</code></pre>
+  <div class="docstring"><p>Purges and reloads specified module</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L132" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="h/3">
-    <strong>h(module, function, arity)</strong>
-  </p>
-  <div class="docstring"><p>Shows the documentation for the <code>function/arity</code> in <code>module</code>.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L164" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L446" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="m/0">
     <strong>m()</strong>
   </p>
   <div class="docstring"><p>Returns the name and module of all modules loaded.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L55" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L57" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="r/0">
     <strong>r()</strong>
@@ -215,7 +202,7 @@ or in <code>Kernel</code>. To see functions from other module, use
   <div class="docstring"><p>Reloads all modules that were already reloaded
 at some point with <code>r/1</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L354" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L424" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="r/1">
     <strong>r(module)</strong>
@@ -225,27 +212,14 @@ at some point with <code>r/1</code>.</p>
 <p>Please note that all the modules defined in the specified
 files are recompiled and reloaded.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L364" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="s/3">
-    <strong>s(module, function, arity)</strong>
-  </p>
-  <div class="docstring"><p>Prints the specs for a given function.</p>
-
-<h2>Examples</h2>
-
-<pre><code>s(Enum.all?/2)
-s(Enum.t/0)
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L307" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L434" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="v/0">
     <strong>v()</strong>
   </p>
   <div class="docstring"><p>Prints commands history and their result.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L69" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L71" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="v/1">
     <strong>v(n)</strong>
@@ -254,7 +228,7 @@ s(Enum.t/0)
 values to lookup query&#39;s value from latest to earliest.
 For instance, v(-1) returns the latest result.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L340" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L410" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -280,9 +254,10 @@ and <code>module.fun/arity</code>, for example:</p>
 
 <pre><code>h receive/1
 h Enum.all?/2
+h Enum.all?
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L101" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L104" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="s/1">
     <strong>s(module)</strong>
@@ -292,9 +267,13 @@ h Enum.all?/2
 <h2>Examples</h2>
 
 <pre><code>s(Enum)
+s(Enum.all?)
+s(Enum.all?/2)
+s(list_to_atom)
+s(list_to_atom/1)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L275" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L315" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="t/1">
     <strong>t(module)</strong>
@@ -306,9 +285,10 @@ specification</p>
 
 <pre><code>t(Enum)
 t(Enum.t/0)
+t(Enum.t)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L228" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex/helpers.ex#L245" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

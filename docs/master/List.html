@@ -125,26 +125,6 @@ first argument.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#range/3">range/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#sort/1">sort/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#sort/2">sort/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#uniq/1">uniq/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#unzip/1">unzip/1</a>
   </span>
 </li>
@@ -413,67 +393,6 @@ List.member? [1,2,3], 0
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L159" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="range/3">
-    <strong>range(first, last, step // nil)</strong>
-  </p>
-  <div class="docstring"><p>Returns a list of integers in the given range (both ends included when
-possible). An optional step can be provided as well (defaults to 1).</p>
-
-<p>If first &gt; last and no step is provided, the numbers will be in descending
-order.</p>
-
-<h2>Examples</h2>
-
-<pre><code>List.range 1, 3     #=&gt; [1,2,3]
-List.range 1, 8, 2  #=&gt; [1,3,5,7]
-List.range 1, 0     #=&gt; []
-List.range 3, 1     #=&gt; [3,2,1]
-List.range 5, 1, -2 #=&gt; [5, 3, 1]
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L271" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="sort/1">
-    <strong>sort(list)</strong>
-  </p>
-  <div class="docstring"><p>Sorts the list by comparing each term. For an alternative
-sorting algorithm, check <code>Enum.qsort</code>.</p>
-
-<h2>Examples</h2>
-
-<pre><code>List.sort [3, 4, 2, 1, 7]
-#=&gt; [1, 2, 3, 4, 7]
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L305" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="sort/2">
-    <strong>sort(list, fun)</strong>
-  </p>
-  <div class="docstring"><p>Sorts the list according to an ordering function. fun(a, b) should
-return true if <code>a</code> compares less than or equal to <code>b</code>, <code>false</code> otherwise.</p>
-
-<h2>Examples</h2>
-
-<pre><code>List.sort [3, 4, 2, 1, 7], fn a, b -&gt; b &lt;= a end
-#=&gt; [7, 4, 3, 2, 1]
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L319" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="uniq/1">
-    <strong>uniq(list)</strong>
-  </p>
-  <div class="docstring"><p>Returns a list without duplicated items.</p>
-
-<h2>Examples</h2>
-
-<pre><code>List.uniq [1,2,3,2,1]
-#=&gt; [1,2,3]
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L332" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
   <p class="signature" id="unzip/1">
     <strong>unzip(list)</strong>
   </p>
@@ -489,7 +408,7 @@ List.unzip [{1, :a, &quot;apple&quot;}, {2, :b, &quot;banana&quot;}, {3, :c}]
 #=&gt; [[1, 2, 3], [:a, :b, :c]]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L388" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L352" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="wrap/1">
     <strong>wrap(list)</strong>
@@ -503,7 +422,7 @@ If the argument is nil, returns an empty list.</p>
 <pre><code>List.wrap [1,2,3] #=&gt; [1,2,3]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L346" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L310" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="zip/1">
     <strong>zip(list_of_lists)</strong>
@@ -519,7 +438,7 @@ List.zip [[1, 2], [3], [5, 6]]
 #=&gt; [{1, 3, 5}]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L370" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/list.ex#L334" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
