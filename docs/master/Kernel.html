@@ -1738,7 +1738,7 @@ Allowed in guard clauses.</p>
           <h2>Macros</h2>
           <div class="detail">
   <p class="signature" id="!/1">
-    <strong>!(arg)</strong>
+    <strong>!arg</strong>
   </p>
   <div class="docstring"><p>It receives any argument and returns true if it is false
 or nil. Returns false otherwise. Not allowed in guard
@@ -1755,7 +1755,7 @@ clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L168" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="!=/2">
-    <strong>!=(left, right)</strong>
+    <strong>left != right</strong>
   </p>
   <div class="docstring"><p>Returns true if the two items are not equal.</p>
 
@@ -1775,7 +1775,7 @@ comparison, use <code>!==</code> instead.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L253" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="!==/2">
-    <strong>!==(left, right)</strong>
+    <strong>left !== right</strong>
   </p>
   <div class="docstring"><p>Returns true if the two items are strictly not equal.
 As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
@@ -1792,7 +1792,7 @@ As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L283" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&amp;&amp;/2">
-    <strong>&amp;&amp;(left, right)</strong>
+    <strong>left &amp;&amp; right</strong>
   </p>
   <div class="docstring"><p>Provides a short-circuit operator that executes the second
 expression only if the first one evalutes to true (i.e. it is
@@ -1813,7 +1813,7 @@ not only booleans, however it is not allowed in guards.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2595" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="*/2">
-    <strong>*(left, right)</strong>
+    <strong>left * right</strong>
   </p>
   <div class="docstring"><p>Arithmetic multiplication. Allowed in guard clauses.</p>
 
@@ -1825,7 +1825,7 @@ not only booleans, however it is not allowed in guards.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L50" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="+/2">
-    <strong>+(left, right)</strong>
+    <strong>left + right</strong>
   </p>
   <div class="docstring"><p>Arithmetic plus. Allowed in guard clauses.</p>
 
@@ -1837,7 +1837,7 @@ not only booleans, however it is not allowed in guards.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L30" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="++/2">
-    <strong>++(left, right)</strong>
+    <strong>left ++ right</strong>
   </p>
   <div class="docstring"><p>Concatenates two lists. Allowed in guard clauses.</p>
 
@@ -1853,7 +1853,7 @@ not only booleans, however it is not allowed in guards.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L90" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="-/2">
-    <strong>-(left, right)</strong>
+    <strong>left - right</strong>
   </p>
   <div class="docstring"><p>Arithmetic minus. Allowed in guard clauses.</p>
 
@@ -1865,7 +1865,7 @@ not only booleans, however it is not allowed in guards.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L40" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="--/2">
-    <strong>--(left, right)</strong>
+    <strong>left -- right</strong>
   </p>
   <div class="docstring"><p>Removes the first occorrence of an item on the left
 for each item on the right. Allowed in guard clauses.</p>
@@ -1882,7 +1882,7 @@ for each item on the right. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L105" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="../2">
-    <strong>..(first, last)</strong>
+    <strong>first .. last</strong>
   </p>
   <div class="docstring"><p>Returns a range with the specified start and end.
 Includes both ends.</p>
@@ -1898,7 +1898,7 @@ Includes both ends.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2575" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="//2">
-    <strong>/(left, right)</strong>
+    <strong>left / right</strong>
   </p>
   <div class="docstring"><p>Arithmetic division. Differently from other languages,
 the result is always a float. Use div and rem if you want
@@ -1913,7 +1913,7 @@ a natural division or the remainder. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L63" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="/&gt;/2">
-    <strong>/&gt;(left, right)</strong>
+    <strong>left /&gt; right</strong>
   </p>
   <div class="docstring"><p><code>/&gt;</code> is called the pipeline operator as it is useful
 to write pipeline style expressions. This operator
@@ -1952,7 +1952,7 @@ is recommended:</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2717" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&lt;/2">
-    <strong>&lt;(left, right)</strong>
+    <strong>left &lt; right</strong>
   </p>
   <div class="docstring"><p>Return true if left is less than right.
 As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
@@ -1966,7 +1966,7 @@ As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L180" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&lt;-/2">
-    <strong>&lt;-(pid, msg)</strong>
+    <strong>pid &lt;- msg</strong>
   </p>
   <div class="docstring"><p>Sends a message to the process identified on the left.
 A process can be identified bu its PID or, if it is registered,
@@ -1981,7 +1981,7 @@ process &lt;- { :ok, &quot;Sending myself a message&quot; }
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L76" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&lt;=/2">
-    <strong>&lt;=(left, right)</strong>
+    <strong>left &lt;= right</strong>
   </p>
   <div class="docstring"><p>Return true if left is less than or equal to right.
 As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
@@ -1995,7 +1995,7 @@ As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L204" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&lt;&gt;/2">
-    <strong>&lt;&gt;(left, right)</strong>
+    <strong>left &lt;&gt; right</strong>
   </p>
   <div class="docstring"><p>Concatenates two binaries.</p>
 
@@ -2014,7 +2014,7 @@ x #=&gt; &quot;bar&quot;
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2558" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="==/2">
-    <strong>==(left, right)</strong>
+    <strong>left == right</strong>
   </p>
   <div class="docstring"><p>Returns true if the two items are equal.</p>
 
@@ -2035,7 +2035,7 @@ comparison, use <code>===</code> instead.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L235" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="===/2">
-    <strong>===(left, right)</strong>
+    <strong>left === right</strong>
   </p>
   <div class="docstring"><p>Returns true if the two items are strictly equal.
 As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
@@ -2052,7 +2052,7 @@ As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L268" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="=~/2">
-    <strong>=~(left, right)</strong>
+    <strong>left =~ right</strong>
   </p>
   <div class="docstring"><p>Matches the term on the left against the regular expression
 on the right. It returns nil if not match happened or the
@@ -2067,7 +2067,7 @@ first match otherwise.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2680" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&gt;/2">
-    <strong>&gt;(left, right)</strong>
+    <strong>left &gt; right</strong>
   </p>
   <div class="docstring"><p>Return true if left is more than right.
 As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
@@ -2081,7 +2081,7 @@ As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L192" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="&gt;=/2">
-    <strong>&gt;=(left, right)</strong>
+    <strong>left &gt;= right</strong>
   </p>
   <div class="docstring"><p>Return true if left is more than or equal to right.
 As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
@@ -2095,7 +2095,7 @@ As Erlang, Elixir can compare any term. Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L216" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="@/1">
-    <strong>@(expr)</strong>
+    <strong>@expr</strong>
   </p>
   <div class="docstring"><p>This macro is a shortcut to read and add attributes to the module
 being compiled. Elixir module attributes are similar to Erlang&#39;s with
@@ -2298,7 +2298,7 @@ access a, 1 #=&gt; :a
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2897" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="and/2">
-    <strong>and(left, right)</strong>
+    <strong>left and right</strong>
   </p>
   <div class="docstring"><p>Boolean and. Arguments needs to necessarily be booleans.
 Allowed in guard clauses.</p>
@@ -3227,7 +3227,7 @@ macro.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L2302" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="in/2">
-    <strong>in(left, right)</strong>
+    <strong>left in right</strong>
   </p>
   <div class="docstring"><p>Returns true if the element on the left is equal (==) to
 any of the items in the right. For now, it only accepts
@@ -3404,7 +3404,7 @@ nil? nil  #=&gt; true
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L1907" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="not/1">
-    <strong>not(arg)</strong>
+    <strong>not arg</strong>
   </p>
   <div class="docstring"><p>Boolean not. Argument needs to necessarily be a boolean.
 Allowed in guard clauses.</p>
@@ -3418,7 +3418,7 @@ Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L153" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="or/2">
-    <strong>or(left, right)</strong>
+    <strong>left or right</strong>
   </p>
   <div class="docstring"><p>Boolean or. Arguments needs to necessarily be booleans.
 Allowed in guard clauses.</p>
@@ -3709,7 +3709,7 @@ information.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L290" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="xor/2">
-    <strong>xor(left, right)</strong>
+    <strong>left xor right</strong>
   </p>
   <div class="docstring"><p>Boolean xor. Arguments needs to necessarily be booleans.
 Allowed in guard clauses.</p>
@@ -3723,7 +3723,7 @@ Allowed in guard clauses.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel.ex#L141" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="||/2">
-    <strong>||(left, right)</strong>
+    <strong>left || right</strong>
   </p>
   <div class="docstring"><p>Provides a short-circuit operator that executes the second
 expression only if the first one does not evalute to true (i.e. it
