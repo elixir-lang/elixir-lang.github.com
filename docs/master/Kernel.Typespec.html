@@ -33,6 +33,86 @@
 <code>@callback</code> available in modules are handled by the equivalent
 macros defined by this module.</p>
 
+<h2>Defining a type</h2>
+
+<p>@type type<em>name :: type
+@typep type</em>name :: type
+@opaque type_name :: type</p>
+
+<p>For more details, see documentation for deftype, deftypep and defopaque in
+Kernel.Typespec</p>
+
+<h2>Defining a specification</h2>
+
+<p>@spec function<em>name(type, type) :: type
+@callback function</em>name(type, type) :: type</p>
+
+<p>For more details, see documentation for defspec and defcallback in
+Kernel.Typespec</p>
+
+<h2>Types</h2>
+
+<p>The type syntax provided by Elixir is fairly similar to the one
+in Erlang.</p>
+
+<p>Most of the built-in types provided in Erlang (for example, <code>pid()</code>)
+are expressed the same way: <code>pid()</code> or simply <code>pid</code>. Parametrized types
+are also supported: <code>list(integer())</code> and so are remote types: <code>Enum.t</code>.</p>
+
+<p>Certain data type shortcuts ([...], &lt;&lt;&gt;&gt; and {...}) are supported as well.</p>
+
+<p>Main differences lie in how bit strings and functions are defined:</p>
+
+<h3>Bit Strings</h3>
+
+<p>Bit string with a base size of 3:</p>
+
+<pre><code>&lt;&lt;_ :: 3&gt;&gt;
+</code></pre>
+
+<p>Bit string with a unit size of 8:</p>
+
+<pre><code>&lt;&lt;_ :: _ * 8&gt;&gt;
+</code></pre>
+
+<h3>Functions</h3>
+
+<p>Any function:</p>
+
+<pre><code>(fun(...) -&gt; any)
+or
+((...) -&gt; any)
+or
+(... -&gt; any)
+</code></pre>
+
+<p>Function with arity of zero:</p>
+
+<pre><code>(fun() -&gt; type)
+or
+(() -&gt; type)
+</code></pre>
+
+<p>Function with some arity:</p>
+
+<pre><code>(fun(type, type) -&gt; type)
+or
+((type, type) -&gt; type)
+or
+(type, type -&gt; type)
+</code></pre>
+
+<h2>Notes</h2>
+
+<p>Elixir discourages the use of type <code>string()</code> as it might be confused
+with binaries which are referred to as &quot;strings&quot; in Elixir (as opposed to 
+character lists). In order to use the type that is called <code>string()</code> in Erlang,
+one has to use the <code>char_list()</code> type which is a synonym to <code>string()</code>. If yu
+use <code>string()</code>, you&#39;ll get a warning from the compiler.</p>
+
+<p>If you want to refer to the &quot;string&quot; type (the one operated by functions in the
+String module), use <code>String.t()</code> type instead.</p>
+
 <p>See <a href="http://www.erlang.org/doc/reference_manual/typespec.html">http://www.erlang.org/doc/reference_manual/typespec.html</a>
 for more information.</p>
 
@@ -95,7 +175,7 @@ for more information.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#spec_to_ast/1">spec_to_ast/1</a>
+    <a href="#spec_to_ast/2">spec_to_ast/2</a>
   </span>
 </li>
 <li>
@@ -112,7 +192,7 @@ for more information.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#defcallback/2">defcallback/2</a>
+    <a href="#defcallback/1">defcallback/1</a>
   </span>
 </li>
 <li>
@@ -122,7 +202,7 @@ for more information.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#defspec/2">defspec/2</a>
+    <a href="#defspec/1">defspec/1</a>
   </span>
 </li>
 <li>
@@ -156,7 +236,7 @@ element is spec name and arity and the second is the spec.</p>
 <p>The module has to have a corresponding beam file
 on the file system.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L231" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L329" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="beam_specs/1">
     <strong>beam_specs(module)</strong>
@@ -169,7 +249,7 @@ element is spec name and arity and the second is the spec.</p>
 <p>The module has to have a corresponding beam file
 on the file system.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L218" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L316" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="beam_types/1">
     <strong>beam_types(module)</strong>
@@ -182,28 +262,28 @@ element is the type (<code>:typep</code>, <code>:type</code> and <code>:opaque</
 <p>The module has to have a corresponding beam file
 on the file system.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L191" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L289" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="define_callback/3">
     <strong>define_callback(module, tuple, definition)</strong>
   </p>
   <div class="docstring"><p>Defines a <code>callback</code> by receiving Erlang&#39;s typespec.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L122" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L208" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="define_spec/3">
     <strong>define_spec(module, tuple, definition)</strong>
   </p>
   <div class="docstring"><p>Defines a <code>spec</code> by receiving Erlang&#39;s typespec.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L115" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L201" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="define_type/3">
     <strong>define_type(module, kind, type)</strong>
   </p>
   <div class="docstring"><p>Defines a <code>type</code>, <code>typep</code> or <code>opaque</code> by receiving Erlang&#39;s typespec.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L95" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L184" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defines_callback?/3">
     <strong>defines_callback?(module, name, arity)</strong>
@@ -211,7 +291,7 @@ on the file system.</p>
   <div class="docstring"><p>Returns true if the current module defines a callback.
 This function is only available for modules being compiled.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L150" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L236" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defines_spec?/3">
     <strong>defines_spec?(module, name, arity)</strong>
@@ -219,7 +299,7 @@ This function is only available for modules being compiled.</p>
   <div class="docstring"><p>Returns true if the current module defines a given spec.
 This function is only available for modules being compiled.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L141" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L227" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defines_type?/3">
     <strong>defines_type?(module, name, arity)</strong>
@@ -228,22 +308,21 @@ This function is only available for modules being compiled.</p>
 (private, opaque or not). This function is only available
 for modules being compiled.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L131" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L217" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="spec_to_ast/1">
-    <strong>spec_to_ast(arg1)</strong>
+  <p class="signature" id="spec_to_ast/2">
+    <strong>spec_to_ast(name, arg2)</strong>
   </p>
-  <div class="docstring"><p>Converts a spec clause back to Elixir AST.
-Returns a 2-items tuple with the spec arguments and return result.</p>
+  <div class="docstring"><p>Converts a spec clause back to Elixir AST.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L159" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L244" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="type_to_ast/1">
     <strong>type_to_ast(arg1)</strong>
   </p>
   <div class="docstring"><p>Converts a type clause back to Elixir AST.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L171" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L268" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
@@ -252,18 +331,18 @@ Returns a 2-items tuple with the spec arguments and return result.</p>
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
-  <p class="signature" id="defcallback/2">
-    <strong>defcallback(spec, block)</strong>
+  <p class="signature" id="defcallback/1">
+    <strong>defcallback(spec)</strong>
   </p>
   <div class="docstring"><p>Defines a callback.
 This macro is the one responsible to handle the attribute @callback.</p>
 
 <h2>Examples</h2>
 
-<pre><code>@callback add(number, number), do: number
+<pre><code>@callback add(number, number) :: number
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L83" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L173" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defopaque/1">
     <strong>defopaque(type)</strong>
@@ -276,20 +355,20 @@ This macro is the one responsible to handle the attribute @opaque.</p>
 <pre><code>@opaque my_type :: atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L37" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L112" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="defspec/2">
-    <strong>defspec(spec, block)</strong>
+  <p class="signature" id="defspec/1">
+    <strong>defspec(spec)</strong>
   </p>
   <div class="docstring"><p>Defines a spec.
 This macro is the one responsible to handle the attribute @spec.</p>
 
 <h2>Examples</h2>
 
-<pre><code>@spec add(number, number), do: number
+<pre><code>@spec add(number, number) :: number
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L67" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L150" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="deftype/1">
     <strong>deftype(type)</strong>
@@ -302,7 +381,7 @@ This macro is the one responsible to handle the attribute @type.</p>
 <pre><code>@type my_type :: atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L22" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L97" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="deftypep/1">
     <strong>deftypep(type)</strong>
@@ -315,7 +394,7 @@ This macro is the one responsible to handle the attribute @typep.</p>
 <pre><code>@typep my_type :: atom
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L52" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/typespec.ex#L127" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

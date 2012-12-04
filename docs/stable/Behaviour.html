@@ -39,10 +39,10 @@ behaviour as follow:</p>
   use Behaviour
 
   @doc &quot;Parses the given URL&quot;
-  defcallback parse(uri_info :: URI.Info.t), do: URI.Info.t
+  defcallback parse(uri_info :: URI.Info.t) :: URI.Info.t
 
   @doc &quot;Defines a default port&quot;
-  defcallback default_port(), do: integer
+  defcallback default_port() :: integer
 end
 </code></pre>
 
@@ -86,6 +86,11 @@ via the <code>__behaviour__</code> callback function.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#defcallback/1">defcallback/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#defcallback/2">defcallback/2</a>
   </span>
 </li>
@@ -101,6 +106,12 @@ via the <code>__behaviour__</code> callback function.</p>
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
+  <p class="signature" id="defcallback/1">
+    <strong>defcallback(fun)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/behaviour.ex#L53" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="defcallback/2">
     <strong>defcallback(fun, list2)</strong>
   </p>

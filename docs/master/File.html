@@ -99,6 +99,21 @@ when reading files, binaries are always returned.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#biniterator/1">biniterator/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#biniterator/2">biniterator/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#biniterator!/2">biniterator!/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#cd/1">cd/1</a>
   </span>
 </li>
@@ -414,6 +429,32 @@ File.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L224" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
+  <p class="signature" id="biniterator/1">
+    <strong>biniterator(device)</strong>
+  </p>
+  <div class="docstring"><p>Converts the file device into an iterator that can
+be passed into <code>Enum</code> to iterate line by line as a
+binary. Check <code>iterator/1</code> for more information.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1224" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="biniterator/2">
+    <strong>biniterator(file, mode)</strong>
+  </p>
+  <div class="docstring"><p>Opens the given <code>file</code> with the given <code>mode</code> and
+returns its biniterator. Fails for the same reasons
+as <code>File.open</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1252" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="biniterator!/2">
+    <strong>biniterator!(file, mode // [])</strong>
+  </p>
+  <div class="docstring"><p>Same as <code>biniterator/2</code> but raises if the file
+cannot be opened.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1263" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="cd/1">
     <strong>cd(path)</strong>
   </p>
@@ -481,9 +522,7 @@ Returns the <code>bytes_copied</code> otherwise.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L583" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cp/3">
-    <strong>cp(source, destination, callback // fn _, _ -&gt;
-  true
-end)</strong>
+    <strong>cp(source, destination, callback // fn _, _ -&gt; true end)</strong>
   </p>
   <div class="docstring"><p>Copies the contents in <code>source</code> to <code>destination</code>.
 Similar to the command <code>cp -r</code> in Unix systems,
@@ -506,9 +545,7 @@ false otherwise. It defaults to return true.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L611" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cp!/3">
-    <strong>cp!(source, destination, callback // fn _, _ -&gt;
-  true
-end)</strong>
+    <strong>cp!(source, destination, callback // fn _, _ -&gt; true end)</strong>
   </p>
   <div class="docstring"><p>The same as <code>cp/3</code>, but raises File.CopyError if it fails.
 Returns the list of copied files otherwise.</p>
@@ -516,9 +553,7 @@ Returns the list of copied files otherwise.</p>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L634" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cp_r/3">
-    <strong>cp_r(source, destination, callback // fn _, _ -&gt;
-  true
-end)</strong>
+    <strong>cp_r(source, destination, callback // fn _, _ -&gt; true end)</strong>
   </p>
   <div class="docstring"><p>Copies the contents in source to destination.
 Similar to the command <code>cp -r</code> in Unix systems,
@@ -568,9 +603,7 @@ end
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L689" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cp_r!/3">
-    <strong>cp_r!(source, destination, callback // fn _, _ -&gt;
-  true
-end)</strong>
+    <strong>cp_r!(source, destination, callback // fn _, _ -&gt; true end)</strong>
   </p>
   <div class="docstring"><p>The same as <code>cp_r/3</code>, but raises File.CopyError if it fails.
 Returns the list of copied files otherwise.</p>
@@ -693,10 +726,12 @@ File.extname(&quot;~/foo/bar&quot;)
   <p class="signature" id="iterator/1">
     <strong>iterator(device)</strong>
   </p>
-  <div class="docstring"><p>Convert the file device into an iterator that can be
+  <div class="docstring"><p>Converts the file device into an iterator that can be
 passed into <code>Enum</code>. The device is iterated line
-by line lazily, at the end of iteration the file is
-closed.</p>
+by line, at the end of iteration the file is closed.</p>
+
+<p>This reads the file as utf-8. CHeck out <code>File.biniterator</code>
+to handle the file as a raw binary.</p>
 
 <h2>Examples</h2>
 
@@ -712,7 +747,7 @@ File.open &quot;NEWREADME.md&quot;, [:write], fn(target) -&gt;
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1174" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1176" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="iterator/2">
     <strong>iterator(file, mode)</strong>
@@ -721,7 +756,7 @@ end
 returns its iterator. Fails for the same reasons
 as <code>File.open</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1210" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1204" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="iterator!/2">
     <strong>iterator!(file, mode // [])</strong>
@@ -729,7 +764,7 @@ as <code>File.open</code>.</p>
   <div class="docstring"><p>Same as <code>iterator/2</code> but raises if the file
 cannot be opened.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1221" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1215" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="join/1">
     <strong>join(paths)</strong>
