@@ -153,7 +153,9 @@ serve_drinks User.get("John")
       <p>After all, Elixir is still Erlang. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
 
 {% highlight ruby %}
-:lists.flatten([1,[2],3]) #=> [1,2,3]
+:application.start(:crypto)
+:crypto.md5("Using crypto from Erlang OTP")
+#=> &lt;&lt;192,223,75,115,...&gt;&gt;
 {% endhighlight %}
 
       <p>Since Elixir generates the same bytecode, Elixir is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and doesn't try to break any of those battle-field tested techniques Erlang is familiar for. Erlang type specifications, behaviors and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
