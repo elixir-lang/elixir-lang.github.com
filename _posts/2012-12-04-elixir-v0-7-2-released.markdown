@@ -14,30 +14,37 @@ the type specification syntax.
 
 Here's the gist:
 
-    @spec myfun(integer), do: integer
-    # becomes
-    @spec myfun(integer) :: integer
+{% highlight ruby %}
+@spec myfun(integer), do: integer
+# becomes
+@spec myfun(integer) :: integer
 
-    @type a :: fun
-    # becomes
-    @type a :: (... -> any) or ((...) -> any) or (fun(...) -> any)
-    @type a :: fun(do: integer)
-    # becomes
-    @type a :: (() -> integer) or (fun() -> integer)
-    @type a :: fun(integer, do: integer)
-    # becomes
-    @type a :: (integer -> integer) or ((integer) -> integer) or (fun(integer) -> integer)
-    @type a :: fun(integer, integer, do: integer)
-    # becomes
-    @type a :: (integer, integer -> integer) or ((integer, integer) -> integer) or (fun(integer, integer) -> integer)
+@type a :: fun
+# becomes
+@type a :: (... -> any) or ((...) -> any) or (fun(...) -> any)
+
+@type a :: fun(do: integer)
+# becomes
+@type a :: (() -> integer) or (fun() -> integer)
+
+@type a :: fun(integer, do: integer)
+# becomes
+@type a :: (integer -> integer) or ((integer) -> integer) or (fun(integer) -> integer)
+
+@type a :: fun(integer, integer, do: integer)
+# becomes
+@type a :: (integer, integer -> integer) or ((integer, integer) -> integer) or (fun(integer, integer) -> integer)
+{% endhighlight %}
 
 Another change is that Mix now echoes the output of external tools
 such as git and rebar, and handles exit status correctly. This have previously
 led to some less-than-perfect workflows.
 
-We've also added a more compact and visual form of the `function` helper. Now, instead of `function(Enum, :all?, 2)` you can use `function(Enum.all?/2)`.
+We've also added a more compact and visual form of the `function` helper. Now,
+instead of `function(Enum, :all?, 2)` you can use `function(Enum.all?/2)`.
 
-We've also figured out how to achieve an up to 6x [performance increase](https://github.com/elixir-lang/elixir/blob/v0.7.2/lib/elixir/lib/kernel.ex#L1386-L1417) when using records.
+We've also figured out how to achieve an up to 6x [performance increase](https://github.com/elixir-lang/elixir/blob/v0.7.2/lib/elixir/lib/kernel.ex#L1386-L1417)
+under some circunstances when using records.
 
 ...and [many other fixes & improvements](https://github.com/elixir-lang/elixir/blob/v0.7.2/CHANGELOG.md).
 
