@@ -1,0 +1,104 @@
+---
+layout: getting_started
+title: 3 Creating custom Mix tasks
+guide: 3
+total_guides: 3
+---
+
+# {{ page.title }}
+
+In Mix, a task is simply an Elixir module inside the `Mix.Tasks` namespace and a `run/1` function. For example, the `compile` task is a module named `Mix.Tasks.Compile`.
+
+Here is a simple example task:
+
+{% highlight ruby %}
+defmodule Mix.Tasks.Hello do
+  use Mix.Task
+
+  @shortdoc "This is short documentation, see"
+
+  @moduledoc """
+  A test task.
+  """
+  def run(_) do
+    IO.puts "Hello, World!"
+  end
+end
+{% endhighlight %}
+
+This defines a task called `hello`. In order to make it a task, it defines a `run` function that takes a single argument that will be a list of binary strings which are the arguments that were passed to the task on the command line or from another task calling this one.
+
+When you invoke `mix hello`, this task will run and print `Hello, World!`. Mix uses its first argument to lookup the task module and execute its `run` function.
+
+You're probably wondering why we have a `@moduledoc` and `@shortdoc`. Both are used by the `help` task for listing tasks and providing documentation of them. The former is used when `mix help TASK` is invoked, the latter in the general listing with `mix help`.
+
+Besides those two, there is also `@hidden` attribute that, when set to true, marks the task as hidden so it does not show up on `mix help Task`. Any task without `@shortdoc` also won't show up.
+
+### 3.1 Common API
+
+When writing tasks, there are some common mix functionality we would like to access. There is a gist:
+
+* `Mix.project` - Returns the project configuration under the function `project`; Notice this function returns an empty configuration if no `mix.exs` file exists in the current directory, this allows many mix functions to work even if a `mix.exs` project is not defined;
+
+* `Mix.Project.current` - Access the module for the current project, this is useful in case you want to access special functions in the project. It raises an exception if no project is defined;
+
+* `Mix.shell` - The shell is a simple abstraction for doing IO in Mix. Such abstractions make it easy to test existing mix tasks. In the future, the shell will provide conveniences for colored output and getting user input;
+
+* `Mix.Task.run(task, args)` - This is how you invoke a task from another task in Mix; Notice that if the task was already invoked, it works as no-op;
+
+There is more to the Mix API, so feel free to [check the documentation](/docs/stable/Mix.html), with special attention to [`Mix.Task`](/docs/stable/Mix.Task.html) and [`Mix.Project`](/docs/stable/Mix.Project.html).
+
+### 3.2 Namespaced Tasks
+
+While tasks are simple, they can be used to accomplish complex things. Since they are just Elixir code, anything you can do in normal Elixir you can do in Mix tasks. You can distribute tasks however you want just like normal libraries and thus they can be reused in many projects.
+
+So, what do you do when you have a whole bunch of related tasks? If you name them all like `foo`, `bar`, `baz`, etc, eventually you'll end up with conflicts with other people's tasks. To prevent this, Mix allows you to namespace tasks.
+
+Let's assume you have a bunch of tasks for working with Riak.
+
+{% highlight ruby %}
+defmodule Mix.Tasks.Riak do
+  defmodule Dostuff do
+    ...
+  end
+
+  defmodule Dootherstuff do
+    ...
+  end
+end
+{% endhighlight %}
+
+Now you'll have two different tasks under the modules `Mix.Tasks.Riak.Dostuff` and `Mix.Tasks.Riak.Dootherstuff` respectively. You can invoke these tasks like so: `mix mongodb.dostuff` and `mix mongodb.dootherstuff`. Pretty cool, huh?
+
+You should use this feature when you have a bunch of related tasks that would be unwieldly if named completely independently of each other. If you have a few unrelated tasks, go ahead and name them however you like.
+
+## 3.3 OptionParser
+
+Although not a Mix feature, Elixir ships with an `OptionParser` which is quite useful when creating mix tasks that accepts options. The `OptionParser` receives a list of arguments and returns a tuple with parsed options and the remaining arguments:
+
+    OptionParser.parse(["--debug"])
+    #=> { [debug: true], [] }
+
+    OptionParser.parse(["--source", "lib"])
+    #=> { [source: "lib"], [] }
+
+    OptionParser.parse(["--source", "lib", "test/enum_test.exs", "--verbose"])
+    #=> { [source: "lib", verbose: true], ["test/enum_test.exs"] }
+
+Check [`OptionParser`](/docs/stable/OptionParser.html) documentation for more information.
+
+## 3.4 Local tasks
+
+Many times, you want to share a task in between projects or easily install a task that someone made available. With this requirement in mind, Mix also ships with the ability to manage local tasks. Local tasks can be installed from any URL and are available from anywhere within Elixir:
+
+    $ mix local.install http://elixir-lang/hello.beam
+
+If everything works as expected, the task will be installed on your machine and you can then successfully invoke it:
+
+    $ mix hello
+
+You can use `mix local` to show all available local tasks and their path. Removing a task is as easy as:
+
+    $ mix local.uninstall hello
+
+With this in mind, you are ready to go out, create and install your custom tasks! Enjoy!
