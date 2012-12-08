@@ -159,11 +159,12 @@ end
 
 ### 1.4.1 Source Code Management (SCM)
 
-In the example above, we have used `git` to specify our dependency.  Mix was designed in a way it can support multiple SCM tools, by default it ships with `:git` and `:raw`. The most common options are:
+In the example above, we have used `git` to specify our dependency.  Mix was designed in a way it can support multiple SCM tools, by default it ships with `:git` and `:path`. The most common options are:
 
 * `:git` - the dependency is a git repository that is retrieved and updated by Mix;
-* `:raw` - the dependency is simply a raw path in the filesystem;
-* `:compile` - how to compile the dependency, more information in the next section;
+* `:path` - the dependency is simply a path in the filesystem;
+* `:compile` - how to compile the dependency;
+* `:app` - the path of the application expected to be defined by the dependency;
 
 Each SCM may support custom options. `:git` supports the following:
 
@@ -186,7 +187,7 @@ If the dependency does not contain any of the above, you can specify a command d
     compile: "./configure && make"
 {% endhighlight %}
 
-If `:noop` is given to `:compile`, nothing is done.
+If `:compile` is set to false, nothing is done.
 
 ### 1.4.3 Repeatability
 
