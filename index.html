@@ -82,7 +82,7 @@ Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 
 {% highlight ruby %}
 { :ok, file } = File.iterator("README.md")
-lines = Enum.map(file, fn(line) -> Regex.replace_all(%r/"/, line, "'") end)
+lines = Enum.map(file, fn(line) -> Regex.replace(%r/"/, line, "'") end)
 File.write("README.md", lines)
 {% endhighlight %}
     </div>
