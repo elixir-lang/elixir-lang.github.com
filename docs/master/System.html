@@ -132,7 +132,7 @@ with the VM or the host system.</p>
   </p>
   <div class="docstring"><p>Registers a function that will be invoked
 at the end of program execution. Useful for
-invoking a hook on scripted mode.</p>
+invoking a hook in a &quot;script&quot; mode.</p>
 
 <p>The function must expect the exit status code
 as argument.</p>
@@ -230,7 +230,7 @@ System.halt(1, flush: false)
 System.halt(:abort)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L188" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L192" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put_env/1">
     <strong>put_env(dict)</strong>
@@ -250,9 +250,13 @@ to each key in <code>dict</code>.</p>
   <p class="signature" id="stacktrace/0">
     <strong>stacktrace()</strong>
   </p>
-  <div class="docstring"><p>Get the stacktrace.</p>
+  <div class="docstring"><p>Gets Elixir&#39;s stacktrace.</p>
+
+<p>Notice the Erlang VM (and therefore this function) does not
+return the current stacktrace but rather the stacktrace of the
+latest exception.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L151" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L155" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="version/0">
     <strong>version()</strong>
