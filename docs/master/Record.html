@@ -94,7 +94,7 @@ values, a set of options and the module environment.</p>
 
 <pre><code>defmodule CustomRecord do
   Record.deffunctions [:name, :age], __ENV__
-  Record.deftypes [:name, :age], __ENV__
+  Record.deftypes [:name, :age], [name: :binary, age: :integer], __ENV__
 end
 </code></pre>
 </div>
@@ -114,7 +114,7 @@ record values and the environment.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L126" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L127" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
     <strong>defrecord(name, values, opts)</strong>
@@ -141,7 +141,7 @@ so check it for more information and documentation.</p>
   </p>
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L95" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L96" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="extract/2">
     <strong>extract(name, opts)</strong>
