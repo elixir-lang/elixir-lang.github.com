@@ -436,7 +436,7 @@ File.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
 be passed into <code>Enum</code> to iterate line by line as a
 binary. Check <code>iterator/1</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1224" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1232" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="biniterator/2">
     <strong>biniterator(file, mode)</strong>
@@ -445,7 +445,7 @@ binary. Check <code>iterator/1</code> for more information.</p>
 returns its biniterator. Fails for the same reasons
 as <code>File.open</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1252" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1263" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="biniterator!/2">
     <strong>biniterator!(file, mode // [])</strong>
@@ -453,7 +453,7 @@ as <code>File.open</code>.</p>
   <div class="docstring"><p>Same as <code>biniterator/2</code> but raises if the file
 cannot be opened.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1263" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1274" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cd/1">
     <strong>cd(path)</strong>
@@ -747,7 +747,7 @@ File.open &quot;NEWREADME.md&quot;, [:write], fn(target) -&gt;
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1176" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1181" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="iterator/2">
     <strong>iterator(file, mode)</strong>
@@ -756,7 +756,7 @@ end
 returns its iterator. Fails for the same reasons
 as <code>File.open</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1204" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1212" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="iterator!/2">
     <strong>iterator!(file, mode // [])</strong>
@@ -764,7 +764,7 @@ as <code>File.open</code>.</p>
   <div class="docstring"><p>Same as <code>iterator/2</code> but raises if the file
 cannot be opened.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1215" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/file.ex#L1223" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="join/1">
     <strong>join(paths)</strong>
@@ -925,7 +925,7 @@ since automatically closing the file may fail
 
 <h2>Examples</h2>
 
-<pre><code>File.open!(&quot;foo.txt&quot;, [:read, :write], fn(file) -&gt;
+<pre><code>File.open!(&quot;file.txt&quot;, [:read, :write], fn(file) -&gt;
   IO.readline(file)
 end)
 </code></pre>
@@ -1009,7 +1009,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 
 <h2>Examples</h2>
 
-<pre><code>File.rm(&#39;foo.txt&#39;)
+<pre><code>File.rm(&#39;file.txt&#39;)
 #=&gt; :ok
 
 File.rm(&#39;tmp_dir/&#39;)
@@ -1066,7 +1066,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 <pre><code>File.rddir(&#39;tmp_dir&#39;)
 #=&gt; :ok
 
-File.rmdir(&#39;foo.txt&#39;)
+File.rmdir(&#39;file.txt&#39;)
 #=&gt; {:error, :enotdir}
 </code></pre>
 </div>
