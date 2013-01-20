@@ -37,7 +37,7 @@ defmodule Stacker.Server do
 end
 {% endhighlight %}
 
-Our server defines three callbacks: `init/1`, `handle_call/3` and `handle_cast/2`. We never call those functions directly, they are called by OTP whenever we interact with the server. We will go into details about these soon, let's just ensure it works as expected. To do so, run `mix iex` and type the following:
+Our server defines three callbacks: `init/1`, `handle_call/3` and `handle_cast/2`. We never call those functions directly, they are called by OTP whenever we interact with the server. We will go into details about these soon, let's just ensure it works as expected. To do so, run `iex -S mix` on your command line to start iex with mix and type the following:
 
     # Let's start the server using Erlang's :gen_server module.
     # It expects 3 arguments: the server module, the initial
@@ -48,7 +48,7 @@ Our server defines three callbacks: `init/1`, `handle_call/3` and `handle_cast/2
     # Now let's push something onto the stack
     iex> :gen_server.cast(pid, { :push, 13 })
     :ok
-    
+
     # Now let's get it out from the stack
     # Notice we are using *call* instead of *cast*
     iex> :gen_server.call(pid, :pop)
@@ -99,7 +99,7 @@ Of what use is a server if we cannot crash it? It is actually quite easy to cras
     # Let's get our initial item:
     iex> :gen_server.call(pid, :pop)
     :hello
-    
+
     # And now let's do an unknown call:
     iex> :gen_server.call(pid, :pop)
 
@@ -121,12 +121,12 @@ Create a file at `lib/stacker/supervisor.ex` with the following:
 {% highlight ruby %}
 defmodule Stacker.Supervisor do
   use Supervisor.Behaviour
-  
+
   # A convenience to start the supervisor
   def start_link(stack) do
     :supervisor.start_link(__MODULE__, stack)
   end
-  
+
   # The callback invoked when the supervisor starts
   def init(stack) do
     children = [ worker(Stacker.Server, [stack]) ]
@@ -165,7 +165,7 @@ end
 
 The `start_link` function is quite similar to how we were starting our server with one extra argument: `{ :local, :stacker }`. This argument registers the server in our local nodes, allowing it to be invoked by the given name (in this case, `:stacker`), instead of the `pid`.
 
-With our supervisor in hand, let's start the console by running `$ mix iex` once again, which will recompile our files too:
+With our supervisor in hand, let's start the console by running `iex -S mix` once again, which will recompile our files too:
 
     # Now we will start the supervisor with a default stack
     iex> Stacker.Supervisor.start_link([:hello])
@@ -191,7 +191,7 @@ It crashes exactly as before but it is restarted right away with the default sta
 
     iex> :gen_server.call(:stacker, :unknown)
     ... 5 times ...
-    
+
     iex> :gen_server.call(:stacker, :unknown)
     ** (exit) {:noproc,{:gen_server,:call,[:stacker,:unknown]}}
         gen_server.erl:180: :gen_server.call/2
@@ -231,7 +231,7 @@ end
 
 The `Application.Behaviour` expects two callbacks, `start(type, args)` and `stop(state)`. We are required to implement `start/2` though we have decided to not bother about `stop(state)` for now.
 
-If everything works correctly, all you need to do is to start `$ mix iex` once again. Our files are going to be recompiled and the supervisor (and consequently our server) will be automatically started:
+If everything works correctly, all you need to do is to start `iex -S mix` once again. Our files are going to be recompiled and the supervisor (and consequently our server) will be automatically started:
 
     iex> :gen_server.call(:stacker, :pop)
     :hello
@@ -255,7 +255,7 @@ end
 When running tasks on Mix, Mix will ensure the application and all application dependencies are started. This can also be done via command line with the flag `--app`:
 
     $ elixir -pa ebin --app my_project
-  
+
 You may also start which application individually via the command line using [Erlang's :application module](http://www.erlang.org/doc/man/application.html):
 
     :application.start(:my_project)
