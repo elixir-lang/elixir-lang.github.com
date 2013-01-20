@@ -136,7 +136,7 @@ We could also write this as:
 
 The example above works as if `size(&1)` translates directly to `fn(x) -> size(x) end`. Since operators are also function calls, they can also benefit of the same syntax:
 
-    iex> Enum.reduce [1,2,3], 0, &1 * &2
+    iex> Enum.reduce [1,2,3], 1, &1 * &2
     6
 
 In this case, `&1 * &2` translates to `fn(x, y) -> x * y end`. The values `&1` and `&2` maps to the argument order in the generated function.

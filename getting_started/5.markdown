@@ -24,7 +24,7 @@ The tuple above represents a function call to sum passing 1, 2 and 3 as argument
 
 * The first element of the tuple is always an atom or another tuple in the same representation;
 * The second element of the tuple is always an integer representing the line number;
-* The third element of the tuple is either a list of arguments for the function call or an atom (`nil` or `:quoted`), meaning that the tuple represents a variable, not a function call.
+* The third element of the tuple is either a list of arguments for the function call or an atom. When an atom, it means the tuple represents a variable, not a function call.
 
 You can get the representation of any expression by using the quote macro:
 
@@ -120,7 +120,7 @@ We can define any macro we want, including ones that override the built-in macro
 
 ## 5.3 Macros hygiene
 
-Elixir macros follow Scheme conventions and are hygienic. This means a variable defined inside a macro won't conflict with a variable defined in the context where that macro is inserted. For example:
+Elixir macros follow Scheme conventions and are hygienic. This means that aliases and imports will be expanded in the context the quoted contents are defined. It also guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
 {% highlight ruby %}
 defmodule Hygiene do
@@ -164,39 +164,23 @@ HygieneTest.go
 # => 1
 {% endhighlight %}
 
-Macros hygiene only works because Elixir marks a variable as coming from the quote. For example, consider this:
+Variables hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined at the line 3 of a module, would be represented as:
+
+    { :x, 3, nil }
+
+However, a quoted variable is represented as:
 
 {% highlight ruby %}
-iex> quote do: x
-{ :x, 0, :quoted }
-{% endhighlight %}
-
-Notice that the third element is `:quoted`. It means that x may be a function call with 0 arguments or a variable coming from a quote. On the other hand, an unquoted variable would have the third element equal to nil. Let's consider this final example:
-
-{% highlight ruby %}
-defmodule Hygiene do
-  defmacro quoted(x) do
-    quote do
-      { unquote(x), x, x() }
-    end
+defmodule Sample do
+  def quoted do
+    quote do: x
   end
 end
+
+Sample.quoted #=> { :x, 3, Sample }
 {% endhighlight %}
 
-In the example above, we have defined a macro called `quoted` that returns an unquoted variable, a quoted variable and a function call. Calling this macro will return:
-
-{% highlight ruby %}
-require Hygiene
-
-Hygiene.quoted(x)
-#=> {
-#     { :x, 1, nil },
-#     { :x, 1, :quoted },
-#     { :x, 1, [] }
-#   }
-{% endhighlight %}
-
-Summing up: if the third element is a list, it is certainly a function call. If not, it may be a variable (coming from a quote or not) or a function call.
+Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers those two variables come from different contexts and handle them accordingly.
 
 ## 5.4 Private macros
 
@@ -287,6 +271,6 @@ At the moment the module is being defined, there isn't **yet** a function named 
 
 ## 5.6 Don't write macros
 
-Although macros are a powerful construct, the first rule of the macro club is **don't write macros**. Macros are harder to write than ordinary Elixir functions, and it's considered to be bad style to use them when they're not necessary.
+Although macros are a powerful construct, the first rule of the macro club is **don't write macros**. Macros are harder to write than ordinary Elixir functions, and it's considered to be bad style to use them when they're not necessary. Elixir already provides elegant mechanisms to write your every day code and macros should be saved as last resort.
 
 With those lessons, we finish our introduction to macros. Next, let's move to the next chapter which will discuss several topics such as native code compilation, partial application and others.

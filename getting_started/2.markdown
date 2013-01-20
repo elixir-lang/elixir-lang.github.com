@@ -106,24 +106,24 @@ In such cases, Elixir detects that all characters in the list and in the binary 
     iex> [?a, ?b, ?c, 1]
     [97,98,99,1]
 
-Since lists are implemented as linked lists, it means a char list usually takes a lot of space in memory (in ASCII, it would be one byte for each character and another byte to point to the next character). For this reason, binary (double-quoted) strings are preferred unless you want to explicitly iterate over a char list.
+Since lists are implemented as linked lists, it means a char list usually takes a lot of space in memory (in ASCII, it would be one byte for each character and another byte to point to the next character). For this reason, binaries (double-quoted) are preferred unless you want to explicitly iterate over a char list.
 
 Although a bit more verbose, it is also possible to do head/tail style pattern matching with binaries. A binary is made up of a number of parts which must be tagged with their type. Most of the time, Elixir will figure out the part's type and won't require any work from you:
 
     iex> <<102, "oo">>
     "foo"
 
-In the example, we have two parts: the first is an integer and the second is a binary. If we use any other Elixir expression, Elixir can no longer guess the type:
+In the example, we have two parts: the first is an integer and the second is a binary. If we use an Elixir expression, Elixir will default its type to an integer:
 
     iex> rest = "oo"
     iex> <<102, rest>>
     ** (ArgumentError) argument error
 
-When a variable or expression is given as a binary part, Elixir defaults the type of that part to an integer. In the example above, since we haven't specified a type, Elixir expected an integer but we passed a binary, resulting in `ArgumentError`. We can solve this by explicitly tagging it as a binary:
+In the example above, since we haven't specified a type for `rest`, Elixir expected an integer but we passed a binary, resulting in `ArgumentError`. We can solve this by explicitly tagging it as a binary:
 
     iex> <<102, rest :: binary>>
 
-The type can be `integer`, `float`, `binary`, `bytes`, `bitstring`, `bits`, `utf8`, `utf16` or `utf32` (we can also pass endianness and signedness as specifiers too, but we will leave this discussion for later). When passing more than one option, we use a list:
+The type can be `integer`, `float`, `binary`, `bytes`, `bitstring`, `bits`, `utf8`, `utf16` or `utf32`. We can pass endianness and signedness too, when passing more than one option, we use a list:
 
     iex> <<102, rest :: [binary, signed]>>
 
@@ -145,9 +145,58 @@ If at any moment, you would like to match the top of a binary against any other 
 
 This is equivalent to the head and tail pattern matching we saw in lists. There is much more to binaries and pattern matching in Elixir that allows great flexibility when working with such structures, but they are beyond the scope of a getting started guide.
 
-In order to work with binaries, one can use [Erlang's binary module](http://www.erlang.org/doc/man/binary.html) or [Elixir's String module](http://elixir-lang.org/docs/stable/String.html) which is meant to work on UTF-8 data.
+## 2.4 UTF-8 Strings
 
-## 2.4 Calling Erlang functions
+In the previous section we've learnt about binaries. A string in Elixir is a binary which is encoded in UTF-8. For example, the string "é" is a UTF-8 binary containing two bytes:
+
+    iex> string = "é"
+    "é"
+    iex> size(string)
+    2
+
+In order to easily manipulate strings, Elixir provides a [String module](http://elixir-lang.org/docs/stable/String.html):
+
+    # returns the number of bytes
+    iex> size "héllò"
+    7
+
+    # returns the number of characters as perceived by humans
+    iex> String.length "héllò"
+    5
+
+> Note: to retrieve the number of elements in a data structure, you will use a function named `length` or `size`. Their usage is not arbitrary. The first is used when the number of elements needs to be calculated. For example, calling `length(list)` will iterate the whole list to find the number of elements in that list. `size` is the opposite, it means the value is pre-calculated and stored somewhere and therefore retrieving its value is a cheap operation. That said, we use `size` to get the size of a binary, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
+
+Each character in the string "héllò" above is a Unicode codepoint. One may use `String.codepoints` to split a string into smaller strings representing its codepoints:
+
+    iex> String.codepoints "héllò"
+    ["h", "é", "l", "l", "ó"]
+
+The Unicode standard assigns an integer value to each character. Elixir allows a developer to retrieve or insert a character based on its integer codepoint value as well:
+
+    # Gettng the integer codepoint
+    iex> ?h
+    104
+    iex> ?é
+    233
+
+    # Inserting a codepoint based on its hexadecimal value
+    iex> "h\xE9ll\xF2"
+    "héllò"
+
+UTF-8 also plays nicely with pattern matching. You can match against a UTF-8 codepoint, retriving its integer value as follow:
+
+    iex> << eacute :: utf8, rest :: binary >> = "épa"
+    "épa"
+    iex> ecaute
+    233
+    iex> << ecaute :: utf8 >>
+    "é"
+    iex> rest
+    "pa"
+
+In general, you will find working with binaries and strings in Elixir a breeze. Whenever you want to work with raw binaries, one can use [Erlang's binary module](http://www.erlang.org/doc/man/binary.html), and use [Elixir's String module](http://elixir-lang.org/docs/stable/String.html) when you want to work on strings, which are simply UTF-8 encoded binaries.
+
+## 2.5 Calling Erlang functions
 
 One of Elixir assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
 
@@ -161,7 +210,7 @@ Erlang's OTP is very well documented and easily navigable:
 * [OTP docs](http://www.erlang.org/doc/)
 * [Standard library docs](http://www.erlang.org/doc/man/STDLIB_app.html)
 
-## 2.5 Pattern matching
+## 2.6 Pattern matching
 
 When discussing lists earlier we saw the following example:
 
@@ -230,7 +279,7 @@ Although pattern matching allows us to build powerful constructs, its usage is l
     iex> :lists.flatten([1,[2],3]) = [1,2,3]
     ** (ErlangError) erlang error :illegal_pattern
 
-## 2.6 Blocks
+## 2.7 Blocks
 
 One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we could write `if` as follow:
 
@@ -279,11 +328,11 @@ Which is not what we want since `do` is binding to the farthest function call, i
       1 + 2
     end)
 
-## 2.7 Control flow structures
+## 2.8 Control flow structures
 
 In this section we'll describe Elixir's main control flow structures.
 
-### 2.7.1 If
+### 2.8.1 If
 
 Refreshing from the section above, all these calls behave the same:
 
@@ -297,7 +346,7 @@ Refreshing from the section above, all these calls behave the same:
 
 In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicit convert the `if` argument to a boolean. If you want to check if one of many conditions are true, you can use the `cond` macro.
 
-### 2.7.2 Cond
+### 2.8.2 Cond
 
 `cond` allows you to check many expressions and executes the first one that evaluates to true:
 
@@ -312,7 +361,7 @@ In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore the
 
 If none of the expressions above return true, an error would be raised.
 
-### 2.7.3 Other boolean operators
+### 2.8.3 Other operators
 
 In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. These operators are strict in that they only accept booleans as their first argument.
 
@@ -340,7 +389,7 @@ Elixir provides three operators with similar functionality but that accept argum
 
 As a rule of thumb, use `and`, `or` and `not` when both arguments are expected to be booleans, as in guard clauses. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
 
-### 2.7.4 Case
+### 2.8.4 Case
 
 In section 2.5, we introduced pattern matching via the `=` operator. Sometimes, however, it is convenient to compare an expression against several expressions until we find a matching one. In this scenario, we use `case`:
 
@@ -372,12 +421,13 @@ Each match clause also supports special conditions specified via guards:
         "No match"
     end
 
-In the example above, the second clause will only match when x is positive. The Erlang VM only allows the following expressions as guards:
+In the example above, the second clause will only match when x is positive. The Erlang VM only allows a limitted set of expressions as guards:
 
 * comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`);
-* strict boolean operators (`and`, `or`, `not`). Note that `||` and `&&` are not allowed;
+* boolean operators (`and`, `or`, `not`). Note that `||` and `&&` are not allowed;
 * arithmetic operators (`+`, `-`, `*`, `/`);
 * `<>` and `++` as long as the left side is a literal;
+* the `in` operator;
 * all the following type check functions:
 
     * is_atom/1
@@ -435,7 +485,7 @@ However, the example above will always fail. If the argument is a list, calling 
 
 In such cases, if there is an error in one of the guards, it won't affect the next one.
 
-### 2.7.5 Functions
+### 2.8.5 Functions
 
 In Elixir, creating a function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
 
@@ -463,7 +513,7 @@ As Elixir is an immutable language, the binding of the function is also immutabl
     (fn -> x = 2 end).()
     x #=> 1
 
-### 2.7.6 Try
+### 2.8.6 Try
 
 The next control-flow mechanism is `try/catch/after`:
 
@@ -510,7 +560,7 @@ The common strategy is to explicitly make all arguments that are required after 
 
     x #=> returns the value of x or nil for failures
 
-### 2.7.7 Receive
+### 2.8.7 Receive
 
 The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
@@ -545,7 +595,7 @@ You may not see exactly `<0.36.0>` back, but something similar. If there are no 
 
 Notice we spawned a new process using the `spawn` function passing another function as argument. Elixir also supports `spawn_link`, which spawns a child process but keeps the parent and child connected. This way, if the child dies unexpectedly, the parent receives a notification. [`Process`](/docs/stable/Process.html) and [`Node`](/docs/stable/Node.html) modules contains many functions to manage processes, including spawning and get information about processes running in other nodes in the network.
 
-## 2.8 Exceptions
+## 2.9 Exceptions
 
 Elixir provides the concept of exceptions. An exception can be raised using the function `raise` and rescued inside a `try` block with the `rescue` keyword:
 
@@ -595,7 +645,7 @@ We can sum this up in few words: don't use exceptions for control-flow. If you f
 
 Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](/docs/stable/), by clicking "Records" in the upper left corner.
 
-## 2.8 Built-in functions
+## 2.10 Built-in functions
 
 Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a string, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
 
