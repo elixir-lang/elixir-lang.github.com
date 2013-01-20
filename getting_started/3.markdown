@@ -298,6 +298,7 @@ Elixir has a handful of reserved attributes. The following are currently functio
 * `@on_load` - expects a function name that will be invoked whenever the module is loaded. The function must have arity 0 and has to return `:ok`, otherwise the loading of the module is aborted;
 * `@before_compile` - expects a `{ module, function }` that will be invoked with the module name before the module is compiled. The function may be a macro, allowing you to inject functions inside the module exactly before compilation;
 * `@after_compile` - expects a `{ module, function }` that will be invoked with the module name and its object code right after the module is compiled and loaded;
+* `@on_definition` - expects a `{ module, function }` that will be invoked after each function/macro is defined. This makes it easy to annotate and customize functions;
 
 The following attributes are part of [typespecs](http://www.erlang.org/doc/reference_manual/typespec.html) and are also supported by Elixir:
 
