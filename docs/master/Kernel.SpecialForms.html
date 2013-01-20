@@ -758,7 +758,7 @@ all variables in the block:</p>
 Consider the following example:</p>
 
 <pre><code>defmodule Hygiene do
-  alias OrdDict, as: D
+  alias HashDict, as: D
 
   defmacro no_interference do
     quote do: D.new
@@ -766,7 +766,7 @@ Consider the following example:</p>
 end
 
 require Hygiene
-Hygiene.no_interference #=&gt; { OrdDict, [] }
+Hygiene.no_interference #=&gt; HashDict[]
 </code></pre>
 
 <p>Notice that, even though the alias <code>D</code> is not available

@@ -27,12 +27,12 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module implements a dictionary type based on
-hashing of the keys. It is a simple wrapper around
-<a href="http://www.erlang.org/doc/man/dict.html">Erlang&#39;s dict module</a>
-and exposed via the <code>Dict</code> module.</p>
+          <p>A key-value store.</p>
 
-<p>Check the <code>Dict</code> module for examples and documentation.</p>
+<p>The <code>HashDict</code> is meant to work well with both small and
+large set of keys and it is an implementation of the <code>Dict</code>
+behaviour. For more information about the functions and
+their APIs, please consult the <code>Dict</code> module.</p>
 
         </div>
       
@@ -48,6 +48,41 @@ and exposed via the <code>Dict</code> module.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#delete/2">delete/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#empty/1">empty/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/3">get/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get!/2">get!/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#has_key?/2">has_key?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#keys/1">keys/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#merge/3">merge/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#new/0">new/0</a>
   </span>
 </li>
@@ -59,6 +94,41 @@ and exposed via the <code>Dict</code> module.</p>
 <li>
   <span class="summary_signature">
     <a href="#new/2">new/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put/3">put/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put_new/3">put_new/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#size/1">size/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_list/1">to_list/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update/3">update/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update/4">update/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#values/1">values/1</a>
   </span>
 </li>
 
@@ -73,39 +143,143 @@ and exposed via the <code>Dict</code> module.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="delete/2">
+    <strong>delete(dict, key)</strong>
+  </p>
+  <div class="docstring"><p>Deletes a value from the dict.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L172" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="empty/1">
+    <strong>empty(_)</strong>
+  </p>
+  <div class="docstring"><p>Returns an empty dict.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L211" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get/3">
+    <strong>get(dict, key, default // nil)</strong>
+  </p>
+  <div class="docstring"><p>Gets the value under key from the dict.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L144" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="get!/2">
+    <strong>get!(dict, key)</strong>
+  </p>
+  <div class="docstring"><p>Gets the value under key from the dict,
+raises KeyError if such key does not exist.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L155" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="has_key?/2">
+    <strong>has_key?(dict, key)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the dict has the given key.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L165" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="keys/1">
+    <strong>keys(dict)</strong>
+  </p>
+  <div class="docstring"><p>Get all keys in the dict.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L229" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="merge/3">
+    <strong>merge(dict, enum, callback // fn _k, _v1, v2 -&gt; v2 end)</strong>
+  </p>
+  <div class="docstring"><p>Merges two dictionaries.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L243" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="new/0">
     <strong>new()</strong>
   </p>
   <div class="docstring"><p>Creates a new empty dict.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L11" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L65" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/1">
     <strong>new(pairs)</strong>
   </p>
-  <div class="docstring"><p>Creates a new dict from a list of pairs.</p>
+  <div class="docstring"><p>Creates a new dict from the given enumerable.</p>
 
 <h2>Examples</h2>
 
 <pre><code>HashDict.new [{:b,1},{:a,2}]
-#=&gt; [a: 1, b: 2]
+#=&gt; HashDict[a: 1, b: 2]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L11" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L78" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="new/2">
     <strong>new(list, transform)</strong>
   </p>
-  <div class="docstring"><p>Creates a new dict from a list of elements with the
+  <div class="docstring"><p>Creates a new dict from the enumerable with the
 help of the transformation function.</p>
 
 <h2>Examples</h2>
 
 <pre><code>HashDict.new [&quot;a&quot;, &quot;b&quot;], fn x -&gt; {x, x} end
-#=&gt; [&quot;a&quot;: &quot;a&quot;, &quot;b&quot;: &quot;b&quot;]
+#=&gt; HashDict[{ &quot;a&quot;, &quot;a&quot; }, { &quot;b&quot;, &quot;b&quot; }]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L11" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L94" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="put/3">
+    <strong>put(dict, key, value)</strong>
+  </p>
+  <div class="docstring"><p>Puts the given key and value in the dict.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L104" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="put_new/3">
+    <strong>put_new(dict, key, value)</strong>
+  </p>
+  <div class="docstring"><p>Puts the given value under key in the dictionary
+only if one does not exist yet.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L113" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="size/1">
+    <strong>size(dict)</strong>
+  </p>
+  <div class="docstring"><p>Returns the dict size.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L204" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="to_list/1">
+    <strong>to_list(dict)</strong>
+  </p>
+  <div class="docstring"><p>Converts the dict to a list.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L218" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update/3">
+    <strong>update(dict, key, fun)</strong>
+  </p>
+  <div class="docstring"><p>Updates the key in the dictionary according
+to the given function. Raises if the key does
+not exist in the dictionary.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L122" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="update/4">
+    <strong>update(dict, key, initial, fun)</strong>
+  </p>
+  <div class="docstring"><p>Updates the key in the dictionary according
+to the given function. Adds initial value if
+the key does not exist in the dicionary.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L136" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="values/1">
+    <strong>values(dict)</strong>
+  </p>
+  <div class="docstring"><p>Get all values in the dict.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/hash_dict.ex#L236" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
