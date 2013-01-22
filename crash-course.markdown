@@ -877,8 +877,7 @@ Elixir is structured similarly to Erlang's OTP. It is divided into applications 
 
 {% highlight erlang %}
 {lib_dirs, [
-  "deps/elixir/lib/elixir/ebin",
-  "deps/elixir/lib/ex_unit/ebin"
+  "deps/elixir/lib"
 ]}.
 {% endhighlight %}
 
