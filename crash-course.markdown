@@ -852,8 +852,8 @@ It can be called from Erlang as follow:
 -module(erlang_contrived).
 -compile(export_all).
 
-uglify(bin) ->
-  'Elixir-Contrived':ugly_binary(bin).
+uglify(Bin) ->
+  'Elixir-Contrived':ugly_binary(Bin).
 {% endhighlight %}
 
 However this syntax is suboptimal. For this reason, Elixir ships with a parse transform that allows you to write the module names in a more convenient way:
