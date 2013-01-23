@@ -185,7 +185,7 @@ Process.self
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
 
 {% highlight ruby %}
-:lists.sort [3, 2,1]
+:lists.sort [3, 2, 1]
 {% endhighlight %}
 
 All of the Erlang built-ins reside in the `:erlang` module.
@@ -383,15 +383,15 @@ Each Erlang module lives in its own file which has the following structure:
 
 {% highlight erlang %}
 -module(hello_module).
--export([fun/0, fun/1]).
+-export([some_fun/0, fun/1]).
 
 % A "Hello world" function
-fun() ->
+some_fun() ->
   io:format('~s~n', ['Hello world!']).
 
 % This one works only with lists
-fun(list) when is_list(list) ->
-  io:format('~s~n', list).
+some_fun(List) when is_list(List) ->
+  io:format('~s~n', List).
 
 % Non-exported functions are private
 priv() ->
@@ -405,12 +405,12 @@ An Elixir equivalent to the Erlang above:
 {% highlight ruby %}
 defmodule HelloModule do
   # A "Hello world" function
-  def fun do
+  def some_fun do
     IO.puts "Hello world!"
   end
 
   # This one works only with lists
-  def fun(list) when is_list(list) do
+  def some_fun(list) when is_list(list) do
     IO.inspect list
   end
 
