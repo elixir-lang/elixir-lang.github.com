@@ -198,7 +198,7 @@ It crashes exactly as before but it is restarted right away with the default sta
 
 The sixth message no longer generates an error report, that happens because our server was no longer started automatically and Elixir returns `:noproc`, meaning there isn't a process named `:stacker`. The number of restarts allowed and its time interval can be customize by passing options to the `supervise` function. Different strategies can be chosen for both the supervisor and the worker. For more information on the supported options, [check the documentation for `Supervisor.Behaviour`](http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html).
 
-## 2.3 Who supervisors the supervisor?
+## 2.3 Who supervises the supervisor?
 
 We have built our supervisor, but a pertinent question is: who supervisors the supervisor? To answer this question, OTP contains the concept of applications. Applications can be started and stopped as an unit and, when doing so, they are often linked to a supervisor.
 
@@ -247,7 +247,7 @@ The project dependencies may contain your test framework or a compile-time only 
 {% highlight ruby %}
 def application do
   [ registered: [:stacker],
-    applications: [:some_dep_],
+    applications: [:some_dep],
     mod: { Stacker, [:hello] } ]
 end
 {% endhighlight %}
@@ -262,6 +262,4 @@ You may also start which application individually via the command line using [Er
 
 You can learn more about the other keys allowed in the application specification [in the applications chapter from Learn You Some Erlang](http://learnyousomeerlang.com/building-otp-applications).
 
-Finally, notice that `mix new` supports a `--sup` option, which tells Mix to generate a supervisor with an application module callback, automating some of the work we have done here.
-
-With final note, we have finished this chapter. We have learned how to create servers, supervise them, and hook them into our application lifecycle. In the next chapter, we will learn how to create custom tasks in Mix.
+Finally, notice that `mix new` supports a `--sup` option, which tells Mix to generate a supervisor with an application module callback, automating some of the work we have done here (try it!). We have learned how to create servers, supervise them, and hook them into our application lifecycle. In the next chapter, we will learn how to create custom tasks in Mix.
