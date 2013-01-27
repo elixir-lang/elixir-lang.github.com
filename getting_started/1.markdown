@@ -189,6 +189,30 @@ Giving a non-boolean will raise an exception:
 
 > Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
 
+Besides those boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
+
+    # or
+    iex> 1 || true
+    1
+    iex> false || 11
+    11
+
+    # and
+    iex> nil && 13
+    nil
+    iex> true && 17
+    17
+
+    # !
+    iex> !true
+    false
+    iex> !1
+    false
+    iex> !nil
+    true
+
+As a rule of thumb, use `and`, `or` and `not` when you are expecting a booleans. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
+
 Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
 
     iex> 1 == 1
