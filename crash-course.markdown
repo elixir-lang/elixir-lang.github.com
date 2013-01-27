@@ -168,7 +168,7 @@ Elixir allows you to omit parentheses in function calls, Erlang does not.
     | Erlang            | Elixir         |
     --------------------------------------
     | some_function().  | some_function  |
-    | sum(a, b)         | sum a, b       |
+    | sum(A, B)         | sum a, b       |
 
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
@@ -390,7 +390,7 @@ some_fun() ->
   io:format('~s~n', ['Hello world!']).
 
 % This one works only with lists
-some_fun(List) when is_list(List) ->
+fun(List) when is_list(List) ->
   io:format('~s~n', List).
 
 % Non-exported functions are private
@@ -474,9 +474,9 @@ Pattern matching in Elixir is based on Erlang's implementation and in general ve
 **Erlang**
 
 {% highlight erlang %}
-loop_through([h|t]) ->
-  io:format '~p~n', [h],
-  loop_through(t);
+loop_through([H|T]) ->
+  io:format '~p~n', [H],
+  loop_through(T);
 
 loop_through([]) ->
   ok.
@@ -506,9 +506,9 @@ In both Erlang and Elixir, a function is not identified only by its name, but by
 **Erlang**
 
 {% highlight erlang %}
-sum() -> 0.
-sum(A) -> A.
-sum(A, B) -> A + B.
+sum() -> 0;
+sum(A) -> A;
+sum(A, B) -> A + B;
 sum(A, B, C) -> A + B + C.
 {% endhighlight %}
 
@@ -651,7 +651,7 @@ Anonymous functions are first-class values, so they can be passed as arguments t
 **Erlang**
 
 {% highlight erlang %}
-square(x) -> x * x.
+square(X) -> X * X.
 
 lists:map(fun square/1, [1, 2, 3]).
 %=> [1, 4, 9]
@@ -850,7 +850,7 @@ It can be called from Erlang as follow:
 
 {% highlight erlang %}
 -module(erlang_contrived).
--compile(export_all).
+-export([uglify/1]).
 
 uglify(Bin) ->
   'Elixir-Contrived':ugly_binary(Bin).
@@ -860,11 +860,11 @@ However this syntax is suboptimal. For this reason, Elixir ships with a parse tr
 
 {% highlight erlang %}
 -module(erlang_improved).
--compile(export_all).
+-export([prettify/1]).
 -compile({parse_transform, elixir_transform}).
 
-pretiffy(bin) ->
-  'Elixir.Contrived':pretty_binary(bin).
+prettify(Bin) ->
+  'Elixir.Contrived':pretty_binary(Bin).
 {% endhighlight %}
 
 ### Rebar integration
