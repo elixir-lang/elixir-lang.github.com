@@ -141,7 +141,7 @@ Elixir allows you to omit parentheses in function calls, Erlang does not.
     | Erlang            | Elixir         |
     --------------------------------------
     | some_function().  | some_function  |
-    | sum(a, b)         | sum a, b       |
+    | sum(A, B)         | sum a, b       |
 
 ### Module References
 
@@ -279,8 +279,8 @@ fun() ->
   io:format('~s~n', ['Hello world!']).
 
 % This one works only with lists
-fun(list) when is_list(list) ->
-  io:format('~s~n', list).
+fun(List) when is_list(List) ->
+  io:format('~s~n', List).
 
 % A private function
 priv() ->
@@ -361,9 +361,9 @@ Pattern matching in Elixir is based on Erlang implementation and in general very
 **Erlang**
 
 {% highlight erlang %}
-loop_through([h|t]) ->
-  io:format '~p~n', [h],
-  loop_through(t);
+loop_through([H|T]) ->
+  io:format '~p~n', [H],
+  loop_through(T);
 
 loop_through([]) ->
   ok.
@@ -394,9 +394,9 @@ Functions in Erlang and Elixir can be overloaded based on arity and guard expres
 
 {% highlight erlang %}
 sum() -> 0;
-sum(a) -> a;
-sum(a, b) -> a + b;
-sum(a, b, c) -> a + b + c.
+sum(A) -> A;
+sum(A, B) -> A + B;
+sum(A, B, C) -> A + B + C.
 {% endhighlight %}
 
 **Elixir**
@@ -475,11 +475,11 @@ Anonymous functions are defined in the following way:
 **Erlang**
 
 {% highlight erlang %}
-Sum = fun(a, b) -> a + b end.
+Sum = fun(A, B) -> A + B end.
 Sum(4, 3).
 %=> 7
 
-Square = fun(x) -> x * x end.
+Square = fun(X) -> X * X end.
 lists:map(Square, [1, 2, 3, 4]).
 %=> [1, 4, 9, 16]
 {% endhighlight %}
@@ -538,7 +538,7 @@ Anonymous functions are first-class values, so they can be passed as arguments t
 **Erlang**
 
 {% highlight erlang %}
-square(x) -> x * x.
+square(X) -> X * X.
 
 lists:map(fun square/1, [1, 2, 3]).
 %=> [1, 4, 9]
@@ -739,12 +739,12 @@ Elixir compiles directly into BEAM byte code. This means that Elixir code can be
 -export([prettify/1]).
 -define(ExContrived, __MAIN__.Contrived).
 
-pretiffy(bin) ->
-  ?ExContrived:pretty_binary(bin).
+pretiffy(Bin) ->
+  ?ExContrived:pretty_binary(Bin).
 
-uglify(bin) ->
+uglify(Bin) ->
   Contrived = '__MAIN__.Contrived',
-  Contrived:ugly_binary(bin).
+  Contrived:ugly_binary(Bin).
 {% endhighlight %}
 
 **Elixir**
