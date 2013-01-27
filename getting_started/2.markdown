@@ -361,35 +361,7 @@ In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore the
 
 If none of the expressions above return true, an error would be raised.
 
-### 2.8.3 Other operators
-
-In the previous chapter, we discussed the boolean operators `and`, `or` and `not`. These operators are strict in that they only accept booleans as their first argument.
-
-Elixir provides three operators with similar functionality but that accept arguments of any type: `||`, `&&` and `!`. For these operators, all values except `false` and `nil` will evaluate to true.
-
-    # or
-    iex> 1 || true
-    1
-    iex> false || 11
-    11
-
-    # and
-    iex> nil && 13
-    nil
-    iex> true && 17
-    17
-
-    # !
-    iex> !true
-    false
-    iex> !1
-    false
-    iex> !nil
-    true
-
-As a rule of thumb, use `and`, `or` and `not` when both arguments are expected to be booleans, as in guard clauses. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
-
-### 2.8.4 Case
+### 2.8.3 Case
 
 In section 2.5, we introduced pattern matching via the `=` operator. Sometimes, however, it is convenient to compare an expression against several expressions until we find a matching one. In this scenario, we use `case`:
 
@@ -485,7 +457,7 @@ However, the example above will always fail. If the argument is a list, calling 
 
 In such cases, if there is an error in one of the guards, it won't affect the next one.
 
-### 2.8.5 Functions
+### 2.8.4 Functions
 
 In Elixir, creating a function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
 
@@ -513,7 +485,7 @@ As Elixir is an immutable language, the binding of the function is also immutabl
     (fn -> x = 2 end).()
     x #=> 1
 
-### 2.8.6 Try
+### 2.8.5 Try
 
 The next control-flow mechanism is `try/catch/after`:
 
@@ -560,7 +532,7 @@ The common strategy is to explicitly make all arguments that are required after 
 
     x #=> returns the value of x or nil for failures
 
-### 2.8.7 Receive
+### 2.8.6 Receive
 
 The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
