@@ -34,7 +34,7 @@ Learn more about [Unicode support with the String module](http://elixir-lang.org
 
 ## AST metadata
 
-As per this release, Elixir AST notes can contain metadata. This metadata is compilation time only but may allow macros to annotate important information in AST nodes, like line numbers, file and other library specific information. If you quote an Elixir expression, we can see the metadata slot:
+As per this release, Elixir AST nodes can contain metadata. This metadata is compilation time only but may allow macros to annotate important information in AST nodes, like line numbers, file and other library specific information. If you quote an Elixir expression, we can see the metadata slot:
 
 {% highlight elixir %}
 quote do: hello("world")
