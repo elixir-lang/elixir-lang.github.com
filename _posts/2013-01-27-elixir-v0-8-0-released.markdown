@@ -3,14 +3,14 @@ layout: post
 title: Elixir v0.8.0 released
 author: José Valim
 category: Releases
-excerpt: In the last 9th January, we celebrated two years since Elixir's first commit and to celebrate this occasion we have prepared a big release. Elixir v0.8 is out, with documentation, optimizations, bug fixes and shinning new features. Let's take a look at them!
+excerpt: On the last 9th January, we celebrated two years since Elixir's first commit and to celebrate this occasion we have prepared a big release. Elixir v0.8 is out, with documentation, optimizations, bug fixes and shiny new features. Let's take a look at them!
 ---
 
-In the last 9th January, we celebrated [two years since Elixir's first commit](https://github.com/elixir-lang/elixir/commit/337c3f2d569a42ebd5fcab6fef18c5e012f9be5b) and to celebrate this occasion we have prepared a big release. Elixir v0.8 is out, with documentation, optimizations, bug fixes and shinning new features. Let's take a look at them!
+On the last 9th January, we celebrated [two years since Elixir's first commit](https://github.com/elixir-lang/elixir/commit/337c3f2d569a42ebd5fcab6fef18c5e012f9be5b) and to celebrate this occasion we have prepared a big release. Elixir v0.8 is out, with documentation, optimizations, bug fixes and shiny new features. Let's take a look at them!
 
 ## OTP applications
 
-One of the goals for the v0.8 release was better integration with OTP applications. By passing the `--sup` optiont to Mix, you can start a new OTP Application containing application callbacks and a supervisor:
+One of the goals for the v0.8 release was better integration with OTP applications. By passing the `--sup` option to Mix, you can start a new OTP Application containing application callbacks and a supervisor:
 
     mix new my_app --sup
 
@@ -34,7 +34,7 @@ Learn more about [Unicode support with the String module](http://elixir-lang.org
 
 ## AST metadata
 
-As per this release, Elixir AST notes can contain metadata. This metadata is compilation time only but may allow macros to annotate important information in the AST nodes, like line numbers, file and other library specific information. If you quote an Elixir expression, you can see the metadata slot:
+As per this release, Elixir AST notes can contain metadata. This metadata is compilation time only but may allow macros to annotate important information in AST nodes, like line numbers, file and other library specific information. If you quote an Elixir expression, we can see the metadata slot:
 
 {% highlight elixir %}
 quote do: hello("world")
@@ -54,7 +54,7 @@ Now, we can see the metadata spot being used to annotate the line number. This c
 
 ## Macros expansion
 
-Prior to this release, Elixir had limitted expension of imports and aliases. We decided this would be an important issue to tackle on this release, as people are building more and more projects on top of Elixir. 
+Prior to this release, Elixir had limited expansion of imports and aliases. We decided this would be an important issue to tackle in this release, as people are building more and more projects on top of Elixir. 
 
 Imagine you manually implemented `unless` as a macro, that does the opposite of `if`:
 
@@ -72,7 +72,7 @@ Elixir v0.8 ensures that the `unless` macro above will expand to the same `if` m
 
 You can read more about [macros in the getting started guide](http://elixir-lang.org/getting_started/5.html) or [go deep into the quote macro docs](http://elixir-lang.org/docs/master/Kernel.SpecialForms.html#quote/2).
 
-## A new way to manipulatet with paths
+## A new way to manipulate pathnames
 
 Elixir v0.8 contains a bit of house cleaning too. We have created [the Path module](http://elixir-lang.org/docs/master/Path.html) to accommodate functions used to manipulate filesystem paths and have also added functions like [`System.tmp_dir` and `System.user_home`](http://elixir-lang.org/docs/master/System.html) which are meant to work accross different operating systems and are very handy when scripting.
 
