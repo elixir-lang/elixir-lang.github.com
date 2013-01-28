@@ -1,13 +1,13 @@
 ---
 layout: getting_started
-title: ExUnit
+title: 1 Introduction to ExUnit
+guide: 1
+total_guides: 1
 ---
 
-# ExUnit
+# {{ page.title }}
 
 ExUnit is a unit test framework that ships with Elixir.
-
-## 1 Getting started
 
 Using ExUnit is quite easy, here is a file with the minimum required:
 
@@ -29,15 +29,15 @@ In general, we just need to invoke `ExUnit.start`, define a test case using `ExU
 
 In this chapter, we will discuss the most common features available in ExUnit and how to customize it further.
 
-## 2 ExUnit
+## 1.1 Starting ExUnit
 
 ExUnit is started using `ExUnit.start`. This function accepts a couple options, so [check its documentation](/docs/stable/ExUnit.html) for more details. For now, we will just detail the most common ones:
 
 * `:formatter` - When you run tests with ExUnit, all the IO is done by [the formatter](https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/formatter.ex). Developers can define their own formatters and this is the configuration that tells ExUnit to use a custom formatter;
 
-* `:max_cases` - As we are going to see soon, ExUnit allows you to easily run tests in parallel. This is very useful to speed up your tests that have no side affects. This option allows us to configure the maximum number of cases ExUnit runs in parallel.
+* `:max_cases` - As we are going to see soon, ExUnit allows you to easily run tests in concurrently. This is very useful to speed up your tests that have no side affects. This option allows us to configure the maximum number of cases ExUnit runs in concurrently.
 
-## 3 ExUnit.Case
+## 1.2 Defining a test case
 
 After ExUnit is started, we can define our own test cases. This is done by using `ExUnit.Case` in our module:
 
@@ -47,19 +47,9 @@ use ExUnit.Case
 
 `ExUnit.Case` provides some features, so let's take a look at them.
 
-### 3.1 Async
+### 1.2.1 The test macro
 
-The first feature worth commenting in ExUnit is the ability to run test cases in parallel. All you need to do is pass the `:async` option set to true:
-
-{% highlight ruby %}
-use ExUnit.Case, async: true
-{% endhighlight %}
-
-This will run this test case in parallel with other test cases which are async too. The tests inside a particular case is still run in parallel.
-
-### 3.2 The test macro
-
-`ExUnit.Case` runs all functions starting with `test`. As a convenience to define such functions, `ExUnit.Case` provides a test macro, so instead of writing:
+`ExUnit.Case` runs all functions whose name starts with `test`:
 
 {% highlight ruby %}
 def test_the_truth do
@@ -67,7 +57,7 @@ def test_the_truth do
 end
 {% endhighlight %}
 
-A developer can write:
+As a convenience to define such functions, `ExUnit.Case` provides a test macro, which allows one to write:
 
 {% highlight ruby %}
 test "the truth" do
@@ -75,9 +65,9 @@ test "the truth" do
 end
 {% endhighlight %}
 
-Which is more legible. The test macro accepts either a binary or an atom as name.
+Which is more readable. The test macro accepts either a binary or an atom as name.
 
-### 3.3 Assertions
+### 1.2.2 Assertions
 
 Another convenience provided by `ExUnit.Case` is to automatically import a set of assertion macros and functions, available in [`ExUnit.Assertions`](/docs/stable/ExUnit.Assertions.html).
 
@@ -108,16 +98,25 @@ end
 
 So don't forget to check [`ExUnit.Assertions`' documentation](/docs/stable/ExUnit.Assertions.html) for more examples.
 
-### 3.4 Callbacks
+### 1.2.3 Callbacks
 
 `ExUnit.Case` defines four callbacks:
 
 * `setup_all()` and `teardown_all(context)` which are executed before and after all tests respectively;
-* `setup(context, test)` and `teardown(context, test)` which are executed before and after each test, receiving
-the test name as argument;
+* `setup(context, test)` and `teardown(context, test)` which are executed before and after each test, receiving the test name as argument;
 
 Such callbacks are useful to clean up any side-effect a test may cause, as for example, state in genservers, data on filesystem, or entries in a database. Data can be passed in between such callbacks as context, the context value returned by `setup_all` is passed down to all other callbacks. The value can then be updated in `setup` which is passed down to `teardown`.
 
-## 4 Lots To Do
+### 1.2.4 Async
+
+Finally, ExUnit also allows test cases to run concurrently. All you need to do is pass the `:async` option set to true:
+
+{% highlight ruby %}
+use ExUnit.Case, async: true
+{% endhighlight %}
+
+This will run this test case concurrently with other test cases which are async too. The tests inside a particular case are still run in sequentially.
+
+## 2 Lots To Do
 
 ExUnit is still a work in progress. Feel free to visit [our issues tracker](https://github.com/elixir-lang/elixir/issues) to add issues for anything you'd like to see in ExUnit and feel free to contribute.

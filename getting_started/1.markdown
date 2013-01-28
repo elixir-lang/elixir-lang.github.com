@@ -1,10 +1,11 @@
 ---
 layout: getting_started
-title: 1. Introduction
+title: 1 Introduction
 guide: 1
+total_guides: 7
 ---
 
-# 1 Introduction
+# {{ page.title }}
 
 Welcome! In this tutorial we are going to show you how to get started with Elixir. We will start with how to install Elixir, how to use its interactive shell, and basic data types and operators. In later chapters, we are even going to discuss more advanced subjects such as macros, protocols and other features provided by Elixir.
 
@@ -26,7 +27,7 @@ After Erlang is up and running, it is time to install Elixir. You can do that vi
 
 ### 1.1.1 Distributions
 
-Elixir v0.7.0 forward is required to run this tutorial and it may be available in some distributions:
+Elixir v0.8.0 forward is required to run this tutorial and it may be available in some distributions:
 
 * Homebrew for Mac OS X: `brew install elixir` (run `brew update` to ensure you have the latest formula)
 * Fedora 17+ and Fedora Rawhide: `sudo yum -y install elixir`
@@ -35,9 +36,9 @@ If you don't use any of the distributions above, don't worry, we also provide a 
 
 ### 1.1.2 Precompiled package
 
-Elixir provides a package file with its compiled source for every release. You can grab the latest [in the downloads page](https://github.com/elixir-lang/elixir/downloads) (make sure to download one of the versioned packages under the "Download packages" section and not the "Download as zip/tar.gz" buttons which will rather download Elixir's master branch).
+Elixir provides a [precompiled package for every release](/packages.html).
 
-After unzip-ing the package, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you also add Elixir's `bin` path to your PATH environment variable to ease development. In a Unix system, that can be achieved with:
+After downloading and unzip-ing the package, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you also add Elixir's `bin` path to your PATH environment variable to ease development. In a Unix system, that can be achieved with:
 
     export PATH="$PATH:/path/to/elixir/bin"
 
