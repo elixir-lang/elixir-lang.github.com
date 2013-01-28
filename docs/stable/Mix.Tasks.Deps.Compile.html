@@ -44,15 +44,8 @@ the following files:</p>
 <p>The compilation can be customized by passing a <code>compile</code> option
 in the dependency:</p>
 
-<pre><code>{ :some_dependency, &quot;0.1.0&quot;, git: &quot;...&quot;, compile: :compile_some_dependency }
+<pre><code>{ :some_dependency, &quot;0.1.0&quot;, git: &quot;...&quot;, compile: &quot;command to compile&quot; }
 </code></pre>
-
-<p>If the compile option is an atom, it will invoke the given atom
-in the current project passing the app name as argument. Except
-if the atom is <code>:noop</code>, where nothing is done.</p>
-
-<p>If a binary, it is considered to be command line instructions
-which mix will use to shell out.</p>
 
         </div>
       
@@ -87,7 +80,7 @@ which mix will use to shell out.</p>
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/deps.compile.ex#L34" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/deps.compile.ex#L28" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

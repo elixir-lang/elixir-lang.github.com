@@ -29,10 +29,21 @@
         <div id="moduledoc" class="docstring">
           <p>Generates an escript for the project.</p>
 
+<h2>Command line options</h2>
+
+<ul>
+<li><p><code>--force</code> forces compilation regardless of mod times</p></li>
+<li><p><code>--no-compile</code> skips compilation to .beam</p></li>
+</ul>
+
+<h2>Configuration</h2>
+
 <p>The following options can be specified in your mix.exs file:</p>
 
 <ul>
 <li><p><code>escript_name</code> - the name of the generated escript
+Defaults to project name</p></li>
+<li><p><code>escript_path</code> - the path to write the escript to
 Defaults to project name</p></li>
 <li><p><code>escript_main_module</code> - the module containing the main/1 function.
 Defaults to <code>Project</code></p></li>
@@ -82,7 +93,7 @@ Defaults to &quot;%%!\n&quot;</p></li>
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/escriptize.ex#L35" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/escriptize.ex#L46" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

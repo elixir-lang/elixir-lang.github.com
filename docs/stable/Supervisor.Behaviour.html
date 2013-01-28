@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Supervisor.Behaviour</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Supervisor.Behaviour
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module is a convenience to define Supervisor
+callbacks in Elixir. By using this module, you get
+the module behaviour automatically tagged as
+<code>:supervisor</code> and some helper functions are imported
+to make defining supervisors easier.</p>
+
+<p>For more information on supervisors, please check the
+remaining functions defined in this module or refer to
+the following:</p>
+
+<p><a href="http://www.erlang.org/doc/man/supervisor.html">http://www.erlang.org/doc/man/supervisor.html</a>
+<a href="http://www.erlang.org/doc/design_principles/sup_princ.html">http://www.erlang.org/doc/design_principles/sup_princ.html</a>
+<a href="http://learnyousomeerlang.com/supervisors">http://learnyousomeerlang.com/supervisors</a></p>
+
+<h2>Example</h2>
+
+<pre><code>defmodule ExUnit.Sup do
+  use Supervisor.Behaviour
+
+  def init(user_options) do
+    tree = [ worker(ExUnit.Runner, [user_options]) ]
+    supervise(tree, strategy: :one_for_one)
+  end
+end
+
+{ :ok, pid } = :supervisor.start_link(MyServer, [])
+</code></pre>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/supervisor/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#supervise/2">supervise/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#supervisor/3">supervisor/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#worker/3">worker/3</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="supervise/2">
+    <strong>supervise(children, options)</strong>
+  </p>
+  <div class="docstring"><p>Receives a list of children (worker or supervisors) to
+supervise and a set of options. Returns a tuple containing
+the supervisor specification.</p>
+
+<h2>Examples</h2>
+
+<pre><code>supervise children, strategy: :one_for_one
+</code></pre>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>:strategy</code> - the restart strategy option It can be either
+<code>:one_for_one</code>, <code>:rest_for_one</code>, <code>:one_for_all</code> and
+<code>:simple_one_for_one</code>;</p></li>
+<li><p><code>:max_restarts</code> - the maximum amount of restarts allowed in
+a time frame. Defaults to 5;</p></li>
+<li><p><code>:max_seconds</code> - the time frame in which max_restarts applies.
+Defaults to 5;</p></li>
+</ul>
+
+<p>The <code>:strategy</code> option is required and by default maximum 5 restarts
+are allowed in 5 seconds.</p>
+
+<h2>Strategies</h2>
+
+<ul>
+<li><p><code>:one_for_one</code> - If a child process terminates, only that
+process is restarted;</p></li>
+<li><p><code>:one_for_all</code> - If a child process terminates, all other child
+processes are terminated and then all child processes, including
+the terminated one, are restarted;</p></li>
+<li><p><code>:rest_for_one</code> - If a child process terminates, the &quot;rest&quot; of
+the child processes, i.e. the child processes after the terminated
+process in start order, are terminated. Then the terminated child
+process and the rest of the child processes are restarted;</p></li>
+<li><p><code>:simple_one_for_one</code> - Similar to <code>:one_for_one</code> but suits better
+when dynamically attaching children;</p></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/supervisor/behaviour.ex#L82" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="supervisor/3">
+    <strong>supervisor(module, args, options // [])</strong>
+  </p>
+  <div class="docstring"><p>Defines the given <code>module</code> as a supervisor which will be started
+with the given arguments.</p>
+
+<pre><code>supervisor ExUnit.Runner, [], restart: :permanent
+</code></pre>
+
+<p>By default, the function <code>:start_link</code> is invoked on the given module.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>:id</code> - a name used to identify the child specification
+internally by the supervisor. Defaults to the module name;</p></li>
+<li><p><code>:function</code> - the function to invoke on the child to start it.
+Defaults to <code>:start_link</code>;</p></li>
+<li><p><code>:restart</code> - defines when the child process should restart.
+Defaults to <code>:permanent</code>;</p></li>
+<li><p><code>:shutdown</code> - defines how a child process should be terminated.
+Defaults to <code>5000</code>;</p></li>
+<li><p><code>:modules</code> - it should be a list with one element <code>[module]</code>,
+where module is the name of the callback module only if the
+child process is a supervisor, gen<em>server or gen</em>fsm. If the
+child process is a gen_event, modules should be <code>:dynamic</code>.
+Defaults to a list with the given module;</p></li>
+</ul>
+
+<h2>Restart values</h2>
+
+<p>The following restart values are supported:</p>
+
+<ul>
+<li><p><code>:permanent</code> - the child process is always restarted;</p></li>
+<li><p><code>:temporary</code> - the child process is never restarted (not even
+when the supervisor&#39;s strategy is <code>:rest_for_one</code> or <code>:one_for_all</code>);</p></li>
+<li><p><code>:transient</code> - the child process is restarted only if it
+terminates abnormally, i.e. with another exit reason than
+<code>:normal</code>, <code>:shutdown</code> or <code>{ :shutdown, term }</code>;</p></li>
+</ul>
+
+<h2>Shutdown values</h2>
+
+<p>The following shutdown values are supported:</p>
+
+<ul>
+<li><p><code>:brutal_kill</code> - the child process is unconditionally terminated
+using <code>exit(child, :kill)</code>;</p></li>
+<li><p><code>:infinity</code> - if the child process is a supervisor, it is a mechanism
+to give the subtree enough time to shutdown. It can also be used with
+workers with care;</p></li>
+<li><p>Finally, it can also be any integer meaning that the supervisor tells
+the child process to terminate by calling <code>exit(child, :shutdown)</code> and
+then waits for an exit signal back. If no exit signal is received within
+the specified time (in miliseconds), the child process is unconditionally
+terminated using <code>exit(child, :kill)</code>;</p></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/supervisor/behaviour.ex#L169" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="worker/3">
+    <strong>worker(module, args, options // [])</strong>
+  </p>
+  <div class="docstring"><p>Defines the given <code>module</code> as a worker which will be started
+with the given arguments.</p>
+
+<pre><code>worker ExUnit.Runner, [], restart: :permanent
+</code></pre>
+
+<p>By default, the function <code>:start_link</code> is invoked on the given module.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><p><code>:id</code> - a name used to identify the child specification
+internally by the supervisor. Defaults to the module name;</p></li>
+<li><p><code>:function</code> - the function to invoke on the child to start it.
+Defaults to <code>:start_link</code>;</p></li>
+<li><p><code>:restart</code> - defines when the child process should restart.
+Defaults to <code>:permanent</code>;</p></li>
+<li><p><code>:shutdown</code> - defines how a child process should be terminated.
+Defaults to <code>5000</code>;</p></li>
+<li><p><code>:modules</code> - it should be a list with one element <code>[module]</code>,
+where module is the name of the callback module only if the
+child process is a supervisor, gen<em>server or gen</em>fsm. If the
+child process is a gen_event, modules should be <code>:dynamic</code>.
+Defaults to a list with the given module;</p></li>
+</ul>
+
+<h2>Restart values</h2>
+
+<p>The following restart values are supported:</p>
+
+<ul>
+<li><p><code>:permanent</code> - the child process is always restarted;</p></li>
+<li><p><code>:temporary</code> - the child process is never restarted (not even
+when the supervisor&#39;s strategy is <code>:rest_for_one</code> or <code>:one_for_all</code>);</p></li>
+<li><p><code>:transient</code> - the child process is restarted only if it
+terminates abnormally, i.e. with another exit reason than
+<code>:normal</code>, <code>:shutdown</code> or <code>{ :shutdown, term }</code>;</p></li>
+</ul>
+
+<h2>Shutdown values</h2>
+
+<p>The following shutdown values are supported:</p>
+
+<ul>
+<li><p><code>:brutal_kill</code> - the child process is unconditionally terminated
+using <code>exit(child, :kill)</code>;</p></li>
+<li><p><code>:infinity</code> - if the child process is a supervisor, it is a mechanism
+to give the subtree enough time to shutdown. It can also be used with
+workers with care;</p></li>
+<li><p>Finally, it can also be any integer meaning that the supervisor tells
+the child process to terminate by calling <code>exit(child, :shutdown)</code> and
+then waits for an exit signal back. If no exit signal is received within
+the specified time (in miliseconds), the child process is unconditionally
+terminated using <code>exit(child, :kill)</code>;</p></li>
+</ul>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/supervisor/behaviour.ex#L155" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

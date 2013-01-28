@@ -28,7 +28,7 @@
       
         <div id="moduledoc" class="docstring">
           <p>Several convenience functions to work and pretty print
-exceptions and backtraces.</p>
+exceptions and stacktraces.</p>
 
         </div>
       
@@ -44,22 +44,12 @@ exceptions and backtraces.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#env_stacktrace/1">env_stacktrace/1</a>
+    <a href="#format_entry/2">format_entry/2</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#format_file_line/1">format_file_line/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_file_line/2">format_file_line/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_module_fun_arity/3">format_module_fun_arity/3</a>
+    <a href="#format_file_line/3">format_file_line/3</a>
   </span>
 </li>
 <li>
@@ -69,7 +59,12 @@ exceptions and backtraces.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#formatted_stacktrace/1">formatted_stacktrace/1</a>
+    <a href="#normalize/1">normalize/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#print_stacktrace/1">print_stacktrace/1</a>
   </span>
 </li>
 
@@ -84,50 +79,51 @@ exceptions and backtraces.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="env_stacktrace/1">
-    <strong>env_stacktrace(env)</strong>
+  <p class="signature" id="format_entry/2">
+    <strong>format_entry(entry, cwd // nil)</strong>
   </p>
-  <div class="docstring"><p>Returns a formatted stacktrace from the environment.</p>
+  <div class="docstring"><p>Receives a tuple representing a stacktrace entry and formats it.
+The current working directory may be given as argument, which
+is used to prettify the stacktrace.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L105" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L65" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="format_file_line/1">
-    <strong>format_file_line(file_line)</strong>
+  <p class="signature" id="format_file_line/3">
+    <strong>format_file_line(file, line, cwd)</strong>
   </p>
-  <div class="docstring"><p>Formats file and line information present in stacktraces.
-Expect them to be given in a keyword list.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L126" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="format_file_line/2">
-    <strong>format_file_line(file, line)</strong>
-  </p>
-  <div class="docstring"><p>Formats the given file and line.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L133" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="format_module_fun_arity/3">
-    <strong>format_module_fun_arity(module, fun, arity)</strong>
-  </p>
-  <div class="docstring"><p>Receives a module, fun and arity and returns a string
-representing such invocation. Arity may also be a list
-of arguments. It follows the same syntax as in stacktraces.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L72" target="_blank" class="view_source">Source</a>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L174" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="format_stacktrace/1">
-    <strong>format_stacktrace(arg1)</strong>
+    <strong>format_stacktrace(trace // nil)</strong>
   </p>
-  <div class="docstring"><p>Formats each line in the stacktrace.</p>
+  <div class="docstring"><p>Formats the stacktrace.</p>
+
+<p>A stacktrace must be given as argument. If not, this function
+calculates the current stacktrace and formats it. As consequence,
+the value of <code>System.stacktrace</code> is changed.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L118" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L97" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
-  <p class="signature" id="formatted_stacktrace/1">
-    <strong>formatted_stacktrace(trace // nil)</strong>
+  <p class="signature" id="normalize/1">
+    <strong>normalize(exception)</strong>
   </p>
-  <div class="docstring"><p>Returns the stacktrace as a binary formatted as per <code>format_stacktrace/1</code>.</p>
+  <div class="docstring"><p>Normalizes an exception converting Erlang exceptions
+to Elixir exceptions. Useful when interfacing Erlang
+code with Elixir code.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L89" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L12" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="print_stacktrace/1">
+    <strong>print_stacktrace(trace // nil)</strong>
+  </p>
+  <div class="docstring"><p>Prints the current stacktrace to standard output.</p>
+
+<p>A stacktrace must be given as argument. If not, this function
+calculates the current stacktrace and formats it. As consequence,
+the value of <code>System.stacktrace</code> is changed.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L124" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

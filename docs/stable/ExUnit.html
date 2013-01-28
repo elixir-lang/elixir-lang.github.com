@@ -66,6 +66,26 @@ assertion_test.exs, you can run it as:</p>
 
 <p>Check ExUnit.Assertions for assertions documentation.</p>
 
+<h2>User config</h2>
+
+<p>When started, ExUnit automatically reads a user configuration
+from the following locations, in this order:</p>
+
+<ul>
+<li>$EXUNIT_CONFIG environment variable</li>
+<li>$HOME/.ex_unit.exs</li>
+</ul>
+
+<p>If none found, no user config will be read.</p>
+
+<p>User config is an elixir file which should return a keyword list
+with ex_unit options. Please note that explicit options passed
+to start/1 or configure/1 will take precedence over user options.</p>
+
+<pre><code># User config example (~/.ex_unit.exs)
+[formatter: ExUnit.Formatter.ANSI]
+</code></pre>
+
         </div>
       
 
@@ -100,6 +120,11 @@ assertion_test.exs, you can run it as:</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#stop/1">stop/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#user_options/1">user_options/1</a>
   </span>
 </li>
@@ -118,68 +143,63 @@ assertion_test.exs, you can run it as:</p>
   <p class="signature" id="after_spawn/1">
     <strong>after_spawn(callback)</strong>
   </p>
-  <div class="docstring"><p>Register a callback to be invoked every time a
+  <div class="docstring"><p>Registers a callback to be invoked every time a
 new ExUnit process is spawned.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L115" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L130" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="configure/1">
     <strong>configure(options)</strong>
   </p>
-  <div class="docstring"><p>Configure ExUnit.</p>
+  <div class="docstring"><p>Configures ExUnit.</p>
 
 <h2>Options</h2>
 
 <p>ExUnit supports the following options given to start:</p>
 
 <ul>
-<li><code>:formatter</code> - The formatter that will print results</li>
-<li><code>:max_cases</code> - Maximum number of cases to run in parallel</li>
+<li><p><code>:formatter</code> - The formatter that will print results.
+             Defaults to <code>ExUnit.CLIFormatter</code>;</p></li>
+<li><p><code>:max_cases</code> - Maximum number of cases to run in parallel.
+             Defaults to <code>:erlang.system_info(:schedulers_online)</code>;</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L107" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L122" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="run/0">
     <strong>run()</strong>
   </p>
-  <div class="docstring"><p>API used to run the tests. A developer does not
-need to call it directly.</p>
+  <div class="docstring"><p>API used to run the tests. It is invoked automatically
+if ExUnit is started via <code>ExUnit.start</code>.</p>
+
+<p>Returns the number of failures.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L123" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L140" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="start/1">
     <strong>start(options // [])</strong>
   </p>
-  <div class="docstring"><p>Start ExUnit. Required to be invoked before loading
-any file that uses ExUnit.Case. Check <code>configure/1</code>
-to see the supported options.</p>
+  <div class="docstring"><p>Starts up ExUnit and automatically set it up to run
+tests at the VM exit. It accepts a set of options to
+configure <code>ExUnit</code> (the same ones accepted by <code>configure/1</code>).</p>
 
-<p>This function will also try to read a user config from the following
-locations, in this order:</p>
-
-<ul>
-<li>$EXUNIT_CONFIG environment variable</li>
-<li>$HOME/.ex_unit.exs</li>
-</ul>
-
-<p>If none found, no user config will be read. </p>
-
-<p>User config is an elixir file which should return a keyword list
-with ex_unit options. Please note that explicit options passed to start/1 
-will take precedence over user options.</p>
-
-<h1>User config example (~/.ex_unit.exs)</h1>
-
-<p>[formatter: ExUnit.Formatter.ANSI]</p>
+<p>In case you want to run tests manually, skip calling this
+function and rely on <code>configure/1</code> and <code>run/0</code> instead.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L64" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L74" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="stop/1">
+    <strong>stop(_state)</strong>
+  </p>
+  <div class="docstring"></div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L98" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="user_options/1">
     <strong>user_options(user_config // nil)</strong>
   </p>
   <div class="docstring"><p>Returns the configured user options.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L82" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L94" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

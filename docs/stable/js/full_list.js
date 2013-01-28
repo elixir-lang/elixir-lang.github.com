@@ -20,7 +20,7 @@ function fullListSearch() {
     var fullName = link.attr('title').split(' ')[0];
     searchCache.push({name:link.text(), fullName:fullName, node:$(this), link:link});
   });
-
+  
   $('#search input').keyup(function(evnt) {
     if ((evnt.keyCode > ignoreKeyCodeMin && evnt.keyCode < ignoreKeyCodeMax)
          || evnt.keyCode == commandKey)
@@ -35,7 +35,7 @@ function fullListSearch() {
       $('#full_list, #content').removeClass('insearch');
       $('#full_list li').removeClass('found').each(function() {
         var link = $(this).find('.object_link a');
-        link.text(link.text());
+        link.text(link.text()); 
       });
       if (clicked) {
         clicked.parents('ul').each(function() {
@@ -53,7 +53,7 @@ function fullListSearch() {
       searchItem();
     }
   });
-
+  
   $('#search input').focus();
   $('#full_list').after("<div id='noresults'></div>");
 }
@@ -127,10 +127,10 @@ function linkList() {
 
 function collapse() {
   if (!$('#full_list').hasClass('class')) return;
-  $('#full_list.class a.toggle').click(function() {
+  $('#full_list.class a.toggle').click(function() { 
     $(this).parent().toggleClass('collapsed').next().toggleClass('collapsed');
     highlight();
-    return false;
+    return false; 
   });
   $('#full_list.class ul').each(function() {
     $(this).addClass('collapsed').prev().addClass('collapsed');
