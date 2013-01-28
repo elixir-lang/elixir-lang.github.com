@@ -20,11 +20,18 @@ section: getting_started
     </ol>
   </div>
   <div class="widget">
-    <h3 class="widget-title">Applications</h3>
-    <ul>
-      <li><a class="spec" href="/getting_started/mix.html">Mix - a build tool for Elixir</a></li>
-      <li><a class="spec" href="/getting_started/ex_unit.html">ExUnit - a unit test framework</a></li>
-    </ul>
+    <h3 class="widget-title">Mix - a build tool for Elixir</h3>
+    <ol>
+      <li><a class="spec" href="/getting_started/mix/1.html">Introduction to Mix</a></li>
+      <li><a class="spec" href="/getting_started/mix/2.html">Building OTP apps with Mix</a></li>
+      <li><a class="spec" href="/getting_started/mix/3.html">Creating custom Mix tasks</a></li>
+    </ol>
+  </div>
+  <div class="widget">
+    <h3 class="widget-title">ExUnit - a unit test framework</h3>
+    <ol>
+      <li><a class="spec" href="/getting_started/ex_unit/1.html">Introduction to ExUnit</a></li>
+    </ol>
   </div>
 </div>
 
@@ -36,11 +43,11 @@ section: getting_started
   {% if page.guide %}
   <div class="pagination loop-pagination">
     {% if page.guide > 1 %}
-      <a href="/getting_started/{{page.guide | minus:1}}.html" class="previous page-numbers spec">&larr; Previous</a>
+      <a href="{{page.guide | minus:1}}.html" class="previous page-numbers spec">&larr; Previous</a>
     {% endif %}
       <a class="page-numbers spec" href="#container">Top</a>
-    {% if page.guide < site.total_guides %}
-      <a href="/getting_started/{{page.guide | plus:1}}.html" class="next page-numbers spec">Next &rarr;</a>
+    {% if page.guide < page.total_guides %}
+      <a href="{{page.guide | plus:1}}.html" class="next page-numbers spec">Next &rarr;</a>
     {% endif %}
   </div>
   {% endif %}
