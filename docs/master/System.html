@@ -65,6 +65,16 @@ with the VM or the host system.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#cwd/0">cwd/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#cwd!/0">cwd!/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#find_executable/1">find_executable/1</a>
   </span>
 </li>
@@ -105,6 +115,26 @@ with the VM or the host system.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#tmp_dir/0">tmp_dir/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#tmp_dir!/0">tmp_dir!/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#user_home/0">user_home/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#user_home!/0">user_home!/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#version/0">version/0</a>
   </span>
 </li>
@@ -125,7 +155,7 @@ with the VM or the host system.</p>
   </p>
   <div class="docstring"><p>Returns the list of command-line arguments passed to the program.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L43" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L57" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="at_exit/1">
     <strong>at_exit(fun)</strong>
@@ -137,14 +167,14 @@ invoking a hook in a &quot;script&quot; mode.</p>
 <p>The function must expect the exit status code
 as argument.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L55" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L157" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="build_info/0">
     <strong>build_info()</strong>
   </p>
   <div class="docstring"><p>Returns a keywords list with version, git tag info and date.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L35" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L49" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="cmd/1">
     <strong>cmd(command)</strong>
@@ -156,7 +186,22 @@ the result as a binary.</p>
 <p>If <code>command</code> is a char list, a char list is returned.
 Returns a binary otherwise.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L69" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L171" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="cwd/0">
+    <strong>cwd()</strong>
+  </p>
+  <div class="docstring"><p>Returns the current working directory or nil if one
+is not available.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L65" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="cwd!/0">
+    <strong>cwd!()</strong>
+  </p>
+  <div class="docstring"><p>Returns the current working directory or raises <code>System.NoAccessCwdError</code>.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L75" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="find_executable/1">
     <strong>find_executable(command)</strong>
@@ -168,7 +213,7 @@ and Windows.</p>
 <p>If <code>command</code> is a char list, a char list is returned.
 Returns a binary otherwise.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L87" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L189" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_env/0">
     <strong>get_env()</strong>
@@ -177,7 +222,7 @@ Returns a binary otherwise.</p>
 given as a single string of the format &quot;VarName=Value&quot;, where VarName is the
 name of the variable and Value its value.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L104" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L206" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_env/1">
     <strong>get_env(varname)</strong>
@@ -186,7 +231,7 @@ name of the variable and Value its value.</p>
 <code>varname</code> as a binary, or nil if the environment
 variable is undefined.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L114" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L216" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="get_pid/0">
     <strong>get_pid()</strong>
@@ -196,7 +241,7 @@ in the format most commonly used by the operating system environment.</p>
 
 <p>See <a href="http://www.erlang.org/doc/man/os.html#getpid-0">http://www.erlang.org/doc/man/os.html#getpid-0</a> for more info.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L128" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L230" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="halt/2">
     <strong>halt(status // 0, options // [])</strong>
@@ -230,7 +275,7 @@ System.halt(1, flush: false)
 System.halt(:abort)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L192" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L294" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put_env/1">
     <strong>put_env(dict)</strong>
@@ -238,14 +283,14 @@ System.halt(:abort)
   <div class="docstring"><p>Sets a new value for each environment variable corresponding
 to each key in <code>dict</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L144" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L246" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="put_env/2">
     <strong>put_env(varname, value)</strong>
   </p>
   <div class="docstring"><p>Sets a new <code>value</code> for the environment variable <code>varname</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L134" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L236" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="stacktrace/0">
     <strong>stacktrace()</strong>
@@ -256,14 +301,56 @@ to each key in <code>dict</code>.</p>
 return the current stacktrace but rather the stacktrace of the
 latest exception.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L155" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L257" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="tmp_dir/0">
+    <strong>tmp_dir()</strong>
+  </p>
+  <div class="docstring"><p>Returns a writable temporary directory.
+It searches for directories in the following order:</p>
+
+<ol>
+<li>The directory named by the TMPDIR environment variable</li>
+<li>The directory named by the TEMP environment variable</li>
+<li>The directory named by the TMP environment variable</li>
+<li><code>C:\TMP</code> on Windows or <code>/tmp</code> on Unix</li>
+<li> As a last resort, the current working directory</li>
+</ol>
+
+<p>Returns nil if none of the above are writable.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L119" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="tmp_dir!/0">
+    <strong>tmp_dir!()</strong>
+  </p>
+  <div class="docstring"><p>Same as <code>tmp_dir</code> but raises <code>System.NoTmpDirError</code>
+instead of returning nil if no temp dir is set.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L131" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="user_home/0">
+    <strong>user_home()</strong>
+  </p>
+  <div class="docstring"><p>Returns the user home (platform independent).
+It returns nil if no user home is set.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L83" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="user_home!/0">
+    <strong>user_home!()</strong>
+  </p>
+  <div class="docstring"><p>Same as <code>user_home</code> but raises <code>System.NoHomeError</code>
+instead of returning nil if no user home is set.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L91" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="version/0">
     <strong>version()</strong>
   </p>
   <div class="docstring"><p>Returns Elixir&#39;s version as binary.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L29" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/system.ex#L43" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

@@ -84,28 +84,35 @@ OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.
 #=&gt; { [debug: true], [] }
 </code></pre>
 
-<h2>Flags</h2>
+<h2>Switches</h2>
 
-<p>A set of flags can be given as argument too. Those are considered
-boolean and never consume the next value unless it is a boolean:</p>
+<p>Extra information about switches can be given as argument too. This is useful
+in order to say a switch must behave as a boolean, list, etc. The following
+types are supported:</p>
 
-<pre><code>OptionParser.parse([&quot;--unlock path/to/file&quot;], flags: [:unlock])
+<ul>
+<li><code>:boolean</code> - They never consume the next value unless it is true/false;</li>
+</ul>
+
+<p>Examples:</p>
+
+<pre><code>OptionParser.parse([&quot;--unlock path/to/file&quot;], switches: [unlock: :boolean])
 #=&gt; { [unlock: true], [&quot;path/to/file&quot;] }
 
-OptionParser.parse([&quot;--unlock false path/to/file&quot;], flags: [:unlock])
+OptionParser.parse([&quot;--unlock false path/to/file&quot;], switches: [unlock: :boolean])
 #=&gt; { [unlock: false], [&quot;path/to/file&quot;] }
 </code></pre>
 
 <h2>Negation switches</h2>
 
 <p>Any switches starting with <code>--no-</code> are always considered to be
-booleans and never parse the next value.</p>
+booleans and never parse the next value:</p>
 
 <pre><code>OptionParser.parse([&quot;--no-op path/to/file&quot;])
 #=&gt; { [no_op: true], [&quot;path/to/file&quot;] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L44" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L49" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="parse_head/2">
     <strong>parse_head(argv, opts // [])</strong>
@@ -121,7 +128,7 @@ I.e. as soon as it finds a non switch, it stops parsing.</p>
 #=&gt; { [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L62" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L65" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

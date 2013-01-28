@@ -137,7 +137,7 @@ into a syntax tree. Structures that are valid syntax nodes
 #=&gt; :foo
 
 Macro.escape({ :a, :b, :c })
-#=&gt; { :{}, 0, [:a, :b, :c] }
+#=&gt; { :{}, [], [:a, :b, :c] }
 </code></pre>
 </div>
   <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L67" target="_blank" class="view_source">Source</a>
@@ -203,7 +203,7 @@ end
 <p>The compilation will fail because <code>My.Module</code> when quoted
 is not an atom, but a syntax tree as follow:</p>
 
-<pre><code>{:__aliases__, 0, [:My, :Module] }
+<pre><code>{:__aliases__, [], [:My, :Module] }
 </code></pre>
 
 <p>That said, we need to expand the aliases node above to an
