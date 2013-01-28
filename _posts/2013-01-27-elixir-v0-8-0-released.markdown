@@ -96,7 +96,7 @@ Finally, given `HashDict` starts with a compact representation, it also takes le
  
 ## Wrapping up
 
-We continue actively working on Elixir and this release is the result of our efforts on different areas! We have exciting plans and newer possibilities to explore, as a new release of Erlang OTP comes out in a couple weeks.
+We continue actively working on Elixir and this release is the [result of our efforts on different areas](https://github.com/elixir-lang/elixir/blob/v0.8.0/CHANGELOG.md)! We have exciting plans and newer possibilities to explore, as a new release of Erlang OTP also comes out in a couple weeks.
 
 Also, we previously announced Elixir is going to be released frequently, every 2 to 4 weeks. We have made a small detour to get v0.8.0 out of the door, but we are back to our regular schedule as of today!
 
