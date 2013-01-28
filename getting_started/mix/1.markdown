@@ -1,0 +1,234 @@
+---
+layout: getting_started
+title: 1 Introduction to Mix
+guide: 1
+total_guides: 3
+---
+
+# {{ page.title }}
+
+Elixir ships with a few applications to make building and deploying projects with Elixir easier and Mix is certainly their backbone.
+
+Mix is a build tool that provides tasks for creating, compiling, testing (and soon deploying) Elixir projects. Mix is inspired by the [Leiningen](https://github.com/technomancy/leiningen) build tool for Clojure and was written by one of its contributors.
+
+In this chapter, you will learn how to create projects using `mix` and install dependencies. In the following sections, we will also learn how to create custom tasks and manage Erlang applications.
+
+## 1.1 Bootstrapping
+
+In order to start your first project, simply use the `mix new` command passing the path to your project. For now, we will create an application called `my_project` in the current directory:
+
+    $ mix new ./my_project
+
+Mix will create a directory named `my_project` with few files in it:
+
+    .gitignore
+    README.md
+    mix.exs
+    lib/my_project.ex
+    test/test_helper.exs
+    test/my_project_test.exs
+
+Let's take a brief look at some of these.
+
+> Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have elixir's executable in your PATH. If not, you can run it by passing the script as argument to elixir:
+>
+>     $ bin/elixir bin/mix new ./my_project
+>
+> Note that you can also execute any script in your PATH from Elixir via the -S option:
+>
+>     $ bin/elixir -S mix new ./my_project
+>
+> When using -S, elixir finds the script wherever it is in your PATH and executes it.
+
+### 1.1.1 mix.exs
+
+This is the file with your projects configuration. It looks like this:
+
+{% highlight ruby %}
+defmodule MyProject.Mixfile do
+  use Mix.Project
+
+  def project do
+    [ app: :my_project,
+      version: "0.0.1",
+      deps: deps ]
+  end
+
+  # Configuration for the OTP application
+  def application do
+    []
+  end
+
+  # Returns the list of dependencies in the format:
+  # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
+  defp deps do
+    []
+  end
+end
+{% endhighlight %}
+
+Our `mix.exs` is quite straight-forward. It defines two functions: `project`, which returns project configuration like the application name and version, and `application`, which is used to generate an Erlang application that is managed by the Erlang Runtime. We will going into detail about these in the next chapter.
+
+### 1.1.2 lib/my_project.ex
+
+This file simply contains a simple module definition to lay out your code:
+
+{% highlight ruby %}
+defmodule MyProject do
+end
+{% endhighlight %}
+
+### 1.1.3 test/my_project_test.exs
+
+This file contains a stub test case for our project:
+
+{% highlight ruby %}
+Code.require_file "../test_helper", __FILE__
+
+defmodule MyProjectTest do
+  use ExUnit.Case
+
+  test "the truth" do
+    assert true
+  end
+end
+{% endhighlight %}
+
+It is important to note a couple things:
+
+1) Notice the file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
+
+2) The first line in our test is simply requiring the `test_helper` file in the same directory as the current file. As we are going to see, the `test/test_helper.exs` file is responsible for starting the test framework;
+
+3) Then we define a test module named `MyProjectTest`, using `ExUnit.Case` to inject default behavior and define a simple test. You can learn more about the test framework in the [ExUnit](/getting_started/ex_unit/1.html) chapter
+
+### 1.1.4 test/test_helper.exs
+
+The last file we are going to check is the `test_helper.exs`, which simply loads our application and sets up the test framework:
+
+{% highlight ruby %}
+ExUnit.start []
+{% endhighlight %}
+
+And that is it, with our project created. We are ready to move on!
+
+## 1.2 Exploring
+
+Now that we created our new project, what can we do with it? In order to check the commands available to us, just run the task `help`:
+
+    $ mix help
+
+It will print all the tasks available. You can get further information by invoking `mix help TASK`.
+
+Play around with the available tasks, like `mix compile` and `mix test`, and execute them in your project to check how they work.
+
+## 1.3 Compilation
+
+Mix can compile our project for us. The default configurations uses `lib/` for source files and `ebin/` for compiled beam files, you don't even have to provide any compilation-specific setup but if you must, some options are available. For instance, if you want to put your compiled files in another directory besides `ebin`, simply set in `:compile_path` in your `mix.exs` file:
+
+{% highlight ruby %}
+def project do
+  [compile_path: "ebin"]
+end
+{% endhighlight %}
+
+In general, Mix tries to be smart and compile only when necessary.
+
+Note that, after you compile for the first time, Mix generates a `my_project.app` file inside your `ebin` directory. This file defines an Erlang application based on the contents of the `application` function in your Mix project.
+
+The `.app` file holds information about your application, what are its dependencies, which modules it defines and so forth. The application is automatically started by Mix every time you run some commands and we will learn how to configure it in the next chapter.
+
+## 1.4 Dependencies
+
+Mix is also able to manage dependencies. Dependencies should be listed in the project settings, as follow:
+
+{% highlight ruby %}
+def project do
+  [ app: :my_project,
+    version: "0.0.1",
+    deps: deps ]
+end
+
+defp deps do
+  [ { :some_project, "0.3.0", github: "some_project/other" },
+    { :another_project, "1.0.2", git: "https://example.com/another/repo.git" } ]
+end
+{% endhighlight %}
+
+**Note:** Although not required, it is common to split dependencies into their own function;
+
+### 1.4.1 Source Code Management (SCM)
+
+In the example above, we have used `git` to specify our dependency.  Mix was designed in a way it can support multiple SCM tools, by default it ships with `:git` and `:path`. The most common options are:
+
+* `:git` - the dependency is a git repository that is retrieved and updated by Mix;
+* `:path` - the dependency is simply a path in the filesystem;
+* `:compile` - how to compile the dependency;
+* `:app` - the path of the application expected to be defined by the dependency;
+
+Each SCM may support custom options. `:git` supports the following:
+
+* `:ref` - an optional reference (a commit) to checkout the git repository;
+* `:tag` - an optional tag to checkout the git repository;
+* `:branch` - an optional branch to checkout the git repository;
+* `:submodules` - when true, initializes submodules recursively in the dependency;
+
+### 1.4.2 Compiling dependencies
+
+In order to compile a dependency, Mix looks into the repository for the best way to proceed. If the dependency contains one of the files below, it will proceed as follows:
+
+1. `mix.exs` - compiles the dependency directly with Mix by invoking the compile task;
+2. `rebar.config` or `rebar.config.script` - compiles using `rebar compile deps_dir=DEPS`, where `DEPS` is the directory where Mix install by default the project dependencies;
+3. `Makefile` - simply invokes `make`;
+
+If the dependency does not contain any of the above, you can specify a command directly with the `:compile` option:
+
+{% highlight ruby %}
+    compile: "./configure && make"
+{% endhighlight %}
+
+If `:compile` is set to false, nothing is done.
+
+### 1.4.3 Repeatability
+
+An important feature in any dependency management tool is repeatability. For this reason when you first get your dependencies, Mix will create a file called `mix.lock` that contains in which reference each dependency is checked out.
+
+When another developer gets a copy of the same project, Mix will checkout exactly the same references, ensuring other developers can "repeat" the same setup.
+
+Locks are automatically updated when `deps.update` is called and can be removed with `deps.unlock`.
+
+### 1.4.4 Dependencies tasks
+
+Elixir has many tasks to manage such dependencies:
+
+* `mix deps` - List all dependencies and their status;
+* `mix deps.get` - Get all unavailable dependencies;
+* `mix deps.compile` - Compile dependencies;
+* `mix deps.update` - Update dependencies;
+* `mix deps.clean` - Remove dependencies files;
+* `mix deps.unlock` - Unlock the given dependencies;
+
+Use `mix help` to get more information.
+
+## 1.5 Environments
+
+Mix has the concept of environments that allows a developer to customize compilation and other options based on an external setting. By default, Mix understands three environments:
+
+* `dev` - the one in which mix tasks are run by default
+* `test` - used by `mix test`
+* `prod` - the environment in which dependencies are loaded and compiled
+
+By default, those environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done using the `env:` option:
+
+{% highlight ruby %}
+def project do
+  [ env: [
+    prod: [compile_path: "prod_ebin"] ] ]
+end
+{% endhighlight %}
+
+By default, Mix runs on `dev` environment (except for tests). The environment can be changed via the `MIX_ENV` environment option:
+
+    $ MIX_ENV=prod mix compile
+
+In the next chapters, we will learn more about building OTP applications with Mix and how to create your own tasks.
