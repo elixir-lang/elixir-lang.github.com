@@ -1,10 +1,11 @@
 ---
 layout: getting_started
-title: 2. Diving in
+title: 2 Diving in
 guide: 2
+total_guides: 7
 ---
 
-# 2 Diving in
+# {{ page.title }}
 
 In this chapter we'll go a bit deeper into the basic data-types, learn some control flow mechanisms and how to create and invoke anonymous functions.
 
@@ -200,12 +201,14 @@ In general, you will find working with binaries and strings in Elixir a breeze. 
 
 One of Elixir assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
 
-Since an Erlang module is nothing more than an atom, invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) as follows:
+Since an Erlang module is nothing more than an atom, invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) or interact with [the math module](http://www.erlang.org/doc/man/math.html) as follows:
 
     iex> :lists.flatten [1,[2],3]
     [1,2,3]
+    iex> :math.sin :math.pi
+    1.2246467991473532e-16
 
-Erlang's OTP is very well documented and easily navigable:
+Erlang's OTP is very well documented and we will learn more about building OTP applications in the Mix chapters:
 
 * [OTP docs](http://www.erlang.org/doc/)
 * [Standard library docs](http://www.erlang.org/doc/man/STDLIB_app.html)
