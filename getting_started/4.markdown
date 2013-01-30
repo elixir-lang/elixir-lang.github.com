@@ -26,7 +26,7 @@ A record is simply a tuple where the first element is the record module name. We
     inspect FileInfo.new, raw: true
     #=> "{ FileInfo, nil, nil }"
 
-Besides defining readers and writers for each attribute, Elixir also defines an `update_#{attribute}` function to update the value. Such functions expect a function as argument that receives the current value and must return the new one. For example, every time the file is accessed, the accesses counter can be incremented with:
+Besides defining readers and writers for each attribute, Elixir records also define an `update_#{attribute}` function to update the value. Such functions expect a function as argument that receives the current value and must return the new one. For example, every time the file is accessed, the accesses counter can be incremented with:
 
     file_info = FileInfo.new(accesses: 10)
     file_info = file_info.update_accesses(fn(x) -> x + 1 end)
@@ -47,17 +47,25 @@ This syntax can also be used to create new records:
 
     file_info = FileInfo[accesses: 0]
 
-As we are going to see in the next section (4.2), this "brackets syntax" is powered by the access protocol and, in the records case, it is handled at compilation time which provides faster access and creation times compared to `file_info.accesses` and `FileInfo.new`.
+Whenever using the bracket syntax above, Elixir expands the record to a tuple at compilation time. That said, the clause:
+
+    def was_accessed?(FileInfo[accesses: 0]), do: true
+
+Is effectively the same as:
+
+    def was_accessed?({ FileInfo, _, 0 }), do: true
+
+Using the bracket syntax is a powerful mechanism for pattern matching and also performance, since it provides faster access and creation times compared to `file_info.accesses` and `FileInfo.new`. However, it loses some part of the record flexibility, since they are no longer dynamic. Luckily, Elixir allows you to mix and match both styles as you may find fit.
 
 For more information on records, [check out the documentation for the `defrecord` macro](http://elixir-lang.org/docs/master/Kernel.html#defrecord/4)
 
 ## 4.2 Protocols
 
-Protocols allow us to define contracts. Dispatching a protocol is available to any data type as long as it implements the prototype. Let's consider a practical example.
+Protocols is a mechanism to achieve polymorphism in Elixir. Dispatching a protocol is available to any data type as long as it implements the protocol. Let's consider a practical example.
 
 In Elixir, only `false` and `nil` are considered falsy values. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
 
-We could implement this protocol as follows:
+We could define this protocol as follows:
 
     defprotocol Blank do
       @doc "Returns true if data is considered blank/empty"
@@ -98,16 +106,29 @@ And we would do so for all native data types. The types available are:
 * Reference
 * Any
 
+Now, with the protocol defined and implementations in hand, we can invoke it:
+
+    Blank.blank?(0)       #=> false
+    Blank.blank?([])      #=> true
+    Blank.blank?([1,2,3]) #=> false
+
+Notice however that passing a data type that does not implement the protocol raises an error:
+
+    Blank.blank?("hello")
+    ** (UndefinedFunctionError) undefined function: Blank.BitString.blank?/1
+
+Implementing the protocol for all 9 types above can be cumbersome. So Elixir gives us some tools to select which protocols we want to implement explicitly.
+
 ### 4.2.1 Selecting implementations
 
-Implementing the protocol for all 9 types above can be cumbersome. Even more if you consider that Number, Function, PID, Port and Reference are never going to be blank. For this reason, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
+Implementing the protocol for all types can be a bit of work and in some cases, even unnecesary. Going back to our `Blank` protocol, the types Number, Function, PID, Port and Reference are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
 
     defprotocol Blank do
       @only [Atom, Tuple, List, BitString, Any]
       def blank?(data)
     end
 
-Since we also specified `Any` as a data type, if the data type is not any of Atom, Tuple, List or BitString, it will automatically fallback to Any:
+Since we also specified `Any` as a data type, if the data type is not any of `Atom`, `Tuple`, `List` or `BitString`, it will automatically fallback to `Any`:
 
     defimpl Blank, for: Any do
       def blank?(_), do: false
@@ -117,21 +138,46 @@ Now all data types that we have not specified will be automatically considered n
 
 ### 4.2.2 Using protocols with records
 
-The real benefit of protocols comes when mixed with records. For instance, imagine we have a module called `RedBlack` that provides an API to create and manipulate Red-Black trees. This module represents such trees via a record named `RedBlack.Tree` and we want this tree to be considered blank in case it has no items. To achieve this, the developer just needs to implement the protocol for `RedBlack.Tree`:
+The power of Elixir extensibility comes when protocols and records are mixed.
 
-    defimpl Blank, for: RedBlack.Tree do
-      def blank?(tree), do: RedBlack.empty?(tree)
+For instance, Elixir provides a `HashDict` implementation that is an efficient data structure to store many keys. Let's take a look at how it works:
+
+    dict = HashDict.new
+    dict = HashDict.put(dict, :hello, "world")
+    HashDict.get(dict, :hello) #=> "world"
+
+If inspect our `HashDict`, we can see it is a simple tuple:
+
+    inspect(dict, raw: true)
+    #=> { HashDict, 1, [{:hello,"world"}] }
+
+Since `HashDict` is a data structure that contains values, it would also be convenient to implement the `Blank` protocol for it too. However, in order to do so, we need to enable the implementation for `Record` types, as follows:
+
+    defprotocol Blank do
+      @only [Atom, Record, Tuple, List, BitString, Any]
+      def blank?(data)
     end
 
-In the example above, we have implemented `blank?` for `RedBlack.Tree` that simply delegates to `RedBlack.empty?` passing the tree as argument. This implementation doesn't need to be defined inside the `RedBlack` tree or inside the record, but anywhere in the code.
+It is important that `Record` comes before `Tuple`, since all records are tuples (but not all tuples are records). After ammending the protocol, we can implement it for the `HashDict` record:
 
-Finally, since records are simply tuples, one can add a default protocol implementation to any record by defining a default implementation for tuples.
+    defimpl Blank, for: HashDict do
+      def blank?(dict), do: HashDict.size(dict) == 0
+    end
+
+And now we can test it:
+
+    Blank.blank?(dict)         #=> false
+    Blank.blank?(HashDict.new) #=> true
+
+Excellent! The best of all is that we implemented the `Blank` protocol for an existing data structure (`HashDict`) without a need to wrap it or recompile it. This allows developers to define protocols in their libraries which are going to be implemented by clients according to their needs and their own data structures.
+
+Finally, since records are simply tuples, in case a record does not implement a given protocol, Elixir will fallback to the tuple implementation of the protocol, if one exists. So one can add a default protocol implementation for all records by simply defining a default implementation for tuples.
 
 ### 4.2.3 Built-in protocols
 
-Elixir ships with five built-in protocols, they are:
+Elixir ships with some built-in protocls, let's take a look at a couple of those:
 
-* Access - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example:
+* `Access` - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example:
 
         iex> x = [a: 1, b: 2]
         [{:a, 1}, {:b, 2}]
@@ -140,9 +186,48 @@ Elixir ships with five built-in protocols, they are:
         iex> x[:b]
         2
 
-* Enum.Iterator - specifies an iteration contract for any data structure. Exposed via the `Enum` module;
-* List.Chars - specifies how to convert a data structures with characters to lists. Exposed via the `to_char_list` function;
-* Binary.Chars - specifies how to convert a data structure with characters to binary. Exposed via the `to_binary` function. For instance, interpolation calls `to_binary` in the interpolated content before adding it to the binary;
-* Binary.Inspect - specifies how to convert any data structure to a string for inspection. Exposed via the `inspect` function;
+* `Enum.Iterator` - any data structured that can be enumerated must implement this protocol. This protocol is consumed by the `Enum` module which provides functions like `map`, `reduce` and others:
 
-You can check the source code for those protocols for more information about how each one is used and how to implement your own. With this, we have finally finished this chapter which has described `defrecord`, `defprotocol` and `defimpl`. Next, we are going to build some macros using `defmacro` and `defmacrop`!
+        iex> Enum.map [1,2,3], fn(x) -> x * 2 end
+        [2,4,6]
+        iex> Enum.reduce [1,2,3], 0, fn(x, acc) -> x + acc end
+        6
+
+* `Binary.Inspect` - this protocol is used to transform any data structure to a readable textual representation. That's what tools like IEx uses to print results:
+
+        iex> { 1, 2, 3 }
+        {1,2,3}
+        iex> HashDict.new
+        #HashDict<[]>
+
+  Keep in mind that whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. For those, the true representation can be retrieved by calling `inspect` directly and passing `raw` as an option:
+
+        iex> HashDict.new
+        { HashDict, 0, [] }
+
+* `Binary.Chars` - specifies how to convert a data structure with characters to binary. Exposed via the `to_binary` function:
+
+        iex> to_binary :hello
+        "hello"
+
+  Notice that string interpolation in Elixir calls the `to_binary` function:
+
+        iex> "age: #{25}"
+        "age: 25"
+
+  The example above only works because numbers implement the `Binary.Chars` protocol. Passing a tuple, for example, will lead to an error:
+
+        iex> "tuple: #{{1,2,3}}"
+        ** (Protocol.UndefinedError) protocol Binary.Chars not implemented for {1,2,3}
+
+  When there is a need to "print" a more complex data structure, one can simply use the `inspect` function:
+
+        iex> "tuple: #{{1,2,3}}"
+        "tuple: {1,2,3}"
+
+* `List.Chars` - specifies how to convert a data structures with characters to lists. Exposed via the `to_char_list` function:
+
+        iex> to_char_list :hello
+        'hello'
+
+Elixir defines other protocols which can be verified in Elixir's documentation. Frameworks and libraries that you use may define a couple of specific protocols as well. Use them wisely to write code that is easy to maintain and extend! Next, let's take a look at how Elixir tackles productivity by building some macros using `defmacro` and `defmacrop`!
