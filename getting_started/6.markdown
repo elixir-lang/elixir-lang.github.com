@@ -142,7 +142,17 @@ The example above works as if `size(&1)` translates directly to `fn(x) -> size(x
 
 In this case, `&1 * &2` translates to `fn(x, y) -> x * y end`. The values `&1` and `&2` maps to the argument order in the generated function.
 
-This syntax can also be used to do partial application in Elixir. For instance, if we want to multiply each item in a list per two, we could write it as:
+Keep in mind that `&args` binds only to the closest function call. For example, the following syntax is invalid:
+
+    iex> foo(&1, 1 + &2)
+    ** (SyntaxError) iex:1: partial variable &2 cannot be defined without &1
+
+This is because we have two functions calls in the example above, `foo` and `+`, and `&1` binds to `foo` while `&2` binds to `+`. In such cases, you need to use the usual function syntax:
+
+    iex> fn(x, y) -> foo(x, 1 + y) end
+    #Function<erl_eval.12.82930912>
+
+Finally, notice this syntax can also be used to do partial application in Elixir. For instance, if we want to multiply each item in a list per two, we could write it as:
 
     iex> Enum.map [1,2,3], &1 * 2
     [2,4,6]
@@ -226,9 +236,3 @@ Elixir provides a set of pseudo-variables. These variables can only be read and 
 * `__FILE__` - Returns a string representing the current file;
 * `__ENV__` - Returns a [Macro.Env](/docs/stable/Macro.Env.html) record with information about the compilation environment. Here we can access the current module, function, line, file and others;
 * `__CALLER__` - Also returns a [Macro.Env](/docs/stable/Macro.Env.html) record but with information of the calling site. `__CALLER__` is available only inside macros;
-
-## 6.9 Native compilation
-
-Elixir can compile to native code using the Hipe compiler. All you need to do is export the following environment variable before running your code:
-
-    export ERL_COMPILER_OPTIONS=native
