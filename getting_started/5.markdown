@@ -17,7 +17,7 @@ The building block of Elixir is a tuple with three elements. The function call `
 { :sum, [], [1, 2, 3] }
 {% endhighlight %}
 
-You can get the representation of any expression by using the quote macro:
+You can get the representation of any expression by using the `quote` macro:
 
     iex> quote do: sum(1, 2, 3)
     { :sum, [], [1, 2, 3] }
@@ -227,6 +227,7 @@ MyMacros.four #=> ** (UndefinedFunctionError) undefined function: two/0
 To finish our discussion about macros, we are going to briefly discuss how code execution works in Elixir. Code execution in Elixir is done in two steps:
 
 1) All the macros in the code are expanded recursively;
+
 2) The expanded code is compiled to Erlang bytecode and executed
 
 This behavior is important to understand because it affects how we think about our code structure. Consider the following code:
