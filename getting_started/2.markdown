@@ -188,9 +188,9 @@ UTF-8 also plays nicely with pattern matching. You can match against a UTF-8 cod
 
     iex> << eacute :: utf8, rest :: binary >> = "épa"
     "épa"
-    iex> ecaute
+    iex> eacute
     233
-    iex> << ecaute :: utf8 >>
+    iex> << eacute :: utf8 >>
     "é"
     iex> rest
     "pa"
@@ -347,7 +347,7 @@ Refreshing from the section above, all these calls behave the same:
       10 + 3
     end
 
-In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicit convert the `if` argument to a boolean. If you want to check if one of many conditions are true, you can use the `cond` macro.
+In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicitly convert the `if` argument to a boolean. If you want to check if one of many conditions are true, you can use the `cond` macro.
 
 ### 2.8.2 Cond
 
