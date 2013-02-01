@@ -186,11 +186,11 @@ The Unicode standard assigns an integer value to each character. Elixir allows a
 
 UTF-8 also plays nicely with pattern matching. You can match against a UTF-8 codepoint, retriving its integer value as follow:
 
-    iex> << ecaute :: utf8, rest :: binary >> = "épa"
+    iex> << eacute :: utf8, rest :: binary >> = "épa"
     "épa"
-    iex> ecaute
+    iex> eacute
     233
-    iex> << ecaute :: utf8 >>
+    iex> << eacute :: utf8 >>
     "é"
     iex> rest
     "pa"
