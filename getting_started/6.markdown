@@ -171,7 +171,9 @@ All functions and macros can be retrieved and partially applied, except [Elixir'
       end
     end
 
-By calling `use`, a hook called `__using__` will be invoked in `ExUnit.Case` which will then do the proper setup. The `use` call above is simply a translation to:
+This allows `ExUnit.Case` to configure and inject the proper setup into the `AssertionTest` module.
+
+The implementation of the `use` macro is actually quite trivial. When you invoke `use` with a module, it invokes a hook called `__using__` in this module. For example, the `use` call above is simply a translation to:
 
     defmodule AssertionTest do
       require ExUnit.Case
