@@ -7,9 +7,9 @@ total_guides: 3
 
 # {{ page.title }}
 
-In Mix, a task is simply an Elixir module inside the `Mix.Tasks` namespace and a `run/1` function. For example, the `compile` task is a module named `Mix.Tasks.Compile`.
+In Mix, a task is simply an Elixir module inside the `Mix.Tasks` namespace containing a `run/1` function. For example, the `compile` task is a module named `Mix.Tasks.Compile`.
 
-Here is a simple example task:
+Let's create a simple task:
 
 {% highlight ruby %}
 defmodule Mix.Tasks.Hello do
@@ -26,11 +26,17 @@ defmodule Mix.Tasks.Hello do
 end
 {% endhighlight %}
 
-This defines a task called `hello`. In order to make it a task, it defines a `run` function that takes a single argument that will be a list of binary strings which are the arguments that were passed to the task on the command line or from another task calling this one.
+Save this module to a file named `hello.ex` then compile and run it as follows:
 
-When you invoke `mix hello`, this task will run and print `Hello, World!`. Mix uses its first argument to lookup the task module and execute its `run` function.
+    $ elixirc hello.ex
+    $ mix hello
+    Hello, World!
 
-You're probably wondering why we have a `@moduledoc` and `@shortdoc`. Both are used by the `help` task for listing tasks and providing documentation of them. The former is used when `mix help TASK` is invoked, the latter in the general listing with `mix help`.
+The module above defines a task named `hello`. The function `run/1` takes a single argument that will be a list of binary strings which are the arguments that were passed to the task on the command line.
+
+When you invoke `mix hello`, this task will run and print `Hello, World!`. Mix uses its first argument (`hello` in this case) to lookup the task module and execute its `run` function.
+
+You're probably wondering why we have a `@moduledoc` and `@shortdoc`. Both are used by the `help` task for listing tasks and providing documentation. The former is used when `mix help TASK` is invoked, the latter in the general listing with `mix help`.
 
 Besides those two, there is also `@hidden` attribute that, when set to true, marks the task as hidden so it does not show up on `mix help Task`. Any task without `@shortdoc` also won't show up.
 
@@ -89,7 +95,9 @@ Check [`OptionParser`](/docs/stable/OptionParser.html) documentation for more in
 
 ## 3.4 Local tasks
 
-Many times, you want to share a task in between projects or easily install a task that someone made available. With this requirement in mind, Mix also ships with the ability to manage local tasks. Local tasks can be installed from any URL and are available from anywhere within Elixir:
+Going back to our `hello.ex` example above, you will be able to run it as long as you are in the same directory as the compiled beam file. That's not practical.
+
+Many times, you want to share a task in between projects or easily install a task that someone made available. For this reason Mix also ships with the ability to manage local tasks. Local tasks can be installed from a path or any URL and are available from anywhere within Elixir:
 
     $ mix local.install http://elixir-lang/hello.beam
 
