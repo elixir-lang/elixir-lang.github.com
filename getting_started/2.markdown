@@ -47,8 +47,8 @@ Since updating a tuple is expensive, when we want to add or remove elements, we 
 
 In the example above, we have assigned the head of the list to the variable `head` and the tail of the list to the variable `tail`. The [`Enum` module](/docs/stable/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](/docs/stable/List.html) provides several helpers specific to lists:
 
-    iex> Enum.map [1,2,3], fn(x) -> x * 2 end
-    [2,4,6]
+    iex> Enum.at [1,2,3], 0
+    1
     iex> List.flatten [1,[2],3]
     [1,2,3]
 
@@ -61,7 +61,9 @@ Elixir also provides a special syntax to create a list of keywords. They can be 
 
 Keyword lists are nothing more than a list of two element tuples, where the first element of the tuple is an atom, and hold their definition order:
 
-    iex> hd [a: 1, b: 2]
+    iex> [head | tail] = [a: 1, b: 2]
+    [a: 1, b: 2]
+    iex> head
     { :a, 1 }
 
 The [`Keyword` module](/docs/stable/Keyword.html) contains several functions that allow you to manipulate a keyword list ignoring duplicated entries or not. For example:
@@ -480,7 +482,12 @@ A function with one clause can be defined with a (preferred) shortcut syntax as 
       x + y
     end
 
-This is the syntax that's going to be used throughout this guide.
+This is the syntax that's going to be used throughout this guide. Such is frequently used to iterate lists with the help of the [`Enum` module](/docs/stable/Enum.html) discuss previously:
+
+    iex> Enum.map [1,2,3], fn(x) -> x * 2 end
+    [2,4,6]
+    iex> Enum.reduce [1,2,3], 0, fn(x, acc) -> x + acc end
+    6
 
 As Elixir is an immutable language, the binding of the function is also immutable. This means that setting a variable inside the function does not affect its outer scope:
 
