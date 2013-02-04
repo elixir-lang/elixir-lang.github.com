@@ -44,9 +44,9 @@ Besides those two, there is also `@hidden` attribute that, when set to true, mar
 
 When writing tasks, there are some common mix functionality we would like to access. There is a gist:
 
-* `Mix.project` - Returns the project configuration under the function `project`; Notice this function returns an empty configuration if no `mix.exs` file exists in the current directory, this allows many mix functions to work even if a `mix.exs` project is not defined;
+* `Mix.project` - Returns the project configuration under the function `project`; Notice this function returns an empty configuration if no `mix.exs` file exists in the current directory, allowing many Mix functions to work even if a `mix.exs` project is not defined;
 
-* `Mix.Project.current` - Access the module for the current project, this is useful in case you want to access special functions in the project. It raises an exception if no project is defined;
+* `Mix.Project.current` - Access the module for the current project, useful in case you want to access special functions in the project. It raises an exception if no project is defined;
 
 * `Mix.shell` - The shell is a simple abstraction for doing IO in Mix. Such abstractions make it easy to test existing mix tasks. In the future, the shell will provide conveniences for colored output and getting user input;
 
@@ -74,9 +74,9 @@ defmodule Mix.Tasks.Riak do
 end
 {% endhighlight %}
 
-Now you'll have two different tasks under the modules `Mix.Tasks.Riak.Dostuff` and `Mix.Tasks.Riak.Dootherstuff` respectively. You can invoke these tasks like so: `mix mongodb.dostuff` and `mix mongodb.dootherstuff`. Pretty cool, huh?
+Now you'll have two different tasks under the modules `Mix.Tasks.Riak.Dostuff` and `Mix.Tasks.Riak.Dootherstuff` respectively. You can invoke these tasks like so: `mix riak.dostuff` and `mix riak.dootherstuff`. Pretty cool, huh?
 
-You should use this feature when you have a bunch of related tasks that would be unwieldly if named completely independently of each other. If you have a few unrelated tasks, go ahead and name them however you like.
+You should use this feature when you have a bunch of related tasks that would be unwieldy if named completely independently of each other. If you have a few unrelated tasks, go ahead and name them however you like.
 
 ## 3.3 OptionParser
 
