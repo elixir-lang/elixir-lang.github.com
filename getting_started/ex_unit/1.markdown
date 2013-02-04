@@ -35,7 +35,7 @@ ExUnit is started using `ExUnit.start`. This function accepts a couple options, 
 
 * `:formatter` - When you run tests with ExUnit, all the IO is done by [the formatter](https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/formatter.ex). Developers can define their own formatters and this is the configuration that tells ExUnit to use a custom formatter;
 
-* `:max_cases` - As we are going to see soon, ExUnit allows you to easily run tests in concurrently. This is very useful to speed up your tests that have no side affects. This option allows us to configure the maximum number of cases ExUnit runs in concurrently.
+* `:max_cases` - As we are going to see soon, ExUnit allows you to easily run tests concurrently. This is very useful to speed up your tests that have no side affects. This option allows us to configure the maximum number of cases ExUnit runs concurrently.
 
 ## 1.2 Defining a test case
 
@@ -49,7 +49,7 @@ use ExUnit.Case
 
 ### 1.2.1 The test macro
 
-`ExUnit.Case` runs all functions whose name starts with `test`:
+`ExUnit.Case` runs all functions whose name start with `test`:
 
 {% highlight ruby %}
 def test_the_truth do
@@ -57,7 +57,7 @@ def test_the_truth do
 end
 {% endhighlight %}
 
-As a convenience to define such functions, `ExUnit.Case` provides a test macro, which allows one to write:
+As a convenience to define such functions, `ExUnit.Case` provides a `test` macro, which allows one to write:
 
 {% highlight ruby %}
 test "the truth" do
@@ -65,7 +65,7 @@ test "the truth" do
 end
 {% endhighlight %}
 
-Which is more readable. The test macro accepts either a binary or an atom as name.
+This construct is considered more readable. The `test` macro accepts either a binary or an atom as name.
 
 ### 1.2.2 Assertions
 
@@ -88,7 +88,7 @@ Will fail as:
 
     Expected 2 to be equal to (==) 3
 
-However, some extra assertions are convenient to make testing easier for some specific cases, a good example is the `assert_raise` macro:
+However, some extra assertions are convenient to make testing easier for some specific cases. A good example is the `assert_raise` macro:
 
 {% highlight ruby %}
 assert_raise ArithmeticError, "bad argument in arithmetic expression", fn ->
@@ -105,7 +105,7 @@ So don't forget to check [`ExUnit.Assertions`' documentation](/docs/stable/ExUni
 * `setup_all()` and `teardown_all(context)` which are executed before and after all tests respectively;
 * `setup(context, test)` and `teardown(context, test)` which are executed before and after each test, receiving the test name as argument;
 
-Such callbacks are useful to clean up any side-effect a test may cause, as for example, state in genservers, data on filesystem, or entries in a database. Data can be passed in between such callbacks as context, the context value returned by `setup_all` is passed down to all other callbacks. The value can then be updated in `setup` which is passed down to `teardown`.
+Such callbacks are useful to clean up any side-effect a test may cause, as for example, state in genservers, data on filesystem, or entries in a database. Data can be passed in between such callbacks as context. The context value returned by `setup_all` is passed down to all other callbacks. The value can then be updated in `setup` which is passed down to `teardown`.
 
 ### 1.2.4 Async
 
@@ -115,7 +115,7 @@ Finally, ExUnit also allows test cases to run concurrently. All you need to do i
 use ExUnit.Case, async: true
 {% endhighlight %}
 
-This will run this test case concurrently with other test cases which are async too. The tests inside a particular case are still run in sequentially.
+This will run this test case concurrently with other test cases which are async too. The tests inside a particular case are still run sequentially.
 
 ## 2 Lots To Do
 
