@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IO.ANSI</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        IO.ANSI
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module provides functionality to render ANSI escape sequences
+(<a href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</a>) —  characters embedded
+in the text used to control formatting, color, and other output options
+on video text terminals.</p>
+
+<p>Please be aware that in Erlang/OTP versions prior to R16, you will not
+be able to render ANSI escape sequences in iex or erlang shell</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L19" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#black/0">black/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#black_background/0">black_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#blink_off/0">blink_off/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#blink_rapid/0">blink_rapid/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#blink_slow/0">blink_slow/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#blue/0">blue/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#blue_background/0">blue_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#bright/0">bright/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#conceal/0">conceal/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#crossed_out/0">crossed_out/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#cyan/0">cyan/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#cyan_background/0">cyan_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#default_background/0">default_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#default_color/0">default_color/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#encircled/0">encircled/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#escape/2">escape/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#escape_fragment/2">escape_fragment/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#faint/0">faint/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_1/0">font_1/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_2/0">font_2/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_3/0">font_3/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_4/0">font_4/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_5/0">font_5/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_6/0">font_6/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_7/0">font_7/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_8/0">font_8/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#font_9/0">font_9/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#framed/0">framed/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#green/0">green/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#green_background/0">green_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#inverse/0">inverse/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#italic/0">italic/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#magenta/0">magenta/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#magenta_background/0">magenta_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#no_underline/0">no_underline/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#normal/0">normal/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#not_framed_encircled/0">not_framed_encircled/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#not_italic/0">not_italic/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#not_overlined/0">not_overlined/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#overlined/0">overlined/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#primary_font/0">primary_font/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#red/0">red/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#red_background/0">red_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#reset/0">reset/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#reverse/0">reverse/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#terminal?/1">terminal?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#underline/0">underline/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#white/0">white/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#white_background/0">white_background/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#yellow/0">yellow/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#yellow_background/0">yellow_background/0</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="black/0">
+    <strong>black()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to black</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="black_background/0">
+    <strong>black_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to black</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="blink_off/0">
+    <strong>blink_off()</strong>
+  </p>
+  <div class="docstring"><p>Blink: off</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L109" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="blink_rapid/0">
+    <strong>blink_rapid()</strong>
+  </p>
+  <div class="docstring"><p>Blink: Rapid. MS-DOS ANSI.SYS; 150 per minute or more; not widely supported</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L75" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="blink_slow/0">
+    <strong>blink_slow()</strong>
+  </p>
+  <div class="docstring"><p>Blink: Slow. Less than 150 per minute</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L72" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="blue/0">
+    <strong>blue()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to blue</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="blue_background/0">
+    <strong>blue_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to blue</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="bright/0">
+    <strong>bright()</strong>
+  </p>
+  <div class="docstring"><p>Bright (increased intensity) or Bold</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L60" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="conceal/0">
+    <strong>conceal()</strong>
+  </p>
+  <div class="docstring"><p>Conceal. Not widely supported</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L84" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="crossed_out/0">
+    <strong>crossed_out()</strong>
+  </p>
+  <div class="docstring"><p>Crossed-out. Characters legible, but marked for deletion. Not widely supported.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L87" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="cyan/0">
+    <strong>cyan()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to cyan</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="cyan_background/0">
+    <strong>cyan_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to cyan</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="default_background/0">
+    <strong>default_background()</strong>
+  </p>
+  <div class="docstring"><p>Default background color</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L128" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="default_color/0">
+    <strong>default_color()</strong>
+  </p>
+  <div class="docstring"><p>Default text color</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L125" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="encircled/0">
+    <strong>encircled()</strong>
+  </p>
+  <div class="docstring"><p>Encircled</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L134" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="escape/2">
+    <strong>escape(string, emit // terminal?())</strong>
+  </p>
+  <div class="docstring"><p>Escapes a string coverting named ANSI sequences into actual ANSI codes.</p>
+
+<p>The format for referring sequences is <code>%{red}</code> and <code>%{red,bright}</code> (for
+multiple sequences)</p>
+
+<p>It will also force a %{reset} to get appended to every string. If you don&#39;t
+want this behaviour, use <code>escape_fragment/1</code> and <code>escape_fragment/2</code>.</p>
+
+<p>An optional boolean parameter can be passed to enable or disable
+emitting actual ANSI codes. When false, no ANSI codes will emitted.
+By default, standard output will be checked if it is a terminal capable
+of handling these sequences (using <code>terminal?/0</code> function)</p>
+
+<h2>Example</h2>
+
+<p>IO.ANSI.escape &quot;Hello %{red,bright,green}yes&quot; #=&gt;
+  &quot;Hello \e[31m\e[1m\e[32myes\e[0m&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L175" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="escape_fragment/2">
+    <strong>escape_fragment(string, emit // terminal?())</strong>
+  </p>
+  <div class="docstring"><p>Escapes a string coverting named ANSI sequences into actual ANSI codes.</p>
+
+<p>The format for referring sequences is <code>%{red}</code> and <code>%{red,bright}</code> (for
+multiple sequences)</p>
+
+<p>An optional boolean parameter can be passed to enable or disable
+emitting actual ANSI codes. When false, no ANSI codes will emitted.
+By default, standard output will be checked if it is a terminal capable
+of handling these sequences (using <code>terminal?/0</code> function)</p>
+
+<h2>Example</h2>
+
+<p>IO.ANSI.escape &quot;Hello %{red,bright,green}yes%{reset}&quot; #=&gt;
+  &quot;Hello \e[31m\e[1m\e[32myes\e[0m&quot;</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L202" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="faint/0">
+    <strong>faint()</strong>
+  </p>
+  <div class="docstring"><p>Faint (decreased intensity), not widely supported</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L63" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_1/0">
+    <strong>font_1()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 1</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_2/0">
+    <strong>font_2()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 2</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_3/0">
+    <strong>font_3()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 3</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_4/0">
+    <strong>font_4()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 4</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_5/0">
+    <strong>font_5()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 5</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_6/0">
+    <strong>font_6()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 6</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_7/0">
+    <strong>font_7()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 7</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_8/0">
+    <strong>font_8()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 8</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="font_9/0">
+    <strong>font_9()</strong>
+  </p>
+  <div class="docstring"><p>Sets alternative font 9</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L93" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="framed/0">
+    <strong>framed()</strong>
+  </p>
+  <div class="docstring"><p>Framed</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L131" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="green/0">
+    <strong>green()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to green</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="green_background/0">
+    <strong>green_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to green</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="inverse/0">
+    <strong>inverse()</strong>
+  </p>
+  <div class="docstring"><p>Image: Negative. Swap foreground and background</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L78" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="italic/0">
+    <strong>italic()</strong>
+  </p>
+  <div class="docstring"><p>Italic: on. Not widely supported. Sometimes treated as inverse.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L66" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="magenta/0">
+    <strong>magenta()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to magenta</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="magenta_background/0">
+    <strong>magenta_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to magenta</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="no_underline/0">
+    <strong>no_underline()</strong>
+  </p>
+  <div class="docstring"><p>Underline: None</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L106" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="normal/0">
+    <strong>normal()</strong>
+  </p>
+  <div class="docstring"><p>Normal color or intensity</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L100" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="not_framed_encircled/0">
+    <strong>not_framed_encircled()</strong>
+  </p>
+  <div class="docstring"><p>Not framed or encircled</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L140" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="not_italic/0">
+    <strong>not_italic()</strong>
+  </p>
+  <div class="docstring"><p>Not italic</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L103" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="not_overlined/0">
+    <strong>not_overlined()</strong>
+  </p>
+  <div class="docstring"><p>Not overlined</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L143" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="overlined/0">
+    <strong>overlined()</strong>
+  </p>
+  <div class="docstring"><p>Overlined</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L137" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="primary_font/0">
+    <strong>primary_font()</strong>
+  </p>
+  <div class="docstring"><p>Sets primary (default) font</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L90" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="red/0">
+    <strong>red()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to red</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="red_background/0">
+    <strong>red_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to red</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="reset/0">
+    <strong>reset()</strong>
+  </p>
+  <div class="docstring"><p>Resets all attributes</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L57" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="reverse/0">
+    <strong>reverse()</strong>
+  </p>
+  <div class="docstring"><p>Image: Negative. Swap foreground and background</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L81" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="terminal?/1">
+    <strong>terminal?(device // :erlang.group_leader())</strong>
+  </p>
+  <div class="docstring"><p>Checks whether the default I/O device is a terminal or a file.</p>
+
+<p>Used to identify whether printing ANSI escape sequences will likely
+be printed as intended.</p>
+
+<p>Please note that invoked while in shell (iex) in Erlang/OTP
+prior to R16, terminal?/0 will always return false because
+Erlang shell did not support ANSI escape sequences up until
+R16.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L45" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="underline/0">
+    <strong>underline()</strong>
+  </p>
+  <div class="docstring"><p>Underline: Single</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L69" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="white/0">
+    <strong>white()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to white</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="white_background/0">
+    <strong>white_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to white</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="yellow/0">
+    <strong>yellow()</strong>
+  </p>
+  <div class="docstring"><p>Sets foreground color to yellow</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="yellow_background/0">
+    <strong>yellow_background()</strong>
+  </p>
+  <div class="docstring"><p>Sets background color to yellow</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io/ansi.ex#L115" target="_blank" class="view_source">Source</a>
+</div>
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

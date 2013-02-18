@@ -38,35 +38,20 @@ as a way to configure and prepare them for testing.</p>
        when your test cases do not change any global state;</li>
 </ul>
 
-<h2>Callbacks</h2>
-
-<p><code>ExUnit.Case</code> defines four callbacks:</p>
-
-<ul>
-<li><code>setup_all()</code> and <code>teardown_all(context)</code> which are executed
-before and after all tests respectively;</li>
-<li><code>setup(context, test)</code> and <code>teardown(context, test)</code> which are
-executed before and after each test, receiving the test name
-as argument;</li>
-</ul>
-
-<p>Such callbacks are useful to clean up any side-effect a test may cause,
-as for example, state in genservers, data on filesystem, or entries in
-a database. Data can be passed in between such callbacks as context,
-the context value returned by <code>setup_all</code> is passed down to all other
-callbacks. The value can then be updated in <code>setup</code> which is passed
-down to <code>teardown</code>.</p>
+<p>This module automatically includes all callbacks defined
+in <code>ExUnit.Callbacks</code>. Read it for more information.</p>
 
 <h2>Examples</h2>
 
-<pre><code>defmodule AssertionTest do
-  use ExUnit.Case, async: true
+<p>defmodule AssertionTest do
+     use ExUnit.Case, async: true</p>
 
-  def test_always_pass
-    assert true
-  end
-end
+<pre><code> def test_always_pass
+   assert true
+ end
 </code></pre>
+
+<p>end</p>
 
         </div>
       
@@ -84,7 +69,7 @@ end
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#test/2">test/2</a>
+    <a href="#test/3">test/3</a>
   </span>
 </li>
 
@@ -99,8 +84,10 @@ end
         <div id="macros_details" class="details_list">
           <h2>Macros</h2>
           <div class="detail">
-  <p class="signature" id="test/2">
-    <strong>test(message, contents)</strong>
+  <p class="signature" id="test/3">
+    <strong>test(message, var // quote() do
+  _
+end, contents)</strong>
   </p>
   <div class="docstring"><p>Provides a convenient macro that allows a test to be
 defined with a string. This macro automatically inserts
@@ -116,7 +103,7 @@ therefore avoiding hiding lines from the backtrace.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L70" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit/case.ex#L66" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
