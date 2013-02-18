@@ -86,12 +86,22 @@ OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.
 
 <h2>Switches</h2>
 
-<p>Extra information about switches can be given as argument too. This is useful
-in order to say a switch must behave as a boolean, list, etc. The following
-types are supported:</p>
+<p>Extra information about switches can be given as argument too.
+This is useful in order to say a switch must behave as a boolean
+or if duplicated switches should be kept, overriden or accumulated.</p>
+
+<p>The following types are supported:</p>
 
 <ul>
-<li><code>:boolean</code> - They never consume the next value unless it is true/false;</li>
+<li><code>:boolean</code> - Mark the given switch as boolean. Boolean switches
+           never consumes the following value unless it is
+           true or false;</li>
+</ul>
+
+<p>The following extra options are supported:</p>
+
+<ul>
+<li><code>:keep</code> - Keep duplicated items in the list instead of overriding;</li>
 </ul>
 
 <p>Examples:</p>
@@ -112,7 +122,7 @@ booleans and never parse the next value:</p>
 #=&gt; { [no_op: true], [&quot;path/to/file&quot;] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L49" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L57" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="parse_head/2">
     <strong>parse_head(argv, opts // [])</strong>
@@ -128,7 +138,7 @@ I.e. as soon as it finds a non switch, it stops parsing.</p>
 #=&gt; { [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L65" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L73" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

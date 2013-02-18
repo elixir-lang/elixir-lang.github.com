@@ -29,20 +29,45 @@
         <div id="moduledoc" class="docstring">
           <p>A task to compile Erlang source files.</p>
 
+<p>When this task runs, it will first check the mod times of
+all of the files. Every file will checked, if file or
+file dependencies, like include files, was changed.
+If file of his dependencies haven&#39;t been changed since the
+last compilation, it will not compile. If file or one of his
+dependency has changed, it will compile.</p>
+
+<p>For this reason, this task touches your <code>:compile_path</code>
+directory and sets the modification time to the current
+time and date at the end of each compilation. You can
+force compilation regardless of mod times by passing
+the <code>--force</code> option.</p>
+
 <h2>Command line options</h2>
 
 <ul>
-<li><code>ERL_COMPILER_OPTIONS</code> - can be used to give default compile options.
-It&#39;s value must be a valid Erlang term. If the value is a list, it will
-be used as is. If it is not a list, it will be put into a list.</li>
+<li><code>--force</code> - forces compilation regardless of module times</li>
 </ul>
 
 <h2>Configuration</h2>
 
 <ul>
-<li><code>:erlc_options</code> - compilation options that applies to Erlang compiler
-By default, the following options are on: <code>[:verbose, :report_errors, :report_warnings]</code></li>
+<li><p><code>ERL_COMPILER_OPTIONS</code> - can be used to give default compile options.
+It&#39;s value must be a valid Erlang term. If the value is a list, it will
+be used as is. If it is not a list, it will be put into a list.</p></li>
+<li><p><code>:erlc_paths</code> - directories to find source files.
+Defaults to <code>[&quot;src&quot;]</code>, can be configured as:</p>
+
+<p>[erlc_paths: [&quot;src&quot;, &quot;other&quot;]]</p></li>
+<li><p><code>:erlc_include_path</code> - directory for adding include files.
+Defaults to <code>&quot;include&quot;</code>, can be configured as:</p>
+
+<p>[<code>erlc_include_path</code>: &quot;other&quot;]</p></li>
+<li><p><code>:erlc_options</code> - compilation options that applies to Erlang&#39;s
+compiler. <code>:debug_info</code> is enabled by default.</p></li>
 </ul>
+
+<p>There are many available options here:
+   <a href="http://www.erlang.org/doc/man/compile.html#file-2">http://www.erlang.org/doc/man/compile.html#file-2</a></p>
 
         </div>
       
@@ -58,7 +83,22 @@ By default, the following options are on: <code>[:verbose, :report_errors, :repo
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#extract_stale_pairs/5">extract_stale_pairs/5</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#interpret_result/3">interpret_result/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#run/1">run/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_erl_file/1">to_erl_file/1</a>
   </span>
 </li>
 
@@ -73,11 +113,37 @@ By default, the following options are on: <code>[:verbose, :report_errors, :repo
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="extract_stale_pairs/5">
+    <strong>extract_stale_pairs(dir1, ext1, dir2, ext2, force)</strong>
+  </p>
+  <div class="docstring"><p>Extract stale pairs considering the set of directories
+and filename extensions. It first looks up the <code>dir1</code>
+for files with <code>ext1</code> extensions and then recursively
+try to find matching pairs in <code>dir2</code> with <code>ext2</code>
+extension.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.erlang.ex#L179" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="interpret_result/3">
+    <strong>interpret_result(file, result, ext // &quot;&quot;)</strong>
+  </p>
+  <div class="docstring"><p>Interprets compilation results and prints them to the console.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.erlang.ex#L195" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
   <p class="signature" id="run/1">
-    <strong>run(_)</strong>
+    <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.erlang.ex#L22" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.erlang.ex#L58" target="_blank" class="view_source">Source</a>
+</div><div class="detail">
+  <p class="signature" id="to_erl_file/1">
+    <strong>to_erl_file(file)</strong>
+  </p>
+  <div class="docstring"><p>Converts the given file to a format accepted by
+Erlang compilation tools.</p>
+</div>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/compile.erlang.ex#L208" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       

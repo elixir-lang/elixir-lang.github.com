@@ -392,7 +392,7 @@ is the list is an atom.</p>
 <pre><code>  Module.concat [some_var, Foo]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L750" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L763" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__block__/1">
     <strong>args</strong>
@@ -405,7 +405,7 @@ and should not be invoked directly:</p>
 #=&gt; { :__block__, [], [1,2,3] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L699" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L712" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="__scope__/2">
     <strong>__scope__(opts, args)</strong>
@@ -421,7 +421,7 @@ it belonged to another file.</p>
 
 <p>Check <code>quote/1</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L712" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L725" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="alias/2">
     <strong>alias(module, opts)</strong>
@@ -474,7 +474,7 @@ specific functions and it won&#39;t affect the overall scope.</p>
 be hygienezed. This means the alias will be expanded when
 the macro is expanded.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L595" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L608" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="bc/1">
     <strong>bc(args)</strong>
@@ -488,7 +488,7 @@ spaces from a string:</p>
 &quot;helloworld&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L688" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L701" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="import/2">
     <strong>import(module, opts)</strong>
@@ -614,10 +614,10 @@ iex&gt; lc &lt;&lt;r:8,g:8,b:8&gt;&gt; inbits pixels, do: {r,g,b}
 [{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L676" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L689" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="quote/2">
-    <strong>quote(opts, list2)</strong>
+    <strong>quote(opts, block)</strong>
   </p>
   <div class="docstring"><p>Allows you to get the representation of any expression.</p>
 
@@ -652,15 +652,12 @@ usually a variable (or a local call);</li>
 <h2>Options</h2>
 
 <ul>
-<li><code>:hygiene</code> - When false, disables hygiene for variables, aliases and imports;</li>
 <li><code>:unquote</code> - When false, disables unquoting. Useful when you have a quote
            inside another quote and want to control which quote is
            able to unquote;</li>
 <li><code>:location</code> - When set to <code>:keep</code>, keeps the current line and file on quotes.
             Read the Stacktrace information section below for more information;</li>
-<li><code>:expand_aliases</code> - When false, do not expand aliases;</li>
-<li><code>:expand_imports</code> - When false, do not expand imports;</li>
-<li><code>:var_context</code> - The context for quoted variables. Defaults to the current module;</li>
+<li><code>:hygiene</code> - Allows a developer to disable hygiene selectively;</li>
 </ul>
 
 <h2>Macro literals</h2>
@@ -678,17 +675,15 @@ when quoted return themselves. They are:</p>
 
 <h2>Hygiene</h2>
 
-<p>Elixir macros are hygienic. This means aliases and imports
-defined inside the quoted often refer to the context that
-defined the macro.</p>
+<p>Elixir macros are hygienic via means of deferred resolution.</p>
 
-<p>Furthermore, variables inside quote are also hygienic. That
-said, a variable defined in a macro cannot affect the scope
-where the macro is included.</p>
+<p>This means aliases and imports defined inside the quoted refer
+to the context that defined the macro and not the context
+where the macro is expanded.</p>
 
-<p>The option <code>hygiene</code> can turn off all the hygiene mechanisms
-defined below. However, they can also be changed in a one by
-one basis.</p>
+<p>Furthermore, variables inside quote are also hygienic: a
+variable defined in a macro cannot affect the variables where
+the macro is expanded.</p>
 
 <h3>Hygiene in variables</h3>
 
@@ -754,15 +749,14 @@ again use <code>var!</code> macro, but explicitly passing a second argument:</p>
 quote do: var!(a, Hygiene1) = 2
 </code></pre>
 
-<p>Another option is to set the <code>var_context</code> option, affecting
-all variables in the block:</p>
+<p>Hygiene for variables can be disabled overall as:</p>
 
-<pre><code>quote var_context: Hygiene1, do: a = 2
+<pre><code>quote hygiene: [vars: false], do: x
 </code></pre>
 
 <h3>Hygiene in aliases</h3>
 
-<p>Aliases inside quote are expanded by default.
+<p>Aliases inside quote are hygienic by default.
 Consider the following example:</p>
 
 <pre><code>defmodule Hygiene do
@@ -774,25 +768,43 @@ Consider the following example:</p>
 end
 
 require Hygiene
-Hygiene.no_interference #=&gt; HashDict[]
+Hygiene.no_interference #=&gt; #HashDict&lt;[]&gt;
 </code></pre>
 
 <p>Notice that, even though the alias <code>D</code> is not available
 in the context the macro is expanded, the code above works
-because <code>D</code> was expanded when the quote was generated.</p>
+because <code>D</code> still expands to <code>HashDict</code>.</p>
 
-<p>There are two ways to disable this behaviour. By giving
-the <code>expand_aliases</code> equals to false to quote or by using
-the <code>alias!</code> macro inside the quote:</p>
+<p>In some particular cases you may want to access an alias
+or a module defined in the caller. In such scenarios, you
+can access it by disabling hygiene with <code>hygiene: [aliases: false]</code>
+or by using the <code>alias!</code> macro inside the quote:</p>
 
-<pre><code>defmodule NoHygiene do
+<pre><code>defmodule Hygiene do
+  # This will expand to Elixir.Nested.hello
+  defmacro no_interference do
+    quote do: Nested.hello
+  end
+
+  # This will expand to Nested.hello for
+  # whatever is Nested in the caller
   defmacro interference do
-    quote do: alias!(D).new
+    quote do: alias!(Nested).hello
   end
 end
 
-require NoHygiene
-NoHygiene.interference #=&gt; UndefinedFunctionError
+defmodule Parent do
+  defmodule Nested do
+    def hello, do: &quot;world&quot;
+  end
+
+  require Hygiene
+  Hygiene.no_interference
+  #=&gt; ** (UndefinedFunctionError) ...
+
+  Hygiene.interference
+  #=&gt; &quot;world&quot;
+end
 </code></pre>
 
 <h2>Hygiene in imports</h2>
@@ -844,7 +856,7 @@ Lazy.return_size #=&gt; 2
 </code></pre>
 
 <p>As in aliases, imports expansion can be explicitly disabled
-via the <code>expand_imports</code> option.</p>
+via the <code>hygiene: [imports: false]</code> option.</p>
 
 <h2>Stacktrace information</h2>
 
@@ -880,7 +892,7 @@ code as if it was defined inside <code>GenServer.Behaviour</code> file, in
 particular, the macro <code>__FILE__</code> and exceptions happening inside
 the quote will always point to <code>GenServer.Behaviour</code> file.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L573" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L586" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="require/2">
     <strong>require(module, opts)</strong>
@@ -940,7 +952,7 @@ quote do: sum(1, unquote(value), 3)
 #=&gt; { :sum, [], [1, 13, 3] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L620" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L633" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="unquote_splicing/1">
     <strong>unquote_splicing(expr)</strong>
@@ -955,7 +967,7 @@ quote do: sum(1, unquote_splicing(values), 5)
 #=&gt; { :sum, [], [1, 2, 3, 4, 5] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L633" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L646" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="var!/1">
     <strong>var!(var)</strong>
@@ -966,7 +978,7 @@ node (i.e. a tuple with three elements where the last
 one is an atom) or an atom representing the variable name.
 Check <code>quote/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L582" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L595" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="var!/2">
     <strong>var!(var, context)</strong>
@@ -974,7 +986,7 @@ Check <code>quote/2</code> for more information.</p>
   <div class="docstring"><p>Defines a variable in the given context.
 Check <code>quote/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L588" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L601" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="{}/1">
     <strong>{args}</strong>

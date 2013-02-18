@@ -40,11 +40,13 @@ ExUnit.start
 
 # 2) Next we create a new TestCase and use ExUnit.Case
 defmodule AssertionTest do
-  # 3) Notice we pass async: true, this runs the test case in parallel
+  # 3) Notice we pass async: true, this runs the test case
+  #    concurrently with other test cases
   use ExUnit.Case, async: true
 
-  # 4) A test is a method which name finishes with _test
-  def test_always_pass do
+  # 4) A test is a function whose name starts with
+  #    test and receives a context
+  def test_always_pass(_) do
     assert true
   end
 
@@ -62,9 +64,13 @@ assertion_test.exs, you can run it as:</p>
 <pre><code>bin/elixir assertion_test.exs
 </code></pre>
 
-<h2>Assertions</h2>
+<h2>Case, callbacks and assertions</h2>
 
-<p>Check ExUnit.Assertions for assertions documentation.</p>
+<p>Check <code>ExUnit.Case</code> and <code>ExUnit.Callbacks</code> for more information about
+defining test cases.</p>
+
+<p>The <code>ExUnit.Assertions</code> module contains a set of macros to easily
+generate assertions with appropriate error messages.</p>
 
 <h2>User config</h2>
 
@@ -99,11 +105,6 @@ to start/1 or configure/1 will take precedence over user options.</p>
         <h2>Functions summary</h2>
         <ul class="summary">
           <li>
-  <span class="summary_signature">
-    <a href="#after_spawn/1">after_spawn/1</a>
-  </span>
-</li>
-<li>
   <span class="summary_signature">
     <a href="#configure/1">configure/1</a>
   </span>
@@ -140,14 +141,6 @@ to start/1 or configure/1 will take precedence over user options.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="after_spawn/1">
-    <strong>after_spawn(callback)</strong>
-  </p>
-  <div class="docstring"><p>Registers a callback to be invoked every time a
-new ExUnit process is spawned.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L130" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
   <p class="signature" id="configure/1">
     <strong>configure(options)</strong>
   </p>
@@ -164,7 +157,7 @@ new ExUnit process is spawned.</p>
              Defaults to <code>:erlang.system_info(:schedulers_online)</code>;</p></li>
 </ul>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L122" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L128" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="run/0">
     <strong>run()</strong>
@@ -174,7 +167,7 @@ if ExUnit is started via <code>ExUnit.start</code>.</p>
 
 <p>Returns the number of failures.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L140" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L145" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="start/1">
     <strong>start(options // [])</strong>
@@ -186,7 +179,7 @@ configure <code>ExUnit</code> (the same ones accepted by <code>configure/1</code
 <p>In case you want to run tests manually, skip calling this
 function and rely on <code>configure/1</code> and <code>run/0</code> instead.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L74" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L80" target="_blank" class="view_source">Source</a>
 </div><div class="detail">
   <p class="signature" id="stop/1">
     <strong>stop(_state)</strong>
@@ -199,7 +192,7 @@ function and rely on <code>configure/1</code> and <code>run/0</code> instead.</p
   </p>
   <div class="docstring"><p>Returns the configured user options.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L94" target="_blank" class="view_source">Source</a>
+  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/lib/ex_unit.ex#L100" target="_blank" class="view_source">Source</a>
 </div>
         </div>
       
