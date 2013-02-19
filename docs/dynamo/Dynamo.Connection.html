@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamo.Connection</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Dynamo.Connection
+        
+          <small>behaviour</small>
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This modules defines the connection API.</p>
+
+<p>By default, Elixir ships with two implementations
+of this API: <code>Dynamo.Cowboy.Connection</code> (used by
+Cowboy web server) and <code>Dynamo.Connection.Test</code>.</p>
+
+<p>Notice that this module documentation uses the record
+notation. So although the documentation says <code>params(conn)</code>,
+the function should be invoked as <code>conn.params()</code> and
+Elixir automatically moves the <code>conn</code> to the last argument.</p>
+
+<p>It is also important to remind that, as in all Elixir
+structures, a connection is immutable. So if you are using
+<code>conn.put_resp_header(&quot;X-API&quot;, &quot;123456&quot;)</code> to set a response
+header, a new connection will be returned with the new header
+set. The original <code>conn</code> is not going to be modified.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2>Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#default_before_send/0">default_before_send/0</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <h2>Callbacks summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#app/1">app/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put_private/3">put_private/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#private/1">private/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put_assign/3">put_assign/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assign/3">assign/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#assigns/1">assigns/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#fetchable/3">fetchable/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#fetch/2">fetch/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put_resp_cookie/4">put_resp_cookie/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_cookies/1">resp_cookies/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#req_cookies/1">req_cookies/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete_resp_header/2">delete_resp_header/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put_resp_header/3">put_resp_header/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_headers/1">resp_headers/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#upgrade/3">upgrade/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#state/1">state/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#sendfile/2">sendfile/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#send/1">send/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp/3">resp/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_content_type/2">resp_content_type/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_content_type/1">resp_content_type/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_charset/2">resp_charset/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_charset/1">resp_charset/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_body/2">resp_body/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#resp_body/1">resp_body/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#status/2">status/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#status/1">status/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#chunk/2">chunk/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#send_chunked/2">send_chunked/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#send/3">send/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#already_sent?/1">already_sent?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#forward_to/3">forward_to/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#script_name/1">script_name/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#script_name_segments/1">script_name_segments/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#path_info/1">path_info/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#path_info_segments/1">path_info_segments/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#path/1">path/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#path_segments/1">path_segments/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#query_string/1">query_string/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#host_url/1">host_url/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#port/1">port/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#host/1">host/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#scheme/1">scheme/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#version/1">version/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#method/2">method/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#original_method/1">original_method/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#method/1">method/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#req_body/1">req_body/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#req_headers/1">req_headers/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#route_params/2">route_params/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#route_params/1">route_params/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#params/1">params/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="default_before_send/0">
+    <strong>default_before_send()</strong>
+  </p>
+  <div class="docstring"><p>Default values for before send callbacks.
+It contains callbacks to set content type,
+configure cookies and session.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L49" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
+      
+
+      
+
+      
+        <div id="callbacks_details" class="details_list">
+          <h2>Callbacks</h2>
+          <div class="detail">
+  <p class="signature" id="app/1">
+    <strong>app(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the application that received the request.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L430" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="put_private/3">
+    <strong>put_private(key :: atom(), value :: term(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sets a new private assign with the given key and value.
+We recommended private keys to follow the format:</p>
+
+<p>:&quot;#{plugin}_#{key}&quot;</p>
+
+<p>For example, a Dynamo key to store timeout values would
+be set as: <code>:dynamo_timeout</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L425" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="private/1">
+    <strong>private(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns a keywords list with private assigns set so far.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L414" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="put_assign/3">
+    <strong>put_assign(key :: atom(), value :: term(), conn())</strong>
+  </p>
+  <div class="docstring"><p>The same as <code>assign/3</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L409" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="assign/3">
+    <strong>assign(key :: atom(), value :: term(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Puts a new assign with the given key and value.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L404" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="assigns/1">
+    <strong>assigns(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns a keywords list with assigns set so far.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L399" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="fetchable/3">
+    <strong>fetchable(atom(), (conn() -&gt; conn()), conn())</strong>
+  </p>
+  <div class="docstring"><p>Register an aspect as fetchable in the connection.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L394" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="fetch/2">
+    <strong>fetch(fetch_aspect() | list(fetch_aspect()), conn())</strong>
+  </p>
+  <div class="docstring"><p>Responsible for fetching and caching aspects of the response.
+The default &quot;fetchable&quot; aspects are: headers, params, cookies and body.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L389" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="put_resp_cookie/4">
+    <strong>put_resp_cookie(key :: binary(), value :: (binary() | nil), opts :: list(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Puts the response cookie with the given key, value and list
+of options.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L381" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_cookies/1">
+    <strong>resp_cookies(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the response cookies as a list of three element tuples
+containing the key, value and given options.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L375" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="req_cookies/1">
+    <strong>req_cookies(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the cookies sent in the request as a <code>Binary.Dict</code>.
+Cookies need to be explicitly fetched with <code>conn.fetch(:cookies)</code>
+before using this function.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L369" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="delete_resp_header/2">
+    <strong>delete_resp_header(key :: Binary.Chars.t(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Deletes a response header.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L360" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="put_resp_header/3">
+    <strong>put_resp_header(key :: Binary.Chars.t(), value :: Binary.Chars.t(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Puts a response header, overriding any previous value.
+Both <code>key</code> and <code>value</code> are converted to binary.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L355" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_headers/1">
+    <strong>resp_headers(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the response headers as <code>Binary.Dict</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L349" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="upgrade/3">
+    <strong>upgrade(upgrades(), module(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Upgrades the connection. The connection is sent
+back to the server which encapsulates all the
+communication with the desired handler.</p>
+
+<p>Dynamo does not intermediate any connection upgrade.
+This means you need to consult the underlying web
+server in order to interact with the upgraded connection.</p>
+
+<p>The only supported upgrade so far is <code>:websocket</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>conn.upgrade(:websocket, GameRoom)
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L344" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="state/1">
+    <strong>state(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the response state. It can be:</p>
+
+<ul>
+<li><code>:unset</code> - the response was not configured yet</li>
+<li><code>:set</code> - the response was set via <code>conn.resp_body</code> or <code>conn.status</code></li>
+<li><code>:chunked</code> - the response is being sent in chunks</li>
+<li><code>:sent</code> - the response was sent</li>
+</ul>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L326" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="sendfile/2">
+    <strong>sendfile(path :: binary(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sends the file at the given path. It is expected that the
+given path exists and it points to a regular file. The
+file is sent straight away.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L315" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="send/1">
+    <strong>send(conn())</strong>
+  </p>
+  <div class="docstring"><p>A shortcut to <code>conn.send(conn.status, conn.resp_body)</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L308" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp/3">
+    <strong>resp(status(), body(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sets a response to the given status and body. The
+response will only be sent when <code>send</code> is called.</p>
+
+<p>After calling this function, the state changes to <code>:set</code>,
+both <code>status</code> and <code>resp_body</code> are set.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L303" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_content_type/2">
+    <strong>resp_content_type(content_type(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sets the response content-type.
+This is sent as a header when the response is sent.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L294" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_content_type/1">
+    <strong>resp_content_type(conn())</strong>
+  </p>
+  <div class="docstring"><p>Gets the response content-type.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L288" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_charset/2">
+    <strong>resp_charset(charset(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sets the response charset. The charset is just added
+to the response if <code>resp_content_type</code> is also set.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L283" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_charset/1">
+    <strong>resp_charset(conn())</strong>
+  </p>
+  <div class="docstring"><p>Gets the response charset.
+Defaults to &quot;utf-8&quot;.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L277" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_body/2">
+    <strong>resp_body(body(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sets the response body and changes the state to <code>:set</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L271" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="resp_body/1">
+    <strong>resp_body(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the response body if one was set.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L266" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="status/2">
+    <strong>status(status(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sets the response status and changes the state to <code>:set</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L261" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="status/1">
+    <strong>status(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the response status if one was set.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L256" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="chunk/2">
+    <strong>chunk(body(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Send the given data through the socket.
+<code>send_chunked/2</code> needs to be called before <code>chunk/2</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L251" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="send_chunked/2">
+    <strong>send_chunked(status(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Starts to send a chunked response to the client.
+An updated connection is returned with <code>:chunked</code> state,
+the given status and response body set to nil.
+Use <code>chunk/2</code> to chunk each part of the response.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L245" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="send/3">
+    <strong>send(status(), body :: term(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Sends to the client the given status and body.
+An updated connection is returned with <code>:sent</code> state,
+the given status and response body set to nil.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L237" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="already_sent?/1">
+    <strong>already_sent?(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns a boolean if the connection was already sent or not.
+This must return the correct result regardless if we have an
+updated copy of the connection or not.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L230" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="forward_to/3">
+    <strong>forward_to(segments(), module(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Mounts the request by setting the new path information to the given
+<em>segments</em>. Both script<em>name/1 and path</em>segments/1 are updated.
+The segments given must be a suffix of the current path segments.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L221" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="script_name/1">
+    <strong>script_name(conn())</strong>
+  </p>
+  <div class="docstring"><p>As in CGI environment, returns the current forwarded endpoint as binary.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L214" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="script_name_segments/1">
+    <strong>script_name_segments(conn())</strong>
+  </p>
+  <div class="docstring"><p>As in CGI environment, returns the current forwarded endpoint as segments.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L209" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="path_info/1">
+    <strong>path_info(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the request path relative to the forwarding endpoint
+as a binary.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L204" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="path_info_segments/1">
+    <strong>path_info_segments(conn())</strong>
+  </p>
+  <div class="docstring"><p>Return the path as a list of binaries split on &quot;/&quot;.
+If the request was forwarded request, <code>path_info_segments</code> returns
+only the segments related to the current forwarded endpoint.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L198" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="path/1">
+    <strong>path(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the full path as a binary, as received by the web server.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L191" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="path_segments/1">
+    <strong>path_segments(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the full path segments, as received by the web server.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L186" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="query_string/1">
+    <strong>query_string(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the query string as a binary.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L181" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="host_url/1">
+    <strong>host_url(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the host_url (i.e. containing the scheme,
+hort and port).</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L174" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="port/1">
+    <strong>port(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the request port.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L168" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="host/1">
+    <strong>host(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the request host.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L163" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="scheme/1">
+    <strong>scheme(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the request scheme.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L158" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="version/1">
+    <strong>version(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the HTTP version.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L153" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="method/2">
+    <strong>method(method(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Changes the request method to the given <code>method</code>,
+storing the previous value in original_method.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L148" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="original_method/1">
+    <strong>original_method(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the original HTTP method as a binary.
+Sometimes a filter may change the method from
+HEAD to GET or from POST to PUT, this function
+returns the original method.</p>
+
+<h2>Examples</h2>
+
+<pre><code>conn.original_method #=&gt; &quot;GET&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L142" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="method/1">
+    <strong>method(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the HTTP method as a binary.</p>
+
+<h2>Examples</h2>
+
+<pre><code>conn.method #=&gt; &quot;GET&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L129" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="req_body/1">
+    <strong>req_body(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the request body as a binary.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L119" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="req_headers/1">
+    <strong>req_headers(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the request headers as <code>Binary.Dict</code>. Note that duplicated
+entries are removed. The headers need to be explicitly fetched with
+<code>conn.fetch(:headers)</code> before using this function. Headers keys are
+all downcased.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L114" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="route_params/2">
+    <strong>route_params(Keyword.t(), conn())</strong>
+  </p>
+  <div class="docstring"><p>Updates the route parameters. This is used internally by Dynamo
+and a developer does not need to invoke it manually.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L106" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="route_params/1">
+    <strong>route_params(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the parameters that were set as part of the route
+matching. This is used internally by Dynamo and a developer
+likely does not need to invoke it manually.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L100" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="params/1">
+    <strong>params(conn())</strong>
+  </p>
+  <div class="docstring"><p>Returns the params retrieved from the query string and the request
+body as a <code>Binary.Dict</code>. The parameters need to be explicitly
+fetched with <code>conn.fetch(:params)</code> before using this function.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/dynamo/blob/master/lib/dynamo/connection.ex#L93" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
+      
+    </div>
+  </body>
+</html>
