@@ -17,7 +17,7 @@ Our application is going to be a simple stack that allow us push and pop items a
 
 Our application is going to have one stack which may be accessed by many processes at the same time. To achieve that, we will create a server that is responsible to manage the stack. Clients will send messages to the server whenever they want to push or pop something from the stack.
 
-Since creating such servers are a common pattern when building Erlang and Elixir applications, we have a behavior in OTP that encapsulates common server functionalities called **GenServer**. Let's create a file named `lib/stacker/server.ex` with our first server:
+Since creating such servers is a common pattern when building Erlang and Elixir applications, we have a behavior in OTP that encapsulates common server functionalities called **GenServer**. Let's create a file named `lib/stacker/server.ex` with our first server:
 
 {% highlight ruby %}
 defmodule Stacker.Server do
