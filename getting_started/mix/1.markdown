@@ -11,11 +11,11 @@ Elixir ships with a few applications to make building and deploying projects wit
 
 Mix is a build tool that provides tasks for creating, compiling, testing (and soon deploying) Elixir projects. Mix is inspired by the [Leiningen](https://github.com/technomancy/leiningen) build tool for Clojure and was written by one of its contributors.
 
-In this chapter, you will learn how to create projects using `mix` and install dependencies. In the following sections, we will also learn how to create custom tasks and manage Erlang applications.
+In this chapter, you will learn how to create projects using `mix` and install dependencies. In the following sections, we will also learn how to create OTP applications and create custom tasks with Mix.
 
 ## 1.1 Bootstrapping
 
-In order to start your first project, simply use the `mix new` command passing the path to your project. For now, we will create an application called `my_project` in the current directory:
+In order to start your first project, simply use the `mix new` command passing the path to your project. For now, we will create an project called `my_project` in the current directory:
 
     $ mix new my_project
 
@@ -67,7 +67,7 @@ defmodule MyProject.Mixfile do
 end
 {% endhighlight %}
 
-Our `mix.exs` is quite straight-forward. It defines two functions: `project`, which returns project configuration like the application name and version, and `application`, which is used to generate an Erlang application that is managed by the Erlang Runtime. We will go into detail about these in the next chapter.
+Our `mix.exs` is quite straight-forward. It defines two functions: `project`, which returns project configuration like the project name and version, and `application`, which is used to generate an Erlang application that is managed by the Erlang Runtime. We will go into detail about these in the next chapter.
 
 ### 1.1.2 lib/my_project.ex
 
@@ -104,7 +104,7 @@ It is important to note a couple things:
 
 ### 1.1.4 test/test_helper.exs
 
-The last file we are going to check is the `test_helper.exs`, which simply loads our application and sets up the test framework:
+The last file we are going to check is the `test_helper.exs`, which simply sets up the test framework:
 
 {% highlight ruby %}
 ExUnit.start []
@@ -136,7 +136,7 @@ In general, Mix tries to be smart and compiles only when necessary.
 
 Note that after you compile for the first time, Mix generates a `my_project.app` file inside your `ebin` directory. This file defines an Erlang application based on the contents of the `application` function in your Mix project.
 
-The `.app` file holds information about your application, what are its dependencies, which modules it defines and so forth. The application is automatically started by Mix every time you run some commands and we will learn how to configure it in the next chapter.
+The `.app` file holds information about the application, what are its dependencies, which modules it defines and so forth. The application is automatically started by Mix every time you run some commands and we will learn how to configure it in the next chapter.
 
 ## 1.4 Dependencies
 
