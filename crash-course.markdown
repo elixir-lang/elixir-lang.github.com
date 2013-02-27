@@ -158,7 +158,7 @@ iex> a = 1
 iex> a = 2
 2
 iex> ^a = 3
-** (MatchError) no match of right hand side value 11
+** (MatchError) no match of right hand side value: 3
 {% endhighlight %}
 
 ### Calling Functions
