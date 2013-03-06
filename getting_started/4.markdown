@@ -21,10 +21,10 @@ The line above will define a module named `FileInfo` which contains a function n
     file_info.atime                   #=> Returns the value of atime
     file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
 
-A record is simply a tuple where the first element is the record module name. We can get the record raw representation as follow:
+A record is simply a tuple where the first element is the record module name. We can get the record raw representation as follows:
 
     inspect FileInfo.new, raw: true
-    #=> "{ FileInfo, nil, nil }"
+    #=> "{ FileInfo, nil, 0 }"
 
 Besides defining readers and writers for each attribute, Elixir records also define an `update_#{attribute}` function to update the value. Such functions expect a function as argument that receives the current value and must return the new one. For example, every time the file is accessed, the accesses counter can be incremented with:
 
@@ -34,7 +34,7 @@ Besides defining readers and writers for each attribute, Elixir records also def
 
 ### 4.1.1 Pattern matching
 
-Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follow:
+Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follows:
 
     def was_accessed?(FileInfo[accesses: 0]), do: true
     def was_accessed?(FileInfo[]),            do: false
@@ -63,7 +63,7 @@ For more information on records, [check out the documentation for the `defrecord
 
 Protocols is a mechanism to achieve polymorphism in Elixir. Dispatching a protocol is available to any data type as long as it implements the protocol. Let's consider a practical example.
 
-In Elixir, only `false` and `nil` are considered falsy values. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
+In Elixir, only `false` and `nil` are considered falsey values. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
 
 We could define this protocol as follows:
 
@@ -121,14 +121,14 @@ Implementing the protocol for all 9 types above can be cumbersome. So Elixir giv
 
 ### 4.2.1 Selecting implementations
 
-Implementing the protocol for all types can be a bit of work and in some cases, even unnecesary. Going back to our `Blank` protocol, the types Number, Function, PID, Port and Reference are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
+Implementing the protocol for all types can be a bit of work and in some cases, even unnecessary. Going back to our `Blank` protocol, the types Number, Function, PID, Port and Reference are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
 
     defprotocol Blank do
       @only [Atom, Tuple, List, BitString, Any]
       def blank?(data)
     end
 
-Since we also specified `Any` as a data type, if the data type is not any of `Atom`, `Tuple`, `List` or `BitString`, it will automatically fallback to `Any`:
+Since we also specified `Any` as a data type, if the data type is not any of `Atom`, `Tuple`, `List` or `BitString`, it will automatically fall back to `Any`:
 
     defimpl Blank, for: Any do
       def blank?(_), do: false
@@ -158,7 +158,7 @@ Since `HashDict` is a data structure that contains values, it would also be conv
       def blank?(data)
     end
 
-It is important that `Record` comes before `Tuple`, since all records are tuples (but not all tuples are records). After ammending the protocol, we can implement it for the `HashDict` record:
+It is important that `Record` comes before `Tuple`, since all records are tuples (but not all tuples are records). After amending the protocol, we can implement it for the `HashDict` record:
 
     defimpl Blank, for: HashDict do
       def blank?(dict), do: HashDict.size(dict) == 0
@@ -171,7 +171,7 @@ And now we can test it:
 
 Excellent! The best of all is that we implemented the `Blank` protocol for an existing data structure (`HashDict`) without a need to wrap it or recompile it. This allows developers to define protocols in their libraries which are going to be implemented by clients according to their needs and their own data structures.
 
-Finally, since records are simply tuples, in case a record does not implement a given protocol, Elixir will fallback to the tuple implementation of the protocol, if one exists. So one can add a default protocol implementation for all records by simply defining a default implementation for tuples.
+Finally, since records are simply tuples, in case a record does not implement a given protocol, Elixir will fall back to the tuple implementation of the protocol, if one exists. So one can add a default protocol implementation for all records by simply defining a default implementation for tuples.
 
 ### 4.2.3 Built-in protocols
 
