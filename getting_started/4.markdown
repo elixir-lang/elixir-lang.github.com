@@ -19,7 +19,11 @@ The line above will define a module named `FileInfo` which contains a function n
 
     file_info = FileInfo.new(atime: { 2010, 4, 17 })
     file_info.atime                   #=> Returns the value of atime
-    file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
+
+    file_info = file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
+    file_info
+
+Notice that when we change the `atime` field of the record, we re-store the record in the `file_info` variable. This is because as almost everything else in Elixir, records are immutable. So changing the `atime` field does not update the record in place. Instead, it returns a new record with the new value set.
 
 A record is simply a tuple where the first element is the record module name. We can get the record raw representation as follows:
 
@@ -36,10 +40,12 @@ Besides defining readers and writers for each attribute, Elixir records also def
 
 Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follows:
 
-    def was_accessed?(FileInfo[accesses: 0]), do: true
-    def was_accessed?(FileInfo[]),            do: false
+    defmodule FileAccess do
+      def was_accessed?(FileInfo[accesses: 0]), do: true
+      def was_accessed?(FileInfo[]),            do: false
+    end
 
-The first clause will only match if a `FileInfo` record is given and the `accesses` field is equal to zero. If instead we would like to assign the value of `accesses` to a variable, we could write:
+The first clause will only match if a `FileInfo` record is given and the `accesses` field is equal to zero. If instead we would like to assign the value of `accesses` to a variable, we could have writen:
 
     def was_accessed?(FileInfo[accesses: accesses]), do: accesses == 0
 
@@ -47,7 +53,7 @@ This syntax can also be used to create new records:
 
     file_info = FileInfo[accesses: 0]
 
-Whenever using the bracket syntax above, Elixir expands the record to a tuple at compilation time. That said, the clause:
+Whenever using the bracket syntax above, Elixir expands the record to a tuple at compilation time. That said, the clause above:
 
     def was_accessed?(FileInfo[accesses: 0]), do: true
 
@@ -55,7 +61,7 @@ Is effectively the same as:
 
     def was_accessed?({ FileInfo, _, 0 }), do: true
 
-Using the bracket syntax is a powerful mechanism for pattern matching and also performance, since it provides faster access and creation times compared to `file_info.accesses` and `FileInfo.new`. However, it loses some part of the record flexibility, since they are no longer dynamic. Luckily, Elixir allows you to mix and match both styles as you may find fit.
+Using the bracket syntax is a powerful mechanism for pattern matching and also performance, since it provides faster times compared to `file_info.accesses` and `FileInfo.new`. The downside is that we hardcode the record name. For this reason, Elixir allows you to mix and match both styles as you may find fit.
 
 For more information on records, [check out the documentation for the `defrecord` macro](http://elixir-lang.org/docs/master/Kernel.html#defrecord/4)
 
