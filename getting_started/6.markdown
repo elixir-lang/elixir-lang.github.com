@@ -13,8 +13,8 @@ This chapter contains different small topics that are part of Elixir's day to da
 
 Elixir provides string sigils via the token `%`:
 
-    %b(Binary with escaping and interpolation)
-    %B(Binary without escaping \n and without #{interpolation})
+    %b(Binary with escape codes \x26 interpolation)
+    %B(Binary without escape codes and without #{interpolation})
 
 Sigils starting with an uppercase letter never escape characters or do interpolation. Notice the separators are not necessarily parenthesis, but any non-alphanumeric character:
 
@@ -222,7 +222,7 @@ Elixir provides generators for both lists and bitstrings:
 Bit string generators are quite useful when you need to organize streams:
 
     iex> pixels = <<213,45,132,64,76,32,76,0,0,234,32,15>>
-    iex> lc <<r:8,g:8,b:8>> inbits pixels, do: {r,g,b}
+    iex> lc <<r :: size(8), g :: size(8), b :: size(8)>> inbits pixels, do: {r,g,b}
     [{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
 
 Remember, as strings are binaries and a binary is a bitstring, we can also use strings in comprehensions. For instance, the example below removes all white space characters from a string via bit comprehensions:
