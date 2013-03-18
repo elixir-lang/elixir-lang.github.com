@@ -22,7 +22,7 @@ layout: default
   <div class="hentry post">
     <h4>Everything is an expression</h4>
     <div class="entry-summary">
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Hello do
   IO.puts "Defining the function world"
 
@@ -54,7 +54,7 @@ Hello World
     <div class="entry-summary">
       <p>With expressions and meta-programming, Elixir developers can easily create <a href="http://en.wikipedia.org/wiki/Domain-specific_language">Domain Specific Languages</a>:</p>
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MathTest do
   use ExUnit.Case
 
@@ -74,13 +74,13 @@ end
     <div class="entry-summary">
       <p>Protocols allow developers to provide type-specific functionality at chosen extension points. For example, the <code>Enum</code> module in Elixir is commonly used to iterate collections:</p>
 
-{% highlight ruby %}
+{% highlight elixir %}
 Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 {% endhighlight %}
 
       <p>Since the <code>Enum</code> module is built on top of protocols, it is not only limited to the data types that ships with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enum.Iterator</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
 
-{% highlight ruby %}
+{% highlight elixir %}
 { :ok, file } = File.iterator("README.md")
 lines = Enum.map(file, fn(line) -> Regex.replace(%r/"/, line, "'") end)
 File.write("README.md", lines)
@@ -94,7 +94,7 @@ File.write("README.md", lines)
     <div class="entry-summary">
       <p>Documentation is written in markdown using Elixir data structures for accessibility:</p>
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyModule do
   @moduledoc """
   Documentation for my module
@@ -125,13 +125,13 @@ Documentation for my module
     <div class="entry-summary">
       <p>Pattern matching allow developer to easily destructure data and access its contents:</p>
 
-{% highlight ruby %}
+{% highlight elixir %}
 { User, name, age } = User.get("John Doe")
 {% endhighlight %}
 
       <p>When mixed with guards, it allows us to easily express our problem:</p>
       
-{% highlight ruby %}
+{% highlight elixir %}
 def serve_drinks({ User, name, age }) when age < 21 do
   raise "No way #{name}!"
 end
@@ -152,7 +152,7 @@ serve_drinks User.get("John")
     <div class="entry-summary">
       <p>After all, Elixir is still Erlang. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
 
-{% highlight ruby %}
+{% highlight elixir %}
 :application.start(:crypto)
 :crypto.md5("Using crypto from Erlang OTP")
 #=> <<192,223,75,115,...>>
