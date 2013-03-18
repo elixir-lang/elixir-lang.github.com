@@ -13,7 +13,7 @@ An Elixir program can be represented by its own data structures. This chapter wi
 
 The building block of Elixir is a tuple with three elements. The function call `sum(1,2,3)` is represented in Elixir as:
 
-{% highlight ruby %}
+{% highlight elixir %}
 { :sum, [], [1, 2, 3] }
 {% endhighlight %}
 
@@ -44,7 +44,7 @@ When quoting more complex expressions, we can see the representation is composed
 
 In general, each node (tuple) above follows the following format:
 
-{% highlight ruby %}
+{% highlight elixir %}
 { tuple | atom, integer, list | atom }
 {% endhighlight %}
 
@@ -54,7 +54,7 @@ In general, each node (tuple) above follows the following format:
 
 Besides the node defined above, there are also five Elixir literals that when quoted return themselves (and not a tuple). They are:
 
-{% highlight ruby %}
+{% highlight elixir %}
 :sum         #=> Atoms
 1.0          #=> Numbers
 [1,2]        #=> Lists
@@ -68,7 +68,7 @@ With those basic structures in mind, we are ready to define our own macro.
 
 A macro can be defined using `defmacro`. For instance, in just a few lines of code we can define a macro called `unless` which does the opposite of `if`:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyMacro do
   defmacro unless(clause, options) do
     quote do: if(!unquote(clause), unquote(options))
@@ -78,20 +78,20 @@ end
 
 Similarly to `if`, `unless` expects two arguments: a `clause` and `options`:
 
-{% highlight ruby %}
+{% highlight elixir %}
 require MyMacro
 MyMacro.unless var, do: IO.puts "false"
 {% endhighlight %}
 
 However, since `unless` is a macro, its arguments are not evaluated when it's invoked but are instead passed literally. For example, if one calls:
 
-{% highlight ruby %}
+{% highlight elixir %}
 unless 2 + 2 == 5, do: call_function()
 {% endhighlight %}
 
 Our `unless` macro will receive the following:
 
-{% highlight ruby %}
+{% highlight elixir %}
 unless({:==, [], [{:+, [], [2, 2]}, 5]}, { :call_function, [], [] })
 {% endhighlight %}
 
@@ -99,7 +99,7 @@ Then our `unless` macro will call `quote`, to return a tree representation of th
 
 There is a common mistake when quoting expressions which is that developers usually forget to `unquote` the proper expression. In order to understand what `unquote` does, let's simply remove it:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmacro unless(clause, options) do
   quote do: if(!clause, options)
 end
@@ -107,13 +107,13 @@ end
 
 When called as `unless 2 + 2 == 5, do: call_function()`, our `unless` would then literally return:
 
-{% highlight ruby %}
+{% highlight elixir %}
 if(!clause, options)
 {% endhighlight %}
 
 Which would fail because the clause and options variables are not defined in the current scope. If we add `unquote` back:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmacro unless(clause, options) do
   quote do: if(!unquote(clause), unquote(options))
 end
@@ -121,7 +121,7 @@ end
 
 `unless` will then return:
 
-{% highlight ruby %}
+{% highlight elixir %}
 if(!(2 + 2 == 5), do: call_function())
 {% endhighlight %}
 
@@ -133,7 +133,7 @@ We can define any macro we want, including ones that override the built-in macro
 
 Elixir macros follow Scheme conventions and are hygienic. This means that aliases and imports will be expanded in the context the quoted contents are defined. It also guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Hygiene do
   defmacro no_interference do
     quote do: a = 1
@@ -155,7 +155,7 @@ HygieneTest.go
 
 In the example above, even if the macro injects `a = 1`, it does not affect the variable `a`. In case the macro wants to explicitly affect the context, it can use `var!`:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Hygiene do
   defmacro interference do
     quote do: var!(a) = 1
@@ -181,7 +181,7 @@ Variables hygiene only works because Elixir annotates variables with their conte
 
 However, a quoted variable is represented as:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Sample do
   def quoted do
     quote do: x
@@ -197,7 +197,7 @@ Notice that the third element in the quoted variable is the atom `Sample`, inste
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time. A common use case for private macros is to define guards that are frequently used in the same module:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyMacros do
   defmacrop is_even?(x) do
     quote do
@@ -213,7 +213,7 @@ end
 
 It is important that the macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyMacros do
   def four, do: two + two
   defmacrop two, do: 2
@@ -232,7 +232,7 @@ To finish our discussion about macros, we are going to briefly discuss how code 
 
 This behavior is important to understand because it affects how we think about our code structure. Consider the following code:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Sample do
   case System.get_env("FULL") do
     "true" ->
@@ -245,7 +245,7 @@ end
 
 The code above will define a function `full?` which will return true or false depending on the value of the environment variable `FULL` at **compilation time**. In order to execute this code, Elixir will first expand all macros. Considering that `defmodule` and `def` are macros, the code will expand to something like:
 
-{% highlight ruby %}
+{% highlight elixir %}
 :elixir_module.store Sample, fn ->
   case System.get_env("FULL") do
     "true" ->
@@ -263,7 +263,7 @@ There are two lessons to take away from this example:
 
 2) we cannot invoke a function or macro just after it is defined in a module. For example, consider:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Sample do
   def full?, do: true
   IO.puts full?
@@ -272,7 +272,7 @@ end
 
   The example above will fail because it translates to:
 
-{% highlight ruby %}
+{% highlight elixir %}
 :elixir_module.store Sample, fn ->
   :elixir_def.store(Foo, :def, :full?, [], true)
   IO.puts full?
