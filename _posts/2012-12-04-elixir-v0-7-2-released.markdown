@@ -14,7 +14,7 @@ the type specification syntax.
 
 Here's the gist:
 
-{% highlight ruby %}
+{% highlight elixir %}
 @spec myfun(integer), do: integer
 # becomes
 @spec myfun(integer) :: integer

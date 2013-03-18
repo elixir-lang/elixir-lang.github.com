@@ -51,7 +51,7 @@ You may keep the shell running while you're editing the file. Just don't forget 
 
 Elixir too has an interactive shell called `iex`. Compiling Elixir code can be done with `elixirc` (which is similar to Erlang's `erlc`). Elixir also provides an executable named `elixir` to run Elixir code. The module defined above can be written in Elixir as:
 
-{% highlight ruby %}
+{% highlight elixir %}
 # module_name.ex
 defmodule ModuleName do
   def hello do
@@ -62,7 +62,7 @@ end
 
 And compiled from `iex`:
 
-{% highlight ruby %}
+{% highlight elixir %}
 Interactive Elixir
 iex> c("module_name.ex")
 [ModuleName]
@@ -73,7 +73,7 @@ Hello world!
 
 However notice that in Elixir you don't need to create a file only to create a new module, Elixir modules can be defined directly in the shell:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyModule do
   def hello do
     IO.puts "Another Hello"
@@ -117,7 +117,7 @@ X + Y.
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 x = 2; y = 3
 x + y
 {% endhighlight %}
@@ -152,7 +152,7 @@ ok
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 iex> a = 1
 1
 iex> a = 2
@@ -178,13 +178,13 @@ orddict:new().
 
 to invoke the `new` function from the `orddict` module. In Elixir, use the dot `.` in place of the colon `:`
 
-{% highlight ruby %}
+{% highlight elixir %}
 Process.self
 {% endhighlight %}
 
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
 
-{% highlight ruby %}
+{% highlight elixir %}
 :lists.sort [3, 2, 1]
 {% endhighlight %}
 
@@ -212,7 +212,7 @@ X = 10.
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 :im_an_atom
 :me_too
 
@@ -235,7 +235,7 @@ is_atom('').                %=> true
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 is_atom :ok                 #=> true
 is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
@@ -259,7 +259,7 @@ setelement(1, { a, b, c }, d) % => { d, b, c }
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 elem({ :a, :b, :c }, 0)        % => :a
 setelem({ :a, :b, :c }, 0, :d) % => { :d, :b, :c }
 {% endhighlight %}
@@ -289,7 +289,7 @@ In Elixir, the word **string** means a utf-8 binary and there is a `String` modu
 
 Elixir also supports multiline strings (also called heredocs):
 
-{% highlight ruby %}
+{% highlight elixir %}
 is_binary """
 This is a binary
 spawning several
@@ -311,14 +311,14 @@ re:run("abc ", Pattern).
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 Regex.run %r/abc\s/, "abc "
 #=> ["abc "]
 {% endhighlight %}
 
 Regexes are also supported in heredocs, which is convenient to define multiline regexes:
 
-{% highlight ruby %}
+{% highlight elixir %}
 is_regex %r"""
 This is a regex
 spawning several
@@ -344,7 +344,7 @@ Dict = orddict:from_list([{key, 10}, {another_key, 20}]).
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 dict = [key: 10, another_key: 20]
 #=> [another_key: 20, key: 10]
 {% endhighlight %}
@@ -360,7 +360,7 @@ The syntax for records differs significantly between Erlang and Elixir. Please r
 
 In order to translate Erlang records into Elixir records, use Record.extract(). For example, to use the `ec2_instance_spec` record from [erlcloud][8]:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defrecord :ec2_instance_spec, Record.extract(:ec2_instance_spec,
                                 from: "deps/erlcloud/include/erlcloud_ec2.hrl")
 
@@ -402,7 +402,7 @@ Here we create a module named ``hello_module``. In it we define three functions,
 
 An Elixir equivalent to the Erlang above:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule HelloModule do
   # A "Hello world" function
   def some_fun do
@@ -423,7 +423,7 @@ end
 
 In Elixir, it is also possible to have multiple modules in one file, as well as nested modules:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule HelloModule do
   defmodule Utils do
     def util do
@@ -484,7 +484,7 @@ loop_through([]) ->
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 def loop_through([h|t]) do
   IO.inspect h
   loop_through t
@@ -514,7 +514,7 @@ sum(A, B, C) -> A + B + C.
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 def sum, do: 0
 def sum(a), do: a
 def sum(a, b), do: a + b
@@ -547,7 +547,7 @@ sum("a", "b").
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 def sum(a, b) when is_integer(a) and is_integer(b) do
   a + b
 end
@@ -599,7 +599,7 @@ lists:map(Square, [1, 2, 3, 4]).
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 sum = fn(a, b) -> a + b end
 sum.(4, 3)
 #=> 7
@@ -629,7 +629,7 @@ F({a, b}).
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 f = function do
       {:a, :b} = tuple ->
         IO.puts "All your #{inspect tuple} are belong to us"
@@ -659,7 +659,7 @@ lists:map(fun square/1, [1, 2, 3]).
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 def square(x) do
   x * x
 end
@@ -672,7 +672,7 @@ Enum.map [1,2,3], function(:square, 1)
 
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
 
-{% highlight ruby %}
+{% highlight elixir %}
 Enum.map [1, 2, 3, 4], &1 * 2
 #=> [2, 4, 6, 8]
 
@@ -682,7 +682,7 @@ List.foldl [1, 2, 3, 4], 0, &1 + &2
 
 Partials also allow us to pass named functions as arguments.
 
-{% highlight ruby %}
+{% highlight elixir %}
 def square(x) do
   x * x
 end
@@ -713,7 +713,7 @@ end
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 case { x, y } do
   { :a, :b } -> :ok
   { :b, :c } -> :good
@@ -750,7 +750,7 @@ Test_fun(10).
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 test_fun = fn(x) ->
   cond do
     x > 10 ->
@@ -782,7 +782,7 @@ There are two important differences between Elixir's `cond` and Erlang's `if`:
 
 Elixir also provides a `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:
 
-{% highlight ruby %}
+{% highlight elixir %}
 if x > 10 do
   :greater_than_ten
 else
@@ -811,7 +811,7 @@ end.
 
 **Elixir**
 
-{% highlight ruby %}
+{% highlight elixir %}
 pid = Process.self
 
 pid <- { :hello }
@@ -834,7 +834,7 @@ Elixir compiles directly into BEAM byte code. This means that Elixir code can be
 
 Consider the following module in Elixir:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Contrived do
   def pretty_binary(bin) do
     "Pretty " <> bin
