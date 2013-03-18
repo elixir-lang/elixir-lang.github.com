@@ -44,7 +44,7 @@ Let's take a brief look at some of these.
 
 This is the file with your projects configuration. It looks like this:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyProject.Mixfile do
   use Mix.Project
 
@@ -73,7 +73,7 @@ Our `mix.exs` is quite straight-forward. It defines two functions: `project`, wh
 
 This file contains a simple module definition to lay out our code:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule MyProject do
 end
 {% endhighlight %}
@@ -82,7 +82,7 @@ end
 
 This file contains a stub test case for our project:
 
-{% highlight ruby %}
+{% highlight elixir %}
 Code.require_file "../test_helper", __FILE__
 
 defmodule MyProjectTest do
@@ -106,7 +106,7 @@ It is important to note a couple things:
 
 The last file we are going to check is the `test_helper.exs`, which simply sets up the test framework:
 
-{% highlight ruby %}
+{% highlight elixir %}
 ExUnit.start []
 {% endhighlight %}
 
@@ -126,7 +126,7 @@ Play around with the available tasks, like `mix compile` and `mix test`, and exe
 
 Mix can compile our project for us. The default configurations uses `lib/` for source files and `ebin/` for compiled beam files. You don't even have to provide any compilation-specific setup but if you must, some options are available. For instance, if you want to put your compiled files in another directory besides `ebin`, simply set in `:compile_path` in your `mix.exs` file:
 
-{% highlight ruby %}
+{% highlight elixir %}
 def project do
   [compile_path: "ebin"]
 end
@@ -142,7 +142,7 @@ The `.app` file holds information about the application, what are its dependenci
 
 Mix is also able to manage dependencies. Dependencies should be listed in the project settings, as follows:
 
-{% highlight ruby %}
+{% highlight elixir %}
 def project do
   [ app: :my_project,
     version: "0.0.1",
@@ -183,7 +183,7 @@ In order to compile a dependency, Mix looks into the repository for the best way
 
 If the dependency does not contain any of the above, you can specify a command directly with the `:compile` option:
 
-{% highlight ruby %}
+{% highlight elixir %}
     compile: "./configure && make"
 {% endhighlight %}
 
@@ -220,7 +220,7 @@ Mix has the concept of environments that allows a developer to customize compila
 
 By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done using the `env:` option:
 
-{% highlight ruby %}
+{% highlight elixir %}
 def project do
   [ env: [
     prod: [compile_path: "prod_ebin"] ] ]
