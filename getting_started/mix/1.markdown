@@ -210,6 +210,22 @@ Elixir has many tasks to manage the project dependencies:
 
 Use `mix help` to get more information.
 
+### 1.4.5 Dependencies of dependencies
+
+If your dependency is another Mix project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project depends on code with other build systems, such as rebar, then the dependencies of your dependencies are not automatically known to Mix. 
+
+To resolve this, put these dependencies in your projects Mix file, in the order of dependence.
+
+For example, if you have a project that uses a database called `:catdb`, that is built with rebar, which depends on `:cdb_storage_engine` and that depends on `:cdb_diskio`, then your mix file should look something like this:
+
+{% highlight elixir %}
+defp deps do
+  [ {:cdb_diskio, github: "catdb/cdb_diskio"},
+	  {:cdb_storage_engine, github: "catdb/cdb_storage_engine"},
+	  {:catdb, github: "catdb/catdb"} ]
+end
+{% endhighlight %}
+
 ## 1.5 Environments
 
 Mix has the concept of environments that allows a developer to customize compilation and other options based on an external setting. By default, Mix understands three environments:
