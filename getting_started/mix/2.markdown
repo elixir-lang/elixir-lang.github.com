@@ -19,7 +19,7 @@ Our application is going to have one stack which may be accessed by many process
 
 Since creating such servers is a common pattern when building Erlang and Elixir applications, we have a behavior in OTP that encapsulates common server functionalities called **GenServer**. Let's create a file named `lib/stacker/server.ex` with our first server:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Stacker.Server do
   use GenServer.Behaviour
 
@@ -120,7 +120,7 @@ When building applications in Erlang/Elixir, a common philosophy is to "let it c
 
 Create a file at `lib/stacker/supervisor.ex` with the following:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Stacker.Supervisor do
   use Supervisor.Behaviour
 
@@ -143,7 +143,7 @@ Our supervisor is very simple: it has to supervise one worker, in this case, `St
 
 Given that our worker is specified by the `Stacker.Server` module passing the `stack` as argument, the supervisor will by default invoke the `Stacker.Server.start_link(stack)` function to start the worker, so let's implement it:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Stacker.Server do
   use GenServer.Behaviour
 
@@ -214,7 +214,7 @@ The `.app` file is called **application specification** and it must contain our 
 
 In this particular case, our application has a supervisor and, furthermore, it registers a server with name `:stacker`. That said, it is useful to add to the **application specification** all registered names in order to avoid conflicts. If it happens that two applications register the same name, we will be able to find about this conflict sooner. So, let's open the `mix.exs` file and edit the `application` function to the following:
 
-{% highlight ruby %}
+{% highlight elixir %}
 def application do
   [ registered: [:stacker],
     mod: { Stacker, [:hello] } ]
@@ -225,7 +225,7 @@ In the `:registered` key we specify all names registered by our application. The
 
 With this in mind, let's open up the `lib/stacker.ex` file and add the following:
 
-{% highlight ruby %}
+{% highlight elixir %}
 defmodule Stacker do
   use Application.Behaviour
 
@@ -250,7 +250,7 @@ Mix will always start the current application and all application dependencies. 
 
 The project dependencies may contain your test framework or a compile-time only dependency. The application dependency is everything you depend on at runtime. Any application dependency needs to be explicitly added to the `application` function too:
 
-{% highlight ruby %}
+{% highlight elixir %}
 def application do
   [ registered: [:stacker],
     applications: [:some_dep],
@@ -269,3 +269,31 @@ You may also start each application individually via the command line using [Erl
 Besides `registered`, `applications` and `mod`, there are other keys allowed in the application specification. You can learn more about them [in the applications chapter from Learn You Some Erlang](http://learnyousomeerlang.com/building-otp-applications).
 
 Finally, notice that `mix new` supports a `--sup` option, which tells Mix to generate a supervisor with an application module callback, automating some of the work we have done here (try it!). With this note, we finalize this chapter. We have learned how to create servers, supervise them, and hook them into our application lifecycle. In the next chapter, we will learn how to create custom tasks in Mix.
+
+## 2.5 Dependencies of Dependencies
+
+If your project is completely written in elixir, Mix does the right thing. However, if your project depends on code with other build systems, such as rebar, then the dependencies of your dependencies are not automatically known to Mix. 
+
+To resolve this, put these dependencies in your projects Mix file, in the order of dependence.
+
+For example, if you have a project that uses a database called :catdb, tht is built with rebar, which depends on :cdb_storage_engine and that depends on :cdb_diskio, then your mix file will look something like this:
+
+{% highlight elixir %}
+@doc "Configuration for the OTP application"
+def application do
+  [
+	 applications: [:catdb]  
+ ]
+end
+
+defp deps do
+  [
+	 {:cdb_diskio, github: "catdb/cdb_diskio"},
+	 {:cdb_storage_engine, github: "catdb/cdb_storage_engine"},
+	 {:catdb, github: "catdb/catdb"}
+ ]
+end
+{% endhighlight %}
+
+
+
