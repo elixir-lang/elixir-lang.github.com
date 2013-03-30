@@ -58,7 +58,7 @@ Besides the node defined above, there are also five Elixir literals that when qu
 :sum         #=> Atoms
 1.0          #=> Numbers
 [1,2]        #=> Lists
-"binaries"   #=> Binaries
+"binaries"   #=> Strings
 {key, value} #=> Tuples with two elements
 {% endhighlight %}
 
@@ -95,7 +95,7 @@ Our `unless` macro will receive the following:
 unless({:==, [], [{:+, [], [2, 2]}, 5]}, { :call_function, [], [] })
 {% endhighlight %}
 
-Then our `unless` macro will call `quote`, to return a tree representation of the `if` clause. This means we are transforming our `unless` into an `if`!
+Then our `unless` macro will call `quote` to return a tree representation of the `if` clause. This means we are transforming our `unless` into an `if`!
 
 There is a common mistake when quoting expressions which is that developers usually forget to `unquote` the proper expression. In order to understand what `unquote` does, let's simply remove it:
 
@@ -131,7 +131,7 @@ We can define any macro we want, including ones that override the built-in macro
 
 ## 5.3 Macros hygiene
 
-Elixir macros follow Scheme conventions and are hygienic. This means that aliases and imports will be expanded in the context the quoted contents are defined. It also guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
+Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
 {% highlight elixir %}
 defmodule Hygiene do
@@ -153,7 +153,7 @@ HygieneTest.go
 # => 13
 {% endhighlight %}
 
-In the example above, even if the macro injects `a = 1`, it does not affect the variable `a`. In case the macro wants to explicitly affect the context, it can use `var!`:
+In the example above, even if the macro injects `a = 1`, it does not affect the variable `a` defined by the `go` function. In case the macro wants to explicitly affect the context, it can use `var!`:
 
 {% highlight elixir %}
 defmodule Hygiene do
@@ -192,6 +192,8 @@ Sample.quoted #=> { :x, [line: 3], Sample }
 {% endhighlight %}
 
 Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers those two variables come from different contexts and handle them accordingly.
+
+Elixir provides similar mechanisms for imports and aliases too. This guarantees macros will behave as specified by its source module rather than conflicting with the target module.
 
 ## 5.4 Private macros
 
@@ -259,7 +261,7 @@ This code will then be executed, define a module `Foo` and store the appropriate
 
 There are two lessons to take away from this example:
 
-1) a macro is always expanded, regardless if it is inside a `case` branch that won't actually match;
+1) a macro is always expanded, regardless if it is inside a `case` branch that won't actually match when executed;
 
 2) we cannot invoke a function or macro just after it is defined in a module. For example, consider:
 

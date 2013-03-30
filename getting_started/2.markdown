@@ -197,7 +197,7 @@ UTF-8 also plays nicely with pattern matching. You can match against a UTF-8 cod
     iex> rest
     "pa"
 
-In general, you will find working with binaries and strings in Elixir a breeze. Whenever you want to work with raw binaries, one can use [Erlang's binary module](http://www.erlang.org/doc/man/binary.html), and use [Elixir's String module](http://elixir-lang.org/docs/stable/String.html) when you want to work on strings, which are simply UTF-8 encoded binaries.
+In general, you will find working with binaries and strings in Elixir a breeze. Whenever you want to work with raw binaries, one can use [Erlang's binary module](http://www.erlang.org/doc/man/binary.html), and use [Elixir's String module](http://elixir-lang.org/docs/stable/String.html) when you want to work on strings, which are simply UTF-8 encoded binaries. Finally, there are a bunch of conversion functions, that allows you to convert a binary to integer, atom and vice-versa [in the Kernel module](http://elixir-lang.org/docs/stable/Kernel.html).
 
 ## 2.5 Calling Erlang functions
 
@@ -401,7 +401,7 @@ Each match clause also supports special conditions specified via guards:
 In the example above, the second clause will only match when x is positive. The Erlang VM only allows a limitted set of expressions as guards:
 
 * comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`);
-* boolean operators (`and`, `or`, `not`). Note that `||` and `&&` are not allowed;
+* boolean operators (`and`, `or`) and negation operators (`not`, `!`). Note that `||` and `&&` are not allowed;
 * arithmetic operators (`+`, `-`, `*`, `/`);
 * `<>` and `++` as long as the left side is a literal;
 * the `in` operator;
