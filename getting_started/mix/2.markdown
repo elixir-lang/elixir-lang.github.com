@@ -269,31 +269,3 @@ You may also start each application individually via the command line using [Erl
 Besides `registered`, `applications` and `mod`, there are other keys allowed in the application specification. You can learn more about them [in the applications chapter from Learn You Some Erlang](http://learnyousomeerlang.com/building-otp-applications).
 
 Finally, notice that `mix new` supports a `--sup` option, which tells Mix to generate a supervisor with an application module callback, automating some of the work we have done here (try it!). With this note, we finalize this chapter. We have learned how to create servers, supervise them, and hook them into our application lifecycle. In the next chapter, we will learn how to create custom tasks in Mix.
-
-## 2.5 Dependencies of Dependencies
-
-If your project is completely written in elixir, Mix does the right thing. However, if your project depends on code with other build systems, such as rebar, then the dependencies of your dependencies are not automatically known to Mix. 
-
-To resolve this, put these dependencies in your projects Mix file, in the order of dependence.
-
-For example, if you have a project that uses a database called :catdb, tht is built with rebar, which depends on :cdb_storage_engine and that depends on :cdb_diskio, then your mix file will look something like this:
-
-{% highlight elixir %}
-@doc "Configuration for the OTP application"
-def application do
-  [
-	 applications: [:catdb]  
- ]
-end
-
-defp deps do
-  [
-	 {:cdb_diskio, github: "catdb/cdb_diskio"},
-	 {:cdb_storage_engine, github: "catdb/cdb_storage_engine"},
-	 {:catdb, github: "catdb/catdb"}
- ]
-end
-{% endhighlight %}
-
-
-
