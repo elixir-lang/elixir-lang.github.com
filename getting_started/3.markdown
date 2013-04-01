@@ -113,30 +113,30 @@ Giving an argument that does not match any of the clauses raises an error.
 
 Named functions also support default arguments:
 
-    defmodule Funs do
+    defmodule Concat do
       def join(a, b, sep // ' ') do
-        List.wrap(a) ++ sep ++ List.wrap(b)
+        a <> sep <> b
       end
     end
 
-    IO.puts Funs.join('Hello', 'world')      #=> Hello world
-    IO.puts Funs.join('Hello', 'world', '_') #=> Hello_world
+    IO.puts Concat.join("Hello", "world")      #=> Hello world
+    IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 
 When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 
-    defmodule Funs do
+    defmodule Concat do
       def join(a, b) do
         IO.puts "***First join"
-        List.wrap(a) ++ List.wrap(b)
+        a <> b
       end
 
       def join(a, b, sep // ' ') do
         IO.puts "***Second join"
-        List.wrap(a) ++ sep ++ List.wrap(b)
+        a <> sep <> b
       end
     end
 
-If we save the code above in a file named "test_funs.ex" and compile it, Elixir will emit the following warning:
+If we save the code above in a file named "concat.ex" and compile it, Elixir will emit the following warning:
 
     test_funs.ex:7: this clause cannot match because a previous clause at line 2 always matches
 
@@ -144,23 +144,23 @@ The compiler is telling us that invoking the `join` function with two arguments 
 
     $ iex test_funs.ex
 
-    iex> Funs.join 'Hello', 'world'
+    iex> Concat.join "Hello", "world"
     ***First join
-    'Helloworld'
+    "Helloworld"
 
-    iex> Funs.join 'Hello', 'world', ' '
+    iex> Concat.join "Hello", "world", "_"
     ***Second join
-    'Hello world'
+    "Hello_world"
 
 ### 3.4 Recursion
 
-Due to data structure immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
+Due to immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
 
     for(i = 0; i < array.length; i++) {
       array[i] = array[i] * 2
     }
 
-In the example above, we are mutating the array which is not possible here. Therefore, in functional languages we use recursion; a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
+In the example above, we are mutating the array which is not possible in Elixir. Therefore, functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
 
     defmodule Math do
       def sum_list([h|t], acc) do
@@ -174,7 +174,7 @@ In the example above, we are mutating the array which is not possible here. Ther
 
     Math.sum_list([1,2,3], 0) #=> 6
 
-In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. As we saw in the previous chapter, when a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to 0.
+In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. When a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to 0.
 
 Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
 
@@ -183,42 +183,45 @@ Then, we add the head of the list to the accumulator `h + acc` and call `sum_lis
     sum_list [3], 3
     sum_list [], 6
 
-When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stack (in which our execution path is kept) would grow until it reaches a limit. Erlang, however, does last call optimization in which the stack does not grow when a function exits by calling another function.
+When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stack (in which our execution path is kept) would grow until it reaches a limit. Elixir, however, does last call optimization in which the stack does not grow when a function exits by calling another function.
 
-Recursion and last call optimization are an important part of Erlang and are commonly used to create loops, especially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
+Recursion and last call optimization are an important part of Elixir and are commonly used to create loops, especially in cases where a process needs to wait and respond to messages (using the `receive` macro we saw in the previous chapter). However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already abstracts such use cases. For instance, the example above could be simply written as:
 
     Enum.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
 
 ## 3.5 Directives
 
-In order to facilitate software reuse, Elixir supports three directives. As we are going to see below, they are called directives because they are the only functions in Elixir that have **lexical scope**.
+In order to facilitate software reuse, Elixir supports three directives. As we are going to see below, they are called directives because they have **lexical scope**.
 
 ### 3.5.1 alias
 
-`alias` allows you to setup aliases for any given module name. For instance, one can do:
+`alias` allows you to setup aliases for any given module name. Imagine our `Math` module has a special list for doing math specific operations:
 
     defmodule Math do
-      alias MyList, as: List
+      alias Math.List, as: List
     end
 
-And now, any reference to `List` will be automatically replaced by `MyList`. In case one wants to access the original `List`, it can be done by accessing the module directly via `Elixir`:
+From now on, any reference to `List` will automatically expand to `Math.List`. In case one wants to access the original `List`, it can be done by accessing the module via `Elixir`:
 
-    List.values         #=> uses MyList.values
-    Elixir.List.values  #=> uses List.values
+    List.values             #=> uses Math.List.values
+    Elixir.List.values      #=> uses List.values
+    Elixir.Math.List.values #=> uses Math.List.values
+
+> Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit the Elixir main namespace.
 
 Calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
 
-    alias Foo.Bar.Baz
+    alias Math.List
 
 Is the same as:
 
-    alias Foo.Bar.Baz, as: Baz
+    alias Math.List, as: List
 
 Notice that `alias` is **lexically scoped**, which allows you to set aliases inside specific functions:
 
     defmodule Math do
       def add(a, b) do
-        alias MyList, as: List
+        alias Math.List
         # ...
       end
 
@@ -238,7 +241,7 @@ In general, a module does not need to be required before usage, except if we wan
       MyMacros.my_if do_something, it_works
     end
 
-An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped.
+An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in chapter 5.
 
 ### 3.5.3 import
 
@@ -254,11 +257,18 @@ We use `import` whenever we want to easily access functions or macros from other
 
 In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `only:` is optional, its usage is recommended. `except` could also be given as an option.
 
-If we want to import only `:functions` or `:macros` from a given module, we can also pass a first argument selecting the scope:
+`import` also supports selectors, to filter what you want to import. We have four selectors:
+
+* `:default` - imports all functions and macros, except the ones starting by underscore;
+* `:all` - imports all functions and macros;
+* `:functions` - imports all functions;
+* `:macros` - imports all macros;
+
+For example, to import all macros, one could write:
 
     import :macros, MyMacros
 
-We can then use `only` or `except` to filter the macros being included. Finally, note that `import` is **lexically scoped**, this means we can import specific macros inside specific functions:
+Note that `import` is also **lexically scoped**, this means we can import specific macros inside specific functions:
 
     defmodule Math do
       def some_function do
@@ -273,33 +283,26 @@ Note that importing a module automatically requires it. Furthermore, `import` al
 
 ## 3.6 Module attributes
 
-Elixir brings the concept of module attributes from Erlang with some differences. The canonical example for attributes is annotating that a module implements an OTP behavior, for example `gen_server`:
-
-    defmodule MyServer do
-      @behavior :gen_server
-      # ... callbacks ...
-    end
-
-Now if the module above does not implement any of the callbacks required by the `:gen_server` behavior, a warning will be raised. Another attribute used internally by Elixir is `@vsn`:
+Elixir brings the concept of module attributes from Erlang. For example:
 
     defmodule MyServer do
       @vsn 2
     end
 
-`@vsn` refers to the module version and is used by the code reloading mechanism to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
+In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang VM to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
 
 Elixir has a handful of reserved attributes. The following are currently functional in Elixir:
 
-* `@behaviour` and `@behavior` - used for specifying an OTP or user-defined behavior;
-* `@vsn` - used for specifying the module version;
+* `@after_compile` - expects a tuple `{ module, function }` containing a module and a function which will be invoked right after the current module is compiled. The module environment and its bytecode are passed as arguments to the callback function;
+* `@before_compile` - expects a `{ module, function }` containing a module and a function that will be invoked before the module is compiled with the module environment. The function may be a macro, allowing you to inject functions inside the module exactly before compilation;
+* `@behaviour` - (notice the british spelling) used for specifying an OTP or user-defined behaviour;
 * `@compile` - provides options for the module compilation;
+* `@doc` - provides documentation for the next function or macro to be defined;
+* `@file` - changes the filename in stacktraces of the next function or macro to be defined;
 * `@moduledoc` - provides documentation for the current module;
-* `@doc` - provides documentation for the function that follows it;
-* `@file` - changes the filename in stacktraces of the next defined function;
-* `@on_load` - expects a function name that will be invoked whenever the module is loaded. The function must have arity 0 and has to return `:ok`, otherwise the loading of the module is aborted;
-* `@before_compile` - expects a `{ module, function }` that will be invoked with the module name before the module is compiled. The function may be a macro, allowing you to inject functions inside the module exactly before compilation;
-* `@after_compile` - expects a `{ module, function }` that will be invoked with the module name and its object code right after the module is compiled and loaded;
-* `@on_definition` - expects a `{ module, function }` that will be invoked after each function/macro is defined. This makes it easy to annotate and customize functions;
+* `@on_definition` - expects a `{ module, function }` containing a module and a function which will be invoked after each function/macro is defined. This makes it easy to annotate and customize functions;
+* `@on_load` - expects a function name from the currently being defined module that will be invoked whenever the module is loaded. The function must have arity 0 and has to return `:ok`, otherwise the loading of the module is aborted;
+* `@vsn` - used for specifying the module version;
 
 The following attributes are part of [typespecs](http://www.erlang.org/doc/reference_manual/typespec.html) and are also supported by Elixir:
 
@@ -309,7 +312,7 @@ The following attributes are part of [typespecs](http://www.erlang.org/doc/refer
 * `@export_type` - informs which types can be exported;
 * `@opaque` - defines an opaque type to be used in @spec;
 
-In addition to the built-in attributes outlined above, customer attributes may also be added:
+In addition to the built-in attributes outlined above, custom attributes may also be added:
 
     defmodule MyServer do
       @my_data 13
@@ -355,19 +358,13 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> :lists.flatten([1,[2],3])
     [1,2,3]
 
-This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, by default `List` translates to the atom `Elixir-List`:
+In other words, we are simply calling the function `flatten` on the atom `:list`. This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, the `List` alias translates by defailt to the atom `Elixir-List`:
 
     iex> is_atom(List)
     true
     iex> to_binary(List)
     "Elixir-List"
 
-Given a scope, aliases can also be set using the `alias` directive discussed above. For instance, it is particularly useful when interacting with Erlang code:
-
-    alias :application, as: Application
-
-This allows you to write code transparently without using the Erlang notation to access the `application` module.
-
 > Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
 
-> Note: preferably, the alias `List` would be converted to the atom `Elixir.List` instead of `Elixir-List`, however there is currently a limitation in Erlang that does not allow us to use such atoms.
+> Note: in the future, the alias `List` will be converted to the atom `Elixir.List` instead of `Elixir-List`.

@@ -604,9 +604,7 @@ Elixir provides the concept of exceptions. An exception can be raised using the 
         x.message
     end
 
-In general, idiomatic Elixir avoids raising exceptions unless you are truly in an exceptional scenario. In such cases, your code nor anyone integrating with your code can recover from the exception and continue.
-
-For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
+In general, idiomatic Elixir avoids using exceptions for control flow. For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
 
     case File.read(file) do
       { :ok, contents }  ->
@@ -617,18 +615,18 @@ For example, if you write a software that does log partitioning and log rotation
         # We need to handle the error accordingly
     end
 
-Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `:ok` in case of success and `{ :error, reason }` in case of failures. This approach is commonly called **sideband data** as we annotate the result.
+Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `{ :ok, contents }` in case of success and `{ :error, reason }` in case of failures. This allows us to use Elixir's pattern matching construncts to control how our application should behave.
 
-On the other hand, a CLI interface that needs to access or manipulate a file given by the user, you may necessarily expect a file to be there, if it isn't there is nothing you can do then fail. Then you may use `File.read!` which raises an exception:
+On the other hand, a CLI interface that needs to access or manipulate a file given by the user may necessarily expect a file to be there. If the given file does not exist, there is nothing you can do but fail. Then you may use `File.read!` which raises an exception:
 
     contents = File.read!(file)
 
-We can sum this up in few words: don't use exceptions for control-flow. If you feel like you need to rescue an exception in order to change how the code behaves, you should probably be using sideband data.
+This pattern is common throughout Elixir standard library. Many libraries have both function definitions followed by their "bang" variation, with exclamation mark. This showcases well Elixir's philosophy of not using exceptions for control-flow. If you feel like you need to rescue an exception in order to change how the code behaves, you should probably return an atom or tuple instead, allowing your developers to rely on pattern matching.
 
-Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentations page](/docs/stable/), by clicking "Records" in the upper left corner.
+Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentation page](/docs/stable/), by clicking "Records" in the upper left corner (we will learn more about Records on chapter 4).
 
 ## 2.10 Built-in functions
 
-Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a string, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
+Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
 
-All of these functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily reused between different components.
+All of these functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily reused between different applications.
