@@ -78,7 +78,7 @@ end
 Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 {% endhighlight %}
 
-      <p>Since the <code>Enum</code> module is built on top of protocols, it is not only limited to the data types that ships with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enum.Iterator</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
+      <p>Since the <code>Enum</code> module is built on top of protocols, it is not only limited to the data types that ship with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enum.Iterator</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
 
 {% highlight elixir %}
 { :ok, file } = File.iterator("README.md")
@@ -92,12 +92,12 @@ File.write("README.md", lines)
     <h4>Documentation as first-class citizen</h4>
 
     <div class="entry-summary">
-      <p>Documentation is written in markdown using Elixir data structures for accessibility:</p>
+      <p>Documentation is supported at language level, in the form of docstrings. Markdown is Elixir's defacto markup language of choice for use in docstrings:</p>
 
 {% highlight elixir %}
 defmodule MyModule do
   @moduledoc """
-  Documentation for my module
+  Documentation for my module. With **formatting**.
   """
 
   @doc "Hello"
@@ -113,9 +113,11 @@ end
 iex> h MyModule
 # MyModule
 
-Documentation for my module
+Documentation for my module. With **formatting**.
 
 {% endhighlight %}
+
+        <p>There is also a documentation generator for Elixir called <a href="https://github.com/elixir-lang/exdoc">ExDoc</a> that can produce a static site using docstrings extracted from the source code.</p>
     </div>
   </div>
 
@@ -130,7 +132,7 @@ Documentation for my module
 {% endhighlight %}
 
       <p>When mixed with guards, it allows us to easily express our problem:</p>
-      
+
 {% highlight elixir %}
 def serve_drinks({ User, name, age }) when age < 21 do
   raise "No way #{name}!"
@@ -145,7 +147,7 @@ serve_drinks User.get("John")
 {% endhighlight %}
     </div>
   </div>
-  
+
   <div class="hentry post">
     <h4>Erlang all the way down</h4>
 
@@ -158,7 +160,7 @@ serve_drinks User.get("John")
 #=> <<192,223,75,115,...>>
 {% endhighlight %}
 
-      <p>Since Elixir generates the same bytecode, Elixir is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and doesn't try to break any of those battle-field tested techniques Erlang is familiar for. Erlang type specifications, behaviors and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
+      <p>Since Elixir compiles to the same bytecode, it is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and works seamlessly with all the battle-tested techniques Erlang/OTP is famous for. Erlang type specifications, behaviors and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
       <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
     </div>
   </div>
