@@ -92,12 +92,12 @@ File.write("README.md", lines)
     <h4>Documentation as first-class citizen</h4>
 
     <div class="entry-summary">
-      <p>Documentation is written in markdown using Elixir data structures for accessibility:</p>
+      <p>Documentation is supported at language level, in the form of docstrings. Markdown is Elixir's defacto markup language of choice for use in docstrings:</p>
 
 {% highlight elixir %}
 defmodule MyModule do
   @moduledoc """
-  Documentation for my module
+  Documentation for my module. With **formatting**.
   """
 
   @doc "Hello"
@@ -113,9 +113,11 @@ end
 iex> h MyModule
 # MyModule
 
-Documentation for my module
+Documentation for my module. With **formatting**.
 
 {% endhighlight %}
+
+        <p>There is also a documentation generator for Elixir called <a href="https://github.com/elixir-lang/exdoc">ExDoc</a> that can produce a static site using docstrings extracted from the source code.</p>
     </div>
   </div>
 
@@ -130,7 +132,7 @@ Documentation for my module
 {% endhighlight %}
 
       <p>When mixed with guards, it allows us to easily express our problem:</p>
-      
+
 {% highlight elixir %}
 def serve_drinks({ User, name, age }) when age < 21 do
   raise "No way #{name}!"
@@ -145,7 +147,7 @@ serve_drinks User.get("John")
 {% endhighlight %}
     </div>
   </div>
-  
+
   <div class="hentry post">
     <h4>Erlang all the way down</h4>
 
