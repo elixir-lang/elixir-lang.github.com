@@ -39,7 +39,7 @@
       
 
       
-        <h2>Functions summary</h2>
+        <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -96,7 +96,7 @@
       
 
       
-        <h2>Macros summary</h2>
+        <h2 id="macros_summary">Macros summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -122,25 +122,28 @@
     <strong>do_safe_term(terms)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L533" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L595" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="escape/1">
-    <strong>escape(tuple)</strong>
+    <strong>escape(expr)</strong>
   </p>
-  <div class="docstring"><p>Recursively escapes the given value so it can be inserted
-into a syntax tree. Structures that are valid syntax nodes
-(like atoms, integers, binaries) are represented by themselves.</p>
+  <div class="docstring"><p>Recursively escapes a value so it can be inserted
+into a syntax tree.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Macro.escape(:foo)
-#=&gt; :foo
+<pre><code>iex&gt; Macro.escape(:foo)
+:foo
 
-Macro.escape({ :a, :b, :c })
-#=&gt; { :{}, [], [:a, :b, :c] }
+iex&gt; Macro.escape({ :a, :b, :c })
+{ :{}, [], [:a, :b, :c] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L67" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L66" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="expand/2">
     <strong>expand(aliases, env)</strong>
@@ -158,10 +161,13 @@ contents are expanded:</p>
 <p>In case the expression cannot be expanded, it returns the expression itself.</p>
 
 <p>Notice that <code>Macro.expand</code> is not recursive and it does not
-expand child expressions. For example, <code>!some_macro</code> will expand as:</p>
+expand child expressions. In this example</p>
 
-<pre><code>iex&gt; IO.puts Macro.to_binary Macro.expand(quote(do: !some_macro), __ENV__)
-case some_macro do
+<p>Macro.expand(quote(do: !some<em>macro), _</em>ENV__)</p>
+
+<p><code>!some_macro</code> will expand to something like:</p>
+
+<pre><code>case some_macro do
   false -&gt; true
   nil   -&gt; true
   _     -&gt; false
@@ -237,7 +243,9 @@ function as:</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L443" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L505" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="extract_args/1">
     <strong>extract_args(expr)</strong>
@@ -254,12 +262,13 @@ arguments syntax available in def/defp/defmacro and friends.</p>
 
 <pre><code>extract_args(quote do: foo)        == { :foo, [] }
 extract_args(quote do: foo())      == { :foo, [] }
-extract_args(quote do: :foo.())    == { :foo, [] }
 extract_args(quote do: foo(1,2,3)) == { :foo, [1,2,3] }
 extract_args(quote do: 1.(1,2,3))  == :error
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L50" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L49" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="safe_term/1">
     <strong>safe_term(terms)</strong>
@@ -269,7 +278,9 @@ safe (i.e. they represented data structured and don&#39;t actually
 evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
 which is returned as <code>{ :unsafe, term }</code>.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L529" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L591" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
     <strong>to_binary(tree)</strong>
@@ -278,11 +289,13 @@ which is returned as <code>{ :unsafe, term }</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Macro.to_binary(quote do: foo.bar(1, 2, 3))
-#=&gt; &quot;foo.bar(1, 2, 3)&quot;
+<pre><code>iex&gt; Macro.to_binary(quote do: foo.bar(1, 2, 3))
+&quot;foo.bar(1, 2, 3)&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L182" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L241" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="unescape_binary/1">
     <strong>unescape_binary(chars)</strong>
@@ -301,14 +314,16 @@ also escaped according to the latin1 set they represent.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Macro.unescape_binary &quot;example\\n&quot;
-#=&gt; &quot;example\n&quot;
+<pre><code>iex&gt; Macro.unescape_binary &quot;example\\n&quot;
+&quot;example\n&quot;
 </code></pre>
 
 <p>In the example above, we pass a string with <code>\n</code> escaped
 and we return a version with it unescaped.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L102" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L161" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="unescape_binary/2">
     <strong>unescape_binary(chars, map)</strong>
@@ -356,7 +371,9 @@ returns false for ?x.</p>
 <pre><code>Macro.unescape_binary &quot;example\\n&quot;, unescape_map(&amp;1)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L149" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L208" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/1">
     <strong>unescape_tokens(tokens)</strong>
@@ -368,7 +385,9 @@ unescaped, all others are ignored. This function is useful
 when implementing your own sigils. Check the implementation
 of <code>Kernel.__b__</code> for examples.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L161" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L220" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/2">
     <strong>unescape_tokens(tokens, map)</strong>
@@ -376,7 +395,9 @@ of <code>Kernel.__b__</code> for examples.</p>
   <div class="docstring"><p>Unescape the given tokens according to the given map.
 Check <code>unescape_tokens/1</code> and <code>unescaped/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L169" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L228" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       
@@ -391,7 +412,9 @@ Check <code>unescape_tokens/1</code> and <code>unescaped/2</code> for more infor
   <div class="docstring"><p>Returns a list of binary operators. This is available
 as a macro so it can be used in guard clauses.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="unary_ops/0">
     <strong>unary_ops()</strong>
@@ -399,7 +422,9 @@ as a macro so it can be used in guard clauses.</p>
   <div class="docstring"><p>Returns a list of unary operators. This is available
 as a macro so it can be used in guard clauses.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L28" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L28" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       

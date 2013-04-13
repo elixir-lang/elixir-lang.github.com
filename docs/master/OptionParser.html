@@ -34,7 +34,7 @@
       
 
       
-        <h2>Functions summary</h2>
+        <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -66,22 +66,22 @@ and the arguments.</p>
 
 <h2>Examples</h2>
 
-<pre><code>OptionParser.parse([&quot;--debug&quot;])
-#=&gt; { [debug: true], [] }
+<pre><code>iex&gt; OptionParser.parse([&quot;--debug&quot;])
+{ [debug: true], [] }
 
-OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;])
-#=&gt; { [source: &quot;lib&quot;], [] }
+iex&gt; OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;])
+{ [source: &quot;lib&quot;], [] }
 
-OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
-#=&gt; { [source: &quot;lib&quot;, verbose: true], [&quot;test/enum_test.exs&quot;] }
+iex&gt; OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
+{ [source: &quot;lib&quot;, verbose: true], [&quot;test/enum_test.exs&quot;] }
 </code></pre>
 
 <h2>Aliases</h2>
 
 <p>A set of aliases can be given as second argument:</p>
 
-<pre><code>OptionParser.parse([&quot;-d&quot;], aliases: [d: :debug])
-#=&gt; { [debug: true], [] }
+<pre><code>iex&gt; OptionParser.parse([&quot;-d&quot;], aliases: [d: :debug])
+{ [debug: true], [] }
 </code></pre>
 
 <h2>Switches</h2>
@@ -106,11 +106,11 @@ or if duplicated switches should be kept, overriden or accumulated.</p>
 
 <p>Examples:</p>
 
-<pre><code>OptionParser.parse([&quot;--unlock path/to/file&quot;], switches: [unlock: :boolean])
-#=&gt; { [unlock: true], [&quot;path/to/file&quot;] }
+<pre><code>iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;path/to/file&quot;], switches: [unlock: :boolean])
+{ [unlock: true], [&quot;path/to/file&quot;] }
 
-OptionParser.parse([&quot;--unlock false path/to/file&quot;], switches: [unlock: :boolean])
-#=&gt; { [unlock: false], [&quot;path/to/file&quot;] }
+iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;false&quot;, &quot;path/to/file&quot;], switches: [unlock: :boolean])
+{ [unlock: false], [&quot;path/to/file&quot;] }
 </code></pre>
 
 <h2>Negation switches</h2>
@@ -118,11 +118,13 @@ OptionParser.parse([&quot;--unlock false path/to/file&quot;], switches: [unlock:
 <p>Any switches starting with <code>--no-</code> are always considered to be
 booleans and never parse the next value:</p>
 
-<pre><code>OptionParser.parse([&quot;--no-op path/to/file&quot;])
-#=&gt; { [no_op: true], [&quot;path/to/file&quot;] }
+<pre><code>iex&gt; OptionParser.parse([&quot;--no-op&quot;, &quot;path/to/file&quot;])
+{ [no_op: true], [&quot;path/to/file&quot;] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L57" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L57" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="parse_head/2">
     <strong>parse_head(argv, opts // [])</strong>
@@ -134,11 +136,13 @@ I.e. as soon as it finds a non switch, it stops parsing.</p>
 
 <h2>Example</h2>
 
-<pre><code>OptionParser.parse_head([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
-#=&gt; { [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;] }
+<pre><code>iex&gt; OptionParser.parse_head([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
+{ [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L73" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/option_parser.ex#L73" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       

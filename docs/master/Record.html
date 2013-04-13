@@ -39,7 +39,7 @@
       
 
       
-        <h2>Functions summary</h2>
+        <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -48,7 +48,7 @@
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#defmacros/3">defmacros/3</a>
+    <a href="#defmacros/4">defmacros/4</a>
   </span>
 </li>
 <li>
@@ -76,6 +76,16 @@
       
 
       
+        <h2 id="macros_summary">Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#import/2">import/2</a>
+  </span>
+</li>
+
+        </ul>
+      
 
       
 
@@ -98,10 +108,12 @@ values, a set of options and the module environment.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L68" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L94" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
-  <p class="signature" id="defmacros/3">
-    <strong>defmacros(name, values, env)</strong>
+  <p class="signature" id="defmacros/4">
+    <strong>defmacros(name, values, env, tag // nil)</strong>
   </p>
   <div class="docstring"><p>Defines macros for manipulating records. This is called
 directly by <code>defrecordp</code>. It expects the macro name, the
@@ -114,7 +126,9 @@ record values and the environment.</p>
 end
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L127" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L153" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
     <strong>defrecord(name, values, opts)</strong>
@@ -124,7 +138,9 @@ with the given <code>name</code> and the fields specified in <code>values</code>
 This is invoked directly by <code>Kernel.defrecord</code>, so check it
 for more information and documentation.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L25" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L25" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="defrecordp/2">
     <strong>defrecordp(name, fields)</strong>
@@ -134,14 +150,18 @@ a set of macros with the given <code>name</code> and the fields specified
 in <code>values</code>. This is invoked directly by <code>Kernel.defrecordp</code>,
 so check it for more information and documentation.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L49" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L75" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="deftypes/3">
     <strong>deftypes(values, types, env)</strong>
   </p>
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L96" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L122" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="extract/2">
     <strong>extract(name, opts)</strong>
@@ -154,11 +174,41 @@ return the fields as a list of tuples.</p>
 <pre><code>defrecord FileInfo, Record.extract(:file_info, from_lib: &quot;kernel/include/file.hrl&quot;)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L15" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L15" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       
 
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="import/2">
+    <strong>import(module, list2)</strong>
+  </p>
+  <div class="docstring"><p>Import public record definition as a set of private macros (as defined by defrecordp/2)</p>
+
+<h2>Usage</h2>
+
+<p>Record.import Record.Module, as: macro_name</p>
+
+<h2>Example</h2>
+
+<p>defmodule Test do
+     Record.import File.Stat, as: :file_stat</p>
+
+<pre><code> def size(file_stat(size: size)), do: size
+</code></pre>
+
+<p>end</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/record.ex#L63" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
       
 
       

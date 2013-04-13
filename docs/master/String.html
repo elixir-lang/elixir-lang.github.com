@@ -27,18 +27,41 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>A string in Elixir is a UTF-8 encoded binary.</p>
+          <p>A String in Elixir is a UTF-8 encoded binary.</p>
+
+<h2>String and binary operations</h2>
 
 <p>The functions in this module act according to the
-Unicode Standard, version 6.2.0. A codepoint is a
-Unicode Character, which may be represented by one
-or more bytes. For example, the character &quot;é&quot; is
-represented with two bytes:</p>
+Unicode Standard, version 6.2.0. For example,
+<code>titlecase</code>, <code>downcase</code>, <code>strip</code> are provided by this
+module.</p>
 
-<pre><code>string = &quot;é&quot;
-#=&gt; &quot;é&quot;
-size(string)
-#=&gt; 2
+<p>Besides this module, Elixir provides more low-level
+operations that works directly with binaries. Some
+of those can be found in the <code>Kernel</code> module, as:</p>
+
+<ul>
+<li><code>binary_part/2</code> and <code>binary_part/3</code> - retrieves part of the binary</li>
+<li><code>bit_size/1</code> and <code>byte_size/1</code> - size related functions</li>
+<li><code>is_bitstring/1</code> and <code>is_binary/1</code> - type checking function</li>
+<li>Plus a bunch of conversion functions, like <code>binary_to_atom/2</code>,
+<code>binary_to_integer/2</code>, <code>binary_to_term/1</code> and their opposite
+like <code>integer_to_binary/2</code></li>
+</ul>
+
+<p>Finally, <a href="http://erlang.org/doc/man/binary.html">the <code>:binary</code> module</a>
+provides a couple other functions that works on the byte level.</p>
+
+<h2>Codepoints and graphemes</h2>
+
+<p>As per the Unicode Standard, a codepoint is an Unicode
+Character, which may be represented by one or more bytes.
+For example, the character &quot;é&quot; is represented with two
+bytes:</p>
+
+<pre><code>iex&gt; string = &quot;é&quot;
+...&gt; byte_size(string)
+2
 </code></pre>
 
 <p>Furthermore, this module also presents the concept of
@@ -47,10 +70,9 @@ graphemes, which are multiple characters that may be
 the same &quot;é&quot; character written above could be represented
 by the letter &quot;e&quot; followed by the accent ́:</p>
 
-<pre><code>string = &quot;\x{0065}\x{0301}&quot;
-#=&gt; &quot;é&quot;
-size(string)
-#=&gt; 3
+<pre><code>iex&gt; string = &quot;\x{0065}\x{0301}&quot;
+...&gt; byte_size(string)
+3
 </code></pre>
 
 <p>Although the example above is made of two characters, it is
@@ -69,29 +91,33 @@ behaviour.</p>
 <h2>Integer codepoints</h2>
 
 <p>Although codepoints could be represented as integers, this
-module represents all codepoints as binaries. For example:</p>
+module represents all codepoints as strings. For example:</p>
 
-<pre><code>String.codepoints &quot;josé&quot; #=&gt; [&quot;j&quot;, &quot;o&quot;, &quot;s&quot;, &quot;é&quot;]
+<pre><code>iex&gt; String.codepoints &quot;josé&quot;
+[&quot;j&quot;, &quot;o&quot;, &quot;s&quot;, &quot;é&quot;]
 </code></pre>
 
 <p>There are a couple of ways to retrieve a character integer
 codepoint. One may use the <code>?</code> special macro:</p>
 
-<pre><code>?j #=&gt; 106
-?é #=&gt; 233
+<pre><code>iex&gt; ?j
+106
+iex&gt; ?é
+233
 </code></pre>
 
 <p>Or also via pattern matching:</p>
 
-<pre><code>&lt;&lt; eacute :: utf8 &gt;&gt; = &quot;é&quot;
-eacute #=&gt; 233
+<pre><code>iex&gt; &lt;&lt; eacute :: utf8 &gt;&gt; = &quot;é&quot;
+...&gt; eacute
+233
 </code></pre>
 
 <p>As we have seen above, codepoints can be inserted into
 a string by their hexadecimal code:</p>
 
-<pre><code>string = &quot;jos\x{0065}\x{0301}&quot;
-#=&gt; &quot;josé&quot;
+<pre><code>&quot;jos\x{0065}\x{0301}&quot; #=&gt;
+&quot;josé&quot;
 </code></pre>
 
 <h2>Self-synchronization</h2>
@@ -105,8 +131,10 @@ codepoint needs to be rejected.</p>
 characters. For example, <code>String.length</code> is going to return
 a correct result even if an invalid codepoint is fed into it.</p>
 
-<p>In the future, bang version of such functions may be
-provided which will rather raise on such invalid data.</p>
+<p>In other words, this module expects invalid data to be detected
+when retrieving data from the external source. For example, a
+driver that reads strings from a database will be the one
+responsible to check the validity of the encoding.</p>
 
         </div>
       
@@ -118,7 +146,7 @@ provided which will rather raise on such invalid data.</p>
       
 
       
-        <h2>Functions summary</h2>
+        <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -212,6 +240,11 @@ provided which will rather raise on such invalid data.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#split/1">split/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#split/3">split/3</a>
   </span>
 </li>
@@ -255,14 +288,21 @@ If <code>position</code> is greater than <code>string</code> length, than it ret
 
 <h2>Examples</h2>
 
-<pre><code>String.at(&quot;elixir&quot;, 0) #=&gt; &quot;e&quot;
-String.at(&quot;elixir&quot;, 1) #=&gt; &quot;l&quot;
-String.at(&quot;elixir&quot;, 10) #=&gt; nil
-String.at(&quot;elixir&quot;, -1) #=&gt; &quot;r&quot;
-String.at(&quot;elixir&quot;, -10) #=&gt; nil
+<pre><code>iex&gt; String.at(&quot;elixir&quot;, 0)
+&quot;e&quot;
+iex&gt; String.at(&quot;elixir&quot;, 1)
+&quot;l&quot;
+iex&gt; String.at(&quot;elixir&quot;, 10)
+nil
+iex&gt; String.at(&quot;elixir&quot;, -1)
+&quot;r&quot;
+iex&gt; String.at(&quot;elixir&quot;, -10)
+nil
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L509" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L594" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="capitalize/1">
     <strong>capitalize(string)</strong>
@@ -277,12 +317,17 @@ no attempt in capitalizing all words in the string
 
 <h2>Examples</h2>
 
-<pre><code>String.capitalize(&quot;abcd&quot;) #=&gt; &quot;Abcd&quot;
-String.capitalize(&quot;ﬁn&quot;)   #=&gt; &quot;Fin&quot;
-String.capitalize(&quot;josé&quot;) #=&gt; &quot;José&quot;
+<pre><code>iex&gt; String.capitalize(&quot;abcd&quot;)
+&quot;Abcd&quot;
+iex&gt; String.capitalize(&quot;ﬁn&quot;)
+&quot;Fin&quot;
+iex&gt; String.capitalize(&quot;josé&quot;)
+&quot;José&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L198" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L249" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="codepoints/1">
     <strong>codepoints(string)</strong>
@@ -291,12 +336,17 @@ String.capitalize(&quot;josé&quot;) #=&gt; &quot;José&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.codepoints(&quot;josé&quot;)         #=&gt; [&quot;j&quot;, &quot;o&quot;, &quot;s&quot;, &quot;é&quot;]
-String.codepoints(&quot;оптими зации&quot;) #=&gt; [&quot;о&quot;,&quot;п&quot;,&quot;т&quot;,&quot;и&quot;,&quot;м&quot;,&quot;и&quot;,&quot; &quot;,&quot;з&quot;,&quot;а&quot;,&quot;ц&quot;,&quot;и&quot;,&quot;и&quot;]
-String.codepoints(&quot;ἅἪῼ&quot;)          #=&gt; [&quot;ἅ&quot;,&quot;Ἢ&quot;,&quot;ῼ&quot;]
+<pre><code>iex&gt; String.codepoints(&quot;josé&quot;)
+[&quot;j&quot;, &quot;o&quot;, &quot;s&quot;, &quot;é&quot;]
+iex&gt; String.codepoints(&quot;оптими зации&quot;)
+[&quot;о&quot;,&quot;п&quot;,&quot;т&quot;,&quot;и&quot;,&quot;м&quot;,&quot;и&quot;,&quot; &quot;,&quot;з&quot;,&quot;а&quot;,&quot;ц&quot;,&quot;и&quot;,&quot;и&quot;]
+iex&gt; String.codepoints(&quot;ἅἪῼ&quot;)
+[&quot;ἅ&quot;,&quot;Ἢ&quot;,&quot;ῼ&quot;]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L371" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L438" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="downcase/1">
     <strong>downcase(binary)</strong>
@@ -305,12 +355,17 @@ String.codepoints(&quot;ἅἪῼ&quot;)          #=&gt; [&quot;ἅ&quot;,&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.downcase(&quot;ABCD&quot;) #=&gt; &quot;abcd&quot;
-String.downcase(&quot;AB 123 XPTO&quot;) #=&gt; &quot;ab 123 xpto&quot;
-String.downcase(&quot;JOSÉ&quot;) #=&gt; &quot;josé&quot;
+<pre><code>iex&gt; String.downcase(&quot;ABCD&quot;)
+&quot;abcd&quot;
+iex&gt; String.downcase(&quot;AB 123 XPTO&quot;)
+&quot;ab 123 xpto&quot;
+iex&gt; String.downcase(&quot;JOSÉ&quot;)
+&quot;josé&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L179" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L227" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="duplicate/2">
     <strong>duplicate(subject, n)</strong>
@@ -319,11 +374,15 @@ String.downcase(&quot;JOSÉ&quot;) #=&gt; &quot;josé&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.duplicate(&quot;abc&quot;, 1) #=&gt; &quot;abc&quot;
-String.duplicate(&quot;abc&quot;, 2) #=&gt; &quot;abcabc&quot;
+<pre><code>iex&gt; String.duplicate(&quot;abc&quot;, 1)
+&quot;abc&quot;
+iex&gt; String.duplicate(&quot;abc&quot;, 2)
+&quot;abcabc&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L356" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L420" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="first/1">
     <strong>first(string)</strong>
@@ -332,11 +391,15 @@ String.duplicate(&quot;abc&quot;, 2) #=&gt; &quot;abcabc&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.first(&quot;elixir&quot;)  #=&gt; &quot;e&quot;
-String.first(&quot;եոգլի&quot;) #=&gt; &quot;ե&quot;
+<pre><code>iex&gt; String.first(&quot;elixir&quot;)
+&quot;e&quot;
+iex&gt; String.first(&quot;եոգլի&quot;)
+&quot;ե&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L447" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L523" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="graphemes/1">
     <strong>graphemes(string)</strong>
@@ -345,10 +408,13 @@ String.first(&quot;եոգլի&quot;) #=&gt; &quot;ե&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.graphemes(&quot;Ā̀stute&quot;) # =&gt; [&quot;Ā̀&quot;,&quot;s&quot;,&quot;t&quot;,&quot;u&quot;,&quot;t&quot;,&quot;e&quot;]
+<pre><code>iex&gt; String.graphemes(&quot;Ā̀stute&quot;)
+[&quot;Ā̀&quot;,&quot;s&quot;,&quot;t&quot;,&quot;u&quot;,&quot;t&quot;,&quot;e&quot;]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L420" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L493" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="last/1">
     <strong>last(string)</strong>
@@ -357,11 +423,15 @@ String.first(&quot;եոգլի&quot;) #=&gt; &quot;ե&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.last(&quot;elixir&quot;)  #=&gt; &quot;r&quot;
-String.last(&quot;եոգլի&quot;) #=&gt; &quot;ի&quot;
+<pre><code>iex&gt; String.last(&quot;elixir&quot;)
+&quot;r&quot;
+iex&gt; String.last(&quot;եոգլի&quot;)
+&quot;ի&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L464" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L542" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="length/1">
     <strong>length(string)</strong>
@@ -370,24 +440,31 @@ String.last(&quot;եոգլի&quot;) #=&gt; &quot;ի&quot;
 
 <h2>Examples</h2>
 
-<pre><code>String.length(&quot;elixir&quot;)  #=&gt; 6
-String.length(&quot;եոգլի&quot;) #=&gt; 5
+<pre><code>iex&gt; String.length(&quot;elixir&quot;)
+6
+iex&gt; String.length(&quot;եոգլի&quot;)
+5
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L484" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L564" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="lstrip/1">
     <strong>lstrip(binary)</strong>
   </p>
-  <div class="docstring"><p>Returns a string where leading whitespace characters
-have been removed.</p>
+  <div class="docstring"><p>Returns a string where leading Unicode whitespace
+has been removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.lstrip(&quot;   abc  &quot;)       #=&gt; &quot;abc  &quot;
+<pre><code>iex&gt; String.lstrip(&quot;   abc  &quot;)
+&quot;abc  &quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L259" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L313" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="lstrip/2">
     <strong>lstrip(other, char)</strong>
@@ -396,10 +473,13 @@ have been removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.lstrip(&quot;_  abc  _&quot;, ?_)  #=&gt; &quot;  abc  _&quot;
+<pre><code>iex&gt; String.lstrip(&quot;_  abc  _&quot;, ?_)
+&quot;  abc  _&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L272" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L327" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="next_codepoint/1">
     <strong>next_codepoint(string)</strong>
@@ -417,10 +497,13 @@ be returned by this function.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.next_codepoint(&quot;josé&quot;) #=&gt; { &quot;j&quot;, &quot;osé&quot; }
+<pre><code>iex&gt; String.next_codepoint(&quot;josé&quot;)
+{ &quot;j&quot;, &quot;osé&quot; }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L391" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L459" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="next_grapheme/1">
     <strong>next_grapheme(string)</strong>
@@ -433,10 +516,13 @@ the String reached its end.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.next_grapheme(&quot;josé&quot;) #=&gt; { &quot;j&quot;, &quot;osé&quot; }
+<pre><code>iex&gt; String.next_grapheme(&quot;josé&quot;)
+{ &quot;j&quot;, &quot;osé&quot; }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L435" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L509" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="printable?/1">
     <strong>printable?(arg1)</strong>
@@ -446,10 +532,13 @@ as UTF-8. Returns true if so, false otherwise.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.printable?(&quot;abc&quot;) #=&gt; true
+<pre><code>iex&gt; String.printable?(&quot;abc&quot;)
+true
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L94" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L121" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="replace/4">
     <strong>replace(subject, pattern, replacement, options // [])</strong>
@@ -464,27 +553,37 @@ specified by using the option <code>insert_replaced</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;-&quot;) #=&gt; &quot;a-b-c&quot;
-String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;-&quot;, global: false) #=&gt; &quot;a-b,c&quot;
-String.replace(&quot;a,b,c&quot;, &quot;b&quot;, &quot;[]&quot;, insert_replaced: 1) #=&gt; &quot;a,[b],c&quot;
-String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;[]&quot;, insert_replaced: 2) #=&gt; &quot;a[],b[],c&quot;
-String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;[]&quot;, insert_replaced: [1,1]) #=&gt; &quot;a[,,]b[,,]c&quot;
+<pre><code>iex&gt; String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;-&quot;)
+&quot;a-b-c&quot;
+iex&gt; String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;-&quot;, global: false)
+&quot;a-b,c&quot;
+iex&gt; String.replace(&quot;a,b,c&quot;, &quot;b&quot;, &quot;[]&quot;, insert_replaced: 1)
+&quot;a,[b],c&quot;
+iex&gt; String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;[]&quot;, insert_replaced: 2)
+&quot;a[],b[],c&quot;
+iex&gt; String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;[]&quot;, insert_replaced: [1,1])
+&quot;a[,,]b[,,]c&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L331" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L393" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="rstrip/1">
     <strong>rstrip(binary)</strong>
   </p>
-  <div class="docstring"><p>Returns a string where trailing whitespace characters
-and new line have been removed.</p>
+  <div class="docstring"><p>Returns a string where trailing Unicode whitespace
+has been removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.rstrip(&quot;   abc  &quot;)      #=&gt; &quot;   abc&quot;
+<pre><code>iex&gt; String.rstrip(&quot;   abc  &quot;)
+&quot;   abc&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L213" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L265" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="rstrip/2">
     <strong>rstrip(string, char)</strong>
@@ -493,10 +592,13 @@ and new line have been removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.rstrip(&quot;   abc _&quot;, ?_)  #=&gt; &quot;   abc &quot;
+<pre><code>iex&gt; String.rstrip(&quot;   abc _&quot;, ?_)
+&quot;   abc &quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L225" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L278" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="slice/3">
     <strong>slice(string, start, len)</strong>
@@ -507,17 +609,24 @@ If the offset is greater than string length, than it returns nil.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.slice(&quot;elixir&quot;, 1, 3) #=&gt; &quot;lix&quot;
-String.slice(&quot;elixir&quot;, 1, 10) #=&gt; &quot;lixir&quot;
-String.slice(&quot;elixir&quot;, 10, 3) #=&gt; nil
-String.slice(&quot;elixir&quot;, -4, 4) #=&gt; &quot;ixi&quot;
-String.slice(&quot;elixir&quot;, -10, 3) #=&gt; nil
+<pre><code>iex&gt; String.slice(&quot;elixir&quot;, 1, 3)
+&quot;lix&quot;
+iex&gt; String.slice(&quot;elixir&quot;, 1, 10)
+&quot;lixir&quot;
+iex&gt; String.slice(&quot;elixir&quot;, 10, 3)
+nil
+iex&gt; String.slice(&quot;elixir&quot;, -4, 4)
+&quot;ixir&quot;
+iex&gt; String.slice(&quot;elixir&quot;, -10, 3)
+nil
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L547" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L637" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
-  <p class="signature" id="split/3">
-    <strong>split(binary, pattern // &quot; &quot;, options // [])</strong>
+  <p class="signature" id="split/1">
+    <strong>split(binary)</strong>
   </p>
   <div class="docstring"><p>Divides a string into sub string based on a pattern,
 returning a list of these sub string. The pattern can
@@ -526,38 +635,64 @@ be a string, a list of strings or a regular expression.</p>
 <p>The string is split into as many parts as possible by
 default, unless the <code>global</code> option is set to false.
 If a pattern is not specified, the string is split on
-whitespace occurrences.</p>
+Unicode whitespace occurrences with leading and trailing
+whitespace ignored.</p>
 
 <p>It returns a list with the original string if the pattern
 can&#39;t be matched.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.split(&quot;a,b,c&quot;, &quot;,&quot;)  #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
-String.split(&quot;a,b,c&quot;, &quot;,&quot;, global: false)  #=&gt; [&quot;a&quot;, &quot;b,c&quot;]
+<pre><code>iex&gt; String.split(&quot;foo bar&quot;)
+[&quot;foo&quot;, &quot;bar&quot;]
+iex&gt; String.split(&quot;foo&quot; &lt;&gt; &lt;&lt;194,133&gt;&gt; &lt;&gt; &quot;bar&quot;)
+[&quot;foo&quot;, &quot;bar&quot;]
+iex&gt; String.split(&quot; foo bar &quot;)
+[&quot;foo&quot;, &quot;bar&quot;]
 
-String.split(&quot;foo bar&quot;)     #=&gt; [&quot;foo&quot;, &quot;bar&quot;]
-String.split(&quot;1,2 3,4&quot;, [&quot; &quot;, &quot;,&quot;]) #=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;]
+iex&gt; String.split(&quot;a,b,c&quot;, &quot;,&quot;)
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+iex&gt; String.split(&quot;a,b,c&quot;, &quot;,&quot;, global: false)
+[&quot;a&quot;, &quot;b,c&quot;]
 
-String.split(&quot;a,b,c&quot;, %r{,}) #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
-String.split(&quot;a,b,c&quot;, %r{,}, global: false)  #=&gt; [&quot;a&quot;, &quot;b,c&quot;]
-String.split(&quot;a,b&quot;, %r{.})   #=&gt; [&quot;a,b&quot;]
+iex&gt; String.split(&quot;1,2 3,4&quot;, [&quot; &quot;, &quot;,&quot;])
+[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;]
+
+iex&gt; String.split(&quot;a,b,c&quot;, %r{,})
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+iex&gt; String.split(&quot;a,b,c&quot;, %r{,}, global: false)
+[&quot;a&quot;, &quot;b,c&quot;]
+iex&gt; String.split(&quot;a,b&quot;, %r{\.})
+[&quot;a,b&quot;]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L144" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L184" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="split/3">
+    <strong>split(binary, pattern, options // [])</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L186" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="strip/1">
     <strong>strip(string)</strong>
   </p>
-  <div class="docstring"><p>Returns a string where leading/trailing whitespace
-and new line characters have been removed.</p>
+  <div class="docstring"><p>Returns a string where leading/trailing Unicode whitespace
+has been removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.strip(&quot;   abc  &quot;)       #=&gt; &quot;abc&quot;
+<pre><code>iex&gt; String.strip(&quot;   abc  &quot;)
+&quot;abc&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L291" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L347" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="strip/2">
     <strong>strip(string, char)</strong>
@@ -567,10 +702,13 @@ removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.strip(&quot;a  abc  a&quot;, ?a)  #=&gt; &quot;  abc  &quot;
+<pre><code>iex&gt; String.strip(&quot;a  abc  a&quot;, ?a)
+&quot;  abc  &quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L306" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L363" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="upcase/1">
     <strong>upcase(binary)</strong>
@@ -579,12 +717,17 @@ removed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.upcase(&quot;abcd&quot;) #=&gt; &quot;ABCD&quot;
-String.upcase(&quot;ab 123 xpto&quot;) #=&gt; &quot;AB 123 XPTO&quot;
-String.upcase(&quot;josé&quot;) #=&gt; &quot;JOSÉ&quot;
+<pre><code>iex&gt; String.upcase(&quot;abcd&quot;)
+&quot;ABCD&quot;
+iex&gt; String.upcase(&quot;ab 123 xpto&quot;)
+&quot;AB 123 XPTO&quot;
+iex&gt; String.upcase(&quot;josé&quot;)
+&quot;JOSÉ&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L166" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L211" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="valid_codepoint?/1">
     <strong>valid_codepoint?(arg1)</strong>
@@ -596,13 +739,19 @@ strings containing multiple codepoints.</p>
 
 <h2>Examples</h2>
 
-<pre><code>String.valid_codepoint?(&quot;a&quot;) #=&gt; true
-String.valid_codepoint?(&quot;ø&quot;) #=&gt; true
-String.valid_codepoint?(&quot;\xffff&quot;) #=&gt; false
-String.valid_codepoint?(&quot;asdf&quot;) #=&gt; false
+<pre><code>iex&gt; String.valid_codepoint?(&quot;a&quot;)
+true
+iex&gt; String.valid_codepoint?(&quot;ø&quot;)
+true
+iex&gt; String.valid_codepoint?(&quot;\xffff&quot;)
+false
+iex&gt; String.valid_codepoint?(&quot;asdf&quot;)
+false
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L408" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/string.ex#L480" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       
