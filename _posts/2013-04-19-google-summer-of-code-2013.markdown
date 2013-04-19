@@ -20,8 +20,8 @@ proposals. If your proposal gets accepted, Google will pay you $5000 over the
 course of three months to work on Elixir. Students can start submitting their
 proposals on April 22 and the deadline is May 23.
 
-Note the [BEAM Community](http://beamcommunity.github.io) hosts other projects
-on the Erlang VM, so don't forget to check them out too!
+Note the BEAM Community serves as a mentoring organization for many other projects
+that run on the Erlang VM, including Elixir. To see the full list, [visit the website](http://beamcommunity.github.io).
 
 We hope to work with you during this summer! If you have more questions, feel free
 to join the [BEAM Community mailing list](https://groups.google.com/d/forum/beam-community)
