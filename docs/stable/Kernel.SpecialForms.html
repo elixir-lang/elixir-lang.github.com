@@ -57,7 +57,7 @@ contents since they are essential in Elixir&#39;s constructions.</p>
       
 
       
-        <h2>Macros summary</h2>
+        <h2 id="macros_summary">Macros summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -101,12 +101,12 @@ contents since they are essential in Elixir&#39;s constructions.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#alias/2">alias/2</a>
+    <a href="#alias/0">alias/0</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#alias!/1">alias!/1</a>
+    <a href="#alias/2">alias/2</a>
   </span>
 </li>
 <li>
@@ -132,16 +132,6 @@ contents since they are essential in Elixir&#39;s constructions.</p>
 <li>
   <span class="summary_signature">
     <a href="#require/2">require/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unquote/1">unquote/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unquote_splicing/1">unquote_splicing/1</a>
   </span>
 </li>
 <li>
@@ -178,7 +168,7 @@ contents since they are essential in Elixir&#39;s constructions.</p>
 
 <h2>Examples</h2>
 
-<pre><code>:&lt;&lt;&gt;&gt;.(1,2,3)
+<pre><code>iex&gt; &lt;&lt; 1, 2, 3 &gt;&gt;
 &lt;&lt; 1, 2, 3 &gt;&gt;
 </code></pre>
 
@@ -188,17 +178,17 @@ contents since they are essential in Elixir&#39;s constructions.</p>
 specific types. Most of the time, Elixir will figure out
 the part&#39;s type and won&#39;t require any work from you:</p>
 
-<pre><code>&lt;&lt;102, &quot;oo&quot;&gt;&gt;
-#=&gt; &quot;foo&quot;
+<pre><code>iex&gt; &lt;&lt;102, &quot;oo&quot;&gt;&gt;
+&quot;foo&quot;
 </code></pre>
 
 <p>Above we have two parts: the first is an integer and the
 second is a binary. If we use any other Elixir expression,
 Elixir can no longer guess the type:</p>
 
-<pre><code>rest = &quot;oo&quot;
-&lt;&lt;102, rest&gt;&gt;
-#=&gt; ** (ArgumentError) argument error
+<pre><code>iex&gt; rest = &quot;oo&quot;
+...&gt; &lt;&lt;102, rest&gt;&gt;
+** (ArgumentError) argument error
 </code></pre>
 
 <p>When a variable or expression is given as a binary part,
@@ -231,8 +221,8 @@ alias for binary.</p>
 signedness only matters for matching. If unspecified, it
 defaults to unsigned. Example:</p>
 
-<pre><code>&lt;&lt;-100 :: signed, rest :: binary&gt;&gt; = &lt;&lt;-100, &quot;foo&quot;&gt;&gt;
-#=&gt; &lt;&lt;156,102,111,111&gt;&gt;
+<pre><code>iex&gt; &lt;&lt;-100 :: signed, _rest :: binary&gt;&gt; = &lt;&lt;-100, &quot;foo&quot;&gt;&gt;
+&lt;&lt;156,102,111,111&gt;&gt;
 </code></pre>
 
 <p>This match would have failed if we did not specify that the
@@ -241,9 +231,9 @@ of a value, the signedness won&#39;t be checked; rather, the number
 will simply be interpreted as having the given (or implied)
 signedness, e.g.:</p>
 
-<pre><code>&lt;&lt;val, rest :: binary&gt;&gt; = &lt;&lt;-100, &quot;foo&quot;&gt;&gt;
-val
-#=&gt; 156
+<pre><code>iex&gt; &lt;&lt;val, _rest :: binary&gt;&gt; = &lt;&lt;-100, &quot;foo&quot;&gt;&gt;
+...&gt; val
+156
 </code></pre>
 
 <p>Here, <code>val</code> is interpreted as unsigned.</p>
@@ -271,13 +261,13 @@ point types (utf16 and utf32).</p>
 unit is multiplied by the size to give the effective size of
 the part:</p>
 
-<pre><code>&lt;&lt;102, rest :: [size(2), unit(8)]&gt;&gt; = &quot;foo&quot;
+<pre><code>iex&gt; &lt;&lt;102, _rest :: [size(2), unit(8)]&gt;&gt; = &quot;foo&quot;
 &quot;foo&quot;
 
-&lt;&lt;102, rest :: size(16)&gt;&gt; = &quot;foo&quot;
+iex&gt; &lt;&lt;102, _rest :: size(16)&gt;&gt; = &quot;foo&quot;
 &quot;foo&quot;
 
-&lt;&lt;102, rest :: size(32)&gt;&gt; = &quot;foo&quot;
+iex&gt; &lt;&lt;102, _rest :: size(32)&gt;&gt; = &quot;foo&quot;
 ** (MatchError) no match of right hand side value: &quot;foo&quot;
 </code></pre>
 
@@ -300,7 +290,8 @@ a default size.</p>
 writing <code>size(8)</code>, one can write just <code>8</code> and it will be interpreted
 as <code>size(8)</code></p>
 
-<pre><code>&lt;&lt; 1 :: 3 &gt;&gt; == &lt;&lt; 1 :: size(3) &gt;&gt; #=&gt; true
+<pre><code>iex&gt; &lt;&lt; 1 :: 3 &gt;&gt; == &lt;&lt; 1 :: size(3) &gt;&gt;
+true
 </code></pre>
 
 <p>The default unit for integers, floats, and bitstrings is 1. For
@@ -309,7 +300,9 @@ binaries, it is 8.</p>
 <p>For floats, unit * size must result in 32 or 64, corresponding
 to binary32 and binary64, respectively.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L169" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L170" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="[]/1">
     <strong>[args]</strong>
@@ -322,7 +315,9 @@ to binary32 and binary64, respectively.</p>
 [ 1, 2, 3 ]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L42" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L42" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="__ENV__/0">
     <strong>__ENV__()</strong>
@@ -331,7 +326,9 @@ to binary32 and binary64, respectively.</p>
 record. In the environment you can access the current filename,
 line numbers, set up aliases, the current function and others.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L313" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L322" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="__FILE__/0">
     <strong>__FILE__()</strong>
@@ -340,7 +337,9 @@ line numbers, set up aliases, the current function and others.</p>
 Although the file can be accessed in the <strong>ENV</strong>, this macro
 is a convenient shortcut.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L327" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L336" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="__MODULE__/0">
     <strong>__MODULE__()</strong>
@@ -349,7 +348,9 @@ is a convenient shortcut.</p>
 Although the module can be accessed in the <strong>ENV</strong>, this macro
 is a convenient shortcut.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L320" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L329" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="__aliases__/1">
     <strong>args</strong>
@@ -357,14 +358,14 @@ is a convenient shortcut.</p>
   <div class="docstring"><p>This is the special form used to hold aliases information.
 It is usually compiled to an atom:</p>
 
-<pre><code>quote do: Foo.Bar
+<pre><code>quote do: Foo.Bar #=&gt;
 { :__aliases__, [], [:Foo,:Bar] }
 </code></pre>
 
 <p>Elixir represents <code>Foo.Bar</code> as <code>__aliases__</code> so calls can be
 unambiguously identified by the operator <code>:.</code>. For example:</p>
 
-<pre><code>quote do: Foo.bar
+<pre><code>quote do: Foo.bar #=&gt;
 {{:.,[],[{:__aliases__,[],[:Foo]},:bar]},[],[]}
 </code></pre>
 
@@ -392,7 +393,9 @@ is the list is an atom.</p>
 <pre><code>  Module.concat [some_var, Foo]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L763" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L734" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="__block__/1">
     <strong>args</strong>
@@ -401,11 +404,13 @@ is the list is an atom.</p>
 of expressions in Elixir. This special form is private
 and should not be invoked directly:</p>
 
-<pre><code>quote do: (1; 2; 3)
-#=&gt; { :__block__, [], [1,2,3] }
+<pre><code>iex&gt; quote do: (1; 2; 3)
+{ :__block__, [], [1,2,3] }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L712" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L683" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="__scope__/2">
     <strong>__scope__(opts, args)</strong>
@@ -421,7 +426,20 @@ it belonged to another file.</p>
 
 <p>Check <code>quote/1</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L725" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L696" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="alias/0">
+    <strong>alias()</strong>
+  </p>
+  <div class="docstring"><p>When used inside quoting, marks that the alias should not
+be hygienezed. This means the alias will be expanded when
+the macro is expanded.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L617" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="alias/2">
     <strong>alias(module, opts)</strong>
@@ -465,16 +483,9 @@ sets an alias based on the last part of the module. For example:</p>
 have lexical scope. This means you can set up aliases inside
 specific functions and it won&#39;t affect the overall scope.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L207" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="alias!/1">
-    <strong>alias!(alias)</strong>
-  </p>
-  <div class="docstring"><p>When used inside quoting, marks that the alias should not
-be hygienezed. This means the alias will be expanded when
-the macro is expanded.</p>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L608" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L208" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="bc/1">
     <strong>bc(args)</strong>
@@ -484,11 +495,13 @@ a list comprehension but expects each element returned to
 be a bitstring. For example, here is how to remove all
 spaces from a string:</p>
 
-<pre><code>bc &lt;&lt;c&gt;&gt; inbits &quot; hello world &quot;, c != ? , do: &lt;&lt;c&gt;&gt;
+<pre><code>iex&gt; bc &lt;&lt;c&gt;&gt; inbits &quot; hello world &quot;, c != ? , do: &lt;&lt;c&gt;&gt;
 &quot;helloworld&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L701" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L672" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="import/2">
     <strong>import(module, opts)</strong>
@@ -502,8 +515,9 @@ others modules without using the qualified name.</p>
 import those functions and reference them as local functions,
 for example:</p>
 
-<pre><code>import List
-flatten([1,[2],3]) #=&gt; [1,2,3]
+<pre><code>iex&gt; import List
+...&gt; flatten([1,[2],3])
+[1,2,3]
 </code></pre>
 
 <h2>Selector</h2>
@@ -565,16 +579,25 @@ module will still be able to use the original one.</p>
 <p>All imported modules are also required by default. <code>import</code>
 also accepts <code>as:</code> as an option so it automatically sets up
 an alias. Please check <code>alias</code> for more information.</p>
+
+<h2>Ambiguous function/macro names</h2>
+
+<p>If two modules <code>A</code> and <code>B</code> are imported and they both contain
+a <code>foo</code> function with an arity of <code>1</code>, an error is only emitted
+if an ambiguous call to <code>foo/1</code> is actually made; that is, the
+errors are emitted lazily, not eagerly.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L306" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L315" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="lc/1">
     <strong>lc(args)</strong>
   </p>
   <div class="docstring"><p>List comprehensions allow you to quickly build a list from another list:</p>
 
-<pre><code>lc n inlist [1,2,3,4], do: n * 2
-#=&gt; [2,4,6,8]
+<pre><code>iex&gt; lc n inlist [1,2,3,4], do: n * 2
+[2,4,6,8]
 </code></pre>
 
 <p>A comprehension accepts many generators and also filters. Generators
@@ -582,39 +605,41 @@ are defined using both <code>inlist</code> and <code>inbits</code> operators, al
 to loop lists and bitstrings:</p>
 
 <pre><code># A list generator:
-lc n inlist [1,2,3,4], do: n * 2
-#=&gt; [2,4,6,8]
+iex&gt; lc n inlist [1,2,3,4], do: n * 2
+[2,4,6,8]
 
 # A bit string generator:
-lc &lt;&lt;n&gt;&gt; inbits &lt;&lt;1,2,3,4&gt;&gt;, do: n * 2
-#=&gt; [2,4,6,8]
+iex&gt; lc &lt;&lt;n&gt;&gt; inbits &lt;&lt;1,2,3,4&gt;&gt;, do: n * 2
+[2,4,6,8]
 
 # A generator from a variable:
-list = [1,2,3,4]
-lc n inlist list, do: n * 2
-#=&gt; [2,4,6,8]
+iex&gt; list = [1,2,3,4]
+...&gt; lc n inlist list, do: n * 2
+[2,4,6,8]
 
 # A comprehension with two generators
-lc x inlist [1,2], y inlist [2,3], do: x*y
-#=&gt; [2,3,4,6]
+iex&gt; lc x inlist [1,2], y inlist [2,3], do: x*y
+[2,3,4,6]
 </code></pre>
 
 <p>Filters can also be given:</p>
 
 <pre><code># A comprehension with a generator and a filter
-lc n inlist [1,2,3,4,5,6], rem(n, 2) == 0, do: n
-#=&gt; [2,4,6]
+iex&gt; lc n inlist [1,2,3,4,5,6], rem(n, 2) == 0, do: n
+[2,4,6]
 </code></pre>
 
 <p>Bit string generators are quite useful when you need to
 organize bit string streams:</p>
 
 <pre><code>iex&gt; pixels = &lt;&lt;213,45,132,64,76,32,76,0,0,234,32,15&gt;&gt;
-iex&gt; lc &lt;&lt;r:8,g:8,b:8&gt;&gt; inbits pixels, do: {r,g,b}
+iex&gt; lc &lt;&lt;r::8,g::8,b::8&gt;&gt; inbits pixels, do: {r,g,b}
 [{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L689" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L660" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="quote/2">
     <strong>quote(opts, block)</strong>
@@ -623,8 +648,8 @@ iex&gt; lc &lt;&lt;r:8,g:8,b:8&gt;&gt; inbits pixels, do: {r,g,b}
 
 <h2>Examples</h2>
 
-<pre><code>quote do: sum(1, 2, 3)
-#=&gt; { :sum, [], [1, 2, 3] }
+<pre><code>iex&gt; quote do: sum(1, 2, 3)
+{ :sum, [], [1, 2, 3] }
 </code></pre>
 
 <h2>Explanation</h2>
@@ -892,7 +917,9 @@ code as if it was defined inside <code>GenServer.Behaviour</code> file, in
 particular, the macro <code>__FILE__</code> and exceptions happening inside
 the quote will always point to <code>GenServer.Behaviour</code> file.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L586" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L595" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="require/2">
     <strong>require(module, opts)</strong>
@@ -923,51 +950,9 @@ end
 <p><code>require</code> also accepts <code>as:</code> as an option so it automatically sets
 up an alias. Please check <code>alias</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L236" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="unquote/1">
-    <strong>unquote(expr)</strong>
-  </p>
-  <div class="docstring"><p>Unquotes the given expression from inside a macro.</p>
-
-<h2>Examples</h2>
-
-<p>Imagine the situation you have a variable <code>name</code> and
-you want to inject it inside some quote. The first attempt
-would be:</p>
-
-<pre><code>value = 13
-quote do: sum(1, value, 3)
-</code></pre>
-
-<p>Which would then return:</p>
-
-<pre><code>{ :sum, [], [1, { :value, [], quoted }, 3] }
-</code></pre>
-
-<p>Which is not the expected result. For this, we use unquote:</p>
-
-<pre><code>value = 13
-quote do: sum(1, unquote(value), 3)
-#=&gt; { :sum, [], [1, 13, 3] }
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L633" target="_blank" class="view_source">Source</a>
-</div><div class="detail">
-  <p class="signature" id="unquote_splicing/1">
-    <strong>unquote_splicing(expr)</strong>
-  </p>
-  <div class="docstring"><p>Unquotes the given list expanding its arguments. Similar
-to unquote.</p>
-
-<h2>Examples</h2>
-
-<pre><code>values = [2,3,4]
-quote do: sum(1, unquote_splicing(values), 5)
-#=&gt; { :sum, [], [1, 2, 3, 4, 5] }
-</code></pre>
-</div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L646" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L237" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="var!/1">
     <strong>var!(var)</strong>
@@ -978,7 +963,9 @@ node (i.e. a tuple with three elements where the last
 one is an atom) or an atom representing the variable name.
 Check <code>quote/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L595" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L604" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="var!/2">
     <strong>var!(var, context)</strong>
@@ -986,7 +973,9 @@ Check <code>quote/2</code> for more information.</p>
   <div class="docstring"><p>Defines a variable in the given context.
 Check <code>quote/2</code> for more information.</p>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L601" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L610" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="{}/1">
     <strong>{args}</strong>
@@ -999,7 +988,9 @@ Check <code>quote/2</code> for more information.</p>
 { 1, 2, 3 }
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L31" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/kernel/special_forms.ex#L31" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       
