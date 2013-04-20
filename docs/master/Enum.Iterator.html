@@ -29,18 +29,19 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This is the protocol used by the <code>Enum</code> module.
-Usually, when you invoke a function in the module <code>Enum</code>,
-the first argument passed to <code>Enum</code> is a collection which
-is forwarded to this protocol in order to retrieve information
-on how to iterate the collection. That said, when:</p>
+          <p>This is the protocol used by the <code>Enum</code> module.</p>
+
+<p>Usually, when you invoke a function in the module <code>Enum</code>, the first argument
+passed to it is a collection which is forwarded to this protocol in order to
+retrieve information on how to iterate the collection.</p>
+
+<p>For example, in the expression</p>
 
 <pre><code>Enum.map [1,2,3], &amp;1 * 2
 </code></pre>
 
-<p>Is invoked, it invokes <code>Enum.Iterator.iterator([1,2,3])</code>
-which returns all the information required by Enum.
-Read each function documentation below for more information.</p>
+<p><code>Enum.map</code> invokes <code>Enum.Iterator.iterator([1,2,3])</code> to retrieve the iterator
+function that will drive the iteration process.</p>
 
         </div>
       
@@ -108,46 +109,47 @@ Read each function documentation below for more information.</p>
   <p class="signature" id="count/1">
     <strong>count(collection)</strong>
   </p>
-  <div class="docstring"><p>The function used to retrieve the collection size.</p>
+  <div class="docstring"><p>The function used to retrieve the collection&#39;s size.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L52" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L54" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="iterator/1">
     <strong>iterator(collection)</strong>
   </p>
-  <div class="docstring"><p>Iteration in Elixir happens with the help of a iterator
-function. Every time this function is called, it must
-return a tuple with two elements. The first element
-is the next item and the second can be any Elixir term
-which the function is going to receive as argument the
-next time it is invoked.</p>
+  <div class="docstring"><p>This function must return a tuple of the form <code>{ iter, step }</code> where
+<code>iter</code> is a function that yields successive values from the collection
+each time it is invoked and <code>step</code> is the first step of iteration.</p>
 
-<p>When there are no more items to be iterated, the function
-must return the atom <code>:stop</code>.</p>
+<p>Iteration in Elixir happens with the help of an <em>iterator function</em> (named
+<code>iter</code> in the paragraph above). When it is invoked, it must return a tuple
+with two elements. The first element is the next successive value from the
+collection and the second element can be any Elixir term which <code>iter</code> is
+going to receive as its argument the next time it is invoked.</p>
 
-<p>In order to retrieve this iterator function, Elixir invokes
-<code>Enum.Iterator.iterator(collection)</code> which should return a
-tuple with two elements: the first element is the iterator
-function and the second is the first step of iteration.</p>
+<p>When there are no more items left to yield, <code>iter</code> must return the atom
+<code>:stop</code>.</p>
 
-<p>As an example, here is the implementation of iterator for lists:</p>
+<p>As an example, here is the implementation of <code>iterator</code> for lists:</p>
 
 <pre><code>def iterator(list),   do: { iterate(&amp;1), iterate(list) }
 defp iterate([h|t]),  do: { h, t }
 defp iterate([]),     do: :stop
 </code></pre>
 
+<p>Here, <code>iterate</code> is the <em>iterator function</em> and <code>{ h, t }</code> is a step of
+iteration.</p>
+
 <h2>Iterating lists</h2>
 
-<p>If a data structure needs to be converted to a list in order
-to be iterated, the iterator function can simply return the
-list and the Enum module will be able to take over the list
-and retrieve the proper iterator function.</p>
+<p>As a special case, if a data structure needs to be converted to a list in
+order to be iterated, <code>iterator</code> can simply return the list and the <code>Enum</code>
+module will be able to take over the list and produce a proper iterator
+function for it.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L47" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

@@ -42,6 +42,7 @@ order to select the files to compile.</p>
 <h2>Command line options</h2>
 
 <ul>
+<li><code>--cover</code> - the directory to include coverage results;</li>
 <li><code>--force</code> - forces compilation regardless of module times;</li>
 <li><code>--quick</code>, <code>-q</code> - only compile files that changed;</li>
 <li><code>--no-compile</code> - do not compile even if files require compilation;</li>
@@ -57,6 +58,8 @@ Defaults to <code>[&quot;test&quot;]</code>.</p></li>
 Defaults to <code>*_test.exs</code>.</p></li>
 <li><p><code>:test_helper</code> - a file that sets up whatever is necessary
 for testing. Defaults to <code>test/test_helper.exs</code>.</p></li>
+<li><p><code>:test_coverage</code> - the directory to include test coverage results.
+Defaults to nil.</p></li>
 </ul>
 
         </div>
@@ -69,7 +72,7 @@ for testing. Defaults to <code>test/test_helper.exs</code>.</p></li>
       
 
       
-        <h2>Functions summary</h2>
+        <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -92,7 +95,9 @@ for testing. Defaults to <code>test/test_helper.exs</code>.</p></li>
     <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/test.ex#L38" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/test.ex#L42" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       

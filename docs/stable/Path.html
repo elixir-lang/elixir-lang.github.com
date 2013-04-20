@@ -48,7 +48,7 @@ that needs to query the filesystem to retrieve paths
       
 
       
-        <h2>Functions summary</h2>
+        <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
   <span class="summary_signature">
@@ -171,7 +171,9 @@ Path.absname(&quot;../x&quot;).
 &quot;D:/usr/local/../x&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L38" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L41" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="absname/2">
     <strong>absname(path, relative_to)</strong>
@@ -185,14 +187,16 @@ resolve <code>..</code>, <code>.</code> or <code>~</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.absname(&quot;foo&quot;, &quot;bar&quot;)
-#=&gt; &quot;bar/foo&quot;
+<pre><code>iex&gt; Path.absname(&quot;foo&quot;, &quot;bar&quot;)
+&quot;bar/foo&quot;
 
-Path.absname(&quot;../x&quot;, &quot;bar&quot;)
-#=&gt; &quot;bar/../x&quot;
+iex&gt; Path.absname(&quot;../x&quot;, &quot;bar&quot;)
+&quot;bar/../x&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L59" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L62" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="basename/1">
     <strong>basename(path)</strong>
@@ -202,17 +206,19 @@ itself if it does not contain any directory separators.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.basename(&quot;foo&quot;)
-#=&gt; &quot;foo&quot;
+<pre><code>iex&gt; Path.basename(&quot;foo&quot;)
+&quot;foo&quot;
 
-Path.basename(&quot;foo/bar&quot;)
-#=&gt; &quot;bar&quot;
+iex&gt; Path.basename(&quot;foo/bar&quot;)
+&quot;bar&quot;
 
-Path.basename(&quot;/&quot;)
-#=&gt; &quot;&quot;
+iex&gt; Path.basename(&quot;/&quot;)
+&quot;&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L237" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L246" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="basename/2">
     <strong>basename(path, extension)</strong>
@@ -223,15 +229,17 @@ extension which may, or may not, be there.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.basename(&quot;~/foo/bar.ex&quot;, &quot;.ex&quot;)
-#=&gt; &quot;bar&quot;
-Path.basename(&quot;~/foo/bar.exs&quot;, &quot;.ex&quot;)
-#=&gt; &quot;bar.exs&quot;
-Path.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
-#=&gt; &quot;bar.old&quot;
+<pre><code>iex&gt; Path.basename(&quot;~/foo/bar.ex&quot;, &quot;.ex&quot;)
+&quot;bar&quot;
+iex&gt; Path.basename(&quot;~/foo/bar.exs&quot;, &quot;.ex&quot;)
+&quot;bar.exs&quot;
+iex&gt; Path.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
+&quot;bar.old&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L256" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L265" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="dirname/1">
     <strong>dirname(path)</strong>
@@ -244,7 +252,9 @@ Path.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
 #=&gt; &quot;foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L269" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L278" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="expand/1">
     <strong>expand(path)</strong>
@@ -254,10 +264,13 @@ any <code>.</code> and <code>..</code> characters.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.expand(&quot;/foo/bar/../bar&quot;) == &quot;/foo/bar&quot;
+<pre><code>iex&gt; Path.expand(&quot;/foo/bar/../bar&quot;)
+&quot;/foo/bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L72" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L76" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="expand/2">
     <strong>expand(path, relative_to)</strong>
@@ -268,11 +281,15 @@ absolute path, the relative location is ignored.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.expand(&quot;foo/bar/../bar&quot;, &quot;/baz&quot;) == &quot;/baz/foo/bar&quot;
-Path.expand(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;) == &quot;/foo/bar&quot;
+<pre><code>iex&gt; Path.expand(&quot;foo/bar/../bar&quot;, &quot;/baz&quot;)
+&quot;/baz/foo/bar&quot;
+iex&gt; Path.expand(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;)
+&quot;/foo/bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L87" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L93" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="extname/1">
     <strong>extname(path)</strong>
@@ -281,13 +298,15 @@ Path.expand(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;) == &quot;/foo/bar&quo
 
 <h2>Examples</h2>
 
-<pre><code>Path.extname(&quot;foo.erl&quot;)
-#=&gt; &quot;.erl&quot;
-Path.extname(&quot;~/foo/bar&quot;)
-#=&gt; &quot;&quot;
+<pre><code>iex&gt; Path.extname(&quot;foo.erl&quot;)
+&quot;.erl&quot;
+iex&gt; Path.extname(&quot;~/foo/bar&quot;)
+&quot;&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L284" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L293" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="join/1">
     <strong>join(list1)</strong>
@@ -297,15 +316,17 @@ This function should be used to convert a list of strings in a path.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.join([&quot;~&quot;, &quot;foo&quot;])
-#=&gt; &quot;~/foo&quot;
-Path.join([&quot;foo&quot;])
-#=&gt; &quot;foo&quot;
-Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
-#=&gt; &quot;/foo/bar&quot;
+<pre><code>iex&gt; Path.join([&quot;~&quot;, &quot;foo&quot;])
+&quot;~/foo&quot;
+iex&gt; Path.join([&quot;foo&quot;])
+&quot;foo&quot;
+iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
+&quot;/foo/bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L333" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L342" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="join/2">
     <strong>join(left, right)</strong>
@@ -314,11 +335,13 @@ Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 
 <h2>Examples</h2>
 
-<pre><code>Path.join(&quot;foo&quot;, &quot;bar&quot;)
-#=&gt; &quot;foo/bar&quot;
+<pre><code>iex&gt; Path.join(&quot;foo&quot;, &quot;bar&quot;)
+&quot;foo/bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L349" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L358" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="relative/1">
     <strong>relative(name)</strong>
@@ -340,7 +363,9 @@ Path.relative(&quot;D:bar.ex&quot;)         #=&gt; &quot;bar.ex&quot;
 Path.relative(&quot;/bar/foo.ex&quot;)      #=&gt; &quot;bar/foo.ex&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L132" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L138" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="relative_to/2">
     <strong>relative_to(path, from)</strong>
@@ -355,12 +380,17 @@ the original path.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/usr/local&quot;) #=&gt; &quot;foo&quot;
-Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/&quot;) #=&gt; &quot;foo&quot;
-Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/etc&quot;) #=&gt; &quot;/usr/local/foo&quot;
+<pre><code>iex&gt; Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/usr/local&quot;)
+&quot;foo&quot;
+iex&gt; Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/&quot;)
+&quot;usr/local/foo&quot;
+iex&gt; Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/etc&quot;)
+&quot;/usr/local/foo&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L196" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L205" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="rootname/1">
     <strong>rootname(path)</strong>
@@ -369,13 +399,15 @@ Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/etc&quot;) #=&gt; &quot;/usr
 
 <h2>Examples</h2>
 
-<pre><code>Path.rootname(&quot;/foo/bar&quot;)
-#=&gt; &quot;/foo/bar&quot;
-Path.rootname(&quot;/foo/bar.ex&quot;)
-#=&gt; &quot;/foo/bar&quot;
+<pre><code>iex&gt; Path.rootname(&quot;/foo/bar&quot;)
+&quot;/foo/bar&quot;
+iex&gt; Path.rootname(&quot;/foo/bar.ex&quot;)
+&quot;/foo/bar&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L299" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L308" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="rootname/2">
     <strong>rootname(path, extension)</strong>
@@ -385,13 +417,15 @@ remove a specific extension which might, or might not, be there.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.erl&quot;)
-#=&gt; &quot;/foo/bar&quot;
-Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.ex&quot;)
-#=&gt; &quot;/foo/bar.erl&quot;
+<pre><code>iex&gt; Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.erl&quot;)
+&quot;/foo/bar&quot;
+iex&gt; Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.ex&quot;)
+&quot;/foo/bar.erl&quot;
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L315" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L324" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="split/1">
     <strong>split(path)</strong>
@@ -401,15 +435,17 @@ If an empty string is given, then it returns the root path.</p>
 
 <h2>Examples</h2>
 
-<pre><code> Path.split(&quot;&quot;)
- #=&gt; [&quot;/&quot;]
- Path.split(&quot;foo&quot;)
- #=&gt; [&quot;foo&quot;]
- Path.split(&quot;/foo/bar&quot;)
- #=&gt; [&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;]
+<pre><code> iex&gt; Path.split(&quot;&quot;)
+ [&quot;/&quot;]
+ iex&gt; Path.split(&quot;foo&quot;)
+ [&quot;foo&quot;]
+ iex&gt; Path.split(&quot;/foo/bar&quot;)
+ [&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;]
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L416" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L425" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="type/1">
     <strong>type(name)</strong>
@@ -431,7 +467,9 @@ Path.type(&quot;D:bar.ex&quot;)         #=&gt; :volumerelative
 Path.type(&quot;/bar/foo.ex&quot;)      #=&gt; :volumerelative
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L108" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L114" target="_blank" class="view_source">Source</a>
+  
 </div><div class="detail">
   <p class="signature" id="wildcard/1">
     <strong>wildcard(glob)</strong>
@@ -471,7 +509,9 @@ inside their ebin directories all projects as follows:</p>
 <pre><code>Path.wildcard(&quot;projects/*/ebin/**/*.{beam,app}&quot;)
 </code></pre>
 </div>
-  <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L453" target="_blank" class="view_source">Source</a>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/path.ex#L462" target="_blank" class="view_source">Source</a>
+  
 </div>
         </div>
       

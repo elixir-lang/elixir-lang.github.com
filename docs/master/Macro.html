@@ -43,11 +43,6 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#do_safe_term/1">do_safe_term/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#escape/1">escape/1</a>
   </span>
 </li>
@@ -118,14 +113,6 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="do_safe_term/1">
-    <strong>do_safe_term(terms)</strong>
-  </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L595" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
   <p class="signature" id="escape/1">
     <strong>escape(expr)</strong>
   </p>
@@ -244,7 +231,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L505" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L507" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="extract_args/1">
@@ -279,7 +266,7 @@ evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
 which is returned as <code>{ :unsafe, term }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L591" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L598" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
@@ -294,7 +281,7 @@ which is returned as <code>{ :unsafe, term }</code>.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L241" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L243" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unescape_binary/1">
@@ -329,8 +316,8 @@ and we return a version with it unescaped.</p>
     <strong>unescape_binary(chars, map)</strong>
   </p>
   <div class="docstring"><p>Unescape the given chars according to the map given.
-Check <code>unescape/1</code> if you want to use the same map as
-Elixir single- and double-quoted strings.</p>
+Check <code>unescape_binary/1</code> if you want to use the same map
+as Elixir single- and double-quoted strings.</p>
 
 <h2>Map</h2>
 
@@ -379,24 +366,26 @@ returns false for ?x.</p>
     <strong>unescape_tokens(tokens)</strong>
   </p>
   <div class="docstring"><p>Unescape the given tokens according to the default map.
-Check <code>unescape/1</code> and <code>unescape/2</code> for more information
-about unescaping. Only tokens that are binaries are
-unescaped, all others are ignored. This function is useful
-when implementing your own sigils. Check the implementation
-of <code>Kernel.__b__</code> for examples.</p>
+Check <code>unescape_binary/1</code> and <code>unescape_binary/2</code> for more
+information about unescaping.</p>
+
+<p>Only tokens that are binaries are unescaped, all others are
+ignored. This function is useful when implementing your own
+sigils. Check the implementation of <code>Kernel.__b__</code>
+for examples.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L220" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L222" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/2">
     <strong>unescape_tokens(tokens, map)</strong>
   </p>
   <div class="docstring"><p>Unescape the given tokens according to the given map.
-Check <code>unescape_tokens/1</code> and <code>unescaped/2</code> for more information.</p>
+Check <code>unescape_tokens/1</code> and <code>unescape_binary/2</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L228" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/macro.ex#L230" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
