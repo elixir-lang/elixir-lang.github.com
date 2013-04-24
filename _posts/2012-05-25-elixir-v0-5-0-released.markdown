@@ -27,7 +27,7 @@ Around February of that year, feeling confident enough about the direction the l
 
 One of the goals we have set was to have a good website and documentation before the next official release. With the help of the Plataformatec team, we created a logo for Elixir and put this website live.
 
-At the same time, [we were working on pygments support](https://bitbucket.org/birkenfeld/pygments-main/pull-request/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/exdoc) and many others. Soon, Github was able to syntax highlight Elixir code and [our API documentation was online](http://elixir-lang.org).
+At the same time, [we were working on pygments support](https://bitbucket.org/birkenfeld/pygments-main/pull-request/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, Github was able to syntax highlight Elixir code and [our API documentation was online](http://elixir-lang.org).
 
 At the same time, people started to gather around #elixir-lang channel on irc.freenode.net and [play with Elixir](http://github.com/elixir-lang/mix), [start their](https://github.com/guedes/exdate) [own projects](https://github.com/yrashk/validatex) and [tutorials](https://github.com/alco/elixir/wiki/Erlang-Syntax:-A-Crash-Course).
 
@@ -41,7 +41,7 @@ There are still many, many things to do! In the next months, we will continue wo
 
 We will also work on better integration and documentation on building Erlang systems. Erlang ships with the [Open Telecom Platform](http://en.wikipedia.org/wiki/Open_Telecom_Platform) which provides many tools to build distributed applications. In v0.5.0, all these tools are already available but we want to make the build process even simpler.
 
-In parallel, we will improve our [documentation generation tool](https://github.com/elixir-lang/exdoc) and [build tool](https://github.com/elixir-lang/mix) which will likely be merged into core when they are solid enough.
+In parallel, we will improve our [documentation generation tool](https://github.com/elixir-lang/ex_doc) and [build tool](https://github.com/elixir-lang/mix) which will likely be merged into core when they are solid enough.
 
 Finally, we will continue improving the Standard Library. Although Elixir's goal is to rely on Erlang the most as possible, we also want to provide a small Standard Library which makes better use of Elixir semantics. For the next weeks, we will focus on improving the IO and File manipulation modules. New data types may also appear, for example, ranges come to my mind.
 
