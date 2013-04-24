@@ -13,9 +13,9 @@ As always, I'm using the latest master (`d28d716de0f2892e31b4bcc9f87549b125075fa
 
 The [online docs][1] are finally up! This means easier navigation and integrated search. The docs are generated directly from the source, so it's very easy for you to contribute. Simply hit the _Source_ link, author your patch and send a pull request to the main Elixir repo. With GitHub you can do this all without leaving the browser. Any changes improving the documentation are welcome.
 
-The docs are generated with the help of the [exdoc][0] utility which is itself written in Elixir.
+The docs are generated with the help of the [ExDoc][0] utility which is itself written in Elixir.
 
-  [0]: https://github.com/elixir-lang/exdoc
+  [0]: https://github.com/elixir-lang/ex_doc
   [1]: http://elixir-lang.org/docs/
 
 
