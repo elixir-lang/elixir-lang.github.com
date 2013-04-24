@@ -90,4 +90,4 @@ Besides improvements to Elixir itself, Elixir's community is also working on too
 
 More importantly, [rebar_elixir_plugin](https://github.com/yrashk/rebar_elixir_plugin) was also released to allow existing Erlang developers to compile Elixir source code using [Rebar](https://github.com/basho/rebar). For those not familar with Rebar, it is a build tool for Erlang projects created by [the good folks at Basho, from Riak fame](http://basho.com/).
 
-Finally, our documentation generation tool [ExDoc](https://github.com/elixir-lang/exdoc) was improved to include the function signatures and arguments, making it more friendly to developers. [The documentation for Elixir master with those improvements is available here](http://elixir-lang.org/docs/master/). Enjoy!
+Finally, our documentation generation tool [ExDoc](https://github.com/elixir-lang/ex_doc) was improved to include the function signatures and arguments, making it more friendly to developers. [The documentation for Elixir master with those improvements is available here](http://elixir-lang.org/docs/master/). Enjoy!
