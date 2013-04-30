@@ -25,12 +25,12 @@ This means that accessing a tuple element is very fast (constant time) and can b
     iex> elem { :a, :b, :c }, 0
     :a
 
-On the other hand, updating a tuple is expensive as it needs to duplicate the tuple contents in memory. Updating a tuple can be done with the `setelem` function:
+On the other hand, updating a tuple is expensive as it needs to duplicate the tuple contents in memory. Updating a tuple can be done with the `set_elem` function:
 
-    iex> setelem { :a, :b, :c }, 0, :d
+    iex> set_elem { :a, :b, :c }, 0, :d
     {:d,:b,:c}
 
-> Note: If you are an Erlang developer, you will notice that we used the `elem` and `setelem` functions instead of Erlang's `element` and `setelement`. The reason for this choice is that Elixir attempts to normalize Erlang API's to always receive the `subject` of the function as the first argument and employ zero-based access.
+> Note: If you are an Erlang developer, you will notice that we used the `elem` and `set_elem` functions instead of Erlang's `element` and `setelement`. The reason for this choice is that Elixir attempts to normalize Erlang API's to always receive the `subject` of the function as the first argument and employ zero-based access.
 
 Since updating a tuple is expensive, when we want to add or remove elements, we use lists. Since lists are linked, it means accessing the first element of the list is very cheap. Accessing the n-th element, however, will require the algorithm to pass through n-1 nodes before reaching the n-th. We can access the `head` of the list as follows:
 
@@ -627,6 +627,6 @@ Custom exceptions can be defined using the `defexception` macro. You can check a
 
 ## 2.10 Built-in functions
 
-Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `setelem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
+Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `set_'elem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
 
 All of these functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily reused between different applications.
