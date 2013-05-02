@@ -24,25 +24,21 @@ Producing an Elixir image using the free Erlang on Xen Build Service requires ju
 
 1. Add a dependency on `lingex` to your `mix.exs` file:
 
-          {% highlight elixir %}
           def deps do
             [ { :lingex, github: "maximk/lingex" } ]
           end
-          {% endhighlight %}
 
 2. Run `mix deps.get` to update your dependencies. This adds a few custom tasks
 to the mix tool (`lingex.build`, `lingex.image`, and `lingex.build_image`)
 
 3. Set `lingex` options. Add the following lines to your `mix.exs` file:
 
-          {% highlight elixir %}
           def project do
             [ lingex_opts: [
                 build_host: "build.erlangonxen.org:8080",
           			username: "test",
           			password: "test" ] ]
           end
-          {% endhighlight %}
 
 4. Optionally, you may register with the build service [here](http://build.erlangonxen.org/register) and update the credentials accordingly. For the complete list of recognized options see the build service documentation.
 
@@ -54,11 +50,8 @@ And this is all. Erlang on Xen is going to boot the Erlang VM and the standard E
 
 1. In the Erlang shell, first start IEx:
 
-          {% highlight elixir %}
           1> application:start(iex).
           ok
-          {% endhighlight %}
-
 
 2. Then hit `Ctrl+G`. This will open up the user switch command interface from the Erlang shell.
 
