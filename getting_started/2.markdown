@@ -474,7 +474,7 @@ In Elixir, creating a function is similar to the `case` mechanism we have just s
     f.(1, 3)  #=> 4
     f.(-1, 3) #=> -3
 
-A function with one clause can be defined with a (preferred) shortcut syntax as follows:
+However, in Elixir code, it is more common to use a shortcut synyax to define functions:
 
     f = fn x, y -> x + y end
 
@@ -482,7 +482,7 @@ A function with one clause can be defined with a (preferred) shortcut syntax as 
       x + y
     end
 
-This is the syntax that's going to be used throughout this guide. Such is frequently used to iterate lists with the help of the [`Enum` module](/docs/stable/Enum.html) discuss previously:
+Such is frequently used to iterate lists with the help of the [`Enum` module](/docs/stable/Enum.html) discuss previously:
 
     iex> Enum.map [1,2,3], fn(x) -> x * 2 end
     [2,4,6]
