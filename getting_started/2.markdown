@@ -464,7 +464,7 @@ In such cases, if there is an error in one of the guards, it won't affect the ne
 
 ### 2.8.4 Functions
 
-In Elixir, creating a function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
+In Elixir, creating an anonymous function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
 
     f = function do
       x, y when x > 0 -> x + y
@@ -474,7 +474,7 @@ In Elixir, creating a function is similar to the `case` mechanism we have just s
     f.(1, 3)  #=> 4
     f.(-1, 3) #=> -3
 
-However, in Elixir code, it is more common to use a shortcut synyax to define functions:
+However, in Elixir code, it is more common to use a shortcut syntax to define anonymous functions:
 
     f = fn x, y -> x + y end
 
@@ -482,7 +482,7 @@ However, in Elixir code, it is more common to use a shortcut synyax to define fu
       x + y
     end
 
-Such is frequently used to iterate lists with the help of the [`Enum` module](/docs/stable/Enum.html) discuss previously:
+This shortcut form is frequently used with functions from the [`Enum` module](/docs/stable/Enum.html) discussed earlier:
 
     iex> Enum.map [1,2,3], fn(x) -> x * 2 end
     [2,4,6]
