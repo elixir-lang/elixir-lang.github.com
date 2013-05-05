@@ -201,7 +201,7 @@ In general, you will find working with binaries and strings in Elixir a breeze. 
 
 ## 2.5 Calling Erlang functions
 
-One of Elixir assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
+One of Elixir's assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
 
 Since an Erlang module is nothing more than an atom, invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) or interact with [the math module](http://www.erlang.org/doc/man/math.html) as follows:
 
@@ -604,7 +604,7 @@ Elixir provides the concept of exceptions. An exception can be raised using the 
         x.message
     end
 
-In general, idiomatic Elixir avoids using exceptions for control flow. For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
+In general, idiomatic Elixir avoids using exceptions for control flow. For example, if you write software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
 
     case File.read(file) do
       { :ok, contents }  ->
@@ -627,6 +627,6 @@ Custom exceptions can be defined using the `defexception` macro. You can check a
 
 ## 2.10 Built-in functions
 
-Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `set_'elem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
+Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `set_elem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
 
 All of these functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily reused between different applications.
