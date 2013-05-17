@@ -7,7 +7,7 @@ total_guides: 7
 
 # {{ page.title }}
 
-In this chapter we'll go a bit deeper into the basic data-types, learn some control flow mechanisms and how to create and invoke anonymous functions.
+In this chapter we'll go a bit deeper into the basic data-types, learn some control flow mechanisms and talk about anonymous functions.
 
 ## 2.1 Lists and tuples
 
@@ -34,20 +34,52 @@ On the other hand, updating a tuple is expensive as it needs to duplicate the tu
 
 Since updating a tuple is expensive, when we want to add or remove elements, we use lists. Since lists are linked, it means accessing the first element of the list is very cheap. Accessing the n-th element, however, will require the algorithm to pass through n-1 nodes before reaching the n-th. We can access the `head` of the list as follows:
 
+    # Match the head and tail of the list
     iex> [head | tail] = [1,2,3]
     [1,2,3]
     iex> head
     1
     iex> tail
     [2,3]
+
+    # Put the head and the tail back together
     iex> [head | tail]
     [1,2,3]
     iex> length [head | tail]
     3
 
-In the example above, we have assigned the head of the list to the variable `head` and the tail of the list to the variable `tail`. The [`Enum` module](/docs/stable/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](/docs/stable/List.html) provides several helpers specific to lists:
+In the example above, we have matched the head of the list to the variable `head` and the tail of the list to the variable `tail`. This is called **pattern matching**. We can also pattern match tuples:
 
-    iex> Enum.at! [1,2,3], 0
+    iex> { a, b, c } = { :hello, "world", 42 }
+    { :hello, "world", 42 }
+    iex> a
+    :hello
+    iex> b
+    "world"
+
+A pattern match will error in case the sides can't match. This is, for example, the case when the tuples have different sizes:
+
+    iex> { a, b, c } = { :hello, "world" }
+    ** (MatchError) no match of right hand side value: {:hello,"world"}
+
+And also when comparing different types:
+
+    iex> { a, b, c } = [:hello, "world"]
+    ** (MatchError) no match of right hand side value: [:hello,"world"]
+
+More interesting, we can match on specific values. The exemplo below asserts that the left side will only match the right side in case the right side is a tuple containing the atom `:ok` as a key:
+
+    iex> { :ok, result } = { :ok, 13 }
+    {:ok,13}
+    iex> result
+    13
+
+    iex> { :ok, result } = { :error, :oops }
+    ** (MatchError) no match of right hand side value: {:error,:oops}
+
+Pattern match allows developers to easily detructure data types like tuples, lists and more. As we will see in following chapters, it is one of the fundations for recursion in Elixir. However, in case you can't wait to iterate and manipulate your lists, the [`Enum` module](/docs/stable/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](/docs/stable/List.html) provides several helpers specific to lists:
+
+    iex> Enum.at [1,2,3], 0
     1
     iex> List.flatten [1,[2],3]
     [1,2,3]
@@ -59,7 +91,7 @@ Elixir also provides a special syntax to create a list of keywords. They can be 
     iex> [a: 1, b: 2]
     [a: 1, b: 2]
 
-Keyword lists are nothing more than a list of two element tuples, where the first element of the tuple is an atom, and hold their definition order:
+Keyword lists are nothing more than a list of two element tuples where the first element of the tuple is an atom:
 
     iex> [head | tail] = [a: 1, b: 2]
     [a: 1, b: 2]
@@ -83,25 +115,25 @@ Since keyword lists are very frequently passed as arguments, they do not require
     iex> if 2 + 2 == 4, do: "OK"
     "OK"
 
-## 2.3 Char lists and binaries
+## 2.3 Strings and char lists
 
-In the previous chapter we have discussed double- and single- representations:
+In Elixir, a double-quoted string is not the same as a single-quoted one:
 
-    iex> "sample" == 'sample'
+    iex> "hello" == 'hello'
     false
-    iex> is_binary "string"
+    iex> is_binary "hello"
     true
-    iex> is_list 'char list'
+    iex> is_list 'hello'
     true
 
-In fact, both double-quoted and single-quoted representations are just a shorter representation of binaries and lists respectively. Given that `?a` in Elixir returns the ASCII integer for the letter `a`, we could also write:
+As shown above, double-quoted returns a binary while single-quoted returns a list. In fact, both double-quoted and single-quoted representations are just a shorter representation of binaries and lists respectively. Given that `?a` in Elixir returns the ASCII integer for the letter `a`, we could also write:
 
     iex> <<?a, ?b, ?c>>
     "abc"
     iex> [?a, ?b, ?c]
     'abc'
 
-In such cases, Elixir detects that all characters in the list and in the binary are printable and returns the quoted representation. However, adding a non-printable character forces them to be printed differently:
+In such cases, Elixir detects that all characters in the binary and in the list are printable and returns the quoted representation. However, adding a non-printable character forces them to be printed differently:
 
     iex> <<?a, ?b, ?c, 1>>
     <<97,98,99,1>>
@@ -109,7 +141,7 @@ In such cases, Elixir detects that all characters in the list and in the binary 
     iex> [?a, ?b, ?c, 1]
     [97,98,99,1]
 
-Since lists are implemented as linked lists, it means a char list usually takes a lot of space in memory (in ASCII, it would be one byte for each character and another byte to point to the next character). For this reason, binaries (double-quoted) are preferred unless you want to explicitly iterate over a char list.
+Since lists are implemented as linked lists, it means a char list usually takes a lot of space in memory (one word for each character and another word to point to the next character). For this reason, double-quoted is preferred unless you want to explicitly iterate over a char list (which is sometimes common when interfacing with Erlang code from Elixir).
 
 Although a bit more verbose, it is also possible to do head/tail style pattern matching with binaries. A binary is made up of a number of parts which must be tagged with their type. Most of the time, Elixir will figure out the part's type and won't require any work from you:
 
@@ -150,7 +182,7 @@ This is equivalent to the head and tail pattern matching we saw in lists. There 
 
 ## 2.4 UTF-8 Strings
 
-In the previous section we've learnt about binaries. A string in Elixir is a binary which is encoded in UTF-8. For example, the string "é" is a UTF-8 binary containing two bytes:
+A String in Elixir is a binary which is encoded in UTF-8. For example, the string "é" is a UTF-8 binary containing two bytes:
 
     iex> string = "é"
     "é"
@@ -186,7 +218,7 @@ The Unicode standard assigns an integer value to each character. Elixir allows a
     iex> "h\xE9ll\xF2"
     "héllò"
 
-UTF-8 also plays nicely with pattern matching. You can match against a UTF-8 codepoint, retriving its integer value as follow:
+UTF-8 also plays nicely with pattern matching. In the exemple below, we are extracting the first UTF-8 codepoint of a String and assigning the rest of the string to the variable `rest`:
 
     iex> << eacute :: utf8, rest :: binary >> = "épa"
     "épa"
@@ -199,92 +231,7 @@ UTF-8 also plays nicely with pattern matching. You can match against a UTF-8 cod
 
 In general, you will find working with binaries and strings in Elixir a breeze. Whenever you want to work with raw binaries, one can use [Erlang's binary module](http://www.erlang.org/doc/man/binary.html), and use [Elixir's String module](http://elixir-lang.org/docs/stable/String.html) when you want to work on strings, which are simply UTF-8 encoded binaries. Finally, there are a bunch of conversion functions, that allows you to convert a binary to integer, atom and vice-versa [in the Kernel module](http://elixir-lang.org/docs/stable/Kernel.html).
 
-## 2.5 Calling Erlang functions
-
-One of Elixir's assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
-
-Since an Erlang module is nothing more than an atom, invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) or interact with [the math module](http://www.erlang.org/doc/man/math.html) as follows:
-
-    iex> :lists.flatten [1,[2],3]
-    [1,2,3]
-    iex> :math.sin :math.pi
-    1.2246467991473532e-16
-
-Erlang's OTP is very well documented and we will learn more about building OTP applications in the Mix chapters:
-
-* [OTP docs](http://www.erlang.org/doc/)
-* [Standard library docs](http://www.erlang.org/doc/man/STDLIB_app.html)
-
-## 2.6 Pattern matching
-
-When discussing lists earlier we saw the following example:
-
-    iex> [h | t] = [1,2,3]
-    [1, 2, 3]
-    iex> h
-    1
-    iex> t
-    [2, 3]
-
-In Elixir, `=` is not an assignment operator as in programming languages like Java, Ruby, Python, etc. `=` is actually a match operator which will check if the expressions on both left and right side match. Consider this example:
-
-    iex> { 1, 2, 3 } = { 1, 2, 3 }
-    { 1, 2, 3 }
-    iex> { 1, 2, 3 } = { 1, 4, 3 }
-    ** (MatchError) no match of right hand side value: {1,4,3}
-
-If the tuples given on the left and right side do not match, an error is raised. If any of the tuples contain a variable, this variable will always be assigned:
-
-    iex> { 1, x, 3 } = { 1, 2, 3 }
-    { 1, 2, 3 }
-    iex> x
-    2
-    iex> { 1, x, 3 } = { 1, 4, 3 }
-    { 1, 4, 3 }
-    iex> x
-    4
-
-This is exactly what happened in the list example:
-
-    iex> [h | t] = [1,2,3]
-    [1, 2, 3]
-
-We have assigned the head of the list to `h` and the tail to `t`. In fact, if we want to check if the head of the list is `1` and assign the tail, we could do:
-
-    iex> [1 | t] = [1,2,3]
-    [1, 2, 3]
-    iex> [0 | t] = [1,2,3]
-    ** (MatchError) no match of right hand side value: [1,2,3]
-
-If you want to pattern match against the value of a variable, you can use the `^` operator:
-
-    iex> x = 1
-    1
-    iex> ^x = 1
-    1
-    iex> ^x = 2
-    ** (MatchError) no match of right hand side value: 2
-    iex> x = 2
-    2
-
-In Elixir, it is a common practice to assign a value to underscore `_` if we don't intend to use it. For example, if only the head of the list matters to us, we can assign the tail to underscore:
-
-    iex> [h | _] = [1,2,3]
-    [1, 2, 3]
-    iex> h
-    1
-
-The variable `_` in Elixir is special in that it can never be read from. Trying to read from it gives an unbound variable error:
-
-    iex> _
-    ** (ErlangError) erlang error {:unbound_var, :_}
-
-Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of the match. The following example is invalid:
-
-    iex> :lists.flatten([1,[2],3]) = [1,2,3]
-    ** (ErlangError) erlang error :illegal_pattern
-
-## 2.7 Blocks
+## 2.5 Blocks
 
 One of the first control flow constructs we usually learn is the conditional `if`. In Elixir, we could write `if` as follow:
 
@@ -333,42 +280,54 @@ Which is not what we want since `do` is binding to the farthest function call, i
       1 + 2
     end)
 
-## 2.8 Control flow structures
+## 2.6 Control flow structures
 
 In this section we'll describe Elixir's main control flow structures.
 
-### 2.8.1 If
+### 2.6.1 Revisiting pattern matching
 
-Refreshing from the section above, all these calls behave the same:
+At the beginning of this chapter we have seen some pattern matching examples:
 
-    if false, do: 1 + 2, else: 10 + 3
+    iex> [h | t] = [1,2,3]
+    [1, 2, 3]
+    iex> h
+    1
+    iex> t
+    [2, 3]
 
-    if false do
-      1 + 2
-    else
-      10 + 3
-    end
+In Elixir, `=` is not an assignment operator as in programming languages like Java, Ruby, Python, etc. `=` is actually a match operator which will check if the expressions on both left and right side match.
 
-In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicitly convert the `if` argument to a boolean. If you want to check if one of many conditions are true, you can use the `cond` macro.
+Many control-flow structures in Elixir rely extensively on pattern matching and the ability for different clauses too match. In some cases, you may want to match against the value of a variable, which can be achieved by with the `^` operator:
 
-### 2.8.2 Cond
+    iex> x = 1
+    1
+    iex> ^x = 1
+    1
+    iex> ^x = 2
+    ** (MatchError) no match of right hand side value: 2
+    iex> x = 2
+    2
 
-`cond` allows you to check many expressions and executes the first one that evaluates to true:
+In Elixir, it is a common practice to assign a value to underscore `_` if we don't intend to use it. For example, if only the head of the list matters to us, we can assign the tail to underscore:
 
-    cond do
-      2 + 2 == 5 ->
-        "This will never match"
-      2 * 2 == 3 ->
-        "Nor this"
-      1 + 1 == 2 ->
-        "But this will"
-    end
+    iex> [h | _] = [1,2,3]
+    [1, 2, 3]
+    iex> h
+    1
 
-If none of the expressions above return true, an error would be raised.
+The variable `_` in Elixir is special in that it can never be read from. Trying to read from it gives an unbound variable error:
 
-### 2.8.3 Case
+    iex> _
+    ** (ErlangError) erlang error {:unbound_var, :_}
 
-In section 2.5, we introduced pattern matching via the `=` operator. Sometimes, however, it is convenient to compare an expression against several expressions until we find a matching one. In this scenario, we use `case`:
+Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:
+
+    iex> length([1,[2],3]) = 3
+    ** (ErlangError) erlang error :illegal_pattern
+
+### 2.6.2 Case
+
+A `case` allows us to compare a value against many patterns until we find a matching one:
 
     case { 1, 2, 3 } do
       { 4, 5, 6 } ->
@@ -376,7 +335,7 @@ In section 2.5, we introduced pattern matching via the `=` operator. Sometimes, 
       { 1, x, 3 } ->
         "This will match and assign x to 2"
       _ ->
-        "This is a match any clause"
+        "This will match any value"
     end
 
 As in the `=` operator, any assigned variable will be overridden in the match clause. If you want to pattern match against a variable, you need to use the `^` operator:
@@ -401,7 +360,7 @@ Each match clause also supports special conditions specified via guards:
 In the example above, the second clause will only match when x is positive. The Erlang VM only allows a limitted set of expressions as guards:
 
 * comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`);
-* boolean operators (`and`, `or`) and negation operators (`not`, `!`). Note that `||` and `&&` are not allowed;
+* boolean operators (`and`, `or`) and negation operators (`not`, `!`);
 * arithmetic operators (`+`, `-`, `*`, `/`);
 * `<>` and `++` as long as the left side is a literal;
 * the `in` operator;
@@ -454,19 +413,19 @@ Many independent guard clauses can also be given at the same time. For example, 
 
 However, the example above will always fail. If the argument is a list, calling `elem` on a list will raise an error. If the element is a tuple, calling `hd` on a tuple will also raise an error. To fix this, we can rewrite it to become two different clauses:
 
-    def first_is_zero?(tuple_or_list) when
-      elem(tuple_or_list, 1) == 0 when
-      hd(tuple_or_list) == 0 do
+    def first_is_zero?(tuple_or_list)
+        when elem(tuple_or_list, 1) == 0
+        when hd(tuple_or_list) == 0 do
       true
     end
 
 In such cases, if there is an error in one of the guards, it won't affect the next one.
 
-### 2.8.4 Functions
+### 2.6.3 Functions
 
-In Elixir, creating an anonymous function is similar to the `case` mechanism we have just seen. It allows us to define a function with many clauses:
+In Elixir, anonymous functions can accept many clauses and guards just the `case` mechanism we have just seen:
 
-    f = function do
+    f = fn
       x, y when x > 0 -> x + y
       x, y -> x * y
     end
@@ -474,77 +433,15 @@ In Elixir, creating an anonymous function is similar to the `case` mechanism we 
     f.(1, 3)  #=> 4
     f.(-1, 3) #=> -3
 
-However, in Elixir code, it is more common to use a shortcut syntax to define anonymous functions:
-
-    f = fn x, y -> x + y end
-
-    f = fn x, y ->
-      x + y
-    end
-
-This shortcut form is frequently used with functions from the [`Enum` module](/docs/stable/Enum.html) discussed earlier:
-
-    iex> Enum.map [1,2,3], fn(x) -> x * 2 end
-    [2,4,6]
-    iex> Enum.reduce [1,2,3], 0, fn(x, acc) -> x + acc end
-    6
-
 As Elixir is an immutable language, the binding of the function is also immutable. This means that setting a variable inside the function does not affect its outer scope:
 
     x = 1
     (fn -> x = 2 end).()
     x #=> 1
 
-### 2.8.5 Try
+### 2.6.4 Receive
 
-The next control-flow mechanism is `try/catch/after`:
-
-    iex> try do
-    ...>   throw 13
-    ...> catch
-    ...>   number -> number
-    ...> end
-    13
-
-`try/catch` is the main mechanism for catching values thrown by Elixir at runtime. It also supports an `after` clause that is invoked regardless of whether or not the value was caught:
-
-    iex> try do
-    ...>   throw 13
-    ...> catch
-    ...>   nan when not is_number(nan) -> nan
-    ...> after
-    ...>   IO.puts "Didn't catch"
-    ...> end
-    Didn't catch
-    ** throw 13
-        erl_eval:expr/3
-
-There is one particularity that applies to `try/catch/after` when compared to other control-flow expressions. The Erlang VM considers such clauses unsafe (since they may or may not fail) and does not allow variables defined inside `try/catch/after` to be accessed from the outer scope:
-
-    iex> try do
-    ...>   new_var = 1
-    ...> catch
-    ...>   value -> value
-    ...> end
-    1
-    iex> new_var
-    ** error :undef
-
-The common strategy is to explicitly make all arguments that are required after the `try`:
-
-    { x, y } = try do
-      x = calculate_some_value()
-      y = some_other_value()
-      { x, y }
-    catch
-      _ -> { nil, nil }
-    end
-
-    x #=> returns the value of x or nil for failures
-
-### 2.8.6 Receive
-
-The last control-flow mechanism we are going to discuss is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
+This next control-flow mechanism is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
 In order to exchange messages, each process has a mailbox where the received messages are stored. The `receive` mechanism allows us to go through this mailbox searching for a message that matches the given pattern. Here is an example that uses the arrow operator `<-` to send a message to the current process and then collects this message from its mailbox:
 
@@ -556,6 +453,7 @@ In order to exchange messages, each process has a mailbox where the received mes
       current_pid <- { :hello, self }
     end
     <0.36.0>
+
 
     # Collect the message
     iex> receive do
@@ -575,58 +473,132 @@ You may not see exactly `<0.36.0>` back, but something similar. If there are no 
     ...> end
     Too late
 
-Notice we spawned a new process using the `spawn` function passing another function as argument. [`Process`](/docs/stable/Process.html) and [`Node`](/docs/stable/Node.html) modules contains many functions to manage processes, including spawning and get information about processes running in other nodes in the network. We will go in more detail about those on chapter 6.
+Notice we spawned a new process using the `spawn` function passing another function as argument. We will talk more about those processes and even how to exchange messages in between different nodes in a later chapter.
 
-## 2.9 Exceptions
+### 2.6.5 Try
 
-Elixir provides the concept of exceptions. An exception can be raised using the function `raise` and rescued inside a `try` block with the `rescue` keyword:
+`try` in Elixir is used to catch values that are thrown. Let's start with an example:
 
-    # rescue only runtime error
-    try do
-      raise "some error"
-    rescue
-      RuntimeError -> "rescued"
+    iex> try do
+    ...>   throw 13
+    ...> catch
+    ...>   number -> number
+    ...> end
+    13
+
+`try/catch` is a control-flow mechanism, useful in rare situations where your code has complex exit strategies and it is easier to `throw` a value back up in the stack. `try` also supports guards in `catch` and an `after` clause that is invoked regardless of whether or not the value was caught:
+
+    iex> try do
+    ...>   throw 13
+    ...> catch
+    ...>   nan when not is_number(nan) -> nan
+    ...> after
+    ...>   IO.puts "Didn't catch"
+    ...> end
+    Didn't catch
+    ** throw 13
+        erl_eval:expr/3
+
+Notice that a thrown value which hasn't been caught halts the software. For this reason, Elixir considers such clauses unsafe (since they may or may not fail) and does not allow variables defined inside `try/catch/after` to be accessed from the outer scope:
+
+    iex> try do
+    ...>   new_var = 1
+    ...> catch
+    ...>   value -> value
+    ...> end
+    1
+    iex> new_var
+    ** error :undef
+
+The common strategy is to explicitly return all arguments from `try`:
+
+    { x, y } = try do
+      x = calculate_some_value()
+      y = some_other_value()
+      { x, y }
+    catch
+      _ -> { nil, nil }
     end
 
-    # rescue runtime and argument errors
-    try do
-      raise "some error"
-    rescue
-      [RuntimeError, ArgumentError] -> "rescued"
+    x #=> returns the value of x or nil for failures
+
+### 2.6.6 If and Unless
+
+Besides the four main control-flow structures above, Elixir provides some extra control-flow structures to help on our daily work. For example, `if` and `unless`:
+
+    iex> if true do
+    iex>   "This works!"
+    iex> end
+    "This works!"
+
+    iex> unless true do
+    iex>   "This will never be seen"
+    iex> end
+    nil
+
+Remember that `do/end` blocks in Elixir are simply a shortcut to the keyword notation. So one could also write:
+
+    iex> if true, do: "This works!"
+    "This works!"
+
+Or even more complex examples like:
+
+    # This is equivalent...
+    if false, do: 1 + 2, else: 10 + 3
+
+    # ... to this
+    if false do
+      1 + 2
+    else
+      10 + 3
     end
 
-    # rescue and assign to x
-    try do
-      raise "some error"
-    rescue
-      x in [RuntimeError] ->
-        # all exceptions respond to message
-        x.message
+In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicitly convert the `if` argument to a boolean. If you want to check if one of many conditions are true, you can use the `cond` macro.
+
+### 2.6.7 Cond
+
+Whenever you want to check for many conditions at the same time, Elixir allows developers to use `cond` insted of nesting many `if` expressions:
+
+    cond do
+      2 + 2 == 5 ->
+        "This will never match"
+      2 * 2 == 3 ->
+        "Nor this"
+      1 + 1 == 2 ->
+        "But this will"
     end
 
-In general, idiomatic Elixir avoids using exceptions for control flow. For example, if you write software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
+If none of the conditions return true, an error will be raised. For this reason, it is common to see a last condition equal to `true`, which will always match:
 
-    case File.read(file) do
-      { :ok, contents }  ->
-        # we could access the file
-        # proceed as expected
-      { :error, reason } ->
-        # Oops, something went wrong
-        # We need to handle the error accordingly
+    cond do
+      2 + 2 == 5 ->
+        "This will never match"
+      2 * 2 == 3 ->
+        "Nor this"
+      true ->
+        "This will always match (equivalent to else)"
     end
 
-Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `{ :ok, contents }` in case of success and `{ :error, reason }` in case of failures. This allows us to use Elixir's pattern matching construncts to control how our application should behave.
+## 2.7 Built-in functions
 
-On the other hand, a CLI interface that needs to access or manipulate a file given by the user may necessarily expect a file to be there. If the given file does not exist, there is nothing you can do but fail. Then you may use `File.read!` which raises an exception:
+Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `set_'elem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
 
-    contents = File.read!(file)
+All of these functions and control flow expressions are essential for building Elixir programs. In some cases though, one may need to use functions available from Erlang, let's see how.
 
-This pattern is common throughout Elixir standard library. Many libraries have both function definitions followed by their "bang" variation, with exclamation mark. This showcases well Elixir's philosophy of not using exceptions for control-flow. If you feel like you need to rescue an exception in order to change how the code behaves, you should probably return an atom or tuple instead, allowing your developers to rely on pattern matching.
+## 2.8 Calling Erlang functions
 
-Custom exceptions can be defined using the `defexception` macro. You can check a list of defined exceptions in [our documentation page](/docs/stable/), by clicking "Records" in the upper left corner (we will learn more about Records on chapter 4).
+One of Elixir's assets is easy integration with the existing Erlang ecosystem. Erlang ships with a group of libraries called OTP (Open Telecom Platform). Besides being a standard library, OTP provides several facilities to build OTP applications with supervisors that are robust, distributed and fault-tolerant.
 
-## 2.10 Built-in functions
+Since an Erlang module is nothing more than an atom, invoking those libraries from Elixir is quite straight-forward. For example, we can call the [function `flatten` from the module `lists`](http://www.erlang.org/doc/man/lists.html#flatten-1) or interact with [the math module](http://www.erlang.org/doc/man/math.html) as follows:
 
-Elixir ships with many built-in functions automatically available in the current scope. In addition to the control flow expressions seen above, Elixir also adds: `elem` and `set_elem` to read and set values in tuples, `inspect` that returns the representation of a given data type as a binary, and many others. All of these functions imported by default are available in [`Kernel`](/docs/stable/Kernel.html) and [Elixir special forms are available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
+    iex> :lists.flatten [1,[2],3]
+    [1,2,3]
+    iex> :math.sin :math.pi
+    1.2246467991473532e-16
 
-All of these functions and control flow expressions are essential for building Elixir programs. The next chapter will discuss how to organize our code into modules, so it can be easily reused between different applications.
+Erlang's OTP is very well documented and we will learn more about building OTP applications in the Mix chapters:
+
+* [OTP docs](http://www.erlang.org/doc/)
+* [Standard library docs](http://www.erlang.org/doc/man/STDLIB_app.html)
+
+That's all for now. The next chapter will discuss how to organize our code into modules so it can be easily reused between different applications.
