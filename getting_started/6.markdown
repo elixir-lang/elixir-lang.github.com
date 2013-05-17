@@ -140,14 +140,19 @@ The example above works as if `size(&1)` translates directly to `fn(x) -> size(x
     iex> Enum.reduce [1,2,3], 1, &1 * &2
     6
 
-In this case, `&1 * &2` translates to `fn(x, y) -> x * y end`. The values `&1` and `&2` maps to the argument order in the generated function.
+In this case, `&1 * &2` translates to `fn(x, y) -> x * y end`. The values `&1` and `&2` map to the argument order in the generated function.
 
-Keep in mind that `&args` binds only to the closest function call. For example, the following syntax is invalid:
+Keep in mind that `&N` binds only to the closest function call. For example, the following syntax is invalid:
 
     iex> foo(&1, 1 + &2)
     ** (SyntaxError) iex:1: partial variable &2 cannot be defined without &1
 
-This is because we have two functions calls in the example above, `foo` and `+`, and `&1` binds to `foo` while `&2` binds to `+`. In such cases, you need to use the usual function syntax:
+This is because we have two functions calls in the example above, `foo` and `+`, and `&1` binds to `foo` while `&2` binds to `+`. Let's add some parenthesis to make it explicit:
+
+    iex> foo(&1, (1 + &2))
+    ** (SyntaxError) iex:1: partial variable &2 cannot be defined without &1
+
+In such cases, you need to use the usual function syntax:
 
     iex> fn(x, y) -> foo(x, 1 + y) end
     #Function<erl_eval.12.82930912>
@@ -166,12 +171,12 @@ All functions and macros can be retrieved and partially applied, except [Elixir'
     defmodule AssertionTest do
       use ExUnit.Case, async: true
 
-      def test_always_pass do
+      test "always pass" do
         true = true
       end
     end
 
-This allows `ExUnit.Case` to configure and inject the proper setup into the `AssertionTest` module.
+This allows `ExUnit.Case` to configure and set up the module for testing, for example, by making the `test` macro used above available.
 
 The implementation of the `use` macro is actually quite trivial. When you invoke `use` with a module, it invokes a hook called `__using__` in this module. For example, the `use` call above is simply a translation to:
 
@@ -179,7 +184,7 @@ The implementation of the `use` macro is actually quite trivial. When you invoke
       require ExUnit.Case
       ExUnit.Case.__using__(async: true)
 
-      def test_always_pass do
+      test "always pass" do
         true = true
       end
     end
@@ -236,5 +241,6 @@ Elixir provides a set of pseudo-variables. These variables can only be read and 
 
 * `__MODULE__` - Returns an atom representing the current module or nil;
 * `__FILE__` - Returns a string representing the current file;
+* `__DIR__` - Returns a string representing the current directory;
 * `__ENV__` - Returns a [Macro.Env](/docs/stable/Macro.Env.html) record with information about the compilation environment. Here we can access the current module, function, line, file and others;
 * `__CALLER__` - Also returns a [Macro.Env](/docs/stable/Macro.Env.html) record but with information of the calling site. `__CALLER__` is available only inside macros;
