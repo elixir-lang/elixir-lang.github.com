@@ -88,6 +88,15 @@ Some basic types are:
     iex> :atom      # atom / symbol
     iex> {1,2,3}    # tuple
     iex> [1,2,3]    # list
+    iex> <<1,2,3>>  # binary
+
+Elixir by default provides many functions to work on those types:
+
+    iex> size { 1, 2, 3 }
+    3
+
+    iex> length [ 1, 2, 3 ]
+    3
 
 Elixir also provides functions (note the dot between the variable and arguments when calling a function):
 
@@ -97,42 +106,28 @@ Elixir also provides functions (note the dot between the variable and arguments 
     iex> x.(1, 2)
     3
 
-And strings:
+Elixir also supports strings and they are all encoded in UTF-8:
 
-    iex> "string"
-    "string"
+    iex> "hellö"
+    "hellö"
 
-Strings in Elixir are UTF-8 binaries delimited by double quotes. A single-quoted string in Elixir is called a char list and is simply a list of characters:
+Strings support interpolation too:
 
-    iex> 'a char list'
-    'a char list'
+    iex> name = "world"
+    iex> "hello #{name}"
+    "hello world"
 
-There is also string interpolation:
+At the end of the day, strings are nothing more than binaries. We can check it using the `is_binary` function:
 
-	iex> name = "world"
-	iex> "hello #{name}"
-	"hello world"
-
-We can use the `is_binary` and `is_list` helpers to detect if a given argument is a binary (double-quoted) or a list (single-quoted):
-
-    iex> is_binary "string"
-    true
-    iex> is_list "string"
-    false
-
-    iex> is_binary 'char list'
-    false
-    iex> is_list 'char list'
+    iex> is_binary("hello")
     true
 
-Although they represent the same thing, double-quoted and single-quoted strings are different and best suited for different scenarios:
+Note a single-quoted expression in Elixir is a char list and it is not the same as a double-quoted one:
 
-    iex> "string" == 'string'
+    iex> is_binary('hello')
     false
 
-In most cases, developers should use double-quoted strings as their representation is more compact. We'll discuss this subject with more detail in the next chapter.
-
-Elixir also provides `true` and `false` as booleans:
+We will go into more details about char lists in the next chapter. Finally, Elixir also provides `true` and `false` as booleans:
 
     iex> true
     true
@@ -157,14 +152,7 @@ Elixir also provides `++` and `--` to manipulate lists:
     iex> [1,2,3] -- [2]
     [1,3]
 
-Since single-quoted strings are lists, we can also use `++` and `--` as operators to manipulate them:
-
-    iex> 'some' ++ ' example'
-    'some example'
-    iex> 'some' -- 'oe'
-    'sm'
-
-Notice that `++` and `--` cannot be used to manipulate double quoted strings, as they are binaries. That said, string concatenation is done via `<>`:
+String concatenation is done via `<>`:
 
     iex> "foo" <> "bar"
     "foobar"

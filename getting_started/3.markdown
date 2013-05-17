@@ -50,7 +50,7 @@ Elixir projects are usually organized into three directories:
 * lib - contains elixir code (usually `.ex` files)
 * test - contains tests (usually `.exs` files)
 
-In many cases, since the bytecode is in `ebin`, you need to explicitly tell Elixir to look for code in the `ebin` directory:
+Whenever interacting with an existing library, you may need to explicitly tell Elixir to look for bytecode in the `ebin` directory:
 
     iex -pa ebin
 
@@ -344,7 +344,7 @@ Modules in Elixir can be nested too:
       end
     end
 
-The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same scope. If later the developer decides to move `Bar` to another file, it needs to be referenced by its full name (`Foo.Bar`) or an alias needs to be set using the `alias` directive discussed above.
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same scope. If later the developer decides to move `Bar` to another file, it will need to be referenced by its full name (`Foo.Bar`) or an alias needs to be set using the `alias` directive discussed above.
 
 ## 3.8 Aliases
 
@@ -353,12 +353,14 @@ In Erlang (and consequently in the Erlang VM), modules and functions are represe
     Mod = lists,
     Mod:flatten([1,[2],3]).
 
-In the example above, we store the atom `lists` in the variable `Mod` and then invoke the function `flatten` in it. In Elixir, the same idiom is allowed. In fact, we could call the same function `flatten` in `lists` as:
+In the example above, we store the atom `lists` in the variable `Mod` and then invoke the function `flatten` in it. In Elixir, the same idiom is allowed:
 
-    iex> :lists.flatten([1,[2],3])
+    iex> mod = :lists
+    :lists
+    iex> mod.flatten([1,[2],3])
     [1,2,3]
 
-In other words, we are simply calling the function `flatten` on the atom `:list`. This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, the `List` alias translates by defailt to the atom `Elixir-List`:
+In other words, we are simply calling the function `flatten` on the atom `:lists`. This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, the `List` alias translates by default to the atom `Elixir-List`:
 
     iex> is_atom(List)
     true

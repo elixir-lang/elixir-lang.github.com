@@ -7,7 +7,7 @@ total_guides: 7
 
 # {{ page.title }}
 
-Elixir provides both records and protocols. This chapter will outline the main features of both and provide some examples. More specifically, we will learn how to use `defrecord`, `defprotocol` and `defimpl`.
+Elixir provides both records and protocols. This chapter will outline the main features of both and provide some examples. More specifically, we will learn how to use `defprotocol`, `defprotocol` and `defimpl`. At the end, we will briefly discuss `try`, `throw` and `raise`.
 
 ## 4.1 Records
 
@@ -229,9 +229,68 @@ Elixir ships with some built-in protocols, let's take a look at a couple of thos
         iex> "tuple: #{inspect tuple}"
         "tuple: {1,2,3}"
 
-* `List.Chars` - specifies how to convert a data structures with characters to lists. Exposed via the `to_char_list` function:
 
-        iex> to_char_list :hello
-        'hello'
+Elixir defines other protocols which can be verified in Elixir's documentation. Frameworks and libraries that you use may define a couple of specific protocols as well. Use them wisely to write code that is easy to maintain and extend.
 
-Elixir defines other protocols which can be verified in Elixir's documentation. Frameworks and libraries that you use may define a couple of specific protocols as well. Use them wisely to write code that is easy to maintain and extend! Next, let's take a look at how Elixir tackles productivity by building some macros using `defmacro` and `defmacrop`!
+## 4.3 Exceptions
+
+The `try` mechanism in Elixir is also used to handle exceptions. In many languages, exceptions would have its own chapter in a getting started guide but here they play a much lesser role.
+
+An exception can be rescued inside a `try` block with the `rescue` keyword:
+
+    # rescue only runtime error
+    try do
+      raise "some error"
+    rescue
+      RuntimeError -> "rescued"
+    end
+
+    # rescue runtime and argument errors
+    try do
+      raise "some error"
+    rescue
+      [RuntimeError, ArgumentError] -> "rescued"
+    end
+
+    # rescue and assign to x
+    try do
+      raise "some error"
+    rescue
+      x in [RuntimeError] ->
+        # all exceptions have a message
+        x.message
+    end
+
+Notice that `rescue` works with exception names and it doesn't allow guards nor pattern matching. This limitation is on purpose: developers should not use exception values to drive their software. In fact, **exceptions in Elixir should not be used for control-flow but only under exceptional circunstances**.
+
+For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
+
+    case File.read(file) do
+      { :ok, contents }  ->
+        # we could access the file
+        # proceed as expected
+      { :error, reason } ->
+        # Oops, something went wrong
+        # We need to handle the error accordingly
+    end
+
+Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `{ :ok, contents }` in case of success and `{ :error, reason }` in case of failures. This allows us to use Elixir's pattern matching constructs to control how our application should behave.
+
+On the other hand, a CLI interface that needs to access or manipulate a file given by the user may necessarily expect a file to be there. If the given file does not exist, there is nothing you can do but fail. Then you may use `File.read!` which raises an exception:
+
+    contents = File.read!(file)
+
+This pattern is common throughout Elixir standard library. Many libraries have both function definitions followed by their "bang!" variation, with exclamation mark. This showcases well Elixir's philosophy of not using exceptions for control-flow. If you feel like you need to rescue an exception in order to change how your code works, you should probably return an atom or tuple instead, allowing your developers to rely on pattern matching.
+
+Finally, exceptions are simply records and they can be defined with `defexception` which has a similar API to `defrecord`. But remember, in Elixir you will use those sparingly. Next, let's take a look at how Elixir tackles productivity by building some macros using `defmacro` and `defmacrop`!
+
+> Note: In order to ease integration with Erlang APIs, Elixir also supports "catching errors" coming from Erlang with `try/catch`, as it works in Erlang:
+>
+>     try do
+>       :erlang.error(:oops)
+>     catch
+>       :error, :oops ->
+>         "Got Erlang error"
+>     end
+>
+> The first atom can be one of `:error`, `:throw` or `:exit`. Keep in mind catching errors is as discouraged as rescuing exceptions in Elixir.
