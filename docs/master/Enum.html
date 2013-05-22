@@ -32,7 +32,7 @@
 flavours. If a given collection implements the mentioned protocol (like
 list, for instance), you can do:</p>
 
-<pre><code>Enum.map [1,2,3], fn(x) -&gt; x * 2 end
+<pre><code>Enum.map([1,2,3], fn(x) -&gt; x * 2 end)
 </code></pre>
 
 <p>Depending on the type of the collection, the user-provided function will
@@ -42,7 +42,7 @@ accept a certain type of argument. For dicts, the argument is always a
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L57" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L62" target="_blank" class="view_source">Source</a>
 
       
 
@@ -63,7 +63,7 @@ accept a certain type of argument. For dicts, the argument is always a
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#at!/2">at!/2</a>
+    <a href="#at/3">at/3</a>
   </span>
 </li>
 <li>
@@ -94,6 +94,16 @@ accept a certain type of argument. For dicts, the argument is always a
 <li>
   <span class="summary_signature">
     <a href="#empty?/1">empty?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#fetch/2">fetch/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#fetch!/2">fetch!/2</a>
   </span>
 </li>
 <li>
@@ -148,6 +158,31 @@ accept a certain type of argument. For dicts, the argument is always a
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#max/1">max/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#max/2">max/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#member?/2">member?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#min/1">min/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#min/2">min/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#partition/2">partition/2</a>
   </span>
 </li>
@@ -193,7 +228,12 @@ accept a certain type of argument. For dicts, the argument is always a
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#uniq/1">uniq/1</a>
+    <a href="#to_list/1">to_list/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#uniq/2">uniq/2</a>
   </span>
 </li>
 <li>
@@ -222,24 +262,24 @@ false.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.all? [2,4,6], fn(x) -&gt; rem(x, 2) == 0 end
+<pre><code>iex&gt; Enum.all?([2,4,6], fn(x) -&gt; rem(x, 2) == 0 end)
 true
 
-iex&gt; Enum.all? [2,3,4], fn(x) -&gt; rem(x, 2) == 0 end
+iex&gt; Enum.all?([2,3,4], fn(x) -&gt; rem(x, 2) == 0 end)
 false
 </code></pre>
 
 <p>If no function is given, it defaults to checking if
 all items in the collection evaluate to true.</p>
 
-<pre><code>iex&gt; Enum.all? [1,2,3]
+<pre><code>iex&gt; Enum.all?([1,2,3])
 true
-iex&gt; Enum.all? [1,nil,3]
+iex&gt; Enum.all?([1,nil,3])
 false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L102" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L157" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="any?/2">
@@ -250,28 +290,28 @@ at least one invocation returns true. Returns false otherwise.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.any? [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+<pre><code>iex&gt; Enum.any?([2,4,6], fn(x) -&gt; rem(x, 2) == 1 end)
 false
 
-iex&gt; Enum.any? [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+iex&gt; Enum.any?([2,3,4], fn(x) -&gt; rem(x, 2) == 1 end)
 true
 </code></pre>
 
 <p>If no function is given, it defaults to checking if
 at least one item in the collection evaluates to true.</p>
 
-<pre><code>iex&gt; Enum.any? [false,false,false]
+<pre><code>iex&gt; Enum.any?([false,false,false])
 false
-iex&gt; Enum.any? [false,true,false]
+iex&gt; Enum.any?([false,true,false])
 true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L141" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L196" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="at!/2">
-    <strong>at!(collection, n)</strong>
+  <p class="signature" id="at/3">
+    <strong>at(collection, n, default // nil)</strong>
   </p>
   <div class="docstring"><p>Finds the element at the given index (zero-based).
 Raises out of bounds error in case the given position
@@ -281,16 +321,18 @@ is outside the range of the collection.</p>
 
 <p>## Examples</p>
 
-<pre><code>  iex&gt; Enum.at! [2,4,6], 0
+<pre><code>  iex&gt; Enum.at([2,4,6], 0)
   2
-  iex&gt; Enum.at! [2,4,6], 2
+  iex&gt; Enum.at([2,4,6], 2)
   6
-  iex&gt; Enum.at! [2,4,6], 4
-  ** (Enum.OutOfBoundsError) out of bounds error
+  iex&gt; Enum.at([2,4,6], 4)
+  nil
+  iex&gt; Enum.at([2,4,6], 4, :none)
+  :none
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L174" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L232" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="count/1">
@@ -300,12 +342,12 @@ is outside the range of the collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.count [1,2,3]
+<pre><code>iex&gt; Enum.count([1,2,3])
 3
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L197" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L111" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="count/2">
@@ -314,7 +356,7 @@ is outside the range of the collection.</p>
   <div class="docstring"><p>Counts for how many items the function returns true.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L205" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L119" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="drop/2">
@@ -325,16 +367,16 @@ Expects an ordered collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.drop [1,2,3], 2
+<pre><code>iex&gt; Enum.drop([1,2,3], 2)
 [3]
-iex&gt; Enum.drop [1,2,3], 10
+iex&gt; Enum.drop([1,2,3], 10)
 []
-iex&gt; Enum.drop [1,2,3], 0
+iex&gt; Enum.drop([1,2,3], 0)
 [1,2,3]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L233" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L254" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="drop_while/2">
@@ -345,12 +387,12 @@ Expects an ordered collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.drop_while [1,2,3,4,5], fn(x) -&gt; x &lt; 3 end
+<pre><code>iex&gt; Enum.drop_while([1,2,3,4,5], fn(x) -&gt; x &lt; 3 end)
 [3,4,5]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L261" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L282" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="each/2">
@@ -362,11 +404,11 @@ in which case the second parameter will be the iteration index.</p>
 
 <h2>Examples</h2>
 
-<pre><code>Enum.each [&#39;some&#39;, &#39;example&#39;], fn(x) -&gt; IO.puts x end
+<pre><code>Enum.each([&#39;some&#39;, &#39;example&#39;], fn(x) -&gt; IO.puts x end)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L285" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L306" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="empty?/1">
@@ -376,14 +418,57 @@ in which case the second parameter will be the iteration index.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.empty? []
+<pre><code>iex&gt; Enum.empty?([])
 true
-iex&gt; Enum.empty? [1,2,3]
+iex&gt; Enum.empty?([1,2,3])
 false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L320" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L341" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="fetch/2">
+    <strong>fetch(collection, n)</strong>
+  </p>
+  <div class="docstring"><p>Finds the element at the given index (zero-based).
+Returns <code>{ :ok, element }</code> if found, otherwise <code>:error</code>.</p>
+
+<p>Expects an ordered collection.</p>
+
+<p>## Examples</p>
+
+<pre><code>  iex&gt; Enum.fetch([2,4,6], 0)
+  { :ok, 2 }
+  iex&gt; Enum.fetch([2,4,6], 2)
+  { :ok, 6 }
+  iex&gt; Enum.fetch([2,4,6], 4)
+  :error
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L369" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="fetch!/2">
+    <strong>fetch!(collection, n)</strong>
+  </p>
+  <div class="docstring"><p>Finds the element at the given index (zero-based).
+Raises out of bounds error in case the given position
+is outside the range of the collection.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.fetch!([2,4,6], 0)
+2
+iex&gt; Enum.fetch!([2,4,6], 2)
+6
+iex&gt; Enum.fetch!([2,4,6], 4)
+** (Enum.OutOfBoundsError) out of bounds error
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L398" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="filter/2">
@@ -394,12 +479,12 @@ for which <code>fun</code> returns true.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.filter [1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end
+<pre><code>iex&gt; Enum.filter([1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end)
 [2]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L342" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L422" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="filter_map/3">
@@ -409,12 +494,12 @@ for which <code>fun</code> returns true.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.filter_map [1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end, &amp;1 * 2
+<pre><code>iex&gt; Enum.filter_map([1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end, &amp;1 * 2)
 [4]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L365" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L445" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="find/3">
@@ -425,18 +510,18 @@ item is found, returns <code>ifnone</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.find [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+<pre><code>iex&gt; Enum.find([2,4,6], fn(x) -&gt; rem(x, 2) == 1 end)
 nil
 
-iex&gt; Enum.find [2,4,6], 0, fn(x) -&gt; rem(x, 2) == 1 end
+iex&gt; Enum.find([2,4,6], 0, fn(x) -&gt; rem(x, 2) == 1 end)
 0
 
-iex&gt; Enum.find [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+iex&gt; Enum.find([2,3,4], fn(x) -&gt; rem(x, 2) == 1 end)
 3
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L397" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L477" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="find_index/2">
@@ -449,15 +534,15 @@ of the item instead of the element itself.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.find_index [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+<pre><code>iex&gt; Enum.find_index([2,4,6], fn(x) -&gt; rem(x, 2) == 1 end)
 nil
 
-iex&gt; Enum.find_index [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+iex&gt; Enum.find_index([2,3,4], fn(x) -&gt; rem(x, 2) == 1 end)
 1
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L459" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L539" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="find_value/3">
@@ -468,15 +553,15 @@ invocation instead of the element itself.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.find_value [2,4,6], fn(x) -&gt; rem(x, 2) == 1 end
+<pre><code>iex&gt; Enum.find_value([2,4,6], fn(x) -&gt; rem(x, 2) == 1 end)
 nil
 
-iex&gt; Enum.find_value [2,3,4], fn(x) -&gt; rem(x, 2) == 1 end
+iex&gt; Enum.find_value([2,3,4], fn(x) -&gt; rem(x, 2) == 1 end)
 true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L428" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L508" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="first/1">
@@ -486,14 +571,14 @@ true
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.first []
+<pre><code>iex&gt; Enum.first([])
 nil
-iex&gt; Enum.first [1,2,3]
+iex&gt; Enum.first([1,2,3])
 1
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L484" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L564" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="join/2">
@@ -519,7 +604,7 @@ iex&gt; Enum.join([1,2,3], &#39; = &#39;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L517" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L597" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="map/2">
@@ -534,15 +619,15 @@ will be the iteration index.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.map [1, 2, 3], fn(x) -&gt; x * 2 end
+<pre><code>iex&gt; Enum.map([1, 2, 3], fn(x) -&gt; x * 2 end)
 [2, 4, 6]
 
-iex&gt; Enum.map [a: 1, b: 2], fn({k, v}) -&gt; { k, -v } end
+iex&gt; Enum.map([a: 1, b: 2], fn({k, v}) -&gt; { k, -v } end)
 [a: -1, b: -2]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L554" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L634" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="map_join/3">
@@ -568,7 +653,7 @@ iex&gt; Enum.map_join([1,2,3], &#39; = &#39;, &amp;1 * 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L595" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L675" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="map_reduce/3">
@@ -584,12 +669,93 @@ tuple itself.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.map_reduce [1, 2, 3], 0, fn(x, acc) -&gt; { x * 2, x + acc } end
+<pre><code>iex&gt; Enum.map_reduce([1, 2, 3], 0, fn(x, acc) -&gt; { x * 2, x + acc } end)
 { [2, 4, 6], 6 }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L630" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L710" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="max/1">
+    <strong>max(collection)</strong>
+  </p>
+  <div class="docstring"><p>Returns the maximum value.
+Raises empty error in case the collection is empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.max([1,2,3])
+3
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1054" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="max/2">
+    <strong>max(collection, fun)</strong>
+  </p>
+  <div class="docstring"><p>Returns the maximum value.
+Raises empty error in case the collection is empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.max([&quot;a&quot;, &quot;aa&quot;, &quot;aaa&quot;], fn(x) -&gt; String.length(x) end)
+&quot;aaa&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1080" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="member?/2">
+    <strong>member?(collection, value)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the <code>value</code> exists within the <code>collection</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.member?(1..10, 5)
+true
+iex&gt; Enum.member?([:a, :b, :c], :d)
+false
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L97" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="min/1">
+    <strong>min(collection)</strong>
+  </p>
+  <div class="docstring"><p>Returns the manimum value.
+Raises empty error in case the collection is empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.min([1,2,3])
+1
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1104" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="min/2">
+    <strong>min(collection, fun)</strong>
+  </p>
+  <div class="docstring"><p>Returns the manimum value.
+Raises empty error in case the collection is empty.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.min([&quot;a&quot;, &quot;aa&quot;, &quot;aaa&quot;], fn(x) -&gt; String.length(x) end)
+&quot;a&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1129" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="partition/2">
@@ -601,12 +767,12 @@ returns false or nil.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.partition [1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end
+<pre><code>iex&gt; Enum.partition([1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end)
 { [2], [1,3] }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L655" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L735" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="reduce/3">
@@ -618,12 +784,12 @@ Returns the accumulator.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.reduce [1, 2, 3], 0, fn(x, acc) -&gt; x + acc end
+<pre><code>iex&gt; Enum.reduce([1, 2, 3], 0, fn(x, acc) -&gt; x + acc end)
 6
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L680" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L760" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="reverse/1">
@@ -633,42 +799,42 @@ Returns the accumulator.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.reverse [1, 2, 3]
+<pre><code>iex&gt; Enum.reverse([1, 2, 3])
 [3, 2, 1]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L703" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L783" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="sort/1">
     <strong>sort(collection)</strong>
   </p>
-  <div class="docstring"><p>Sorts the collection using the merge sort algorithm.</p>
+  <div class="docstring"><p>Returns a sorted list of collection elements. Uses the merge sort algorithm.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.sort [3,2,1]
+<pre><code>iex&gt; Enum.sort([3,2,1])
 [1,2,3]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L724" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L804" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="sort/2">
     <strong>sort(collection, fun)</strong>
   </p>
-  <div class="docstring"><p>Sorts the collection using the merge sort algorithm.</p>
+  <div class="docstring"><p>Returns a sorted list of collection elements. Uses the merge sort algorithm.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.sort [1,2,3], &amp;1 &gt; &amp;2
+<pre><code>iex&gt; Enum.sort([1,2,3], &amp;1 &gt; &amp;2)
 [3,2,1]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L747" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L827" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="split/2">
@@ -685,20 +851,20 @@ another one to do the actual splitting.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.split [1,2,3], 2
+<pre><code>iex&gt; Enum.split([1,2,3], 2)
 { [1,2], [3] }
-iex&gt; Enum.split [1,2,3], 10
+iex&gt; Enum.split([1,2,3], 10)
 { [1,2,3], [] }
-iex&gt; Enum.split [1,2,3], 0
+iex&gt; Enum.split([1,2,3], 0)
 { [], [1,2,3] }
-iex&gt; Enum.split [1,2,3], -1
+iex&gt; Enum.split([1,2,3], -1)
 { [1,2], [3] }
-iex&gt; Enum.split [1,2,3], -5
+iex&gt; Enum.split([1,2,3], -5)
 { [], [1,2,3] }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L785" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L865" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="split_while/2">
@@ -708,12 +874,12 @@ iex&gt; Enum.split [1,2,3], -5
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.split_while [1,2,3,4], fn(x) -&gt; x &lt; 3 end
+<pre><code>iex&gt; Enum.split_while([1,2,3,4], fn(x) -&gt; x &lt; 3 end)
 { [1, 2], [3, 4] }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L812" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L892" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="take/2">
@@ -724,16 +890,16 @@ collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.take [1,2,3], 2
+<pre><code>iex&gt; Enum.take([1,2,3], 2)
 [1,2]
-iex&gt; Enum.take [1,2,3], 10
+iex&gt; Enum.take([1,2,3], 10)
 [1,2,3]
-iex&gt; Enum.take [1,2,3], 0
+iex&gt; Enum.take([1,2,3], 0)
 []
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L841" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L921" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="take_while/2">
@@ -744,27 +910,45 @@ Expects an ordered collection.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.take_while [1,2,3], fn(x) -&gt; x &lt; 3 end
+<pre><code>iex&gt; Enum.take_while([1,2,3], fn(x) -&gt; x &lt; 3 end)
 [1, 2]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L874" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L954" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="uniq/1">
-    <strong>uniq(collection)</strong>
+  <p class="signature" id="to_list/1">
+    <strong>to_list(collection)</strong>
+  </p>
+  <div class="docstring"><p>Convert <code>collection</code> to a list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Enum.to_list(1 .. 3)
+[1, 2, 3]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L977" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="uniq/2">
+    <strong>uniq(collection, fun // fn x -&gt; x end)</strong>
   </p>
   <div class="docstring"><p>Iterates the enumerable removing all duplicated items.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Enum.uniq [1,2,3,2,1]
+<pre><code>iex&gt; Enum.uniq([1,2,3,2,1])
 [1, 2, 3]
+
+iex&gt; Enum.uniq([{1,:x}, {2,:y}, {1,:z}], fn {x,_} -&gt; x end)
+[{1,:x}, {2,:y}]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L897" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1008" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="zip/2">
@@ -776,7 +960,7 @@ dictated by the first enum. In case the second list is shorter,
 values are filled with nil.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L917" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/enum.ex#L1030" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

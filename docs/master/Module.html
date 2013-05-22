@@ -189,11 +189,11 @@ It handles char lists, binaries and atoms.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Module.concat [Foo, Bar]
+<pre><code>iex&gt; Module.concat([Foo, Bar])
 Foo.Bar
-iex&gt; Module.concat [Foo, &quot;Bar&quot;]
+iex&gt; Module.concat([Foo, &quot;Bar&quot;])
 Foo.Bar
-iex&gt; Module.concat [Foo, &#39;Bar&#39;]
+iex&gt; Module.concat([Foo, &#39;Bar&#39;])
 Foo.Bar
 </code></pre>
 </div>
@@ -209,11 +209,11 @@ It handles char lists, binaries and atoms.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Module.concat Foo, Bar
+<pre><code>iex&gt; Module.concat(Foo, Bar)
 Foo.Bar
-iex&gt; Module.concat Foo, &quot;Bar&quot;
+iex&gt; Module.concat(Foo, &quot;Bar&quot;)
 Foo.Bar
-iex&gt; Module.concat Foo, &#39;Bar&#39;
+iex&gt; Module.concat(Foo, &#39;Bar&#39;)
 Foo.Bar
 </code></pre>
 </div>
@@ -355,7 +355,7 @@ end
   <div class="docstring"><p>Evalutes the quotes contents in the given module context.</p>
 
 <p>A list of environment options can also be given as argument.
-Check <code>Code.eval</code> for more information.</p>
+Check <code>Code.eval_string</code> for more information.</p>
 
 <p>Raises an error if the module was already compiled.</p>
 
@@ -505,10 +505,10 @@ It handles char lists, binaries and atoms.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Module.safe_concat [Unknown, Module]
+<pre><code>iex&gt; Module.safe_concat([Unknown, Module])
 ** (ArgumentError) argument error
 
-iex&gt; Module.safe_concat [List, Chars]
+iex&gt; Module.safe_concat([List, Chars])
 List.Chars
 </code></pre>
 </div>
@@ -526,10 +526,10 @@ It handles char lists, binaries and atoms.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Module.safe_concat Unknown, Module
+<pre><code>iex&gt; Module.safe_concat(Unknown, Module)
 ** (ArgumentError) argument error
 
-iex&gt; Module.safe_concat List, Chars
+iex&gt; Module.safe_concat(List, Chars)
 List.Chars
 </code></pre>
 </div>

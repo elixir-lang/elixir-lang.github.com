@@ -58,6 +58,11 @@
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#get_cookie/0">get_cookie/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#list/0">list/0</a>
   </span>
 </li>
@@ -79,6 +84,11 @@
 <li>
   <span class="summary_signature">
     <a href="#self/0">self/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#set_cookie/2">set_cookie/2</a>
   </span>
 </li>
 <li>
@@ -160,6 +170,16 @@ false. If the local node is not alive, the function returns ignored.</p>
     <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L78" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
+  <p class="signature" id="get_cookie/0">
+    <strong>get_cookie()</strong>
+  </p>
+  <div class="docstring"><p>Returns the magic cookie of the local node, if the node is alive;
+otherwise <code>:nocookie</code>.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L183" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
   <p class="signature" id="list/0">
     <strong>list()</strong>
   </p>
@@ -214,6 +234,19 @@ option to be given, namely :allow</em>passive_connect.</p>
 </div>
   
     <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L12" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="set_cookie/2">
+    <strong>set_cookie(node // Node.self(), cookie)</strong>
+  </p>
+  <div class="docstring"><p>Sets the magic cookie of <code>node</code> to the atom <code>cookie</code>. The default node
+is <code>Node.self</code>, the local node. If node is the local node, the function also
+sets the cookie of all other unknown nodes to <code>cookie</code>.</p>
+
+<p>This function will raise <code>FunctionClauseError</code> if the given node is not alive.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/node.ex#L175" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="spawn/2">
