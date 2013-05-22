@@ -33,7 +33,7 @@ exceptions and stacktraces.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L92" target="_blank" class="view_source">Source</a>
 
       
 
@@ -44,17 +44,17 @@ exceptions and stacktraces.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#format_entry/2">format_entry/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#format_file_line/3">format_file_line/3</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
     <a href="#format_stacktrace/1">format_stacktrace/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#format_stacktrace_entry/2">format_stacktrace_entry/2</a>
   </span>
 </li>
 <li>
@@ -79,23 +79,12 @@ exceptions and stacktraces.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="format_entry/2">
-    <strong>format_entry(entry, cwd // nil)</strong>
-  </p>
-  <div class="docstring"><p>Receives a tuple representing a stacktrace entry and formats it.
-The current working directory may be given as argument, which
-is used to prettify the stacktrace.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L65" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
   <p class="signature" id="format_file_line/3">
     <strong>format_file_line(file, line, cwd)</strong>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L169" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L260" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="format_stacktrace/1">
@@ -108,7 +97,18 @@ calculates the current stacktrace and formats it. As consequence,
 the value of <code>System.stacktrace</code> is changed.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L196" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="format_stacktrace_entry/2">
+    <strong>format_stacktrace_entry(entry, cwd // nil)</strong>
+  </p>
+  <div class="docstring"><p>Receives a tuple representing a stacktrace entry and formats it.
+The current working directory may be given as argument, which
+is used to prettify the stacktrace.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="normalize/1">
@@ -119,7 +119,7 @@ to Elixir exceptions. Useful when interfacing Erlang
 code with Elixir code.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L12" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L103" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="print_stacktrace/1">
@@ -132,7 +132,7 @@ calculates the current stacktrace and formats it. As consequence,
 the value of <code>System.stacktrace</code> is changed.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L119" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/exception.ex#L218" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

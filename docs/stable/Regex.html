@@ -171,12 +171,12 @@ Requires the regex to be compiled with the groups option.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.captures %r/c(?&lt;foo&gt;d)/g, &quot;abcd&quot;
+<pre><code>iex&gt; Regex.captures(%r/c(?&lt;foo&gt;d)/g, &quot;abcd&quot;)
 [foo: &quot;d&quot;]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L156" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L158" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="compile/2">
@@ -208,12 +208,12 @@ Fails with <code>Regex.CompileError</code> if the regex cannot be compiled.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.groups %r/(?&lt;foo&gt;foo)/g
+<pre><code>iex&gt; Regex.groups(%r/(?&lt;foo&gt;foo)/g)
 [:foo]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L211" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L213" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="index/2">
@@ -225,9 +225,9 @@ match occurs, nil otherwise.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.index %r/c(d)/, &quot;abcd&quot;
+<pre><code>iex&gt; Regex.index(%r/c(d)/, &quot;abcd&quot;)
 2
-iex&gt; Regex.index %r/e/, &quot;abcd&quot;
+iex&gt; Regex.index(%r/e/, &quot;abcd&quot;)
 nil
 </code></pre>
 </div>
@@ -242,9 +242,9 @@ nil
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.match? %r/foo/, &quot;foo&quot;
+<pre><code>iex&gt; Regex.match?(%r/foo/, &quot;foo&quot;)
 true
-iex&gt; Regex.match? %r/foo/, &quot;bar&quot;
+iex&gt; Regex.match?(%r/foo/, &quot;bar&quot;)
 false
 </code></pre>
 </div>
@@ -259,12 +259,12 @@ false
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.opts %r(foo)m
+<pre><code>iex&gt; Regex.opts(%r(foo)m)
 &quot;m&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L198" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L200" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="re_pattern/1">
@@ -273,7 +273,7 @@ false
   <div class="docstring"><p>Returns the underlying <code>re_pattern</code> in the regular expression.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L172" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L174" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="replace/4">
@@ -302,25 +302,26 @@ iex&gt; Regex.replace(%r/(b)/, &quot;abc&quot;, &quot;[\\1]&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L285" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L287" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="run/3">
     <strong>run(regex, string, options // [])</strong>
   </p>
   <div class="docstring"><p>Runs the regular expression against the given string.
-It returns a list with all matches or nil if no match ocurred.</p>
+It returns a list with all matches, nil if no match ocurred, or []
+if it matched, /g was specified, but nothing was captured.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.run %r/c(d)/, &quot;abcd&quot;
+<pre><code>iex&gt; Regex.run(%r/c(d)/, &quot;abcd&quot;)
 [&quot;cd&quot;, &quot;d&quot;]
-iex&gt; Regex.run %r/e/, &quot;abcd&quot;
+iex&gt; Regex.run(%r/e/, &quot;abcd&quot;)
 nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L129" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L130" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="scan/3">
@@ -333,16 +334,16 @@ list, each element in this secondary list is a capture.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.scan %r/c(d|e)/, &quot;abcd abce&quot;
+<pre><code>iex&gt; Regex.scan(%r/c(d|e)/, &quot;abcd abce&quot;)
 [[&quot;d&quot;], [&quot;e&quot;]]
-iex&gt; Regex.scan %r/c(?:d|e)/, &quot;abcd abce&quot;
+iex&gt; Regex.scan(%r/c(?:d|e)/, &quot;abcd abce&quot;)
 [&quot;cd&quot;, &quot;ce&quot;]
-iex&gt; Regex.scan %r/e/, &quot;abcd&quot;
+iex&gt; Regex.scan(%r/e/, &quot;abcd&quot;)
 []
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L231" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="source/1">
@@ -352,12 +353,12 @@ iex&gt; Regex.scan %r/e/, &quot;abcd&quot;
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Regex.source %r(foo)
+<pre><code>iex&gt; Regex.source(%r(foo))
 &quot;foo&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L185" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L187" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="split/3">
@@ -367,7 +368,7 @@ iex&gt; Regex.scan %r/e/, &quot;abcd&quot;
 If no ammount of parts is given, it defaults to :infinity.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L247" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/regex.ex#L249" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

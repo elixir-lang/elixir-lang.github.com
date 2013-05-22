@@ -27,18 +27,97 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module implements Interactive Elixir.</p>
+          <p>Welcome to IEx.</p>
 
-<p>The interactive elixir needs to be set as the
-proper <code>-user</code> when starting the Erlang VM and
-so can be done with the help of IEx.CLI.</p>
+<p>This module is the main entry point Interactive Elixir and
+in this documentation we will talk a bit about how IEx works.</p>
 
-<p>If possible, Elixir will start a tty (smart terminal)
-which makes all control commands available in tty
-available to the developer.</p>
+<p>Notice some of the functionality described here will be available
+depending on your terminal. In particular, if you get a message
+saying that the smart terminal could not be run, some of the
+features described here won&#39;t work.</p>
 
-<p>In case <code>tty</code> is not available (for example, Windows),
-a dumb terminal version is started instead.</p>
+<h2>The Break command</h2>
+
+<p>Inside IEx, hitting Ctrl+C will open up the BREAK menu. In this
+menu you can quit the shell, see process and ets tables information
+and much more.</p>
+
+<h2>The User Switch command</h2>
+
+<p>Besides the break command, one can type Ctrl+G to get the to
+the user switch command. When reached, you can type <code>h</code> to
+get more information.</p>
+
+<p>In this switch, developers are able to create new shell and
+alternate in between them. Let&#39;s give it a try:</p>
+
+<pre><code>User switch command
+ --&gt; s &#39;Elixir-IEx&#39;
+ --&gt; c
+</code></pre>
+
+<p>The command above will start a new shell and connect to it.
+Create a new variable called hello and assign some value to it:</p>
+
+<pre><code>hello = :world
+</code></pre>
+
+<p>Now, let&#39;s rollback to the first shell:</p>
+
+<pre><code>User switch command
+ --&gt; c 1
+</code></pre>
+
+<p>Now, try to access the hello variable again:</p>
+
+<pre><code>hello
+** (UndefinedFunctionError) undefined function: IEx.Helpers.hello/0
+</code></pre>
+
+<p>The command above fails because we have changed the shells
+and they are isolated from each other, you can access the
+variables defined in one in the other.</p>
+
+<p>The User Switch also allow developers to connect to remote
+shells using r. Keep in mind that you can&#39;t connect to a
+remote node if you haven&#39;t given a name to the current node
+(i.e. Process.is_alive? must return true).</p>
+
+<h2>Expressions in IEx</h2>
+
+<p>As an interactive shell, IEx evalutes expressions. This has some
+interesting consequences worthy discussing.</p>
+
+<p>The first one is that the code is truly evaluated and not compiled.
+This means that, any benchmarking done in the shell is going to have
+skewed results. So never run any profiling nor benchmark in the shell.</p>
+
+<p>Second of all, IEx alows you to break an expression into many lines,
+since this is common in Elixir. For example:</p>
+
+<pre><code>iex(1)&gt; &quot;ab
+...(1)&gt; c&quot;
+&quot;ab\nc&quot;
+</code></pre>
+
+<p>In the example above, the shell will be expecting more input until it
+finds the closing quote. Sometimes it is not obvious which character
+the shell is expecting, and the user may find themselves trapped in
+the state of incomplete expression with no ability to terminate it other
+than by exiting the shell.</p>
+
+<p>For such cases, there is a special break-trigger (&quot;#iex:break&quot;) that when
+encountered on a line by itself will force the shell to break out of any
+pending expression and return to its normal state:</p>
+
+<pre><code>iex(1)&gt; [&quot;ab
+...(1)&gt; c&quot;
+...(1)&gt; &quot;
+...(1)&gt; ]
+...(1)&gt; #iex:break
+** (TokenMissingError) iex:1: incomplete expression
+</code></pre>
 
         </div>
       
@@ -95,7 +174,7 @@ a dumb terminal version is started instead.</p>
   <div class="docstring"><p>Returns registered after spawn callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L103" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="after_spawn/1">
@@ -104,7 +183,7 @@ a dumb terminal version is started instead.</p>
   <div class="docstring"><p>Registers a function to be invoked after IEx process is spawned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L22" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L96" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect_opts/0">
@@ -113,7 +192,7 @@ a dumb terminal version is started instead.</p>
   <div class="docstring"><p>Returns currently registered inspect options.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L51" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L125" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect_opts/1">
@@ -122,7 +201,7 @@ a dumb terminal version is started instead.</p>
   <div class="docstring"><p>Registers options used on inspect.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L118" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="started?/0">
@@ -131,7 +210,7 @@ a dumb terminal version is started instead.</p>
   <div class="docstring"><p>Returns true if IEx was properly started.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L37" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L111" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

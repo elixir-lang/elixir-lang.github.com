@@ -75,6 +75,11 @@
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#recursive?/1">recursive?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#reenable/1">reenable/1</a>
   </span>
 </li>
@@ -132,7 +137,7 @@ won&#39;t show up. Check <code>load_all/0</code> if you want to preload all task
 Returns an ordset with all the tasks invoked thus far.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L137" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L153" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="get/1">
@@ -148,7 +153,7 @@ Returns an ordset with all the tasks invoked thus far.</p>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L107" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="hidden?/1">
@@ -179,13 +184,23 @@ Returns the moduledoc or <code>nil</code>.</p>
     <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L54" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
+  <p class="signature" id="recursive?/1">
+    <strong>recursive?(module)</strong>
+  </p>
+  <div class="docstring"><p>Checks if the task is defined for umbrella projects.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L85" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
   <p class="signature" id="reenable/1">
     <strong>reenable(task)</strong>
   </p>
-  <div class="docstring"><p>Reenables a given task so it can be executed again down the stack.</p>
+  <div class="docstring"><p>Reenables a given task so it can be executed again down the stack. If
+an umbrella project reenables a task it is reenabled for all sub projects.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L144" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L161" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="run/2">
@@ -202,7 +217,7 @@ again and simply aborts with <code>:noop</code>.</p>
 or it is invalid. Check <code>get/2</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="shortdoc/1">
@@ -221,7 +236,7 @@ Returns the shortdoc or <code>nil</code>.</p>
   <div class="docstring"><p>Returns the task name for the given module.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/task.ex#L95" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

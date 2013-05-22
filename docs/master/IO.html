@@ -76,7 +76,12 @@ given argument;</p></li>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#getb/3">getb/3</a>
+    <a href="#getn/2">getn/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#getn/3">getn/3</a>
   </span>
 </li>
 <li>
@@ -162,10 +167,13 @@ as a binary, no unicode conversion happens.</p>
     <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L114" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="getb/3">
-    <strong>getb(device // group_leader(), prompt, count // 1)</strong>
+  <p class="signature" id="getn/2">
+    <strong>getn(prompt, count // 1)</strong>
   </p>
-  <div class="docstring"><p>Gets <code>count</code> bytes from the IO device. It returns:</p>
+  <div class="docstring"><p>Gets a number of bytes from the io device. If the
+io device is a unicode device, count implies
+the number of unicode codepoints to be retrieved.
+Otherwise, the number of raw bytes. It returns:</p>
 
 <ul>
 <li><p><code>data</code> - The input characters.</p></li>
@@ -176,7 +184,19 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L160" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L163" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="getn/3">
+    <strong>getn(device, prompt, count)</strong>
+  </p>
+  <div class="docstring"><p>Gets a number of bytes from the io device. If the
+io device is a unicode device, count implies
+the number of unicode codepoints to be retrieved.
+Otherwise, the number of raw bytes.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L179" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="gets/2">
@@ -194,7 +214,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L176" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/elixir/lib/io.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect/2">

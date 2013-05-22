@@ -30,17 +30,19 @@
           <p>Creates a new Elixir project.
 It expects the path of the project as argument.</p>
 
-<pre><code>mix new PATH [--sup] [--app APP] [--module MODULE]
+<pre><code>mix new PATH [--sup] [--module MODULE] [--umbrella]
 </code></pre>
 
 <p>A project at the given PATH  will be created. The
 application name and module name will be retrieved
-from the path, unless one of <code>-app</code> or <code>--module</code>
-is given.</p>
+from the path, unless <code>--module</code> is given.</p>
 
-<p>An <code>--sup</code> option can be given to generate an
+<p>A <code>--sup</code> option can be given to generate an
 app with a supervisor and an application module
 that starts the supervisor.</p>
+
+<p>An <code>--umbrella</code> option can be given to generate an
+umbrella project.</p>
 
 <h2>Examples</h2>
 
@@ -49,7 +51,7 @@ that starts the supervisor.</p>
 
 <p>Is equivalent to:</p>
 
-<pre><code>mix new hello_world --app hello_world --module HelloWorld
+<pre><code>mix new hello_world --module HelloWorld
 </code></pre>
 
 <p>To generate an app with supervisor and application behaviours:</p>
@@ -91,7 +93,7 @@ that starts the supervisor.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/new.ex#L37" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/new.ex#L39" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

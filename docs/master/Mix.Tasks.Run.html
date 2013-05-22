@@ -29,14 +29,14 @@
         <div id="moduledoc" class="docstring">
           <p>Run the given expression in the application context.</p>
 
-<p>Before running the code, it invokes the prepare task
+<p>Before running the code, it invokes the app.start task
 which defaults to compile and load your project.</p>
 
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--require</code>, <code>-r</code> - Requires a file before running the command</li>
-<li><code>--parallel-require</code>, <code>-pr</code> - Requires a file in parallel</li>
+<li><code>--require</code>, <code>-r</code> - Requires pattern before running the command</li>
+<li><code>--parallel-require</code>, <code>-pr</code> - Requires pattern in parallel</li>
 <li><code>--no-halt</code> - Does not halt the system after running the command</li>
 <li><code>--no-compile</code> - Do not compile even if files require compilation;</li>
 <li><code>--no-start</code> - Do not start applications after compilation;</li>
@@ -46,6 +46,11 @@ which defaults to compile and load your project.</p>
 
 <pre><code>mix run Hello.world
 mix run &quot;Some.function with_args&quot;
+</code></pre>
+
+<p>Command line options given to the <code>elixir</code> executable can be passed as:</p>
+
+<pre><code>elixir --sname hello -S mix run &quot;My.code&quot;
 </code></pre>
 
         </div>
@@ -82,7 +87,7 @@ mix run &quot;Some.function with_args&quot;
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/run.ex#L26" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/tasks/run.ex#L30" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

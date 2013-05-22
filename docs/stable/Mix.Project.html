@@ -72,6 +72,16 @@ defined.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
+    <a href="#apps_path/0">apps_path/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#compile_paths/0">compile_paths/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#config/0">config/0</a>
   </span>
 </li>
@@ -92,7 +102,27 @@ defined.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#in_project/4">in_project/4</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#load_paths/0">load_paths/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#recur/1">recur/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#refresh/0">refresh/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#umbrella?/0">umbrella?/0</a>
   </span>
 </li>
 
@@ -107,6 +137,24 @@ defined.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="apps_path/0">
+    <strong>apps_path()</strong>
+  </p>
+  <div class="docstring"><p>Returns the path to the apps directory.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L140" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="compile_paths/0">
+    <strong>compile_paths()</strong>
+  </p>
+  <div class="docstring"><p>Returns the paths this project compiles to.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L201" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
   <p class="signature" id="config/0">
     <strong>config()</strong>
   </p>
@@ -152,6 +200,40 @@ is available.</p>
     <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L96" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
+  <p class="signature" id="in_project/4">
+    <strong>in_project(app, app_path, post_config // [], fun)</strong>
+  </p>
+  <div class="docstring"><p>Runs the given <code>fun</code> inside the given project by changing
+the current working directory and loading the given project
+into the project stack.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L180" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="load_paths/0">
+    <strong>load_paths()</strong>
+  </p>
+  <div class="docstring"><p>Returns all load paths for this project.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L208" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="recur/1">
+    <strong>recur(fun)</strong>
+  </p>
+  <div class="docstring"><p>Runs <code>fun</code> in the current project.</p>
+
+<p>The goal of this function is to transparently abstract umbrella projects.
+So if you want to gather data from a project, like beam files, you can
+use this function to transparently go through the project, regardless
+if it is an umbrella project or not.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L152" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
   <p class="signature" id="refresh/0">
     <strong>refresh()</strong>
   </p>
@@ -160,6 +242,15 @@ when the environment changes during a task.</p>
 </div>
   
     <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L71" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="umbrella?/0">
+    <strong>umbrella?()</strong>
+  </p>
+  <div class="docstring"><p>Returns true if project is an umbrella project.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/mix/lib/mix/project.ex#L133" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
