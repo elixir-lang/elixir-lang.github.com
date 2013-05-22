@@ -13,13 +13,13 @@ Keep in mind that Elixir is still in development so if at any point you receive 
 
 ## 1.1 Installation
 
-The only prerequisite for Elixir is Erlang, version R15B or later. You can find the source code for [Erlang here](http://www.erlang.org/download.html) or use one of the [precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp).
+The only prerequisite for Elixir is Erlang, version R16B or later. You can find the source code for [Erlang here](http://www.erlang.org/download.html) or use one of the [precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp).
 
 For Windows developers, we recommend the precompiled package. Those on the UNIX platform can probably get Erlang installed via one of the many package management tools.
 
 After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:
 
-    Erlang R15B (erts-5.8.4) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
+    Erlang R16B (erts-5.8.4) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
 
 Notice that depending on how you installed Erlang, it will not add Erlang binaries to your environment. Be sure to have Erlang binaries in your [PATH](http://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
 
@@ -29,7 +29,10 @@ After Erlang is up and running, it is time to install Elixir. You can do that vi
 
 Elixir v0.8.1 forward is required to run this tutorial and it may be available in some distributions:
 
-* Homebrew for Mac OS X: `brew install elixir` (run `brew update` to ensure you have the latest formula)
+* Homebrew for Mac OS X
+  * Since Elixir requires Erlang R16B, first call `brew tap homebrew/versions` and then `brew install erlang-r16`
+  * Update your homebrew to latest: `brew update`
+  * Install Elixir: `brew install elixir`
 * Fedora 17+ and Fedora Rawhide: `sudo yum -y install elixir`
 * Arch Linux : Elixir is available on AUR via `yaourt -S elixir`
 
