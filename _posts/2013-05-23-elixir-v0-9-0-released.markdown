@@ -112,7 +112,7 @@ This approach solves all the problems above:
 * Reducers do not dictate how a type should be enumerated. This means types like `Range` and `HashDict` can provide a much faster implementation for Reducers;
 * Furthermore, the end result is a cleaner implementation of most of `Enum` functions (the [reducers pull request](https://github.com/elixir-lang/elixir/pull/1102) removes over 500LOC) and better performance!
 
-Reducers also opens up room for lazy and parallel enumeration, as [the Clojure community has already proven](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html).
+Reducers also opens up room for lazy and parallel enumeration, as [the Clojure community has already proven](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html) and something we are looking forward to explore on upcoming releases.
 
 A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implementing this feature!
 
