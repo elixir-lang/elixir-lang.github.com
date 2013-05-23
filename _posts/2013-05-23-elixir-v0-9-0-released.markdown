@@ -3,14 +3,14 @@ layout: post
 title: Elixir v0.9.0 released
 author: José Valim
 category: Releases
-excerpt: Elixir v0.9.0 is released with support for reducers, umbrella projects, faster compilation times and drops support for R15 and before.
+excerpt: Elixir v0.9.0 is released with support for reducers, umbrella projects, faster compilation times and dropped support for R15 and earlier OTP versions.
 ---
 
 While [Programming Elixir](http://pragprog.com/book/elixir/programming-elixir) was being announced, we have been working on Elixir v0.9.0 which is finally out. This release contains new features, important performance optimizations and bug fixes.
 
-Elixir v0.9.0 also removes support for Erlang R15 and before. In case you still need to run Elixir software on R15, we have also released Elixir v0.8.3, which contains many of the enhancements in v0.9.0. Check the [CHANGELOG for more details for both releases](https://github.com/elixir-lang/elixir/blob/v0.9.0/CHANGELOG.md).
+Elixir v0.9.0 also removes support for Erlang R15 and earlier versions. In case you still need to run Elixir software on R15, we have also released Elixir v0.8.3, which contains many of the enhancements in v0.9.0. Check the [CHANGELOG for more details for both releases](https://github.com/elixir-lang/elixir/blob/v0.9.0/CHANGELOG.md).
 
-All this work was achieved by a very vibrant community! Over the last month, 17 authors have pushed more than 500 commits, where more than 60 pull requests were merged and more than 80 issues were closed.
+All this work was achieved by our very vibrant community! Over the last month, 17 authors have pushed more than 500 commits, where more than 60 pull requests were merged and more than 80 issues were closed.
 
 Let's talk about the goodies!
 
@@ -44,7 +44,7 @@ The generated project will have the following structure:
     mix.exs
     README.md
 
-Now, inside the `apps` directory, you can create as many applications as you want and by running `mix compile`, inside the umbrella project will automatically compile all applications. The [original discussion for this feature](https://github.com/elixir-lang/elixir/issues/667) contains more details about how it all works.
+Now, inside the `apps` directory, you can create as many applications as you want and running `mix compile` inside the umbrella project will automatically compile all applications. The [original discussion for this feature](https://github.com/elixir-lang/elixir/issues/667) contains more details about how it all works.
 
 A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implementing this feature and to [Yurii](https://github.com/yrashk) for testing it against different edge cases.
 
@@ -57,15 +57,15 @@ Enum.map([1,2,3], fn(x) -> x * x end)
 #=> [1, 4, 9]
 {% endhighlight %}
 
-It asked the `Enum.Iterator` protocol for instruction on how to iterate the list `[1,2,3]`. This iteration happened by retrieving each item in the list, one by one, until there were no items left.
+It asked the `Enum.Iterator` protocol for instructions on how to iterate the list `[1,2,3]`. This iteration happened by retrieving each item in the list, one by one, until there were no items left.
 
 This approach posed many problems:
 
 * Iterators are very hard to compose;
-* Iterators contain state. You need to know, at each moment, what is the next element you have to iterate next. We use functions to pass the iteration state around;
-* Iterators have the "dangling open resource" problem. Consider that you want to iterate a file with `Enum.map/2` as above. If any step during the iteration fails, there is no easy way to notify the iterator (in this case, th opened file) that iteration failed, so we can't close the file automatically, leaving it to the user.
+* Iterators contain state. You need to know, at each moment, what is the next element you have to iterate next. We use functions and their bindings to pass the iteration state around;
+* Iterators have the "dangling open resource" problem. Consider that you want to iterate a file with `Enum.map/2` as above. If any step during the iteration fails, there is no easy way to notify the resource being iterated  (in this case, the opened file) that iteration failed, so we can't close the file automatically, leaving it to the user.
 
-Reducers solve all of those problems by using a more functional approach. Instead of asking a list how to iterate itself, we generate a recipe and pass this recipe to the list reduce on itself.
+Reducers solve all of those problems by using a more functional approach. Instead of asking a list to spill its elements out one by one and then working on each element, we now generate a recipe of computations and pass it down to the list which applies those computations on itself.
 
 Here is how we implement the `Enumerable` protocol for lists:
 
@@ -85,14 +85,15 @@ defimpl Enumerable, for: List do
 end
 {% endhighlight %}
 
-The implementation above works as a simple `reduce` (also called `fold`, `inject` or `foldl` in other languages). Here is how it works:
+The implementation above works as a simple `reduce` function (also called `fold`, `inject` or `foldl` in other languages). Here is how it works:
 
 {% highlight elixir %}
+# Sum all elements in a list
 Enumerable.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
 #=> 6
 {% endhighlight %}
 
-Now the `Enum.map/2` we have seen above is implemented in terms of this reducing function:
+The `Enum.map/2` we have used above is now implmented in terms of this reducing function:
 
 {% highlight elixir %}
 defmodule Enum do
@@ -110,7 +111,7 @@ This approach solves all the problems above:
 * Reducers are self-contained: there is no need keep state around which also solves the "dangling open resource" problem. The data type now knows exactly when the iteration starts and when it finishes;
 * Reducers do not dictate how a type should be enumerated. This means types like `Range` and `HashDict` can provide a much faster implementation for Reducers.
 
-Reducers also opens up room for lazy and parallel enumeration of functions, as [the Clojure community has already proven](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html).
+Reducers also opens up room for lazy and parallel enumeration, as [the Clojure community has already proven](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html).
 
 A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implementing this feature!
 
@@ -119,11 +120,11 @@ A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implem
 We have also many other smaller improvements:
 
 * Our CLI now supports `--hidden` and `--cookie` flags which are useful for distributed modes;
-* Our test framework, ExUnit, is now able to capture all the communication that happens with a registed IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](http://elixir-lang.org/docs/master/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts on some inputs and what it prints to the terminal;
-* `String`, `Enum` and `Dict` modules got more convenience functions to work with their respective types;
+* Our test framework, ExUnit, is now able to capture all the communication that happens with a registed IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](http://elixir-lang.org/docs/master/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts to some inputs and what it prints to the terminal;
 * `IEx` now allows files to be imported into the shell with `import_file` and also loads `~/.iex` on startup for custom configuration;
+* The `String`, `Enum` and `Dict` modules got more convenience functions that goes from checking unicode character validity to taking values out of a dictionary;
 * And many, many more!
 
-We are very thankful for the community around us, which sent bug reports, provided bug fixes and contributed all those amazing features. And when are **you** joining us?
+A huge thank you to our community for sending bug reports, providing bug fixes and contributing all those amazing features. And when are **you** joining us? :)
 
-Give Elixir a try! You can start with our [getting started guide](http://elixir-lang.org/getting_started/1.html), or [check this 30 minute video](http://pragprog.com/book/elixir/programming-elixir) from [PragProg](http://pragprog.com/book/elixir/programming-elixir) or buy the beta version of [Programming Elixir](http://pragprog.com/book/elixir/programming-elixir).
+Give Elixir a try! You can start with our [getting started guide](http://elixir-lang.org/getting_started/1.html), or [check this 30 minute video from PragProg](http://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](http://pragprog.com/book/elixir/programming-elixir).
