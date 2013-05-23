@@ -58,7 +58,7 @@ And this is all. Erlang on Xen is going to boot the Erlang VM and the standard E
 3. In the user switch interface, type:
 
           User switch command
-           --> s 'Elixir-IEx'
+           --> s 'Elixir.IEx'
            --> c
 
 This will bring you to Interactive Elixir and you can execute Elixir expressions as usual!

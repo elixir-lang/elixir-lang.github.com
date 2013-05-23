@@ -39,7 +39,7 @@ This file can be compiled using `elixirc` (remember, if you installed Elixir fro
 
     elixirc math.ex
 
-This will generate a file named `Elixir-Math.beam` containing the bytecode for the defined module. Now, if we start `iex` again, our module definition will be available (considering `iex` is being started in the same directory the bytecode file is):
+This will generate a file named `Elixir.Math.beam` containing the bytecode for the defined module. Now, if we start `iex` again, our module definition will be available (considering `iex` is being started in the same directory the bytecode file is):
 
     iex> Math.sum(1, 2)
     3
@@ -360,13 +360,9 @@ In the example above, we store the atom `lists` in the variable `Mod` and then i
     iex> mod.flatten([1,[2],3])
     [1,2,3]
 
-In other words, we are simply calling the function `flatten` on the atom `:lists`. This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, the `List` alias translates by default to the atom `Elixir-List`:
+In other words, we are simply calling the function `flatten` on the atom `:lists`. This mechanism is exactly what empowers Elixir aliases. An alias in Elixir is a capitalized identifier (like `List`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, the `List` alias translates by default to the atom `Elixir.List`:
 
     iex> is_atom(List)
     true
     iex> to_binary(List)
-    "Elixir-List"
-
-> Note: an alias does not actually ensure the aliased module really exists. For instance, `Foo.Bar.Baz` will return an atom regardless if a `Foo.Bar.Baz` module is defined or not.
-
-> Note: in the future, the alias `List` will be converted to the atom `Elixir.List` instead of `Elixir-List`.
+    "Elixir.List"
