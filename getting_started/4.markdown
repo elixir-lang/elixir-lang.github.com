@@ -188,7 +188,7 @@ Elixir ships with some built-in protocols, let's take a look at a couple of thos
         iex> x[:b]
         2
 
-* `Enum.Iterator` - any data structured that can be enumerated must implement this protocol. This protocol is consumed by the `Enum` module which provides functions like `map`, `reduce` and others:
+* `Enumerable` - any data structured that can be enumerated must implement this protocol. This protocol is consumed by the `Enum` module which provides functions like `map`, `reduce` and others:
 
         iex> Enum.map [1,2,3], fn(x) -> x * 2 end
         [2,4,6]
