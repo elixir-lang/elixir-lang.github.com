@@ -29,7 +29,7 @@
         <div id="moduledoc" class="docstring">
           <p>Welcome to IEx.</p>
 
-<p>This module is the main entry point Interactive Elixir and
+<p>This module is the main entry point for Interactive Elixir and
 in this documentation we will talk a bit about how IEx works.</p>
 
 <p>Notice some of the functionality described here will be available
@@ -45,11 +45,11 @@ and much more.</p>
 
 <h2>The User Switch command</h2>
 
-<p>Besides the break command, one can type Ctrl+G to get the to
-the user switch command. When reached, you can type <code>h</code> to
+<p>Besides the break command, one can type Ctrl+G to get to the
+user switch command menu. When reached, you can type <code>h</code> to
 get more information.</p>
 
-<p>In this switch, developers are able to create new shell and
+<p>In this menu, developers are able to start new shells and
 alternate in between them. Let&#39;s give it a try:</p>
 
 <pre><code>User switch command
@@ -63,7 +63,7 @@ Create a new variable called hello and assign some value to it:</p>
 <pre><code>hello = :world
 </code></pre>
 
-<p>Now, let&#39;s rollback to the first shell:</p>
+<p>Now, let&#39;s roll back to the first shell:</p>
 
 <pre><code>User switch command
  --&gt; c 1
@@ -75,23 +75,59 @@ Create a new variable called hello and assign some value to it:</p>
 ** (UndefinedFunctionError) undefined function: IEx.Helpers.hello/0
 </code></pre>
 
-<p>The command above fails because we have changed the shells
-and they are isolated from each other, you can access the
-variables defined in one in the other.</p>
+<p>The command above fails because we have switched the shells.
+Since shells are isolated from each other, you can&#39;t access the
+variables defined in one shell from the other one.</p>
 
-<p>The User Switch also allow developers to connect to remote
-shells using r. Keep in mind that you can&#39;t connect to a
+<p>The user switch command menu also allows developers to connect to remote
+shells using the &quot;r&quot; command. Keep in mind that you can&#39;t connect to a
 remote node if you haven&#39;t given a name to the current node
 (i.e. Process.is_alive? must return true).</p>
 
+<h2>The .iex file</h2>
+
+<p>When starting IEx, it will look for a local .iex file (located in the current
+working directory), then a global one (located at ~/.iex) and will load the
+first one it finds (if any). The code in the chosen .iex file will be
+evaluated in the shell&#39;s context. So, for instance, any modules that are
+loaded or variables that are bound in the .iex file will be available in the
+shell after it has booted.</p>
+
+<p>Sample contents of a local .iex file:</p>
+
+<pre><code># source another .iex file
+import_file &quot;~/.iex&quot;
+
+# print something before the shell starts
+IO.puts &quot;hello world&quot;
+
+# bind a variable that&#39;ll be accessible in the shell
+value = 13
+</code></pre>
+
+<p>Running the shell in the directory where the above .iex file is located
+results in</p>
+
+<pre><code>$ iex
+Erlang R15B03 (erts-5.9.3.1) [...]
+
+hello world
+Interactive Elixir (0.8.3.dev) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)&gt; value
+13
+</code></pre>
+
+<p>It is possible to override the default loading sequence for .iex file by
+supplying the --dot-iex option to iex. See <code>iex --help</code>.</p>
+
 <h2>Expressions in IEx</h2>
 
-<p>As an interactive shell, IEx evalutes expressions. This has some
-interesting consequences worthy discussing.</p>
+<p>As an interactive shell, IEx evaluates expressions. This has some
+interesting consequences that are worth discussing.</p>
 
 <p>The first one is that the code is truly evaluated and not compiled.
-This means that, any benchmarking done in the shell is going to have
-skewed results. So never run any profiling nor benchmark in the shell.</p>
+This means that any benchmarking done in the shell is going to have
+skewed results. So never run any profiling nor benchmarks in the shell.</p>
 
 <p>Second of all, IEx alows you to break an expression into many lines,
 since this is common in Elixir. For example:</p>
@@ -122,7 +158,7 @@ pending expression and return to its normal state:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L4" target="_blank" class="view_source">Source</a>
 
       
 
@@ -174,7 +210,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Returns registered after spawn callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L103" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L138" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="after_spawn/1">
@@ -183,7 +219,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Registers a function to be invoked after IEx process is spawned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L96" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect_opts/0">
@@ -192,7 +228,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Returns currently registered inspect options.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L125" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L160" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect_opts/1">
@@ -201,7 +237,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Registers options used on inspect.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L118" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L153" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="started?/0">
@@ -210,7 +246,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Returns true if IEx was properly started.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/master/lib/iex/lib/iex.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L146" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
