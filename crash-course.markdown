@@ -219,7 +219,7 @@ X = 10.
 im_a_var
 x = 10
 
-Module  # this is called an atom alias; it expands to :'Elixir-Module'
+Module  # this is called an atom alias; it expands to :'Elixir.Module'
 {% endhighlight %}
 
 It is also possible to create atoms that start with a character other than a lowercase letter. The syntax is different between the two languages:
@@ -853,7 +853,7 @@ It can be called from Erlang as follow:
 -export([uglify/1]).
 
 uglify(Bin) ->
-  'Elixir-Contrived':ugly_binary(Bin).
+  'Elixir.Contrived':ugly_binary(Bin).
 {% endhighlight %}
 
 However this syntax is suboptimal. For this reason, Elixir ships with a parse transform that allows you to write the module names in a more convenient way:
