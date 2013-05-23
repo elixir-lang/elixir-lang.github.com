@@ -8,7 +8,7 @@ excerpt: Elixir v0.9.0 is released with support for reducers, umbrella projects,
 
 While [Programming Elixir](http://pragprog.com/book/elixir/programming-elixir) was being announced, we have been working on Elixir v0.9.0 which is finally out. This release contains new features, important performance optimizations and bug fixes.
 
-Elixir v0.9.0 also removes support to Erlang R15 and before. In case you still need to run Elixir software on R15, we have also released Elixir v0.8.3, which contains many of the enhancements in v0.9.0. Check the [CHANGELOG for more details for both releases](https://github.com/elixir-lang/elixir/blob/v0.9.0/CHANGELOG.md).
+Elixir v0.9.0 also removes support for Erlang R15 and before. In case you still need to run Elixir software on R15, we have also released Elixir v0.8.3, which contains many of the enhancements in v0.9.0. Check the [CHANGELOG for more details for both releases](https://github.com/elixir-lang/elixir/blob/v0.9.0/CHANGELOG.md).
 
 All this work was achieved by a very vibrant community! Over the last month, 17 authors have pushed more than 500 commits, where more than 60 pull requests were merged and more than 80 issues were closed.
 
