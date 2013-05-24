@@ -93,7 +93,7 @@ Enumerable.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
 #=> 6
 {% endhighlight %}
 
-The `Enum.map/2` we have used above is now implmented in terms of this reducing function:
+The `Enum.map/2` we have used above is now implemented in terms of this reducing function:
 
 {% highlight elixir %}
 defmodule Enum do
