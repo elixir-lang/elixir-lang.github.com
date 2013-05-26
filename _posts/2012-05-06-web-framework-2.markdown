@@ -295,6 +295,6 @@ This concludes the second part in the series. Don't forget to grab the code [fro
 
 See you there.
 
-  [3]: http://groups.google.com/group/elixir-lang-core
+  [3]: http://groups.google.com/group/elixir-lang-talk
   [4]: https://github.com/rafaelfranca
   [5]: https://github.com/josevalim
