@@ -211,4 +211,4 @@ Awesome! This concludes the first part in the series. Don't forget to grab the c
 See you there.
 
   [3]: https://github.com/alco/web-framework/tree/master/1-macros
-  [4]: http://groups.google.com/group/elixir-lang-core
+  [4]: http://groups.google.com/group/elixir-lang-talk
