@@ -828,43 +828,14 @@ end
 
 ## 7 Adding Elixir to existing Erlang programs
 
-### Parse transform
-
-Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. In order to avoid conflicts with Erlang, Elixir modules are prefixed by the word `Elixir` and separated using `-`:
-
-Consider the following module in Elixir:
-
-{% highlight elixir %}
-defmodule Contrived do
-  def pretty_binary(bin) do
-    "Pretty " <> bin
-  end
-
-  def ugly_binary(bin) do
-    "Ugly " <> bin
-  end
-end
-{% endhighlight %}
-
-It can be called from Erlang as follow:
+Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the "Elixir." prefix followed by the regular Elixir name. For example, here is how to use the UTF-8 aware String downcase from Elixir in Erlang:
 
 {% highlight erlang %}
--module(erlang_contrived).
--export([uglify/1]).
+-module(bstring).
+-export([downcase/1]).
 
-uglify(Bin) ->
-  'Elixir.Contrived':ugly_binary(Bin).
-{% endhighlight %}
-
-However this syntax is suboptimal. For this reason, Elixir ships with a parse transform that allows you to write the module names in a more convenient way:
-
-{% highlight erlang %}
--module(erlang_improved).
--export([prettify/1]).
--compile({parse_transform, elixir_transform}).
-
-prettify(Bin) ->
-  'Elixir.Contrived':pretty_binary(Bin).
+downcase(Bin) ->
+  'Elixir.String':downcase(Bin).
 {% endhighlight %}
 
 ### Rebar integration
