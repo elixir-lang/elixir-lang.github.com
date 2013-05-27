@@ -64,10 +64,10 @@ A pattern match will error in case the sides can't match. This is, for example, 
 
 And also when comparing different types:
 
-    iex> { a, b, c } = [:hello, "world"]
+    iex> { a, b, c } = [:hello, "world", '!']
     ** (MatchError) no match of right hand side value: [:hello,"world"]
 
-More interesting, we can match on specific values. The exemplo below asserts that the left side will only match the right side in case the right side is a tuple containing the atom `:ok` as a key:
+More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side in case that the right side is a tuple that starts with the atom `:ok` as a key:
 
     iex> { :ok, result } = { :ok, 13 }
     {:ok,13}
@@ -77,7 +77,7 @@ More interesting, we can match on specific values. The exemplo below asserts tha
     iex> { :ok, result } = { :error, :oops }
     ** (MatchError) no match of right hand side value: {:error,:oops}
 
-Pattern match allows developers to easily detructure data types like tuples, lists and more. As we will see in following chapters, it is one of the fundations for recursion in Elixir. However, in case you can't wait to iterate and manipulate your lists, the [`Enum` module](/docs/stable/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](/docs/stable/List.html) provides several helpers specific to lists:
+Pattern matching allows developers to easily destruct data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir. However, in case you can't wait to iterate through and manipulate your lists, the [`Enum` module](/docs/stable/Enum.html) provides several helpers to manipulate lists (and other enumerables in general) while the [`List` module](/docs/stable/List.html) provides several helpers specific to lists:
 
     iex> Enum.at [1,2,3], 0
     1
