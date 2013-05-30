@@ -120,6 +120,31 @@ iex(1)&gt; value
 <p>It is possible to override the default loading sequence for .iex file by
 supplying the --dot-iex option to iex. See <code>iex --help</code>.</p>
 
+<h2>Configuring the shell</h2>
+
+<p>There is a number of customization options provided by the shell. Take a look
+at the docs for the <code>IEx.Options</code> module.</p>
+
+<p>The main functions there are <code>IEx.Options.get/1</code> and <code>IEx.Options.set/2</code>. One
+can also use <code>IEx.Options.list/0</code> to get the list of all supported options.
+<code>IEx.Options.print_help/1</code> will print documentation for the given option.</p>
+
+<p>In particular, it might be convenient to customize those options inside your
+.iex file like this:</p>
+
+<pre><code># .iex
+IEx.Options.set :inspect, limit: 3
+
+### now run the shell ###
+
+$ iex
+Erlang R16B (erts-5.10.1) [...]
+
+Interactive Elixir (0.9.1.dev) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)&gt; [1,2,3,4,5]
+[1,2,3,...]
+</code></pre>
+
 <h2>Expressions in IEx</h2>
 
 <p>As an interactive shell, IEx evaluates expressions. This has some
@@ -158,7 +183,7 @@ pending expression and return to its normal state:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L4" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L4" target="_blank" class="view_source">Source</a>
 
       
 
@@ -179,12 +204,17 @@ pending expression and return to its normal state:</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#inspect_opts/0">inspect_opts/0</a>
+    <a href="#color/2">color/2</a>
   </span>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#inspect_opts/1">inspect_opts/1</a>
+    <a href="#color_fragment/1">color_fragment/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#color_reset/0">color_reset/0</a>
   </span>
 </li>
 <li>
@@ -210,7 +240,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Returns registered after spawn callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L138" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L162" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="after_spawn/1">
@@ -219,25 +249,34 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Registers a function to be invoked after IEx process is spawned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L131" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="inspect_opts/0">
-    <strong>inspect_opts()</strong>
+  <p class="signature" id="color/2">
+    <strong>color(color_name, string)</strong>
   </p>
-  <div class="docstring"><p>Returns currently registered inspect options.</p>
+  <div class="docstring"><p>Returns <code>string</code> escaped using the specified color.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L160" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L249" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="inspect_opts/1">
-    <strong>inspect_opts(opts)</strong>
+  <p class="signature" id="color_fragment/1">
+    <strong>color_fragment(color_name)</strong>
   </p>
-  <div class="docstring"><p>Registers options used on inspect.</p>
+  <div class="docstring"><p>Returns an escaped fragment using the specified color.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L153" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L257" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="color_reset/0">
+    <strong>color_reset()</strong>
+  </p>
+  <div class="docstring"><p>Returns an escaped fragment that resets colors and attributes.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L265" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="started?/0">
@@ -246,7 +285,7 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Returns true if IEx was properly started.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/iex/lib/iex.ex#L146" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
