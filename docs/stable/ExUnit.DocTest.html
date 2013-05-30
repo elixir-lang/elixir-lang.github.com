@@ -56,9 +56,9 @@ an ExUnit case with a <code>doctest</code> macro:</p>
 end
 </code></pre>
 
-<p>The <code>doctest</code> macro is going to loop all functions and macros
-defined in <code>MyModule</code>, parsing their documentation in search for
-code examples.</p>
+<p>The <code>doctest</code> macro is going to loop through all functions and
+macros defined in <code>MyModule</code>, parsing their documentation in
+search for code examples.</p>
 
 <p>A very basic example is:</p>
 
@@ -66,12 +66,30 @@ code examples.</p>
 2
 </code></pre>
 
-<p>Multiline is also supported:</p>
+<p>Expressions on multiple lines are also supported:</p>
 
 <pre><code>iex&gt; Enum.map [1,2,3], fn(x) -&gt;
 ...&gt;   x * 2
 ...&gt; end
 [2,4,6]
+</code></pre>
+
+<p>Multiple results can be checked within the same test:</p>
+
+<pre><code>iex&gt; a = 1
+1
+iex&gt; a + 1
+2
+</code></pre>
+
+<p>If you want to keep any two tests separate from each other,
+add an empty line between them:</p>
+
+<pre><code>iex&gt; a = 1
+1
+
+iex&gt; a + 1  # will fail with a &quot;function a/0 undefined&quot; error
+2
 </code></pre>
 
 <p>Similarly to iex you can use numbers in your &quot;prompts&quot;:</p>
@@ -89,7 +107,7 @@ code examples.</p>
 </ul>
 
 <p>We also allow you to select or skip some functions when calling
-<code>doctest</code>. See its documentation documentation for more info.</p>
+<code>doctest</code>. See its documentation for more info.</p>
 
 <h2>Exceptions</h2>
 
@@ -112,14 +130,14 @@ supported.</p>
 side effects. For example, if a doctest prints to standard output, doctest
 will not try to capture the output.</p>
 
-<p>Similarly, doctest does not run in any kind of side box. So any module
+<p>Similarly, doctest does not run in any kind of sandbox. So any module
 defined in a code example is going to linger throughout the whole test suite
 run.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/ex_unit/lib/ex_unit/doc_test.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/doc_test.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -152,20 +170,16 @@ run.</p>
   </p>
   <div class="docstring"><p>This macro is used to generate ExUnit test cases for doctests.</p>
 
-<p>There are three ways this macro can be used:</p>
-
-<ul>
-<li><code>doctest(Module)</code> — will generate tests for all doctests found
-in the module <code>Module</code></li>
-</ul>
+<p>Calling <code>doctest(Module)</code> will generate tests for all doctests found
+in the module <code>Module</code></p>
 
 <p>Options can also be supplied:</p>
 
 <ul>
 <li><p><code>:except</code> — generate tests for all functions except those listed
           (list of <code>{function, arity}</code> tuples)</p></li>
-<li><p><code>:only</code> — generate tests only forfunctions listed
-        (list of <code>{function, arity}</code> tuples)</p></li>
+<li><p><code>:only</code>   — generate tests only forfunctions listed
+          (list of <code>{function, arity}</code> tuples)</p></li>
 <li><p><code>:import</code> — when true, one can test a function defined in the module
           without referring to the module name. However, this is not
           feasible when there is a clash with a number module like
@@ -178,10 +192,10 @@ in the module <code>Module</code></li>
 <pre><code>doctest MyModule, except: [trick_fun: 1]
 </code></pre>
 
-<p>This macro is auto-imported into every <code>ExUnit.Case</code>.</p>
+<p>This macro is auto-imported with every <code>ExUnit.Case</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/ex_unit/lib/ex_unit/doc_test.ex#L116" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/doc_test.ex#L132" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

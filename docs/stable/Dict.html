@@ -70,7 +70,7 @@ end)
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -270,11 +270,6 @@ end)
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#get!/2">get!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#get/3">get/3</a>
   </span>
 </li>
@@ -330,7 +325,7 @@ true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L264" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L254" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="drop/2">
@@ -353,7 +348,7 @@ iex&gt; d = HashDict.new([a: 1, b: 2])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L417" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L407" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="empty/1">
@@ -362,7 +357,7 @@ iex&gt; d = HashDict.new([a: 1, b: 2])
   <div class="docstring"><p>Returns an empty dict of the same type as <code>dict</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L447" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L437" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="equal?/2">
@@ -385,7 +380,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L469" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L459" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="fetch/2">
@@ -397,16 +392,14 @@ If <code>dict</code> does not contain <code>key</code>, returns <code>:error</co
 <h2>Examples</h2>
 
 <pre><code>iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.fetch(d, :a)
+iex&gt; Dict.fetch(d, :a)
 { :ok, 1 }
-
-iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.fetch(d, :b)
+iex&gt; Dict.fetch(d, :b)
 :error
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L191" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L182" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="fetch!/2">
@@ -418,15 +411,14 @@ contain <code>key</code>, it raises <code>KeyError</code>.</p>
 <h2>Examples</h2>
 
 <pre><code>iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.fetch!(d, :a)
+iex&gt; Dict.fetch!(d, :a)
 1
-iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.fetch!(d, :b)
+iex&gt; Dict.fetch!(d, :b)
 ** (KeyError) key not found: :b
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L210" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L200" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="get/3">
@@ -438,20 +430,16 @@ contain <code>key</code>, returns <code>default</code> (or nil if not provided).
 <h2>Examples</h2>
 
 <pre><code>iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.get(d, :a)
+iex&gt; Dict.get(d, :a)
 1
-
-iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.get(d, :b)
+iex&gt; Dict.get(d, :b)
 nil
-
-iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.get(d, :b, 3)
+iex&gt; Dict.get(d, :b, 3)
 3
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L166" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L159" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="has_key?/2">
@@ -462,16 +450,14 @@ iex&gt; d = HashDict.new([a: 1])
 <h2>Examples</h2>
 
 <pre><code>iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.has_key?(d, :a)
+iex&gt; Dict.has_key?(d, :a)
 true
-
-iex&gt; d = HashDict.new([a: 1])
-...&gt; Dict.has_key?(d, :b)
+iex&gt; Dict.has_key?(d, :b)
 false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L143" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L140" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="keys/1">
@@ -489,7 +475,7 @@ the underlying dict implementation defines so.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L94" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L93" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="merge/2">
@@ -508,7 +494,7 @@ alread exist in the dict, it is given higher preference.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L282" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L272" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="merge/3">
@@ -530,7 +516,7 @@ conflicts.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L303" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L293" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="pop/3">
@@ -558,7 +544,7 @@ iex&gt; dict = HashDict.new [a: 1]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L330" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L320" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="put/3">
@@ -576,7 +562,7 @@ If <code>dict</code> already has <code>key</code>, the stored value is replaced 
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L227" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L217" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="put_new/3">
@@ -593,7 +579,7 @@ If <code>dict</code> already has <code>key</code>, the stored value is replaced 
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L243" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="size/1">
@@ -609,7 +595,7 @@ If <code>dict</code> already has <code>key</code>, the stored value is replaced 
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L124" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L123" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="split/2">
@@ -640,7 +626,7 @@ iex&gt; d = HashDict.new([a: 1, b: 2])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L395" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L385" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="take/2">
@@ -652,18 +638,18 @@ included. Any non-member keys are ignored.</p>
 <h2>Examples</h2>
 
 <pre><code>iex&gt; d = HashDict.new([a: 1, b: 2])
+...&gt;
 ...&gt; d = Dict.take(d, [:a, :c, :d])
 ...&gt; Dict.to_list(d)
 [a: 1]
-
-iex&gt; d = HashDict.new([a: 1, b: 2])
+...&gt;
 ...&gt; d = Dict.take(d, [:c, :d])
 ...&gt; Dict.to_list(d)
 []
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L439" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L429" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="to_list/1">
@@ -673,7 +659,7 @@ iex&gt; d = HashDict.new([a: 1, b: 2])
 No particular order is enforced.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L490" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L480" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="update/3">
@@ -691,7 +677,7 @@ value. An exception is generated if <code>key</code> is not present in the dict.
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L347" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L337" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="update/4">
@@ -710,7 +696,7 @@ value.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L365" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L355" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="values/1">
@@ -726,7 +712,7 @@ value.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L109" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L108" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
@@ -743,7 +729,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L68" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L67" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="update/4">
@@ -751,7 +737,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L67" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L66" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="update/3">
@@ -759,7 +745,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L66" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L65" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="to_list/1">
@@ -767,7 +753,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L65" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="take/2">
@@ -775,7 +761,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L63" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="split/2">
@@ -783,7 +769,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L63" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L62" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="size/1">
@@ -791,7 +777,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L62" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L61" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="put_new/3">
@@ -799,7 +785,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L61" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="put/3">
@@ -807,7 +793,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L60" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L59" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="pop/3">
@@ -815,7 +801,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L59" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L58" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="pop/2">
@@ -823,7 +809,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L58" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L57" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="merge/3">
@@ -831,7 +817,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L57" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L56" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="merge/2">
@@ -839,7 +825,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L56" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L55" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="keys/1">
@@ -847,7 +833,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L55" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L54" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="has_key?/2">
@@ -855,15 +841,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L54" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="get!/2">
-    <strong>get!(t(), key())</strong>
-  </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L53" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L53" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="get/3">
@@ -871,7 +849,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L52" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L52" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="get/2">
@@ -879,7 +857,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L51" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L51" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="equal?/2">
@@ -887,7 +865,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L50" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L50" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="empty/1">
@@ -895,7 +873,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="drop/2">
@@ -903,7 +881,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L48" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L48" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="delete/2">
@@ -911,7 +889,7 @@ value.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.0/lib/elixir/lib/dict.ex#L47" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/dict.ex#L47" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

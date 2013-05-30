@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IEx.Options</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        IEx.Options
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Provides an interface for adjusting options of the running IEx session.</p>
+
+<p>Changing options is usually done inside an IEx session or in your .iex file.
+See <code>h(IEx)</code> for more info on the latter.</p>
+
+<p>If the value of an option is a keyword list, only those keys that are
+mentioned will be changed. The rest of the sub-options will keep their
+current values. Any extraneous keys are filtered out, i.e. not used.</p>
+
+<p>To get the list of all supported options, use <code>list/0</code>. You can also get an
+option&#39;s description using <code>print_help/1</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex(1)&gt; ArgumentError[]
+ArgumentError[message: &quot;argument error&quot;]
+
+iex(2)&gt; IEx.Options.set :inspect, raw: true
+[limit: 50, raw: false]
+
+iex(3)&gt; ArgumentError[]
+{ArgumentError,:__exception__,&quot;argument error&quot;}
+
+iex(4)&gt; IEx.Options.list
+[:colors,:inspect]
+
+iex(5)&gt; IEx.Options.print_help :colors
+This is an aggregate option that encapsulates all color settings used
+by the shell.
+... # omitted content
+</code></pre>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#colors/0">colors/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/0">get/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/1">get/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#help/1">help/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#history_size/0">history_size/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#inspect/0">inspect/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#list/0">list/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#print_help/1">print_help/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#set/1">set/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#set/2">set/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="colors/0">
+    <strong>colors()</strong>
+  </p>
+  <div class="docstring"><p><strong>NOTE</strong>: This is just a stub for documentation purposes. Use
+<code>IEx.Options.get</code> and <code>IEx.Options.set</code> to query and change the option&#39;s
+value.</p>
+
+<p>This is an aggregate option that encapsulates all color settings used by the
+shell. See documentation for the <code>IO.ANSI</code> module for the list of supported
+colors and attributes.</p>
+
+<p>The value is a keyword list. List of supported keys:</p>
+
+<ul>
+<li><p>enabled     -- boolean value that allows for switching the coloring
+               on and off</p></li>
+<li><p>eval_result -- color for an expression&#39;s resulting value</p></li>
+<li><p>error       -- color for error messages</p></li>
+<li><p>info        -- color for various informational messages</p></li>
+<li><p>directory   -- color for directory entries (ls helper)</p></li>
+<li><p>device      -- color for device entries (ls helper)</p></li>
+</ul>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L189" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="get/0">
+    <strong>get()</strong>
+  </p>
+  <div class="docstring"><p>Returns all supported IEx options with their respective values as a keyword
+list.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L46" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="get/1">
+    <strong>get(name)</strong>
+  </p>
+  <div class="docstring"><p>Get current value of the option <code>name</code>. Raises ArgumentError if name is not a
+known option.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L56" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="help/1">
+    <strong>help(name)</strong>
+  </p>
+  <div class="docstring"><p>Returns a string with the option&#39;s description. Raises if <code>name</code> is not a
+known option.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L138" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="history_size/0">
+    <strong>history_size()</strong>
+  </p>
+  <div class="docstring"><p><strong>NOTE</strong>: This is just a stub for documentation purposes. Use
+<code>IEx.Options.get</code> and <code>IEx.Options.set</code> to query and change the option&#39;s
+value.</p>
+
+<p>Number of expressions and their results to keep in the history.</p>
+
+<p>The value is an integer. When it is negative, the history is unlimited.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L216" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="inspect/0">
+    <strong>inspect()</strong>
+  </p>
+  <div class="docstring"><p><strong>NOTE</strong>: This is just a stub for documentation purposes. Use
+<code>IEx.Options.get</code> and <code>IEx.Options.set</code> to query and change the option&#39;s
+value.</p>
+
+<p>Inspect options used by the shell when printing results of expression
+evaluation.</p>
+
+<p>The value is a keyword list.</p>
+
+<p>See <code>Kernel.inspect/2</code> for the full list of options.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L204" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="list/0">
+    <strong>list()</strong>
+  </p>
+  <div class="docstring"><p>Returns all supported options as a list of names.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L164" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="print_help/1">
+    <strong>print_help(name)</strong>
+  </p>
+  <div class="docstring"><p>Same as <code>help/1</code> but instead of returning a string, prints it.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L157" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="set/1">
+    <strong>set(opts)</strong>
+  </p>
+  <div class="docstring"><p>Set all options at once by providing a keyword list with option names and
+their corresponding values. This is generally obtained from <code>get/0</code>.</p>
+
+<p>Returns a keyword list of old option values.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L83" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="set/2">
+    <strong>set(name, value)</strong>
+  </p>
+  <div class="docstring"><p>Sets the value for the option <code>name</code> to <code>value</code>.</p>
+
+<p>Returns option&#39;s previous value in the case of success.</p>
+
+<p>Raises if <code>name</code> is not a known option or if the value is invalid.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/iex/lib/iex/options.ex#L96" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>
