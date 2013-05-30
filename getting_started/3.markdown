@@ -114,13 +114,34 @@ Giving an argument that does not match any of the clauses raises an error.
 Named functions also support default arguments:
 
     defmodule Concat do
-      def join(a, b, sep // ' ') do
+      def join(a, b, sep // " ") do
         a <> sep <> b
       end
     end
 
     IO.puts Concat.join("Hello", "world")      #=> Hello world
     IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
+
+
+
+If a function with default values has multiple clauses, it is recommended to create a separate clause without an actual body, just for declaring defaults:
+
+    defmodule Concat do
+      def join(a, b // nil, sep // " ")
+
+      def join(a, b, _sep) when nil?(b) do
+        a
+      end
+
+      def join(a, b, sep) do
+        a <> sep <> b
+      end
+    end
+
+    IO.puts Concat.join("Hello", "world")      #=> Hello world
+    IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
+    IO.puts Concat.join("Hello")               #=> Hello
+
 
 When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 
@@ -130,7 +151,7 @@ When using default values, one must be careful to avoid overlapping function def
         a <> b
       end
 
-      def join(a, b, sep // ' ') do
+      def join(a, b, sep // " ") do
         IO.puts "***Second join"
         a <> sep <> b
       end
