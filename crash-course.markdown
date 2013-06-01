@@ -179,7 +179,7 @@ orddict:new().
 to invoke the `new` function from the `orddict` module. In Elixir, use the dot `.` in place of the colon `:`
 
 {% highlight elixir %}
-Process.self
+Kernel.self
 {% endhighlight %}
 
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
@@ -812,7 +812,7 @@ end.
 **Elixir**
 
 {% highlight elixir %}
-pid = Process.self
+pid = Kernel.self
 
 pid <- { :hello }
 
