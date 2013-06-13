@@ -324,18 +324,12 @@ Elixir brings the concept of module attributes from Erlang. For example:
 
 In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang VM to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
 
-Elixir has a handful of reserved attributes. The following are currently functional in Elixir:
+Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones. Take a look at the docs for [Module](http://elixir-lang.org/docs/stable/Module.html) for a complete list of supported attributes.
 
-* `@after_compile` - expects a tuple `{ module, function }` containing a module and a function which will be invoked right after the current module is compiled. The module environment and its bytecode are passed as arguments to the callback function;
-* `@before_compile` - expects a `{ module, function }` containing a module and a function that will be invoked before the module is compiled with the module environment. The function may be a macro, allowing you to inject functions inside the module exactly before compilation;
-* `@behaviour` - (notice the british spelling) used for specifying an OTP or user-defined behaviour;
-* `@compile` - provides options for the module compilation;
-* `@doc` - provides documentation for the next function or macro to be defined;
-* `@file` - changes the filename in stacktraces of the next function or macro to be defined;
 * `@moduledoc` - provides documentation for the current module;
-* `@on_definition` - expects a `{ module, function }` containing a module and a function which will be invoked after each function/macro is defined. This makes it easy to annotate and customize functions;
-* `@on_load` - expects a function name from the currently being defined module that will be invoked whenever the module is loaded. The function must have arity 0 and has to return `:ok`, otherwise the loading of the module is aborted;
-* `@vsn` - used for specifying the module version;
+* `@doc` - provides documentation for the function or macro that follows the attribute;
+* `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour;
+* `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation;
 
 The following attributes are part of [typespecs](http://www.erlang.org/doc/reference_manual/typespec.html) and are also supported by Elixir:
 
