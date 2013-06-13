@@ -212,19 +212,7 @@ Use `mix help` to get more information.
 
 ### 1.4.5 Dependencies of dependencies
 
-If your dependency is another Mix project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project depends on code with other build systems, such as rebar, then the dependencies of your dependencies are not automatically known to Mix. 
-
-To resolve this, put these dependencies in your projects Mix file, in the order of dependence.
-
-For example, if you have a project that uses a database called `:catdb`, that is built with rebar, which depends on `:cdb_storage_engine` and that depends on `:cdb_diskio`, then your mix file should look something like this:
-
-{% highlight elixir %}
-defp deps do
-  [ {:cdb_diskio, github: "catdb/cdb_diskio"},
-    {:cdb_storage_engine, github: "catdb/cdb_storage_engine"},
-    {:catdb, github: "catdb/catdb"} ]
-end
-{% endhighlight %}
+If your dependency is another Mix  or rebar project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project have two dependencies that share the same dependency and the SCM information for the shared dependency doesn't match between the parent dependencies, Mix will mark that dependency as diverged and emit a warning. To solve this issue you can declare the shared dependency in your project and Mix will use that SCM information to fetch the dependency.
 
 ## 1.5 Environments
 
