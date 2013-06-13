@@ -38,13 +38,15 @@ dependencies. It keeps:</p>
 <li>requirements - a binary or regexp with the deps requirement;</li>
 <li>status - the current status of dependency, check <code>Mix.Deps.format_status/1</code> for more info;</li>
 <li>opts - the options given by the developer</li>
-<li>project - the Mix.Project for the dependency</li>
+<li>source - any possible configuration associated with the manager field,
+       rebar.config for rebar or the Mix.Project for Mix</li>
+<li>manager - the project management, possible values: :rebar | :mix | :make | nil</li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/mix/lib/mix/deps.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/mix/lib/mix/deps.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -84,13 +86,19 @@ dependencies. It keeps:</p>
           
             <li>
               <span class="summary_signature">
-                <strong>project:</strong> nil
+                <strong>deps:</strong> []
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
-                <strong>deps:</strong> []
+                <strong>source:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>manager:</strong> nil
               </span>
             </li>
           

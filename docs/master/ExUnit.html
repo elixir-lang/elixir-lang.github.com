@@ -27,7 +27,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Basic unit test structure for Elixir.</p>
+          <p>Basic unit testing framework for Elixir.</p>
 
 <h2>Example</h2>
 
@@ -35,10 +35,11 @@
 
 <pre><code># File: assertion_test.exs
 
-# 1) Start ExUnit. You can pass some options as argument (list below)
+# 1) Start ExUnit. You could also pass some options to the start function
+# (see `configure/1` for the list of options)
 ExUnit.start
 
-# 2) Next we create a new TestCase and use ExUnit.Case
+# 2) Create a new test module (or &quot;case&quot;) and use ExUnit.Case
 defmodule AssertionTest do
   # 3) Notice we pass async: true, this runs the test case
   #    concurrently with other test cases
@@ -57,7 +58,7 @@ defmodule AssertionTest do
 end
 </code></pre>
 
-<p>To run the test above, all you need to to is to run the file
+<p>To run the test above, all you need to do is to run the file
 using elixir from command line. Assuming you named your file
 assertion_test.exs, you can run it as:</p>
 
@@ -66,16 +67,38 @@ assertion_test.exs, you can run it as:</p>
 
 <h2>Case, callbacks and assertions</h2>
 
-<p>Check <code>ExUnit.Case</code> and <code>ExUnit.Callbacks</code> for more information about
+<p>See <code>ExUnit.Case</code> and <code>ExUnit.Callbacks</code> for more information about
 defining test cases.</p>
 
 <p>The <code>ExUnit.Assertions</code> module contains a set of macros to easily
 generate assertions with appropriate error messages.</p>
 
+<h2>Integration with Mix</h2>
+
+<p>Mix is the project management and build tool for Elixir. Invoking <code>mix test</code>
+from the command line will run tests in each file matching the pattern
+&quot;*_test.exs&quot; found in the <code>test</code> directory of your project.</p>
+
+<p>By convention, you could also create a test_helper.exs file inside the
+<code>test</code> directory and put the code common to all tests there.</p>
+
+<p>The minimum example of a test_helper.exs file would be:</p>
+
+<p># test/test_helper.exs
+  ExUnit.start</p>
+
+<p>Then, in each test file, require test_helper.exs before defining test modules
+(or cases):</p>
+
+<p># test/myproject<em>test.exs
+  Code.require</em>file &quot;test<em>helper.exs&quot;, _</em>DIR__</p>
+
+<p># ... test cases follow</p>
+
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -128,7 +151,7 @@ generate assertions with appropriate error messages.</p>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit.ex#L134" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="run/0">
@@ -140,7 +163,7 @@ if ExUnit is started via <code>ExUnit.start</code>.</p>
 <p>Returns the number of failures.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit.ex#L144" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="start/1">
@@ -154,7 +177,7 @@ configure <code>ExUnit</code> (the same ones accepted by <code>configure/1</code
 function and rely on <code>configure/1</code> and <code>run/0</code> instead.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit.ex#L79" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit.ex#L102" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

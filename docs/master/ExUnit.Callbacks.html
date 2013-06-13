@@ -28,36 +28,82 @@
       
         <div id="moduledoc" class="docstring">
           <p>This module defines four callbacks: <code>setup_all</code>, <code>teardown_all</code>,
-<code>setup</code> and <code>teardown</code>. Those callbacks are defined via macros
-and receives a keyword list of metadata. The callback may
-optionally define extra data which will be available in the test
-cases.</p>
+<code>setup</code> and <code>teardown</code>.</p>
+
+<p>Those callbacks are defined via macros and each one can optionally receive a
+keyword list with metadata, usually referred to as <code>context</code>. The callback
+may optionally put extra data into <code>context</code> to be used in the tests.</p>
+
+<p><strong>Note</strong>: <code>setup</code> and <code>teardown</code> callbacks share the same context, it
+provides an ExUnit.Test record associated with the <code>:test</code> key. <code>setup_all</code>
+and <code>teardown_all</code> share their own context in a similar way, but this one
+provides an ExUnit.TestCase record associated with the <code>:case</code> key.</p>
+
+<p>If you return <code>{ :ok, &lt;keyword list&gt; }</code> from <code>setup</code> or <code>teardown</code>, the keyword
+list will get merged into the context that will be available in all
+subsequent <code>setup</code>, <code>test</code>, or <code>teardown</code> calls.</p>
+
+<p>Similarly, returning <code>{ :ok, &lt;keyword list&gt; }</code> from <code>setup_all</code> or
+<code>teardown_all</code> will merge the keyword list into the context that will be
+available in all subsequent <code>setup_all</code> or <code>teardown_all</code> calls.</p>
+
+<p>Returning :ok leaves the context unchanged in both cases.</p>
+
+<p>Returning anything else from <code>setup</code> or <code>teardown</code> will force the current
+test to fail, and subsequent <code>setup</code>, <code>test</code>, and <code>teardown</code> callbacks won&#39;t
+be called for it.</p>
+
+<p>Returning anything else from <code>setup_all</code> or <code>teardown_all</code> will force the
+whole case to fail, and no other callback will be called.</p>
+
+<p>It is allowed to define multiple <code>setup</code> or <code>teardown</code> callbacks, they will
+be called sequentially in the order of definition before each test. The
+returned keyword list from the last <code>setup</code> will be merged into the context passed to
+the <code>test</code> and <code>teardown</code> (if defined) callbacks.</p>
+
+<p>In the case of <code>setup_all</code> and <code>teardown_all</code> callbacks, each <code>setup_all</code>
+will be called only once before the first test&#39;s <code>setup</code> and each
+<code>teardown_all</code> will be called once after the last test. The returned keyword
+list from the last <code>setup_all</code> will get merged into the context passed to the
+<code>teardown_all</code> callbacks.</p>
 
 <h2>Examples</h2>
 
 <pre><code>defmodule AssertionTest do
   use ExUnit.Case, async: true
 
+  # `setup` is called before each test is run
   setup do
     IO.puts &quot;This is a setup callback&quot;
 
-    # Returns extra metadata
+    # Return extra metadata, it has to be a keyword list
     { :ok, [hello: &quot;world&quot;] }
   end
 
+  # Same as `setup`, but receives the context for the current test
   setup context do
-    # We can access the test name in the context
+    # We can access the test record in the context
     IO.puts &quot;Setting up: #{context[:test]}&quot;
 
-    # The metadata returned by the previous setup as well
+    # We can also access the data returned from `setup/0`
     assert context[:hello] == &quot;world&quot;
 
     # No metadata
     :ok
   end
 
+  # This is called after each test finishes
+  teardown context do
+    assert context[:hello] == &quot;world&quot;
+    :ok
+  end
+
   test &quot;always pass&quot; do
     assert true
+  end
+
+  test &quot;another one&quot;, context do
+    assert context[:hello] == &quot;world&quot;
   end
 end
 </code></pre>
@@ -65,7 +111,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -116,7 +162,7 @@ end, block)</strong>
   <div class="docstring"><p>Called before the start of each test.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="setup_all/2">
@@ -124,10 +170,11 @@ end, block)</strong>
   _
 end, block)</strong>
   </p>
-  <div class="docstring"><p>Called before the start of a case.</p>
+  <div class="docstring"><p>Called before the start of a case, i.e. called once before the first test in
+the current module and before any <code>setup</code> callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L108" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="teardown/2">
@@ -135,11 +182,11 @@ end, block)</strong>
   _
 end, block)</strong>
   </p>
-  <div class="docstring"><p>Called after the finish of each test. Note that, if the test crasches with an exit
-message <code>teardown</code> will not be run.</p>
+  <div class="docstring"><p>Called after the finish of each test. Note that if the test crashed with an :exit
+message, <code>teardown</code> will not be run.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L143" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="teardown_all/2">
@@ -147,10 +194,10 @@ message <code>teardown</code> will not be run.</p>
   _
 end, block)</strong>
   </p>
-  <div class="docstring"><p>Called after the finish of each case.</p>
+  <div class="docstring"><p>Called once after the last test finishes without emitting an :exit message.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L119" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L166" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
