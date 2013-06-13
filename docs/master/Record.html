@@ -29,10 +29,176 @@
         <div id="moduledoc" class="docstring">
           <p>Functions to define Elixir records</p>
 
+<p>A record is a tagged tuple which contains one or more elements and the first
+element is a module. One creates a record by calling <code>defrecord</code> or
+<code>defrecordp</code> which are documented in <code>Kernel</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>defrecord FileInfo, atime: nil, accesses: 0
+</code></pre>
+
+<p>The line above will define a module named <code>FileInfo</code> which
+contains a function named <code>new</code> that returns a new record
+and other functions to read and set the values in the
+record:</p>
+
+<pre><code>file_info = FileInfo.new(atime: now())
+file_info.atime         #=&gt; Returns the value of atime
+file_info.atime(now())  #=&gt; Updates the value of atime
+
+# Update multiple attributes at once:
+file_info.update(atime: now(), accesses: 1)
+
+# Obtain the keywords representation of a record:
+file_info.to_keywords   #=&gt; [accesses: 1, atime: {1370,7171,911705}]
+</code></pre>
+
+<p>A record is simply a tuple where the first element is the record
+module name. We can get the record raw representation as follow:</p>
+
+<pre><code>inspect FileInfo.new, raw: true
+#=&gt; { FileInfo, nil, nil }
+</code></pre>
+
+<p>Besides defining readers and writers for each attribute, Elixir also
+defines an <code>update_#{attribute}</code> function to update the value. Such
+functions expect a function as argument that receives the current
+value and must return the new one. For example, every time the file
+is accessed, the accesses counter can be incremented with:</p>
+
+<pre><code>file_info.update_accesses(fn(old) -&gt; old + 1 end)
+</code></pre>
+
+<p>Which can be also written as:</p>
+
+<pre><code>file_info.update_accesses(&amp;1 + 1)
+</code></pre>
+
+<h2>Access syntax</h2>
+
+<p>Records in Elixir can be expanded at compilation time to provide
+pattern matching and faster operations. For example, the clause
+below will only match if a <code>FileInfo</code> is given and the number of
+accesses is zero:</p>
+
+<pre><code>def enforce_no_access(FileInfo[accesses: 0]), do: :ok
+</code></pre>
+
+<p>The clause above will expand to:</p>
+
+<pre><code>def enforce_no_access({ FileInfo, _, 0 }), do: :ok
+</code></pre>
+
+<p>The downside of using such syntax is that, every time the record
+changes, your code now needs to be recompiled (which is usually
+not a concern since Elixir build tools by default recompiles the
+whole project whenever there is a change).</p>
+
+<p>Finally, keep in mind that Elixir triggers some optimizations whenever
+the access syntax is used. For example:</p>
+
+<pre><code>def no_access?(FileInfo[] = file_info) do
+  file_info.accesses == 0
+end
+</code></pre>
+
+<p>Is translated to:</p>
+
+<pre><code>def no_access?({ FileInfo, _, _ } = file_info) do
+  elem(file_info, 1) == 0
+end
+</code></pre>
+
+<p>Which provides faster get and set times for record operations.</p>
+
+<h2>Runtime introspection</h2>
+
+<p>At runtime, developers can use <code>__record__</code> to get information
+about the given record:</p>
+
+<pre><code>FileInfo.__record__(:name)
+#=&gt; FileInfo
+
+FileInfo.__record__(:fields)
+#=&gt; [atime: nil, accesses: 0]
+</code></pre>
+
+<p>In order to quickly access the index of a field, one can use
+the <code>__index__</code> function:</p>
+
+<pre><code>FileInfo.__index__(:atime)
+#=&gt; 0
+
+FileInfo.__index__(:unknown)
+#=&gt; nil
+</code></pre>
+
+<h2>Compile-time introspection</h2>
+
+<p>At the compile time, one can access following information about the record
+from within the record module:</p>
+
+<ul>
+<li><code>@record_fields</code> — a keyword list of record fields with defaults</li>
+<li><p><code>@record_types</code> — a keyword list of record fields with types</p>
+
+<p>defrecord Foo, bar: nil do
+   record<em>type bar: nil | integer
+   IO.inspect @record</em>fields
+   IO.inspect @record_types
+ end</p></li>
+</ul>
+
+<p>prints out</p>
+
+<pre><code> [bar: nil]
+ [bar: {:|,[line: ...],[nil,{:integer,[line: ...],nil}]}]
+</code></pre>
+
+<p>where the last line is a quoted representation of</p>
+
+<pre><code> [bar: nil | integer]
+</code></pre>
+
+<h2>Documentation</h2>
+
+<p>By default records are not documented and have <code>@moduledoc</code> set to false.</p>
+
+<h2>Types</h2>
+
+<p>Every record defines a type named <code>t</code> that can be accessed in typespecs.
+For example, assuming the <code>Config</code> record defined above, it could be used
+in typespecs as follow:</p>
+
+<pre><code>@spec handle_config(Config.t) :: boolean()
+</code></pre>
+
+<p>Inside the record definition, a developer can define his own types too:</p>
+
+<pre><code>defrecord Config, counter: 0, failures: [] do
+  @type kind :: term
+  record_type counter: integer, failures: [kind]
+end
+</code></pre>
+
+<p>When defining a type, all the fields not mentioned in the type are
+assumed to have type <code>term</code>.</p>
+
+<h2>Importing records</h2>
+
+<p>It is also possible to import a public record (a record, defined using
+<code>defrecord</code>) as a set of private macros (as if it was defined using <code>defrecordp</code>):</p>
+
+<pre><code>Record.import Config, as: :config
+</code></pre>
+
+<p>See <code>Record.import/2</code> and <code>defrecordp/2</code> documentation for more information</p>
+
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -109,7 +275,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L246" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="defmacros/4">
@@ -127,7 +293,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L156" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L305" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="defrecord/3">
@@ -139,7 +305,7 @@ This is invoked directly by <code>Kernel.defrecord</code>, so check it
 for more information and documentation.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L25" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L174" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="defrecordp/2">
@@ -151,7 +317,7 @@ in <code>values</code>. This is invoked directly by <code>Kernel.defrecordp</cod
 so check it for more information and documentation.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L78" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L227" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="deftypes/3">
@@ -160,7 +326,7 @@ so check it for more information and documentation.</p>
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L125" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L274" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="extract/2">
@@ -175,7 +341,7 @@ return the fields as a list of tuples.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L15" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
@@ -205,7 +371,7 @@ return the fields as a list of tuples.</p>
 <p>end</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/elixir/lib/record.ex#L66" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/record.ex#L215" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

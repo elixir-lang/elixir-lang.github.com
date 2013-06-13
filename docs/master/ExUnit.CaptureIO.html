@@ -27,8 +27,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module provides functionality to capture IO to test it.
-The way to use this module is to import them into your module.</p>
+          <p>This module provides functionality to capture IO to test it.</p>
 
 <h2>Examples</h2>
 
@@ -48,7 +47,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/capture_io.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/capture_io.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -87,29 +86,17 @@ end
   <p class="signature" id="capture_io/1">
     <strong>capture_io(fun)</strong>
   </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/capture_io.ex#L61" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="capture_io/2">
-    <strong>capture_io(device, fun)</strong>
-  </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/capture_io.ex#L53" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="capture_io/3">
-    <strong>capture_io(device, input, fun)</strong>
-  </p>
   <div class="docstring"><p>Captures IO. Returns nil in case of no output,
-otherwise returns the binary which is captured outputs.</p>
+otherwise returns the binary which is the captured output.</p>
 
 <p>By default, capture<em>io replaces the group</em>leader (<code>:stdio</code>)
 for the current process. However, the capturing of any other
 named device like <code>:stderr</code> is also possible globally by
 giving the registered device name explicitly as argument.</p>
+
+<p>When capturing <code>:stdio</code> and the <code>:capture_prompt</code> option is <code>false</code>,
+prompts (specified as arguments in IO.get* functions) are not
+captured.</p>
 
 <p>A developer can set a string as an input. The default
 input is <code>:eof</code>.</p>
@@ -122,15 +109,36 @@ iex&gt; capture_io(fn -&gt; :ok end) == nil
 true
 iex&gt; capture_io(:stderr, fn -&gt; IO.write(:stderr, &quot;josé&quot;) end) == &quot;josé&quot;
 true
-iex&gt; capture_io(&quot;this is input&quot;, fn-&gt;
-...&gt;   input = IO.gets &quot;&quot;
+iex&gt; capture_io(&quot;this is input&quot;, fn -&gt;
+...&gt;   input = IO.gets &quot;&gt;&quot;
+...&gt;   IO.write input
+...&gt; end) == &quot;&gt;this is input&quot;
+true
+iex&gt; capture_io([input: &quot;this is input&quot;, capture_prompt: false], fn -&gt;
+...&gt;   input = IO.gets &quot;&gt;&quot;
 ...&gt;   IO.write input
 ...&gt; end) == &quot;this is input&quot;
 true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.1/lib/ex_unit/lib/ex_unit/capture_io.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/capture_io.ex#L57" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="capture_io/2">
+    <strong>capture_io(device, fun)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/capture_io.ex#L61" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="capture_io/3">
+    <strong>capture_io(device, input, fun)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/ex_unit/lib/ex_unit/capture_io.ex#L73" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
