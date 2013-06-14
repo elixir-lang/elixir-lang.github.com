@@ -3,7 +3,7 @@ section: home
 layout: default
 ---
 
-# Erlang/Elixir Syntax: A Crash Course 
+# Erlang/Elixir Syntax: A Crash Course
 
 This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, support interoperability, read the docs, sample code, etc.
 
@@ -456,7 +456,7 @@ HelloModule.Utils.priv
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
 
 HelloModule.State.new
-#=> HelloModule.State[ponies: [:sally]] 
+#=> HelloModule.State[ponies: [:sally]]
 {% endhighlight %}
 
 <div id="function_syntax"></div>
@@ -609,7 +609,7 @@ Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 {% endhighlight %}
 
-It is possible to use pattern matching when defining anonymous functions too. In Elixir, `fn` is a shortcut, so we need to use `function` when we want many clauses:
+It is possible to use pattern matching when defining anonymous functions too.
 
 **Erlang**
 
@@ -630,7 +630,7 @@ F({a, b}).
 **Elixir**
 
 {% highlight elixir %}
-f = function do
+f = fn
       {:a, :b} = tuple ->
         IO.puts "All your #{inspect tuple} are belong to us"
       [] ->
