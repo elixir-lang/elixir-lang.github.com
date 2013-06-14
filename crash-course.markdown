@@ -253,15 +253,15 @@ That said, Elixir does not import the default `element` and `setelement` functio
 **Erlang**
 
 {% highlight erlang %}
-element(1, { a, b, c })       % => a
-setelement(1, { a, b, c }, d) % => { d, b, c }
+element(1, { a, b, c })       %=> a
+setelement(1, { a, b, c }, d) %=> { d, b, c }
 {% endhighlight %}
 
 **Elixir**
 
 {% highlight elixir %}
-elem({ :a, :b, :c }, 0)        % => :a
-setelem({ :a, :b, :c }, 0, :d) % => { :d, :b, :c }
+elem({ :a, :b, :c }, 0)        #=> :a
+setelem({ :a, :b, :c }, 0, :d) #=> { :d, :b, :c }
 {% endhighlight %}
 
 ### Lists and Binaries
@@ -278,7 +278,7 @@ is_binary(<<"Hello">>).  %=> true
 
 **Elixir**
 
-{% highlight text %}
+{% highlight elixir %}
 is_list 'Hello'          #=> true
 is_binary "Hello"        #=> true
 is_binary <<"Hello">>    #=> true
@@ -572,7 +572,7 @@ sum "a", "b"
 
 In addition, Elixir provides default values for arguments whereas Erlang does not.
 
-{% highlight text %}
+{% highlight elixir %}
 def mul_by(x, n // 2) do
   x * n
 end
