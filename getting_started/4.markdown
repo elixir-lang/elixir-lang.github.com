@@ -261,7 +261,7 @@ An exception can be rescued inside a `try` block with the `rescue` keyword:
         x.message
     end
 
-Notice that `rescue` works with exception names and it doesn't allow guards nor pattern matching. This limitation is on purpose: developers should not use exception values to drive their software. In fact, **exceptions in Elixir should not be used for control-flow but only under exceptional circunstances**.
+Notice that `rescue` works with exception names and it doesn't allow guards nor pattern matching. This limitation is on purpose: developers should not use exception values to drive their software. In fact, **exceptions in Elixir should not be used for control-flow but only under exceptional circumstances**.
 
 For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
 
