@@ -27,9 +27,16 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Install a task locally.</p>
+          <p>Install a task or an archive locally.</p>
 
-<p>The task can be either a local beam file or a beam
+<p>If no argument is supplied but there is an archive in the root
+(created with mix archive), then the archive will be installed
+locally. For example:</p>
+
+<pre><code>mix do archive, local.install
+</code></pre>
+
+<p>The task can also be a single local beam file or a beam
 file located at some URL.</p>
 
 <pre><code>mix local.install http://example.com/some_task.beam
@@ -50,7 +57,7 @@ intended for automation in build systems like Make.</li>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/mix/lib/mix/tasks/local.install.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/tasks/local.install.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -81,7 +88,7 @@ intended for automation in build systems like Make.</li>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/mix/lib/mix/tasks/local.install.ex#L27" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/tasks/local.install.ex#L33" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

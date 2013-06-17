@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -129,7 +129,7 @@ iex&gt; Macro.escape({ :a, :b, :c })
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L66" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L66" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="expand/2">
@@ -148,22 +148,21 @@ contents are expanded:</p>
 <p>In case the expression cannot be expanded, it returns the expression itself.</p>
 
 <p>Notice that <code>Macro.expand</code> is not recursive and it does not
-expand child expressions. In this example</p>
+expand child expressions. In this example:</p>
 
-<p>Macro.expand(quote(do: !some<em>macro), _</em>ENV__)</p>
+<p>Macro.expand(quote(do: var &amp;&amp; some<em>macro), _</em>ENV__)</p>
 
-<p><code>!some_macro</code> will expand to something like:</p>
+<p><code>var &amp;&amp; some_macro</code> will expand to something like:</p>
 
-<pre><code>case some_macro do
-  false -&gt; true
-  nil   -&gt; true
-  _     -&gt; false
+<pre><code>case var do
+  _ in [false, nil] -&gt; var
+  _ -&gt; some_macro
 end
 </code></pre>
 
-<p>Notice that the <code>!</code> operator is a macro that expands to a case.
+<p>Notice that the <code>&amp;&amp;</code> operator is a macro that expands to a case.
 Even though <code>some_macro</code> is also a macro, it is not expanded
-because it is a child expression given to <code>!</code> as argument.</p>
+because it is a child expression given to <code>&amp;&amp;</code> as argument.</p>
 
 <h2>Examples</h2>
 
@@ -231,7 +230,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L442" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L441" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="extract_args/1">
@@ -249,12 +248,12 @@ arguments syntax available in def/defp/defmacro and friends.</p>
 
 <pre><code>extract_args(quote do: foo)        == { :foo, [] }
 extract_args(quote do: foo())      == { :foo, [] }
-extract_args(quote do: foo(1,2,3)) == { :foo, [1,2,3] }
-extract_args(quote do: 1.(1,2,3))  == :error
+extract_args(quote do: foo(1, 2, 3)) == { :foo, [1, 2, 3] }
+extract_args(quote do: 1.(1, 2, 3))  == :error
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="safe_term/1">
@@ -266,7 +265,7 @@ evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
 which is returned as <code>{ :unsafe, term }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L534" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L533" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="to_binary/1">
@@ -281,7 +280,7 @@ which is returned as <code>{ :unsafe, term }</code>.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L178" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L178" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unescape_binary/1">
@@ -309,7 +308,7 @@ also escaped according to the latin1 set they represent.</p>
 and we return a version with it unescaped.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L96" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L96" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unescape_binary/2">
@@ -359,7 +358,7 @@ returns false for ?x.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L143" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L143" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/1">
@@ -375,7 +374,7 @@ sigils. Check the implementation of <code>Kernel.__b__</code>
 for examples.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L157" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L157" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unescape_tokens/2">
@@ -385,7 +384,7 @@ for examples.</p>
 Check <code>unescape_tokens/1</code> and <code>unescape_binary/2</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L165" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L165" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
@@ -402,7 +401,7 @@ Check <code>unescape_tokens/1</code> and <code>unescape_binary/2</code> for more
 as a macro so it can be used in guard clauses.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L12" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="unary_ops/0">
@@ -412,7 +411,7 @@ as a macro so it can be used in guard clauses.</p>
 as a macro so it can be used in guard clauses.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/macro.ex#L28" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/elixir/lib/macro.ex#L28" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
