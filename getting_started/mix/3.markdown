@@ -101,31 +101,21 @@ After you create your own tasks, you may want to share them with other developer
 
 Imagine you've created a Mix project called `my_tasks` which provides many tasks. By adding the `my_tasks` project as a dependency to any other project, all the tasks in `my_tasks` will be available in the parent project. It just works!
 
-### 3.4.2 As a BEAM file
+### 3.4.2 As an archive
 
 Mix tasks are useful not only inside projects, but also to create new projects, automate complex tasks and to avoid repetitive work. For such cases, you want a task always available in your workflow, regardless if you are inside a project or not.
 
-For such cases, Mix allows developers to install and uninstall BEAM files locally. Local tasks can be installed from a path or any URL and are available from anywhere with Mix:
-
-    $ mix local.install http://elixir-lang.org/hello.beam
-
-The URL above contains the same `hello.ex` we have built at the beginning of this chapter. If everything works as expected, the task will be installed on your machine and you can then successfully invoke it:
-
-    $ mix hello
-
-You can use `mix local` to show all available local tasks and their path. Removing a task is as easy as:
-
-    $ mix local.uninstall hello
-
-### 3.4.3 As an archive
-
-The BEAM file approach only works if you are sharing small tasks, one-off scripts. More complex tasks require distributing a set of files and sometimes even static contents. For such cases, Mix can generate archives from existing mix projects. Inside your project, just run:
+For such cases, Mix allows developers to install and uninstall archives locally. You can generate and archive for a current project and install it locally as:
 
     $ mix do archive, local.install
 
-The command above will create an archive and install it locally. All the tasks in the archive is now accessible from anywhere with Mix, which can also be managed and viewed via `mix local`. Notice that archives do not include the source files nor the project dependencies.
+Archives can be installed from a path or any URL:
 
-### 3.4.4 MIX_PATH
+    $ mix local.install http://example.org/path/to/sample/archive.ez
+
+After installing an archive, you can run all tasks contained in the archive, list them via `mix local` or uninstall the package via `mix local.uninstall archive.ez`.
+
+### 3.4.3 MIX_PATH
 
 The last mechanism for sharing tasks is `MIX_PATH`. By setting up your `MIX_PATH`, any task available in the `MIX_PATH` will be automatically visible to Mix. Here is an example:
 
