@@ -295,6 +295,7 @@ This is a binary
 spawning several
 lines.
 """
+#=> true
 {% endhighlight %}
 
 ### Regular expressions
@@ -345,7 +346,7 @@ Dict = orddict:from_list([{key, 10}, {another_key, 20}]).
 **Elixir**
 
 {% highlight elixir %}
-dict = [key: 10, another_key: 20]
+dict = [another_key: 20, key: 10]
 #=> [another_key: 20, key: 10]
 {% endhighlight %}
 
@@ -651,20 +652,25 @@ Anonymous functions are first-class values, so they can be passed as arguments t
 **Erlang**
 
 {% highlight erlang %}
+-module(math).
+-export([square/1]).
+
 square(X) -> X * X.
 
-lists:map(fun square/1, [1, 2, 3]).
+lists:map(fun math:square/1, [1, 2, 3]).
 %=> [1, 4, 9]
 {% endhighlight %}
 
 **Elixir**
 
 {% highlight elixir %}
-def square(x) do
-  x * x
+defmodule Math do
+  def square(x) do
+    x * x
+  end
 end
 
-Enum.map [1,2,3], function(square/1)
+Enum.map [1,2,3], function(Math.square/1)
 #=> [1, 4, 9]
 {% endhighlight %}
 
@@ -683,11 +689,14 @@ List.foldl [1, 2, 3, 4], 0, &1 + &2
 Partials also allow us to pass named functions as arguments.
 
 {% highlight elixir %}
-def square(x) do
-  x * x
+defmodule Math do
+  def square(x) do
+    x * x
+  end
 end
 
-Enum.map [1, 2, 3], square &1
+Enum.map [1,2,3], Math.square &1
+
 #=> [1, 4, 9]
 {% endhighlight %}
 
