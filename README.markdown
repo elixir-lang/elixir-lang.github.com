@@ -24,6 +24,23 @@ Development is done in the `next` branch, while `master` contains the docs and g
 
     export EDITOR=vim; _bin/newpost 'Post title'
 
+## Contributing improvements or bug fixes
+
+1. Fork elixir-lang.github.com
+
+2. Make your changes
+
+3. Test it locally
+
+   You need to install `jekyll` and `rdiscount`
+
+   ```shell
+   $ gem install jekyll rdiscount
+   $ jekyll serve # check localhost:4000
+   ```
+
+4. Send a pull-request for your changes.
+
 ## License
 
 * The Elixir logo and website contents are copyrighted to [Plataformatec](http://plataformatec.com.br/).
