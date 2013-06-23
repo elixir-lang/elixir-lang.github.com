@@ -33,7 +33,7 @@ exceptions and stacktraces.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/exception.ex#L97" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/exception.ex#L97" target="_blank" class="view_source">Source</a>
 
       
 
@@ -43,6 +43,11 @@ exceptions and stacktraces.</p>
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
+  <span class="summary_signature">
+    <a href="#format_caller/1">format_caller/1</a>
+  </span>
+</li>
+<li>
   <span class="summary_signature">
     <a href="#format_file_line/3">format_file_line/3</a>
   </span>
@@ -62,11 +67,6 @@ exceptions and stacktraces.</p>
     <a href="#normalize/1">normalize/1</a>
   </span>
 </li>
-<li>
-  <span class="summary_signature">
-    <a href="#print_stacktrace/1">print_stacktrace/1</a>
-  </span>
-</li>
 
         </ul>
       
@@ -79,12 +79,23 @@ exceptions and stacktraces.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="format_caller/1">
+    <strong>format_caller(trace // nil)</strong>
+  </p>
+  <div class="docstring"><p>Formats the caller, i.e. the first entry in the stacktrace.
+Notice that doing to tail call optimization, the stacktrace
+may not report the direct caller of the function.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/exception.ex#L213" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
   <p class="signature" id="format_file_line/3">
     <strong>format_file_line(file, line, cwd)</strong>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/exception.ex#L259" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/exception.ex#L265" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="format_stacktrace/1">
@@ -97,7 +108,7 @@ calculates the current stacktrace and formats it. As consequence,
 the value of <code>System.stacktrace</code> is changed.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/exception.ex#L195" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/exception.ex#L195" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="format_stacktrace_entry/2">
@@ -108,7 +119,7 @@ The current working directory may be given as argument, which
 is used to prettify the stacktrace.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/exception.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/exception.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="normalize/1">
@@ -119,20 +130,7 @@ to Elixir exceptions. Useful when interfacing Erlang
 code with Elixir code.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/exception.ex#L108" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="print_stacktrace/1">
-    <strong>print_stacktrace(trace // nil)</strong>
-  </p>
-  <div class="docstring"><p>Prints the current stacktrace to standard output.</p>
-
-<p>A stacktrace must be given as argument. If not, this function
-calculates the current stacktrace and formats it. As consequence,
-the value of <code>System.stacktrace</code> is changed.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.2/lib/elixir/lib/exception.ex#L217" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/exception.ex#L108" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

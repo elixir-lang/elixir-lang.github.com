@@ -26,8 +26,69 @@
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p>This module provides functions for parsing and matching
+versions with requirements.</p>
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/version.ex#L1" target="_blank" class="view_source">Source</a>
+<p>A version is a string or a <code>Mix.Version.Schema</code> generated
+after parsing via <code>Mix.Version.parse/1</code>. A requirement is
+a string that follows a specific format.</p>
+
+<p><code>Mix.Version</code> parsing and requirements follows
+<a href="http://semver.org/">SemVer 2.0 schema</a> and you will get
+the most of Mix&#39; version system by following it. In order
+to support integration with projects that may
+follow different versioning schemas, Elixir won&#39;t choke
+on unknown versions, however you won&#39;t be able to use
+Mix requirements with such unformatted versions.</p>
+
+<h2>Versions</h2>
+
+<p>In a nutshell, a version is given by three numbers:</p>
+
+<pre><code>MAJOR.MINOR.PATCH
+</code></pre>
+
+<p>Pre-releases are supported by appending <code>-[0-9A-Za-z-\.]</code>:</p>
+
+<pre><code>&quot;1.0.0-alpha3&quot;
+</code></pre>
+
+<p>Build information can be added by appending <code>+[0-9A-Za-z-\.]</code>:</p>
+
+<pre><code>&quot;1.0.0-alpha3+20130417140000&quot;
+</code></pre>
+
+<h2>Requirements</h2>
+
+<p>Requirements allow you to specify which versions of a given
+dependency you are willing to work against. It supports common
+operators like <code>&gt;=</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>==</code> and friends that would
+work as one would expect:</p>
+
+<pre><code># Only version 2.0.0
+&quot;== 2.0.0&quot;
+
+# Anything later than 2.0.0
+&quot;&gt; 2.0.0&quot;
+</code></pre>
+
+<p>Requirements also support <code>and</code> and <code>or</code> for complex conditions:</p>
+
+<pre><code># 2.0.0 and later until 2.1.0
+&quot;&gt;= 2.0.0 and &lt; 2.1.0&quot;
+</code></pre>
+
+<p>Since the example above is such a common requirement, it can
+be expressed as:</p>
+
+<pre><code>&quot;~&gt; 2.0.0&quot;
+</code></pre>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/version.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -79,16 +140,16 @@
   <div class="docstring"><p>Convert a matchable to a <code>Mix.Version</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/version.ex#L151" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/version.ex#L209" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="match?/2">
-    <strong>match?(spec, version)</strong>
+    <strong>match?(version, requirement)</strong>
   </p>
-  <div class="docstring"><p>Checks if the given specification matches the given version.</p>
+  <div class="docstring"><p>Checks if the given version matches the specification.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/version.ex#L27" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/version.ex#L85" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="parse/1">
@@ -113,7 +174,7 @@ iex&gt; Mix.Version.parse(&quot;1.0.3.4&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/version.ex#L96" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/version.ex#L154" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="to_matchable/1">
@@ -138,7 +199,7 @@ iex&gt; Mix.Version.to_matchable(&quot;1.0.3.4&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/version.ex#L123" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/version.ex#L181" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="valid?/1">
@@ -163,7 +224,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87da4e91bbcf3d6b25a7709ba82b428ddbfcdcf7/lib/mix/lib/mix/version.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/version.ex#L127" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
