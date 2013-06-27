@@ -35,7 +35,7 @@ body {
 	margin: 0;
 	font: 0.8125em/1.692307em 'Bitter', Georgia, 'Times New Roman', Times, serif;	/* 13 / 16 = 0.8125;  22 / 13 = 1.692307 */
 	color: #555;
-	background: url("/images/texture.png") #6e4a7e;
+  /* background: url("/images/texture.png") #6e4a7e; */
 	padding: 0;
   height: 100%;
 }
@@ -161,10 +161,6 @@ ul {
 	list-style: disc;
 	margin: 0 0 1.692307em 2.8em;
 	padding: 0;
-}
-li.learning {
-  list-style: none;
-  margin-bottom: 10px;
 }
 ol {
 	list-style-type: decimal;
@@ -417,6 +413,7 @@ a:hover img, #slider-nav li a:hover img { opacity: 0.85; }
 	border: 1px solid #e5e5e5;
 }
 .rss-button { margin-bottom: 25px; }
+img.no-border { border: 0 };
 
 /* Layout
 -------------------------------------------------------------- */
@@ -552,6 +549,9 @@ body.source           div.menu li.source          a {
 	font-size: 1em;
 	border-bottom: 1px solid #e5e5e5;
 }
+.hentry:last-child {
+  border-bottom: 0;
+}
 .singular .hentry {
 	margin: 0 0 30px 0;
 	position: relative;
@@ -678,7 +678,7 @@ body.source           div.menu li.source          a {
 .pagination.loop-pagination {
   text-align: center;
 	clear: both;
-	margin-top: 7px;
+	margin: 7px 0;
 }
 .pagination .page-numbers, .comment-navigation .page-numbers {
 	display: inline-block;
@@ -706,6 +706,11 @@ body.source           div.menu li.source          a {
 	color: #888;
 }
 .widget table, .widget ul, .widget ol { margin: 0 0 0 16px; }
+
+li.image {
+  list-style: none;
+  margin-bottom: 10px;
+}
 
 /* Widget titles
 -------------------------------------------------------------- */
@@ -750,25 +755,11 @@ body.source           div.menu li.source          a {
 #social { float: right; margin-top: -15px; }
 #social ul { list-style: none; margin: 0; }
 #social li { float: right; margin-left: -10px; }
-#twitter h4 a { text-decoration: none; }
-#twitter ul { list-style: none; margin: 0 10px; }
-
-#twitter h4 a {
-  padding: 0 0 5px 45px;
-  margin: 0;
-  background: url("/images/social/Twitter.png") no-repeat -4px -18px;
-}
-
-#twitter ul li {
-	font-family: Georgia, serif;
-  padding: 5px 0;
-  border-bottom: dotted 2px white;
-}
 
 #copyright {
   text-align: center;
   font-size: 12px;
-  margin: 10px;
+  padding: 0 0 10px;
 }
 
 /*  Media Queries (mobile browsing)
