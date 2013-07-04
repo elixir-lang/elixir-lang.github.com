@@ -82,7 +82,7 @@ The protocol expects a function called `blank?` that receives one argument to be
 
     # Numbers are never blank
     defimpl Blank, for: Number do
-      def blank?(number), do: false
+      def blank?(_), do: false
     end
 
     # Just empty list is blank
