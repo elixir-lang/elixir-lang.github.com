@@ -35,18 +35,20 @@ dependencies. It keeps:</p>
 <ul>
 <li>scm - a module representing the source code management tool (SCM) operations;</li>
 <li>app - the app name as an atom;</li>
-<li>requirements - a binary or regexp with the deps requirement;</li>
+<li>requirement - a binary or regex with the dep&#39;s requirement</li>
 <li>status - the current status of dependency, check <code>Mix.Deps.format_status/1</code> for more info;</li>
 <li>opts - the options given by the developer</li>
+<li>deps - dependencies of this dependency</li>
 <li>source - any possible configuration associated with the manager field,
-       rebar.config for rebar or the Mix.Project for Mix</li>
+rebar.config for rebar or the Mix.Project for Mix</li>
 <li>manager - the project management, possible values: :rebar | :mix | :make | nil</li>
+<li>from - path to file where dependency was defined</li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/deps.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/deps.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -99,6 +101,12 @@ dependencies. It keeps:</p>
             <li>
               <span class="summary_signature">
                 <strong>manager:</strong> nil
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>from:</strong> nil
               </span>
             </li>
           

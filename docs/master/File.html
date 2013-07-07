@@ -39,11 +39,11 @@ via <code>File.rm_rf/2</code></p>
 
 <p>In order to write and read files, one must use the functions
 in the IO module. By default, a file is opened in binary mode
-which requires the functions <code>IO.binread</code>, <code>IO.binwrite</code> and
-<code>IO.binreadline</code> to interact with the file. A developer may
-pass <code>:utf8</code> as an option when opening the file and then all
-other functions from IO are available, since they work directly
-with Unicode data.</p>
+which requires the functions <code>IO.binread</code> and <code>IO.binwrite</code>
+to interact with the file. A developer may pass <code>:utf8</code> as an
+option when opening the file and then all other functions
+from IO are available, since they work directly with Unicode
+data.</p>
 
 <p>Most of the functions in this module return <code>:ok</code> or
 <code>{ :ok, result }</code> in case of success, <code>{ :error, reason }</code>
@@ -73,7 +73,7 @@ file cannot be read (i.e. it is literally an exception).</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L57" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L57" target="_blank" class="view_source">Source</a>
 
       
 
@@ -84,12 +84,7 @@ file cannot be read (i.e. it is literally an exception).</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#biniterator/1">biniterator/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#biniterator!/2">biniterator!/2</a>
+    <a href="#binstream!/2">binstream!/2</a>
   </span>
 </li>
 <li>
@@ -190,16 +185,6 @@ file cannot be read (i.e. it is literally an exception).</p>
 <li>
   <span class="summary_signature">
     <a href="#exists?/1">exists?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#iterator/1">iterator/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#iterator!/2">iterator!/2</a>
   </span>
 </li>
 <li>
@@ -309,6 +294,11 @@ file cannot be read (i.e. it is literally an exception).</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#stream!/2">stream!/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#touch/2">touch/2</a>
   </span>
 </li>
@@ -349,27 +339,16 @@ file cannot be read (i.e. it is literally an exception).</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="biniterator/1">
-    <strong>biniterator(device)</strong>
-  </p>
-  <div class="docstring"><p>Converts the file device into an iterator that can
-be passed into <code>Enum</code> to iterate line by line as a
-binary. Check <code>iterator/1</code> for more information.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L999" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="biniterator!/2">
-    <strong>biniterator!(file, mode // [])</strong>
+  <p class="signature" id="binstream!/2">
+    <strong>binstream!(file, mode // [])</strong>
   </p>
   <div class="docstring"><p>Opens the given <code>file</code> with the given <code>mode</code> and
-returns its biniterator. The returned iterator will
+returns its binstream. The returned stream will
 fail for the same reasons as <code>File.open!</code>. Note
 that the file is opened when the iteration begins.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1011" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L988" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cd/1">
@@ -379,7 +358,7 @@ that the file is opened when the iteration begins.</p>
 <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L878" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L877" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cd!/1">
@@ -388,7 +367,7 @@ that the file is opened when the iteration begins.</p>
   <div class="docstring"><p>The same as <code>cd/0</code>, but raises an exception if it fails.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L885" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L884" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cd!/2">
@@ -402,18 +381,18 @@ to the previous path regardless if there is an exception.</p>
 directory fails.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L901" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L900" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="chgrp/2">
     <strong>chgrp(file, gid)</strong>
   </p>
-  <div class="docstring"><p>Changes the user group given by the group id <code>gid</code> 
-for a given <code>file</code>. Returns <code>:ok</code> on success, or 
-<code>{:error, reason}</code> on failure.  </p>
+  <div class="docstring"><p>Changes the user group given by the group id <code>gid</code>
+for a given <code>file</code>. Returns <code>:ok</code> on success, or
+<code>{:error, reason}</code> on failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1047" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L1030" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="chgrp!/2">
@@ -422,18 +401,18 @@ for a given <code>file</code>. Returns <code>:ok</code> on success, or
   <div class="docstring"><p>Same as <code>chgrp/2</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1054" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L1037" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="chmod/2">
     <strong>chmod(file, mode)</strong>
   </p>
-  <div class="docstring"><p>Changes the unix file <code>mode</code> for a given <code>file</code>. 
-Returns <code>:ok</code> on success, or <code>{:error, reason}</code> 
-on failure.  </p>
+  <div class="docstring"><p>Changes the unix file <code>mode</code> for a given <code>file</code>.
+Returns <code>:ok</code> on success, or <code>{:error, reason}</code>
+on failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1027" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L1010" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="chmod!/2">
@@ -442,18 +421,18 @@ on failure.  </p>
   <div class="docstring"><p>Same as <code>chmod/2</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1034" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L1017" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="chown/2">
     <strong>chown(file, uid)</strong>
   </p>
-  <div class="docstring"><p>Changes the owner given by the user id <code>gid</code> 
-for a given <code>file</code>. Returns <code>:ok</code> on success, 
-or <code>{:error, reason}</code> on failure.  </p>
+  <div class="docstring"><p>Changes the owner given by the user id <code>gid</code>
+for a given <code>file</code>. Returns <code>:ok</code> on success,
+or <code>{:error, reason}</code> on failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1067" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L1050" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="chown!/2">
@@ -462,7 +441,7 @@ or <code>{:error, reason}</code> on failure.  </p>
   <div class="docstring"><p>Same as <code>chown/2</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L1074" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L1057" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="close/1">
@@ -476,7 +455,7 @@ for some severe errors such as out of memory.</p>
 See <code>open/2</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L944" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L943" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="copy/3">
@@ -504,7 +483,7 @@ the file mode after copy.</p>
 <code>read/1</code> and <code>write/2</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L332" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L332" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="copy!/3">
@@ -514,7 +493,7 @@ the file mode after copy.</p>
 Returns the <code>bytes_copied</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L340" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L340" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cp/3">
@@ -539,7 +518,7 @@ or do a straight copy from a source to a destination without
 preserving modes, check <code>File.copy/3</code> instead.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L368" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L368" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cp!/3">
@@ -549,7 +528,7 @@ preserving modes, check <code>File.copy/3</code> instead.</p>
 Returns the list of copied files otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L387" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L387" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cp_r/3">
@@ -601,7 +580,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L443" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L443" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cp_r!/3">
@@ -611,7 +590,7 @@ end
 Returns the list of copied files otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L462" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L462" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cwd/0">
@@ -623,7 +602,7 @@ directories of the current directory. For this reason, returns <code>{ :ok, cwd 
 in case of success, <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L856" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L855" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="cwd!/0">
@@ -632,7 +611,7 @@ in case of success, <code>{ :error, reason }</code> otherwise.</p>
   <div class="docstring"><p>The same as <code>cwd/0</code>, but raises an exception if it fails.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L866" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L865" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="dir?/1">
@@ -641,7 +620,7 @@ in case of success, <code>{ :error, reason }</code> otherwise.</p>
   <div class="docstring"><p>Returns true if the path is a directory.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L121" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="exists?/1">
@@ -664,48 +643,7 @@ File.exists?(&quot;/dev/null&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L142" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="iterator/1">
-    <strong>iterator(device)</strong>
-  </p>
-  <div class="docstring"><p>Converts the file device into an iterator that can be
-passed into <code>Enum</code>. The device is iterated line
-by line, at the end of iteration the file is closed.</p>
-
-<p>This reads the file as utf-8. Check out <code>File.biniterator</code>
-to handle the file as a raw binary.</p>
-
-<h2>Examples</h2>
-
-<p>An example that lazily iterates a file replacing all double
-quotes per single quotes and writes each line to a target file
-is shown below:</p>
-
-<pre><code>{ :ok, device } = File.open(&quot;README.md&quot;)
-source = File.iterator(device)
-File.open &quot;NEWREADME.md&quot;, [:write], fn(target) -&gt;
-  Enum.each source, fn(line) -&gt;
-    IO.write target, Regex.replace(%r/&quot;/, line, &quot;&#39;&quot;)
-  end
-end
-</code></pre>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L971" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="iterator!/2">
-    <strong>iterator!(file, mode // [])</strong>
-  </p>
-  <div class="docstring"><p>Opens the given <code>file</code> with the given <code>mode</code> and
-returns its iterator. The returned iterator will
-fail for the same reasons as <code>File.open!</code>. Note
-that the file is opened when the iteration begins.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L983" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L142" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="ls/1">
@@ -717,7 +655,7 @@ that the file is opened when the iteration begins.</p>
 <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L917" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L916" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="ls!/1">
@@ -727,7 +665,7 @@ that the file is opened when the iteration begins.</p>
 in case of an error.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L928" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L927" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="mkdir/1">
@@ -748,7 +686,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L159" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L159" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="mkdir!/1">
@@ -757,7 +695,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
   <div class="docstring"><p>Same as <code>mkdir</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L166" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L166" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="mkdir_p/1">
@@ -775,7 +713,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L184" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L184" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="mkdir_p!/1">
@@ -784,7 +722,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
   <div class="docstring"><p>Same as <code>mkdir_p</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L191" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L191" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="open/2">
@@ -794,11 +732,10 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 
 <p>In order to write and read files, one must use the functions
 in the IO module. By default, a file is opened in binary mode
-which requires the functions <code>IO.binread</code>, <code>IO.binwrite</code> and
-<code>IO.binreadline</code> to interact with the file. A developer may pass
-<code>:utf8</code> as an option when opening the file and then all other
-functions from IO are available, since they work directly with
-Unicode data.</p>
+which requires the functions <code>IO.binread</code> and <code>IO.binwrite</code>
+to interact with the file. A developer may pass <code>:utf8</code> as an
+option when opening the file and then all other functions from
+<code>IO</code> are available, since they work directly with Unicode data.</p>
 
 <p>The allowed modes:</p>
 
@@ -842,12 +779,12 @@ other options as <code>read_ahead</code> and <code>delayed_write</code>.</p>
 <h2>Examples</h2>
 
 <pre><code>{ :ok, file } = File.open(&quot;foo.tar.gz&quot;, [:read, :compressed])
-IO.readline(file)
+IO.read(file, :line)
 File.close(file)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L783" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L782" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="open/3">
@@ -869,12 +806,12 @@ since automatically closing the file may fail
 <h2>Examples</h2>
 
 <pre><code>File.open(&quot;file.txt&quot;, [:read, :write], fn(file) -&gt;
-  IO.readline(file)
+  IO.read(file, :line)
 end)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L814" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L813" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="open!/2">
@@ -884,7 +821,7 @@ end)
 Returns the <code>io_device</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L830" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L829" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="open!/3">
@@ -894,7 +831,7 @@ Returns the <code>io_device</code> otherwise.</p>
 Returns the function result otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L842" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L841" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="read/1">
@@ -918,7 +855,7 @@ of <code>path</code>, or <code>{:error, reason}</code> if an error occurs.</p>
 <p>You can use <code>:file.format_error(reason)</code> to get a descriptive string of the error.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L215" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L215" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="read!/1">
@@ -928,7 +865,7 @@ of <code>path</code>, or <code>{:error, reason}</code> if an error occurs.</p>
 File.Error if an error occurs.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L223" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L223" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="regular?/1">
@@ -942,7 +879,7 @@ File.Error if an error occurs.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L114" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L114" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="rm/1">
@@ -972,7 +909,7 @@ File.rm(&#39;tmp_dir/&#39;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L605" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L605" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="rm!/1">
@@ -981,7 +918,7 @@ File.rm(&#39;tmp_dir/&#39;)
   <div class="docstring"><p>Same as <code>rm</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L612" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L612" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="rm_rf/1">
@@ -1005,7 +942,7 @@ File.rm_rf &quot;unknown&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L666" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L666" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="rm_rf!/1">
@@ -1015,7 +952,7 @@ File.rm_rf &quot;unknown&quot;
 otherwise the list of files or directories removed.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L713" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L713" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="rmdir/1">
@@ -1034,7 +971,7 @@ File.rmdir(&#39;file.txt&#39;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L633" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L633" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="rmdir!/1">
@@ -1043,7 +980,7 @@ File.rmdir(&#39;file.txt&#39;)
   <div class="docstring"><p>Same as <code>rmdir/1</code>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L640" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L640" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="stat/2">
@@ -1064,7 +1001,7 @@ Default is local.</li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L246" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L246" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="stat!/2">
@@ -1074,7 +1011,19 @@ Default is local.</li>
 throws <code>File.Error</code> if an error is returned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L259" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L259" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="stream!/2">
+    <strong>stream!(file, mode // [])</strong>
+  </p>
+  <div class="docstring"><p>Opens the given <code>file</code> with the given <code>mode</code> and
+returns its stream. The returned stream will
+fail for the same reasons as <code>File.open!</code>. Note
+that the file is opened when the iteration begins.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L959" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="touch/2">
@@ -1084,7 +1033,7 @@ throws <code>File.Error</code> if an error is returned.</p>
 the given file. File is created if it doesn’t exist.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L291" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L291" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="touch!/2">
@@ -1094,7 +1043,7 @@ the given file. File is created if it doesn’t exist.</p>
 Returns <code>:ok</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L302" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L302" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="write/3">
@@ -1116,7 +1065,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L568" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L568" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="write!/3">
@@ -1125,7 +1074,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
   <div class="docstring"><p>Same as <code>write/3</code> but raises an exception if it fails, returns <code>:ok</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L575" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L575" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="write_stat/3">
@@ -1135,7 +1084,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 path. Returns <code>:ok</code> or <code>{ :error, reason }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L271" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L271" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="write_stat!/3">
@@ -1145,7 +1094,7 @@ path. Returns <code>:ok</code> or <code>{ :error, reason }</code>.</p>
 Returns <code>:ok</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/file.ex#L279" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/file.ex#L279" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

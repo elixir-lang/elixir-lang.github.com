@@ -37,7 +37,7 @@ name, e.g. root of zip file should be <code>my_app/ebin/Elixir.My.App.beam</code
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/archive.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/archive.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -49,6 +49,16 @@ name, e.g. root of zip file should be <code>my_app/ebin/Elixir.My.App.beam</code
           <li>
   <span class="summary_signature">
     <a href="#create/2">create/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#dir/1">dir/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#name/2">name/2</a>
   </span>
 </li>
 
@@ -64,14 +74,32 @@ name, e.g. root of zip file should be <code>my_app/ebin/Elixir.My.App.beam</code
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="create/2">
-    <strong>create(project_path // &quot;.&quot;, archive_path // &quot;.&quot;)</strong>
+    <strong>create(archive_file, project_path // &quot;.&quot;)</strong>
   </p>
   <div class="docstring"><p>Creates an application archive from the current project.
 The path will be the root of the project and must contain an ebin folder.
 The archive file will be created in archive_path.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/mix/lib/mix/archive.ex#L16" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/archive.ex#L29" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="dir/1">
+    <strong>dir(path)</strong>
+  </p>
+  <div class="docstring"><p>Returns the archive internal directory from its full path.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/archive.ex#L20" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="name/2">
+    <strong>name(app, vsn)</strong>
+  </p>
+  <div class="docstring"><p>Returns the archive name based on the app and version.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/archive.ex#L14" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

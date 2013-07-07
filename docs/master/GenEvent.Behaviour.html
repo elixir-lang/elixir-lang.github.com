@@ -27,13 +27,13 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module is a convenience to define GenEvent callbacks in Elixir.</p>
+          <p>This module is a convenience for defining GenEvent callbacks in Elixir.</p>
 
 <p>GenEvent is an OTP behaviour that encapsulates event handling functionality.</p>
 
 <h2>Example</h2>
 
-<p>Bellow follows an example of a GenEvent that stores notifications
+<p>Below is an example of a GenEvent that stores notifications
 until they are fetched:</p>
 
 <pre><code>defmodule MyEventHandler do
@@ -56,11 +56,16 @@ until they are fetched:</p>
 end
 
 { :ok, pid } = :gen_event.start_link
+#=&gt; {:ok,#PID&lt;0.42.0&gt;}
 
 :gen_event.add_handler(pid, MyEventHandler, [])
+#=&gt; :ok
 
 :gen_event.notify(pid, {:notification, 1})
+#=&gt; :ok
+
 :gen_event.notify(pid, {:notification, 2})
+#=&gt; :ok
 
 :gen_event.call(pid, MyEventHandler, :notifications)
 #=&gt; [1, 2]
@@ -72,17 +77,19 @@ end
 <p>Notice we never call the server callbacks directly, they are called
 by OTP whenever we interact with the server. </p>
 
-<p>Starting and sending messages to gen_event is done
+<p>Starting and sending messages to the GenEvent is done
 via Erlang&#39;s <code>:gen_event</code> module. For more information,
 please refer to the following:</p>
 
-<p><a href="http://www.erlang.org/doc/man/gen_event.html">http://www.erlang.org/doc/man/gen_event.html</a>
-<a href="http://learnyousomeerlang.com/event-handlers">http://learnyousomeerlang.com/event-handlers</a></p>
+<ul>
+<li><a href="http://www.erlang.org/doc/man/gen_event.html">http://www.erlang.org/doc/man/gen_event.html</a></li>
+<li><a href="http://learnyousomeerlang.com/event-handlers">http://learnyousomeerlang.com/event-handlers</a></li>
+</ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/gen_event/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/gen_event/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 

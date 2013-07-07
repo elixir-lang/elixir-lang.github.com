@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inspect.Algebra</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Inspect.Algebra
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A set of functions for creating and manipulating algebra
+documents, as described in <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.34.2200">&quot;Strictly Pretty&quot; (2000) by Christian Lindig</a>.</p>
+
+<p>An algebra document is represented by an <code>Inspect.Algebra</code> node
+or a regular string.</p>
+
+<pre><code>iex&gt; Inspect.Algebra.empty
+:doc_nil
+iex&gt; &quot;foo&quot;
+&quot;foo&quot;
+</code></pre>
+
+<p>With the functions in this module, we can concatenate different
+elements together and render them:</p>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.concat(Inspect.Algebra.empty, &quot;foo&quot;)
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;foo&quot;
+</code></pre>
+
+<p>The functions <code>nest/2</code>, <code>space/2</code> and <code>line/2</code> help you put the
+document together into a rigid structure. However, the document
+algebra gets interesting when using functions like <code>break/2</code>, which
+converts the given string into a line break depending on how much space
+there is to print. Let&#39;s glue two docs together with a break and then
+render it:</p>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.glue(&quot;a&quot;, &quot; &quot;, &quot;b&quot;)
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;a b&quot;
+</code></pre>
+
+<p>Notice the break was represented as is, because we haven&#39;t reached
+a line limit. Once we do, it is replaced by a newline:</p>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.glue(String.duplicate(&quot;a&quot;, 20), &quot; &quot;, &quot;b&quot;)
+iex&gt; Inspect.Algebra.pretty(doc, 10)
+&quot;aaaaaaaaaaaaaaaaaaaa\nb&quot;
+</code></pre>
+
+<p>Finally, this module also contains Elixir related functions, a bit
+tied to Elixir formatting, namely <code>surround/3</code> and <code>surround_many/5</code>.</p>
+
+<h2>Implementation details</h2>
+
+<p>The original Haskell implementation of the algorithm by <a href="http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf">Wadler</a>
+relies on lazy evaluation to unfold document groups on two alternatives:
+<code>:flat</code> (breaks as spaces) and <code>:broken</code> (breaks as newlines).
+Implementing the same logic in a strict language such as Elixir leads
+to an exponential growth of possible documents, unless document
+groups are encoded explictly as <code>:flat</code> or <code>:broken</code>. Those groups are
+then reduced to a simple document, where the layout is already decided,
+per <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.34.2200">Lindig</a>.</p>
+
+<p>Custom pretty printers can be implemented using the documents returned
+by this module and by providing their own rendering functions.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#break/0">break/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#break/1">break/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#concat/1">concat/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#concat/2">concat/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#empty/0">empty/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#folddoc/2">folddoc/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#glue/2">glue/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#glue/3">glue/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#group/1">group/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#line/2">line/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#nest/2">nest/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#pretty/2">pretty/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#render/1">render/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#space/2">space/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#surround/3">surround/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#surround_many/5">surround_many/5</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="break/0">
+    <strong>break()</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L151" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="break/1">
+    <strong>break(s)</strong>
+  </p>
+  <div class="docstring"><p>Document entity representing a break. This break can
+be rendered as a linebreak or as spaces, depending on the
+<code>mode</code> of the chosen layout or the provided separator.</p>
+
+<h2>Examples</h2>
+
+<p>Let&#39;s glue two docs together with a break and then render it:</p>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.glue(&quot;a&quot;, &quot; &quot;, &quot;b&quot;)
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;a b&quot;
+</code></pre>
+
+<p>Notice the break was represented as is, because we haven&#39;t reached
+a line limit. Once we do, it is replaced by a newline:</p>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.glue(String.duplicate(&quot;a&quot;, 20), &quot; &quot;, &quot;b&quot;)
+iex&gt; Inspect.Algebra.pretty(doc, 10)
+&quot;aaaaaaaaaaaaaaaaaaaa\nb&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L148" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="concat/1">
+    <strong>concat(docs)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates a list of documents.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L109" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="concat/2">
+    <strong>concat(x, y)</strong>
+  </p>
+  <div class="docstring"><p>Concatenates two document entities. Takes two arguments:
+left doc and right doc. Returns a DocCons doc</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.concat &quot;Tasteless&quot;, &quot;Artosis&quot;
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;TastelessArtosis&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L103" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="empty/0">
+    <strong>empty()</strong>
+  </p>
+  <div class="docstring"><p>Returns <code>:doc_nil</code> which is a document entity used to represent
+nothingness. Takes no arguments.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Inspect.Algebra.empty
+:doc_nil
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L89" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="folddoc/2">
+    <strong>folddoc(list1, f)</strong>
+  </p>
+  <div class="docstring"><p>Folds a list of document entities into a document entity
+using a function that is passed as the first argument.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = [&quot;A&quot;, &quot;B&quot;]
+iex&gt; doc = Inspect.Algebra.folddoc(doc, fn(x,y) -&gt;
+...&gt;   Inspect.Algebra.concat [x, &quot;!&quot;, y]
+...&gt; end)
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;A!B&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L237" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="glue/2">
+    <strong>glue(x, y)</strong>
+  </p>
+  <div class="docstring"><p>Inserts a break between two docs. See <code>break/1</code> for more info.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L157" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="glue/3">
+    <strong>glue(x, g, y)</strong>
+  </p>
+  <div class="docstring"><p>Inserts a break, passed as the second argument, between two docs,
+the first and the third arguments.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="group/1">
+    <strong>group(d)</strong>
+  </p>
+  <div class="docstring"><p>Returns a group containing the specified document.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.group(
+...&gt;   Inspect.Algebra.concat(
+...&gt;     Inspect.Algebra.group(
+...&gt;       Inspect.Algebra.concat(
+...&gt;         &quot;Hello,&quot;,
+...&gt;         Inspect.Algebra.concat(
+...&gt;           Inspect.Algebra.break,
+...&gt;           &quot;A&quot;
+...&gt;         )
+...&gt;       )
+...&gt;     ),
+...&gt;     Inspect.Algebra.concat(
+...&gt;       Inspect.Algebra.break,
+...&gt;       &quot;B&quot;
+...&gt;     )
+...&gt; ))
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;Hello, A B&quot;
+iex&gt; Inspect.Algebra.pretty(doc, 6)
+&quot;Hello,\nA\nB&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L194" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="line/2">
+    <strong>line(x, y)</strong>
+  </p>
+  <div class="docstring"><p>Inserts a mandatory linebreak between two document entities.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.line &quot;Hughes&quot;, &quot;Wadler&quot;
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;Hughes\nWadler&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L220" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="nest/2">
+    <strong>nest(x, i)</strong>
+  </p>
+  <div class="docstring"><p>Nests document entity <code>x</code> positions deep. Nesting will be
+appended to the line breaks.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.nest(Inspect.Algebra.concat(Inspect.Algebra.break, &quot;6&quot;), 5)
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot; 6&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L123" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="pretty/2">
+    <strong>pretty(d, w)</strong>
+  </p>
+  <div class="docstring"><p>The pretty printing function.
+Takes the maximum width and a document to print as its arguments and returns the string
+representation of the best layout for the document to fit in the given width.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L342" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="render/1">
+    <strong>render(sdoc)</strong>
+  </p>
+  <div class="docstring"><p>Renders a simple document into a binary</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L324" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="space/2">
+    <strong>space(x, y)</strong>
+  </p>
+  <div class="docstring"><p>Inserts a mandatory single space between two document entities.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.space &quot;Hughes&quot;, &quot;Wadler&quot;
+iex&gt; Inspect.Algebra.pretty(doc, 80)
+&quot;Hughes Wadler&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L207" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="surround/3">
+    <strong>surround(left, doc, right)</strong>
+  </p>
+  <div class="docstring"><p>Surrounds a document with characters.</p>
+
+<p>Puts the document between left and right enclosing and nesting it.
+The document is marked as a group, to show the maximum as possible
+concisely together.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.surround &quot;[&quot;, Inspect.Algebra.glue(&quot;a&quot;, &quot;b&quot;), &quot;]&quot;
+iex&gt; Inspect.Algebra.pretty(doc, 3)
+&quot;[a\n b]&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L258" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="surround_many/5">
+    <strong>surround_many(left, docs, right, limit, fun)</strong>
+  </p>
+  <div class="docstring"><p>Maps and glues a collection of items together using the given separator
+and surrounds them. A limit can be passed which, once reached, stops
+gluing and outputs &quot;...&quot; instead.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; doc = Inspect.Algebra.surround_many(&quot;[&quot;, Enum.to_list(1..5), &quot;]&quot;, :infinity, integer_to_binary(&amp;1))
+iex&gt; Inspect.Algebra.pretty(doc, 5)
+&quot;[1,\n 2,\n 3,\n 4,\n 5]&quot;
+
+iex&gt; doc = Inspect.Algebra.surround_many(&quot;[&quot;, Enum.to_list(1..5), &quot;]&quot;, 3, integer_to_binary(&amp;1))
+iex&gt; Inspect.Algebra.pretty(doc, 20)
+&quot;[1, 2, 3, ...]&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect/algebra.ex#L279" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

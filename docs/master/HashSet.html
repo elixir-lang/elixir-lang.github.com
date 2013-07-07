@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HashSet</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        HashSet
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A set store.</p>
+
+<p>The <code>HashSet</code> is meant to work well with both small and
+large sets. It is an implementation of the <code>Set</code> behaviour.
+For more information about the functions and their APIs,
+please consult the <code>Set</code> module.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#delete/2">delete/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#difference/2">difference/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#disjoint?/2">disjoint?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#empty/1">empty/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#equal?/2">equal?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#intersection/2">intersection/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#member?/2">member?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#new/0">new/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#new/1">new/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#put/2">put/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#size/1">size/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#subset?/2">subset?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_list/1">to_list/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#union/2">union/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="delete/2">
+    <strong>delete(set, member)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L114" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="difference/2">
+    <strong>difference(set1, set2)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L85" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="disjoint?/2">
+    <strong>disjoint?(set1, set2)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L133" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="empty/1">
+    <strong>empty(_)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L93" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="equal?/2">
+    <strong>equal?(set1, set2)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L119" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="intersection/2">
+    <strong>intersection(set1, set2)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L77" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="member?/2">
+    <strong>member?(set, member)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L89" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="new/0">
+    <strong>new()</strong>
+  </p>
+  <div class="docstring"><p>Creates a new empty set.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L46" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="new/1">
+    <strong>new(members)</strong>
+  </p>
+  <div class="docstring"><p>Creates a new set from the given enumerable.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; HashSet.new [1, 1, 2, 3, 3] |&gt; HashSet.to_list
+[1,2,3]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L59" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="put/2">
+    <strong>put(set, member)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L109" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="size/1">
+    <strong>size(set)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L97" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="subset?/2">
+    <strong>subset?(set1, set2)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L129" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="to_list/1">
+    <strong>to_list(set)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L101" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="union/2">
+    <strong>union(set1, set2)</strong>
+  </p>
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/hash_set.ex#L65" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

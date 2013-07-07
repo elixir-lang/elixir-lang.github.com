@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Binary.Inspect.Function</title>
+    <title>Inspect.BitString</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,20 +21,15 @@
 
     <div id="content">
       <h1>
-        Binary.Inspect.Function
+        Inspect.BitString
         
           <small>impl</small>
         
       </h1>
 
       
-        <div id="moduledoc" class="docstring">
-          <p>Inspect functions, when possible, in a literal form.</p>
 
-        </div>
-      
-
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/binary/inspect.ex#L423" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect.ex#L135" target="_blank" class="view_source">Source</a>
 
       
 
@@ -61,11 +56,23 @@
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="inspect/2">
-    <strong>inspect(function, _opts)</strong>
+    <strong>inspect(thing, opts)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Represents a string as itself escaping all necessary
+characters. Bitstrings and strings that contain non-
+printable characters are printed using the bitstring
+syntax.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; inspect(&quot;bar&quot;)
+&quot;\&quot;bar\&quot;&quot;
+iex&gt; inspect(&quot;f\&quot;oo&quot;)
+&quot;\&quot;f\\\&quot;oo\&quot;&quot;
+</code></pre>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/binary/inspect.ex#L428" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect.ex#L150" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

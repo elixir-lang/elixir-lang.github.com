@@ -27,186 +27,206 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Functions to define Elixir records</p>
+          <p>Convenience functions for working with Records.</p>
 
-<p>A record is a tagged tuple which contains one or more elements and the first
-element is a module. One creates a record by calling <code>defrecord</code> or
-<code>defrecordp</code> which are documented in <code>Kernel</code>.</p>
+<p>A record is a tagged tuple which contains one or more elements
+where the first element is an atom. We can manually create a record
+by simply defining such a tuple:</p>
 
-<h2>Examples</h2>
-
-<pre><code>defrecord FileInfo, atime: nil, accesses: 0
+<pre><code>iex&gt; record = { User, &quot;josé&quot;, 25 }
+iex&gt; is_record(record, User)
+true
 </code></pre>
 
-<p>The line above will define a module named <code>FileInfo</code> which
-contains a function named <code>new</code> that returns a new record
-and other functions to read and set the values in the
-record:</p>
+<p>However, manually constructing tuples can be quite error prone.
+In case we need to add a new field to our User, it would require
+us to carefully change all places where the tuple is used.
+Furthermore, as more and more items are added to the tuple, they
+lose semantic value.</p>
 
-<pre><code>file_info = FileInfo.new(atime: now())
-file_info.atime         #=&gt; Returns the value of atime
-file_info.atime(now())  #=&gt; Updates the value of atime
+<p>This module solves these problems by allowing us to name each
+element and encapsulate the generation and manipulation of
+such tuples. Much of the functionality provided by this module happens
+at compilation time, meaning they don&#39;t add any runtime overhead while
+considerably improving the quality of our code.</p>
 
-# Update multiple attributes at once:
-file_info.update(atime: now(), accesses: 1)
+<p>For these reasons, Records are frequently used in Elixir and
+are also very useful when combined with Protocols. This module
+provides different mechanisms for working with records and we
+are going to explore them in the following sections.</p>
 
-# Obtain the keywords representation of a record:
-file_info.to_keywords   #=&gt; [accesses: 1, atime: {1370,7171,911705}]
-</code></pre>
+<h2>defrecordp</h2>
 
-<p>A record is simply a tuple where the first element is the record
-module name. We can get the record raw representation as follow:</p>
+<p>The simplest way of working with records is via <code>defrecordp</code>:</p>
 
-<pre><code>inspect FileInfo.new, raw: true
-#=&gt; { FileInfo, nil, nil }
-</code></pre>
-
-<p>Besides defining readers and writers for each attribute, Elixir also
-defines an <code>update_#{attribute}</code> function to update the value. Such
-functions expect a function as argument that receives the current
-value and must return the new one. For example, every time the file
-is accessed, the accesses counter can be incremented with:</p>
-
-<pre><code>file_info.update_accesses(fn(old) -&gt; old + 1 end)
-</code></pre>
-
-<p>Which can be also written as:</p>
-
-<pre><code>file_info.update_accesses(&amp;1 + 1)
-</code></pre>
-
-<h2>Access syntax</h2>
-
-<p>Records in Elixir can be expanded at compilation time to provide
-pattern matching and faster operations. For example, the clause
-below will only match if a <code>FileInfo</code> is given and the number of
-accesses is zero:</p>
-
-<pre><code>def enforce_no_access(FileInfo[accesses: 0]), do: :ok
-</code></pre>
-
-<p>The clause above will expand to:</p>
-
-<pre><code>def enforce_no_access({ FileInfo, _, 0 }), do: :ok
-</code></pre>
-
-<p>The downside of using such syntax is that, every time the record
-changes, your code now needs to be recompiled (which is usually
-not a concern since Elixir build tools by default recompiles the
-whole project whenever there is a change).</p>
-
-<p>Finally, keep in mind that Elixir triggers some optimizations whenever
-the access syntax is used. For example:</p>
-
-<pre><code>def no_access?(FileInfo[] = file_info) do
-  file_info.accesses == 0
+<pre><code>defmodule User do
+  defrecordp :user, name: &quot;José&quot;, age: 25
 end
 </code></pre>
 
-<p>Is translated to:</p>
+<p>In the example above, <code>defrecordp</code> is going to generate a set of
+macros named <code>user</code> that allows us to create, update and match
+on a record. Our record is going to have two fields, a <code>name</code> with
+default value of &quot;José&quot; and <code>age</code> of 25.</p>
 
-<pre><code>def no_access?({ FileInfo, _, _ } = file_info) do
-  elem(file_info, 1) == 0
+<p>Let&#39;s see some examples:</p>
+
+<pre><code># To create records
+user()        #=&gt; { User, &quot;José&quot;, 25 }
+user(age: 26) #=&gt; { User, &quot;José&quot;, 26 }
+</code></pre>
+
+<p>By using the <code>user</code> macro, we no longer need to explicitly create
+a tuple with all elements. It also allows us to create and modify
+values by name:</p>
+
+<pre><code># Create a new record
+sample_user = user()
+
+# And now change its age to 26
+user(sample_user, age: 26)
+</code></pre>
+
+<p>Since <code>user</code> is a macro, all the work happens at compilation time.
+This means all the operations, like changing the <code>age</code> above, works
+as a simple tuple operation at runtime:</p>
+
+<pre><code># This update operation...
+user(sample_user, age: 26)
+
+# Literally translates to this one:
+set_elem(sample_user, 2, 26)
+</code></pre>
+
+<p>For this reason, the following operation is not allowed as all
+values need to be explicit:</p>
+
+<pre><code>new_values = [age: 26]
+user(sample_user, new_values)
+</code></pre>
+
+<p>As the name says, <code>defrecordp</code> is useful when you don&#39;t want to
+expose the record definition. The <code>user</code> macro used above, for
+example, is only available inside the <code>User</code> module and nowhere else.
+You can find more information in <code>Kernel.defrecordp/2</code> docs.</p>
+
+<p>In general, though, records are used as part of a module&#39;s public
+interface. For such use cases, Elixir provides record modules.</p>
+
+<h2>defrecord</h2>
+
+<p>By using <code>defrecord</code>, a developer can make a Record definition
+available everywhere within Elixir code. Let&#39;s see an example:</p>
+
+<pre><code>defrecord User, name: &quot;José&quot;, age: 25
+</code></pre>
+
+<p>Notice that, unlike <code>defrecordp</code>, <code>defrecord</code> expects an
+alias as first argument. This is because <code>defrecord</code> is going
+to create a module named <code>User</code> with all the relevant metadata.
+This module can then be imported and we can manipulate the user
+as with <code>defrecordp</code>:</p>
+
+<pre><code>Record.import User, as: :user
+user()        #=&gt; User[name: &quot;José&quot;, age: 25]
+user(age: 26) #=&gt; User[name: &quot;José&quot;, age: 26]
+</code></pre>
+
+<p>Notice that now, since the record definition is accessible, Elixir
+shows the record nicely formatted, no longer as a simple tuple.</p>
+
+<p>Since working with external records is frequent, Elixir allows
+developers to skip importing the record altogether in favor
+of a <code>Module[args]</code> syntax:</p>
+
+<pre><code># Skipping a field uses its default value
+User[]        #=&gt; User[name: &quot;José&quot;, age: 25]
+User[age: 26] #=&gt; User[name: &quot;José&quot;, age: 26]
+</code></pre>
+
+<p>The macro name is replaced by the module name and the parenthesis
+are replaced by brackets. When the shortcut syntax is used, there
+is no need to import the record.</p>
+
+<p>Before we sum up the differences between <code>defrecord</code> and
+<code>defrecordp</code>, there is one last functionality introduced by
+<code>defrecord</code> that we need to discuss.</p>
+
+<h2>Runtime access</h2>
+
+<p>All the functionality discussed above happens at compilation time.
+This means that both <code>user(user, age: 26)</code> and <code>User[user, age: 26]</code>
+will be transformed into a simple tuple operation at compile time.</p>
+
+<p>However, there are some situations where we want to set or update
+fields dynamically. <code>defrecord</code> (and <code>defrecord</code> only) supports
+it out of the box:</p>
+
+<pre><code>defrecord User, name: &quot;José&quot;, age: 25
+
+opts = [name: &quot;Hello&quot;]
+user = User.new(opts)
+#=&gt; User[name: &quot;Hello&quot;, age: 25]
+user.update(age: 26)
+#=&gt; User[name: &quot;Hello&quot;, age: 26]
+</code></pre>
+
+<p>All the calls above happen at runtime. It gives Elixir
+records flexibility at the cost of performance since
+there is more work happening at runtime.</p>
+
+<p>To sum up, <code>defrecordp</code> should be used when you don&#39;t want
+to expose the record information while <code>defrecord</code> should be used
+whenever you want to share a record within your code or with other
+libraries or whenever you need to dynamically set or update fields.</p>
+
+<p>You can learn more about records in the <code>Kernel.defrecord/2</code> docs. Now
+let&#39;s discuss the usefulness of combining records with protocols.</p>
+
+<h2>Protocols</h2>
+
+<p>Developers can extend existing protocols by creating their own
+records and implementing the desired protocols. For instance,
+imagine that you have created a new representation for storing
+date and time, represented by the year, the week of the year
+and the week day:</p>
+
+<pre><code>defrecord WeekDate, year: nil, week: nil, week_day: nil
+</code></pre>
+
+<p>Now we want this date to be represented as a string and this
+can be done by implementing the <code>Binary.Chars</code> protocol for
+our record:</p>
+
+<pre><code>defimpl Binary.Chars, for: WeekDate do
+  def to_binary(WeekDate[year: year, week: week, week_day: day]) do
+    &quot;#{year}-W#{week}-#{day}&quot;
+  end
 end
 </code></pre>
 
-<p>Which provides faster get and set times for record operations.</p>
+<p>Now we can explicitly convert our WeekDate:</p>
 
-<h2>Runtime introspection</h2>
-
-<p>At runtime, developers can use <code>__record__</code> to get information
-about the given record:</p>
-
-<pre><code>FileInfo.__record__(:name)
-#=&gt; FileInfo
-
-FileInfo.__record__(:fields)
-#=&gt; [atime: nil, accesses: 0]
+<pre><code>to_binary WeekDate[year: 2013, week: 26, week_day: 4]
+&quot;2013-W26-4&quot;
 </code></pre>
 
-<p>In order to quickly access the index of a field, one can use
-the <code>__index__</code> function:</p>
+<p>A protocol can be implemented for any record, regardless if
+it was generated by <code>defrecord</code> or <code>defrecordp</code>. That&#39;s because
+records are simply tuples and the protocol works directly on
+the tuple.</p>
 
-<pre><code>FileInfo.__index__(:atime)
-#=&gt; 0
+<p>Note: Although a record can be defined using a regular atom
+instead of an alias, as shown below, such records are <strong>not</strong>
+supported in Protocols:</p>
 
-FileInfo.__index__(:unknown)
-#=&gt; nil
+<pre><code>defrecord :just_an_atom, [:name, :age]
 </code></pre>
-
-<h2>Compile-time introspection</h2>
-
-<p>At the compile time, one can access following information about the record
-from within the record module:</p>
-
-<ul>
-<li><code>@record_fields</code> — a keyword list of record fields with defaults</li>
-<li><p><code>@record_types</code> — a keyword list of record fields with types</p>
-
-<p>defrecord Foo, bar: nil do
-   record<em>type bar: nil | integer
-   IO.inspect @record</em>fields
-   IO.inspect @record_types
- end</p></li>
-</ul>
-
-<p>prints out</p>
-
-<pre><code> [bar: nil]
- [bar: {:|,[line: ...],[nil,{:integer,[line: ...],nil}]}]
-</code></pre>
-
-<p>where the last line is a quoted representation of</p>
-
-<pre><code> [bar: nil | integer]
-</code></pre>
-
-<h2>Documentation</h2>
-
-<p>By default records are not documented and have <code>@moduledoc</code> set to false.</p>
-
-<h2>Types</h2>
-
-<p>Every record defines a type named <code>t</code> that can be accessed in typespecs.
-Those types can be passed at the moment the record is defined:</p>
-
-<pre><code>defrecord User,
-  name: &quot;&quot; :: string,
-  age: 0 :: integer
-</code></pre>
-
-<p>All the fields without a specified type are assumed to have type <code>term</code>.</p>
-
-<p>Assuming the <code>User</code> record defined above, it could be used in typespecs
-as follow:</p>
-
-<pre><code>@spec handle_user(User.t) :: boolean()
-</code></pre>
-
-<p>If the developer wants to define their own types to be used with the
-record, Elixir allows a more lengthy definition with the help of the
-<code>record_type</code> macro:</p>
-
-<pre><code>defrecord Config, counter: 0, failures: [] do
-  @type kind :: term
-  record_type counter: integer, failures: [kind]
-end
-</code></pre>
-
-<h2>Importing records</h2>
-
-<p>It is also possible to import a public record (a record, defined using
-<code>defrecord</code>) as a set of private macros (as if it was defined using <code>defrecordp</code>):</p>
-
-<pre><code>Record.import Config, as: :config
-</code></pre>
-
-<p>See <code>Record.import/2</code> and <code>defrecordp/2</code> documentation for more information</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -223,16 +243,6 @@ end
 <li>
   <span class="summary_signature">
     <a href="#defmacros/4">defmacros/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#defrecord/3">defrecord/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#defrecordp/2">defrecordp/2</a>
   </span>
 </li>
 <li>
@@ -283,7 +293,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L293" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/record.ex#L310" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="defmacros/4">
@@ -301,31 +311,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L352" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="defrecord/3">
-    <strong>defrecord(name, values, opts)</strong>
-  </p>
-  <div class="docstring"><p>Main entry point for records definition. It defines a module
-with the given <code>name</code> and the fields specified in <code>values</code>.
-This is invoked directly by <code>Kernel.defrecord</code>, so check it
-for more information and documentation.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L181" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="defrecordp/2">
-    <strong>defrecordp(name, fields)</strong>
-  </p>
-  <div class="docstring"><p>Main entry point for private records definition. It defines
-a set of macros with the given <code>name</code> and the fields specified
-in <code>values</code>. This is invoked directly by <code>Kernel.defrecordp</code>,
-so check it for more information and documentation.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L255" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/record.ex#L369" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="deftypes/3">
@@ -334,7 +320,7 @@ so check it for more information and documentation.</p>
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L321" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/record.ex#L338" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="extract/2">
@@ -349,7 +335,7 @@ return the fields as a list of tuples.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L171" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/record.ex#L196" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
@@ -362,7 +348,7 @@ return the fields as a list of tuples.</p>
   <p class="signature" id="import/2">
     <strong>import(module, list2)</strong>
   </p>
-  <div class="docstring"><p>Import public record definition as a set of private macros,
+  <div class="docstring"><p>Imports a public record definition as a set of private macros,
 as defined by <code>Kernel.defrecordp/2</code>. This is useful when one
 desires to manipulate a record via a set of macros instead
 of the regular access syntax.</p>
@@ -378,7 +364,7 @@ of the regular access syntax.</p>
 <p>end</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/record.ex#L242" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/record.ex#L215" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

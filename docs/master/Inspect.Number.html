@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Binary.Inspect.Port</title>
+    <title>Inspect.Number</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,20 +21,15 @@
 
     <div id="content">
       <h1>
-        Binary.Inspect.Port
+        Inspect.Number
         
           <small>impl</small>
         
       </h1>
 
       
-        <div id="moduledoc" class="docstring">
-          <p>Inspect ports</p>
 
-        </div>
-      
-
-      <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/binary/inspect.ex#L447" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect.ex#L315" target="_blank" class="view_source">Source</a>
 
       
 
@@ -61,11 +56,24 @@
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="inspect/2">
-    <strong>inspect(port, _)</strong>
+    <strong>inspect(thing, _opts)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Represents the number as a string.</p>
+
+<p>Floats are represented using the shortened, correctly rounded string
+that converts to float when read back with <code>binary_to_float/1</code>. This
+is done via the Erlang implementation of <em>Printing Floating-Point
+Numbers Quickly and Accurately</em> in Proceedings of the SIGPLAN &#39;96
+Conference on Programming Language Design and Implementation.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; inspect(1)
+&quot;1&quot;
+</code></pre>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/867d1eaf9b8b475cf96f8de7b88b24933ba049bf/lib/elixir/lib/binary/inspect.ex#L450" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/elixir/lib/inspect.ex#L331" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
