@@ -27,16 +27,16 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module is a convenience to define GenServer callbacks in Elixir.</p>
+          <p>This module is a convenience for defining GenServer callbacks in Elixir.</p>
 
-<p>A server is responsible to react to messages received from client
-and a GenServer is an OTP behaviour that encapsulates common server
+<p>A server is responsible for reacting to messages received from a client.
+A GenServer is an OTP behaviour that encapsulates common server
 functionalities.</p>
 
 <h2>Example</h2>
 
-<p>Bellow follows an example of a GenServer that push and pop items
-into a stack:</p>
+<p>Below is an example of a GenServer that pushes and pops items
+onto a stack:</p>
 
 <pre><code>defmodule MyServer do
   use GenServer.Behaviour
@@ -47,17 +47,17 @@ into a stack:</p>
     { :reply, h, t }
   end
 
-  def handle_call(_request, _from, _config) do
+  def handle_call(request, from, config) do
     # Call the default implementation from GenServer.Behaviour
-    super
+    super(request, from, config)
   end
 
   def handle_cast({ :push, item }, config) do
     { :noreply, [item|config] }
   end
 
-  def handle_cast(_request, _config) do
-    super
+  def handle_cast(request, config) do
+    super(request, config)
   end
 end
 
@@ -75,8 +75,8 @@ end
 
 <p>Notice we never call the server callbacks directly, they are called
 by OTP whenever we interact with the server. <strong>cast</strong> messages are
-asynchronous while <strong>call</strong> ones are synchronous.  In the case of
-GenServer&#39;s, there are 8 different values a callback such as
+asynchronous while <strong>call</strong> ones are synchronous. For a
+GenServer, there are 8 different values a callback such as
 <code>handle_call</code> or <code>handle_cast</code> can return:</p>
 
 <pre><code>{ :reply, reply, new_state }
@@ -91,7 +91,7 @@ GenServer&#39;s, there are 8 different values a callback such as
 
 <p>There are 6 callbacks required to be implemented in a GenServer. The
 <code>GenServer.Behaviour</code> module defines all of them automatically, but
-allows us to customize the ones we need. The list of callbacks are:</p>
+allows us to customize the ones we need. The required callbacks are:</p>
 
 <ul>
 <li><code>init(args)</code> - invoked when the server is started;</li>
@@ -105,18 +105,20 @@ terminate, useful for cleaning up;</li>
 code is being upgraded live (hot code swap);</li>
 </ul>
 
-<p>Starting and sending messages to the gen_server is done
+<p>Starting and sending messages to the GenServer is done
 via Erlang&#39;s <code>:gen_server</code> module. For more information,
 please refer to the following:</p>
 
-<p><a href="http://www.erlang.org/doc/man/gen_server.html">http://www.erlang.org/doc/man/gen_server.html</a>
-<a href="http://www.erlang.org/doc/design_principles/gen_server_concepts.html">http://www.erlang.org/doc/design_principles/gen_server_concepts.html</a>
-<a href="http://learnyousomeerlang.com/clients-and-servers">http://learnyousomeerlang.com/clients-and-servers</a></p>
+<ul>
+<li><a href="http://www.erlang.org/doc/man/gen_server.html">http://www.erlang.org/doc/man/gen_server.html</a></li>
+<li><a href="http://www.erlang.org/doc/design_principles/gen_server_concepts.html">http://www.erlang.org/doc/design_principles/gen_server_concepts.html</a></li>
+<li><a href="http://learnyousomeerlang.com/clients-and-servers">http://learnyousomeerlang.com/clients-and-servers</a></li>
+</ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/gen_server/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/gen_server/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 

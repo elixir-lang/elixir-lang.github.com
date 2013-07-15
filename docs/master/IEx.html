@@ -32,7 +32,7 @@
 <p>This module is the main entry point for Interactive Elixir and
 in this documentation we will talk a bit about how IEx works.</p>
 
-<p>Notice some of the functionality described here will be available
+<p>Notice that some of the functionality described here will not be available
 depending on your terminal. In particular, if you get a message
 saying that the smart terminal could not be run, some of the
 features described here won&#39;t work.</p>
@@ -82,7 +82,7 @@ variables defined in one shell from the other one.</p>
 <p>The user switch command menu also allows developers to connect to remote
 shells using the <code>r</code> command. Keep in mind that you can&#39;t connect to a
 remote node if you haven&#39;t given a name to the current node
-(i.e. <code>Process.is_alive?</code> must return true).</p>
+(i.e. <code>Process.is_alive?</code> must return <code>true</code>).</p>
 
 <h2>The .iex file</h2>
 
@@ -118,7 +118,7 @@ iex(1)&gt; value
 </code></pre>
 
 <p>It is possible to override the default loading sequence for .iex file by
-supplying the --dot-iex option to iex. See <code>iex --help</code>.</p>
+supplying the <code>--dot-iex</code> option to iex. See <code>iex --help</code>.</p>
 
 <h2>Configuring the shell</h2>
 
@@ -154,7 +154,7 @@ interesting consequences that are worth discussing.</p>
 This means that any benchmarking done in the shell is going to have
 skewed results. So never run any profiling nor benchmarks in the shell.</p>
 
-<p>Second of all, IEx allows you to break an expression into many lines,
+<p>Second, IEx allows you to break an expression into many lines,
 since this is common in Elixir. For example:</p>
 
 <pre><code>iex(1)&gt; &quot;ab
@@ -183,7 +183,7 @@ pending expression and return to its normal state:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/iex/lib/iex.ex#L4" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/iex/lib/iex.ex#L4" target="_blank" class="view_source">Source</a>
 
       
 
@@ -235,26 +235,26 @@ pending expression and return to its normal state:</p>
   <div class="docstring"><p>Returns registered <code>after_spawn</code> callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/iex/lib/iex.ex#L162" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/iex/lib/iex.ex#L162" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="after_spawn/1">
     <strong>after_spawn(fun)</strong>
   </p>
-  <div class="docstring"><p>Registers a function to be invoked after IEx process is spawned.</p>
+  <div class="docstring"><p>Registers a function to be invoked after the IEx process is spawned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/iex/lib/iex.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/iex/lib/iex.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="boot_config/1">
     <strong>boot_config(opts)</strong>
   </p>
-  <div class="docstring"><p>Returns default config used to launch IEx. This config is also used by
+  <div class="docstring"><p>Returns the default config used to launch IEx. This config is also used by
 <code>IEx.TestFramework</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/iex/lib/iex.ex#L212" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/iex/lib/iex.ex#L212" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="color/2">
@@ -264,7 +264,7 @@ pending expression and return to its normal state:</p>
 are not processed in any way.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/iex/lib/iex.ex#L254" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/iex/lib/iex.ex#L254" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="started?/0">
@@ -273,7 +273,7 @@ are not processed in any way.</p>
   <div class="docstring"><p>Returns <code>true</code> if IEx was properly started.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/iex/lib/iex.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/iex/lib/iex.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

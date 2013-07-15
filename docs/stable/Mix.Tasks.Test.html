@@ -31,9 +31,9 @@
 
 <p>This task will preload the <code>test/test_helper.exs</code> which
 should do all testing setup and then require all files
-that matches the given <code>test_pattern</code> in parallel.</p>
+that match the given <code>test_pattern</code> in parallel.</p>
 
-<p>Before running tests, it invokes the prepare task
+<p>Before running tests, it invokes the <code>App.Start</code> task
 which defaults to compile and load your project.</p>
 
 <p>A list of files can be given after the task name in
@@ -42,6 +42,8 @@ order to select the files to compile.</p>
 <h2>Command line options</h2>
 
 <ul>
+<li><code>--trace</code> - run tests with detailed reporting. Automatically sets <code>max-cases</code> to 1;</li>
+<li><code>--max-cases</code> - set the maximum number of cases running async;</li>
 <li><code>--cover</code> - the directory to include coverage results;</li>
 <li><code>--force</code> - forces compilation regardless of module times;</li>
 <li><code>--quick</code>, <code>-q</code> - only compile files that changed;</li>
@@ -52,20 +54,20 @@ order to select the files to compile.</p>
 <h2>Configuration</h2>
 
 <ul>
-<li><p><code>:test_paths</code> - path containing tests.
+<li><p><code>:test_paths</code> - list of paths containing test files.
 Defaults to <code>[&quot;test&quot;]</code>.</p></li>
 <li><p><code>:test_pattern</code> - a pattern to load test files.
 Defaults to <code>*_test.exs</code>.</p></li>
 <li><p><code>:test_helper</code> - a file that sets up whatever is necessary
 for testing. Defaults to <code>test/test_helper.exs</code>.</p></li>
 <li><p><code>:test_coverage</code> - the directory to include test coverage results.
-Defaults to nil.</p></li>
+Defaults to <code>nil</code>.</p></li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/mix/lib/mix/tasks/test.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/test.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -96,7 +98,7 @@ Defaults to nil.</p></li>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/mix/lib/mix/tasks/test.ex#L43" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/test.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

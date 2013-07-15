@@ -26,8 +26,13 @@
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p>This module contains functions to parse command line arguments.</p>
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -61,8 +66,8 @@
   <p class="signature" id="parse/2">
     <strong>parse(argv, opts // [])</strong>
   </p>
-  <div class="docstring"><p>Parses the argv and returns one tuple with parsed options
-and the arguments.</p>
+  <div class="docstring"><p>Parses <code>argv</code> and returns a tuple with parsed options
+and arguments.</p>
 
 <h2>Examples</h2>
 
@@ -78,7 +83,7 @@ iex&gt; OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/en
 
 <h2>Aliases</h2>
 
-<p>A set of aliases can be given as second argument:</p>
+<p>A set of aliases can be given as the second argument:</p>
 
 <pre><code>iex&gt; OptionParser.parse([&quot;-d&quot;], aliases: [d: :debug])
 { [debug: true], [] }
@@ -86,22 +91,24 @@ iex&gt; OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/en
 
 <h2>Switches</h2>
 
-<p>Extra information about switches can be given as argument too.
-This is useful in order to say a switch must behave as a boolean
+<p>Extra information about switches can be given as arguments, too.
+This is useful when a switch must behave as a boolean
 or if duplicated switches should be kept, overriden or accumulated.</p>
 
 <p>The following types are supported:</p>
 
 <ul>
-<li><code>:boolean</code> - Mark the given switch as boolean. Boolean switches
-           never consumes the following value unless it is
-           true or false;</li>
+<li><code>:boolean</code> - Marks the given switch as a boolean. Boolean switches
+           never consume the following value unless it is
+           <code>true</code> or <code>false</code>;</li>
+<li><code>:integer</code> - Parses the switch as an integer;</li>
+<li><code>:float</code>   - Parses the switch as a float;</li>
 </ul>
 
 <p>The following extra options are supported:</p>
 
 <ul>
-<li><code>:keep</code> - Keep duplicated items in the list instead of overriding;</li>
+<li><code>:keep</code> - Keeps duplicated items in the list instead of overriding;</li>
 </ul>
 
 <p>Examples:</p>
@@ -123,25 +130,28 @@ booleans and never parse the next value:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/option_parser.ex#L57" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/option_parser.ex#L63" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="parse_head/2">
     <strong>parse_head(argv, opts // [])</strong>
   </p>
-  <div class="docstring"><p>Similar to parse but only parses the head of the argv.
-I.e. as soon as it finds a non switch, it stops parsing.</p>
+  <div class="docstring"><p>Similar to <code>parse/2</code> but only parses the head of <code>argv</code>;
+as soon as it finds a non-switch, it stops parsing.</p>
 
-<p>Check <code>parse/2</code> for more info.</p>
+<p>See <code>parse/2</code> for more information.</p>
 
 <h2>Example</h2>
 
 <pre><code>iex&gt; OptionParser.parse_head([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
 { [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;] }
+
+iex&gt; OptionParser.parse_head([&quot;--verbose&quot;, &quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--unlock&quot;])
+{[verbose: true, source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--unlock&quot;]}
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/option_parser.ex#L73" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/option_parser.ex#L81" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

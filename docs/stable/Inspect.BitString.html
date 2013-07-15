@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>URI.LDAP</title>
+    <title>Inspect.BitString</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,13 +21,15 @@
 
     <div id="content">
       <h1>
-        URI.LDAP
+        Inspect.BitString
+        
+          <small>impl</small>
         
       </h1>
 
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/uri/ldap.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L135" target="_blank" class="view_source">Source</a>
 
       
 
@@ -38,12 +40,7 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#default_port/0">default_port/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#parse/1">parse/1</a>
+    <a href="#inspect/2">inspect/2</a>
   </span>
 </li>
 
@@ -58,20 +55,24 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="default_port/0">
-    <strong>default_port()</strong>
+  <p class="signature" id="inspect/2">
+    <strong>inspect(thing, opts)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Represents a string as itself escaping all necessary
+characters. Bitstrings and strings that contain non-
+printable characters are printed using the bitstring
+syntax.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; inspect(&quot;bar&quot;)
+&quot;\&quot;bar\&quot;&quot;
+iex&gt; inspect(&quot;f\&quot;oo&quot;)
+&quot;\&quot;f\\\&quot;oo\&quot;&quot;
+</code></pre>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/uri/ldap.ex#L3" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="parse/1">
-    <strong>parse(info)</strong>
-  </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/uri/ldap.ex#L6" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L150" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

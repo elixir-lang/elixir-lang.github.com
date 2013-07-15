@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Binary.Inspect.List</title>
+    <title>Inspect.Regex</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,38 +21,15 @@
 
     <div id="content">
       <h1>
-        Binary.Inspect.List
+        Inspect.Regex
         
           <small>impl</small>
         
       </h1>
 
       
-        <div id="moduledoc" class="docstring">
-          <p>Represents a list checking if it can be printed or not.
-If so, a single-quoted representation is returned,
-otherwise the brackets syntax is used.</p>
 
-<p>Inspecting a list is conservative as it does not try
-to guess how the list is encoded. That said, <code>&#39;josé&#39;</code>
-will likely be inspected as <code>[106,111,115,195,169]</code>
-because we can&#39;t know if it is encoded in utf-8
-or iso-5569-1, which is common in Erlang libraries.</p>
-
-<h2>Examples</h2>
-
-<pre><code>iex&gt; inspect(&#39;bar&#39;)
-&quot;&#39;bar&#39;&quot;
-iex&gt; inspect([0|&#39;bar&#39;])
-&quot;[0,98,97,114]&quot;
-iex&gt; inspect([:foo,:bar])
-&quot;[:foo,:bar]&quot;
-</code></pre>
-
-        </div>
-      
-
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/binary/inspect.ex#L246" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L340" target="_blank" class="view_source">Source</a>
 
       
 
@@ -79,11 +56,18 @@ iex&gt; inspect([:foo,:bar])
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="inspect/2">
-    <strong>inspect(thing, opts)</strong>
+    <strong>inspect(regex, opts)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Represents the Regex using the <code>%r&quot;&quot;</code> syntax.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; inspect(%r/foo/m)
+&quot;%r\&quot;foo\&quot;m&quot;
+</code></pre>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/binary/inspect.ex#L271" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L350" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

@@ -50,7 +50,7 @@ given argument;</p></li>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -66,7 +66,7 @@ given argument;</p></li>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#binreadline/1">binreadline/1</a>
+    <a href="#binstream/1">binstream/1</a>
   </span>
 </li>
 <li>
@@ -111,12 +111,7 @@ given argument;</p></li>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#readline/1">readline/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#warn/1">warn/1</a>
+    <a href="#stream/1">stream/1</a>
   </span>
 </li>
 <li>
@@ -137,27 +132,33 @@ given argument;</p></li>
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="binread/2">
-    <strong>binread(device // group_leader(), count)</strong>
+    <strong>binread(device // group_leader, chars_or_line)</strong>
   </p>
-  <div class="docstring"><p>Reads <code>count</code> bytes from the IO device as binary,
-no unicode conversion happens.</p>
+  <div class="docstring"><p>Reads <code>count</code> bytes from the IO device or until
+the end of the line if <code>:line</code> is given. It returns:</p>
 
-<p>Check <code>read/2</code> for more information.</p>
+<ul>
+<li><p><code>data</code> - The input characters.</p></li>
+<li><p>:eof - End of file was encountered.</p></li>
+<li><p>{:error, reason} - Other (rare) error condition,
+for instance {:error, :estale} if reading from an
+NFS file system.</p></li>
+</ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L62" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="binreadline/1">
-    <strong>binreadline(device // group_leader())</strong>
+  <p class="signature" id="binstream/1">
+    <strong>binstream(device)</strong>
   </p>
-  <div class="docstring"><p>Reads a line from the IO device as binary,
-no unicode conversion happens.</p>
+  <div class="docstring"><p>Converts the io device into a Stream. The device is
+iterated line by line.</p>
 
-<p>Check <code>readline/1</code> for more information.</p>
+<p>This reads the io as a raw binary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L80" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L243" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="binwrite/2">
@@ -169,7 +170,7 @@ as a binary, no unicode conversion happens.</p>
 <p>Check <code>write/2</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L114" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L120" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="getn/2">
@@ -189,7 +190,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L174" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L182" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="getn/3">
@@ -201,7 +202,7 @@ the number of unicode codepoints to be retrieved.
 Otherwise, the number of raw bytes.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L190" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L198" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="gets/2">
@@ -219,7 +220,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L206" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect/2">
@@ -228,13 +229,17 @@ NFS file system.</p></li>
   <div class="docstring"><p>Inspects and writes the given argument to the device
 followed by a new line. A set of options can be given.</p>
 
+<p>It sets by default pretty printing to true and the
+width to be the width of the device, with a minimum
+of 80 characters.</p>
+
 <h2>Examples</h2>
 
 <pre><code>IO.inspect Process.list
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L148" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L147" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="inspect/3">
@@ -243,7 +248,7 @@ followed by a new line. A set of options can be given.</p>
   <div class="docstring"><p>Inspects the item with options using the given device.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L154" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="puts/2">
@@ -254,13 +259,14 @@ but adds a new line at the end. The argument is expected
 to be a chardata.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L123" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L129" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="read/2">
-    <strong>read(device // group_leader(), count)</strong>
+    <strong>read(device // group_leader, chars_or_line)</strong>
   </p>
-  <div class="docstring"><p>Reads <code>count</code> bytes from the IO device. It returns:</p>
+  <div class="docstring"><p>Reads <code>count</code> characters from the IO device or until
+the end of the line if <code>:line</code> is given. It returns:</p>
 
 <ul>
 <li><p><code>data</code> - The input characters.</p></li>
@@ -271,39 +277,27 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L39" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L40" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
-  <p class="signature" id="readline/1">
-    <strong>readline(device // group_leader())</strong>
+  <p class="signature" id="stream/1">
+    <strong>stream(device)</strong>
   </p>
-  <div class="docstring"><p>Reads a line from the IO device. It returns:</p>
+  <div class="docstring"><p>Converts the io device into a Stream. The device is
+iterated line by line.</p>
 
-<ul>
-<li><p><code>data</code> - The input characters.</p></li>
-<li><p>:eof - End of file was encountered.</p></li>
-<li><p>{:error, reason} - Other (rare) error condition,
-for instance {:error, :estale} if reading from an
-NFS file system.</p></li>
-</ul>
+<p>This reads the io as utf-8. Check out
+<code>IO.binstream/1</code> to handle the IO as a raw binary.</p>
 
-<p>This function does the same as <code>gets/2</code>,
-except the prompt is not required as argument.</p>
+<h2>Examples</h2>
+
+<p>Here is an example on how we mimic an echo server
+from the command line:</p>
+
+<p>Enum.each IO.stream(:stdio), IO.write(&amp;1)</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L70" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="warn/1">
-    <strong>warn(item)</strong>
-  </p>
-  <div class="docstring"><p>Writes the given arguments to stderr as a warning.</p>
-
-<p>If <code>--warnings-as-errors</code> is true and this function is
-called during compilation, compilation will fail.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L134" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="write/2">
@@ -326,7 +320,7 @@ IO.write :stderr, &quot;error&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/io.ex#L104" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/io.ex#L110" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>URI.FTP</title>
+    <title>Inspect.Number</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,13 +21,15 @@
 
     <div id="content">
       <h1>
-        URI.FTP
+        Inspect.Number
+        
+          <small>impl</small>
         
       </h1>
 
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/uri/ftp.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L315" target="_blank" class="view_source">Source</a>
 
       
 
@@ -38,12 +40,7 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#default_port/0">default_port/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#parse/1">parse/1</a>
+    <a href="#inspect/2">inspect/2</a>
   </span>
 </li>
 
@@ -58,20 +55,25 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="default_port/0">
-    <strong>default_port()</strong>
+  <p class="signature" id="inspect/2">
+    <strong>inspect(thing, _opts)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Represents the number as a string.</p>
+
+<p>Floats are represented using the shortened, correctly rounded string
+that converts to float when read back with <code>binary_to_float/1</code>. This
+is done via the Erlang implementation of <em>Printing Floating-Point
+Numbers Quickly and Accurately</em> in Proceedings of the SIGPLAN &#39;96
+Conference on Programming Language Design and Implementation.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; inspect(1)
+&quot;1&quot;
+</code></pre>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/uri/ftp.ex#L3" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="parse/1">
-    <strong>parse(info)</strong>
-  </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/uri/ftp.ex#L4" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L331" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
