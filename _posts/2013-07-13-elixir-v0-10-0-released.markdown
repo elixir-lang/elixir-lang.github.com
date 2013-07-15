@@ -78,7 +78,7 @@ Other notable improvements are:
 
 * We are also working hard on Windows support, improving its command-line tools and working towards a green test suite, thanks to [Tom Jansens](https://github.com/tojans);
 
-* Meta-programming in Elixir was also improved by the addition of the `binding/0` and `binding/1` macros plus the additions of `Macro.expand_once/2` and `Macro.expand_all/2` to the [`Macro` module](http://elixir-lang.org/docs/stable/Set.html);
+* Meta-programming in Elixir was also improved by the addition of the `binding/0` and `binding/1` macros plus the additions of `Macro.expand_once/2` and `Macro.expand_all/2` to the [`Macro` module](http://elixir-lang.org/docs/stable/Macro.html);
 
 There are also improvements to typespecs, error messages, many bug fixes and some backwards incompatible changes. We have posted a detailed [upgrade instructions on the mailing list](https://groups.google.com/forum/?fromgroups#!topic/elixir-lang-talk/ksrefrgK1eY). For a general overview, [check out the CHANGELOG]((https://github.com/elixir-lang/elixir/blob/v0.10.0/CHANGELOG.md)).
 
