@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stream</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Stream
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Module for creating and composing streams.</p>
+
+<p>Streams are composable, lazy enumerables. Any enumerable that generates
+items one by one during enumeration is called a stream. For example,
+Elixir&#39;s <code>Range</code> is a stream:</p>
+
+<pre><code>iex&gt; range = 1..5
+1..5
+iex&gt; Enum.map range, &amp;1 * 2
+[2,4,6,8,10]
+</code></pre>
+
+<p>In the example above, as we mapped over the range, the elements being
+enumerated were created one by one, during enumeration. The <code>Stream</code>
+module allows us to map the range, without triggering its enumeration:</p>
+
+<pre><code>iex&gt; range = 1..3
+iex&gt; stream = Stream.map(range, &amp;1 * 2)
+iex&gt; Enum.map(stream, &amp;1 + 1)
+[3,5,7]
+</code></pre>
+
+<p>Notice we started with a range and then we created a stream that is
+meant to multiply each item in the range by 2. At this point, no
+computation was done yet. Just when <code>Enum.map/2</code> is called we
+enumerate over each item in the range, multiplying it by 2 and adding 1.
+We say the functions in <code>Stream</code> are <em>lazy</em> and the functions in <code>Enum</code>
+are <em>eager</em>.</p>
+
+<p>Due to their laziness, streams are useful when working with large 
+(or even infinite) collections. When chaining many operations with <code>Enum</code>,
+intermediate lists are created, while <code>Stream</code> creates a recipe of
+computations that are executed at a later moment. Let&#39;s see another
+example:</p>
+
+<pre><code>1..3 |&gt;
+  Enum.map(IO.inspect(&amp;1)) |&gt;
+  Enum.map(&amp;1 * 2) |&gt;
+  Enum.map(IO.inspect(&amp;1))
+1
+2
+3
+2
+4
+6
+#=&gt; [2,4,6]
+</code></pre>
+
+<p>Notice that we first printed each item in the list, then multiplied each
+element by 2 and finally printed each new value. In this example, the list
+was iterated three times. Let&#39;s see an example with streams:</p>
+
+<pre><code>stream = 1..3 |&gt;
+  Stream.map(IO.inspect(&amp;1)) |&gt;
+  Stream.map(&amp;1 * 2) |&gt;
+  Stream.map(IO.inspect(&amp;1))
+Enum.to_list(stream)
+1
+2
+2
+4
+3
+6
+#=&gt; [2,4,6]
+</code></pre>
+
+<p>Although the end result is the same, the order in which the items were
+printed changed! With streams, we print the first item and then print
+its double. In this example, the list was iterated just once!</p>
+
+<p>That&#39;s what we meant when we first said that streams are composable,
+lazy enumerables. Notice we could call <code>Stream.map/2</code> multiple times,
+effectively composing the streams and they are lazy. The computations
+are performed only when you call a function from the <code>Enum</code> module.</p>
+
+<h2>Creating Streams</h2>
+
+<p>There are many functions in Elixir&#39;s standard library that return
+streams, some examples are:</p>
+
+<ul>
+<li><code>IO.stream/1</code> - Streams input lines, one by one;</li>
+<li><code>URI.query_decoder/1</code> - Decodes a query string, pair by pair;</li>
+</ul>
+
+<p>This module also allows us to create streams from any enumerable:</p>
+
+<pre><code>iex&gt; stream = Stream.map([1,2,3], &amp;1 * 2)
+iex&gt; Enum.map(stream, &amp;1 + 1)
+[3,5,7]
+</code></pre>
+
+<p>By simply passing a list (which is an enumerable) as the first argument
+to <code>Stream.map/2</code>, we have automatically created a stream that will
+multiply the items in the list by 2 on enumeration.</p>
+
+<p>This module also provides other functions for creating streams, such as
+<code>Stream.cycle/1</code>.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#cycle/1">cycle/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#drop/2">drop/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#drop_while/2">drop_while/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#filter/2">filter/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#iterate/2">iterate/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#map/2">map/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#reject/2">reject/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#repeatedly/1">repeatedly/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#take/2">take/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#take_while/2">take_while/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#with_index/1">with_index/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="cycle/1">
+    <strong>cycle(enumerable)</strong>
+  </p>
+  <div class="docstring"><p>Creates a stream that cycles through the given enumerable,
+infinitely.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.cycle([1,2,3])
+iex&gt; Enum.take(stream, 5)
+[1,2,3,1,2]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L146" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="drop/2">
+    <strong>drop(enumerable, n)</strong>
+  </p>
+  <div class="docstring"><p>Lazily drops the next <code>n</code> items from the enumerable.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.drop(1..10, 5)
+iex&gt; Enum.to_list(stream)
+[6,7,8,9,10]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L166" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="drop_while/2">
+    <strong>drop_while(enumerable, f)</strong>
+  </p>
+  <div class="docstring"><p>Lazily drops elements of the enumerable while the given
+function returns true.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.drop_while(1..10, &amp;1 &lt;= 5)
+iex&gt; Enum.to_list(stream)
+[6,7,8,9,10]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L191" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="filter/2">
+    <strong>filter(enumerable, f)</strong>
+  </p>
+  <div class="docstring"><p>Creates a stream that will filter elements according to
+the given function on enumeration.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.filter([1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end)
+iex&gt; Enum.to_list(stream)
+[2]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L216" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="iterate/2">
+    <strong>iterate(start_value, next_fun)</strong>
+  </p>
+  <div class="docstring"><p>Emit a sequence of values, starting with <code>start_value</code>. Successive
+values are generated by calling <code>next_fun</code> on the previous value.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Stream.iterate(0, &amp;1+1) |&gt; Enum.take(5)
+[0,1,2,3,4]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L237" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="map/2">
+    <strong>map(enumerable, f)</strong>
+  </p>
+  <div class="docstring"><p>Creates a stream that will apply the given function on
+enumeration.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.map([1, 2, 3], fn(x) -&gt; x * 2 end)
+iex&gt; Enum.to_list(stream)
+[2,4,6]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L260" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="reject/2">
+    <strong>reject(enumerable, f)</strong>
+  </p>
+  <div class="docstring"><p>Creates a stream that will reject elements according to
+the given function on enumeration.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.reject([1, 2, 3], fn(x) -&gt; rem(x, 2) == 0 end)
+iex&gt; Enum.to_list(stream)
+[1,3]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L281" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="repeatedly/1">
+    <strong>repeatedly(generator_fun)</strong>
+  </p>
+  <div class="docstring"><p>Returns a stream generated by calling <code>generator_fun</code> repeatedly.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Stream.repeatedly(function(:random.uniform/0)) |&gt; Enum.take(3)
+[0.4435846174457203, 0.7230402056221108, 0.94581636451987]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L301" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="take/2">
+    <strong>take(enumerable, n)</strong>
+  </p>
+  <div class="docstring"><p>Lazily takes the next <code>n</code> items from the enumerable and stops
+enumeration.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.take(1..100, 5)
+iex&gt; Enum.to_list(stream)
+[1,2,3,4,5]
+
+iex&gt; stream = Stream.cycle([1, 2, 3]) |&gt; Stream.take(5)
+iex&gt; Enum.to_list(stream)
+[1,2,3,1,2]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L327" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="take_while/2">
+    <strong>take_while(enumerable, f)</strong>
+  </p>
+  <div class="docstring"><p>Lazily takes elements of the enumerable while the given
+function returns true.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.take_while(1..100, &amp;1 &lt;= 5)
+iex&gt; Enum.to_list(stream)
+[1,2,3,4,5]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L352" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
+  <p class="signature" id="with_index/1">
+    <strong>with_index(enumerable)</strong>
+  </p>
+  <div class="docstring"><p>Creates a stream where each item in the enumerable will
+be accompanied by its index.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; stream = Stream.with_index([1, 2, 3])
+iex&gt; Enum.to_list(stream)
+[{1,0},{2,1},{3,2}]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/stream.ex#L377" target="_blank" class="view_source">Source</a>
+  
+</div>
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

@@ -27,7 +27,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Run the given expression in the application context.</p>
+          <p>Runs the given file or expession in the context of the application.</p>
 
 <p>Before running the code, it invokes the app.start task
 which defaults to compile and load your project.</p>
@@ -35,28 +35,30 @@ which defaults to compile and load your project.</p>
 <h2>Command line options</h2>
 
 <ul>
+<li><code>--eval</code>, <code>-e</code> - Evaluates the given code</li>
 <li><code>--require</code>, <code>-r</code> - Requires pattern before running the command</li>
 <li><code>--parallel-require</code>, <code>-pr</code> - Requires pattern in parallel</li>
 <li><code>--no-halt</code> - Does not halt the system after running the command</li>
-<li><code>--no-compile</code> - Do not compile even if files require compilation;</li>
-<li><code>--no-start</code> - Do not start applications after compilation;</li>
+<li><code>--no-compile</code> - Does not compile even if files require compilation</li>
+<li><code>--no-start</code> - Does not start applications after compilation</li>
 </ul>
 
 <h2>Examples</h2>
 
-<pre><code>mix run Hello.world
-mix run &quot;Some.function with_args&quot;
+<pre><code>mix run -e Hello.world
+mix run -e &quot;Some.function with_args&quot;
+mix run -r some_file.exs
 </code></pre>
 
 <p>Command line options given to the <code>elixir</code> executable can be passed as:</p>
 
-<pre><code>elixir --sname hello -S mix run &quot;My.code&quot;
+<pre><code>elixir --sname hello -S mix run -e &quot;My.code&quot;
 </code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/tasks/run.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/tasks/run.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -87,7 +89,7 @@ mix run &quot;Some.function with_args&quot;
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bde91c325c7d2014a395a9b989be19b1c870756a/lib/mix/lib/mix/tasks/run.ex#L30" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/tasks/run.ex#L32" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

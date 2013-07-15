@@ -34,12 +34,11 @@ An engine needs to implement two functions:</p>
 <li><p><code>handle_text(buffer, text)</code> - it receives the buffer,
 the text and must return a new quoted expression;</p></li>
 <li><p><code>handle_expr(buffer, marker, expr)</code> - it receives the buffer,
-the marker, the expr and must return a new quoted expression;</p></li>
-</ul>
+the marker, the expr and must return a new quoted expression;</p>
 
 <p>The marker is what follows exactly after <code>&lt;%</code>. For example,
-  <code>&lt;% foo %&gt;</code> has an empty marker, but <code>&lt;%= foo %&gt;</code> has <code>&#39;=&#39;</code>
-  as marker. The allowed markers so far are:</p>
+<code>&lt;% foo %&gt;</code> has an empty marker, but <code>&lt;%= foo %&gt;</code> has <code>&#39;=&#39;</code>
+as marker. The allowed markers so far are:</p>
 
 <ul>
 <li><code>&#39;&#39;</code></li>
@@ -47,12 +46,13 @@ the marker, the expr and must return a new quoted expression;</p></li>
 </ul>
 
 <p>Read <code>handle_expr/3</code> below for more information about the markers
-  implemented by default by this engine.</p>
+implemented by default by this engine.</p></li>
+</ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/eex/lib/eex/engine.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/eex/lib/eex/engine.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -93,7 +93,7 @@ the marker, the expr and must return a new quoted expression;</p></li>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/eex/lib/eex/engine.ex#L53" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/eex/lib/eex/engine.ex#L53" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="handle_expr/3">
@@ -108,7 +108,7 @@ the marker, the expr and must return a new quoted expression;</p></li>
 <p>All other markers are not implemented by this engine.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/eex/lib/eex/engine.ex#L38" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/eex/lib/eex/engine.ex#L38" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="handle_text/2">
@@ -117,7 +117,7 @@ the marker, the expr and must return a new quoted expression;</p></li>
   <div class="docstring"><p>The default implementation simply concatenates text to the buffer.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/eex/lib/eex/engine.ex#L26" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/eex/lib/eex/engine.ex#L26" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

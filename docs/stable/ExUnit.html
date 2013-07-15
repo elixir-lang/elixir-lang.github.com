@@ -35,11 +35,11 @@
 
 <pre><code># File: assertion_test.exs
 
-# 1) Start ExUnit. You could also pass some options to the start function
-# (see `configure/1` for the list of options)
+# 1) Start ExUnit. You can pass some options
+#    (see `configure/1` for the list of options)
 ExUnit.start
 
-# 2) Create a new test module (or &quot;case&quot;) and use ExUnit.Case
+# 2) Create a new test module (test case) and use ExUnit.Case
 defmodule AssertionTest do
   # 3) Notice we pass async: true, this runs the test case
   #    concurrently with other test cases
@@ -51,7 +51,7 @@ defmodule AssertionTest do
     assert true
   end
 
-  # 5) It is recommended to use the test macro instead of def
+  # 5) It is recommended to use the &quot;test&quot; macro instead of def
   test &quot;the truth&quot; do
     assert true
   end
@@ -79,26 +79,28 @@ generate assertions with appropriate error messages.</p>
 from the command line will run tests in each file matching the pattern
 &quot;*_test.exs&quot; found in the <code>test</code> directory of your project.</p>
 
-<p>By convention, you could also create a test_helper.exs file inside the
+<p>By convention, you could also create a <code>test_helper.exs</code> file inside the
 <code>test</code> directory and put the code common to all tests there.</p>
 
 <p>The minimum example of a test_helper.exs file would be:</p>
 
-<p># test/test_helper.exs
-  ExUnit.start</p>
+<pre><code># test/test_helper.exs
+ExUnit.start
+</code></pre>
 
 <p>Then, in each test file, require test_helper.exs before defining test modules
 (or cases):</p>
 
-<p># test/myproject<em>test.exs
-  Code.require</em>file &quot;test<em>helper.exs&quot;, _</em>DIR__</p>
+<pre><code># test/myproject_test.exs
+Code.require_file &quot;test_helper.exs&quot;, __DIR__
 
-<p># ... test cases follow</p>
+# ... test cases follow
+</code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/ex_unit/lib/ex_unit.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -108,6 +110,11 @@ from the command line will run tests in each file matching the pattern
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
+  <span class="summary_signature">
+    <a href="#configuration/0">configuration/0</a>
+  </span>
+</li>
+<li>
   <span class="summary_signature">
     <a href="#configure/1">configure/1</a>
   </span>
@@ -134,6 +141,15 @@ from the command line will run tests in each file matching the pattern
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="configuration/0">
+    <strong>configuration()</strong>
+  </p>
+  <div class="docstring"><p>Returns ExUnit configuration.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit.ex#L147" target="_blank" class="view_source">Source</a>
+  
+</div><div class="detail">
   <p class="signature" id="configure/1">
     <strong>configure(options)</strong>
   </p>
@@ -141,17 +157,19 @@ from the command line will run tests in each file matching the pattern
 
 <h2>Options</h2>
 
-<p>ExUnit supports the following options given to start:</p>
+<p>ExUnit supports the following options:</p>
 
 <ul>
 <li><p><code>:formatter</code> - The formatter that will print results.
              Defaults to <code>ExUnit.CLIFormatter</code>;</p></li>
 <li><p><code>:max_cases</code> - Maximum number of cases to run in parallel.
              Defaults to <code>:erlang.system_info(:schedulers_online)</code>;</p></li>
+<li><p><code>:trace</code> - Set ExUnit into trace mode, this set <code>:max_cases</code> to 1
+         and prints each test case and test while running;</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/ex_unit/lib/ex_unit.ex#L134" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit.ex#L138" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="run/0">
@@ -163,7 +181,7 @@ if ExUnit is started via <code>ExUnit.start</code>.</p>
 <p>Returns the number of failures.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/ex_unit/lib/ex_unit.ex#L144" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit.ex#L157" target="_blank" class="view_source">Source</a>
   
 </div><div class="detail">
   <p class="signature" id="start/1">
@@ -177,7 +195,7 @@ configure <code>ExUnit</code> (the same ones accepted by <code>configure/1</code
 function and rely on <code>configure/1</code> and <code>run/0</code> instead.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/ex_unit/lib/ex_unit.ex#L102" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit.ex#L104" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Binary.Inspect.Regex</title>
+    <title>Inspect.List</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,26 +21,15 @@
 
     <div id="content">
       <h1>
-        Binary.Inspect.Regex
+        Inspect.List
         
           <small>impl</small>
         
       </h1>
 
       
-        <div id="moduledoc" class="docstring">
-          <p>Represents the Regex using the <code>%r&quot;&quot;</code> syntax.</p>
 
-<h2>Examples</h2>
-
-<pre><code>iex&gt; inspect(%r/foo/m)
-&quot;%r\&quot;foo\&quot;m&quot;
-</code></pre>
-
-        </div>
-      
-
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/binary/inspect.ex#L403" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L194" target="_blank" class="view_source">Source</a>
 
       
 
@@ -67,11 +56,25 @@
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="inspect/2">
-    <strong>inspect(regex, opts)</strong>
+    <strong>inspect(thing, opts)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Represents a list, checking if it can be printed or not.
+If so, a single-quoted representation is returned,
+otherwise the brackets syntax is used. Keywords are
+printed in keywords syntax.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; inspect(&#39;bar&#39;)
+&quot;&#39;bar&#39;&quot;
+iex&gt; inspect([0|&#39;bar&#39;])
+&quot;[0, 98, 97, 114]&quot;
+iex&gt; inspect([:foo,:bar])
+&quot;[:foo, :bar]&quot;
+</code></pre>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.9.3/lib/elixir/lib/binary/inspect.ex#L414" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect.ex#L212" target="_blank" class="view_source">Source</a>
   
 </div>
         </div>
