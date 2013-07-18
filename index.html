@@ -81,7 +81,7 @@ Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
       <p>Since the <code>Enum</code> module is built on top of protocols, it is not only limited to the data types that ship with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enumerable</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
 
 {% highlight elixir %}
-file  = File.iterator!("README.md")
+file  = File.stream!("README.md")
 lines = Enum.map(file, fn(line) -> Regex.replace(%r/"/, line, "'") end)
 File.write("README.md", lines)
 {% endhighlight %}
