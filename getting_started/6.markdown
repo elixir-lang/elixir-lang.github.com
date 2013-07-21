@@ -20,13 +20,14 @@ Sigils starting with an uppercase letter never escape characters or do interpola
 
     %b-another binary-
 
-Internally, `%b` is translated as a function call to `__b__`. For instance, the docs for `%b` are available [in the function `__b__/2` defined in `Kernel` module](/docs/stable/Kernel.html#__b__/2).
+Internally, `%b` is translated as a function call to `sigil_b`. For instance, the docs for `%b` are available in the macro [`sigil_b/2`](/docs/stable/Kernel.html#sigil_b/2) defined in `Kernel` module.
 
 The sigils defined in Elixir by default are:
 
 * `%b` and `%B` - Returns a binary;
 * `%c` and `%C` - Returns a char list;
 * `%r` and `%R` - Returns a regular expression;
+* `%w` and `%W` - Returns a list of "words" split by whitespace;
 
 ## 6.2 Heredocs
 
