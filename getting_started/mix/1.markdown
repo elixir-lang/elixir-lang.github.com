@@ -214,7 +214,45 @@ Use `mix help` to get more information.
 
 If your dependency is another Mix  or rebar project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project have two dependencies that share the same dependency and the SCM information for the shared dependency doesn't match between the parent dependencies, Mix will mark that dependency as diverged and emit a warning. To solve this issue you can declare the shared dependency in your project and Mix will use that SCM information to fetch the dependency.
 
-## 1.5 Environments
+## 1.5 Umbrella projects
+
+It can be convenient to bundle multiple Mix projects together and run Mix tasks for them at the same time. They can be bundled and used together in an what is called an umbrella project. An umbrella project can be created with the following command:
+
+    $ mix new project --umbrella
+
+It will create a `mix.exs` file with the following contents:
+
+{% highlight elixir %}
+defmodule Project.Mixfile do
+  use Mix.Project
+
+  def project do
+    [ apps_path: "apps" ]
+  end
+end
+{% endhighlight %}
+
+The `apps_path` option specifies the directory where subprojects will reside. Mix tasks that run in the umbrella project will run for every project in the `apps_path` directory. For example `mix compile` or `mix test` will compile or test every project in the directory. It's important to note that an umbrella project is not a regular Mix project, it's not an OTP application nor can code source files be added.
+
+If there are interdependencies between subprojects these have to be specified so that Mix can compile the projects in the correct order. If one project A depends on another project B the dependency has to be specified in A's `mix.exs` file, add the following code to specifiy the dependency:
+
+{% highlight elixir %}
+defmodule A.Mixfile do
+  use Mix.Project
+
+  def project do
+    [ app: :a,
+      version: "0.0.1",
+      deps: deps ]
+  end
+
+  defp deps do
+    [ { :b, path: "../b" } ]
+  end
+end
+{% endhighlight %}
+
+## 1.6 Environments
 
 Mix has the concept of environments that allows a developer to customize compilation and other options based on an external setting. By default, Mix understands three environments:
 
