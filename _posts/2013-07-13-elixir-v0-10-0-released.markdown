@@ -64,7 +64,7 @@ This feature was a contribution from [Joseph Wilk](https://github.com/josephwilk
 
 ## Pretty printing
 
-Another addition to this release is pretty printing. The pretty printing started as an implementation of the [Wadler paper](http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf) by [Jonns Mostovoys](https://github.com/manpages) which was then improved by [Gustavo Brunoro](https://github.com/brunoro) under his Google Summer of Code project as described in [Lindig's &lquot;Strictly Prettier&rquot; paper](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.34.2200).
+Another addition to this release is pretty printing. The pretty printing started as an implementation of the [Wadler paper](http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf) by [Jonns Mostovoys](https://github.com/manpages) which was then improved by [Gustavo Brunoro](https://github.com/brunoro) under his Google Summer of Code project as described in [Lindig's _Strictly Prettier_ paper](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.34.2200).
 
 As soon as you upgrade to Elixir v0.10.0 and start IEx, you will get pretty printing for all data structures provided by Elixir. We have also added documentation to the `Inspect` module about [adding pretty printing to your own structures](http://elixir-lang.org/docs/stable/Inspect.html) as well as [using the document algebra for any other kind of formatting](http://elixir-lang.org/docs/stable/Inspect.Algebra.html).
 
