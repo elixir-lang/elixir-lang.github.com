@@ -216,11 +216,11 @@ If your dependency is another Mix  or rebar project, Mix does the right thing: i
 
 ## 1.5 Umbrella projects
 
-It can be convenient to bundle multiple Mix projects together and run Mix tasks for them at the same time. They can be bundled and used together in an what is called an umbrella project. An umbrella project can be created with the following command:
+It can be convenient to bundle multiple Mix projects together and run Mix tasks for them at the same time. They can be bundled and used together in what is called an umbrella project. An umbrella project can be created with the following command:
 
     $ mix new project --umbrella
 
-It will create a `mix.exs` file with the following contents:
+This will create a `mix.exs` file with the following contents:
 
 {% highlight elixir %}
 defmodule Project.Mixfile do
@@ -232,9 +232,9 @@ defmodule Project.Mixfile do
 end
 {% endhighlight %}
 
-The `apps_path` option specifies the directory where subprojects will reside. Mix tasks that run in the umbrella project will run for every project in the `apps_path` directory. For example `mix compile` or `mix test` will compile or test every project in the directory. It's important to note that an umbrella project is not a regular Mix project, it's not an OTP application nor can code source files be added.
+The `apps_path` option specifies the directory where subprojects will reside. Mix tasks that run in the umbrella project will run for every project in the `apps_path` directory. For example `mix compile` or `mix test` will compile or test every project in the directory. It's important to note that an umbrella project is neither a regular Mix project, nor is it an OTP application nor can code source files be added.
 
-If there are interdependencies between subprojects these have to be specified so that Mix can compile the projects in the correct order. If one project A depends on another project B the dependency has to be specified in A's `mix.exs` file, add the following code to specifiy the dependency:
+If there are interdependencies between subprojects these have to be specified so that Mix can compile the projects in the correct order. If Project A depends on Project B, the dependency has to be specified in Project A's `mix.exs` file; modify the `mix.exs` file to specify the dependency:
 
 {% highlight elixir %}
 defmodule A.Mixfile do
