@@ -8,7 +8,7 @@ layout: default
     <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
 
     <div class="entry-summary">
-      <p>Elixir is a functional meta-programming aware language built on top of the Erlang VM. It is a dynamic language with flexible syntax with macros support that leverages Erlang's abilities to build concurrent, distributed, fault-tolerant applications with hot code upgrades.</p>
+      <p>Elixir is a functional, meta-programming aware language built on top of the Erlang VM. It is a dynamic language with flexible syntax and macro support that leverages Erlang's abilities to build concurrent, distributed and fault-tolerant applications with hot code upgrades.</p>
       <p>Elixir also provides first-class support for pattern matching, polymorphism via protocols (similar to Clojure's), aliases and associative data structures (usually known as dicts or hashes in other programming languages).</p>
       <p>Finally, Elixir and Erlang share the same bytecode and data types. This means you can invoke Erlang code from Elixir (and vice-versa) without any conversion or performance hit. This allows a developer to mix the expressiveness of Elixir with the robustness and performance of Erlang.</p>
       <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
@@ -44,7 +44,7 @@ Function world defined
 Hello World
 </pre>
 
-      <p>This allows a module to be defined in terms of many expressions, programmable by the developer, being the basic foundation for meta-programming. This is similar to what Joe Armstrong (creator of Erlang) proposes with his <a href="https://github.com/joearms/erl2" target="_blank">erl2 project</a>.</p>
+      <p>This allows a module to be defined in terms of many expressions, programmable by the developer, being the basic foundation for meta-programming. This is similar to what Joe Armstrong (creator of Erlang) proposes in his <a href="https://github.com/joearms/erl2" target="_blank">erl2 project</a>.</p>
     </div>
   </div>
 
@@ -52,7 +52,7 @@ Hello World
     <h4>Meta-programming and DSLs</h4>
 
     <div class="entry-summary">
-      <p>With expressions and meta-programming, Elixir developers can easily create <a href="http://en.wikipedia.org/wiki/Domain-specific_language">Domain Specific Languages</a>:</p>
+      <p>Using expressions and meta-programming, Elixir developers can easily create <a href="http://en.wikipedia.org/wiki/Domain-specific_language">Domain Specific Languages</a>:</p>
 
 {% highlight elixir %}
 defmodule MathTest do
@@ -64,7 +64,7 @@ defmodule MathTest do
 end
 {% endhighlight %}
 
-      <p>DSLs allow a developer to write abstractions for specific domains, often getting rid of boilerplate code.</p>
+      <p>DSLs allow a developer to create abstractions for specific domains, often getting rid of boilerplate code.</p>
     </div>
   </div>
 
@@ -78,7 +78,7 @@ end
 Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 {% endhighlight %}
 
-      <p>Since the <code>Enum</code> module is built on top of protocols, it is not only limited to the data types that ship with Elixir. A developer can use his own collections with <code>Enum</code> as long as it implements the <code>Enumerable</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
+      <p>Since the <code>Enum</code> module is built on top of protocols, it is not limited to the data types that ship with Elixir. A developer can use their own collections with <code>Enum</code> as long as they implement the <code>Enumerable</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
 
 {% highlight elixir %}
 file  = File.stream!("README.md")
@@ -92,7 +92,7 @@ File.write("README.md", lines)
     <h4>Documentation as first-class citizen</h4>
 
     <div class="entry-summary">
-      <p>Documentation is supported at language level, in the form of docstrings. Markdown is Elixir's defacto markup language of choice for use in docstrings:</p>
+      <p>Documentation is supported at the language level in the form of docstrings. Markdown is Elixir's defacto markup language of choice for use in docstrings:</p>
 
 {% highlight elixir %}
 defmodule MyModule do
@@ -131,7 +131,7 @@ Documentation for my module. With **formatting**.
 { User, name, age } = User.get("John Doe")
 {% endhighlight %}
 
-      <p>When mixed with guards, it allows us to easily express our problem:</p>
+      <p>When mixed with guards, pattern matching allows us to easily express our intent:</p>
 
 {% highlight elixir %}
 def serve_drinks({ User, name, age }) when age < 21 do
@@ -160,7 +160,7 @@ serve_drinks User.get("John")
 #=> <<192,223,75,115,...>>
 {% endhighlight %}
 
-      <p>Since Elixir compiles to the same bytecode, it is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and works seamlessly with all the battle-tested techniques Erlang/OTP is famous for. Erlang type specifications, behaviors and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
+      <p>Since Elixir compiles to the same bytecode, it is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and works seamlessly with all the battle-tested techniques for which Erlang/OTP is famous. Erlang type specifications, behaviours and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
       <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
     </div>
   </div>
