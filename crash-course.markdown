@@ -502,7 +502,7 @@ Elixir doesn't require punctuation to separate clauses, but they must be grouped
 
 ### Function Overloading
 
-In both Erlang and Elixir, a function is not identified only by its name, but by its name and arity. In both examples above, we are defining four different functions (all named `sum`, but with different arity):
+In both Erlang and Elixir, a function is not identified only by its name, but by its name and arity. In both examples below, we are defining four different functions (all named `sum`, but with different arity):
 
 **Erlang**
 
