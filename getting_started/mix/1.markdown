@@ -60,7 +60,7 @@ defmodule MyProject.Mixfile do
   end
 
   # Returns the list of dependencies in the format:
-  # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
+  # { :foobar, "~> 0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
     []
   end
@@ -150,12 +150,29 @@ def project do
 end
 
 defp deps do
-  [ { :some_project, "0.3.0", github: "some_project/other" },
+  [ { :some_project, ">= 0.3.0", github: "some_project/other" },
     { :another_project, "1.0.2", git: "https://example.com/another/repo.git" } ]
 end
 {% endhighlight %}
 
 **Note:** Although not required, it is common to split dependencies into their own function.
+
+The dependency is represented by an atom, followed by the version requirement and some options detailed in the next section. The version requirement allows you to specify which versions of a given dependency you are willing to work against. It supports common operators like `>=`, `<=`, `>`, `==` as follows:
+
+    # Only version 2.0.0
+    "== 2.0.0"
+
+    # Anything later than 2.0.0
+    "> 2.0.0"
+
+Requirements also support `and` and `or` for complex conditions:
+
+    # 2.0.0 and later until 2.1.0
+    ">= 2.0.0 and < 2.1.0"
+
+Since the example above is such a common requirement, it can be expressed as:
+
+    "~> 2.0.0"
 
 ### 1.4.1 Source Code Management (SCM)
 
@@ -165,6 +182,7 @@ In the example above, we have used `git` to specify our dependencies. Mix is des
 * `:path` - the dependency is simply a path in the filesystem;
 * `:compile` - how to compile the dependency;
 * `:app` - the path of the application expected to be defined by the dependency;
+* `:env` - the environment to use from the dependency (more info below), defaults to `:prod`;
 
 Each SCM may support custom options. `:git`, for example, supports the following:
 
@@ -212,7 +230,7 @@ Use `mix help` to get more information.
 
 ### 1.4.5 Dependencies of dependencies
 
-If your dependency is another Mix  or rebar project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project have two dependencies that share the same dependency and the SCM information for the shared dependency doesn't match between the parent dependencies, Mix will mark that dependency as diverged and emit a warning. To solve this issue you can declare the shared dependency in your project and Mix will use that SCM information to fetch the dependency.
+If your dependency is another Mix or rebar project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project have two dependencies that share the same dependency and the SCM information for the shared dependency doesn't match between the parent dependencies, Mix will mark that dependency as diverged and emit a warning. To solve this issue you can declare the shared dependency in your project and Mix will use that SCM information to fetch the dependency.
 
 ## 1.5 Umbrella projects
 
