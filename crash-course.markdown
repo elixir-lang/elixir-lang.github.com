@@ -327,30 +327,22 @@ lines.
 """
 {% endhighlight %}
 
-### Keyword list (Orddict)
+### Keyword list
 
-Orddicts in Erlang are created using either `orddict:new/0` or `orddict:from_list/1` while Elixir offers a literal syntax and calls them keyword lists:
+Elixir offers a literal syntax for creating a list of two-item tuples where the first item in the tuple is an atom and calls them keyword lists:
 
 **Erlang**
 
 {% highlight erlang %}
-Dict = orddict:new(),
-Dict1 = orddict:store(key, 10, Dict),
-Dict2 = orddict:store(another_key, 20, Dict1).
-%=> [{another_key,20},{key,10}]
-
-Dict = orddict:from_list([{key, 10}, {another_key, 20}]).
-%=> [{another_key,20},{key,10}]
+[{another_key,20},{key,10}]
 {% endhighlight %}
 
 **Elixir**
 
 {% highlight elixir %}
-dict = [another_key: 20, key: 10]
-#=> [another_key: 20, key: 10]
+kw = [another_key: 20, key: 10]
+kw[:another_key] #=> 20
 {% endhighlight %}
-
-Their internal representation is the same though. Both are made of a list of tuples.
 
 ### Records
 
@@ -500,7 +492,7 @@ When defining a function with the same name multiple times, each such definition
 
 Elixir doesn't require punctuation to separate clauses, but they must be grouped together.
 
-### Function Overloading
+### Identifying functions
 
 In both Erlang and Elixir, a function is not identified only by its name, but by its name and arity. In both examples below, we are defining four different functions (all named `sum`, but with different arity):
 
