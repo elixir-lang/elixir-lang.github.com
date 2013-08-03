@@ -147,9 +147,9 @@ iex> h(Kernel.is_atom/1)
 ...
 ```
 
-## 6.5 Function retrieval and partial application
+## 6.5 Function capture
 
-Elixir supports a convenient syntax for retrieving functions. Let's suppose we have a list of binaries and we want to calculate the size of each of them. We could do it in the following way:
+Functions in Elixir are identified by their name and arity (the number of arguments it expects). Since passing functions around is a common practice in Elixir, Elixir provides the capture operator `&` as a convenience. Consider this example:
 
 ```iex
 iex> list = ["foo", "bar", "baz"]
@@ -158,51 +158,40 @@ iex> Enum.map list, fn(x) -> size(x) end
 [3,3,3]
 ```
 
-We could also write this as:
+We could write the second line using the capture operator as:
 
 ```iex
-iex> Enum.map list, size(&1)
+iex> Enum.map list, &size/1
 [3,3,3]
 ```
 
-The example above works as if `size(&1)` translates directly to `fn(x) -> size(x) end`. Since operators are also function calls, they can also benefit of the same syntax:
+The capture operator retrieves the function size with arity 1 as an anonymous function and passes it down to `Enum.map/2`. Remote calls can also be captured:
 
 ```iex
-iex> Enum.reduce [1,2,3], 1, &1 * &2
-6
+iex> fun = &Kernel.size/1
+&Kernel.size/1
+iex> fun.("hello")
+5
 ```
 
-In this case, `&1 * &2` translates to `fn(x, y) -> x * y end`. The values `&1` and `&2` map to the argument order in the generated function.
-
-Keep in mind that `&N` binds only to the closest function call. For example, the following syntax is invalid:
+A capture also allows the captured functions to be partially applied, for example:
 
 ```iex
-iex> foo(&1, 1 + &2)
-** (SyntaxError) iex:1: partial variable &2 cannot be defined without &1
+iex> fun = &atom_to_binary(&1, :utf8)
+#Function<6.17052888 in :erl_eval.expr/5>
+iex> fun.(:hello)
+"hello"
 ```
 
-This is because we have two functions calls in the example above, `foo` and `+`, and `&1` binds to `foo` while `&2` binds to `+`. Let's add some parenthesis to make it explicit:
+In the example above, we use &1 as a placeholder, generating a function with one argument. The capture above is equivalent to `fn(x) -> atom_to_binary(&1, :utf8) end`.
 
-```iex
-iex> foo(&1, (1 + &2))
-** (SyntaxError) iex:1: partial variable &2 cannot be defined without &1
-```
+Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses around:
 
-In such cases, you need to use the usual function syntax:
+    iex> fun = &(&1 + &2)
+    iex> fun.(1, 2)
+    3
 
-```iex
-iex> fn(x, y) -> foo(x, 1 + y) end
-#Function<erl_eval.12.82930912>
-```
-
-Finally, notice this syntax can also be used to do partial application in Elixir. For instance, if we want to multiply each item in a list per two, we could write it as:
-
-```iex
-iex> Enum.map [1,2,3], &1 * 2
-[2,4,6]
-```
-
-All functions and macros can be retrieved and partially applied, except [Elixir's special forms](/docs/stable/Kernel.SpecialForms.html).
+The capture operator is a handy way of capturing functions and passing them around as anonymous functions. To learn more about it, [check out its documentation](http://elixir-lang.org/docs/stable/Kernel.SpecialForms.html#&/1).
 
 ## 6.6 Use
 
