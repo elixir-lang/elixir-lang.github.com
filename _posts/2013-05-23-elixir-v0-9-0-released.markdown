@@ -18,9 +18,9 @@ Let's talk about the goodies!
 
 We have spent some time improving compilation time. The particular scenario we have worked on was the definition of records:
 
-{% highlight elixir %}
+```elixir
 defrecord User, name: nil, age: nil
-{% endhighlight %}
+```
 
 Records are a good scenario because they are implemented in Elixir, using Elixir macros, and they also define a module underneath, which exercises the Erlang VM compilation stack.
 
@@ -52,10 +52,10 @@ A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implem
 
 Elixir v0.9.0 changes its main abstraction for enumeration from iterators to reducers. Before Elixir v0.9.0, when you invoked:
 
-{% highlight elixir %}
+```elixir
 Enum.map([1,2,3], fn(x) -> x * x end)
 #=> [1, 4, 9]
-{% endhighlight %}
+```
 
 It asked the `Enum.Iterator` protocol for instructions on how to iterate the list `[1,2,3]`. This iteration happened by retrieving each item in the list, one by one, until there were no items left.
 
@@ -69,7 +69,7 @@ Reducers solve all of those problems by using a more functional approach. Instea
 
 Here is how we implement the `Enumerable` protocol for lists:
 
-{% highlight elixir %}
+```elixir
 defimpl Enumerable, for: List do
   def reduce(list, acc, fun) do
     do_reduce(list, acc, fun)
@@ -83,19 +83,19 @@ defimpl Enumerable, for: List do
     acc
   end
 end
-{% endhighlight %}
+```
 
 The implementation above works as a simple `reduce` function (also called `fold`, `inject` or `foldl` in other languages). Here is how it works:
 
-{% highlight elixir %}
+```elixir
 # Sum all elements in a list
 Enumerable.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
 #=> 6
-{% endhighlight %}
+```
 
 The `Enum.map/2` we have used above is now implemented in terms of this reducing function:
 
-{% highlight elixir %}
+```elixir
 defmodule Enum do
   def map(collection, fun) do
     Enumerable.reduce(collection, [], fn(x, acc) ->
@@ -103,7 +103,7 @@ defmodule Enum do
     end) |> reverse
   end
 end
-{% endhighlight %}
+```
 
 This approach solves all the problems above:
 

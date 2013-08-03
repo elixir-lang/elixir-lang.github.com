@@ -78,21 +78,25 @@ When you install Elixir, you will have three new executables: `iex`, `elixir` an
 
 For now, let's start by running `iex` which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result straight away. Let's warm up with some basic arithmetic expressions:
 
-    iex> 1 + 1
-    2
-    iex> 10 - 5
-    5
-    iex> 10 / 2
-    5.0
+```iex
+iex> 1 + 1
+2
+iex> 10 - 5
+5
+iex> 10 / 2
+5.0
+```
 
 Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir the operator `/` always returns a float. In case you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
-    iex> div(10, 2)
-    5
-    iex> div 10, 2
-    5
-    iex> rem 10, 3
-    1
+```iex
+iex> div(10, 2)
+5
+iex> div 10, 2
+5
+iex> rem 10, 3
+1
+```
 
 In the example above, we called two functions called `div` and `rem`. Notice that parentheses are not required in order to invoke a function. We are going to discuss more about it later. Let's move forward and see which other data types we have in Elixir:
 
@@ -100,62 +104,80 @@ In the example above, we called two functions called `div` and `rem`. Notice tha
 
 Some basic types are:
 
-    iex> 1          # integer
-    iex> 0x1F       # integer
-    iex> 1.0        # float
-    iex> :atom      # atom / symbol
-    iex> {1,2,3}    # tuple
-    iex> [1,2,3]    # list
-    iex> <<1,2,3>>  # binary
+```iex
+iex> 1          # integer
+iex> 0x1F       # integer
+iex> 1.0        # float
+iex> :atom      # atom / symbol
+iex> {1,2,3}    # tuple
+iex> [1,2,3]    # list
+iex> <<1,2,3>>  # binary
+```
 
 Elixir by default provides many functions to work on those types:
 
-    iex> size { 1, 2, 3 }
-    3
+```iex
+iex> size { 1, 2, 3 }
+3
 
-    iex> length [ 1, 2, 3 ]
-    3
+iex> length [ 1, 2, 3 ]
+3
+```
 
 Elixir also provides functions (note the dot between the variable and arguments when calling a function):
 
-    # function
-    iex> x = fn(a, b) -> a + b end
-    #Fun<erl_eval.12.111823515>
-    iex> x.(1, 2)
-    3
+```iex
+# function
+iex> x = fn(a, b) -> a + b end
+#Fun<erl_eval.12.111823515>
+iex> x.(1, 2)
+3
+```
 
 Elixir also supports strings and they are all encoded in UTF-8:
 
-    iex> "hellö"
-    "hellö"
+```iex
+iex> "hellö"
+"hellö"
+```
 
 Strings support interpolation too:
 
-    iex> name = "world"
-    iex> "hello #{name}"
-    "hello world"
+```iex
+iex> name = "world"
+iex> "hello #{name}"
+"hello world"
+```
 
 At the end of the day, strings are nothing more than binaries. We can check it using the `is_binary` function:
 
-    iex> is_binary("hello")
-    true
+```iex
+iex> is_binary("hello")
+true
+```
 
 Note a single-quoted expression in Elixir is a char list and it is not the same as a double-quoted one:
 
-    iex> is_binary('hello')
-    false
+```iex
+iex> is_binary('hello')
+false
+```
 
 We will go into more details about char lists in the next chapter. Finally, Elixir also provides `true` and `false` as booleans:
 
-    iex> true
-    true
-    iex> is_boolean false
-    true
+```iex
+iex> true
+true
+iex> is_boolean false
+true
+```
 
 Booleans are represented internally as atoms:
 
-    iex> is_atom(true)
-    true
+```iex
+iex> is_atom(true)
+true
+```
 
 Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication) but they are out of the scope of a getting started tutorial. For now, let's take a look at the basic operators in Elixir before we move on to the next chapter.
 
@@ -165,82 +187,100 @@ As we saw earlier, Elixir provides `+`, `-`, `*`, `/` as arithmetic operators.
 
 Elixir also provides `++` and `--` to manipulate lists:
 
-    iex> [1,2,3] ++ [4,5,6]
-    [1,2,3,4,5,6]
-    iex> [1,2,3] -- [2]
-    [1,3]
+```iex
+iex> [1,2,3] ++ [4,5,6]
+[1,2,3,4,5,6]
+iex> [1,2,3] -- [2]
+[1,3]
+```
 
 String concatenation is done via `<>`:
 
-    iex> "foo" <> "bar"
-    "foobar"
+```iex
+iex> "foo" <> "bar"
+"foobar"
+```
 
 Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense they expect a boolean (true or false) as their first argument:
 
-    iex> true and true
-    true
-    iex> false or is_atom(:example)
-    true
+```iex
+iex> true and true
+true
+iex> false or is_atom(:example)
+true
+```
 
 Giving a non-boolean will raise an exception:
 
-    iex> 1 and true
-    ** (ArgumentError) argument error
+```iex
+iex> 1 and true
+** (ArgumentError) argument error
+```
 
 `or` and `and` are short-circuit operators. They just execute the right side in case the left side is not enough to determine the result:
 
-    iex> false and error("This error will never be raised")
-    false
+```iex
+iex> false and error("This error will never be raised")
+false
 
-    iex> true or error("This error will never be raised")
-    true
+iex> true or error("This error will never be raised")
+true
+```
 
 > Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
 
 Besides those boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
 
-    # or
-    iex> 1 || true
-    1
-    iex> false || 11
-    11
+```iex
+# or
+iex> 1 || true
+1
+iex> false || 11
+11
 
-    # and
-    iex> nil && 13
-    nil
-    iex> true && 17
-    17
+# and
+iex> nil && 13
+nil
+iex> true && 17
+17
 
-    # !
-    iex> !true
-    false
-    iex> !1
-    false
-    iex> !nil
-    true
+# !
+iex> !true
+false
+iex> !1
+false
+iex> !nil
+true
+```
 
 As a rule of thumb, use `and`, `or` and `not` when you are expecting a booleans. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
 
 Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
 
-    iex> 1 == 1
-    true
-    iex> 1 != 2
-    true
-    iex> 1 < 2
-    true
+```iex
+iex> 1 == 1
+true
+iex> 1 != 2
+true
+iex> 1 < 2
+true
+```
 
 The difference between `==` and `===` is that the latter is more strict when comparing integers and floats:
 
-    iex> 1 == 1.0
-    true
-    iex> 1 === 1.0
-    false
+```iex
+iex> 1 == 1.0
+true
+iex> 1 === 1.0
+false
+```
 
 In Elixir, we can compare two different data types:
 
-    iex> 1 < :atom
-    true
+```iex
+iex> 1 < :atom
+true
+```
 
 The reason we can compare different data types is for pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
 

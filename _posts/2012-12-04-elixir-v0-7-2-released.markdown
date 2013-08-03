@@ -14,7 +14,7 @@ the type specification syntax.
 
 Here's the gist:
 
-{% highlight elixir %}
+```elixir
 @spec myfun(integer), do: integer
 # becomes
 @spec myfun(integer) :: integer
@@ -34,7 +34,7 @@ Here's the gist:
 @type a :: fun(integer, integer, do: integer)
 # becomes
 @type a :: (integer, integer -> integer) or ((integer, integer) -> integer) or (fun(integer, integer) -> integer)
-{% endhighlight %}
+```
 
 Another change is that Mix now echoes the output of external tools
 such as git and rebar, and handles exit status correctly. This have previously

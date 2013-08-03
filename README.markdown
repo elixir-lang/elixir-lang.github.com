@@ -32,10 +32,10 @@ Development is done in the `next` branch, while `master` contains the docs and g
 
 3. Test it locally
 
-   You need to install `jekyll` and `rdiscount`
+   You need to install `jekyll` and `redcarpet`
 
    ```shell
-   $ gem install jekyll rdiscount
+   $ gem install jekyll redcarpet
    $ jekyll serve # check localhost:4000
    ```
 
