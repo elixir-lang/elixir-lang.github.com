@@ -33,24 +33,24 @@
 
 <p>The functions in this module act according to the
 Unicode Standard, version 6.2.0. For example,
-<code>titlecase</code>, <code>downcase</code>, <code>strip</code> are provided by this
+<a href="#capitalize/1"><code>capitalize/1</code></a>, <a href="#downcase/1"><code>downcase/1</code></a>, <a href="#strip/1"><code>strip/1</code></a> are provided by this
 module.</p>
 
 <p>Besides this module, Elixir provides more low-level
-operations that works directly with binaries. Some
+operations that work directly with binaries. Some
 of those can be found in the <code>Kernel</code> module, as:</p>
 
 <ul>
-<li><code>binary_part/2</code> and <code>binary_part/3</code> - retrieves part of the binary</li>
-<li><code>bit_size/1</code> and <code>byte_size/1</code> - size related functions</li>
-<li><code>is_bitstring/1</code> and <code>is_binary/1</code> - type checking function</li>
-<li>Plus a bunch of conversion functions, like <code>binary_to_atom/2</code>,
-<code>binary_to_integer/2</code>, <code>binary_to_term/1</code> and their opposite
-like <code>integer_to_binary/2</code></li>
+<li><code>Kernel.binary_part/2</code> and <code>Kernelbinary_part/3</code> - retrieves part of the binary</li>
+<li><code>Kernel.bit_size/1</code> and <code>Kernel.byte_size/1</code> - size related functions</li>
+<li><code>Kernel.is_bitstring/1</code> and <code>Kernel.is_binary/1</code> - type checking function</li>
+<li>Plus a number of conversion functions, like <code>Kernel.binary_to_atom/2</code>,
+<code>Kernel.binary_to_integer/2</code>, <code>Kernel.binary_to_term/1</code> and their opposite
+like <code>Kernel.integer_to_binary/2</code></li>
 </ul>
 
-<p>Finally, <a href="http://erlang.org/doc/man/binary.html">the <code>:binary</code> module</a>
-provides a couple other functions that works on the byte level.</p>
+<p>Finally, the <a href="http://erlang.org/doc/man/binary.html"><code>:binary</code> module</a>
+provides a few other functions that work on the byte level.</p>
 
 <h2>Codepoints and graphemes</h2>
 
@@ -128,7 +128,7 @@ to the definition of the encoding) is encountered, only one
 codepoint needs to be rejected.</p>
 
 <p>This module relies on this behaviour to ignore such invalid
-characters. For example, <code>String.length</code> is going to return
+characters. For example, <a href="#length/1"><code>length/1</code></a> is going to return
 a correct result even if an invalid codepoint is fed into it.</p>
 
 <p>In other words, this module expects invalid data to be detected
@@ -139,7 +139,7 @@ responsible to check the validity of the encoding.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -195,6 +195,16 @@ responsible to check the validity of the encoding.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#from_char_list/1">from_char_list/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#from_char_list!/1">from_char_list!/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#graphemes/1">graphemes/1</a>
   </span>
 </li>
@@ -240,6 +250,11 @@ responsible to check the validity of the encoding.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#reverse/1">reverse/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#rstrip/1">rstrip/1</a>
   </span>
 </li>
@@ -276,6 +291,16 @@ responsible to check the validity of the encoding.</p>
 <li>
   <span class="summary_signature">
     <a href="#strip/2">strip/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_char_list/1">to_char_list/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#to_char_list!/1">to_char_list!/1</a>
   </span>
 </li>
 <li>
@@ -341,18 +366,19 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L716" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L740" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="capitalize/1">
     <strong>capitalize(string)</strong>
   </p>
   <div class="docstring"><p>Converts the first character in the given string to
-titlecase and the remaining to downcase.</p>
+uppercase and the remaining to lowercase.</p>
 
 <p>This relies on the titlecase information provided
 by the Unicode Standard. Note this function makes
-no attempt in capitalizing all words in the string
+no attempt to capitalize all words in the string
 (usually known as titlecase).</p>
 
 <h2>Examples</h2>
@@ -366,9 +392,10 @@ iex&gt; String.capitalize(&quot;josé&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L312" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L312" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="codepoints/1">
     <strong>codepoints(string)</strong>
   </p>
@@ -385,13 +412,14 @@ iex&gt; String.codepoints(&quot;ἅἪῼ&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L503" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L527" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="contains?/2">
     <strong>contains?(string, matches)</strong>
   </p>
-  <div class="docstring"><p>Returns true if <code>string</code> contains match, otherwise false.
+  <div class="docstring"><p>Returns <code>true</code> if <code>string</code> contains match, otherwise <code>false</code>.
 <code>matches</code> can be either a single string or a list of strings.</p>
 
 <h2>Examples</h2>
@@ -405,13 +433,14 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L954" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L978" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="downcase/1">
     <strong>downcase(binary)</strong>
   </p>
-  <div class="docstring"><p>Convert all characters on the given string to downcase.</p>
+  <div class="docstring"><p>Convert all characters on the given string to lowercase.</p>
 
 <h2>Examples</h2>
 
@@ -424,9 +453,10 @@ iex&gt; String.downcase(&quot;JOSÉ&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L290" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L290" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="duplicate/2">
     <strong>duplicate(subject, n)</strong>
   </p>
@@ -443,14 +473,15 @@ iex&gt; String.duplicate(&quot;abc&quot;, 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L485" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L509" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="ends_with?/2">
     <strong>ends_with?(string, suffixes)</strong>
   </p>
-  <div class="docstring"><p>Returns true if <code>string</code> ends with any of the suffixes given, otherwise
-false. <code>suffixes</code> can be either a single suffix or a list of suffixes.</p>
+  <div class="docstring"><p>Returns <code>true</code> if <code>string</code> ends with any of the suffixes given, otherwise
+<code>false</code>. <code>suffixes</code> can be either a single suffix or a list of suffixes.</p>
 
 <h2>Examples</h2>
 
@@ -463,9 +494,10 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L915" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L939" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="escape/2">
     <strong>escape(other, char)</strong>
   </p>
@@ -482,9 +514,10 @@ iex&gt; String.escape(&quot;a\nb&quot;, ?&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L154" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L154" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="first/1">
     <strong>first(string)</strong>
   </p>
@@ -500,9 +533,48 @@ iex&gt; String.first(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L644" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L668" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
+  <p class="signature" id="from_char_list/1">
+    <strong>from_char_list(list)</strong>
+  </p>
+  <div class="docstring"><p>Converts a list of integer codepoints to a string.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; String.from_char_list([0x00E6, 0x00DF])
+{ :ok, &quot;æß&quot; }
+iex&gt; String.from_char_list([0x0061, 0x0062, 0x0063])
+{ :ok, &quot;abc&quot; }
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L1079" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="from_char_list!/1">
+    <strong>from_char_list!(list)</strong>
+  </p>
+  <div class="docstring"><p>Converts a list of integer codepoints to a string.</p>
+
+<p>In case the conversion fails, it raises a <code>String.UnicodeConversionError</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; String.from_char_list!([0x00E6, 0x00DF])
+&quot;æß&quot;
+iex&gt; String.from_char_list!([0x0061, 0x0062, 0x0063])
+&quot;abc&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L1106" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="graphemes/1">
     <strong>graphemes(string)</strong>
   </p>
@@ -515,14 +587,15 @@ iex&gt; String.first(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L613" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L637" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="last/1">
     <strong>last(string)</strong>
   </p>
   <div class="docstring"><p>Returns the last grapheme from an utf8 string,
-nil if the string is empty.</p>
+<code>nil</code> if the string is empty.</p>
 
 <h2>Examples</h2>
 
@@ -533,9 +606,10 @@ iex&gt; String.last(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L664" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L688" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="length/1">
     <strong>length(string)</strong>
   </p>
@@ -550,9 +624,10 @@ iex&gt; String.length(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L686" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L710" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="lstrip/1">
     <strong>lstrip(binary)</strong>
   </p>
@@ -566,9 +641,10 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L376" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L376" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="lstrip/2">
     <strong>lstrip(other, char)</strong>
   </p>
@@ -581,9 +657,10 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L390" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L390" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="next_codepoint/1">
     <strong>next_codepoint(string)</strong>
   </p>
@@ -593,7 +670,7 @@ has been removed.</p>
 remaining of the string or <code>:no_codepoint</code> in case
 the string reached its end.</p>
 
-<p>As the other functions in the String module, this
+<p>As with other functions in the String module, this
 function does not check for the validity of the codepoint.
 That said, if an invalid codepoint is found, it will
 be returned by this function.</p>
@@ -605,9 +682,10 @@ be returned by this function.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L524" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L548" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="next_grapheme/1">
     <strong>next_grapheme(string)</strong>
   </p>
@@ -624,14 +702,15 @@ the String reached its end.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L629" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L653" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="printable?/1">
     <strong>printable?(arg1)</strong>
   </p>
   <div class="docstring"><p>Checks if a string is printable considering it is encoded
-as UTF-8. Returns true if so, false otherwise.</p>
+as UTF-8. Returns <code>true</code> if so, <code>false</code> otherwise.</p>
 
 <h2>Examples</h2>
 
@@ -640,15 +719,16 @@ true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L121" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="replace/4">
     <strong>replace(subject, pattern, replacement, options // [])</strong>
   </p>
   <div class="docstring"><p>Returns a new binary based on <code>subject</code> by replacing the parts
 matching <code>pattern</code> for <code>replacement</code>. By default, it replaces
-all entries, except if the <code>global</code> option is set to false.</p>
+all entries, except if the <code>global</code> option is set to <code>false</code>.</p>
 
 <p>If the replaced part must be used in <code>replacement</code>, then the
 position or the positions where it is to be inserted must be
@@ -669,9 +749,30 @@ iex&gt; String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;[]&quot;, insert_
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L456" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L456" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
+  <p class="signature" id="reverse/1">
+    <strong>reverse(string)</strong>
+  </p>
+  <div class="docstring"><p>Reverses the given string. Works on graphemes.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; String.reverse(&quot;abcd&quot;)
+&quot;dcba&quot;
+iex&gt; String.reverse(&quot;hello world&quot;)
+&quot;dlrow olleh&quot;
+iex&gt; String.reverse(&quot;hello ∂og&quot;)
+&quot;go∂ olleh&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L485" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="rstrip/1">
     <strong>rstrip(binary)</strong>
   </p>
@@ -685,9 +786,10 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L328" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L328" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="rstrip/2">
     <strong>rstrip(string, char)</strong>
   </p>
@@ -700,15 +802,16 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L341" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L341" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="slice/3">
     <strong>slice(string, start, len)</strong>
   </p>
   <div class="docstring"><p>Returns a substring starting at the offset given by the first, and
 a length given by the second.
-If the offset is greater than string length, than it returns nil.</p>
+If the offset is greater than string length, than it returns <code>nil</code>.</p>
 
 <h2>Examples</h2>
 
@@ -731,13 +834,14 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L765" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L789" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="split/1">
     <strong>split(binary)</strong>
   </p>
-  <div class="docstring"><p>Splits a string on sub strings at each Unicode whitespace
+  <div class="docstring"><p>Splits a string on substrings at each Unicode whitespace
 occurrence with leading and trailing whitespace ignored.</p>
 
 <h2>Examples</h2>
@@ -751,18 +855,19 @@ iex&gt; String.split(&quot; foo bar &quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L217" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L217" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="split/3">
     <strong>split(binary, pattern, options // [])</strong>
   </p>
-  <div class="docstring"><p>Divides a string into sub strings based on a pattern,
-returning a list of these sub string. The pattern can
+  <div class="docstring"><p>Divides a string into substrings based on a pattern,
+returning a list of these substrings. The pattern can
 be a string, a list of strings or a regular expression.</p>
 
 <p>The string is split into as many parts as possible by
-default, unless the <code>global</code> option is set to false.</p>
+default, unless the <code>global</code> option is set to <code>false</code>.</p>
 
 <h2>Examples</h2>
 
@@ -783,14 +888,15 @@ iex&gt; String.split(&quot;a,b&quot;, %r{\.})
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L247" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L247" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="starts_with?/2">
     <strong>starts_with?(string, prefixes)</strong>
   </p>
-  <div class="docstring"><p>Returns true if <code>string</code> starts with any of the prefixes given, otherwise
-false. <code>prefixes</code> can be either a single prefix or a list of prefixes.</p>
+  <div class="docstring"><p>Returns <code>true</code> if <code>string</code> starts with any of the prefixes given, otherwise
+<code>false</code>. <code>prefixes</code> can be either a single prefix or a list of prefixes.</p>
 
 <h2>Examples</h2>
 
@@ -803,9 +909,10 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L879" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L903" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="strip/1">
     <strong>strip(string)</strong>
   </p>
@@ -819,9 +926,10 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L410" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L410" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="strip/2">
     <strong>strip(string, char)</strong>
   </p>
@@ -835,16 +943,58 @@ removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L426" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L426" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
+  <p class="signature" id="to_char_list/1">
+    <strong>to_char_list(string)</strong>
+  </p>
+  <div class="docstring"><p>Converts a string into a char list converting each codepoint to its
+respective integer value.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; String.to_char_list(&quot;æß&quot;)
+{ :ok, &#39;æß&#39; }
+iex&gt; String.to_char_list(&quot;abc&quot;)
+{ :ok, &#39;abc&#39; }
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L1025" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="to_char_list!/1">
+    <strong>to_char_list!(string)</strong>
+  </p>
+  <div class="docstring"><p>Converts a string into a char list converting each codepoint to its
+respective integer value.</p>
+
+<p>In case the conversion fails or is incomplete,
+it raises a <code>String.UnicodeConversionError</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; String.to_char_list!(&quot;æß&quot;)
+&#39;æß&#39;
+iex&gt; String.to_char_list!(&quot;abc&quot;)
+&#39;abc&#39;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L1054" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="to_float/1">
     <strong>to_float(string)</strong>
   </p>
   <div class="docstring"><p>Converts a string to a float. If successful, returns a
-tuple of form {float, remainder of string}. If unsuccessful,
-returns :error. If given an integer value, will return
-same as to_integer/1.</p>
+tuple of the form <code>{float, remainder of string}</code>. If unsuccessful,
+returns <code>:error</code>. If given an integer value, will return
+the same value as <a href="#to_integer/1"><code>to_integer/1</code></a>.</p>
 
 <h2>Examples</h2>
 
@@ -859,15 +1009,16 @@ iex&gt; String.to_float(&quot;pi&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L849" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L873" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="to_integer/1">
     <strong>to_integer(string)</strong>
   </p>
   <div class="docstring"><p>Converts a string to an integer. If successful, returns a
-tuple of form {integer, remainder of string}. If unsuccessful,
-returns :error.</p>
+tuple of the form <code>{integer, remainder of string}</code>. If unsuccessful,
+returns <code>:error</code>.</p>
 
 <h2>Examples</h2>
 
@@ -880,13 +1031,14 @@ iex&gt; String.to_integer(&quot;three&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L821" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L845" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="upcase/1">
     <strong>upcase(binary)</strong>
   </p>
-  <div class="docstring"><p>Convert all characters on the given string to upcase.</p>
+  <div class="docstring"><p>Convert all characters on the given string to uppercase.</p>
 
 <h2>Examples</h2>
 
@@ -899,9 +1051,10 @@ iex&gt; String.upcase(&quot;josé&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L274" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L274" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="valid?/1">
     <strong>valid?(arg1)</strong>
   </p>
@@ -920,9 +1073,10 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L550" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L574" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="valid_character?/1">
     <strong>valid_character?(codepoint)</strong>
   </p>
@@ -945,9 +1099,10 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L578" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L602" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="valid_codepoint?/1">
     <strong>valid_codepoint?(arg1)</strong>
   </p>
@@ -969,9 +1124,10 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/string.ex#L600" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/string.ex#L624" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

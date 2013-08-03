@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -116,8 +116,9 @@ or if duplicated switches should be kept, overriden or accumulated.</p>
 <pre><code>iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;path/to/file&quot;], switches: [unlock: :boolean])
 { [unlock: true], [&quot;path/to/file&quot;] }
 
-iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;false&quot;, &quot;path/to/file&quot;], switches: [unlock: :boolean])
-{ [unlock: false], [&quot;path/to/file&quot;] }
+iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;--limit&quot;, &quot;0&quot;, &quot;path/to/file&quot;],
+...&gt;                    switches: [unlock: :boolean, limit: :integer])
+{ [unlock: true, limit: 0], [&quot;path/to/file&quot;] }
 </code></pre>
 
 <h2>Negation switches</h2>
@@ -128,18 +129,25 @@ booleans and never parse the next value:</p>
 <pre><code>iex&gt; OptionParser.parse([&quot;--no-op&quot;, &quot;path/to/file&quot;])
 { [no_op: true], [&quot;path/to/file&quot;] }
 </code></pre>
+
+<p>In case the negated switch exists as a boolean, it sets the boolean to false:</p>
+
+<pre><code>iex&gt; OptionParser.parse([&quot;--no-op&quot;, &quot;path/to/file&quot;], switches: [op: :boolean])
+{ [op: false], [&quot;path/to/file&quot;] }
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/option_parser.ex#L63" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/option_parser.ex#L69" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="parse_head/2">
     <strong>parse_head(argv, opts // [])</strong>
   </p>
-  <div class="docstring"><p>Similar to <code>parse/2</code> but only parses the head of <code>argv</code>;
+  <div class="docstring"><p>Similar to <a href="#parse/2"><code>parse/2</code></a> but only parses the head of <code>argv</code>;
 as soon as it finds a non-switch, it stops parsing.</p>
 
-<p>See <code>parse/2</code> for more information.</p>
+<p>See <a href="#parse/2"><code>parse/2</code></a> for more information.</p>
 
 <h2>Example</h2>
 
@@ -151,9 +159,10 @@ iex&gt; OptionParser.parse_head([&quot;--verbose&quot;, &quot;--source&quot;, &q
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/option_parser.ex#L81" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/option_parser.ex#L87" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

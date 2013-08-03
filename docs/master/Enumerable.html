@@ -40,14 +40,14 @@ perform operations on the collection.</p>
 <pre><code>Enum.map([1, 2, 3], &amp;1 * 2)
 </code></pre>
 
-<p><code>Enum.map</code> invokes <code>Enumerable.reduce</code> to perform the reducing operation
+<p><code>Enum.map/2</code> invokes <code>Enumerable.reduce/3</code> to perform the reducing operation
 that builds a mapped list by calling the mapping function <code>&amp;1 * 2</code> on every
 element in the collection and cons&#39;ing the element with the accumulated list.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
 
       
         <h2 id="implementations">Implementations</h2>
@@ -127,21 +127,23 @@ element in the collection and cons&#39;ing the element with the accumulated list
   <p class="signature" id="count/1">
     <strong>count(collection)</strong>
   </p>
-  <div class="docstring"><p>The function used to retrieve the collection&#39;s size.</p>
+  <div class="docstring"><p>The function is used to retrieve the collection&#39;s size.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="member?/2">
     <strong>member?(collection, value)</strong>
   </p>
-  <div class="docstring"><p>The function used to check if a value exists within the collection.</p>
+  <div class="docstring"><p>The function is used to check if a value exists within the collection.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="reduce/3">
     <strong>reduce(collection, acc, fun)</strong>
   </p>
@@ -155,7 +157,7 @@ element with the accumulated value.</p>
 def reduce([], acc, _fun),   do: acc
 </code></pre>
 
-<p>As an additional example, here is the implementation of <code>Enum.map</code> with
+<p>As an additional example, here is the implementation of <code>Enum.map/2</code> with
 <code>Enumerable</code>:</p>
 
 <pre><code>def map(collection, fun) do
@@ -166,9 +168,10 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

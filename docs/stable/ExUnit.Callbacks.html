@@ -35,9 +35,9 @@ keyword list with metadata, usually referred to as <code>context</code>. The cal
 may optionally put extra data into <code>context</code> to be used in the tests.</p>
 
 <p><strong>Note</strong>: <code>setup</code> and <code>teardown</code> callbacks share the same context, it
-provides an ExUnit.Test record associated with the <code>:test</code> key. <code>setup_all</code>
+provides an <code>ExUnit.Test</code> record associated with the <code>:test</code> key. <code>setup_all</code>
 and <code>teardown_all</code> share their own context in a similar way, but this one
-provides an ExUnit.TestCase record associated with the <code>:case</code> key.</p>
+provides an <code>ExUnit.TestCase</code> record associated with the <code>:case</code> key.</p>
 
 <p>If you return <code>{ :ok, &lt;keyword list&gt; }</code> from <code>setup</code> or <code>teardown</code>, the keyword
 list will get merged into the context that will be available in all
@@ -47,7 +47,7 @@ subsequent <code>setup</code>, <code>test</code>, or <code>teardown</code> calls
 <code>teardown_all</code> will merge the keyword list into the context that will be
 available in all subsequent <code>setup_all</code> or <code>teardown_all</code> calls.</p>
 
-<p>Returning :ok leaves the context unchanged in both cases.</p>
+<p>Returning <code>:ok</code> leaves the context unchanged in both cases.</p>
 
 <p>Returning anything else from <code>setup</code> or <code>teardown</code> will force the current
 test to fail, and subsequent <code>setup</code>, <code>test</code>, and <code>teardown</code> callbacks won&#39;t
@@ -111,7 +111,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/callbacks.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -162,9 +162,10 @@ end, block)</strong>
   <div class="docstring"><p>Called before the start of each test.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/callbacks.ex#L109" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L109" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="setup_all/2">
     <strong>setup_all(var // quote() do
   _
@@ -174,9 +175,10 @@ end, block)</strong>
 the current module and before any <code>setup</code> callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/callbacks.ex#L133" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L133" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="teardown/2">
     <strong>teardown(var // quote() do
   _
@@ -186,9 +188,10 @@ end, block)</strong>
 message, <code>teardown</code> will not be run.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/callbacks.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L121" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="teardown_all/2">
     <strong>teardown_all(var // quote() do
   _
@@ -197,9 +200,10 @@ end, block)</strong>
   <div class="docstring"><p>Called once after the last test finishes without emitting an :exit message.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/callbacks.ex#L144" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/callbacks.ex#L144" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

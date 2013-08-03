@@ -47,7 +47,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 &quot;foo&quot;
 </code></pre>
 
-<p>The functions <code>nest/2</code>, <code>space/2</code> and <code>line/2</code> help you put the
+<p>The functions <a href="#nest/2"><code>nest/2</code></a>, <a href="#space/2"><code>space/2</code></a> and <a href="#line/2"><code>line/2</code></a> help you put the
 document together into a rigid structure. However, the document
 algebra gets interesting when using functions like <code>break/2</code>, which
 converts the given string into a line break depending on how much space
@@ -68,7 +68,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 10)
 </code></pre>
 
 <p>Finally, this module also contains Elixir related functions, a bit
-tied to Elixir formatting, namely <code>surround/3</code> and <code>surround_many/5</code>.</p>
+tied to Elixir formatting, namely <a href="#surround/3"><code>surround/3</code></a> and <a href="#surround_many/5"><code>surround_many/5</code></a>.</p>
 
 <h2>Implementation details</h2>
 
@@ -94,7 +94,7 @@ by this module and by providing their own rendering functions.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -195,9 +195,10 @@ by this module and by providing their own rendering functions.</p>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L158" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L158" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="break/1">
     <strong>break(s)</strong>
   </p>
@@ -223,18 +224,20 @@ iex&gt; Inspect.Algebra.pretty(doc, 10)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L155" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="concat/1">
     <strong>concat(docs)</strong>
   </p>
   <div class="docstring"><p>Concatenates a list of documents.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L116" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L116" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="concat/2">
     <strong>concat(x, y)</strong>
   </p>
@@ -249,9 +252,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L110" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L110" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="empty/0">
     <strong>empty()</strong>
   </p>
@@ -265,9 +269,10 @@ nothingness. Takes no arguments.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L96" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L96" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="folddoc/2">
     <strong>folddoc(list1, f)</strong>
   </p>
@@ -285,18 +290,20 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L244" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L244" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="glue/2">
     <strong>glue(x, y)</strong>
   </p>
-  <div class="docstring"><p>Inserts a break between two docs. See <code>break/1</code> for more info.</p>
+  <div class="docstring"><p>Inserts a break between two docs. See <a href="#break/1"><code>break/1</code></a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="glue/3">
     <strong>glue(x, g, y)</strong>
   </p>
@@ -304,9 +311,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 the first and the third arguments.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L171" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L171" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="group/1">
     <strong>group(d)</strong>
   </p>
@@ -337,9 +345,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 6)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L201" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L201" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="line/2">
     <strong>line(x, y)</strong>
   </p>
@@ -353,9 +362,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L227" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L227" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="nest/2">
     <strong>nest(x, i)</strong>
   </p>
@@ -370,9 +380,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L130" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L130" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="pretty/2">
     <strong>pretty(d, w)</strong>
   </p>
@@ -383,9 +394,10 @@ and returns the string representation of the best layout for the
 document to fit in the given width.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L327" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L327" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="space/2">
     <strong>space(x, y)</strong>
   </p>
@@ -399,9 +411,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L214" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="surround/3">
     <strong>surround(left, doc, right)</strong>
   </p>
@@ -419,9 +432,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L265" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L265" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="surround_many/5">
     <strong>surround_many(left, docs, right, limit, fun)</strong>
   </p>
@@ -441,9 +455,10 @@ iex&gt; Inspect.Algebra.pretty(doc, 20)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/inspect/algebra.ex#L286" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/inspect/algebra.ex#L286" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

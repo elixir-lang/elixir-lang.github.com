@@ -29,16 +29,16 @@
         <div id="moduledoc" class="docstring">
           <p>A task to compile Yecc source files.</p>
 
-<p>When this task runs, it will check the mod time of every file, and
-if it has changed, then file will be compiled. Files will be
-compiled in the same source directory with .erl extension.
-You can force compilation regardless of mod times by passing
+<p>When this task runs, it will check the modification time of every file, and
+if it has changed, the file will be compiled. Files will be
+compiled in the same source directory with a .erl extension.
+You can force compilation regardless of modification times by passing
 the <code>--force</code> option.</p>
 
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--force</code> - forces compilation regardless of module times;</li>
+<li><code>--force</code> - forces compilation regardless of modification times;</li>
 </ul>
 
 <h2>Configuration</h2>
@@ -47,8 +47,10 @@ the <code>--force</code> option.</p>
 <li><p><code>:erlc_paths</code> - directories to find source files.
 Defaults to <code>[&quot;src&quot;]</code>, can be configured as:</p>
 
-<p>[erlc_paths: [&quot;src&quot;, &quot;other&quot;]]</p></li>
-<li><p><code>:yecc_options</code> - compilation options that applies
+<p><code>
+[erlc_paths: [&quot;src&quot;, &quot;other&quot;]]
+</code></p></li>
+<li><p><code>:yecc_options</code> - compilation options that apply
 to Yecc&#39;s compiler. There are many other available
 options here: <a href="http://www.erlang.org/doc/man/yecc.html#file-1">http://www.erlang.org/doc/man/yecc.html#file-1</a></p></li>
 </ul>
@@ -56,7 +58,7 @@ options here: <a href="http://www.erlang.org/doc/man/yecc.html#file-1">http://ww
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/compile.yecc.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.yecc.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -66,6 +68,11 @@ options here: <a href="http://www.erlang.org/doc/man/yecc.html#file-1">http://ww
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
+  <span class="summary_signature">
+    <a href="#manifest/0">manifest/0</a>
+  </span>
+</li>
+<li>
   <span class="summary_signature">
     <a href="#run/1">run/1</a>
   </span>
@@ -82,14 +89,26 @@ options here: <a href="http://www.erlang.org/doc/man/yecc.html#file-1">http://ww
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="manifest/0">
+    <strong>manifest()</strong>
+  </p>
+  <div class="docstring"><p>Returns Yecc manifest.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.yecc.ex#L60" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="run/1">
     <strong>run(args)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Runs this task.</p>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/compile.yecc.ex#L38" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.yecc.ex#L42" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

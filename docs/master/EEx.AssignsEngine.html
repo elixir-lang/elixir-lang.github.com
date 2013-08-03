@@ -50,10 +50,25 @@ a template, after compiled, may receive different assigns
 and the developer don&#39;t want to recompile it for each
 variable set.</p>
 
+<p>Assigns can also be used when compiled to a function:</p>
+
+<pre><code># sample.eex
+&lt;%= @a + @b %&gt;
+
+# sample.ex
+defmodule Sample do
+  require EEx
+  EEx.function_from_file :def, :sample, &quot;sample.eex&quot;, [:assigns]
+end
+
+# iex
+Sample.sample(a: 1, b: 2) #=&gt; &quot;3&quot;
+</code></pre>
+
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/eex/lib/eex/smart_engine.ex#L47" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/eex/lib/eex/smart_engine.ex#L47" target="_blank" class="view_source">Source</a>
 
       
 

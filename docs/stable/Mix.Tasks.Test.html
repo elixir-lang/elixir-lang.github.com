@@ -29,45 +29,59 @@
         <div id="moduledoc" class="docstring">
           <p>Run the tests for a project.</p>
 
-<p>This task will preload the <code>test/test_helper.exs</code> which
-should do all testing setup and then require all files
-that match the given <code>test_pattern</code> in parallel.</p>
+<p>This task starts the current application, loads up
+<code>test/test_helper.exs</code> and then requires all files matching the
+<code>test/**/_test.exs</code> pattern in parallel.</p>
 
-<p>Before running tests, it invokes the <code>App.Start</code> task
-which defaults to compile and load your project.</p>
+<p>A list of files can be given after the task name in order to select
+the files to compile:</p>
 
-<p>A list of files can be given after the task name in
-order to select the files to compile.</p>
+<pre><code>mix test test/some/particular/file_test.exs
+</code></pre>
 
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--trace</code> - run tests with detailed reporting. Automatically sets <code>max-cases</code> to 1;</li>
-<li><code>--max-cases</code> - set the maximum number of cases running async;</li>
-<li><code>--cover</code> - the directory to include coverage results;</li>
-<li><code>--force</code> - forces compilation regardless of module times;</li>
-<li><code>--quick</code>, <code>-q</code> - only compile files that changed;</li>
-<li><code>--no-compile</code> - do not compile even if files require compilation;</li>
-<li><code>--no-start</code> - do not start applications after compilation;</li>
+<li><code>--trace</code> - run tests with detailed reporting. Automatically sets <code>--max-cases</code> to 1</li>
+<li><code>--max-cases</code> - set the maximum number of cases running async</li>
+<li><code>--cover</code> - the directory to include coverage results</li>
+<li><code>--force</code> - forces compilation regardless of modification times</li>
+<li><code>--no-compile</code> - do not compile, even if files require compilation</li>
+<li><code>--no-start</code> - do not start applications after compilation</li>
+<li><code>--no-color</code> - disable color in the output</li>
 </ul>
 
 <h2>Configuration</h2>
 
 <ul>
-<li><p><code>:test_paths</code> - list of paths containing test files.
-Defaults to <code>[&quot;test&quot;]</code>.</p></li>
-<li><p><code>:test_pattern</code> - a pattern to load test files.
-Defaults to <code>*_test.exs</code>.</p></li>
-<li><p><code>:test_helper</code> - a file that sets up whatever is necessary
-for testing. Defaults to <code>test/test_helper.exs</code>.</p></li>
-<li><p><code>:test_coverage</code> - the directory to include test coverage results.
-Defaults to <code>nil</code>.</p></li>
+<li><p><code>:test_paths</code> - list of paths containing test files, defaults to <code>[&quot;test&quot;]</code>.
+              it is expected all test paths to contain a <code>test_helper.exs</code> file</p></li>
+<li><p><code>:test_pattern</code> - a pattern to load test files, defaults to <code>*_test.exs</code></p></li>
+<li><p><code>:test_coverage</code> - a set of options to be passed down to the coverage mechanism</p></li>
 </ul>
+
+<h2>Coverage</h2>
+
+<p>The <code>:test_coverage</code> configuration accepts the following options:</p>
+
+<ul>
+<li><code>:output</code> - the output for cover results, defaults to <code>&quot;cover&quot;</code></li>
+<li><code>:tool</code>   - the coverage tool</li>
+</ul>
+
+<p>By default, a very simple wrapper around OTP&#39;s <code>cover</code> is used as a tool,
+but it can be overriden as follows:</p>
+
+<pre><code>test_coverage: [tool: CoverModule]
+</code></pre>
+
+<p><code>CoverModule</code> can be any module that exports <code>start/2</code>, receiving the
+compilation path and the <code>test_coverage</code> options as arguments.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/test.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/test.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -98,9 +112,10 @@ Defaults to <code>nil</code>.</p></li>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/test.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/test.ex#L81" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

@@ -29,34 +29,22 @@
         <div id="moduledoc" class="docstring">
           <p>A task to compile Elixir source files.</p>
 
-<p>When this task runs, it will first check the mod times of
-all of the files to be compiled and if they haven&#39;t been
-changed since the last compilation, it will not compile
-them at all. If any one of them has changed, it compiles
-everything.</p>
+<p>Elixir is smart enough to recompile only files that changed
+and their dependencies. This means if <code>lib/a.ex</code> is invoking
+a function defined over <code>lib/b.ex</code>, whenever <code>lib/b.ex</code> changes,
+<code>lib/a.ex</code> is also recompiled.</p>
 
-<p>For this reason, this task touches your <code>:compile_path</code>
-directory and sets the modification time to the current
-time and date at the end of each compilation. You can
-force compilation regardless of mod times by passing
-the <code>--force</code> option.</p>
-
-<p>Note it is important to recompile all files because
-often there are compilation time dependencies between
-the files (macros and etc). However, in some cases it
-is useful to compile just the changed files for quick
-development cycles, for such, a developer can pass
-the <code>--quick</code> otion.</p>
+<p>Note it is important to recompile a file dependencies because
+often there are compilation time dependencies in between them.</p>
 
 <h2>Command line options</h2>
 
 <ul>
-<li><code>--force</code> - forces compilation regardless of module times;</li>
-<li><code>--quick</code>, <code>-q</code> - only compile files that changed;</li>
+<li><code>--force</code> - forces compilation regardless of modification times;</li>
 <li><code>--no-docs</code> - Do not attach documentation to compiled modules;</li>
 <li><code>--no-debug-info</code> - Do not attach debug info to compiled modules;</li>
 <li><code>--ignore-module-conflict</code></li>
-<li><code>--warnings-as-errors</code> - Treat warnings as errors and return non-zero exit code</li>
+<li><code>--warnings-as-errors</code> - Treat warnings as errors and return a non-zero exit code</li>
 </ul>
 
 <h2>Configuration</h2>
@@ -65,28 +53,31 @@ the <code>--quick</code> otion.</p>
 <li><p><code>:elixirc_paths</code> - directories to find source files.
 Defaults to <code>[&quot;lib&quot;]</code>, can be configured as:</p>
 
-<p>[elixirc_paths: [&quot;lib&quot;, &quot;other&quot;]]</p></li>
-<li><p><code>:elixirc_options</code> - compilation options that applies
+<p><code>
+[elixirc_paths: [&quot;lib&quot;, &quot;other&quot;]]
+</code></p></li>
+<li><p><code>:elixirc_options</code> - compilation options that apply
 to Elixir&#39;s compiler, they are: <code>:ignore_module_conflict</code>,
 <code>:docs</code> and <code>:debug_info</code>. By default, uses the same
-behaviour as Elixir;</p>
-
-<ul>
+behaviour as Elixir;</p></li>
 <li><p><code>:elixirc_exts</code> - extensions to compile whenever there
 is a change:</p>
 
-<p>[compile_exts: [:ex]]</p></li>
+<p><code>
+[compile_exts: [:ex]]
+</code></p></li>
 <li><p><code>:watch_exts</code> - extensions to watch in order to trigger
 a compilation:</p>
 
-<p>[elixirc<em>watch</em>exts: [:ex, :eex]]</p></li>
-</ul></li>
+<p><code>
+[elixirc_watch_exts: [:ex, :eex]]
+</code></p></li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/compile.elixir.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -96,6 +87,16 @@ a compilation:</p>
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
+  <span class="summary_signature">
+    <a href="#files_to_path/5">files_to_path/5</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#manifest/0">manifest/0</a>
+  </span>
+</li>
+<li>
   <span class="summary_signature">
     <a href="#run/1">run/1</a>
   </span>
@@ -112,14 +113,45 @@ a compilation:</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="files_to_path/5">
+    <strong>files_to_path(manifest, stale, all, path, on_start)</strong>
+  </p>
+  <div class="docstring"><p>Compiles stale Elixir files.</p>
+
+<p>It expects a manifest file, all stale files, all source files
+available (including the ones that are not stale) and a path
+where compiled files will be written to. All paths are required
+to be relative to the current working directory.</p>
+
+<p>The manifest is written down with information including dependencies
+in between modules, which helps it recompile only the modules that
+have changed at runtime.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L277" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="manifest/0">
+    <strong>manifest()</strong>
+  </p>
+  <div class="docstring"><p>The manifest for this compiler.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L261" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="run/1">
     <strong>run(args)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Runs this task.</p>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/compile.elixir.ex#L68" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

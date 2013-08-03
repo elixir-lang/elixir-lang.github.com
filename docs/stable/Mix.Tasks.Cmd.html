@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mix.SystemVersionError</title>
+    <title>Mix.Tasks.Cmd</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,41 +21,30 @@
 
     <div id="content">
       <h1>
-        Mix.SystemVersionError
-        
-          <small>exception</small>
+        Mix.Tasks.Cmd
         
       </h1>
 
       
+        <div id="moduledoc" class="docstring">
+          <p>Executes the given command.</p>
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/exceptions.ex#L18" target="_blank" class="view_source">Source</a>
+<p>Useful in umbrella applications to execute a command
+on each child app:</p>
+
+<pre><code>mix cmd echo pwd
+</code></pre>
+
+<p>Aborts when the first command exits with status different
+than zero.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/cmd.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
-      
-        <h2>Fields <small>(and defaults)</small></h2>
-        <ul class="summary">
-          
-            <li>
-              <span class="summary_signature">
-                <strong>mix_error:</strong> true
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>expected:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>actual:</strong> nil
-              </span>
-            </li>
-          
-        </ul>
       
 
       
@@ -63,7 +52,7 @@
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#message/1">message/1</a>
+    <a href="#run/1">run/1</a>
   </span>
 </li>
 
@@ -78,14 +67,15 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="message/1">
-    <strong>message(exception)</strong>
+  <p class="signature" id="run/1">
+    <strong>run(args)</strong>
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/exceptions.ex#L19" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/cmd.ex#L18" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

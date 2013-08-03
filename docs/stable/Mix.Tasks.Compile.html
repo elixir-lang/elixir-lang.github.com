@@ -27,7 +27,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>A meta task that compile source files. It simply runs the
+          <p>A meta task that compiles source files. It simply runs the
 compilers registered in your project. At the end of compilation
 it ensures load paths are set.</p>
 
@@ -36,11 +36,15 @@ it ensures load paths are set.</p>
 <ul>
 <li><p><code>:compilers</code> - compilers to be run, defaults to:</p>
 
-<p>[:elixir, :app]</p>
+<p><code>
+[:elixir, :app]
+</code></p>
 
 <p>It can be configured to handle custom compilers, for example:</p>
 
-<p>[compilers: [:elixir, :mycompiler, :app]]</p></li>
+<p><code>
+[compilers: [:elixir, :mycompiler, :app]]
+</code></p></li>
 </ul>
 
 <h2>Command line options</h2>
@@ -59,13 +63,15 @@ it ensures load paths are set.</p>
 <li><p><code>:compile_path</code> - directory to output compiled files.
 Defaults to <code>&quot;ebin&quot;</code>, can be configured as:</p>
 
-<p>[compile_path: &quot;ebin&quot;]</p></li>
+<p><code>
+[compile_path: &quot;ebin&quot;]
+</code></p></li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/compile.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -75,6 +81,11 @@ Defaults to <code>&quot;ebin&quot;</code>, can be configured as:</p>
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
+  <span class="summary_signature">
+    <a href="#manifests/0">manifests/0</a>
+  </span>
+</li>
+<li>
   <span class="summary_signature">
     <a href="#run/1">run/1</a>
   </span>
@@ -91,14 +102,26 @@ Defaults to <code>&quot;ebin&quot;</code>, can be configured as:</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="manifests/0">
+    <strong>manifests()</strong>
+  </p>
+  <div class="docstring"><p>Returns manifests for all compilers.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.ex#L86" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="run/1">
     <strong>run(args)</strong>
   </p>
-  <div class="docstring"></div>
+  <div class="docstring"><p>Runs this compile task by recursively calling all registered compilers.</p>
+</div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/tasks/compile.ex#L38" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.ex#L44" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

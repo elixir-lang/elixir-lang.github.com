@@ -31,19 +31,19 @@
 doctest</a>.</p>
 
 <p>In a nutshell, it allows us to generate tests from the code
-examples existing in module/function/macro&#39;s documentation.
-In order to do that, one needs to invoke <code>doctest/1</code> macro
+examples existing in a module/function/macro&#39;s documentation.
+In order to do that, one needs to invoke the <code>doctest/1</code> macro
 from their test case and write their examples according
 to some guidelines.</p>
 
 <p>The syntax for examples is as follows. Every new test starts
-on a new line, with an &quot;iex&gt;&quot; prefix. Multiline expressions
+on a new line, with an <code>iex&gt;</code> prefix. Multiline expressions
 can be employed if the following lines start with either
-&quot;...&gt;&quot; (recommended) or &quot;iex&gt;&quot; prefix.</p>
+<code>...&gt;</code> (recommended) or <code>iex&gt;</code> prefix.</p>
 
-<p>The expected result should start at the next line after &quot;iex&gt;&quot;
-or &quot;...&gt;&quot; line(s) and is terminated either by a newline, new
-&quot;iex&gt;&quot; prefix or end of the string literal.</p>
+<p>The expected result should start at the next line after <code>iex&gt;</code>
+or <code>...&gt;</code> line(s) and is terminated either by a newline, new
+<code>iex&gt;</code> prefix or end of the string literal.</p>
 
 <h2>Examples</h2>
 
@@ -58,7 +58,7 @@ end
 
 <p>The <code>doctest</code> macro is going to loop through all functions and
 macros defined in <code>MyModule</code>, parsing their documentation in
-search for code examples.</p>
+search of code examples.</p>
 
 <p>A very basic example is:</p>
 
@@ -82,7 +82,7 @@ iex&gt; a + 1
 2
 </code></pre>
 
-<p>If you want to keep any two tests separate from each other,
+<p>If you want to keep any two tests separate,
 add an empty line between them:</p>
 
 <pre><code>iex&gt; a = 1
@@ -107,7 +107,7 @@ iex&gt; a + 1  # will fail with a &quot;function a/0 undefined&quot; error
 </ul>
 
 <p>We also allow you to select or skip some functions when calling
-<code>doctest</code>. See its documentation for more info.</p>
+<code>doctest</code>. See the documentation for more info.</p>
 
 <h2>Exceptions</h2>
 
@@ -117,10 +117,10 @@ iex&gt; a + 1  # will fail with a &quot;function a/0 undefined&quot; error
 ** (ArgumentError) argument error
 </code></pre>
 
-<p>What DocTest will be looking for is a line starting with &quot;** (&quot; and it
-will parse it accordingly to extract the exception name and the message.
+<p>What DocTest will be looking for is a line starting with <code>** (</code> and it
+will parse it accordingly to extract the exception name and message.
 At this moment, the exception parser would make the parser treat the next
-line as a start of a completely new expression (if it is prefixed with iex&gt;)
+line as a start of a completely new expression (if it is prefixed with <code>iex&gt;</code>)
 or a no-op line with documentation. Thus, multiline messages are not
 supported.</p>
 
@@ -137,7 +137,7 @@ run.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/doc_test.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/doc_test.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -178,11 +178,11 @@ in the module <code>Module</code></p>
 <ul>
 <li><p><code>:except</code> — generate tests for all functions except those listed
           (list of <code>{function, arity}</code> tuples)</p></li>
-<li><p><code>:only</code>   — generate tests only forfunctions listed
+<li><p><code>:only</code>   — generate tests only for functions listed
           (list of <code>{function, arity}</code> tuples)</p></li>
 <li><p><code>:import</code> — when true, one can test a function defined in the module
           without referring to the module name. However, this is not
-          feasible when there is a clash with a number module like
+          feasible when there is a clash with a module like
           Kernel. In these cases, <code>import</code> should be set to <code>false</code>
           and a full <code>M.f</code> construct should be used.</p></li>
 </ul>
@@ -195,9 +195,10 @@ in the module <code>Module</code></p>
 <p>This macro is auto-imported with every <code>ExUnit.Case</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/ex_unit/lib/ex_unit/doc_test.ex#L132" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/ex_unit/lib/ex_unit/doc_test.ex#L132" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

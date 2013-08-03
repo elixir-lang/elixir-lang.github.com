@@ -27,10 +27,23 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Runs the given file or expession in the context of the application.</p>
+          <p>Runs the given file or expression in the context of the application.</p>
 
-<p>Before running the code, it invokes the app.start task
-which defaults to compile and load your project.</p>
+<p>Before running the code, it invokes the <code>app.start</code> task which compiles
+and loads your project.</p>
+
+<p>It is the goal of this task to provide a subset of the functionality
+existent in the <code>elixir</code> executable, including setting up the <code>System.argv</code>:</p>
+
+<pre><code>mix run -e Hello.world
+mix run my_script.exs arg1 arg2 arg3
+</code></pre>
+
+<p>Many command line options need to be passed to the <code>elixir</code> executable
+directly, which can be done as follows:</p>
+
+<pre><code>elixir --sname hello -S mix run -e &quot;My.code&quot;
+</code></pre>
 
 <h2>Command line options</h2>
 
@@ -43,22 +56,10 @@ which defaults to compile and load your project.</p>
 <li><code>--no-start</code> - Does not start applications after compilation</li>
 </ul>
 
-<h2>Examples</h2>
-
-<pre><code>mix run -e Hello.world
-mix run -e &quot;Some.function with_args&quot;
-mix run -r some_file.exs
-</code></pre>
-
-<p>Command line options given to the <code>elixir</code> executable can be passed as:</p>
-
-<pre><code>elixir --sname hello -S mix run -e &quot;My.code&quot;
-</code></pre>
-
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/tasks/run.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/mix/lib/mix/tasks/run.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -89,9 +90,10 @@ mix run -r some_file.exs
   </p>
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/tasks/run.ex#L32" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/mix/lib/mix/tasks/run.ex#L33" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

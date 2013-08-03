@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/kernel/parallel_compiler.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/kernel/parallel_compiler.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -64,7 +64,7 @@
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="files/2">
-    <strong>files(files, callback // default_callback)</strong>
+    <strong>files(files, opts // [])</strong>
   </p>
   <div class="docstring"><p>Compiles the given files.</p>
 
@@ -73,27 +73,40 @@ detect dependencies between them. Once a dependency is found,
 the current file stops being compiled until the dependency is
 resolved.</p>
 
-<p>If there is any error during compilation or if warnings<em>as</em>errors
-is set to true and there is a warning, this function will fail
+<p>If there is an error during compilation or if <code>warnings_as_errors</code>
+is set to <code>true</code> and there is a warning, this function will fail
 with an exception.</p>
 
-<p>A callback that is invoked every time a file is compiled
-with its name can be optionally given as argument.</p>
+<p>This function receives a set of callbacks as options:</p>
+
+<ul>
+<li><code>:each_file</code> - for each file compiled, invokes the callback passing the file</li>
+<li><code>:each_module</code> - for each module compiled, invokes the callback
+               passing the file, module and the module bytecode</li>
+<li><code>:each_waiting</code> - every time a module waits for another module to be compiled,
+                this callback is invoked with the module we are waiting</li>
+</ul>
+
+<p>The compiler doesn&#39;t care about the return values of the callbacks except
+by <code>each_waiting</code>, which must return nil or a file as a hint where the source
+could be found.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/kernel/parallel_compiler.ex#L27" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/kernel/parallel_compiler.ex#L30" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="files_to_path/3">
-    <strong>files_to_path(files, path, callback // default_callback)</strong>
+    <strong>files_to_path(files, path, opts // [])</strong>
   </p>
   <div class="docstring"><p>Compiles the given files to the given path.
-Read files/2 for more information.</p>
+Read <a href="#files/2"><code>files/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/kernel/parallel_compiler.ex#L35" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/kernel/parallel_compiler.ex#L46" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

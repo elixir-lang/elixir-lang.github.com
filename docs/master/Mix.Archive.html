@@ -37,7 +37,7 @@ name, e.g. the root of the zip file should be <code>my_app/ebin/Elixir.My.App.be
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/archive.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/mix/lib/mix/archive.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -81,27 +81,45 @@ The path will be the root of the project and must contain an ebin folder.
 The archive file will be created in archive_path.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/archive.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/mix/lib/mix/archive.ex#L44" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="dir/1">
     <strong>dir(path)</strong>
   </p>
-  <div class="docstring"><p>Returns the archive internal directory from its full path.</p>
+  <div class="docstring"><p>Returns the archive internal directory from its <code>path</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Mix.Archive.dir(&quot;foo/bar/baz-0.1.0.ez&quot;)
+&quot;baz-0.1.0&quot;
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/archive.ex#L20" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/mix/lib/mix/archive.ex#L35" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="name/2">
     <strong>name(app, vsn)</strong>
   </p>
-  <div class="docstring"><p>Returns the archive name based on <code>app</code> and version.</p>
+  <div class="docstring"><p>Returns the archive name based on <code>app</code> and <code>version</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Mix.Archive.name(&quot;foo&quot;, nil)
+&quot;foo.ez&quot;
+
+iex&gt; Mix.Archive.name(&quot;foo&quot;, &quot;0.1.0&quot;)
+&quot;foo-0.1.0.ez&quot;
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/dbf1e25e152cfadc1e45690e7bcffcabb53afbf9/lib/mix/lib/mix/archive.ex#L14" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/mix/lib/mix/archive.ex#L23" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

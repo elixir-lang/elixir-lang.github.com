@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -101,21 +101,6 @@
       
 
       
-        <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#binary_ops/0">binary_ops/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unary_ops/0">unary_ops/0</a>
-  </span>
-</li>
-
-        </ul>
-      
 
       
 
@@ -129,7 +114,7 @@
   <div class="docstring"><p>Recursively escapes a value so it can be inserted
 into a syntax tree.</p>
 
-<p>One may pass <code>unquote: true</code> to <code>Macro.escape/2</code>
+<p>One may pass <code>unquote: true</code> to <a href="#escape/2"><code>escape/2</code></a>
 which leaves unquote statements unescaped, effectively
 unquoting the contents on escape.</p>
 
@@ -146,28 +131,30 @@ iex&gt; Macro.escape({ :unquote, [], [1] }, unquote: true)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L75" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L69" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="expand/2">
     <strong>expand(tree, env)</strong>
   </p>
   <div class="docstring"><p>Receives a AST node and expands it until it no longer represents
-a macro. Check <code>Macro.expand_once/2</code> for more information on how
-expansion works and <code>Macro.expand_all/2</code> for recursive expansion.</p>
+a macro. Check <a href="#expand_once/2"><code>expand_once/2</code></a> for more information on how
+expansion works and <a href="#expand_all/2"><code>expand_all/2</code></a> for recursive expansion.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L541" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L532" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="expand_all/2">
     <strong>expand_all(tree, env)</strong>
   </p>
   <div class="docstring"><p>Receives a AST node and expands it until it no longer represents
 a macro. Then it expands all of its children recursively.</p>
 
-<p>The documentation for <code>Macro.expand_once/2</code> goes into more detail
-on how expansion works. Keep in mind that <code>Macro.expand_all/2</code> is
+<p>The documentation for <a href="#expand_once/2"><code>expand_once/2</code></a> goes into more detail
+on how expansion works. Keep in mind that <a href="#expand_all/2"><code>expand_all/2</code></a> is
 naive as it doesn&#39;t mutate the environment. Take this example:</p>
 
 <pre><code>quoted = quote do: __MODULE__
@@ -176,7 +163,7 @@ Macro.to_string Macro.expand_all(quoted, __ENV__)
 </code></pre>
 
 <p>The example above, works as expected. Outside of a module,
-<code>__MODULE__</code> returns nil. Now consider this variation:</p>
+<code>__MODULE__</code> returns <code>nil</code>. Now consider this variation:</p>
 
 <pre><code>quoted = quote do
   defmodule Foo, do: __MODULE__
@@ -193,9 +180,10 @@ the whole Elixir compiler by actually executing the code, which
 is beyond the scope of this function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L586" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L577" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="expand_once/2">
     <strong>expand_once(aliases, env)</strong>
   </p>
@@ -204,14 +192,14 @@ is beyond the scope of this function.</p>
 <ul>
 <li>Macros (local or remote);</li>
 <li>Aliases are expanded (if possible) and return atoms;</li>
-<li>All pseudo-variables (<strong>FILE</strong>, <strong>MODULE</strong>, etc);</li>
-<li>Module attributes reader (@foo);</li>
+<li>All pseudo-variables (<code>__FILE__</code>, <code>__MODULE__</code>, etc);</li>
+<li>Module attributes reader (<code>@foo</code>);</li>
 </ul>
 
 <p>In case the expression cannot be expanded, it returns the expression
-itself. Notice that <code>Macro.expand_once/2</code> performs the expansion just
-once and it is not recursive. Check <code>Macro.expand/2</code> for expansion
-until the node no longer represents a macro and <code>Macro.expand_all/2</code>
+itself. Notice that <a href="#expand_once/2"><code>expand_once/2</code></a> performs the expansion just
+once and it is not recursive. Check <a href="#expand/2"><code>expand/2</code></a> for expansion
+until the node no longer represents a macro and <a href="#expand_all/2"><code>expand_all/2</code></a>
 for recursive expansion.</p>
 
 <h2>Examples</h2>
@@ -280,9 +268,10 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L444" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L430" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="extract_args/1">
     <strong>extract_args(expr)</strong>
   </p>
@@ -292,7 +281,7 @@ function name and the arguments list or <code>:error</code> if not
 a valid call syntax.</p>
 
 <p>This is useful for macros that want to provide the same
-arguments syntax available in def/defp/defmacro and friends.</p>
+argument syntax available in def/defp/defmacro and friends.</p>
 
 <h2>Examples</h2>
 
@@ -303,21 +292,23 @@ extract_args(quote do: 1.(1, 2, 3))  == :error
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L51" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L45" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="safe_term/1">
     <strong>safe_term(terms)</strong>
   </p>
-  <div class="docstring"><p>Recurs the quoted expression checking if all sub terms are
-safe (i.e. they represented data structured and don&#39;t actually
+  <div class="docstring"><p>Recurs the quoted expression checking if all sub-terms are
+safe (i.e. they represent data structures and don&#39;t actually
 evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
 which is returned as <code>{ :unsafe, term }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L621" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L612" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="to_string/1">
     <strong>to_string(tree)</strong>
   </p>
@@ -330,15 +321,16 @@ which is returned as <code>{ :unsafe, term }</code>.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L188" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L176" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="unescape_binary/1">
     <strong>unescape_binary(chars)</strong>
   </p>
   <div class="docstring"><p>Unescape the given chars. This is the unescaping behavior
 used by default in Elixir single- and double-quoted strings.
-Check <code>unescape_binary/2</code> for information on how to customize
+Check <a href="#unescape_binary/2"><code>unescape_binary/2</code></a> for information on how to customize
 the escaping map.</p>
 
 <p>In this setup, Elixir will escape the following: <code>\a</code>, <code>\b</code>,
@@ -358,14 +350,15 @@ also escaped according to the latin1 set they represent.</p>
 and we return a version with it unescaped.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L94" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="unescape_binary/2">
     <strong>unescape_binary(chars, map)</strong>
   </p>
   <div class="docstring"><p>Unescape the given chars according to the map given.
-Check <code>unescape_binary/1</code> if you want to use the same map
+Check <a href="#unescape_binary/1"><code>unescape_binary/1</code></a> if you want to use the same map
 as Elixir single- and double-quoted strings.</p>
 
 <h2>Map</h2>
@@ -387,7 +380,7 @@ def unescape_map(?v), do: ?\v
 def unescape_map(e),  do: e
 </code></pre>
 
-<p>If the <code>unescape_map</code> function returns false. The char is
+<p>If the <code>unescape_map</code> function returns <code>false</code>. The char is
 not escaped and <code>\</code> is kept in the char list.</p>
 
 <h2>Octals</h2>
@@ -397,7 +390,7 @@ returns false for ?0.</p>
 
 <h2>Hex</h2>
 
-<p>Octals will by default be escaped unless the map function
+<p>Hexadecimals will by default be escaped unless the map function
 returns false for ?x.</p>
 
 <h2>Examples</h2>
@@ -408,14 +401,15 @@ returns false for ?x.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L147" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L141" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="unescape_tokens/1">
     <strong>unescape_tokens(tokens)</strong>
   </p>
   <div class="docstring"><p>Unescape the given tokens according to the default map.
-Check <code>unescape_binary/1</code> and <code>unescape_binary/2</code> for more
+Check <a href="#unescape_binary/1"><code>unescape_binary/1</code></a> and <a href="#unescape_binary/2"><code>unescape_binary/2</code></a> for more
 information about unescaping.</p>
 
 <p>Only tokens that are binaries are unescaped, all others are
@@ -424,47 +418,24 @@ sigils. Check the implementation of <code>Kernel.sigil_b</code>
 for examples.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L161" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L155" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="unescape_tokens/2">
     <strong>unescape_tokens(tokens, map)</strong>
   </p>
   <div class="docstring"><p>Unescape the given tokens according to the given map.
-Check <code>unescape_tokens/1</code> and <code>unescape_binary/2</code> for more information.</p>
+Check <a href="#unescape_tokens/1"><code>unescape_tokens/1</code></a> and <a href="#unescape_binary/2"><code>unescape_binary/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L169" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/macro.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 
-      
-        <div id="macros_details" class="details_list">
-          <h2>Macros</h2>
-          <div class="detail">
-  <p class="signature" id="binary_ops/0">
-    <strong>binary_ops()</strong>
-  </p>
-  <div class="docstring"><p>Returns a list of binary operators. This is available
-as a macro so it can be used in guard clauses.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L14" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="unary_ops/0">
-    <strong>unary_ops()</strong>
-  </p>
-  <div class="docstring"><p>Returns a list of unary operators. This is available
-as a macro so it can be used in guard clauses.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/macro.ex#L30" target="_blank" class="view_source">Source</a>
-  
-</div>
-        </div>
       
 
       

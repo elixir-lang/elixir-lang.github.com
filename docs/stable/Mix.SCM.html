@@ -35,7 +35,7 @@ behavior required by any SCM used by mix.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -70,37 +70,7 @@ behavior required by any SCM used by mix.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#clean/1">clean/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#equal?/2">equal?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#matches_lock?/1">matches_lock?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#update/1">update/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#checkout/1">checkout/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#checked_out?/1">checked_out?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#accepts_options/1">accepts_options/1</a>
+    <a href="#format/1">format/1</a>
   </span>
 </li>
 <li>
@@ -110,7 +80,37 @@ behavior required by any SCM used by mix.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#format/1">format/1</a>
+    <a href="#accepts_options/2">accepts_options/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#checked_out?/1">checked_out?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#checkout/1">checkout/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update/1">update/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#matches_lock?/1">matches_lock?/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#equal?/2">equal?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#clean/1">clean/1</a>
   </span>
 </li>
 
@@ -127,27 +127,30 @@ behavior required by any SCM used by mix.</p>
   <div class="docstring"><p>Returns all available SCM.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L90" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L90" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="register/1">
     <strong>register(mod)</strong>
   </p>
   <div class="docstring"><p>Register the scm repository with the given <code>key</code> and <code>mod</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L97" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="register_builtin/0">
     <strong>register_builtin()</strong>
   </p>
   <div class="docstring"><p>Register builtin SCMs.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L104" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L104" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 
@@ -157,80 +160,30 @@ behavior required by any SCM used by mix.</p>
         <div id="callbacks_details" class="details_list">
           <h2>Callbacks</h2>
           <div class="detail">
-  <p class="signature" id="clean/1">
-    <strong>clean(opts())</strong>
+  <p class="signature" id="format/1">
+    <strong>format(opts())</strong>
   </p>
-  <div class="docstring"><p>This behavior function should clean the given dependency.</p>
+  <div class="docstring"><p>Returns an Elixir term that contains relevant SCM
+information for printing.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L16" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
-  <p class="signature" id="equal?/2">
-    <strong>equal?(opts1 :: opts(), opts2 :: opts())</strong>
+</div>
+<div class="detail">
+  <p class="signature" id="format_lock/1">
+    <strong>format_lock(lock())</strong>
   </p>
-  <div class="docstring"><p>Receives two options and must return true if the refer to the
-same repository. The options are guaranteed to belong to the
-same SCM.</p>
+  <div class="docstring"><p>Returns an Elixir term that contains relevant SCM
+lock information for printing.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L80" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L22" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
-  <p class="signature" id="matches_lock?/1">
-    <strong>matches_lock?(opts())</strong>
-  </p>
-  <div class="docstring"><p>This behavior function checks if the dependency is locked and
-the current repository version matches the lock. Note that some
-SCMs do not require a lock, for such, this function can simply
-return true.</p>
 </div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L73" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="update/1">
-    <strong>update(opts())</strong>
-  </p>
-  <div class="docstring"><p>This behavior function updates dependencies. It may be
-called by <code>deps.get</code> or <code>deps.update</code>.</p>
-
-<p>In the first scenario, a lock is received in <code>opts</code> and
-the repository must be updated to the lock. In the second,
-no lock is given and the repository can be updated freely.</p>
-
-<p>It must return the current lock.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L65" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="checkout/1">
-    <strong>checkout(opts())</strong>
-  </p>
-  <div class="docstring"><p>This behavior function checks out dependencies.</p>
-
-<p>If the dependency is locked, a lock is received in <code>opts</code>
-and the repository must be check out at the lock. Otherwise,
-no lock is given and the repository can be checked out
-to the latest version.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L53" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="checked_out?/1">
-    <strong>checked_out?(opts())</strong>
-  </p>
-  <div class="docstring"><p>This behavior function returns a boolean if the
-dependency is available.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L43" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
-  <p class="signature" id="accepts_options/1">
-    <strong>accepts_options(opts())</strong>
+<div class="detail">
+  <p class="signature" id="accepts_options/2">
+    <strong>accepts_options(app :: atom(), opts())</strong>
   </p>
   <div class="docstring"><p>This behavior function receives a keyword list of <code>opts</code>
 and should return an updated list in case the SCM consumes
@@ -246,29 +199,88 @@ sense for the Git SCM, it will return an update list of options
 while other SCMs would simply return nil.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L37" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L37" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
-  <p class="signature" id="format_lock/1">
-    <strong>format_lock(lock())</strong>
+</div>
+<div class="detail">
+  <p class="signature" id="checked_out?/1">
+    <strong>checked_out?(opts())</strong>
   </p>
-  <div class="docstring"><p>Returns an Elixir term that contains relevant SCM
-lock information for printing.</p>
+  <div class="docstring"><p>This behavior function returns a boolean if the
+dependency is available.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L22" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L43" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
-  <p class="signature" id="format/1">
-    <strong>format(opts())</strong>
+</div>
+<div class="detail">
+  <p class="signature" id="checkout/1">
+    <strong>checkout(opts())</strong>
   </p>
-  <div class="docstring"><p>Returns an Elixir term that contains relevant SCM
-information for printing.</p>
+  <div class="docstring"><p>This behavior function checks out dependencies.</p>
+
+<p>If the dependency is locked, a lock is received in <code>opts</code>
+and the repository must be check out at the lock. Otherwise,
+no lock is given and the repository can be checked out
+to the latest version.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/scm.ex#L16" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L53" target="_blank" class="view_source">Source</a>
   
 </div>
+<div class="detail">
+  <p class="signature" id="update/1">
+    <strong>update(opts())</strong>
+  </p>
+  <div class="docstring"><p>This behavior function updates dependencies. It may be
+called by <code>deps.get</code> or <code>deps.update</code>.</p>
+
+<p>In the first scenario, a lock is received in <code>opts</code> and
+the repository must be updated to the lock. In the second,
+no lock is given and the repository can be updated freely.</p>
+
+<p>It must return the current lock.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L65" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="matches_lock?/1">
+    <strong>matches_lock?(opts())</strong>
+  </p>
+  <div class="docstring"><p>This behavior function checks if the dependency is locked and
+the current repository version matches the lock. Note that some
+SCMs do not require a lock, for such, this function can simply
+return true.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L73" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="equal?/2">
+    <strong>equal?(opts1 :: opts(), opts2 :: opts())</strong>
+  </p>
+  <div class="docstring"><p>Receives two options and must return true if the refer to the
+same repository. The options are guaranteed to belong to the
+same SCM.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L80" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="clean/1">
+    <strong>clean(opts())</strong>
+  </p>
+  <div class="docstring"><p>This behavior function should clean the given dependency.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/scm.ex#L85" target="_blank" class="view_source">Source</a>
+  
+</div>
+
         </div>
       
     </div>

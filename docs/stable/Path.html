@@ -36,12 +36,12 @@ type.</p>
 
 <p>The majority of the functions in this module do not
 interact with the file system, except for a few functions
-that require it (like <code>Path.wildcard</code> and <code>Path.expand</code>).</p>
+that require it (like <a href="#wildcard/1"><code>wildcard/1</code></a> and <a href="#expand/1"><code>expand/1</code></a>).</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -151,7 +151,7 @@ that require it (like <code>Path.wildcard</code> and <code>Path.expand</code>).<
     <strong>absname(path)</strong>
   </p>
   <div class="docstring"><p>Converts the given path to an absolute one. Unlike
-<code>Path.expand/1</code>, no attempt is made to resolve <code>..</code>, <code>.</code> or <code>~</code>.</p>
+<a href="#expand/1"><code>expand/1</code></a>, no attempt is made to resolve <code>..</code>, <code>.</code> or <code>~</code>.</p>
 
 <h2>Unix examples</h2>
 
@@ -171,16 +171,17 @@ Path.absname(&quot;../x&quot;).
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L40" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L40" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="absname/2">
     <strong>absname(path, relative_to)</strong>
   </p>
   <div class="docstring"><p>Builds a path from <code>relative_to</code> to <code>path</code>. If <code>path</code> is already
-an absolute path, <code>relative_to</code> is ignored. See also <code>Path.relative/2</code>.</p>
+an absolute path, <code>relative_to</code> is ignored. See also <code>relative/2</code>.</p>
 
-<p>Unlike <code>Path.expand/2</code>, no attempt is made to
+<p>Unlike <a href="#expand/2"><code>expand/2</code></a>, no attempt is made to
 resolve <code>..</code>, <code>.</code> or <code>~</code>.</p>
 
 <h2>Examples</h2>
@@ -193,9 +194,10 @@ iex&gt; Path.absname(&quot;../x&quot;, &quot;bar&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L60" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L60" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="basename/1">
     <strong>basename(path)</strong>
   </p>
@@ -215,9 +217,10 @@ iex&gt; Path.basename(&quot;/&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L255" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L255" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="basename/2">
     <strong>basename(path, extension)</strong>
   </p>
@@ -236,9 +239,10 @@ iex&gt; Path.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L274" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L274" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="dirname/1">
     <strong>dirname(path)</strong>
   </p>
@@ -253,9 +257,10 @@ Path.dirname(&quot;/foo/bar/baz.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L289" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L289" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="expand/1">
     <strong>expand(path)</strong>
   </p>
@@ -269,9 +274,10 @@ any <code>.</code> and <code>..</code> characters and a leading <code>~</code>.<
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L74" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="expand/2">
     <strong>expand(path, relative_to)</strong>
   </p>
@@ -279,7 +285,7 @@ any <code>.</code> and <code>..</code> characters and a leading <code>~</code>.<
 expanding any <code>.</code> and <code>..</code> characters. If the path is already an
 absolute path, <code>relative_to</code> is ignored.</p>
 
-<p>Note, that this function treats <code>path</code> with leading <code>~</code> as
+<p>Note, that this function treats <code>path</code> with a leading <code>~</code> as
 an absolute one.</p>
 
 <p>The second argument is first expanded to an absolute path.</p>
@@ -297,9 +303,10 @@ Path.expand(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L100" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="extname/1">
     <strong>extname(path)</strong>
   </p>
@@ -314,9 +321,10 @@ iex&gt; Path.extname(&quot;~/foo/bar&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L304" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L304" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="join/1">
     <strong>join(list1)</strong>
   </p>
@@ -334,9 +342,10 @@ iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L353" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L353" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="join/2">
     <strong>join(left, right)</strong>
   </p>
@@ -349,9 +358,10 @@ iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L369" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L369" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="relative/1">
     <strong>relative(name)</strong>
   </p>
@@ -373,9 +383,10 @@ Path.relative(&quot;/bar/foo.ex&quot;)      #=&gt; &quot;bar/foo.ex&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L146" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L146" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="relative_to/2">
     <strong>relative_to(path, from)</strong>
   </p>
@@ -399,9 +410,10 @@ iex&gt; Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/etc&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L214" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="rootname/1">
     <strong>rootname(path)</strong>
   </p>
@@ -416,9 +428,10 @@ iex&gt; Path.rootname(&quot;/foo/bar.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L319" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L319" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="rootname/2">
     <strong>rootname(path, extension)</strong>
   </p>
@@ -434,9 +447,10 @@ iex&gt; Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L335" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L335" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="split/1">
     <strong>split(path)</strong>
   </p>
@@ -454,9 +468,10 @@ If an empty string is given, returns the root path.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L434" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L434" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="type/1">
     <strong>type(name)</strong>
   </p>
@@ -479,9 +494,10 @@ Path.type(&quot;/bar/foo.ex&quot;)      #=&gt; :volumerelative
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L122" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="wildcard/1">
     <strong>wildcard(glob)</strong>
   </p>
@@ -510,7 +526,7 @@ that matching is case-sensitive; i.e. &quot;a&quot; will not match &quot;A&quot;
 
 <p>Imagine you have a directory called <code>projects</code> with three Elixir projects
 inside of it: <code>elixir</code>, <code>ex_doc</code> and <code>dynamo</code>. You can find all <code>.beam</code> files
-inside the ebin directory of each project as follows:</p>
+inside the <code>ebin</code> directory of each project as follows:</p>
 
 <pre><code>Path.wildcard(&quot;projects/*/ebin/**/*.beam&quot;)
 </code></pre>
@@ -521,9 +537,10 @@ inside the ebin directory of each project as follows:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/path.ex#L473" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/path.ex#L473" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

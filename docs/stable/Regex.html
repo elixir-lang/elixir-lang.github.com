@@ -77,7 +77,7 @@ a binary, a char list will return a char list).</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -166,23 +166,24 @@ a binary, a char list will return a char list).</p>
   <p class="signature" id="captures/3">
     <strong>captures(regex, string, options // [])</strong>
   </p>
-  <div class="docstring"><p>Returns the given captures as a keyword list or <code>nil</code> if no captures are found.
-Requires the regex to be compiled with the groups option.</p>
+  <div class="docstring"><p>Returns the given captures as a keyword list or <code>nil</code> if no captures
+are found. Requires the regex to be compiled with the groups option.</p>
 
 <h2>Examples</h2>
 
 <pre><code>iex&gt; Regex.captures(%r/c(?&lt;foo&gt;d)/g, &quot;abcd&quot;)
 [foo: &quot;d&quot;]
 iex&gt; Regex.captures(%r/a(?&lt;foo&gt;b)c(?&lt;bar&gt;d)/g, &quot;abcd&quot;)
-[bar: &quot;d&quot;, foo: &quot;b&quot;]
+[foo: &quot;b&quot;, bar: &quot;d&quot;]
 iex&gt; Regex.captures(%r/a(?&lt;foo&gt;b)c(?&lt;bar&gt;d)/g, &quot;efgh&quot;) 
 nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L143" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L146" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="compile/2">
     <strong>compile(source, options // &quot;&quot;)</strong>
   </p>
@@ -192,9 +193,10 @@ nil
 <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L57" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L57" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="compile!/2">
     <strong>compile!(source, options // &quot;&quot;)</strong>
   </p>
@@ -202,9 +204,10 @@ nil
 Fails with <code>Regex.CompileError</code> if the regex cannot be compiled.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L75" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L75" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="escape/1">
     <strong>escape(string)</strong>
   </p>
@@ -219,9 +222,10 @@ iex&gt; Regex.escape(&quot;\\what if&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L302" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L311" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="groups/1">
     <strong>groups(arg1)</strong>
   </p>
@@ -234,9 +238,10 @@ iex&gt; Regex.escape(&quot;\\what if&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L198" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L194" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="match?/2">
     <strong>match?(arg1, string)</strong>
   </p>
@@ -251,9 +256,10 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L93" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L93" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="opts/1">
     <strong>opts(arg1)</strong>
   </p>
@@ -266,18 +272,20 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L185" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L181" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="re_pattern/1">
     <strong>re_pattern(arg1)</strong>
   </p>
   <div class="docstring"><p>Returns the underlying <code>re_pattern</code> in the regular expression.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L159" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L155" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="replace/4">
     <strong>replace(arg1, string, replacement, options // [])</strong>
   </p>
@@ -286,7 +294,7 @@ binary where the all matches are replaced by replacement.</p>
 
 <p>Inside the replacement, you can either give <code>&amp;</code> to access the
 whole regular expression or <code>\N</code>, where <code>N</code> is in integer to access
-a specific matching parens. You can also set global to false
+a specific matching parens. You can also set <code>:global</code> to <code>false</code>
 if you want to replace just the first occurrence.</p>
 
 <h2>Examples</h2>
@@ -304,15 +312,18 @@ iex&gt; Regex.replace(%r/(b)/, &quot;abc&quot;, &quot;[\\1]&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L280" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L289" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="run/3">
     <strong>run(regex, string, options // [])</strong>
   </p>
   <div class="docstring"><p>Runs the regular expression against the given string.
-It returns a list with all matches, <code>nil</code> if no match occurred, or <code>[]</code>
-if it matched, <code>/g</code> was specified, but nothing was captured.</p>
+It returns a list with all matches or <code>nil</code> if no match occurred.</p>
+
+<p>When the option <code>:capture</code> is set to <code>:groups</code>, it will capture all
+the groups in the regex.</p>
 
 <h2>Examples</h2>
 
@@ -325,31 +336,39 @@ iex&gt; Regex.run(%r/c(d)/, &quot;abcd&quot;, return: :index)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L112" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L114" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="scan/3">
     <strong>scan(regex, string, options // [])</strong>
   </p>
-  <div class="docstring"><p>Same as run, but scans the target several times collecting all matches of
-the regular expression. A list is returned with each match. If the item in
-the list is a binary, it means there were no captures. If the item is another
-list, each element in this secondary list is a capture.</p>
+  <div class="docstring"><p>Same as <a href="#run/3"><code>run/3</code></a>, but scans the target several times collecting all
+matches of the regular expression. A list of lists is returned,
+where each entry in the primary list represents a match and each
+entry in the secondary list represents the captured contents.</p>
+
+<p>The captured contents defaults to <code>:all</code>, which includes the whole
+regex match and each capture.</p>
+
+<p>When the option <code>:capture</code> is set to <code>:groups</code>, it will capture all
+the groups in the regex.</p>
 
 <h2>Examples</h2>
 
 <pre><code>iex&gt; Regex.scan(%r/c(d|e)/, &quot;abcd abce&quot;)
-[[&quot;d&quot;], [&quot;e&quot;]]
+[[&quot;cd&quot;, &quot;d&quot;], [&quot;ce&quot;, &quot;e&quot;]]
 iex&gt; Regex.scan(%r/c(?:d|e)/, &quot;abcd abce&quot;)
-[&quot;cd&quot;, &quot;ce&quot;]
+[[&quot;cd&quot;], [&quot;ce&quot;]]
 iex&gt; Regex.scan(%r/e/, &quot;abcd&quot;)
 []
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L218" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L220" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="source/1">
     <strong>source(arg1)</strong>
   </p>
@@ -362,9 +381,10 @@ iex&gt; Regex.scan(%r/e/, &quot;abcd&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L172" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L168" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="split/3">
     <strong>split(regex, string, options // [])</strong>
   </p>
@@ -382,9 +402,10 @@ iex&gt; Regex.split(%r/-/, &quot;abc&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/elixir/lib/regex.ex#L242" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/regex.ex#L251" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 

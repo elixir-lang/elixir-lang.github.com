@@ -48,20 +48,20 @@ with projects.</p>
 end
 </code></pre>
 
-<p>After defined, the configuration for this project can be read
-as <code>Mix.project/0</code>. Notice that config won&#39;t fail if a
-project is not defined, this allows many of mix tasks to work
+<p>After being defined, the configuration for this project can be read
+as <code>Mix.project/0</code>. Notice that <a href="#config/0"><code>config/0</code></a> won&#39;t fail if a
+project is not defined; this allows many mix tasks to work
 even without a project.</p>
 
-<p>In case the developer needs a project or want to access a special
-function in the project, he can access <code>Mix.Project.get!/0</code>
+<p>In case the developer needs a project or wants to access a special
+function in the project, he can call <code>Mix.Project.get!/0</code>
 which fails with <code>Mix.NoProjectError</code> in case a project is not
 defined.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -71,11 +71,6 @@ defined.</p>
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
-  <span class="summary_signature">
-    <a href="#apps_path/0">apps_path/0</a>
-  </span>
-</li>
-<li>
   <span class="summary_signature">
     <a href="#compile_paths/0">compile_paths/0</a>
   </span>
@@ -117,11 +112,6 @@ defined.</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#refresh/0">refresh/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#umbrella?/0">umbrella?/0</a>
   </span>
 </li>
@@ -137,89 +127,95 @@ defined.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="apps_path/0">
-    <strong>apps_path()</strong>
-  </p>
-  <div class="docstring"><p>Returns the path to the apps directory.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L149" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
   <p class="signature" id="compile_paths/0">
     <strong>compile_paths()</strong>
   </p>
-  <div class="docstring"><p>Returns the paths this project compiles to.</p>
+  <div class="docstring"><p>Returns the paths this project compiles to,
+collecting all <code>:compile_path</code> in case of umbrella apps.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L211" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L197" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="config/0">
     <strong>config()</strong>
   </p>
-  <div class="docstring"><p>Returns the project configuration already
-considering the current environment.</p>
+  <div class="docstring"><p>Returns the project configuration for the current environment.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L113" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L102" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="config_files/0">
     <strong>config_files()</strong>
   </p>
-  <div class="docstring"><p>Returns a list of project config files (mix.exs and mix.lock).</p>
+  <div class="docstring"><p>Returns a list of project configuration files, for example,
+<code>mix.exs</code> and <code>mix.lock</code>. This function is usually used
+in compilation tasks to trigger a full recompilation
+whenever such configuration files change.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L123" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L115" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="get/0">
     <strong>get()</strong>
   </p>
-  <div class="docstring"><p>Retrieves the current project.</p>
+  <div class="docstring"><p>Retrieves the current project, <code>nil</code> if there is no
+current project (i.e. there is no mixfile in the current
+project).</p>
 
-<p>This is usually called by tasks that needs additional
-functions on the project to be defined. Since such
-tasks usually depends on a project to be defined, this
-function raises <code>Mix.NoProjectError</code> in case no project
-is available.</p>
-
-<p>Returns nil if no project.</p>
+<p>If you expect a project to be defined, i.e. it is a
+requirement of the current task, you should call
+<a href="#get!/0"><code>get!/0</code></a> instead.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L95" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L79" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="get!/0">
     <strong>get!()</strong>
   </p>
-  <div class="docstring"><p>Same as <code>get/0</code> but raises an exception if no project.</p>
+  <div class="docstring"><p>Same as <a href="#get/0"><code>get/0</code></a>, but raises an exception if there is no current project.</p>
+
+<p>This is usually called by tasks that need additional
+functions on the project to be defined. Since such
+tasks usually depend on a project being defined, this
+function raises <code>Mix.NoProjectError</code> in case no project
+is available.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L105" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L95" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="in_project/4">
     <strong>in_project(app, app_path, post_config // [], fun)</strong>
   </p>
   <div class="docstring"><p>Runs the given <code>fun</code> inside the given project by changing
 the current working directory and loading the given project
-into the project stack.</p>
+onto the project stack.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L190" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L175" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="load_paths/0">
     <strong>load_paths()</strong>
   </p>
-  <div class="docstring"><p>Returns all load paths for this project.</p>
+  <div class="docstring"><p>Returns all load paths for this project,
+collecting all <code>:load_paths</code> in case of umbrella apps.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L218" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L205" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
+</div>
+<div class="detail">
   <p class="signature" id="recur/2">
     <strong>recur(post_config // [], fun)</strong>
   </p>
@@ -231,28 +227,20 @@ use this function to transparently go through the project, regardless
 if it is an umbrella project or not.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L161" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L146" target="_blank" class="view_source">Source</a>
   
-</div><div class="detail">
-  <p class="signature" id="refresh/0">
-    <strong>refresh()</strong>
-  </p>
-  <div class="docstring"><p>Refresh the project configuration. Usually required
-when the environment changes during a task.</p>
 </div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L80" target="_blank" class="view_source">Source</a>
-  
-</div><div class="detail">
+<div class="detail">
   <p class="signature" id="umbrella?/0">
     <strong>umbrella?()</strong>
   </p>
-  <div class="docstring"><p>Returns true if project is an umbrella project.</p>
+  <div class="docstring"><p>Returns <code>true</code> if project is an umbrella project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.0/lib/mix/lib/mix/project.ex#L142" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/project.ex#L134" target="_blank" class="view_source">Source</a>
   
 </div>
+
         </div>
       
 
