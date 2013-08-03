@@ -11,7 +11,7 @@ In Mix, a task is simply an Elixir module inside the `Mix.Tasks` namespace conta
 
 Let's create a simple task:
 
-{% highlight elixir %}
+```elixir
 defmodule Mix.Tasks.Hello do
   use Mix.Task
 
@@ -24,7 +24,7 @@ defmodule Mix.Tasks.Hello do
     IO.puts "Hello, World!"
   end
 end
-{% endhighlight %}
+```
 
 Save this module to a file named `hello.ex` then compile and run it as follows:
 
@@ -62,7 +62,7 @@ So, what do you do when you have a whole bunch of related tasks? If you name the
 
 Let's assume you have a bunch of tasks for working with Riak.
 
-{% highlight elixir %}
+```elixir
 defmodule Mix.Tasks.Riak do
   defmodule Dostuff do
     ...
@@ -72,7 +72,7 @@ defmodule Mix.Tasks.Riak do
     ...
   end
 end
-{% endhighlight %}
+```
 
 Now you'll have two different tasks under the modules `Mix.Tasks.Riak.Dostuff` and `Mix.Tasks.Riak.Dootherstuff` respectively. You can invoke these tasks like so: `mix riak.dostuff` and `mix riak.dootherstuff`. Pretty cool, huh?
 
@@ -82,14 +82,16 @@ You should use this feature when you have a bunch of related tasks that would be
 
 Although not a Mix feature, Elixir ships with an `OptionParser` which is quite useful when creating mix tasks that accepts options. The `OptionParser` receives a list of arguments and returns a tuple with parsed options and the remaining arguments:
 
-    OptionParser.parse(["--debug"])
-    #=> { [debug: true], [] }
+```elixir
+OptionParser.parse(["--debug"])
+#=> { [debug: true], [] }
 
-    OptionParser.parse(["--source", "lib"])
-    #=> { [source: "lib"], [] }
+OptionParser.parse(["--source", "lib"])
+#=> { [source: "lib"], [] }
 
-    OptionParser.parse(["--source", "lib", "test/enum_test.exs", "--verbose"])
-    #=> { [source: "lib", verbose: true], ["test/enum_test.exs"] }
+OptionParser.parse(["--source", "lib", "test/enum_test.exs", "--verbose"])
+#=> { [source: "lib", verbose: true], ["test/enum_test.exs"] }
+```
 
 Check [`OptionParser`](/docs/stable/OptionParser.html) documentation for more information.
 
