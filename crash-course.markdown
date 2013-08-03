@@ -661,7 +661,7 @@ defmodule Math do
   end
 end
 
-Enum.map [1,2,3], function(Math.square/1)
+Enum.map [1,2,3], &Math.square/1
 #=> [1, 4, 9]
 ```
 
