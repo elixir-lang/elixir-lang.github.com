@@ -13,53 +13,71 @@ Elixir provides both records and protocols. This chapter will outline the main f
 
 Records are simple structures that hold values. For example, we can define a `FileInfo` record that is supposed to store information about files as follows:
 
-    defrecord FileInfo, atime: nil, accesses: 0
+```elixir
+defrecord FileInfo, atime: nil, accesses: 0
+```
 
 The line above will define a module named `FileInfo` which contains a function named `new` that returns a new record and other functions to read and set the values in the record:
 
-    file_info = FileInfo.new(atime: { 2010, 4, 17 })
-    file_info.atime                   #=> Returns the value of atime
+```elixir
+file_info = FileInfo.new(atime: { 2010, 4, 17 })
+file_info.atime                   #=> Returns the value of atime
 
-    file_info = file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
-    file_info
+file_info = file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
+file_info
+```
 
 Notice that when we change the `atime` field of the record, we re-store the record in the `file_info` variable. This is because as almost everything else in Elixir, records are immutable. So changing the `atime` field does not update the record in place. Instead, it returns a new record with the new value set.
 
 A record is simply a tuple where the first element is the record module name. We can get the record raw representation as follows:
 
-    inspect FileInfo.new, raw: true
-    #=> "{ FileInfo, nil, 0 }"
+```elixir
+inspect FileInfo.new, raw: true
+#=> "{ FileInfo, nil, 0 }"
+```
 
 Besides defining readers and writers for each attribute, Elixir records also define an `update_#{attribute}` function to update values. Such functions expect a function as argument that receives the current value and must return the new one. For example, every time the file is accessed, the accesses counter can be incremented with:
 
-    file_info = FileInfo.new(accesses: 10)
-    file_info = file_info.update_accesses(fn(x) -> x + 1 end)
-    file_info.accesses #=> 11
+```elixir
+file_info = FileInfo.new(accesses: 10)
+file_info = file_info.update_accesses(fn(x) -> x + 1 end)
+file_info.accesses #=> 11
+```
 
 ### 4.1.1 Pattern matching
 
 Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follows:
 
-    defmodule FileAccess do
-      def was_accessed?(FileInfo[accesses: 0]), do: true
-      def was_accessed?(FileInfo[]),            do: false
-    end
+```elixir
+defmodule FileAccess do
+  def was_accessed?(FileInfo[accesses: 0]), do: true
+  def was_accessed?(FileInfo[]),            do: false
+end
+```
 
 The first clause will only match if a `FileInfo` record is given and the `accesses` field is equal to zero. The second clause will match any `FileInfo` record and nothing more. We can also like the value of `accesses` to a variable as follows:
 
-    def was_accessed?(FileInfo[accesses: accesses]), do: accesses == 0
+```elixir
+def was_accessed?(FileInfo[accesses: accesses]), do: accesses == 0
+```
 
 The pattern matching syntax can also be used to create new records:
 
-    file_info = FileInfo[accesses: 0]
+```elixir
+file_info = FileInfo[accesses: 0]
+```
 
 Whenever using the bracket syntax above, Elixir expands the record to a tuple at compilation time. That said, the clause above:
 
-    def was_accessed?(FileInfo[accesses: 0]), do: true
+```elixir
+def was_accessed?(FileInfo[accesses: 0]), do: true
+```
 
 Is effectively the same as:
 
-    def was_accessed?({ FileInfo, _, 0 }), do: true
+```elixir
+def was_accessed?({ FileInfo, _, 0 }), do: true
+```
 
 Using the bracket syntax is a powerful mechanism not only due to pattern matching but also regarding performance, since it provides faster times compared to `FileInfo.new` and `file_info.accesses`. The downside is that we hardcode the record name. For this reason, Elixir allows you to mix and match both styles as you may find fit.
 
@@ -73,30 +91,34 @@ In Elixir, only `false` and `nil` are considered falsy values. Everything else e
 
 We could define this protocol as follows:
 
-    defprotocol Blank do
-      @doc "Returns true if data is considered blank/empty"
-      def blank?(data)
-    end
+```elixir
+defprotocol Blank do
+  @doc "Returns true if data is considered blank/empty"
+  def blank?(data)
+end
+```
 
 The protocol expects a function called `blank?` that receives one argument to be implemented. We can implement this protocol for some Elixir data types in the following way:
 
-    # Numbers are never blank
-    defimpl Blank, for: Number do
-      def blank?(_), do: false
-    end
+```elixir
+# Numbers are never blank
+defimpl Blank, for: Number do
+  def blank?(_), do: false
+end
 
-    # Just empty list is blank
-    defimpl Blank, for: List do
-      def blank?([]), do: true
-      def blank?(_),  do: false
-    end
+# Just empty list is blank
+defimpl Blank, for: List do
+  def blank?([]), do: true
+  def blank?(_),  do: false
+end
 
-    # Just the atoms false and nil are blank
-    defimpl Blank, for: Atom do
-      def blank?(false), do: true
-      def blank?(nil),   do: true
-      def blank?(_),     do: false
-    end
+# Just the atoms false and nil are blank
+defimpl Blank, for: Atom do
+  def blank?(false), do: true
+  def blank?(nil),   do: true
+  def blank?(_),     do: false
+end
+```
 
 And we would do so for all native data types. The types available are:
 
@@ -114,14 +136,18 @@ And we would do so for all native data types. The types available are:
 
 Now, with the protocol defined and implementations in hand, we can invoke it:
 
-    Blank.blank?(0)       #=> false
-    Blank.blank?([])      #=> true
-    Blank.blank?([1,2,3]) #=> false
+```elixir
+Blank.blank?(0)       #=> false
+Blank.blank?([])      #=> true
+Blank.blank?([1,2,3]) #=> false
+```
 
 Notice however that passing a data type that does not implement the protocol raises an error:
 
-    Blank.blank?("hello")
-    ** (UndefinedFunctionError) undefined function: Blank.BitString.blank?/1
+```elixir
+Blank.blank?("hello")
+** (UndefinedFunctionError) undefined function: Blank.BitString.blank?/1
+```
 
 Implementing the protocol for all 9 types above can be cumbersome. So Elixir gives us some tools to select which protocols we want to implement explicitly.
 
@@ -129,16 +155,20 @@ Implementing the protocol for all 9 types above can be cumbersome. So Elixir giv
 
 Implementing the protocol for all types can be a bit of work and in some cases, even unnecessary. Going back to our `Blank` protocol, the types Number, Function, PID, Port and Reference are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
 
-    defprotocol Blank do
-      @only [Atom, Record, Tuple, List, BitString, Any]
-      def blank?(data)
-    end
+```elixir
+defprotocol Blank do
+  @only [Atom, Record, Tuple, List, BitString, Any]
+  def blank?(data)
+end
+```
 
 Since we also specified `Any` as a data type, if the data type is not any of `Atom`, `Record`, `Tuple`, `List` or `BitString`, it will automatically fall back to `Any`:
 
-    defimpl Blank, for: Any do
-      def blank?(_), do: false
-    end
+```elixir
+defimpl Blank, for: Any do
+  def blank?(_), do: false
+end
+```
 
 Now all data types that we have not specified will be automatically considered non-blank.
 
@@ -148,30 +178,40 @@ The power of Elixir extensibility comes when protocols and records are mixed.
 
 For instance, Elixir provides a `HashDict` implementation that is an efficient data structure to store many keys. Let's take a look at how it works:
 
-    dict = HashDict.new
-    dict = HashDict.put(dict, :hello, "world")
-    HashDict.get(dict, :hello) #=> "world"
+```elixir
+dict = HashDict.new
+dict = HashDict.put(dict, :hello, "world")
+HashDict.get(dict, :hello) #=> "world"
+```
 
 If we inspect our `HashDict`, we can see it is a simple tuple:
 
-    inspect(dict, raw: true)
-    #=> { HashDict, 1, [{:hello,"world"}] }
+```elixir
+inspect(dict, raw: true)
+#=> { HashDict, 1, [{:hello,"world"}] }
+```
 
 Since `HashDict` is a data structure that contains values, it would be convenient to implement the `Blank` protocol for it too:
 
-    defimpl Blank, for: HashDict do
-      def blank?(dict), do: HashDict.size(dict) == 0
-    end
+```elixir
+defimpl Blank, for: HashDict do
+  def blank?(dict), do: HashDict.size(dict) == 0
+end
+```
 
 And now we can test it:
 
-    dict = HashDict.new(hello: "world")
-    Blank.blank?(dict)         #=> false
-    Blank.blank?(HashDict.new) #=> true
+```elixir
+dict = HashDict.new(hello: "world")
+Blank.blank?(dict)         #=> false
+Blank.blank?(HashDict.new) #=> true
+```
 
 Excellent! The best of all is that we implemented the `Blank` protocol for an existing data structure (`HashDict`) without a need to wrap it or recompile it, which allows developers to easily extend previously defined protocols. Note this only worked because, when we defined the protocol, we have added `Record` to the list of types supported by the protocol:
 
-    @only [Atom, Record, Tuple, List, BitString, Any]
+```elixir
+@only [Atom, Record, Tuple, List, BitString, Any]
+```
 
 Keep in mind that `Record` needs to come before `Tuple`, since all records are tuples (but not all tuples are records).  For this reason, in case a record does not implement a given protocol, Elixir will fall back to the tuple implementation of that protocol if one exists. So one can add a default protocol implementation for all records by simply defining a default implementation for tuples.
 
@@ -181,54 +221,68 @@ Elixir ships with some built-in protocols, let's take a look at a couple of thos
 
 * `Access` - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example:
 
-        iex> x = [a: 1, b: 2]
-        [{:a, 1}, {:b, 2}]
-        iex> x[:a]
-        1
-        iex> x[:b]
-        2
+```iex
+iex> x = [a: 1, b: 2]
+[{:a, 1}, {:b, 2}]
+iex> x[:a]
+1
+iex> x[:b]
+2
+```
 
 * `Enumerable` - any data structured that can be enumerated must implement this protocol. This protocol is consumed by the `Enum` module which provides functions like `map`, `reduce` and others:
 
-        iex> Enum.map [1,2,3], fn(x) -> x * 2 end
-        [2,4,6]
-        iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
-        6
+```iex
+iex> Enum.map [1,2,3], fn(x) -> x * 2 end
+[2,4,6]
+iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
+6
+```
 
 * `Binary.Inspect` - this protocol is used to transform any data structure into a readable textual representation. That's what tools like IEx uses to print results:
 
-        iex> { 1, 2, 3 }
-        {1,2,3}
-        iex> HashDict.new
-        #HashDict<[]>
+```iex
+iex> { 1, 2, 3 }
+{1,2,3}
+iex> HashDict.new
+#HashDict<[]>
+```
 
   Keep in mind that whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. For those, the true representation can be retrieved by calling `inspect` directly and passing `raw` as an option:
 
-        iex> inspect HashDict.new, raw: true
-        "{HashDict,0,[]}"
+```iex
+iex> inspect HashDict.new, raw: true
+"{HashDict,0,[]}"
+```
 
 * `Binary.Chars` - specifies how to convert a data structure with characters to binary. It's exposed via the `to_binary` function:
 
-        iex> to_binary :hello
-        "hello"
+```iex
+iex> to_binary :hello
+"hello"
+```
 
   Notice that string interpolation in Elixir calls the `to_binary` function:
 
-        iex> "age: #{25}"
-        "age: 25"
+```iex
+iex> "age: #{25}"
+"age: 25"
+```
 
   The example above only works because numbers implement the `Binary.Chars` protocol. Passing a tuple, for example, will lead to an error:
 
-        iex> tuple = { 1, 2, 3 }
-        {1,2,3}
-        iex> "tuple: #{tuple}"
-        ** (Protocol.UndefinedError) protocol Binary.Chars not implemented for {1,2,3}
-
+```iex
+iex> tuple = { 1, 2, 3 }
+{1,2,3}
+iex> "tuple: #{tuple}"
+** (Protocol.UndefinedError) protocol Binary.Chars not implemented for {1,2,3}
+```
   When there is a need to "print" a more complex data structure, one can simply use the `inspect` function:
 
-        iex> "tuple: #{inspect tuple}"
-        "tuple: {1,2,3}"
-
+```iex
+iex> "tuple: #{inspect tuple}"
+"tuple: {1,2,3}"
+```
 
 Elixir defines other protocols which can be verified in Elixir's documentation. Frameworks and libraries that you use may define a couple of specific protocols as well. Use them wisely to write code that is easy to maintain and extend.
 
@@ -238,47 +292,53 @@ The `try` mechanism in Elixir is also used to handle exceptions. In many languag
 
 An exception can be rescued inside a `try` block with the `rescue` keyword:
 
-    # rescue only runtime error
-    try do
-      raise "some error"
-    rescue
-      RuntimeError -> "rescued"
-    end
+```elixir
+# rescue only runtime error
+try do
+  raise "some error"
+rescue
+  RuntimeError -> "rescued"
+end
 
-    # rescue runtime and argument errors
-    try do
-      raise "some error"
-    rescue
-      [RuntimeError, ArgumentError] -> "rescued"
-    end
+# rescue runtime and argument errors
+try do
+  raise "some error"
+rescue
+  [RuntimeError, ArgumentError] -> "rescued"
+end
 
-    # rescue and assign to x
-    try do
-      raise "some error"
-    rescue
-      x in [RuntimeError] ->
-        # all exceptions have a message
-        x.message
-    end
+# rescue and assign to x
+try do
+  raise "some error"
+rescue
+  x in [RuntimeError] ->
+    # all exceptions have a message
+    x.message
+end
+```
 
 Notice that `rescue` works with exception names and it doesn't allow guards nor pattern matching. This limitation is on purpose: developers should not use exception values to drive their software. In fact, **exceptions in Elixir should not be used for control-flow but only under exceptional circumstances**.
 
 For example, if you write a software that does log partitioning and log rotation over the network, you may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, a developer can read some file using `File.read`:
 
-    case File.read(file) do
-      { :ok, contents }  ->
-        # we could access the file
-        # proceed as expected
-      { :error, reason } ->
-        # Oops, something went wrong
-        # We need to handle the error accordingly
-    end
+```elixir
+case File.read(file) do
+  { :ok, contents }  ->
+    # we could access the file
+    # proceed as expected
+  { :error, reason } ->
+    # Oops, something went wrong
+    # We need to handle the error accordingly
+end
+```
 
 Notice `File.read` does not raise an exception in case something goes wrong, it returns a tuple containing `{ :ok, contents }` in case of success and `{ :error, reason }` in case of failures. This allows us to use Elixir's pattern matching constructs to control how our application should behave.
 
 On the other hand, a CLI interface that needs to access or manipulate a file given by the user may necessarily expect a file to be there. If the given file does not exist, there is nothing you can do but fail. Then you may use `File.read!` which raises an exception:
 
-    contents = File.read!(file)
+```elixir
+contents = File.read!(file)
+```
 
 This pattern is common throughout Elixir standard library. Many libraries have both function definitions followed by their "bang!" variation, with exclamation mark. This showcases well Elixir's philosophy of not using exceptions for control-flow. If you feel like you need to rescue an exception in order to change how your code works, you should probably return an atom or tuple instead, allowing your developers to rely on pattern matching.
 

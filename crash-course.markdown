@@ -26,24 +26,24 @@ This page is divided into sections:
 
 The fastest way to run some code is to launch the Erlang shell -- `erl`. Many code snippets on this page can be pasted directly into the shell. However, when you want to define a named function, Erlang expects it to be inside of a module, and modules have to be compiled. Here's a skeleton for a module:
 
-{% highlight erlang %}
+```erlang
 -module(module_name).  % you may use some other name
 -compile(export_all).
 
 hello() ->
   io:format("~s~n", ["Hello world!"]).
-{% endhighlight %}
+```
 
 Add your functions to it, save it to disk, run `erl` from the same directory and execute the `compile` command:
 
-{% highlight erlang %}
+```erlang
 Eshell V5.9  (abort with ^G)
 1> c(module_name).
 ok
 1> module_name:hello().
 Hello world!
 ok
-{% endhighlight %}
+```
 
 You may keep the shell running while you're editing the file. Just don't forget to execute `c(module_name)` to load the latest changes. Note that the filename has to be the same as the one declared in the `-module()` directive, plus an extension `.erl`.
 
@@ -51,35 +51,35 @@ You may keep the shell running while you're editing the file. Just don't forget 
 
 Elixir too has an interactive shell called `iex`. Compiling Elixir code can be done with `elixirc` (which is similar to Erlang's `erlc`). Elixir also provides an executable named `elixir` to run Elixir code. The module defined above can be written in Elixir as:
 
-{% highlight elixir %}
+```elixir
 # module_name.ex
 defmodule ModuleName do
   def hello do
     IO.puts "Hello World"
   end
 end
-{% endhighlight %}
+```
 
 And compiled from `iex`:
 
-{% highlight elixir %}
+```iex
 Interactive Elixir
 iex> c("module_name.ex")
 [ModuleName]
 iex> ModuleName.hello
 Hello world!
 :ok
-{% endhighlight %}
+```
 
 However notice that in Elixir you don't need to create a file only to create a new module, Elixir modules can be defined directly in the shell:
 
-{% highlight elixir %}
+```elixir
 defmodule MyModule do
   def hello do
     IO.puts "Another Hello"
   end
 end
-{% endhighlight %}
+```
 
 <div id="notable_differences"></div>
 
@@ -110,17 +110,16 @@ Erlang expressions are terminated with a dot `.` and comma `,` is used to evalua
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 X = 2, Y = 3.
 X + Y.
-{% endhighlight %}
+```
 
 **Elixir**
-
-{% highlight elixir %}
+```elixir
 x = 2; y = 3
 x + y
-{% endhighlight %}
+```
 
 ### Variable Names
 
@@ -130,7 +129,7 @@ Elixir allows you to assign to a variable more than once. If you want to match a
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 Eshell V5.9  (abort with ^G)
 1> X = 10.
 10
@@ -148,18 +147,18 @@ ok
 * 1: variable 'X' is unbound
 8> X1.
 * 1: variable 'X1' is unbound
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 iex> a = 1
 1
 iex> a = 2
 2
 iex> ^a = 3
 ** (MatchError) no match of right hand side value: 3
-{% endhighlight %}
+```
 
 ### Calling Functions
 
@@ -172,21 +171,21 @@ Elixir allows you to omit parentheses in function calls, Erlang does not.
 
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
-{% highlight erlang %}
+```erlang
 orddict:new().
-{% endhighlight %}
+```
 
 to invoke the `new` function from the `orddict` module. In Elixir, use the dot `.` in place of the colon `:`
 
-{% highlight elixir %}
+```elixir
 Kernel.self
-{% endhighlight %}
+```
 
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
 
-{% highlight elixir %}
+```elixir
 :lists.sort [3, 2, 1]
-{% endhighlight %}
+```
 
 All of the Erlang built-ins reside in the `:erlang` module.
 
@@ -202,17 +201,17 @@ In Erlang, an `atom` is any identifier that starts with a small letter, e.g. `ok
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 im_an_atom.
 me_too.
 
 Im_a_var.
 X = 10.
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 :im_an_atom
 :me_too
 
@@ -220,26 +219,26 @@ im_a_var
 x = 10
 
 Module  # this is called an atom alias; it expands to :'Elixir.Module'
-{% endhighlight %}
+```
 
 It is also possible to create atoms that start with a character other than a lowercase letter. The syntax is different between the two languages:
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 is_atom(ok).                %=> true
 is_atom('0_ok').            %=> true
 is_atom('Multiple words').  %=> true
 is_atom('').                %=> true
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 is_atom :ok                 #=> true
 is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
-{% endhighlight %}
+```
 
 ### Tuples
 
@@ -252,17 +251,17 @@ That said, Elixir does not import the default `element` and `setelement` functio
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 element(1, { a, b, c })       %=> a
 setelement(1, { a, b, c }, d) %=> { d, b, c }
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 elem({ :a, :b, :c }, 0)        #=> :a
 setelem({ :a, :b, :c }, 0, :d) #=> { :d, :b, :c }
-{% endhighlight %}
+```
 
 ### Lists and Binaries
 
@@ -270,33 +269,33 @@ Elixir has a shortcut syntax for binaries:
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 is_list('Hello').        %=> false
 is_list("Hello").        %=> true
 is_binary(<<"Hello">>).  %=> true
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 is_list 'Hello'          #=> true
 is_binary "Hello"        #=> true
 is_binary <<"Hello">>    #=> true
 <<"Hello">> === "Hello"  #=> true
-{% endhighlight %}
+```
 
 In Elixir, the word **string** means a utf-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be utf-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module, that's not utf-8 aware and works mostly with char lists.
 
 Elixir also supports multiline strings (also called heredocs):
 
-{% highlight elixir %}
+```elixir
 is_binary """
 This is a binary
 spawning several
 lines.
 """
 #=> true
-{% endhighlight %}
+```
 
 ### Regular expressions
 
@@ -304,28 +303,28 @@ Elixir supports a literal syntax for regular expressions. Such syntax allows reg
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 { ok, Pattern } = re:compile("abc\\s").
 re:run("abc ", Pattern).
 %=> { match, ["abc "] }
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 Regex.run %r/abc\s/, "abc "
 #=> ["abc "]
-{% endhighlight %}
+```
 
 Regexes are also supported in heredocs, which is convenient to define multiline regexes:
 
-{% highlight elixir %}
+```elixir
 is_regex %r"""
 This is a regex
 spawning several
 lines.
 """
-{% endhighlight %}
+```
 
 ### Keyword list
 
@@ -333,16 +332,16 @@ Elixir offers a literal syntax for creating a list of two-item tuples where the 
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 [{another_key,20},{key,10}]
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 kw = [another_key: 20, key: 10]
 kw[:another_key] #=> 20
-{% endhighlight %}
+```
 
 ### Records
 
@@ -353,7 +352,7 @@ The syntax for records differs significantly between Erlang and Elixir. Please r
 
 In order to translate Erlang records into Elixir records, use Record.extract(). For example, to use the `ec2_instance_spec` record from [erlcloud][8]:
 
-{% highlight elixir %}
+```elixir
 defrecord :ec2_instance_spec, Record.extract(:ec2_instance_spec,
                                 from: "deps/erlcloud/include/erlcloud_ec2.hrl")
 
@@ -364,7 +363,7 @@ new_host = :ec2_instance_spec.new(
 )
 
 IO.puts inspect(new_host)
-{% endhighlight %}
+```
 
 [8]: https://github.com/gleber/erlcloud/blob/master/include/erlcloud_ec2.hrl#L11
 
@@ -374,7 +373,7 @@ IO.puts inspect(new_host)
 
 Each Erlang module lives in its own file which has the following structure:
 
-{% highlight erlang %}
+```erlang
 -module(hello_module).
 -export([some_fun/0, fun/1]).
 
@@ -389,13 +388,13 @@ fun(List) when is_list(List) ->
 % Non-exported functions are private
 priv() ->
   secret_info.
-{% endhighlight %}
+```
 
 Here we create a module named ``hello_module``. In it we define three functions, the first two of which are made available for other modules to call via the ``export`` directive at the top. It contains a list of functions, each of which is written in the format ``<function name>/<arity>``. Arity stands for the number of arguments.
 
 An Elixir equivalent to the Erlang above:
 
-{% highlight elixir %}
+```elixir
 defmodule HelloModule do
   # A "Hello world" function
   def some_fun do
@@ -412,11 +411,11 @@ defmodule HelloModule do
     :secret_info
   end
 end
-{% endhighlight %}
+```
 
 In Elixir, it is also possible to have multiple modules in one file, as well as nested modules:
 
-{% highlight elixir %}
+```elixir
 defmodule HelloModule do
   defmodule Utils do
     def util do
@@ -450,7 +449,7 @@ HelloModule.Utils.priv
 
 HelloModule.State.new
 #=> HelloModule.State[ponies: [:sally]]
-{% endhighlight %}
+```
 
 <div id="function_syntax"></div>
 
@@ -466,18 +465,18 @@ Pattern matching in Elixir is based on Erlang's implementation and in general ve
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 loop_through([H|T]) ->
   io:format '~p~n', [H],
   loop_through(T);
 
 loop_through([]) ->
   ok.
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 def loop_through([h|t]) do
   IO.inspect h
   loop_through t
@@ -486,7 +485,7 @@ end
 def loop_through([]) do
   :ok
 end
-{% endhighlight %}
+```
 
 When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side and are separated by a semi-colon ``;``. The last clause is terminated by a dot ``.``.
 
@@ -498,27 +497,27 @@ In both Erlang and Elixir, a function is not identified only by its name, but by
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 sum() -> 0;
 sum(A) -> A;
 sum(A, B) -> A + B;
 sum(A, B, C) -> A + B + C.
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 def sum, do: 0
 def sum(a), do: a
 def sum(a, b), do: a + b
 def sum(a, b, c), do: a + b + c
-{% endhighlight %}
+```
 
 Guard expressions provide a concise way to define functions that accept a limited set of values based on some condition.
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 sum(A, B) when is_integer(A), is_integer(B) ->
   A + B;
 
@@ -536,11 +535,11 @@ sum([1], [2]).
 
 sum("a", "b").
 %=> "ab"
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 def sum(a, b) when is_integer(a) and is_integer(b) do
   a + b
 end
@@ -561,18 +560,18 @@ sum [1], [2]
 
 sum "a", "b"
 #=> "ab"
-{% endhighlight %}
+```
 
 In addition, Elixir provides default values for arguments whereas Erlang does not.
 
-{% highlight elixir %}
+```elixir
 def mul_by(x, n // 2) do
   x * n
 end
 
 mul_by 4, 3 #=> 12
 mul_by 4    #=> 8
-{% endhighlight %}
+```
 
 ### Anonymous Functions
 
@@ -580,7 +579,7 @@ Anonymous functions are defined in the following way:
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 Sum = fun(A, B) -> A + B end.
 Sum(4, 3).
 %=> 7
@@ -588,11 +587,11 @@ Sum(4, 3).
 Square = fun(X) -> X * X end.
 lists:map(Square, [1, 2, 3, 4]).
 %=> [1, 4, 9, 16]
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 sum = fn(a, b) -> a + b end
 sum.(4, 3)
 #=> 7
@@ -600,13 +599,13 @@ sum.(4, 3)
 square = fn(x) -> x * x end
 Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
-{% endhighlight %}
+```
 
 It is possible to use pattern matching when defining anonymous functions too.
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 F = fun(Tuple = {a, b}) ->
         io:format("All your ~p are belong to us~n", [Tuple]);
         ([]) ->
@@ -618,11 +617,11 @@ F([]).
 
 F({a, b}).
 %=> "All your {a,b} are belong to us"
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 f = fn
       {:a, :b} = tuple ->
         IO.puts "All your #{inspect tuple} are belong to us"
@@ -635,7 +634,7 @@ f.([])
 
 f.({:a, :b})
 #=> "All your {:a,:b} are belong to us"
-{% endhighlight %}
+```
 
 ### First-Class Functions
 
@@ -643,7 +642,7 @@ Anonymous functions are first-class values, so they can be passed as arguments t
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 -module(math).
 -export([square/1]).
 
@@ -651,11 +650,11 @@ square(X) -> X * X.
 
 lists:map(fun math:square/1, [1, 2, 3]).
 %=> [1, 4, 9]
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 defmodule Math do
   def square(x) do
     x * x
@@ -664,23 +663,23 @@ end
 
 Enum.map [1,2,3], function(Math.square/1)
 #=> [1, 4, 9]
-{% endhighlight %}
+```
 
 ### Partials in Elixir
 
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
 
-{% highlight elixir %}
+```elixir
 Enum.map [1, 2, 3, 4], &1 * 2
 #=> [2, 4, 6, 8]
 
 List.foldl [1, 2, 3, 4], 0, &1 + &2
 #=> 10
-{% endhighlight %}
+```
 
 Partials also allow us to pass named functions as arguments.
 
-{% highlight elixir %}
+```elixir
 defmodule Math do
   def square(x) do
     x * x
@@ -690,7 +689,7 @@ end
 Enum.map [1,2,3], Math.square &1
 
 #=> [1, 4, 9]
-{% endhighlight %}
+```
 
 <div id="control_flow"></div>
 
@@ -704,29 +703,29 @@ The ``case`` construct provides control flow based purely on pattern matching.
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 case { X, Y } of
 { a, b } -> ok;
 { b, c } -> good;
 Else -> Else
 end
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 case { x, y } do
   { :a, :b } -> :ok
   { :b, :c } -> :good
   other -> other
 end
-{% endhighlight %}
+```
 
 ### If
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 Test_fun = fun (X) ->
   if X > 10 ->
        greater_than_ten;
@@ -747,11 +746,11 @@ Test_fun(-2).
 
 Test_fun(10).
 %=> exactly_ten
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 test_fun = fn(x) ->
   cond do
     x > 10 ->
@@ -773,7 +772,7 @@ test_fun.(0)
 
 test_fun.(10)
 #=> :exactly_ten
-{% endhighlight %}
+```
 
 There are two important differences between Elixir's `cond` and Erlang's `if`:
 
@@ -783,13 +782,13 @@ There are two important differences between Elixir's `cond` and Erlang's `if`:
 
 Elixir also provides a `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:
 
-{% highlight elixir %}
+```elixir
 if x > 10 do
   :greater_than_ten
 else
   :not_greater_than_ten
 end
-{% endhighlight %}
+```
 
 ### Sending and Receiving Messages
 
@@ -797,7 +796,7 @@ The syntax for sending and receiving differs only slightly between Erlang and El
 
 **Erlang**
 
-{% highlight erlang %}
+```erlang
 Pid = self().
 
 Pid ! { hello }.
@@ -808,11 +807,11 @@ receive
 after
   10 -> timeout
 end.
-{% endhighlight %}
+```
 
 **Elixir**
 
-{% highlight elixir %}
+```elixir
 pid = Kernel.self
 
 pid <- { :hello }
@@ -823,7 +822,7 @@ receive do
 after
   10 -> :timeout
 end
-{% endhighlight %}
+```
 
 <div id="interop"></div>
 
@@ -831,13 +830,13 @@ end
 
 Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the "Elixir." prefix followed by the regular Elixir name. For example, here is how to use the UTF-8 aware String downcase from Elixir in Erlang:
 
-{% highlight erlang %}
+```erlang
 -module(bstring).
 -export([downcase/1]).
 
 downcase(Bin) ->
   'Elixir.String':downcase(Bin).
-{% endhighlight %}
+```
 
 ### Rebar integration
 
@@ -847,11 +846,11 @@ If you are using rebar, you should be able to include Elixir git repository as a
 
 Elixir is structured similarly to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen in its [source code repository](https://github.com/elixir-lang/elixir). Since rebar does not recognize such structure, we need to explicitly add to our `rebar.config` which Elixir apps we want to use, for example:
 
-{% highlight erlang %}
+```erlang
 {lib_dirs, [
   "deps/elixir/lib"
 ]}.
-{% endhighlight %}
+```
 
 This should be enough to invoke Elixir functions straight from your Erlang code. If you are also going to write Elixir code, you can [install Elixir's rebar plugin for automatic compilation](https://github.com/yrashk/rebar_elixir_plugin).
 
