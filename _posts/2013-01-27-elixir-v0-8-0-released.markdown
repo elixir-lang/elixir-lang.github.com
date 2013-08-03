@@ -24,9 +24,9 @@ We have written a whole [guide chapter about creating OTP applications, supervis
 
 Elixir favors the use of utf-8 binaries since its first release. In the latest releases, we took it up a notch by adding Unicode support, built upon the Unicode Standard 6.2.0. Elixir v0.8 takes this even further, adding more convenience functions and better support to named sequences:
 
-{% highlight elixir %}
+```elixir
 String.capitalize("ﬁN") #=> "Fin"
-{% endhighlight %}
+```
 
 The example above contains a string with only two codepoints, [the codepoint ﬁ](http://www.fileformat.info/info/unicode/char/FB01/index.htm) and [the codepoint n](http://www.fileformat.info/info/unicode/char/006E/index.htm). Look how Elixir properly capitalizes the string, returning a new string made of three codepoints (all ascii letters).
 
@@ -36,35 +36,35 @@ Learn more about [Unicode support with the String module](http://elixir-lang.org
 
 As per this release, Elixir AST nodes can contain metadata. This metadata is compilation time only but may allow macros to annotate important information in AST nodes, like line numbers, file and other library specific information. If you quote an Elixir expression, we can see the metadata slot:
 
-{% highlight elixir %}
+```elixir
 quote do: hello("world")
 { :hello, [], ["world"] }
-{% endhighlight %}
+```
 
 In the example above, we can see the AST representation of the expression `hello("world")`. It is made of a tuple of three elements, the first one is the function name represented by the atom `:hello`, the second one is a keyword list containing metadata (in this case, no metadata is available) and the third is a list of arguments, containing the string "world".
 
 By default, `quote` does not annotate line numbers, but we can pass it as an option:
 
-{% highlight elixir %}
+```elixir
 quote line: __ENV__.line, do: hello("world")
 { :hello, [line: 9], ["world"] }
-{% endhighlight %}
+```
 
 Now, we can see the metadata spot being used to annotate the line number. This change allowed us to take our macros one step further...
 
 ## Macros expansion
 
-Prior to this release, Elixir had limited expansion of imports and aliases. We decided this would be an important issue to tackle in this release, as people are building more and more projects on top of Elixir. 
+Prior to this release, Elixir had limited expansion of imports and aliases. We decided this would be an important issue to tackle in this release, as people are building more and more projects on top of Elixir.
 
 Imagine you manually implemented `unless` as a macro, that does the opposite of `if`:
 
-{% highlight elixir %}
+```elixir
 defmacro unless(expr, opts) do
   quote do
     if(!unquote(expr), unquote(opts))
   end
 end
-{% endhighlight %}
+```
 
 When some code call the `unless` macro above, in previous Elixir versions, it would expect the `if` macro to be available at the caller. This may not be necessarily true and, even worse, another implementation of the `if` macro, not compatible to the one above, could be available.
 
@@ -93,7 +93,7 @@ For each number of keys, we have measured and normalized those values against `H
 `orddict` is still the faster representation for small ranges since it is a simple list. However, `HashDict` is able to be relatively fast compared to `orddict` for those small ranges and the fastest solution once you have dozens of keys. [Those results can be verified when using other types as keys as well](https://gist.github.com/436a9d2bca5051a6dfab).
 
 Finally, given `HashDict` starts with a compact representation, it also takes less memory. Compared to the `dict` implementation, an empty `HashDict` takes only 5 words, while `dict` takes 47.
- 
+
 ## Wrapping up
 
 We continue actively working on Elixir and this release is the [result of our efforts on different areas](https://github.com/elixir-lang/elixir/blob/v0.8.0/CHANGELOG.md)! We have exciting plans and newer possibilities to explore, as a new release of Erlang OTP also comes out in a couple weeks.
