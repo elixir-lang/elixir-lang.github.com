@@ -73,20 +73,18 @@ Next we define a test case and we do an assertion with the `assert` macro. Simpl
 In Elixir however `assert` is a macro and as such it can look into the code being asserted and infer that a comparison is being made. This code is then transformed to provide a detailed error report when the test runs:
 
 ```
-Failures:
-
-  1) test adding two numbers (MathTest)
-     ** (ExUnit.ExpectationError)
-                  expected: 3
-       to be equal to (==): 4
-     at test.exs:7
+1) test adding two numbers (MathTest)
+   ** (ExUnit.ExpectationError)
+                expected: 3
+     to be equal to (==): 4
+   at test.exs:7
 ```
 
 This very simply example illustrates how a developer can leverage macros to provide a concise but powerful API. Macros have access to the whole compilation environment, being able to check imported functions, macros and defined variables.
 
 Those examples are just scratching the surface of what can be achieved with macros in Elixir. In some talks I mentioned how we can use macros to compile routes from a web application into a bunch of patterns that are highly optimizable by the VM, providing an expressive but heavily optimized routing algorithm.
 
-The macro system also caused a huge imapct on the syntax, which we will discuss briefly before moving to our last goal.
+The macro system also caused a huge imapct on the syntax, which we will discuss briefly before moving to the last goal.
 
 ### Syntax
 
