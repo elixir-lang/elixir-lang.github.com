@@ -106,7 +106,7 @@ Some operators are spelled differently.
 
 ### Delimiters
 
-Erlang expressions are terminated with a dot `.` and comma `,` is used to evaluates multiple expressions within one context (in a function definition, for instance). In Elixir, expressions are delimited by a line break or a colon-comma `;`.
+Erlang expressions are terminated with a dot `.` and comma `,` is used to evaluates multiple expressions within one context (in a function definition, for instance). In Elixir, expressions are delimited by a line break or a semicolon `;`.
 
 **Erlang**
 
@@ -198,7 +198,7 @@ Erlang and Elixir have the same data types for the most part, but there are a nu
 
 ### Atoms
 
-In Erlang, an `atom` is any identifier that starts with a small letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letters are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as atom aliases. Atoms in Elixir always start with a colon `:`.
+In Erlang, an `atom` is any identifier that starts with a lowercase letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letters are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as atom aliases. Atoms in Elixir always start with a colon `:`.
 
 **Erlang**
 
@@ -243,9 +243,9 @@ is_atom :"Multiple words"   #=> true
 
 ### Tuples
 
-The syntax for tuples is the same in both languages but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
+The syntax for tuples is the same in both languages, but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
 
-1. The `subject` of the function is always the first argument and
+1. The `subject` of the function is always the first argument. 
 2. All data structures functions employ zero-based access.
 
 That said, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `setelem`:
@@ -317,7 +317,7 @@ Regex.run %r/abc\s/, "abc "
 #=> ["abc "]
 ```
 
-Regexes are also supported in heredocs, which is convenient to define multiline regexes:
+Regexes are also supported in heredocs, which is convenient when defining multiline regexes:
 
 ```elixir
 is_regex %r"""
@@ -351,7 +351,7 @@ The syntax for records differs significantly between Erlang and Elixir. Please r
 [1]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
 [2]: http://elixir-lang.org/getting_started/4.html
 
-In order to translate Erlang records into Elixir records, use Record.extract(). For example, to use the `ec2_instance_spec` record from [erlcloud][8]:
+In order to translate Erlang records into Elixir records, use `Record.extract()`. For example, to use the `ec2_instance_spec` record from [erlcloud][8]:
 
 ```elixir
 defrecord :ec2_instance_spec, Record.extract(:ec2_instance_spec,
@@ -391,7 +391,7 @@ priv() ->
   secret_info.
 ```
 
-Here we create a module named ``hello_module``. In it we define three functions, the first two of which are made available for other modules to call via the ``export`` directive at the top. It contains a list of functions, each of which is written in the format ``<function name>/<arity>``. Arity stands for the number of arguments.
+Here we create a module named ``hello_module``. In it we define three functions, the first two are made available for other modules to call via the ``export`` directive at the top. It contains a list of functions, each of which is written in the format ``<function name>/<arity>``. Arity stands for the number of arguments.
 
 An Elixir equivalent to the Erlang above:
 
@@ -462,7 +462,7 @@ HelloModule.State.new
 
 ### Pattern Matching
 
-Pattern matching in Elixir is based on Erlang's implementation and in general very similar:
+Pattern matching in Elixir is based on Erlang's implementation and in general is very similar:
 
 **Erlang**
 
@@ -488,7 +488,7 @@ def loop_through([]) do
 end
 ```
 
-When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side and are separated by a semi-colon ``;``. The last clause is terminated by a dot ``.``.
+When defining a function with the same name multiple times, each such definition is called a **clause**. In Erlang, clauses always go side by side and are separated by a semicolon ``;``. The last clause is terminated by a dot ``.``.
 
 Elixir doesn't require punctuation to separate clauses, but they must be grouped together.
 
@@ -563,7 +563,7 @@ sum "a", "b"
 #=> "ab"
 ```
 
-In addition, Elixir provides default values for arguments whereas Erlang does not.
+In addition, Elixir allows for default values for arguments, whereas Erlang does not.
 
 ```elixir
 def mul_by(x, n // 2) do
@@ -602,7 +602,7 @@ Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 ```
 
-It is possible to use pattern matching when defining anonymous functions too.
+It is possible to use pattern matching when defining anonymous functions, too.
 
 **Erlang**
 
@@ -671,10 +671,10 @@ Enum.map [1,2,3], &Math.square/1
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
 
 ```elixir
-Enum.map [1, 2, 3, 4], &1 * 2
+Enum.map [1, 2, 3, 4], &(&1 * 2)
 #=> [2, 4, 6, 8]
 
-List.foldl [1, 2, 3, 4], 0, &1 + &2
+List.foldl [1, 2, 3, 4], 0, &(&1 + &2)
 #=> 10
 ```
 
@@ -687,7 +687,7 @@ defmodule Math do
   end
 end
 
-Enum.map [1,2,3], Math.square &1
+Enum.map [1,2,3], &Math.square(&1)
 
 #=> [1, 4, 9]
 ```
@@ -696,7 +696,7 @@ Enum.map [1,2,3], Math.square &1
 
 ## 6 Control Flow
 
-The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow like in imperative languages.
+The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow as in imperative languages.
 
 ### Case
 
@@ -706,9 +706,9 @@ The ``case`` construct provides control flow based purely on pattern matching.
 
 ```erlang
 case { X, Y } of
-{ a, b } -> ok;
-{ b, c } -> good;
-Else -> Else
+  { a, b } -> ok;
+  { b, c } -> good;
+  Else -> Else
 end
 ```
 
@@ -781,7 +781,7 @@ There are two important differences between Elixir's `cond` and Erlang's `if`:
 
 2) `cond` uses Elixir's concepts of truthy and falsy values (everything is truthy except `nil` and `false`), Erlang's `if` expects strictly a boolean;
 
-Elixir also provides a `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:
+Elixir also provides an `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:
 
 ```elixir
 if x > 10 do
@@ -829,7 +829,7 @@ end
 
 ## 7 Adding Elixir to existing Erlang programs
 
-Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the "Elixir." prefix followed by the regular Elixir name. For example, here is how to use the UTF-8 aware String downcase from Elixir in Erlang:
+Elixir compiles directly into BEAM byte code. This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the `Elixir.` prefix followed by the regular Elixir name. For example, here is how to use the utf-8 aware `String` downcase from Elixir in Erlang:
 
 ```erlang
 -module(bstring).
@@ -845,7 +845,7 @@ If you are using rebar, you should be able to include Elixir git repository as a
 
     https://github.com/elixir-lang/elixir.git
 
-Elixir is structured similarly to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen in its [source code repository](https://github.com/elixir-lang/elixir). Since rebar does not recognize such structure, we need to explicitly add to our `rebar.config` which Elixir apps we want to use, for example:
+Elixir is structured similar to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen in its [source code repository](https://github.com/elixir-lang/elixir). Since rebar does not recognize such structure, we need to explicitly add to our `rebar.config` which Elixir apps we want to use, for example:
 
 ```erlang
 {lib_dirs, [
