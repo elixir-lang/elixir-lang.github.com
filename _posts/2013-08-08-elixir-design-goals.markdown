@@ -6,9 +6,9 @@ category: Internals
 excerpt: Highlight of Elixir design goals.
 ---
 
-During the last year, we have spoken at many conferences spreading the word about Elixir. [My talk](http://vimeo.com/53221562) started with introducing the Erlang VM, then I went on to talk about Elixir goals, saving some time at the end to do a live demo, showing some goodies like exchange information in between remote nodes and even hot code swapping.
+During the last year, we have spoken at many conferences spreading the word about Elixir. We [usually started with introducing the Erlang VM](http://vimeo.com/53221562), then went on to talk about Elixir goals, saving some time at the end to do a live demo, showing some goodies like exchange information in between remote nodes and even hot code swapping.
 
-This post is a summary of the talk, focusing on the language goals: compatibility, productivity and extensibility.
+This post is a summary of those talks, focusing on the language goals: compatibility, productivity and extensibility.
 
 ## Compatibility
 
@@ -18,13 +18,13 @@ Elixir is meant to be compatible with the Erlang VM and the existing ecosystem. 
 * A set of design principles, called OTP
 * The Erlang Virtual Machine, referred as EVM or BEAM
 
-Elixir runs in the same virtual machine and is compatible with OTP. Not only that, all the tools and libraries available in the Erlang ecosystem are also available in Elixir simply because there is no conversion cost from calling Erlang from Elixir and vice-versa.
+Elixir runs in the same virtual machine and is compatible with OTP. Not only that, all the tools and libraries available in the Erlang ecosystem are also available in Elixir, simply because there is no conversion cost from calling Erlang from Elixir and vice-versa.
 
 We frequently say that **the Erlang VM is Elixir's strongest asset**.
 
 All Elixir code is executed inside light-weight processes (actors), each with its own state, that exchange messages in between each other. The Erlang VM multiplexes those processes onto many cores, making it trivial to run code concurrently.
 
-In fact if you compile any Elixir code, including Elixir source, you will see all cores on your machine being used. With [technologies like Parallella](http://www.parallella.org/board/) becoming more accessible and affordable, it is hard to ignore the power you can get out of the Erlang VM.
+In fact if you compile any Elixir code, including Elixir source, you will see all cores on your machine being used out of the box. With [technologies like Parallella](http://www.parallella.org/board/) becoming more accessible and affordable, it is hard to ignore the power you can get out of the Erlang VM.
 
 Finally, the Erlang VM was designed to build systems that run forever, self-heal and scale. Joe Armstrong, one of Erlang creators, has recently given an excellent talk [about the design decisions behind OTP and the VM](http://www.infoq.com/presentations/self-heal-scalable-system).
 
@@ -32,9 +32,13 @@ Nothing that we are describing here is particularly new. Open source projects li
 
 ## Productivity
 
-Productivity is in general a hard to measure goal. A language productive for creating desktop applications may not be productive for technical computing. Productivity depends directly on the field you intend to use the language, the available tools in the ecosystem and how easy it is to create and extend those tools.
+> Now we need to go meta. We should now think of a language design as being a pattern for language designs. A tool for making more tools of the same kind. [...] A language design can no longer be a thing. It must be a pattern, a pattern for growth. A pattern for growing a pattern, for defining the patterns that programmers can use for their real work and main goals.
 
-For this reason, we have opted for a small language core. While some languages have `if`, `case`, `try` and so on as language keywords, each with its own rules in the parser, **in Elixir they are just macros**. This allows us to implement most of Elixir in Elixir and also allows developers to extend the language by providing better constructs specific to the domain they are working on (the so-called DSLs).
+- Guy Steele, keynote at the 1998 ACM OOPSLA conference on "Growing a Language"
+
+Productivity is in general a hard to measure goal. A language productive for creating desktop applications may not be productive for mathematical computing. Productivity depends directly on the field you intend to use the language, the available tools in the ecosystem and how easy it is to create and extend those tools.
+
+For this reason, we have opted for a small language core. For example, while some languages have `if`, `case`, `try` and so on as language keywords, each with its own rules in the parser, **in Elixir they are just macros**. This allows us to implement most of Elixir in Elixir and also allows developers to extend the language using the same tools we used to build the language itself, often extending the language to the specific domains they are working on.
 
 Here is an example of how someone would implement `unless`, which is a keyword in many languages, in Elixir:
 
@@ -52,7 +56,7 @@ end
 
 Since a macro receives the code representation as arguments, we can simply convert an `unless` into an `if` at compile time.
 
-Macros are also the base construct for meta-programming in Elixir: the ability of writing code that writes code. Meta-programming allows developers to easily get rid of boilerplate and create powerful tools. A common example is how our test framework uses macros for expressiveness. Let's see an example:
+Macros are also the base construct for meta-programming in Elixir: the ability of writing code that writes code. Meta-programming allows developers to easily get rid of boilerplate and create powerful tools. A common example mentioned in talks is how our test framework uses macros for expressiveness. Let's see an example:
 
 ```elixir
 ExUnit.start
@@ -68,7 +72,7 @@ end
 
 The first thing to notice is the `async: true` option. When your tests do not have any side-effect, you can run them concurrenctly by passing the `async: true` option.
 
-Next we define a test case and we do an assertion with the `assert` macro. Simply calling `assert` would be a bad practice in many languages, since it would provide a poor error report. In such languages, functions/methods like `assertEqual` or `assert_equal` would be the recommended way of performing such assertion.
+Next we define a test case and we do an assertion with the `assert` macro. Simply calling `assert` would be a bad practice in many languages as it would provide a poor error report. In such languages, functions/methods like `assertEqual` or `assert_equal` would be the recommended way of performing such assertion.
 
 In Elixir, however, `assert` is a macro and as such it can look into the code being asserted and infer that a comparison is being made. This code is then transformed to provide a detailed error report when the test runs:
 
@@ -80,9 +84,9 @@ In Elixir, however, `assert` is a macro and as such it can look into the code be
    at test.exs:7
 ```
 
-This simple example illustrates how a developer can leverage macros to provide a concise but powerful API. Macros have access to the whole compilation environment, being able to check imported functions, macros and defined variables.
+This simple example illustrates how a developer can leverage macros to provide a concise but powerful API. Macros have access to the whole compilation environment, being able to check the imported functions, macros, defined variables and more.
 
-Those examples are just scratching the surface of what can be achieved with macros in Elixir. In some talks I mentioned how we can use macros to compile routes from a web application into a bunch of patterns that are highly optimizable by the VM, providing an expressive but heavily optimized routing algorithm.
+Those examples are just scratching the surface of what can be achieved with macros in Elixir. Currently, we are using macros to compile routes from a web application into a bunch of patterns that are highly optimizable by the VM, providing an expressive but heavily optimized routing algorithm.
 
 The macro system also caused a huge imapct on the syntax, which we will discuss briefly before moving to the last goal.
 
@@ -99,7 +103,7 @@ defmodule(Hello, do: (
 ))
 ```
 
-In the snippet above, we represent everything, except variables, as a function or a macro call. Notice keywords were common since the first version. From this, we slowly added new syntax, making some common patterns more elegant while keeping the same underlying data representation. We soon added operators:
+In the snippet above, we represent everything, except variables, as a function or a macro call. Notice keywords were common since the first version. From this, we slowly added new syntax, making some common patterns more elegant while keeping the same underlying data representation. We soon added infix notation for operators:
 
 ```elixir
 defmodule(Hello, do: (
@@ -121,7 +125,7 @@ defmodule Hello, do: (
 )
 ```
 
-And finally we added `do/end` as delimiters for the common `do: (...)` construct:
+And finally we added `do/end` as convenience for the common `do: (...)` construct:
 
 ```elixir
 defmodule Hello do
@@ -132,9 +136,11 @@ defmodule Hello do
 end
 ```
 
+Those examples show how `defmodule` and `def` are simply macros for defining modules and functions.
+
 Given my previous background in Ruby, it is natural that some of the constructs added were borrowed from Ruby. However, those additions were a by-product, never a language goal.
 
-Many language constructs are also based on their Erlang counter-parts, like some of the control-flow macros, operators and containers. Notice how some Elixir code:
+Many language constructs are also inspired by their Erlang counter-parts, like some of the control-flow macros, operators and containers. Notice how some Elixir code:
 
 ```elixir
 # A tuple
@@ -168,7 +174,7 @@ end.
 
 ## Extensibility
 
-By building on top of a small core, most of the constructs in the language can be replaced and extended by developers as required. However, there is a particular domain that Elixir is inherently good at, which is building concurrent, distributed applications, thanks to OTP and the Erlang VM.
+By building on top of a small core, most of the constructs in the language can be replaced and extended as required by developers to target specific domains. However, there is a particular domain that Elixir is inherently good at, which is building concurrent, distributed applications, thanks to OTP and the Erlang VM.
 
 Elixir complements this domain by providing a standard library with:
 
@@ -204,8 +210,8 @@ There are many other protocols exposed by the language, like [the Inspect protoc
 
 ## Summing up
 
-The goal of this post was to sumarize the language goals: compatibility, productivity and extensibility. By being compatibile with the Erlang VM, we are providing developers another approach for building concurrent, distributed and fault-tolerant systems.
+The goal of this post was to sumarize the language goals: compatibility, productivity and extensibility. By being compatibile with the Erlang VM, we are providing developers another approach for building concurrent application and also distributed and fault-tolerant systems.
 
-We also hope to have clarified what Elixir offers in addition to what exists in the Erlang VM today, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with powerful and consistent APIs for different types, including strict and lazy enumeration, unicode handling, a test framework and more.
+We also hope to have clarified what Elixir brings to the Erlang VM, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with powerful and consistent APIs for different types, including strict and lazy enumeration, unicode handling, a test framework and more.
 
 Give Elixir a try! You can start with our [getting started guide](http://elixir-lang.org/getting_started/1.html), or check out our sidebar for other learning resources.
