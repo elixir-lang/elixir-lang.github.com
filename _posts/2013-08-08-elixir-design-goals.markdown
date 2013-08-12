@@ -86,7 +86,7 @@ In Elixir, however, `assert` is a macro and as such it can look into the code be
 
 This simple example illustrates how a developer can leverage macros to provide a concise but powerful API. Macros have access to the whole compilation environment, being able to check the imported functions, macros, defined variables and more.
 
-Those examples are just scratching the surface of what can be achieved with macros in Elixir. Currently, we are using macros to compile routes from a web application into a bunch of patterns that are highly optimizable by the VM, providing an expressive but heavily optimized routing algorithm.
+Those examples are just scratching the surface of what can be achieved with macros in Elixir. For example, we are currently using macros to compile routes from a web application into a bunch of patterns that are highly optimizable by the VM, providing an expressive but heavily optimized routing algorithm.
 
 The macro system also caused a huge imapct on the syntax, which we will discuss briefly before moving to the last goal.
 
@@ -103,7 +103,7 @@ defmodule(Hello, do: (
 ))
 ```
 
-In the snippet above, we represent everything, except variables, as a function or a macro call. Notice keywords were common since the first version. From this, we slowly added new syntax, making some common patterns more elegant while keeping the same underlying data representation. We soon added infix notation for operators:
+In the snippet above, we represent everything, except variables, as a function or a macro call. Notice keyword arguments like `do:` were common since the first version. From this, we slowly added new syntax, making some common patterns more elegant while keeping the same underlying data representation. We soon added infix notation for operators:
 
 ```elixir
 defmodule(Hello, do: (
@@ -135,8 +135,6 @@ defmodule Hello do
   end
 end
 ```
-
-Those examples show how `defmodule` and `def` are simply macros for defining modules and functions.
 
 Given my previous background in Ruby, it is natural that some of the constructs added were borrowed from Ruby. However, those additions were a by-product, never a language goal.
 
@@ -179,16 +177,16 @@ By building on top of a small core, most of the constructs in the language can b
 Elixir complements this domain by providing a standard library with:
 
 * Unicode strings and unicode operations
-* A unit test framework
-* Sets, Lists, Dictionaries and Ranges
+* A powerful unit test framework
+* More data structures like ranges, including novel implementations for sets and dictionaries
 * Polymorphic records (in contrast to Erlang's compilation-time only records)
 * Strict and lazy enumeration APIs
-* Functions for working with paths and the file system
+* Convenience functions for scripting, like working with paths and the file system
 * A project management tool to compile and test Elixir code
 
 And much more.
 
-Most of the features above provide their own extensibility mechanisms too. For example, take the `Enum` module. The `Enum` module can work against the built-in ranges, lists, sets, etc:
+Most of the features above provide their own extensibility mechanisms too. For example, take the `Enum` module. The `Enum` module allow us to enumerate the built-in ranges, lists, sets, etc:
 
 ```elixir
 list = [1,2,3]
@@ -204,14 +202,14 @@ Enum.map set, fn(x) -> x * 2 end
 #=> [2,4,6]
 ```
 
-Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](http://elixir-lang.org/docs/stable/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing a specific API for enumerating sets, another for lists, another for dicts, etc.
+Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](http://elixir-lang.org/docs/stable/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.
 
 There are many other protocols exposed by the language, like [the Inspect protocol](http://elixir-lang.org/docs/stable/Inspect.html) for pretty printing data structures and [the Access protocol](http://elixir-lang.org/docs/stable/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
 
 ## Summing up
 
-The goal of this post was to sumarize the language goals: compatibility, productivity and extensibility. By being compatibile with the Erlang VM, we are providing developers another approach for building concurrent application and also distributed and fault-tolerant systems.
+The goal of this post was to sumarize the language goals: compatibility, productivity and extensibility. By being compatibile with the Erlang VM, we are providing developers a different toolset for building concurrent, distributed and fault-tolerant systems.
 
-We also hope to have clarified what Elixir brings to the Erlang VM, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with powerful and consistent APIs for different types, including strict and lazy enumeration, unicode handling, a test framework and more.
+We also hope to have clarified what Elixir brings to the Erlang VM, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with extensible and consistent APIs for diverse types, including strict and lazy enumeration, unicode handling, a test framework and more.
 
 Give Elixir a try! You can start with our [getting started guide](http://elixir-lang.org/getting_started/1.html), or check out our sidebar for other learning resources.
