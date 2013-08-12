@@ -7,19 +7,19 @@ total_guides: 7
 
 # {{ page.title }}
 
-Welcome! In this tutorial we are going to show you how to get started with Elixir. We will start with how to install Elixir, how to use its interactive shell, and basic data types and operators. In later chapters, we are even going to discuss more advanced subjects such as macros, protocols and other features provided by Elixir.
+Welcome! In this tutorial we are going to show you how to get started with Elixir. We will start with how to install Elixir, how to use its interactive shell, basic data types and operators. In later chapters, we are going to discuss more advanced subjects such as macros, protocols and other features provided by Elixir.
 
-To see Elixir in action, check out these introductory screencasts by Dave Thomas. The first one, [Nine Minutes of Elixir](http://www.youtube.com/watch?v=hht9s6nAAx8), provides a brief tour of the language. The second one is a 30-minute [introduction to Elixir](http://www.youtube.com/watch?v=a-off4Vznjs) that'll help you get started with writing your first functions and creating your first processes in Elixir. Be sure to follow the next section of this guide to install Elixir on your machine and then follow along with the videos.
+To see Elixir in action, check out these introductory screencasts by Dave Thomas. The first one, [Nine Minutes of Elixir](http://www.youtube.com/watch?v=hht9s6nAAx8), provides a brief tour of the language. The second one is a 30-minute [introduction to Elixir](http://www.youtube.com/watch?v=a-off4Vznjs) that'll help you get started writing your first functions and creating your first processes in Elixir. Be sure to follow the next section of this guide to install Elixir on your machine and then follow along with the videos.
 
 PeepCode also has a two hour video with Jos&eacute; Valim called [Meet Elixir](https://peepcode.com/products/elixir).
 
-Keep in mind that Elixir is still in development so if at any point you receive an error message and you are not sure how to proceed, [please let us know in the issues tracker](https://github.com/elixir-lang/elixir/issues). Having explanative and consistent error messages is one of the many features we aim for Elixir.
+Keep in mind that Elixir is still in development, so if at any point you receive an error message and you are not sure how to proceed, [please let us know in the issues tracker](https://github.com/elixir-lang/elixir/issues). Having explanative and consistent error messages is one of the many features we aim for in Elixir.
 
 ## 1.1 Installation
 
 The only prerequisite for Elixir is Erlang, version R16B or later. You can find the source code for [Erlang here](http://www.erlang.org/download.html) or use one of the [precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp).
 
-For Windows developers, we recommend the precompiled package. Those on the UNIX platform can probably get Erlang installed via one of the many package management tools.
+For Windows developers, we recommend the precompiled package. Those on a UNIX platform can probably get Erlang installed via one of the many package management tools.
 
 After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:
 
@@ -74,7 +74,7 @@ After downloading and unzip-ing the package, you are ready to run the `elixir` a
 
 ## 1.2 Interactive mode
 
-When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or you are using a packaged version, you can find these inside the `bin` directory.
+When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
 For now, let's start by running `iex` which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result straight away. Let's warm up with some basic arithmetic expressions:
 
@@ -87,7 +87,7 @@ iex> 10 / 2
 5.0
 ```
 
-Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir the operator `/` always returns a float. In case you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
+Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
 ```iex
 iex> div(10, 2)
@@ -98,7 +98,7 @@ iex> rem 10, 3
 1
 ```
 
-In the example above, we called two functions called `div` and `rem`. Notice that parentheses are not required in order to invoke a function. We are going to discuss more about it later. Let's move forward and see which other data types we have in Elixir:
+In the example above, we called two functions called `div` and `rem`. Notice that parentheses are not required in order to invoke a function. We are going to discuss more about this later. Let's move forward and see what other data types we have in Elixir.
 
 ## 1.3 Basic types
 
@@ -114,7 +114,7 @@ iex> [1,2,3]    # list
 iex> <<1,2,3>>  # binary
 ```
 
-Elixir by default provides many functions to work on those types:
+Elixir by default provides many functions to work on these types:
 
 ```iex
 iex> size { 1, 2, 3 }
@@ -134,14 +134,14 @@ iex> x.(1, 2)
 3
 ```
 
-Elixir also supports strings and they are all encoded in UTF-8:
+Elixir also supports UTF-8 encoded strings:
 
 ```iex
 iex> "hellö"
 "hellö"
 ```
 
-Strings support interpolation too:
+Strings support interpolation, too:
 
 ```iex
 iex> name = "world"
@@ -149,14 +149,14 @@ iex> "hello #{name}"
 "hello world"
 ```
 
-At the end of the day, strings are nothing more than binaries. We can check it using the `is_binary` function:
+At the end of the day, strings are nothing more than binaries. We can verify this using the `is_binary` function:
 
 ```iex
 iex> is_binary("hello")
 true
 ```
 
-Note a single-quoted expression in Elixir is a char list and it is not the same as a double-quoted one:
+Note that a single-quoted expression in Elixir is a char list and is not the same as a double-quoted one:
 
 ```iex
 iex> is_binary('hello')
@@ -179,7 +179,7 @@ iex> is_atom(true)
 true
 ```
 
-Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication) but they are out of the scope of a getting started tutorial. For now, let's take a look at the basic operators in Elixir before we move on to the next chapter.
+Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication), but they are out of the scope of a getting started tutorial. For now, let's take a look at the basic operators in Elixir before we move on to the next chapter.
 
 ## 1.4 Operators
 
@@ -201,7 +201,7 @@ iex> "foo" <> "bar"
 "foobar"
 ```
 
-Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense they expect a boolean (true or false) as their first argument:
+Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect a boolean (`true` or `false`) as their first argument:
 
 ```iex
 iex> true and true
@@ -210,14 +210,14 @@ iex> false or is_atom(:example)
 true
 ```
 
-Giving a non-boolean will raise an exception:
+Providing a non-boolean will raise an exception:
 
 ```iex
 iex> 1 and true
 ** (ArgumentError) argument error
 ```
 
-`or` and `and` are short-circuit operators. They just execute the right side in case the left side is not enough to determine the result:
+`or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
 
 ```iex
 iex> false and error("This error will never be raised")
@@ -229,7 +229,7 @@ true
 
 > Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
 
-Besides those boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
+Besides these boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
 
 ```iex
 # or
@@ -253,7 +253,7 @@ iex> !nil
 true
 ```
 
-As a rule of thumb, use `and`, `or` and `not` when you are expecting a booleans. If any of the arguments are non-booleans, use `&&`, `||` and `!`.
+As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`.
 
 Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
 
@@ -286,6 +286,6 @@ The reason we can compare different data types is for pragmatism. Sorting algori
 
     number < atom < reference < functions < port < pid < tuple < list < bit string
 
-You actually don't need to memorize this ordering, but it is important just to know an order exists.
+You dont't actually need to memorize this ordering, but it is important just to know an order exists.
 
 Well, that is it for the introduction. In the next chapter, we are going to discuss some basic functions, data types conversions and a bit of control-flow.
