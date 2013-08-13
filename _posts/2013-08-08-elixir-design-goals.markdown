@@ -6,7 +6,7 @@ category: Internals
 excerpt: Highlight of Elixir design goals.
 ---
 
-During the last year, we have spoken at many conferences spreading the word about Elixir. We [usually started with introducing the Erlang VM](http://vimeo.com/53221562), then went on to talk about Elixir goals, saving some time at the end to do a live demo, showing some goodies like exchange information in between remote nodes and even hot code swapping.
+During the last year, we have spoken at many conferences spreading the word about Elixir. We [usually started with introducing the Erlang VM](http://vimeo.com/53221562), then went on to talk about Elixir goals, saving some time at the end to do a live demo, showing some goodies like exchanging information between remote nodes and even hot code swapping.
 
 This post is a summary of those talks, focusing on the language goals: compatibility, productivity and extensibility.
 
@@ -16,17 +16,17 @@ Elixir is meant to be compatible with the Erlang VM and the existing ecosystem. 
 
 * A functional programming language, called Erlang
 * A set of design principles, called OTP
-* The Erlang Virtual Machine, referred as EVM or BEAM
+* The Erlang Virtual Machine, referred to as EVM or BEAM
 
 Elixir runs in the same virtual machine and is compatible with OTP. Not only that, all the tools and libraries available in the Erlang ecosystem are also available in Elixir, simply because there is no conversion cost from calling Erlang from Elixir and vice-versa.
 
 We frequently say that **the Erlang VM is Elixir's strongest asset**.
 
-All Elixir code is executed inside light-weight processes (actors), each with its own state, that exchange messages in between each other. The Erlang VM multiplexes those processes onto many cores, making it trivial to run code concurrently.
+All Elixir code is executed inside light-weight processes (actors), each with its own state, that exchange messages between each other. The Erlang VM multiplexes those processes onto many cores, making it trivial to run code concurrently.
 
-In fact if you compile any Elixir code, including Elixir source, you will see all cores on your machine being used out of the box. With [technologies like Parallella](http://www.parallella.org/board/) becoming more accessible and affordable, it is hard to ignore the power you can get out of the Erlang VM.
+In fact if you compile any Elixir code, including the Elixir source, you will see all cores on your machine being used out of the box. With [technologies like Parallella](http://www.parallella.org/board/) becoming more accessible and affordable, it is hard to ignore the power you can get out of the Erlang VM.
 
-Finally, the Erlang VM was designed to build systems that run forever, self-heal and scale. Joe Armstrong, one of Erlang creators, has recently given an excellent talk [about the design decisions behind OTP and the VM](http://www.infoq.com/presentations/self-heal-scalable-system).
+Finally, the Erlang VM was designed to build systems that run forever, self-heal and scale. Joe Armstrong, one of Erlang's creators, has recently given an excellent talk [about the design decisions behind OTP and the VM](http://www.infoq.com/presentations/self-heal-scalable-system).
 
 Nothing that we are describing here is particularly new. Open source projects like CouchDB, Riak, RabbitMQ, Chef11 and companies like Ericsson, Heroku, Basho, Klarna and Wooga are already enjoying the benefits provided by the Erlang VM, some of them for quite a long time.
 
@@ -36,7 +36,7 @@ Nothing that we are describing here is particularly new. Open source projects li
 
 - Guy Steele, keynote at the 1998 ACM OOPSLA conference on "Growing a Language"
 
-Productivity is in general a hard to measure goal. A language productive for creating desktop applications may not be productive for mathematical computing. Productivity depends directly on the field you intend to use the language, the available tools in the ecosystem and how easy it is to create and extend those tools.
+Productivity is, in general, a hard goal to measure. A language productive for creating desktop applications may not be productive for mathematical computing. Productivity depends directly on the field in which you intend to use the language, the available tools in the ecosystem and how easy it is to create and extend those tools.
 
 For this reason, we have opted for a small language core. For example, while some languages have `if`, `case`, `try` and so on as language keywords, each with its own rules in the parser, **in Elixir they are just macros**. This allows us to implement most of Elixir in Elixir and also allows developers to extend the language using the same tools we used to build the language itself, often extending the language to the specific domains they are working on.
 
@@ -56,7 +56,7 @@ end
 
 Since a macro receives the code representation as arguments, we can simply convert an `unless` into an `if` at compile time.
 
-Macros are also the base construct for meta-programming in Elixir: the ability of writing code that writes code. Meta-programming allows developers to easily get rid of boilerplate and create powerful tools. A common example mentioned in talks is how our test framework uses macros for expressiveness. Let's see an example:
+Macros are also the base construct for meta-programming in Elixir: the ability to write code that generates code. Meta-programming allows developers to easily get rid of boilerplate and create powerful tools. A common example mentioned in talks is how our test framework uses macros for expressiveness. Let's see an example:
 
 ```elixir
 ExUnit.start
@@ -70,7 +70,7 @@ defmodule MathTest do
 end
 ```
 
-The first thing to notice is the `async: true` option. When your tests do not have any side-effect, you can run them concurrenctly by passing the `async: true` option.
+The first thing to notice is the `async: true` option. When your tests do not have any side-effects, you can run them concurrently by passing the `async: true` option.
 
 Next we define a test case and we do an assertion with the `assert` macro. Simply calling `assert` would be a bad practice in many languages as it would provide a poor error report. In such languages, functions/methods like `assertEqual` or `assert_equal` would be the recommended way of performing such assertion.
 
@@ -92,7 +92,7 @@ The macro system also caused a huge imapct on the syntax, which we will discuss 
 
 ### Syntax
 
-Although syntax is usually one of the first topics that comes up when Elixir is being discussed, it was never a goal to simply provide a different syntax. Since we wanted to provide a macro system, we knew that the macro system would only be sane if we could represent Elixir syntax in terms of Elixir own data structures in a straight-forward fashion. With this goal in mind, we set out to design the first Elixir version, which looked like this:
+Although syntax is usually one of the first topics that comes up when Elixir is being discussed, it was never a goal to simply provide a different syntax. Since we wanted to provide a macro system, we knew that the macro system would only be sane if we could represent Elixir syntax in terms of Elixir's own data structures in a straight-forward fashion. With this goal in mind, we set out to design the first Elixir version, which looked like this:
 
 ```elixir
 defmodule(Hello, do: (
@@ -103,7 +103,7 @@ defmodule(Hello, do: (
 ))
 ```
 
-In the snippet above, we represent everything, except variables, as a function or a macro call. Notice keyword arguments like `do:` were common since the first version. From this, we slowly added new syntax, making some common patterns more elegant while keeping the same underlying data representation. We soon added infix notation for operators:
+In the snippet above, we represent everything, except variables, as a function or a macro call. Notice keyword arguments like `do:` have been present since the first version. To this, we slowly added new syntax, making some common patterns more elegant while keeping the same underlying data representation. We soon added infix notation for operators:
 
 ```elixir
 defmodule(Hello, do: (
@@ -181,12 +181,12 @@ Elixir complements this domain by providing a standard library with:
 * More data structures like ranges, including novel implementations for sets and dictionaries
 * Polymorphic records (in contrast to Erlang's compilation-time only records)
 * Strict and lazy enumeration APIs
-* Convenience functions for scripting, like working with paths and the file system
+* Convenience functions for scripting, like working with paths and the filesystem
 * A project management tool to compile and test Elixir code
 
 And much more.
 
-Most of the features above provide their own extensibility mechanisms too. For example, take the `Enum` module. The `Enum` module allow us to enumerate the built-in ranges, lists, sets, etc:
+Most of the features above provide their own extensibility mechanisms, too. For example, take the `Enum` module. The `Enum` module allow us to enumerate the built-in ranges, lists, sets, etc:
 
 ```elixir
 list = [1,2,3]
@@ -204,7 +204,7 @@ Enum.map set, fn(x) -> x * 2 end
 
 Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](http://elixir-lang.org/docs/stable/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.
 
-There are many other protocols exposed by the language, like [the Inspect protocol](http://elixir-lang.org/docs/stable/Inspect.html) for pretty printing data structures and [the Access protocol](http://elixir-lang.org/docs/stable/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
+There are many other protocols exposed by the language, like [the `Inspect` protocol](http://elixir-lang.org/docs/stable/Inspect.html) for pretty printing data structures and [the `Access` protocol](http://elixir-lang.org/docs/stable/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
 
 ## Summing up
 
