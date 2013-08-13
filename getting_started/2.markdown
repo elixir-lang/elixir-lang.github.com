@@ -78,7 +78,7 @@ And also when comparing different types:
 
 ```iex
 iex> { a, b, c } = [:hello, "world", '!']
-** (MatchError) no match of right hand side value: [:hello,"world"]
+** (MatchError) no match of right hand side value: [:hello,"world",'!']
 ```
 
 More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side in case that the right side is a tuple that starts with the atom `:ok` as a key:
