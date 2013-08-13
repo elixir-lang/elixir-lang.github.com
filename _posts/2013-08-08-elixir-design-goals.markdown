@@ -43,7 +43,7 @@ For this reason, we have opted for a small language core. For example, while som
 Here is an example of how someone would implement `unless`, which is a keyword in many languages, in Elixir:
 
 ```elixir
-def unless(expr, opts) do
+defmacro unless(expr, opts) do
   quote do
     if(!unquote(expr), unquote(opts))
   end
