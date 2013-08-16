@@ -29,7 +29,7 @@
 
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/inspect.ex#L137" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect.ex#L137" target="_blank" class="view_source">Source</a>
 
       
 
@@ -59,9 +59,8 @@
     <strong>inspect(thing, opts)</strong>
   </p>
   <div class="docstring"><p>Represents a string as itself escaping all necessary
-characters. Bitstrings and strings that contain non-
-printable characters are printed using the bitstring
-syntax.</p>
+characters. Binaries that contain non-printable characters
+are printed using the bitstring syntax.</p>
 
 <h2>Examples</h2>
 
@@ -69,10 +68,12 @@ syntax.</p>
 &quot;\&quot;bar\&quot;&quot;
 iex&gt; inspect(&quot;f\&quot;oo&quot;)
 &quot;\&quot;f\\\&quot;oo\&quot;&quot;
+iex&gt; inspect(&lt;&lt;0,1,2&gt;&gt;)
+&quot;&lt;&lt;0, 1, 2&gt;&gt;&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/inspect.ex#L152" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect.ex#L153" target="_blank" class="view_source">Source</a>
   
 </div>
 

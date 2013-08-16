@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -66,27 +66,31 @@
   <p class="signature" id="parse/2">
     <strong>parse(argv, opts // [])</strong>
   </p>
-  <div class="docstring"><p>Parses <code>argv</code> and returns a tuple with parsed options
-and arguments.</p>
+  <div class="docstring"><p>Parses <code>argv</code> and returns a tuple with the parsed options, its
+arguments, and a list options that couldn&#39;t be parsed.</p>
 
 <h2>Examples</h2>
 
 <pre><code>iex&gt; OptionParser.parse([&quot;--debug&quot;])
-{ [debug: true], [] }
+{ [debug: true], [], [] }
 
 iex&gt; OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;])
-{ [source: &quot;lib&quot;], [] }
+{ [source: &quot;lib&quot;], [], [] }
 
-iex&gt; OptionParser.parse([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
-{ [source: &quot;lib&quot;, verbose: true], [&quot;test/enum_test.exs&quot;] }
+iex&gt; OptionParser.parse([&quot;--source-path&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
+{ [source_path: &quot;lib&quot;, verbose: true], [&quot;test/enum_test.exs&quot;], [] }
 </code></pre>
+
+<p>Notice how Elixir automatically translates the &quot;--source-path&quot;
+switch to the underscored atom <code>:source_path</code>, which better follows
+Elixir conventions.</p>
 
 <h2>Aliases</h2>
 
 <p>A set of aliases can be given as the second argument:</p>
 
 <pre><code>iex&gt; OptionParser.parse([&quot;-d&quot;], aliases: [d: :debug])
-{ [debug: true], [] }
+{ [debug: true], [], [] }
 </code></pre>
 
 <h2>Switches</h2>
@@ -105,6 +109,9 @@ or if duplicated switches should be kept, overriden or accumulated.</p>
 <li><code>:float</code>   - Parses the switch as a float;</li>
 </ul>
 
+<p>If a switch can&#39;t be parsed, the option is returned in the invalid
+options list (third element of the returned tuple).</p>
+
 <p>The following extra options are supported:</p>
 
 <ul>
@@ -114,11 +121,17 @@ or if duplicated switches should be kept, overriden or accumulated.</p>
 <p>Examples:</p>
 
 <pre><code>iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;path/to/file&quot;], switches: [unlock: :boolean])
-{ [unlock: true], [&quot;path/to/file&quot;] }
+{ [unlock: true], [&quot;path/to/file&quot;], [] }
 
 iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;--limit&quot;, &quot;0&quot;, &quot;path/to/file&quot;],
 ...&gt;                    switches: [unlock: :boolean, limit: :integer])
-{ [unlock: true, limit: 0], [&quot;path/to/file&quot;] }
+{ [unlock: true, limit: 0], [&quot;path/to/file&quot;], [] }
+
+iex&gt; OptionParser.parse([&quot;-limit&quot;, &quot;3&quot;], switches: [limit: :integer])
+{ [limit: 3], [], [] }
+
+iex&gt; OptionParser.parse([&quot;-limit&quot;, &quot;yyz&quot;], switches: [limit: :integer])
+{ [], [], [limit: &quot;yyz&quot;] }
 </code></pre>
 
 <h2>Negation switches</h2>
@@ -127,17 +140,17 @@ iex&gt; OptionParser.parse([&quot;--unlock&quot;, &quot;--limit&quot;, &quot;0&q
 booleans and never parse the next value:</p>
 
 <pre><code>iex&gt; OptionParser.parse([&quot;--no-op&quot;, &quot;path/to/file&quot;])
-{ [no_op: true], [&quot;path/to/file&quot;] }
+{ [no_op: true], [&quot;path/to/file&quot;], [] }
 </code></pre>
 
 <p>In case the negated switch exists as a boolean, it sets the boolean to false:</p>
 
 <pre><code>iex&gt; OptionParser.parse([&quot;--no-op&quot;, &quot;path/to/file&quot;], switches: [op: :boolean])
-{ [op: false], [&quot;path/to/file&quot;] }
+{ [op: false], [&quot;path/to/file&quot;], [] }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/option_parser.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/option_parser.ex#L82" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -152,14 +165,14 @@ as soon as it finds a non-switch, it stops parsing.</p>
 <h2>Example</h2>
 
 <pre><code>iex&gt; OptionParser.parse_head([&quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--verbose&quot;])
-{ [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;] }
+{ [source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--verbose&quot;], [] }
 
 iex&gt; OptionParser.parse_head([&quot;--verbose&quot;, &quot;--source&quot;, &quot;lib&quot;, &quot;test/enum_test.exs&quot;, &quot;--unlock&quot;])
-{[verbose: true, source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--unlock&quot;]}
+{ [verbose: true, source: &quot;lib&quot;], [&quot;test/enum_test.exs&quot;, &quot;--unlock&quot;], [] }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/option_parser.ex#L87" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/option_parser.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 

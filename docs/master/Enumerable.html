@@ -37,59 +37,18 @@ perform operations on the collection.</p>
 
 <p>For example, in the expression</p>
 
-<pre><code>Enum.map([1, 2, 3], &amp;1 * 2)
+<pre><code>Enum.map([1, 2, 3], &amp;(&amp;1 * 2))
 </code></pre>
 
 <p><code>Enum.map/2</code> invokes <code>Enumerable.reduce/3</code> to perform the reducing operation
-that builds a mapped list by calling the mapping function <code>&amp;1 * 2</code> on every
+that builds a mapped list by calling the mapping function <code>&amp;(&amp;1 * 2)</code> on every
 element in the collection and cons&#39;ing the element with the accumulated list.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
 
-      
-        <h2 id="implementations">Implementations</h2>
-        <ul class="summary">
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.Function.html">Function</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.HashDict.html">HashDict</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.HashSet.html">HashSet</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.List.html">List</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.Range.html">Range</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.Stream.Lazy.html">Stream.Lazy</a>
-              </span>
-            </li>
-          
-        </ul>
       
 
       
@@ -130,7 +89,7 @@ element in the collection and cons&#39;ing the element with the accumulated list
   <div class="docstring"><p>The function is used to retrieve the collection&#39;s size.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -140,7 +99,7 @@ element in the collection and cons&#39;ing the element with the accumulated list
   <div class="docstring"><p>The function is used to check if a value exists within the collection.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -168,7 +127,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/bac39e4a8d196d7f548d430f895426e5c262a665/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
   
 </div>
 
