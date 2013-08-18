@@ -111,26 +111,16 @@ iex> 1.0        # float
 iex> :atom      # atom / symbol
 iex> {1,2,3}    # tuple
 iex> [1,2,3]    # list
-iex> <<1,2,3>>  # binary
+iex> <<1,2,3>>  # bitstring
 ```
 
-Elixir by default provides many functions to work on these types:
+Elixir by default imports many functions to work on these types:
 
 ```iex
 iex> size { 1, 2, 3 }
 3
 
 iex> length [ 1, 2, 3 ]
-3
-```
-
-Elixir also provides functions (note the dot between the variable and arguments when calling a function):
-
-```iex
-# function
-iex> x = fn(a, b) -> a + b end
-#Fun<erl_eval.12.111823515>
-iex> x.(1, 2)
 3
 ```
 
@@ -149,10 +139,28 @@ iex> "hello #{name}"
 "hello world"
 ```
 
-At the end of the day, strings are nothing more than binaries. We can verify this using the `is_binary` function:
+At the end of the day, strings are nothing more than a bunch of bytes packed together. We can verify this using the `is_binary` function:
 
 ```iex
 iex> is_binary("hello")
+true
+iex> byte_size("hello")
+5
+```
+
+And a binary is nothing more than a bunch of bits packed together:
+
+```iex
+iex> is_bitstring("hello")
+true
+iex> bit_size("hello")
+40
+```
+
+Elixir allows you to create "raw" binaries too. Let's create a binary with three null bytes:
+
+```iex
+iex> is_binary <<0, 0, 0>>
 true
 ```
 
@@ -161,9 +169,11 @@ Note that a single-quoted expression in Elixir is a char list and is not the sam
 ```iex
 iex> is_binary('hello')
 false
+iex> is_list('hello')
+true
 ```
 
-We will go into more details about char lists in the next chapter. Finally, Elixir also provides `true` and `false` as booleans:
+We will go into more details about char lists in the next chapter. Elixir also provides `true` and `false` as booleans:
 
 ```iex
 iex> true
@@ -177,6 +187,16 @@ Booleans are represented internally as atoms:
 ```iex
 iex> is_atom(true)
 true
+```
+
+Elixir also provides anonymous functions (note the dot between the variable and arguments when calling an anonymous function):
+
+```iex
+# function
+iex> x = fn(a, b) -> a + b end
+#Fun<erl_eval.12.111823515>
+iex> x.(1, 2)
+3
 ```
 
 Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication), but they are out of the scope of a getting started tutorial. For now, let's take a look at the basic operators in Elixir before we move on to the next chapter.
@@ -284,7 +304,7 @@ true
 
 The reason we can compare different data types is for pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
 
-    number < atom < reference < functions < port < pid < tuple < list < bit string
+    number < atom < reference < functions < port < pid < tuple < list < bitstring
 
 You dont't actually need to memorize this ordering, but it is important just to know an order exists.
 
