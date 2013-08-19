@@ -49,9 +49,7 @@ calls like above.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -192,12 +190,42 @@ calls like above.</p>
       
 
       
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:value/0">
+    <a href="#t:value/0">value()</a> :: any()
+  </p>
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:values/0">
+    <a href="#t:values/0">values()</a> :: [<a href="#t:value/0">value()</a>]
+  </p>
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t()</a> :: {}
+  </p>
+</div>
+
+        </div>
+      
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="delete/2">
     <strong>delete(set, value)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>delete(<a href="#t:t/0">t()</a>, <a href="#t:value/0">value()</a>) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Deletes <code>value</code> from <code>set</code>.</p>
 
 <h2>Examples</h2>
@@ -212,13 +240,21 @@ iex&gt; s = HashSet.new([1, 2, 3])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L63" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L63" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="difference/2">
     <strong>difference(set1, set2)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>difference(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns a set that is <code>set1</code> without the members of <code>set2</code>.</p>
 
 <h2>Examples</h2>
@@ -228,13 +264,21 @@ iex&gt; s = HashSet.new([1, 2, 3])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L77" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L77" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="disjoint?/2">
     <strong>disjoint?(set1, set2)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>disjoint?(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: boolean()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Checks if <code>set1</code> and <code>set2</code> have no members in common.</p>
 
 <h2>Examples</h2>
@@ -246,23 +290,39 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L93" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L93" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="empty/1">
     <strong>empty(set)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>empty(<a href="#t:t/0">t()</a>) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns an empty set of the same type as <code>set</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L101" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L101" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="equal?/2">
     <strong>equal?(set1, set2)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>equal?(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: boolean()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Checks if <code>set1</code> and <code>set2</code> are equal.</p>
 
 <h2>Examples</h2>
@@ -275,13 +335,21 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L118" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L118" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="intersection/2">
     <strong>intersection(set1, set2)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>intersection(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns a set containing only members in common between <code>set1</code> and <code>set2</code>.</p>
 
 <h2>Examples</h2>
@@ -294,13 +362,21 @@ iex&gt; Set.intersection(HashSet.new([1,2]), HashSet.new([3,4])) |&gt; HashSet.t
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L135" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L135" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="member?/2">
     <strong>member?(set, value)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>member?(<a href="#t:t/0">t()</a>, <a href="#t:value/0">value()</a>) :: boolean()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Checks if <code>set</code> contains <code>value</code>.</p>
 
 <h2>Examples</h2>
@@ -313,13 +389,21 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L152" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L152" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="put/2">
     <strong>put(set, value)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>put(<a href="#t:t/0">t()</a>, <a href="#t:value/0">value()</a>) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Inserts <code>value</code> into <code>set</code> if it does not already contain it.</p>
 
 <h2>Examples</h2>
@@ -332,13 +416,21 @@ iex&gt; Set.put(HashSet.new([1, 2, 3]), 4) |&gt; Set.to_list
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L169" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L169" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="size/1">
     <strong>size(set)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>size(<a href="#t:t/0">t()</a>) :: non_neg_integer()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns the number of elements in <code>set</code>.</p>
 
 <h2>Examples</h2>
@@ -348,13 +440,21 @@ iex&gt; Set.put(HashSet.new([1, 2, 3]), 4) |&gt; Set.to_list
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L183" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L183" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="subset?/2">
     <strong>subset?(set1, set2)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>subset?(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: boolean()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Checks if <code>set1</code>&#39;s members are all contained in <code>set2</code>.</p>
 
 <h2>Examples</h2>
@@ -366,13 +466,21 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L198" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L198" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="to_list/1">
     <strong>to_list(set)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>to_list(<a href="#t:t/0">t()</a>) :: []</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Converts <code>set</code> to a list.</p>
 
 <h2>Examples</h2>
@@ -382,13 +490,21 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L212" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L212" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="union/2">
     <strong>union(set1, set2)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>union(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns a set containing all members of <code>set1</code> and <code>set2</code>.</p>
 
 <h2>Examples</h2>
@@ -398,7 +514,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L226" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L226" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -414,108 +530,120 @@ false
   <p class="signature" id="delete/2">
     <strong>delete(t(), value())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L26" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L26" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="difference/2">
     <strong>difference(t(), t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L27" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L27" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="disjoint?/2">
     <strong>disjoint?(t(), t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L28" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L28" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="empty/1">
     <strong>empty(t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L29" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="equal?/2">
     <strong>equal?(t(), t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L30" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L30" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="intersection/2">
     <strong>intersection(t(), t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L31" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="member?/2">
     <strong>member?(t(), value())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L32" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L32" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="put/2">
     <strong>put(t(), value())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L33" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L33" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="size/1">
     <strong>size(t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L34" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L34" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="subset?/2">
     <strong>subset?(t(), t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L35" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L35" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="to_list/1">
     <strong>to_list(t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L36" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L36" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="union/2">
     <strong>union(t(), t())</strong>
   </p>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/set.ex#L37" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/set.ex#L37" target="_blank" class="view_source">Source</a>
   
 </div>
 

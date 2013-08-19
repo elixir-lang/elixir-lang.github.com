@@ -41,9 +41,7 @@ that require it (like <a href="#wildcard/1"><code>wildcard/1</code></a> and <a h
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -149,12 +147,30 @@ that require it (like <a href="#wildcard/1"><code>wildcard/1</code></a> and <a h
       
 
       
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t()</a> :: char_list() | atom() | binary()
+  </p>
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:r/0">
+    <a href="#t:r/0">r()</a> :: char_list() | binary()
+  </p>
+</div>
+
+        </div>
+      
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="absname/1">
     <strong>absname(path)</strong>
   </p>
+  
   <div class="docstring"><p>Converts the given path to an absolute one. Unlike
 <a href="#expand/1"><code>expand/1</code></a>, no attempt is made to resolve <code>..</code>, <code>.</code> or <code>~</code>.</p>
 
@@ -176,13 +192,14 @@ Path.absname(&quot;../x&quot;).
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L40" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L40" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="absname/2">
     <strong>absname(path, relative_to)</strong>
   </p>
+  
   <div class="docstring"><p>Builds a path from <code>relative_to</code> to <code>path</code>. If <code>path</code> is already
 an absolute path, <code>relative_to</code> is ignored. See also <code>relative/2</code>.</p>
 
@@ -199,13 +216,14 @@ iex&gt; Path.absname(&quot;../x&quot;, &quot;bar&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L60" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="basename/1">
     <strong>basename(path)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the last component of the path or the path
 itself if it does not contain any directory separators.</p>
 
@@ -222,13 +240,14 @@ iex&gt; Path.basename(&quot;/&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L267" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L267" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="basename/2">
     <strong>basename(path, extension)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the last component of <code>path</code> with the <code>extension</code>
 stripped. This function should be used to remove a specific
 extension which may, or may not, be there.</p>
@@ -244,13 +263,14 @@ iex&gt; Path.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L286" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L286" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="dirname/1">
     <strong>dirname(path)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the directory component of <code>path</code>.</p>
 
 <h2>Examples</h2>
@@ -262,13 +282,14 @@ Path.dirname(&quot;/foo/bar/baz.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L301" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L301" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="expand/1">
     <strong>expand(path)</strong>
   </p>
+  
   <div class="docstring"><p>Converts the path to an absolute one and expands
 any <code>.</code> and <code>..</code> characters and a leading <code>~</code>.</p>
 
@@ -279,13 +300,14 @@ any <code>.</code> and <code>..</code> characters and a leading <code>~</code>.<
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L74" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="expand/2">
     <strong>expand(path, relative_to)</strong>
   </p>
+  
   <div class="docstring"><p>Expands the path relative to the path given as the second argument
 expanding any <code>.</code> and <code>..</code> characters. If the path is already an
 absolute path, <code>relative_to</code> is ignored.</p>
@@ -308,13 +330,14 @@ Path.expand(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="extname/1">
     <strong>extname(path)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the extension of the last component of <code>path</code>.</p>
 
 <h2>Examples</h2>
@@ -326,13 +349,14 @@ iex&gt; Path.extname(&quot;~/foo/bar&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L316" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L316" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="join/1">
     <strong>join(list1)</strong>
   </p>
+  
   <div class="docstring"><p>Returns a string with one or more path components joined by the path separator.
 This function should be used to convert a list of strings to a path.</p>
 
@@ -347,13 +371,14 @@ iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L365" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L365" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="join/2">
     <strong>join(left, right)</strong>
   </p>
+  
   <div class="docstring"><p>Joins two paths.</p>
 
 <h2>Examples</h2>
@@ -363,13 +388,14 @@ iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L381" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L381" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="relative/1">
     <strong>relative(name)</strong>
   </p>
+  
   <div class="docstring"><p>Forces the path to be a relative path.</p>
 
 <h2>Unix examples</h2>
@@ -388,13 +414,14 @@ Path.relative(&quot;/bar/foo.ex&quot;)      #=&gt; &quot;bar/foo.ex&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L146" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L146" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="relative_to/2">
     <strong>relative_to(path, from)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the given <code>path</code> relative to the given <code>from</code> path.
 In other words, it tries to strip the <code>from</code> prefix from <code>path</code>.</p>
 
@@ -415,25 +442,27 @@ iex&gt; Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/etc&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="relative_to_cwd/1">
     <strong>relative_to_cwd(path)</strong>
   </p>
+  
   <div class="docstring"><p>Convenience to get the path relative to the current working
 directory. If, for some reason, the current working directory
 cannot be retrieved, returns the full path.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L244" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L244" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="rootname/1">
     <strong>rootname(path)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the <code>path</code> with the <code>extension</code> stripped.</p>
 
 <h2>Examples</h2>
@@ -445,13 +474,14 @@ iex&gt; Path.rootname(&quot;/foo/bar.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L331" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L331" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="rootname/2">
     <strong>rootname(path, extension)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the <code>path</code> with the <code>extension</code> stripped. This function should be used to
 remove a specific extension which might, or might not, be there.</p>
 
@@ -464,13 +494,14 @@ iex&gt; Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L347" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L347" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="split/1">
     <strong>split(path)</strong>
   </p>
+  
   <div class="docstring"><p>Returns a list with the path split by the path separator.
 If an empty string is given, returns the root path.</p>
 
@@ -485,13 +516,14 @@ If an empty string is given, returns the root path.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L446" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L446" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="type/1">
     <strong>type(name)</strong>
   </p>
+  
   <div class="docstring"><p>Returns the path type.</p>
 
 <h2>Unix examples</h2>
@@ -511,13 +543,14 @@ Path.type(&quot;/bar/foo.ex&quot;)      #=&gt; :volumerelative
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L122" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="wildcard/1">
     <strong>wildcard(glob)</strong>
   </p>
+  
   <div class="docstring"><p>Traverses paths according to the given <code>glob</code> expression.</p>
 
 <p>The wildcard looks like an ordinary path, except that certain
@@ -554,7 +587,7 @@ inside the <code>ebin</code> directory of each project as follows:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/path.ex#L485" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L485" target="_blank" class="view_source">Source</a>
   
 </div>
 

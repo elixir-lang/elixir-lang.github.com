@@ -94,9 +94,7 @@ by this module and by providing their own rendering functions.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -187,21 +185,54 @@ by this module and by providing their own rendering functions.</p>
       
 
       
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t()</a> :: :doc_nil | doc_cons_t() | doc_nest_t() | doc_break_t() | doc_group_t() | binary()
+  </p>
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:sdoc/0">
+    <a href="#t:sdoc/0">sdoc()</a> :: :s_nil | s_text_t() | s_line_t()
+  </p>
+</div>
+
+        </div>
+      
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="break/0">
     <strong>break()</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>break() :: doc_break_t()</li>
+      
+    </ul>
+  
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L158" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L158" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="break/1">
     <strong>break(s)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>break(binary()) :: doc_break_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Document entity representing a break. This break can
 be rendered as a linebreak or as spaces, depending on the
 <code>mode</code> of the chosen layout or the provided separator.</p>
@@ -224,23 +255,39 @@ iex&gt; Inspect.Algebra.pretty(doc, 10)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="concat/1">
     <strong>concat(docs)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>concat([<a href="#t:t/0">t()</a>]) :: doc_cons_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Concatenates a list of documents.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L116" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L116" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="concat/2">
     <strong>concat(x, y)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>concat(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Concatenates two document entities. Takes two arguments:
 left doc and right doc. Returns a DocCons doc</p>
 
@@ -252,13 +299,21 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L110" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L110" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="empty/0">
     <strong>empty()</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>empty() :: :doc_nil</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns <code>:doc_nil</code> which is a document entity used to represent
 nothingness. Takes no arguments.</p>
 
@@ -269,13 +324,21 @@ nothingness. Takes no arguments.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L96" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L96" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="folddoc/2">
     <strong>folddoc(list1, f)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>folddoc([any()], (any(), [<a href="#t:t/0">t()</a>] -> <a href="#t:t/0">t()</a>)) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Folds a list of document entities into a document entity
 using a function that is passed as the first argument.</p>
 
@@ -290,34 +353,58 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L244" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L244" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="glue/2">
     <strong>glue(x, y)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>glue(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Inserts a break between two docs. See <a href="#break/1"><code>break/1</code></a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="glue/3">
     <strong>glue(x, g, y)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>glue(<a href="#t:t/0">t()</a>, binary(), <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Inserts a break, passed as the second argument, between two docs,
 the first and the third arguments.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L171" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L171" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="group/1">
     <strong>group(d)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>group(<a href="#t:t/0">t()</a>) :: doc_group_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Returns a group containing the specified document.</p>
 
 <h2>Examples</h2>
@@ -345,13 +432,21 @@ iex&gt; Inspect.Algebra.pretty(doc, 6)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L201" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L201" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="line/2">
     <strong>line(x, y)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>line(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Inserts a mandatory linebreak between two document entities.</p>
 
 <h2>Examples</h2>
@@ -362,13 +457,21 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L227" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L227" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="nest/2">
     <strong>nest(x, i)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>nest(<a href="#t:t/0">t()</a>, non_neg_integer()) :: doc_nest_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Nests document entity <code>x</code> positions deep. Nesting will be
 appended to the line breaks.</p>
 
@@ -380,13 +483,21 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L130" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L130" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="pretty/2">
     <strong>pretty(d, w)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>pretty(<a href="#t:t/0">t()</a>, non_neg_integer() | :infinity) :: binary()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>The pretty printing function.</p>
 
 <p>Takes the maximum width and a document to print as its arguments
@@ -394,13 +505,21 @@ and returns the string representation of the best layout for the
 document to fit in the given width.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L327" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L327" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="space/2">
     <strong>space(x, y)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>space(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Inserts a mandatory single space between two document entities.</p>
 
 <h2>Examples</h2>
@@ -411,13 +530,21 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="surround/3">
     <strong>surround(left, doc, right)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>surround(binary(), <a href="#t:t/0">t()</a>, binary()) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Surrounds a document with characters.</p>
 
 <p>Puts the document between left and right enclosing and nesting it.
@@ -432,13 +559,21 @@ iex&gt; Inspect.Algebra.pretty(doc, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L265" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L265" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="surround_many/5">
     <strong>surround_many(left, docs, right, limit, fun)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>surround_many(binary(), [any()], binary(), integer() | :infinity, (term() -> <a href="#t:t/0">t()</a>)) :: <a href="#t:t/0">t()</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Maps and glues a collection of items together using the given separator
 and surrounds them. A limit can be passed which, once reached, stops
 gluing and outputs &quot;...&quot; instead.</p>
@@ -455,7 +590,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 20)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/eccf6c9e6ea9eb244d3d6b21e104c562e9f70f0f/lib/elixir/lib/inspect/algebra.ex#L286" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L286" target="_blank" class="view_source">Source</a>
   
 </div>
 
