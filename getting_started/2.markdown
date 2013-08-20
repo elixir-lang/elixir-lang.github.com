@@ -245,7 +245,7 @@ iex> "h\xE9ll\xF2"
 "héllò"
 ```
 
-UTF-8 also plays nicely with pattern matching. In the exemple below, we are extracting the first UTF-8 codepoint of a String and assigning the rest of the string to the variable `rest`:
+UTF-8 also plays nicely with pattern matching. In the example below, we are extracting the first UTF-8 codepoint of a String and assigning the rest of the string to the variable `rest`:
 
 ```iex
 iex> << eacute :: utf8, rest :: binary >> = "épa"
@@ -638,11 +638,11 @@ else
 end
 ```
 
-In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicitly convert the `if` argument to a boolean. If you want to check if one of many conditions are true, you can use the `cond` macro.
+In Elixir, all values except `false` and `nil` evaluate to `true`. Therefore there is no need to explicitly convert the `if` argument to a boolean. If you want to check if one of many conditions are `true`, you can use the `cond` macro.
 
 ### 2.6.7 Cond
 
-Whenever you want to check for many conditions at the same time, Elixir allows developers to use `cond` insted of nesting many `if` expressions:
+Whenever you want to check for many conditions at the same time, Elixir allows developers to use `cond` instead of nesting many `if` expressions:
 
 ```elixir
 cond do
@@ -655,7 +655,7 @@ cond do
 end
 ```
 
-If none of the conditions return true, an error will be raised. For this reason, it is common to see a last condition equal to `true`, which will always match:
+If none of the conditions return `true`, an error will be raised. For this reason, it is common to see a last condition equal to `true`, which will always match:
 
 ```elixir
 cond do
