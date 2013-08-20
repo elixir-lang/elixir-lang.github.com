@@ -185,7 +185,7 @@ iex> fun.(:hello)
 
 In the example above, we use `&1` as a placeholder, generating a function with one argument. The capture above is equivalent to `fn(x) -> atom_to_binary(x, :utf8) end`.
 
-Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses around:
+Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses:
 
     iex> fun = &(&1 + &2)
     iex> fun.(1, 2)
