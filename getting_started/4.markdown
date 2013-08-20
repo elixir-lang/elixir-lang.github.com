@@ -87,7 +87,7 @@ For more information on records, [check out the documentation for the `defrecord
 
 Protocols is a mechanism to achieve polymorphism in Elixir. Dispatching a protocol is available to any data type as long as it implements the protocol. Let's consider a practical example.
 
-In Elixir, only `false` and `nil` are evaluated as `false`. Everything else evaluates to `true`. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
+In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
 
 We could define this protocol as follows:
 
