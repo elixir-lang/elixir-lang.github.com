@@ -50,15 +50,15 @@ Elixir also allows one to pattern match against records. For example, imagine we
 
 ```elixir
 defmodule FileAccess do
-  def was_accessed?(FileInfo[accesses: 0]), do: true
-  def was_accessed?(FileInfo[]),            do: false
+  def was_accessed?(FileInfo[accesses: 0]), do: false
+  def was_accessed?(FileInfo[]),            do: true
 end
 ```
 
-The first clause will only match if a `FileInfo` record is given and the `accesses` field is equal to zero. The second clause will match any `FileInfo` record and nothing more. We can also like the value of `accesses` to a variable as follows:
+The first clause will only match if a `FileInfo` record is given and its `accesses` field is equal to zero. The second clause will match any `FileInfo` record and nothing more. We can also link the value of `accesses` to a variable as follows:
 
 ```elixir
-def was_accessed?(FileInfo[accesses: accesses]), do: accesses == 0
+def was_accessed?(FileInfo[accesses: accesses]), do: accesses > 0
 ```
 
 The pattern matching syntax can also be used to create new records:
@@ -70,13 +70,13 @@ file_info = FileInfo[accesses: 0]
 Whenever using the bracket syntax above, Elixir expands the record to a tuple at compilation time. That said, the clause above:
 
 ```elixir
-def was_accessed?(FileInfo[accesses: 0]), do: true
+def was_accessed?(FileInfo[accesses: 0]), do: false
 ```
 
 Is effectively the same as:
 
 ```elixir
-def was_accessed?({ FileInfo, _, 0 }), do: true
+def was_accessed?({ FileInfo, _, 0 }), do: false
 ```
 
 Using the bracket syntax is a powerful mechanism not only due to pattern matching but also regarding performance, since it provides faster times compared to `FileInfo.new` and `file_info.accesses`. The downside is that we hardcode the record name. For this reason, Elixir allows you to mix and match both styles as you may find fit.
