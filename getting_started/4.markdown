@@ -122,17 +122,17 @@ end
 
 And we would do so for all native data types. The types available are:
 
-* Record
-* Tuple
-* Atom
-* List
-* BitString
-* Number
-* Function
-* PID
-* Port
-* Reference
-* Any
+* `Record`
+* `Tuple`
+* `Atom`
+* `List`
+* `BitString`
+* `Number`
+* `Function`
+* `PID`
+* `Port`
+* `Reference`
+* `Any`
 
 Now, with the protocol defined and implementations in hand, we can invoke it:
 
@@ -149,11 +149,11 @@ Blank.blank?("hello")
 ** (UndefinedFunctionError) undefined function: Blank.BitString.blank?/1
 ```
 
-Implementing the protocol for all 9 types above can be cumbersome. So Elixir gives us some tools to select which protocols we want to implement explicitly.
+Implementing the protocol for all 9 types above can be cumbersome, but Elixir gives us some tools to select which protocols we want to implement explicitly.
 
 ### 4.2.1 Selecting implementations
 
-Implementing the protocol for all types can be a bit of work and in some cases, even unnecessary. Going back to our `Blank` protocol, the types Number, Function, PID, Port and Reference are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
+Implementing the protocol for all types can be a bit of work, and in some cases even unnecessary. Going back to our `Blank` protocol, the types `Number`, `Function`, `PID`, `Port` and `Reference` are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
 
 ```elixir
 defprotocol Blank do
@@ -217,9 +217,9 @@ Keep in mind that `Record` needs to come before `Tuple`, since all records are t
 
 ### 4.2.3 Built-in protocols
 
-Elixir ships with some built-in protocols, let's take a look at a couple of those:
+Elixir ships with some built-in protocols. Here are a couple of them:
 
-* `Access` - specifies how to access an element. This is the protocol that empowers bracket access in Elixir, for example:
+* `Access` - specifies how to access an element. This is the protocol that empowers bracket access in Elixir. For example:
 
 ```iex
 iex> x = [a: 1, b: 2]
@@ -239,7 +239,7 @@ iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 6
 ```
 
-* `Binary.Inspect` - this protocol is used to transform any data structure into a readable textual representation. That's what tools like IEx uses to print results:
+* `Binary.Inspect` - this protocol is used to transform any data structure into a readable textual representation. This is what tools like IEx use to print results:
 
 ```iex
 iex> { 1, 2, 3 }
@@ -272,16 +272,17 @@ iex> "age: #{25}"
   The example above only works because numbers implement the `Binary.Chars` protocol. Passing a tuple, for example, will lead to an error:
 
 ```iex
-iex> tuple = { 1, 2, 3 }
-{1,2,3}
+iex> tuple = {1, 2, 3}
+{1, 2, 3}
 iex> "tuple: #{tuple}"
-** (Protocol.UndefinedError) protocol Binary.Chars not implemented for {1,2,3}
+** (Protocol.UndefinedError) protocol Binary.Chars not implemented for {1, 2, 3}
 ```
+
   When there is a need to "print" a more complex data structure, one can simply use the `inspect` function:
 
 ```iex
 iex> "tuple: #{inspect tuple}"
-"tuple: {1,2,3}"
+"tuple: {1, 2, 3}"
 ```
 
 Elixir defines other protocols which can be verified in Elixir's documentation. Frameworks and libraries that you use may define a couple of specific protocols as well. Use them wisely to write code that is easy to maintain and extend.
