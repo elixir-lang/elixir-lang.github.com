@@ -183,15 +183,17 @@ iex> fun.(:hello)
 "hello"
 ```
 
-In the example above, we use &1 as a placeholder, generating a function with one argument. The capture above is equivalent to `fn(x) -> atom_to_binary(&1, :utf8) end`.
+In the example above, we use `&1` as a placeholder, generating a function with one argument. The capture above is equivalent to `fn(x) -> atom_to_binary(x, :utf8) end`.
 
-Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses around:
+Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses:
 
-    iex> fun = &(&1 + &2)
-    iex> fun.(1, 2)
-    3
+```iex
+iex> fun = &(&1 + &2)
+iex> fun.(1, 2)
+3
+```
 
-The capture operator is a handy way of capturing functions and passing them around as anonymous functions. To learn more about it, [check out its documentation](http://elixir-lang.org/docs/stable/Kernel.SpecialForms.html#&/1).
+The capture operator is a handy way of capturing functions and passing them around as anonymous functions. To learn more, [read the documentation](http://elixir-lang.org/docs/stable/Kernel.SpecialForms.html#&/1).
 
 ## 6.6 Use
 
