@@ -187,11 +187,13 @@ In the example above, we use `&1` as a placeholder, generating a function with o
 
 Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses:
 
-    iex> fun = &(&1 + &2)
-    iex> fun.(1, 2)
-    3
+```iex
+iex> fun = &(&1 + &2)
+iex> fun.(1, 2)
+3
+```
 
-The capture operator is a handy way of capturing functions and passing them around as anonymous functions. To learn more about it, [check out its documentation](http://elixir-lang.org/docs/stable/Kernel.SpecialForms.html#&/1).
+The capture operator is a handy way of capturing functions and passing them around as anonymous functions. To learn more, [read the documentation](http://elixir-lang.org/docs/stable/Kernel.SpecialForms.html#&/1).
 
 ## 6.6 Use
 
