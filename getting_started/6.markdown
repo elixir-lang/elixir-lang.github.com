@@ -88,7 +88,7 @@ iex> MyModule.__info__(:moduledoc)
 {1,"It does X"}
 ```
 
-`__info__(:docs)` returns a list of tuples where each tuple contains a function/arity pair, the line the function was defined on, the kind of the function (`def` or `defmacro`, private functions cannot be documented), the function arguments and its documentation. The comment will be either a binary or `nil` (not given) or `false` (explicit no doc).
+`__info__(:docs)` returns a list of tuples where each tuple contains a function/arity pair, the line the function was defined on, the kind of the function (either `def` or `defmacro`, private functions defined with `defp` or `defmacrop` cannot be documented), the function arguments and its documentation. The comment will be either a binary or `nil` (not given) or `false` (explicit no doc).
 
 Similarly, `__info__(:moduledoc)` returns a tuple with the line the module was defined on and its documentation.
 
