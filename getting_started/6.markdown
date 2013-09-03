@@ -14,32 +14,32 @@ This chapter contains different small topics that are part of Elixir's day to da
 Elixir provides string sigils via the token `%`:
 
 ```elixir
-%b(Binary with escape codes \x26 interpolation)
-%B(Binary without escape codes and without #{interpolation})
+%s(String with escape codes \x26 interpolation)
+%S(String without escape codes and without #{interpolation})
 ```
 
 Sigils starting with an uppercase letter never escape characters or do interpolation. Notice the separators are not necessarily parenthesis, but any non-alphanumeric character:
 
 ```elixir
-%b-another binary-
+%s-another string-
 ```
 
-Internally, `%b` is translated as a function call to `sigil_b`. For instance, the docs for `%b` are available in the macro [`sigil_b/2`](/docs/stable/Kernel.html#sigil_b/2) defined in `Kernel` module.
+Internally, `%s` is translated as a call to `sigil_s`. For instance, the docs for `%s` are available in the macro [`sigil_s/2`](/docs/stable/Kernel.html#sigil_s/2) defined in `Kernel` module.
 
 The sigils defined in Elixir by default are:
 
-* `%b` and `%B` - Returns a binary;
 * `%c` and `%C` - Returns a char list;
 * `%r` and `%R` - Returns a regular expression;
+* `%s` and `%S` - Returns a string;
 * `%w` and `%W` - Returns a list of "words" split by whitespace;
 
 ## 6.2 Heredocs
 
-Elixir supports heredocs as a way to define long strings. Heredocs are delimited by triple double-quotes for binaries or triple single-quotes for char lists:
+Elixir supports heredocs as a way to define long strings. Heredocs are delimited by triple double-quotes for string or triple single-quotes for char lists:
 
 ```elixir
 """
-Binary heredoc
+String heredoc
 """
 
 '''
@@ -51,14 +51,14 @@ The heredoc ending must be in a line on its own, otherwise it is part of the her
 
 ```elixir
 """
-Binary heredocs in Elixir use """
+String heredocs in Elixir use """
 """
 ```
 
 Notice the sigils discussed in the previous section are also available as heredocs:
 
 ```elixir
-%B"""
+%S"""
 A heredoc without escaping or interpolation
 """
 ```
