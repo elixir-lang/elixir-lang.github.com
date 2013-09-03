@@ -94,7 +94,7 @@ by this module and by providing their own rendering functions.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -189,12 +189,12 @@ by this module and by providing their own rendering functions.</p>
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t()</a> :: :doc_nil | doc_cons_t() | doc_nest_t() | doc_break_t() | doc_group_t() | binary()
+    <a href="#t:t/0">t</a> :: :doc_nil | doc_cons_t | doc_nest_t | doc_break_t | doc_group_t | binary
   </p>
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:sdoc/0">
-    <a href="#t:sdoc/0">sdoc()</a> :: :s_nil | s_text_t() | s_line_t()
+    <a href="#t:sdoc/0">sdoc</a> :: :s_nil | s_text_t | s_line_t
   </p>
 </div>
 
@@ -212,13 +212,13 @@ by this module and by providing their own rendering functions.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>break() :: doc_break_t()</li>
+        <li>break :: doc_break_t</li>
       
     </ul>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L158" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L158" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -229,7 +229,7 @@ by this module and by providing their own rendering functions.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>break(binary()) :: doc_break_t()</li>
+        <li>break(binary) :: doc_break_t</li>
       
     </ul>
   
@@ -255,7 +255,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 10)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -266,14 +266,14 @@ iex&gt; Inspect.Algebra.pretty(doc, 10)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>concat([<a href="#t:t/0">t()</a>]) :: doc_cons_t()</li>
+        <li>concat([<a href="#t:t/0">t</a>]) :: doc_cons_t</li>
       
     </ul>
   
   <div class="docstring"><p>Concatenates a list of documents.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L116" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L116" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -284,7 +284,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 10)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>concat(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+        <li>concat(<a href="#t:t/0">t</a>, <a href="#t:t/0">t</a>) :: doc_cons_t</li>
       
     </ul>
   
@@ -299,7 +299,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L110" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L110" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -310,7 +310,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>empty() :: :doc_nil</li>
+        <li>empty :: :doc_nil</li>
       
     </ul>
   
@@ -324,7 +324,7 @@ nothingness. Takes no arguments.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L96" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L96" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -335,7 +335,7 @@ nothingness. Takes no arguments.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>folddoc([any()], (any(), [<a href="#t:t/0">t()</a>] -> <a href="#t:t/0">t()</a>)) :: <a href="#t:t/0">t()</a></li>
+        <li>folddoc([any], (any, [<a href="#t:t/0">t</a>] -> <a href="#t:t/0">t</a>)) :: <a href="#t:t/0">t</a></li>
       
     </ul>
   
@@ -353,7 +353,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L244" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L244" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -364,14 +364,14 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>glue(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+        <li>glue(<a href="#t:t/0">t</a>, <a href="#t:t/0">t</a>) :: doc_cons_t</li>
       
     </ul>
   
   <div class="docstring"><p>Inserts a break between two docs. See <a href="#break/1"><code>break/1</code></a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -382,7 +382,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>glue(<a href="#t:t/0">t()</a>, binary(), <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+        <li>glue(<a href="#t:t/0">t</a>, binary, <a href="#t:t/0">t</a>) :: doc_cons_t</li>
       
     </ul>
   
@@ -390,7 +390,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 the first and the third arguments.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L171" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L171" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -401,7 +401,7 @@ the first and the third arguments.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>group(<a href="#t:t/0">t()</a>) :: doc_group_t()</li>
+        <li>group(<a href="#t:t/0">t</a>) :: doc_group_t</li>
       
     </ul>
   
@@ -432,7 +432,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 6)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L201" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L201" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -443,7 +443,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 6)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>line(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+        <li>line(<a href="#t:t/0">t</a>, <a href="#t:t/0">t</a>) :: doc_cons_t</li>
       
     </ul>
   
@@ -457,7 +457,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L227" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L227" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -468,7 +468,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>nest(<a href="#t:t/0">t()</a>, non_neg_integer()) :: doc_nest_t()</li>
+        <li>nest(<a href="#t:t/0">t</a>, non_neg_integer) :: doc_nest_t</li>
       
     </ul>
   
@@ -483,7 +483,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L130" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L130" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -494,7 +494,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>pretty(<a href="#t:t/0">t()</a>, non_neg_integer() | :infinity) :: binary()</li>
+        <li>pretty(<a href="#t:t/0">t</a>, non_neg_integer | :infinity) :: binary</li>
       
     </ul>
   
@@ -505,7 +505,7 @@ and returns the string representation of the best layout for the
 document to fit in the given width.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L327" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L327" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -516,7 +516,7 @@ document to fit in the given width.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>space(<a href="#t:t/0">t()</a>, <a href="#t:t/0">t()</a>) :: doc_cons_t()</li>
+        <li>space(<a href="#t:t/0">t</a>, <a href="#t:t/0">t</a>) :: doc_cons_t</li>
       
     </ul>
   
@@ -530,7 +530,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -541,7 +541,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 80)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>surround(binary(), <a href="#t:t/0">t()</a>, binary()) :: <a href="#t:t/0">t()</a></li>
+        <li>surround(binary, <a href="#t:t/0">t</a>, binary) :: <a href="#t:t/0">t</a></li>
       
     </ul>
   
@@ -559,7 +559,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L265" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L265" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -570,7 +570,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 3)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>surround_many(binary(), [any()], binary(), integer() | :infinity, (term() -> <a href="#t:t/0">t()</a>)) :: <a href="#t:t/0">t()</a></li>
+        <li>surround_many(binary, [any], binary, integer | :infinity, (term -> <a href="#t:t/0">t</a>)) :: <a href="#t:t/0">t</a></li>
       
     </ul>
   
@@ -590,7 +590,7 @@ iex&gt; Inspect.Algebra.pretty(doc, 20)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/inspect/algebra.ex#L286" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/inspect/algebra.ex#L286" target="_blank" class="view_source">Source</a>
   
 </div>
 

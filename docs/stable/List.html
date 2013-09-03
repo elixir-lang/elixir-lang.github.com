@@ -32,16 +32,14 @@ and cannot be part of the Enum protocol. In general,
 favor using the Enum API instead of List.</p>
 
 <p>A decision was taken to delegate most functions to
-Erlang&#39;s standard lib but following Elixir&#39;s convention
+Erlang&#39;s standard library but follow Elixir&#39;s convention
 of receiving the target (in this case, a list) as the
 first argument.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -49,16 +47,6 @@ first argument.</p>
         <h2 id="functions_summary">Functions summary</h2>
         <ul class="summary">
           <li>
-  <span class="summary_signature">
-    <a href="#concat/1">concat/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#concat/2">concat/2</a>
-  </span>
-</li>
-<li>
   <span class="summary_signature">
     <a href="#delete/2">delete/2</a>
   </span>
@@ -130,6 +118,11 @@ first argument.</p>
 </li>
 <li>
   <span class="summary_signature">
+    <a href="#replace_at/3">replace_at/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
     <a href="#unzip/1">unzip/1</a>
   </span>
 </li>
@@ -152,48 +145,15 @@ first argument.</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="concat/1">
-    <strong>concat(list)</strong>
-  </p>
-  <div class="docstring"><p>Given a list of lists, concatenates the sublists into a single list.</p>
-
-<h2>Examples</h2>
-
-<pre><code>iex&gt; List.concat([[1, [2], 3], [4], [5, 6]])
-[1,[2],3,4,5,6]
-</code></pre>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L24" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="concat/2">
-    <strong>concat(list, elements)</strong>
-  </p>
-  <div class="docstring"><p>Concatenates the list on the right with the list on the left.</p>
-
-<p>This function produces the same result the <code>++</code> operator. The only difference
-is a minor optimization: when the first list contains only one element, we
-simply add it as a head to the second list.</p>
-
-<h2>Examples</h2>
-
-<pre><code>iex&gt; List.concat([1, 2, 3], [4, 5, 6])
-[1,2,3,4,5,6]
-</code></pre>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L41" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
   <p class="signature" id="delete/2">
     <strong>delete(list, item)</strong>
   </p>
+  
   <div class="docstring"><p>Deletes the given item from the list. Returns a list without the item.
 If the item occurs more than once in the list, just the first occurrence
 is removed.</p>
@@ -202,17 +162,21 @@ is removed.</p>
 
 <pre><code>iex&gt; List.delete([1, 2, 3], 1)
 [2,3]
+
+iex&gt; List.delete([1, 2, 2, 3], 2)
+[1, 2, 3]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L56" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L41" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="duplicate/2">
     <strong>duplicate(elem, n)</strong>
   </p>
-  <div class="docstring"><p>Duplicates the given element n times in a list.</p>
+  
+  <div class="docstring"><p>Duplicates the given element <code>n</code> times in a list.</p>
 
 <h2>Examples</h2>
 
@@ -224,43 +188,50 @@ iex&gt; List.duplicate([1, 2], 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L71" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L56" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="flatten/1">
     <strong>flatten(list)</strong>
   </p>
-  <div class="docstring"><p>Flattens the given <code>list</code> of nested lists. An optional
-tail can be given that will be added at the end of
-the flattened list.</p>
+  
+  <div class="docstring"><p>Flattens the given <code>list</code> of nested lists.</p>
 
 <h2>Examples</h2>
 
 <pre><code>iex&gt; List.flatten([1, [[2], 3]])
 [1,2,3]
-
-iex&gt; List.flatten([1, [[2], 3]], [4, 5])
-[1,2,3,4,5]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L89" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="flatten/2">
     <strong>flatten(list, tail)</strong>
   </p>
-  <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L93" target="_blank" class="view_source">Source</a>
+  <div class="docstring"><p>Flattens the given <code>list</code> of nested lists. 
+The list <code>tail</code> will be added at the end of
+the flattened list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; List.flatten([1, [[2], 3]], [4, 5])
+[1,2,3,4,5]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L84" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="foldl/3">
     <strong>foldl(list, acc, function)</strong>
   </p>
+  
   <div class="docstring"><p>Folds (reduces) the given list to the left with
 a function. Requires an accumulator.</p>
 
@@ -274,13 +245,14 @@ iex&gt; List.foldl([1, 2, 3, 4], 0, fn (x, acc) -&gt; x - acc end)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L110" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L101" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="foldr/3">
     <strong>foldr(list, acc, function)</strong>
   </p>
+  
   <div class="docstring"><p>Folds (reduces) the given list to the right with
 a function. Requires an accumulator.</p>
 
@@ -291,15 +263,16 @@ a function. Requires an accumulator.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L124" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L115" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="insert_at/3">
     <strong>insert_at(list, index, value)</strong>
   </p>
-  <div class="docstring"><p>Returns a list with an inserted value at specified index. Note that the index
-is capped at the list length and that negative indicies wraps around at the
+  
+  <div class="docstring"><p>Returns a list with <code>value</code> inserted at the specified <code>index</code>. Note that <code>index</code>
+is capped at the list length. Negative indices indicate an offset from the
 end of the list.</p>
 
 <h2>Examples</h2>
@@ -311,20 +284,24 @@ iex&gt; List.insert_at([1, 2, 3], 10, 0)
 [1, 2, 3, 0]
 
 iex&gt; List.insert_at([1, 2, 3], -1, 0)
-[1, 2, 0, 3]
+[1, 2, 3, 0]
+
+iex&gt; List.insert_at([1, 2, 3], -10, 0)
+[0, 1, 2, 3]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L330" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L333" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="keydelete/3">
     <strong>keydelete(list, key, position)</strong>
   </p>
+  
   <div class="docstring"><p>Receives a list of tuples and deletes the first tuple
-where the item at position <code>position</code> matches with the
-given <code>item</code>. Returns the new tuple.</p>
+where the item at <code>position</code> matches the
+given <code>item</code>. Returns the new list.</p>
 
 <h2>Examples</h2>
 
@@ -339,15 +316,16 @@ iex&gt; List.keydelete([a: 1, b: 2], :c, 0)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L252" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L246" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="keyfind/4">
     <strong>keyfind(list, key, position, default // nil)</strong>
   </p>
+  
   <div class="docstring"><p>Receives a list of tuples and returns the first tuple
-where the item at position <code>position</code> matches with the
+where the item at <code>position</code> in the tuple matches the
 given <code>item</code>.</p>
 
 <h2>Examples</h2>
@@ -363,16 +341,17 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L164" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="keymember?/3">
     <strong>keymember?(list, key, position)</strong>
   </p>
-  <div class="docstring"><p>Receives a list of tuples and returns true if there is
-a tuple where the item at position <code>position</code> matches
-with the given <code>item</code>.</p>
+  
+  <div class="docstring"><p>Receives a list of tuples and returns <code>true</code> if there is
+a tuple where the item at <code>position</code> in the tuple matches
+the given <code>item</code>.</p>
 
 <h2>Examples</h2>
 
@@ -387,15 +366,16 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L185" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L176" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="keyreplace/4">
     <strong>keyreplace(list, key, position, new_tuple)</strong>
   </p>
+  
   <div class="docstring"><p>Receives a list of tuples and replaces the item
-identified by <code>key</code> at position <code>pos</code> if it exists.</p>
+identified by <code>key</code> at <code>position</code> if it exists.</p>
 
 <h2>Examples</h2>
 
@@ -404,15 +384,16 @@ identified by <code>key</code> at position <code>pos</code> if it exists.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L199" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L190" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="keysort/2">
     <strong>keysort(list, position)</strong>
   </p>
+  
   <div class="docstring"><p>Receives a list of tuples and sorts the items
-at position <code>pos</code> of the tuples. The sort is stable.</p>
+at <code>position</code> of the tuples. The sort is stable.</p>
 
 <h2>Examples</h2>
 
@@ -424,32 +405,37 @@ iex&gt; List.keysort([a: 5, c: 1, b: 3], 0)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L216" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L207" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="keystore/4">
     <strong>keystore(list, key, position, new_tuple)</strong>
   </p>
+  
   <div class="docstring"><p>Receives a list of tuples and replaces the item
-identified by <code>key</code> at position <code>pos</code>. If the item
+identified by <code>key</code> at <code>position</code>. If the item
 does not exist, it is added to the end of the list.</p>
 
 <h2>Examples</h2>
 
 <pre><code>iex&gt; List.keystore([a: 1, b: 2], :a, 0, { :a, 3 })
 [a: 3, b: 2]
+
+iex&gt; List.keystore([a: 1, b: 2], :c, 0, { :c, 3 })
+[a: 1, b: 2, c: 3]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L231" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L225" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="last/1">
     <strong>last(list)</strong>
   </p>
-  <div class="docstring"><p>Returns the last element in <code>list</code> or nil if the <code>list</code> is empty.</p>
+  
+  <div class="docstring"><p>Returns the last element in <code>list</code> or <code>nil</code> if <code>list</code> is empty.</p>
 
 <h2>Examples</h2>
 
@@ -462,13 +448,42 @@ iex&gt; List.last([1, 2, 3])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L141" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L132" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="replace_at/3">
+    <strong>replace_at(list, index, value)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns a list with a replaced value at the specified <code>index</code>. Negative indices
+indicate an offset from the end of the list. If <code>index</code> is out of bounds, the
+original <code>list</code> is returned.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; List.replace_at([1, 2, 3], 0, 0)
+[0, 2, 3]
+
+iex&gt; List.replace_at([1, 2, 3], 10, 0)
+[1, 2, 3]
+
+iex&gt; List.replace_at([1, 2, 3], -1, 0)
+[1, 2, 0]
+
+iex&gt; List.replace_at([1, 2, 3], -10, 0)
+[1, 2, 3]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L361" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="unzip/1">
     <strong>unzip(list)</strong>
   </p>
+  
   <div class="docstring"><p>Unzips the given list of lists or tuples into separate lists and returns a
 list of lists.</p>
 
@@ -482,31 +497,39 @@ iex&gt; List.unzip([{1, :a, &quot;apple&quot;}, {2, :b, &quot;banana&quot;}, {3,
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L309" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L309" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="wrap/1">
     <strong>wrap(list)</strong>
   </p>
+  
   <div class="docstring"><p>Wraps the argument in a list.
 If the argument is already a list, returns the list.
-If the argument is nil, returns an empty list.</p>
+If the argument is <code>nil</code>, returns an empty list.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; List.wrap([1, 2, 3])
+<pre><code>iex&gt; List.wrap(&quot;hello&quot;)
+[&quot;hello&quot;]
+
+iex&gt; List.wrap([1, 2, 3])
 [1,2,3]
+
+iex&gt; List.wrap(nil)
+[]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L267" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L267" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="zip/1">
     <strong>zip(list_of_lists)</strong>
   </p>
+  
   <div class="docstring"><p>Zips corresponding elements from each list in <code>list_of_lists</code>.</p>
 
 <h2>Examples</h2>
@@ -519,7 +542,7 @@ iex&gt; List.zip([[1, 2], [3], [5, 6]])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/list.ex#L291" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L291" target="_blank" class="view_source">Source</a>
   
 </div>
 

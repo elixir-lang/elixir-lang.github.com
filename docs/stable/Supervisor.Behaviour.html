@@ -58,9 +58,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/supervisor/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/supervisor/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -91,12 +89,15 @@ end
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="supervise/2">
     <strong>supervise(children, options)</strong>
   </p>
+  
   <div class="docstring"><p>Receives a list of children (worker or supervisors) to
 supervise and a set of options. Returns a tuple containing
 the supervisor specification.</p>
@@ -138,13 +139,14 @@ when dynamically attaching children;</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/supervisor/behaviour.ex#L82" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/supervisor/behaviour.ex#L82" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="supervisor/3">
     <strong>supervisor(module, args, options // [])</strong>
   </p>
+  
   <div class="docstring"><p>Defines the given <code>module</code> as a supervisor which will be started
 with the given arguments.</p>
 
@@ -163,10 +165,10 @@ Defaults to <code>:start_link</code>;</p></li>
 <li><p><code>:restart</code> - defines when the child process should restart.
 Defaults to <code>:permanent</code>;</p></li>
 <li><p><code>:shutdown</code> - defines how a child process should be terminated.
-Defaults to <code>5000</code>;</p></li>
+Defaults to <code>5000</code> for a worker and <code>:infinity</code> for a supervisor;</p></li>
 <li><p><code>:modules</code> - it should be a list with one element <code>[module]</code>,
 where module is the name of the callback module only if the
-child process is a supervisor, gen<em>server or gen</em>fsm. If the
+child process is a supervisor, <code>gen_server</code> or <code>gen_fsm</code>. If the
 child process is a gen_event, modules should be <code>:dynamic</code>.
 Defaults to a list with the given module;</p></li>
 </ul>
@@ -202,13 +204,14 @@ terminated using <code>exit(child, :kill)</code>;</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/supervisor/behaviour.ex#L169" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/supervisor/behaviour.ex#L169" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="worker/3">
     <strong>worker(module, args, options // [])</strong>
   </p>
+  
   <div class="docstring"><p>Defines the given <code>module</code> as a worker which will be started
 with the given arguments.</p>
 
@@ -227,10 +230,10 @@ Defaults to <code>:start_link</code>;</p></li>
 <li><p><code>:restart</code> - defines when the child process should restart.
 Defaults to <code>:permanent</code>;</p></li>
 <li><p><code>:shutdown</code> - defines how a child process should be terminated.
-Defaults to <code>5000</code>;</p></li>
+Defaults to <code>5000</code> for a worker and <code>:infinity</code> for a supervisor;</p></li>
 <li><p><code>:modules</code> - it should be a list with one element <code>[module]</code>,
 where module is the name of the callback module only if the
-child process is a supervisor, gen<em>server or gen</em>fsm. If the
+child process is a supervisor, <code>gen_server</code> or <code>gen_fsm</code>. If the
 child process is a gen_event, modules should be <code>:dynamic</code>.
 Defaults to a list with the given module;</p></li>
 </ul>
@@ -266,7 +269,7 @@ terminated using <code>exit(child, :kill)</code>;</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/supervisor/behaviour.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/supervisor/behaviour.ex#L155" target="_blank" class="view_source">Source</a>
   
 </div>
 

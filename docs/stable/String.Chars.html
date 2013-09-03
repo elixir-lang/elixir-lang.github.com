@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Binary.Chars</title>
+    <title>String.Chars</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,7 +21,7 @@
 
     <div id="content">
       <h1>
-        Binary.Chars
+        String.Chars
         
           <small>protocol</small>
         
@@ -29,21 +29,21 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>The Binary.Chars protocol is responsible for
+          <p>The String.Chars protocol is responsible for
 converting a structure to a Binary (only if applicable).
 The only function required to be implemented is
-<code>to_binary</code> which does the conversion.</p>
+<code>to_string</code> which does the conversion.</p>
 
-<p>The <code>to_binary</code> function automatically imported
+<p>The <code>to_string</code> function automatically imported
 by Kernel invokes this protocol. String
-interpolation also invokes to_binary in its
+interpolation also invokes to_string in its
 arguments. For example, <code>&quot;foo#{bar}&quot;</code> is the same
-as <code>&quot;foo&quot; &lt;&gt; to_binary(bar)</code>.</p>
+as <code>&quot;foo&quot; &lt;&gt; to_string(bar)</code>.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/binary/chars.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/string/chars.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -52,7 +52,7 @@ as <code>&quot;foo&quot; &lt;&gt; to_binary(bar)</code>.</p>
         <ul class="summary">
           <li>
   <span class="summary_signature">
-    <a href="#to_binary/1">to_binary/1</a>
+    <a href="#to_string/1">to_string/1</a>
   </span>
 </li>
 
@@ -68,7 +68,7 @@ as <code>&quot;foo&quot; &lt;&gt; to_binary(bar)</code>.</p>
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t()</a> :: <<_ :: 0>> | [] | number() | atom() | {}
+    <a href="#t:t/0">t</a> :: <<_ :: 0>> | [] | number | atom | 
   </p>
 </div>
 
@@ -79,13 +79,13 @@ as <code>&quot;foo&quot; &lt;&gt; to_binary(bar)</code>.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="to_binary/1">
-    <strong>to_binary(thing)</strong>
+  <p class="signature" id="to_string/1">
+    <strong>to_string(thing)</strong>
   </p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/binary/chars.ex#L19" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/string/chars.ex#L19" target="_blank" class="view_source">Source</a>
   
 </div>
 

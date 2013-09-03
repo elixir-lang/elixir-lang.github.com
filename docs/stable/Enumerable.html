@@ -37,60 +37,17 @@ perform operations on the collection.</p>
 
 <p>For example, in the expression</p>
 
-<pre><code>Enum.map([1, 2, 3], &amp;1 * 2)
+<pre><code>Enum.map([1, 2, 3], &amp;(&amp;1 * 2))
 </code></pre>
 
-<p><code>Enum.map/2</code> invokes <code>Enumerable.reduce/3</code> to perform the reducing operation
-that builds a mapped list by calling the mapping function <code>&amp;1 * 2</code> on every
+<p><a href="Enum.html#map/2"><code>Enum.map/2</code></a> invokes <a href="Enumerable.html#reduce/3"><code>Enumerable.reduce/3</code></a> to perform the reducing operation
+that builds a mapped list by calling the mapping function <code>&amp;(&amp;1 * 2)</code> on every
 element in the collection and cons&#39;ing the element with the accumulated list.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
-        <h2 id="implementations">Implementations</h2>
-        <ul class="summary">
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.Function.html">Function</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.HashDict.html">HashDict</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.HashSet.html">HashSet</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.List.html">List</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.Range.html">Range</a>
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <a href="Enumerable.Stream.Lazy.html">Stream.Lazy</a>
-              </span>
-            </li>
-          
-        </ul>
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -121,32 +78,47 @@ element in the collection and cons&#39;ing the element with the accumulated list
       
 
       
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t</a> :: [] |  | (... -> any)
+  </p>
+</div>
+
+        </div>
+      
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="count/1">
     <strong>count(collection)</strong>
   </p>
+  
   <div class="docstring"><p>The function is used to retrieve the collection&#39;s size.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="member?/2">
     <strong>member?(collection, value)</strong>
   </p>
+  
   <div class="docstring"><p>The function is used to check if a value exists within the collection.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="reduce/3">
     <strong>reduce(collection, acc, fun)</strong>
   </p>
+  
   <div class="docstring"><p>This function performs the reducing operation on a given collection. It
 returns the accumulated value of applying the given function <code>fun</code> on every
 element with the accumulated value.</p>
@@ -157,7 +129,7 @@ element with the accumulated value.</p>
 def reduce([], acc, _fun),   do: acc
 </code></pre>
 
-<p>As an additional example, here is the implementation of <code>Enum.map/2</code> with
+<p>As an additional example, here is the implementation of <a href="Enum.html#map/2"><code>Enum.map/2</code></a> with
 <code>Enumerable</code>:</p>
 
 <pre><code>def map(collection, fun) do
@@ -168,7 +140,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
   
 </div>
 

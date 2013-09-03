@@ -185,7 +185,7 @@ to expose the record information while <code>defrecord</code> should be used
 whenever you want to share a record within your code or with other
 libraries or whenever you need to dynamically set or update fields.</p>
 
-<p>You can learn more about records in the <code>Kernel.defrecord/3</code> docs. Now
+<p>You can learn more about records in the <a href="Kernel.html#defrecord/3"><code>Kernel.defrecord/3</code></a> docs. Now
 let&#39;s discuss the usefulness of combining records with protocols.</p>
 
 <h2>Protocols</h2>
@@ -200,11 +200,11 @@ and the week day:</p>
 </code></pre>
 
 <p>Now we want this date to be represented as a string and this
-can be done by implementing the <code>Binary.Chars</code> protocol for
+can be done by implementing the <code>String.Chars</code> protocol for
 our record:</p>
 
-<pre><code>defimpl Binary.Chars, for: WeekDate do
-  def to_binary(WeekDate[year: year, week: week, week_day: day]) do
+<pre><code>defimpl String.Chars, for: WeekDate do
+  def to_string(WeekDate[year: year, week: week, week_day: day]) do
     &quot;#{year}-W#{week}-#{day}&quot;
   end
 end
@@ -212,7 +212,7 @@ end
 
 <p>Now we can explicitly convert our WeekDate:</p>
 
-<pre><code>to_binary WeekDate[year: 2013, week: 26, week_day: 4]
+<pre><code>to_string WeekDate[year: 2013, week: 26, week_day: 4]
 &quot;2013-W26-4&quot;
 </code></pre>
 
@@ -221,7 +221,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -271,7 +271,7 @@ end
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t()</a> :: {}
+    <a href="#t:t/0">t</a> :: {}
   </p>
 </div>
 
@@ -299,7 +299,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/record.ex#L295" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L295" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -319,7 +319,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/record.ex#L353" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L353" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -330,7 +330,7 @@ end
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/record.ex#L322" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L322" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -347,7 +347,7 @@ return the fields as a list of tuples.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/record.ex#L192" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L192" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -377,7 +377,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/record.ex#L211" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L211" target="_blank" class="view_source">Source</a>
   
 </div>
 

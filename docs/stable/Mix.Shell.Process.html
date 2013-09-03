@@ -27,7 +27,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This is Mix shell that uses the current process mailbox
+          <p>This is a Mix shell that uses the current process mailbox
 for communication instead of IO.</p>
 
 <p>When a developer calls <code>info(&quot;hello&quot;)</code>, the following
@@ -38,16 +38,14 @@ message will be sent to the current process:</p>
 
 <p>This is mainly useful in tests, allowing us to assert
 if given messages were received or not. Since we need
-to guarantee a clean slate in between tests, there
-is also a flush function responsible for flushing all
-<code>:mix_shell</code> related tasks from the process inbox.</p>
+to guarantee a clean slate between tests, there
+is also a <a href="#flush/1"><code>flush/1</code></a> function responsible for flushing all
+<code>:mix_shell</code> related messages from the process inbox.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -76,16 +74,13 @@ is also a flush function responsible for flushing all
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#put_app/0">put_app/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
     <a href="#yes?/1">yes?/1</a>
   </span>
 </li>
 
         </ul>
+      
+
       
 
       
@@ -99,28 +94,31 @@ is also a flush function responsible for flushing all
   <p class="signature" id="cmd/1">
     <strong>cmd(command)</strong>
   </p>
+  
   <div class="docstring"><p>Executes the given command and fowards its messages to
 the current process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L46" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="error/1">
     <strong>error(message)</strong>
   </p>
-  <div class="docstring"><p>Simply forwards the message to the current process.</p>
+  
+  <div class="docstring"><p>Forwards the message to the current process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="flush/1">
     <strong>flush(callback // fn x -&gt; x end)</strong>
   </p>
-  <div class="docstring"><p>Flush all :mix<em>shell and :mix</em>shell_input messages from the current process.
+  
+  <div class="docstring"><p>Flush all <code>:mix_shell</code> and <code>:mix_shell_input</code> messages from the current process.
 If a callback is given, it is invoked for each received message.</p>
 
 <h2>Examples</h2>
@@ -129,43 +127,36 @@ If a callback is given, it is invoked for each received message.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L29" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="info/1">
     <strong>info(message)</strong>
   </p>
-  <div class="docstring"><p>Simply forwards the message to the current process.</p>
+  
+  <div class="docstring"><p>Forwards the message to the current process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L56" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="put_app/0">
-    <strong>put_app()</strong>
-  </p>
-  <div class="docstring"></div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L89" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L56" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="yes?/1">
     <strong>yes?(message)</strong>
   </p>
-  <div class="docstring"><p>Simply forwards the message to the current process.
+  
+  <div class="docstring"><p>Forwards the message to the current process.
 It also checks the inbox for an input message matching:</p>
 
 <pre><code>{ :mix_shell_input, :yes?, value }
 </code></pre>
 
 <p>If one does not exist, it will abort since there no shell
-process input given. Value must be true or false.</p>
+process inputs given. Value must be <code>true</code> or <code>false</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/shell/process.ex#L78" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L78" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -31,7 +31,7 @@
 versions with requirements.</p>
 
 <p>A version is a string or a <code>Mix.Version.Schema</code> generated
-after parsing via <code>Mix.Version.parse/1</code>. A requirement is
+after parsing via <a href="Mix.Version.html#parse/1"><code>Mix.Version.parse/1</code></a>. A requirement is
 a string that follows a specific format.</p>
 
 <p><code>Mix.Version</code> parsing and requirements follows
@@ -88,9 +88,7 @@ be expressed as:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/version.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/version.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -131,56 +129,118 @@ be expressed as:</p>
       
 
       
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t</a> :: <a href="String.html#t:t/0">String.t</a> | <a href="Mix.Version.Schema.html#t:t/0">Mix.Version.Schema.t</a>
+  </p>
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:requirement/0">
+    <a href="#t:requirement/0">requirement</a> :: <a href="String.html#t:t/0">String.t</a> | <a href="Mix.Version.Requirement.html#t:t/0">Mix.Version.Requirement.t</a>
+  </p>
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:matchable/0">
+    <a href="#t:matchable/0">matchable</a> :: {major :: <a href="String.html#t:t/0">String.t</a> | non_neg_integer, minor :: non_neg_integer | nil, patch :: non_neg_integer | nil, pre :: [<a href="String.html#t:t/0">String.t</a>]}
+  </p>
+</div>
+
+        </div>
+      
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="from_matchable/1">
     <strong>from_matchable(arg1)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from_matchable(<a href="Mix.Version.html#t:matchable/0">Mix.Version.matchable</a>) :: <a href="Mix.Version.Schema.html#t:t/0">Mix.Version.Schema.t</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Convert a matchable to a <code>Mix.Version</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/version.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/version.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="match?/2">
     <strong>match?(version, requirement)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>match?(<a href="#t:t/0">t</a>, <a href="#t:requirement/0">requirement</a>) :: boolean</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Checks if the given version matches the specification.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/version.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/version.ex#L85" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="parse/1">
     <strong>parse(string)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>parse(<a href="String.html#t:t/0">String.t</a>) :: {:ok, <a href="Mix.Version.Schema.html#t:t/0">Mix.Version.Schema.t</a>} | {:error, term}</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Parse a version into a matchable value.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/version.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/version.ex#L122" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="to_matchable/1">
     <strong>to_matchable(string)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>to_matchable(<a href="String.html#t:t/0">String.t</a> | <a href="Mix.Version.Schema.html#t:t/0">Mix.Version.Schema.t</a>) :: <a href="Mix.Version.html#t:matchable/0">Mix.Version.matchable</a></li>
+      
+    </ul>
+  
   <div class="docstring"><p>Get the matchable representation.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/version.ex#L143" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/version.ex#L143" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="valid?/1">
     <strong>valid?(string)</strong>
   </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>valid?(<a href="String.html#t:t/0">String.t</a> | <a href="Mix.Version.Schema.html#t:t/0">Mix.Version.Schema.t</a>) :: boolean</li>
+      
+    </ul>
+  
   <div class="docstring"><p>Checks if a version string is compatible with <a href="http://semver.org/">semver</a>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/version.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/version.ex#L111" target="_blank" class="view_source">Source</a>
   
 </div>
 

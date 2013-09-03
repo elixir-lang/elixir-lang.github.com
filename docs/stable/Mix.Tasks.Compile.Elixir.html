@@ -66,7 +66,7 @@ is a change:</p>
 <p><code>
 [compile_exts: [:ex]]
 </code></p></li>
-<li><p><code>:watch_exts</code> - extensions to watch in order to trigger
+<li><p><code>:elixirc_watch_exts</code> - extensions to watch in order to trigger
 a compilation:</p>
 
 <p><code>
@@ -77,9 +77,7 @@ a compilation:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L1" target="_blank" class="view_source">Source</a>
-
-      
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.elixir.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -93,7 +91,7 @@ a compilation:</p>
 </li>
 <li>
   <span class="summary_signature">
-    <a href="#manifest/0">manifest/0</a>
+    <a href="#manifests/0">manifests/0</a>
   </span>
 </li>
 <li>
@@ -110,12 +108,15 @@ a compilation:</p>
       
 
       
+
+      
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
   <p class="signature" id="files_to_path/5">
     <strong>files_to_path(manifest, stale, all, path, on_start)</strong>
   </p>
+  
   <div class="docstring"><p>Compiles stale Elixir files.</p>
 
 <p>It expects a manifest file, all stale files, all source files
@@ -128,27 +129,29 @@ in between modules, which helps it recompile only the modules that
 have changed at runtime.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L277" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.elixir.ex#L288" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="manifest/0">
-    <strong>manifest()</strong>
+  <p class="signature" id="manifests/0">
+    <strong>manifests()</strong>
   </p>
-  <div class="docstring"><p>The manifest for this compiler.</p>
+  
+  <div class="docstring"><p>Returns Elixir manifests.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L261" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.elixir.ex#L273" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="run/1">
     <strong>run(args)</strong>
   </p>
+  
   <div class="docstring"><p>Runs this task.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.1/lib/mix/lib/mix/tasks/compile.elixir.ex#L233" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.elixir.ex#L240" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -41,7 +41,7 @@ that require it (like <a href="#wildcard/1"><code>wildcard/1</code></a> and <a h
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -151,12 +151,12 @@ that require it (like <a href="#wildcard/1"><code>wildcard/1</code></a> and <a h
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t()</a> :: char_list() | atom() | binary()
+    <a href="#t:t/0">t</a> :: char_list | atom | binary
   </p>
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:r/0">
-    <a href="#t:r/0">r()</a> :: char_list() | binary()
+    <a href="#t:r/0">r</a> :: char_list | binary
   </p>
 </div>
 
@@ -192,7 +192,7 @@ Path.absname(&quot;../x&quot;).
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L40" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L40" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -201,7 +201,7 @@ Path.absname(&quot;../x&quot;).
   </p>
   
   <div class="docstring"><p>Builds a path from <code>relative_to</code> to <code>path</code>. If <code>path</code> is already
-an absolute path, <code>relative_to</code> is ignored. See also <code>relative/2</code>.</p>
+an absolute path, <code>relative_to</code> is ignored. See also <a href="#relative_to/2"><code>relative_to/2</code></a>.</p>
 
 <p>Unlike <a href="#expand/2"><code>expand/2</code></a>, no attempt is made to
 resolve <code>..</code>, <code>.</code> or <code>~</code>.</p>
@@ -216,7 +216,7 @@ iex&gt; Path.absname(&quot;../x&quot;, &quot;bar&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L60" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -240,7 +240,7 @@ iex&gt; Path.basename(&quot;/&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L267" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L267" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -263,7 +263,7 @@ iex&gt; Path.basename(&quot;~/foo/bar.old.ex&quot;, &quot;.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L286" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L286" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -282,7 +282,7 @@ Path.dirname(&quot;/foo/bar/baz.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L301" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L301" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -300,7 +300,7 @@ any <code>.</code> and <code>..</code> characters and a leading <code>~</code>.<
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L74" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -330,7 +330,7 @@ Path.expand(&quot;/foo/bar/../bar&quot;, &quot;/baz&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -349,7 +349,7 @@ iex&gt; Path.extname(&quot;~/foo/bar&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L316" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L316" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -371,7 +371,7 @@ iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L365" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L365" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -388,7 +388,7 @@ iex&gt; Path.join([&quot;/&quot;, &quot;foo&quot;, &quot;bar&quot;])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L381" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L381" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -414,7 +414,7 @@ Path.relative(&quot;/bar/foo.ex&quot;)      #=&gt; &quot;bar/foo.ex&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L146" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L146" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -442,7 +442,7 @@ iex&gt; Path.relative_to(&quot;/usr/local/foo&quot;, &quot;/etc&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -455,7 +455,7 @@ directory. If, for some reason, the current working directory
 cannot be retrieved, returns the full path.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L244" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L244" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -474,7 +474,7 @@ iex&gt; Path.rootname(&quot;/foo/bar.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L331" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L331" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -494,7 +494,7 @@ iex&gt; Path.rootname(&quot;/foo/bar.erl&quot;, &quot;.ex&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L347" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L347" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -516,7 +516,7 @@ If an empty string is given, returns the root path.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L446" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L446" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -543,7 +543,7 @@ Path.type(&quot;/bar/foo.ex&quot;)      #=&gt; :volumerelative
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L122" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -587,7 +587,7 @@ inside the <code>ebin</code> directory of each project as follows:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/path.ex#L485" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/path.ex#L485" target="_blank" class="view_source">Source</a>
   
 </div>
 

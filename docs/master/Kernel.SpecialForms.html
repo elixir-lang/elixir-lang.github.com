@@ -48,7 +48,7 @@ contents since they are essential in Elixir&#39;s constructs.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -273,7 +273,7 @@ var = 1
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L936" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L938" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -336,7 +336,12 @@ IEEE 754 binary32 or binary64 floating point number. A bitstring
 is an arbitrary series of bits. A binary is a special case of
 bitstring that has a total size divisible by 8.</p>
 
-<p>The utf8, utf16, and utf32 types are for UTF code points.</p>
+<p>The utf8, utf16, and utf32 types are for UTF code points. They
+can also be applied to literal strings and char lists:</p>
+
+<pre><code>iex&gt; &lt;&lt;&quot;foo&quot; :: utf16&gt;&gt;
+&lt;&lt;0,102,0,111,0,111&gt;&gt;
+</code></pre>
 
 <p>The bits type is an alias for bitstring. The bytes type is an
 alias for binary.</p>
@@ -425,7 +430,7 @@ binaries, it is 8.</p>
 to binary32 and binary64, respectively.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L175" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L179" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -442,7 +447,7 @@ to binary32 and binary64, respectively.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L42" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L42" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -453,7 +458,7 @@ to binary32 and binary64, respectively.</p>
   <div class="docstring"><p>Returns the current directory as a binary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L359" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L361" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -466,7 +471,7 @@ record. In the environment you can access the current filename,
 line numbers, set up aliases, the current function and others.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L340" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L342" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -479,7 +484,7 @@ Although the file can be accessed in the <code>__ENV__</code>, this macro
 is a convenient shortcut.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L354" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L356" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -492,7 +497,7 @@ Although the module can be accessed in the <code>__ENV__</code>, this macro
 is a convenient shortcut.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L347" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L349" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -539,7 +544,7 @@ in the list is an atom.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L987" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L989" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -556,7 +561,7 @@ and should not be invoked directly:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L858" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L860" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -576,7 +581,7 @@ it belonged to another file.</p>
 <p>Check <code>quote/1</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L949" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L951" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -624,7 +629,7 @@ have lexical scope. This means you can set up aliases inside
 specific functions and it won&#39;t affect the overall scope.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L213" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L217" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -637,7 +642,7 @@ be hygienezed. This means the alias will be expanded when
 the macro is expanded.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L739" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L741" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -655,7 +660,7 @@ spaces from a string:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L847" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L849" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -686,26 +691,30 @@ usually callbacks):</p>
 <pre><code>import List
 </code></pre>
 
-<p>A developer can change this behavior to include all macros and
-functions, regardless if it starts with an underscore, by passing
-<code>:all</code> as first argument:</p>
+<p>A developer can filter to import only macros or functions via
+the only option:</p>
 
-<pre><code>import :all, List
+<pre><code>import List, only: :functions
+import List, only: :macros
 </code></pre>
 
-<p>It can also be customized to import only all functions or
-all macros:</p>
-
-<pre><code>import :functions, List
-import :macros, List
-</code></pre>
-
-<p>Alternatively, Elixir allows a developer to specify <code>:only</code>
-or <code>:except</code> as a fine grained control on what to import (or
-not):</p>
+<p>Alternatively, Elixir allows a developer to pass pairs of
+name/arities to <code>:only</code> or <code>:except</code> as a fine grained control
+on what to import (or not):</p>
 
 <pre><code>import List, only: [flatten: 1]
+import String, except: [split: 2]
 </code></pre>
+
+<p>Notice that calling <code>except</code> for a previously declared <code>import</code>
+simply filters the previously imported elements. For example:</p>
+
+<pre><code>import List, only: [flatten: 1, keyfind: 3]
+import List, except: [flatten: 1]
+</code></pre>
+
+<p>After the two import calls above, only <code>List.keyfind/3</code> will be
+imported.</p>
 
 <h2>Lexical scope</h2>
 
@@ -731,12 +740,6 @@ replacing the original <code>if/2</code> implementation by our own
 within that specific function. All other functions in that
 module will still be able to use the original one.</p>
 
-<h2>Alias/Require shortcut</h2>
-
-<p>All imported modules are also required by default. <code>import</code>
-also accepts <code>as:</code> as an option so it automatically sets up
-an alias. Please check <code>alias</code> for more information.</p>
-
 <h2>Warnings</h2>
 
 <p>If you import a module and you don&#39;t use any of the imported
@@ -758,7 +761,7 @@ if an ambiguous call to <code>foo/1</code> is actually made; that is, the
 errors are emitted lazily, not eagerly.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L333" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L335" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -825,7 +828,7 @@ Erlang example:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L835" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L837" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1209,7 +1212,7 @@ end
 desires to inject a value into the quote.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L713" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L715" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1244,7 +1247,7 @@ end
 up an alias. Please check <code>alias</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L242" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L246" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1256,7 +1259,7 @@ up an alias. Please check <code>alias</code> for more information.</p>
 See <code>Kernel.defoverridable</code> for more information and documentation.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L993" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L995" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1289,7 +1292,7 @@ quote do: sum(1, unquote(value), 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L765" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L767" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1308,7 +1311,7 @@ quote do: sum(1, unquote_splicing(values), 5)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L779" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L781" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1323,7 +1326,7 @@ one is an atom) or an atom representing the variable name.
 Check <a href="#quote/2"><code>quote/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L722" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L724" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1339,7 +1342,7 @@ context and the variable is not shared in between clauses.</p>
 <p>Check <a href="#quote/2"><code>quote/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L732" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L734" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1356,7 +1359,7 @@ context and the variable is not shared in between clauses.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/elixir/lib/kernel/special_forms.ex#L31" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/kernel/special_forms.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
 

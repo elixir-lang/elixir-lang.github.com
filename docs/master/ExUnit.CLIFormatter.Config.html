@@ -29,7 +29,7 @@
 
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/84a2b3122137459d8fb73feb5e2f0faaa1aa9d74/lib/ex_unit/lib/ex_unit/cli_formatter.ex#L10" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/cli_formatter.ex#L10" target="_blank" class="view_source">Source</a>
 
       
         <h2>Fields <small>(and defaults)</small></h2>
@@ -43,19 +43,13 @@
           
             <li>
               <span class="summary_signature">
-                <strong>invalid_counter:</strong> 0
+                <strong>invalids_counter:</strong> 0
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
-                <strong>test_failures:</strong> []
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>case_failures:</strong> []
+                <strong>failures_counter:</strong> 0
               </span>
             </li>
           
@@ -68,6 +62,12 @@
             <li>
               <span class="summary_signature">
                 <strong>color:</strong> true
+              </span>
+            </li>
+          
+            <li>
+              <span class="summary_signature">
+                <strong>previous:</strong> nil
               </span>
             </li>
           
@@ -85,12 +85,12 @@
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t()</a> :: {ExUnit.CLIFormatter.Config, term(), term(), term(), term(), term(), term()}
+    <a href="#t:t/0">t</a> :: {ExUnit.CLIFormatter.Config, term, term, term, term, term, term}
   </p>
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:options/0">
-    <a href="#t:options/0">options()</a> :: [{:color, term()} | ({:trace, term()} | ({:case_failures, term()} | ({:test_failures, term()} | ({:invalid_counter, term()} | {:tests_counter, term()}))))]
+    <a href="#t:options/0">options</a> :: [{:previous, term} | ({:color, term} | ({:trace, term} | ({:failures_counter, term} | ({:invalids_counter, term} | {:tests_counter, term}))))]
   </p>
 </div>
 
