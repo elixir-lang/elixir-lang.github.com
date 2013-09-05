@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Repo</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Repo
+        
+          <small>behaviour</small>
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module is used to define a repository. A repository maps to a data
+store, for example an SQL database. A repository must implement <a href="#url/0"><code>url/0</code></a> and
+set an adapter (see <code>Ecto.Adapter</code>) to be used for the repository. All
+functions from the <code>Ecto.Adapter</code> module will be available on the repository
+module but without the first parameter.</p>
+
+<p>When used, the following options are allowed:</p>
+
+<ul>
+<li><code>:adapter</code> - the adapter to be used for the repository; it will be used
+           to handle connections to the data store and to compile queries</li>
+</ul>
+
+<h2>Example</h2>
+
+<pre><code>defmodule MyRepo do
+  use Ecto.Repo, adapter: Ecto.Adapters.Postgres
+
+  def url do
+    &quot;ecto://postgres:postgres@localhost/postgres&quot;
+  end
+end
+</code></pre>
+
+        </div>
+      
+
+      <a href="" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#check_single_result/2">check_single_result/2</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <h2 id="callbacks_summary">Callbacks summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#url/0">url/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#start_link/0">start_link/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#stop/0">stop/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#get/2">get/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#all/1">all/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#create/1">create/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update/1">update/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#update_all/2">update_all/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete/1">delete/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#delete_all/1">delete_all/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="check_single_result/2">
+    <strong>check_single_result(result, entity)</strong>
+  </p>
+  
+  <div class="docstring"></div>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+        <div id="callbacks_details" class="details_list">
+          <h2>Callbacks</h2>
+          <div class="detail">
+  <p class="signature" id="url/0">
+    <strong>url()</strong>
+  </p>
+  
+  <div class="docstring"><p>Should return the Ecto URL to be used for the repository. A URL is of the
+following format: <code>ecto://username:password@hostname:port/database?opts=123</code>
+where the <code>password</code>, <code>port</code> and <code>options</code> are optional. This function must be
+implemented by the user.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="start_link/0">
+    <strong>start_link()</strong>
+  </p>
+  
+  <div class="docstring"><p>Starts any connection pooling or supervision, if implemented by the adapter.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="stop/0">
+    <strong>stop()</strong>
+  </p>
+  
+  <div class="docstring"><p>Stops any connection pooling or supervision started with <code>start_link/1</code>.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="get/2">
+    <strong>get(Ecto.Queryable.t(), integer())</strong>
+  </p>
+  
+  <div class="docstring"><p>Fetches a single entity from the data store where the primary key matches the
+given id. id should be an integer or a string that can be cast to an
+integer. Returns <code>nil</code> if no result was found. If the entity in the queryable
+has no primary key <code>Ecto.NoPrimaryKey</code> will be raised. <code>Ecto.AdapterError</code>
+will be raised if there is an adapter error.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="all/1">
+    <strong>all(Ecto.Query.t())</strong>
+  </p>
+  
+  <div class="docstring"><p>Fetches all results from the data store based on the given query. May raise
+<code>Ecto.InvalidQuery</code> if query validation fails. <code>Ecto.AdapterError</code> will be
+raised if there is an adapter error.</p>
+
+<h2>Example</h2>
+
+<pre><code># Fetch all post titles
+query = from p in Post,
+     select: post.title
+MyRepo.all(query)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="create/1">
+    <strong>create(Record.t())</strong>
+  </p>
+  
+  <div class="docstring"><p>Stores a single new entity in the data store and returns its stored
+representation. May raise <code>Ecto.AdapterError</code> if there is an adapter error.</p>
+
+<h2>Example</h2>
+
+<pre><code>post = Post.new(title: &quot;Ecto is great&quot;, text: &quot;really, it is&quot;)
+  |&gt; MyRepo.create
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="update/1">
+    <strong>update(Record.t())</strong>
+  </p>
+  
+  <div class="docstring"><p>Updates an entity using the primary key as key. If the entity has no primary
+key <code>Ecto.NoPrimaryKey</code> will be raised. <code>Ecto.AdapterError</code> will be raised if
+there is an adapter error.</p>
+
+<h2>Example</h2>
+
+<pre><code>[post] = from p in Post, where: p.id == 42
+post = post.title(&quot;New title&quot;)
+MyRepo.update(post)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="update_all/2">
+    <strong>update_all</strong>
+  </p>
+  
+  <div class="docstring"><p>Updates all entities matching the given query with the given values.
+<code>Ecto.AdapterError</code> will be raised if there is an adapter error.</p>
+
+<h2>Examples</h2>
+
+<pre><code>MyRepo.update_all(Post, title: &quot;New title&quot;)
+
+MyRepo.update_all(p in Post, visits: p.visits + 1)
+
+from(p in Post, where: p.id &lt; 10) |&gt;
+  MyRepo.update_all(visits: title: &quot;New title&quot;)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="delete/1">
+    <strong>delete(Record.t())</strong>
+  </p>
+  
+  <div class="docstring"><p>Deletes an entity using the primary key as key. If the entity has no primary
+key <code>Ecto.NoPrimaryKey</code> will be raised. <code>Ecto.AdapterError</code> will be raised if
+there is an adapter error.</p>
+
+<h2>Example</h2>
+
+<pre><code>[post] = from p in Post, where: p.id == 42
+MyRepo.delete(post)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="delete_all/1">
+    <strong>delete_all(Ecto.Queryable.t())</strong>
+  </p>
+  
+  <div class="docstring"><p>Deletes all entities matching the given query with the given values.
+<code>Ecto.AdapterError</code> will be raised if there is an adapter error.</p>
+
+<h2>Examples</h2>
+
+<pre><code>MyRepo.delete_all(Post)
+
+from(p in Post, where: p.id &lt; 10) |&gt; MyRepo.delete_all
+</code></pre>
+</div>
+  
+</div>
+
+        </div>
+      
+    </div>
+  </body>
+</html>

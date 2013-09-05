@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Entity</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Entity
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module is used to define an entity. An entity is a record with associated
+meta data that is persisted to a repository.</p>
+
+<p>Every entity is also a record, that means that you work with entities just
+like you would work with records, to set the default values for the record
+fields the <code>default</code> option is set in the <code>field</code> options.</p>
+
+<h2>Example</h2>
+
+<pre><code>defmodule User.Entity do
+  use Ecto.Entity
+
+  field :name, :string
+  field :age, :integer, default: 0
+  has_many :posts, Post
+end
+
+User.Entity.new
+#=&gt; User.Entity[]
+</code></pre>
+
+<p>In the majority of the cases though, an entity is defined inlined in a model:</p>
+
+<pre><code>defmodule User do
+  use Ecto.Model
+
+  queryable &quot;users&quot; do
+    field :name, :string
+    field :age, :integer, default: 0
+    has_many :posts, Post
+  end
+end
+
+User.Entity.new
+#=&gt; User.Entity[]
+</code></pre>
+
+<p>In addition to the record functionality, Ecto also defines accessors and updater
+functions for the primary key will be generated on the entity, specifically
+<code>primary_key/1</code>, <code>primary_key/2</code> and <code>update_primary_key/2</code>.</p>
+
+        </div>
+      
+
+      <a href="" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="macros_summary">Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#belongs_to/3">belongs_to/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#field/3">field/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#has_many/3">has_many/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#has_one/3">has_one/3</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="belongs_to/3">
+    <strong>belongs_to(name, queryable, opts // [])</strong>
+  </p>
+  
+  <div class="docstring"><p>Indiciates a one-to-one association with another queryable, this entity
+belongs to zero or one records of the queryable structure. The other queryable
+often has a <code>has_one</code> or a <code>has_many</code> field with the reverse association.</p>
+
+<p>Creates a virtual field called <code>name</code>. The association can be accessed via
+this field, see <code>Ecto.Associations.BelongsTo</code> for more information. Check the
+examples to see how to perform queries on the association and
+<code>Ecto.Query.join/3</code> for joins. Will also generate a foreign key field.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:foreign_key</code> - Sets the foreign key field name, defaults to:
+                 <code>:&quot;#{other_entity}_id&quot;</code>;</li>
+<li><code>:primary_key</code> - Sets the key on the other entity to be used for the
+                 association, defaults to: <code>:id</code>;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Comment do
+  queryable &quot;comments&quot; do
+    belongs_to :post, Post
+  end
+end
+
+# The post can come preloaded on the comment record
+[comment] = Repo.all(from(c in Comment, where: c.id == 42, preload: :post))
+comment.post.get #=&gt; Post.Entity[...]
+
+# Or via an association join
+[comment] = Repo.all(from(c in Comment,
+                   where: c.id == 42,
+               left_join: p in c.post,
+                  select: assoc(c, p)))
+comment.post.get #=&gt; Post.Entity[...]
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="field/3">
+    <strong>field(name, type, opts // [])</strong>
+  </p>
+  
+  <div class="docstring"><p>Defines a field on the entity with given name and type, will also create a
+record field. If the type is <code>:virtual</code> it wont be persisted.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:default</code> - Sets the default value on the entity and the record;</li>
+<li><code>:primary_key</code> - Sets the field to be the primary key, the default
+primary key have to be overridden by setting its name to <code>nil</code>, see
+<code>Ecto.Entity.dataset</code>;</li>
+</ul>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="has_many/3">
+    <strong>has_many(name, queryable, opts // [])</strong>
+  </p>
+  
+  <div class="docstring"><p>Indicates a one-to-many association with another queryable, where this entity
+has zero or more records of the queryable structure. The other queryable often
+has a <code>belongs_to</code> field with the reverse association.</p>
+
+<p>Creates a virtual field called <code>name</code>. The association can be accessed via
+this field, see <code>Ecto.Associations.HasMany</code> for more information. Check the
+examples to see how to perform queries on the association and
+<code>Ecto.Query.join/3</code> for joins.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:foreign_key</code> - Sets the foreign key that is used on the other entity,
+                 defaults to: <code>:&quot;#{model}_id&quot;</code>;</li>
+<li><code>:primary_key</code> - Sets the key on the current entity to be used for the
+                 association, defaults to the primary key on the entity;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Post do
+  queryable &quot;posts&quot; do
+    has_many :comments, Comment
+  end
+end
+
+# Get all comments for a given post
+post = Repo.get(Post, 42)
+comments = Repo.all(post.comments)
+
+# The comments can come preloaded on the post record
+[post] = Repo.all(from(p in Post, where: p.id == 42, preload: :comments))
+post.comments.to_list #=&gt; [ Comment.Entity[...], ... ]
+
+# Or via an association join
+[post] = Repo.all(from(p in Post,
+                where: p.id == 42,
+            left_join: c in p.comments,
+               select: assoc(p, c)))
+post.comments.to_list #=&gt; [ Comment.Entity[...], ... ]
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="has_one/3">
+    <strong>has_one(name, queryable, opts // [])</strong>
+  </p>
+  
+  <div class="docstring"><p>Indicates a one-to-one association with another queryable, where this entity
+has zero or one records of the queryable structure. The other queryable often
+has a <code>belongs_to</code> field with the reverse association.</p>
+
+<p>Creates a virtual field called <code>name</code>. The association can be accessed via
+this field, see <code>Ecto.Associations.HasOne</code> for more information. Check the
+examples to see how to perform queries on the association and
+<code>Ecto.Query.join/3</code> for joins.</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:foreign_key</code> - Sets the foreign key that is used on the other entity,
+                 defaults to: <code>:&quot;#{model}_id&quot;</code>;</li>
+<li><code>:primary_key</code> - Sets the key on the current entity to be used for the
+                 association, defaults to the primary key on the entity;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>defmodule Post do
+  queryable &quot;posts&quot; do
+    has_one :permalink, Permalink
+  end
+end
+
+# The permalink can come preloaded on the post record
+[post] = Repo.all(from(p in Post, where: p.id == 42, preload: :permalink))
+post.permalink.get #=&gt; Permalink.Entity[...]
+
+# Or via an association join
+[post] = Repo.all(from(p in Post,
+                where: p.id == 42,
+            left_join: pl in p.permalink,
+               select: assoc(p, pl)))
+post.permalink.get #=&gt; Permalink.Entity[...]
+</code></pre>
+</div>
+  
+</div>
+
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

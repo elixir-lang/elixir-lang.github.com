@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Query.API</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Query.API
+        
+      </h1>
+
+      
+
+      <a href="" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#!=/2">!=/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#*/2">*/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#+/1">+/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#+/2">+/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#++/2">++/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#-/1">-/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#-/2">-/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#../2">../2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#//2">//2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&lt;/2">&lt;/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&lt;=/2">&lt;=/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&lt;&gt;/2">&lt;&gt;/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#==/2">==/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&gt;/2">&gt;/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#&gt;=/2">&gt;=/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#aggregate?/2">aggregate?/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#and/2">and/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#avg/1">avg/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#count/1">count/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#div/2">div/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#downcase/1">downcase/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#in/2">in/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#localtimestamp/0">localtimestamp/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#max/1">max/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#min/1">min/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#not/1">not/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#now/0">now/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#or/2">or/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#pow/2">pow/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#random/0">random/0</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#rem/2">rem/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#round/1">round/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#round/2">round/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#sum/1">sum/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#upcase/1">upcase/1</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="!=/2">
+    <strong>left != right</strong>
+  </p>
+  
+  <div class="docstring"><p>Inequality.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="*/2">
+    <strong>left * right</strong>
+  </p>
+  
+  <div class="docstring"><p>Multiplication of numbers.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="+/1">
+    <strong>+arg</strong>
+  </p>
+  
+  <div class="docstring"><p>Positive number.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="+/2">
+    <strong>left + right</strong>
+  </p>
+  
+  <div class="docstring"><p>Addition of numbers or datetimes.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="++/2">
+    <strong>left ++ right</strong>
+  </p>
+  
+  <div class="docstring"><p>List concatenation.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="-/1">
+    <strong>-arg</strong>
+  </p>
+  
+  <div class="docstring"><p>Negate number.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="-/2">
+    <strong>left - right</strong>
+  </p>
+  
+  <div class="docstring"><p>Subtraction of numbers or datetimes.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="../2">
+    <strong>left .. right</strong>
+  </p>
+  
+  <div class="docstring"><p>Range from left to right,</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="//2">
+    <strong>left / right</strong>
+  </p>
+  
+  <div class="docstring"><p>Division of numbers.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="&lt;/2">
+    <strong>left &lt; right</strong>
+  </p>
+  
+  <div class="docstring"><p>Left less than right.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="&lt;=/2">
+    <strong>left &lt;= right</strong>
+  </p>
+  
+  <div class="docstring"><p>Left less than or equal to right.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="&lt;&gt;/2">
+    <strong>left &lt;&gt; right</strong>
+  </p>
+  
+  <div class="docstring"><p>Binary and string concatenation.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="==/2">
+    <strong>left == right</strong>
+  </p>
+  
+  <div class="docstring"><p>Equality.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="&gt;/2">
+    <strong>left &gt; right</strong>
+  </p>
+  
+  <div class="docstring"><p>Left greater than right.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="&gt;=/2">
+    <strong>left &gt;= right</strong>
+  </p>
+  
+  <div class="docstring"><p>Left greater than or equal to right.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="aggregate?/2">
+    <strong>aggregate?(arg1, arg2)</strong>
+  </p>
+  
+  <div class="docstring"></div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="and/2">
+    <strong>left and right</strong>
+  </p>
+  
+  <div class="docstring"><p>Boolean and.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="avg/1">
+    <strong>avg(numbers)</strong>
+  </p>
+  
+  <div class="docstring"><p>Aggregate function, averages the given field over the current group.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="count/1">
+    <strong>count(arg)</strong>
+  </p>
+  
+  <div class="docstring"><p>Aggregate function, counts the number of occurrences of the given field
+in the current group.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="div/2">
+    <strong>div(left, right)</strong>
+  </p>
+  
+  <div class="docstring"><p>Integer division.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="downcase/1">
+    <strong>downcase(string)</strong>
+  </p>
+  
+  <div class="docstring"><p>Downcase string.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="in/2">
+    <strong>left in right</strong>
+  </p>
+  
+  <div class="docstring"><p>Boolean is left in right list.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="localtimestamp/0">
+    <strong>localtimestamp()</strong>
+  </p>
+  
+  <div class="docstring"></div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="max/1">
+    <strong>max(numbers)</strong>
+  </p>
+  
+  <div class="docstring"><p>Aggregate function, the maximum number of the given field in the current
+group.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="min/1">
+    <strong>min(numbers)</strong>
+  </p>
+  
+  <div class="docstring"><p>Aggregate function, the minimum number of the given field in the current
+group.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="not/1">
+    <strong>not arg</strong>
+  </p>
+  
+  <div class="docstring"><p>Boolean not.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="now/0">
+    <strong>now()</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns the current date and time</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="or/2">
+    <strong>left or right</strong>
+  </p>
+  
+  <div class="docstring"><p>Boolean or.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="pow/2">
+    <strong>pow(base, exp)</strong>
+  </p>
+  
+  <div class="docstring"><p>base to the power of exp.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="random/0">
+    <strong>random()</strong>
+  </p>
+  
+  <div class="docstring"><p>Random float number from 0.0 to 1.0 including.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="rem/2">
+    <strong>rem(left, right)</strong>
+  </p>
+  
+  <div class="docstring"><p>Integer remainder of division.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="round/1">
+    <strong>round(number)</strong>
+  </p>
+  
+  <div class="docstring"><p>Round number to closest integer.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="round/2">
+    <strong>round(x0, x1)</strong>
+  </p>
+  
+  <div class="docstring"></div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="sum/1">
+    <strong>sum(numbers)</strong>
+  </p>
+  
+  <div class="docstring"><p>Aggregate function, sums the given field over the current group.</p>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="upcase/1">
+    <strong>upcase(string)</strong>
+  </p>
+  
+  <div class="docstring"><p>Upcase string.</p>
+</div>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

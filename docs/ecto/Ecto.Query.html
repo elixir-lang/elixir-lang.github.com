@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Query</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Query
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module is the query DSL. Queries are used to fetch data from a repository
+(see <code>Ecto.Repo</code>).</p>
+
+<h2>Examples</h2>
+
+<pre><code>import Ecto.Query
+
+   from w in Weather,
+ where: w.prcp &gt; 0,
+select: w.city
+</code></pre>
+
+<p>The above example will create a query that can be run against a repository.
+<code>from</code> will bind the variable <code>w</code> to the entity <code>Weather</code> (see <code>Ecto.Entity</code>).
+If there are multiple from expressions the query will run for every
+permutation of their combinations. <code>where</code> is used to filter the results,
+multiple <code>where</code>s can be given. <code>select</code> selects which results will be
+returned, a single variable can be given, that will return the full entity, or
+a single field. Multiple fields can also be grouped in lists or tuples. Only
+one <code>select</code> expression is allowed.</p>
+
+<p>External variables and elixir expressions can be injected into a query
+expression with <code>^</code>. Anything that isn&#39;t inside a <code>^</code> expression is treated
+as a query expression.</p>
+
+<p>This allows one to create dynamic queries:</p>
+
+<pre><code>def with_minimum(age, height_ft) do
+  from u in User,
+  where: u.age &gt; ^age and u.height &gt; ^(height_ft * 3.28)
+end
+</code></pre>
+
+<p>In the example above, we will compare against the <code>age</code> given as argument.
+Notice the <code>select</code> clause is optional, Ecto will automatically infer and
+returns the user record (similar to <code>select: u</code>) from the query above.</p>
+
+<h2>Extensions</h2>
+
+<p>Queries are composable and can be extend dynamically. This allows you to
+create specific queries given a parameter:</p>
+
+<pre><code>query = from w in Weather, select: w.city
+if filter_by_prcp do
+  query = extend w in query, where: w.prcp &gt; 0
+end
+Repo.all(query)
+</code></pre>
+
+<p>Or even create functions that extend an existing query:</p>
+
+<pre><code>def paginate(query, page, size) do
+  extend query,
+    limit: size,
+    offset: (page-1) * size
+end
+
+query |&gt; paginate |&gt; Repo.all
+</code></pre>
+
+<h2>Query expansion</h2>
+
+<p>In the examples above, we have used the so-called <strong>keywords query syntax</strong>
+to create a query. Our first example:</p>
+
+<pre><code>import Ecto.Query
+
+   from w in Weather,
+ where: w.prcp &gt; 0,
+select: w.city
+</code></pre>
+
+<p>Simply expands to the following <strong>query expressions</strong>:</p>
+
+<pre><code>from(w in Weather) |&gt; where([w], w.prcp &gt; 0) |&gt; select([w], w.city)
+</code></pre>
+
+<p>Which then expands to:</p>
+
+<pre><code>select(where(from(w in Weather), [w], w.prcp &gt; 0), [w], w.city)
+</code></pre>
+
+<p>This module documents each of those macros, providing examples both
+in the keywords query and in the query expression formats.</p>
+
+        </div>
+      
+
+      <a href="" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="macros_summary">Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#from/1">from/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#from/2">from/2</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#group_by/3">group_by/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#having/3">having/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#join/5">join/5</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#limit/3">limit/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#offset/3">offset/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#order_by/3">order_by/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#preload/3">preload/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#select/3">select/3</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#where/3">where/3</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t</a> :: Query.t
+  </p>
+</div>
+
+        </div>
+      
+
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="from/1">
+    <strong>from(kw)</strong>
+  </p>
+  
+  <div class="docstring"><p>Creates a query with a from query expression.</p>
+
+<h2>Examples</h2>
+
+<pre><code>from(c in City)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="from/2">
+    <strong>from(expr, kw)</strong>
+  </p>
+  
+  <div class="docstring"><p>Creates a query. It can either be a keyword query or a query expression. If it
+is a keyword query the first argument should be an <code>in</code> expression and the
+second argument a keyword query where they keys are expression types and the
+values are expressions.</p>
+
+<p>If it is a query expression the first argument is the original query and the
+second argument the expression.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code>from(City, select: c)
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(City) |&gt; select([c], c)
+</code></pre>
+
+<h1>Extending queries</h1>
+
+<p>An existing query can be extended with <code>from</code> by appending the given
+expressions to it.</p>
+
+<p>The existing variables from the original query can be rebound by
+giving the variables on the left hand side of <code>in</code>. The bindings
+are order dependent, that means that each variable will be bound to
+the variable in the original query that was defined in the same order
+as the binding was in its list.</p>
+
+<h2>Examples</h2>
+
+<pre><code>def paginate(query, page, size) do
+  from query,
+    limit: size,
+    offset: (page-1) * size
+end
+</code></pre>
+
+<p>The example above does not rebinding any variable, as they are not
+required for <code>limit</code> and <code>offset</code>. However, extending a query with
+where expression would require so:</p>
+
+<pre><code>def published(query) do
+  from p in query, where: p.published_at != nil
+end
+</code></pre>
+
+<p>Notice we have rebound the term <code>p</code>. In case the given query has
+more than one <code>from</code> expression, each of them must be given in
+the order they were bound:</p>
+
+<pre><code>def published_multi(query) do
+  from [p,o] in query,
+  where: p.published_at != nil and o.published_at != nil
+end
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="group_by/3">
+    <strong>group_by(query, binding, expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>A group by query expression. Groups together rows from the entity that have
+the same values in the given fields. Using <code>group_by</code> &quot;groups&quot; the query
+giving it different semantics in the <code>select</code> expression. If a query is
+grouped only fields that were referenced in the <code>group_by</code> can be used in the
+<code>select</code> or if the field is given as an argument to an aggregate function.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code># Returns the number of posts in each category
+from(p in Post,
+  group_by: p.category,
+  select: { p.category, count(p.id) })
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(Post) |&gt; group_by([p], p.category) |&gt; select([p], count(p.id))
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="having/3">
+    <strong>having(query, binding, expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>A having query expression. Like <code>where</code> <code>having</code> filters rows from the entity,
+but after the grouping is performed giving it the same semantics as <code>select</code>
+for a grouped query (see <a href="#group_by/3"><code>group_by/3</code></a>). <code>having</code> groups the query even if the
+query has no <code>group_by</code> expression.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code># Returns the number of posts in each category where the
+# average number of comments is above ten
+from(p in Post,
+  group_by: p.category,
+  having: avg(p.num_comments) &gt; 10,
+  select: { p.category, count(p.id) })
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(Post)
+  |&gt; group_by([p], p.category)
+  |&gt; having([p], avg(p.num_comments) &gt; 10)
+  |&gt; select([p], count(p.id))
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="join/5">
+    <strong>join(query, binding, qual // nil, expr, on // nil)</strong>
+  </p>
+  
+  <div class="docstring"><p>A join query expression. Receives an entity that is to be joined to the query
+and a condition to do the joining on. The join condition can be any expression
+that evaluates to a boolean value. The join is by default an inner join, the
+qualifier can be changed by giving the atoms: <code>:inner</code>, <code>:left</code>, <code>:right</code> or
+<code>:full</code>. For a keyword query the <code>:join</code> keyword can be changed to:
+<code>:inner_join</code>, <code>:left_join</code>, <code>:right_join</code> or <code>:full_join</code>.</p>
+
+<p>The join condition can be automatically set when doing an association join. An
+association join can be done on any association field (<code>has_many</code>, <code>has_one</code>,
+<code>belong_to</code>).</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code>   from c in Comment,
+  join: p in Post, on: c.post_id == p.id,
+select: { p.title, c.text }
+
+   from p in Post,
+  left_join: c in p.comments,
+select: { p, c }
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(Comment)
+  |&gt; join([c], p in Post, c.post_id == p.id)
+  |&gt; select([c, p], { p.title, c.text })
+
+from(Post)
+  |&gt; join([p], :left, c in p.comments)
+  |&gt; select([p, c], { p, c })
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="limit/3">
+    <strong>limit(query, binding // [], expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>A limit query expression. Limits the number of rows selected from the entity.
+Can be any expression but have to evaluate to an integer value. Can&#39;t include
+entity fields.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code>from(u in User, where: u.id == current_user, limit: 1)
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(u in User) |&gt; where(u.id == current_user) |&gt; limit(1)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="offset/3">
+    <strong>offset(query, binding // [], expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>An offset query expression. Limits the number of rows selected from the
+entity. Can be any expression but have to evaluate to an integer value.
+Can&#39;t include entity fields.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code># Get all posts on page 4
+from(p in Post, limit: 10, offset: 30)
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(p in Post) |&gt; limit(10) |&gt; offset(30)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="order_by/3">
+    <strong>order_by(query, binding, expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>An order by query expression. Orders the fields based on one or more entity
+fields. It accepts a single field or a list field, the direction can be
+specified in a keyword list as shown in the examples. There can be several
+order by expressions in a query.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code>from(c in City, order_by: c.name, order_by: c.population)
+from(c in City, order_by: [c.name, c.population])
+from(c in City, order_by: [asc: c.name, desc: c.population])
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(c in City) |&gt; order_by([c], asc: c.name, desc: c.population)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="preload/3">
+    <strong>preload(query, binding // [], expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>A preload query expression. Preloads the specified fields on the entity in the
+from expression. Loads all associated records for each entity in the result
+set based on the association. The fields have to be association fields and the
+entity has to be in the select expression.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code># Returns all posts and their associated comments
+from(p in Post,
+  preload: [:comments],
+  select: p)
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(Post) |&gt; preload(:comments) |&gt; select([p], p)
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="select/3">
+    <strong>select(query, binding, expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>A select query expression. Selects which fields will be selected from the
+entity and any transformations that should be performed on the fields, any
+expression that is accepted in a query can be a select field. There can only
+be one select expression in a query, if the select expression is omitted, the
+query will by default select the full entity (only works when there is a
+single from expression and no group by).</p>
+
+<p>The sub-expressions in the query can be wrapped in lists or tuples as shown in
+the examples. A full entity can also be selected if the entity variable is the
+only thing in the expression.</p>
+
+<p>The <code>assoc/2</code> selector can be used to load an association on a parent entity
+as shown in the examples below. The first argument to <code>assoc</code> has to be a
+variable bound in the <code>from</code> query expression, the second has to be a variable
+bound in an association join on the <code>from</code> variable.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code>from(c in City, select: c) # selects the entire entity
+from(c in City, select: { c.name, c.population })
+from(c in City, select: [c.name, c.county])
+from(c in City, select: { c.name, to_binary(40 + 2), 43 })
+
+from(p in Post, join: c in p.comments, select: assoc(p, c))
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(c in City) |&gt; select([c], c)
+from(c in City) |&gt; select([c], { c.name, c.country })
+</code></pre>
+</div>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="where/3">
+    <strong>where(query, binding, expr)</strong>
+  </p>
+  
+  <div class="docstring"><p>A where query expression. Filters the rows from the entity. If there are more
+than one where expressions they will be combined in conjunction. A where
+expression have to evaluate to a boolean value.</p>
+
+<h2>Keywords examples</h2>
+
+<pre><code>from(c in City, where: c.state == &quot;Sweden&quot;)
+</code></pre>
+
+<h2>Expressions examples</h2>
+
+<pre><code>from(c in City) |&gt; where([c], c.state == &quot;Sweden&quot;)
+</code></pre>
+</div>
+  
+</div>
+
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>
