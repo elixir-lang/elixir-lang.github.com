@@ -61,16 +61,6 @@ end
       
 
       
-        <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#check_single_result/2">check_single_result/2</a>
-  </span>
-</li>
-
-        </ul>
-      
 
       
 
@@ -133,19 +123,6 @@ end
 
       
 
-      
-        <div id="functions_details" class="details_list">
-          <h2>Functions</h2>
-          <div class="detail">
-  <p class="signature" id="check_single_result/2">
-    <strong>check_single_result(result, entity)</strong>
-  </p>
-  
-  <div class="docstring"></div>
-  
-</div>
-
-        </div>
       
 
       
@@ -217,7 +194,7 @@ MyRepo.all(query)
 </div>
 <div class="detail">
   <p class="signature" id="create/1">
-    <strong>create(Record.t())</strong>
+    <strong>create(Ecto.Entity.t())</strong>
   </p>
   
   <div class="docstring"><p>Stores a single new entity in the data store and returns its stored
@@ -233,7 +210,7 @@ representation. May raise <code>Ecto.AdapterError</code> if there is an adapter 
 </div>
 <div class="detail">
   <p class="signature" id="update/1">
-    <strong>update(Record.t())</strong>
+    <strong>update(Ecto.Entity.t())</strong>
   </p>
   
   <div class="docstring"><p>Updates an entity using the primary key as key. If the entity has no primary
@@ -271,7 +248,7 @@ from(p in Post, where: p.id &lt; 10) |&gt;
 </div>
 <div class="detail">
   <p class="signature" id="delete/1">
-    <strong>delete(Record.t())</strong>
+    <strong>delete(Ecto.Entity.t())</strong>
   </p>
   
   <div class="docstring"><p>Deletes an entity using the primary key as key. If the entity has no primary
