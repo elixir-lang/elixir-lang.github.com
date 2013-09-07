@@ -224,7 +224,7 @@ iex> String.length "héllò"
 
 > Note: to retrieve the number of elements in a data structure, you will use a function named `length` or `size`. Their usage is not arbitrary. The first is used when the number of elements needs to be calculated. For example, calling `length(list)` will iterate the whole list to find the number of elements in that list. `size` is the opposite, it means the value is pre-calculated and stored somewhere and therefore retrieving its value is a cheap operation. That said, we use `size` to get the size of a binary, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
 
-Each character in the string "héllò" above is a Unicode codepoint. One may use `String.codepoints` to split a string into smaller strings representing its codepoints:
+Each character in the string "héllò" above is an Unicode codepoint. One may use `String.codepoints` to split a string into smaller strings representing its codepoints:
 
 ```iex
 iex> String.codepoints "héllò"
