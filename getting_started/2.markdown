@@ -197,7 +197,7 @@ iex> rest
 
 In the example above, we tagged each segment in the binary. The first segment has integer type (the default), which captures the ascii code for the letter "f". The remaining bytes "oo" are assigned into the binary `rest`.
 
-The binary/bitstring syntax is Elixir is very powerful, allowing you to match on bytes, bits, utf8 codepoints and much more. You can find more about it [in Elixir docs](http://elixir-lang.org/docs/master/Kernel.SpecialForms.html#<<>>/1). Meanwhile, let's talk more about Unicode.
+The binary/bitstring syntax in Elixir is very powerful, allowing you to match on bytes, bits, utf8 codepoints and much more. You can find more about it [in Elixir docs](http://elixir-lang.org/docs/master/Kernel.SpecialForms.html#<<>>/1). Meanwhile, let's talk more about Unicode.
 
 ## 2.4 Unicode support
 
@@ -210,7 +210,7 @@ iex> size(string)
 2
 ```
 
-In order to easily manipulate strings, Elixir provides a [String module](http://elixir-lang.org/docs/stable/String.html):
+In order to easily manipulate strings, Elixir provides a [`String` module](http://elixir-lang.org/docs/stable/String.html):
 
 ```iex
 # returns the number of bytes
@@ -224,7 +224,7 @@ iex> String.length "héllò"
 
 > Note: to retrieve the number of elements in a data structure, you will use a function named `length` or `size`. Their usage is not arbitrary. The first is used when the number of elements needs to be calculated. For example, calling `length(list)` will iterate the whole list to find the number of elements in that list. `size` is the opposite, it means the value is pre-calculated and stored somewhere and therefore retrieving its value is a cheap operation. That said, we use `size` to get the size of a binary, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
 
-Each character in the string "héllò" above is a Unicode codepoint. One may use `String.codepoints` to split a string into smaller strings representing its codepoints:
+Each character in the string "héllò" above is an Unicode codepoint. One may use `String.codepoints` to split a string into smaller strings representing its codepoints:
 
 ```iex
 iex> String.codepoints "héllò"
