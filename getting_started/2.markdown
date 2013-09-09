@@ -159,6 +159,8 @@ We say a double-quoted value is a **string**, which is represented by a binary. 
 In fact, both double-quoted and single-quoted representations are just a shorter representation of binaries and lists respectively. Given that `?a` in Elixir returns the ASCII integer for the letter `a`, we could also write:
 
 ```iex
+iex> is_integer ?a
+true
 iex> <<?a, ?b, ?c>>
 "abc"
 iex> [?a, ?b, ?c]
