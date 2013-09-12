@@ -75,14 +75,15 @@ defmodule Math do
   end
 end
 
-IO.puts Math.sum(1, 2)
+# IO.puts expects a list or a binary, so we use the string representation of the sum
+IO.puts to_string(Math.sum(1, 2))
 ```
 
 And execute it as:
 
     elixir math.exs
 
-The file will be compiled in memory and executed, printing 3 as the result. No bytecode file will be created.
+The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created.
 
 ## 3.3 Functions and private functions
 
