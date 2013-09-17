@@ -9,7 +9,7 @@ total_guides: 3
 
 Elixir ships with a few applications to make building and deploying projects with Elixir easier and Mix is certainly their backbone.
 
-Mix is a build tool that provides tasks for creating, compiling, testing (and soon deploying) Elixir projects. Mix is inspired by the [Leiningen](https://github.com/technomancy/leiningen) build tool for Clojure and was written by one of its contributors.
+Mix is a build tool that provides tasks for creating, compiling, testing (and soon releasing) Elixir projects. Mix is inspired by the [Leiningen](https://github.com/technomancy/leiningen) build tool for Clojure and was written by one of its contributors.
 
 In this chapter, you will learn how to create projects using `mix` and install dependencies. In the following sections, we will also learn how to create OTP applications and create custom tasks with Mix.
 
@@ -17,7 +17,7 @@ In this chapter, you will learn how to create projects using `mix` and install d
 
 In order to start your first project, simply use the `mix new` command passing the path to your project. For now, we will create an project called `my_project` in the current directory:
 
-    $ mix new my_project
+    $ mix new my_project --bare
 
 Mix will create a directory named `my_project` with few files in it:
 
@@ -67,7 +67,7 @@ defmodule MyProject.Mixfile do
 end
 ```
 
-Our `mix.exs` is quite straight-forward. It defines two functions: `project`, which returns project configuration like the project name and version, and `application`, which is used to generate an Erlang application that is managed by the Erlang Runtime. In this chapter, we will talk about the `project` function. We will go into detail about what goes in the `application` function in the next chapter.
+Our `mix.exs` defines two functions: `project`, which returns project configuration like the project name and version, and `application`, which is used to generate an Erlang application that is managed by the Erlang Runtime. In this chapter, we will talk about the `project` function. We will go into detail about what goes in the `application` function in the next chapter.
 
 ### 1.1.2 lib/my_project.ex
 
@@ -83,8 +83,6 @@ end
 This file contains a stub test case for our project:
 
 ```elixir
-Code.require_file "test_helper.exs", __DIR__
-
 defmodule MyProjectTest do
   use ExUnit.Case
 
@@ -98,9 +96,7 @@ It is important to note a couple things:
 
 1) Notice the file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
-2) The first line in our test is simply requiring the `test_helper` file in the same directory as the current file. As we are going to see, the `test/test_helper.exs` file is responsible for starting the test framework;
-
-3) We define a test module named `MyProjectTest`, using `ExUnit.Case` to inject default behavior and define a simple test. You can learn more about the test framework in the [ExUnit](/getting_started/ex_unit/1.html) chapter;
+2) We define a test module named `MyProjectTest`, using `ExUnit.Case` to inject default behavior and define a simple test. You can learn more about the test framework in the [ExUnit](/getting_started/ex_unit/1.html) chapter;
 
 ### 1.1.4 test/test_helper.exs
 
@@ -110,7 +106,7 @@ The last file we are going to check is the `test_helper.exs`, which simply sets 
 ExUnit.start
 ```
 
-And that is it, our project is created. We are ready to move on!
+This file will be automatically required by Mix every time before we run our tests. And that is it, our project is created. We are ready to move on!
 
 ## 1.2 Exploring
 

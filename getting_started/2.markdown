@@ -510,7 +510,7 @@ x #=> 1
 
 ### 2.6.4 Receive
 
-This next control-flow mechanism is essential to Elixir's and Erlang's actor mechanism. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
+This next control-flow mechanism is essential to Elixir's actors. In Elixir, the code is run in separate processes that exchange messages between them. Those processes are not Operating System processes (they are actually quite light-weight) but are called so since they do not share state with each other.
 
 In order to exchange messages, each process has a mailbox where the received messages are stored. The `receive` mechanism allows us to go through this mailbox searching for a message that matches the given pattern. Here is an example that uses the arrow operator `<-` to send a message to the current process and then collects this message from its mailbox:
 
