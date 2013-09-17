@@ -7,13 +7,17 @@ total_guides: 3
 
 # {{ page.title }}
 
-In the previous chapter, we have generated a project with Mix and explored a bit how Mix works. In this chapter, we will learn how to build an OTP application. In practice, we don't need Mix in order to build such applications, however Mix provides some conveniences that we are going to explore throughout this chapter.
+Where do we keep state in Elixir?
+
+Our software needs to keep state, configuration values, data about the running system, etc. We have learned in previous sections how we can use processes/actors to keep state, receiving and responding to messages in a loop but this approach seems to be brittle. What happens if there is an error in our actor and it crashes? Even more, is it really required to create a new process when all we want to do is to keep simple configuration values?
+
+In this chapter, we will answer those questions by building an OTP application. In practice, we don't need Mix in order to build such applications, however Mix provides some conveniences that we are going to explore throughout this chapter.
 
 ## 2.1 The Stacker server
 
 Our application is going to be a simple stack that allow us push and pop items as we wish. Let's call it stacker:
 
-    $ mix new stacker
+    $ mix new stacker --bare
 
 Our application is going to have one stack which may be accessed by many processes at the same time. To achieve that, we will create a server that is responsible to manage the stack. Clients will send messages to the server whenever they want to push or pop something from the stack.
 
@@ -258,9 +262,20 @@ iex> :gen_server.call(:stacker, :pop)
 
 Amazing, it works! As you may have noticed, the application `start/2` callback receives a type argument, which we have ignored. The type controls how the VM should behave when the supervisor, and consequently our application, crashes. You can learn more about it by [reading the documentation for `Application.Behaviour`](http://elixir-lang.org/docs/stable/Application.Behaviour.html).
 
+Finally, notice that `mix new` supports a `--sup` option, which tells Mix to generate a supervisor with an application module callback, automating some of the work we have done here. Try it!
+
 ## 2.4 Starting applications
 
-Mix will always start the current application and all application dependencies. Notice there is a difference between your project dependencies (the ones defined under the `deps` key we have discussed in the previous chapter) and the application dependencies.
+We did not have to, at any point, start the application we have just defined. That's because Mix starts all applications, and all application dependencies, by default. We can start any application manually by calling functions from [the :application module provided by OTP](http://www.erlang.org/doc/man/application.html):
+
+```iex
+iex> :application.start(:stacker)
+{ :error, { :already_started, :stacker } }
+```
+
+In this case, since the application was previously started, it returns so as an error message.
+
+Mix does not only starts your application but all of your application dependencies. Notice there is a difference between your project dependencies (the ones defined under the `deps` key we have discussed in the previous chapter) and the application dependencies.
 
 The project dependencies may contain your test framework or a compile-time only dependency. The application dependency is everything you depend on at runtime. Any application dependency needs to be explicitly added to the `application` function too:
 
@@ -272,16 +287,40 @@ def application do
 end
 ```
 
-When running tasks on Mix, it will ensure the application and all application dependencies are started. This can also be done via command line with the flag `--app`:
+When running tasks on Mix, it will ensure the application and all application dependencies are started.
 
-    $ elixir -pa ebin --app my_project
+## 2.5 Configuring applications
 
-You may also start each application individually via the command line using [Erlang's :application module](http://www.erlang.org/doc/man/application.html):
+Besides the `:registered`, `:applications` and `:mod` keys we have seen above, applications also support configuration values that can be get and set explicitly.
 
-```elixir
-:application.start(:my_project)
+Still in the command line, try:
+
+```iex
+iex> :application.get_key(:stacker, :foo)
+:undefined
+iex> :application.set_key(:stacker, :foo, :bar)
+:ok
+iex> :application.get_key(:stacker, :foo)
+{ :ok, :bar }
 ```
 
-Besides `registered`, `applications` and `mod`, there are other keys allowed in the application specification. You can learn more about them [in the applications chapter from Learn You Some Erlang](http://learnyousomeerlang.com/building-otp-applications).
+This is a very useful mechanism for providing configuration values in your applications without a need to create the whole supervise chain. Default values for the application configuration can be defined in the `mix.exs` file as follows:
 
-Finally, notice that `mix new` supports a `--sup` option, which tells Mix to generate a supervisor with an application module callback, automating some of the work we have done here (try it!). With this note, we finalize this chapter. We have learned how to create servers, supervise them, and hook them into our application lifecycle. In the next chapter, we will learn how to create custom tasks in Mix.
+```elixir
+def application do
+  [ registered: [:stacker],
+    mod: { Stacker, [:hello] },
+    env: [foo: :bar] ]
+end
+```
+
+Now, leave the current shell and restart it with `iex -S mix`:
+
+```iex
+iex> :application.get_env(:stacker, :foo)
+{ :ok, :bar }
+```
+
+For example, IEx and ExUnit are two applications that ship with Elixir that relies on such configuration values, as seen in their `mix.exs` files: [IEx](https://github.com/elixir-lang/elixir/blob/master/lib/iex/mix.exs) and [ExUnit](https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/mix.exs). Such applications then provide [wrappers for reading and setting such values](https://github.com/elixir-lang/elixir/blob/d2bfd10299dc0e2df573589f1d33565177d63a7d/lib/ex_unit/lib/ex_unit.ex#L125-L155).
+
+With this note, we finalize this chapter. We have learned how to create servers, supervise them, hook them into our application lifecycle and provide simple configuration options. In the next chapter, we will learn how to create custom tasks in Mix.
