@@ -339,8 +339,9 @@ Notice that `File.read` does not raise an exception in case something goes wrong
 
 On the other hand, a CLI interface that needs to access or manipulate a file given by the user may necessarily expect a file to be there. If the given file does not exist, there is nothing to do but fail. Then you may use `File.read!`, which raises an exception instead:
 
-```elixir
-contents = File.read!(file)
+```iex
+iex> contents = File.read!("/inexistent/file")
+** (File.Error) could not read file /inexistent/file: no such file or directory
 ```
 
 This pattern is common throughout the Elixir standard library, and many libraries provide both forms.
