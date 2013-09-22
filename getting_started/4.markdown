@@ -17,14 +17,16 @@ Records are simple structures that hold values. For example, we can define a `Fi
 defrecord FileInfo, atime: nil, accesses: 0
 ```
 
-The line above will define a module named `FileInfo` which contains a function named `new` that returns a new record and other functions to read and set the values in the record:
+The line above will define a module named `FileInfo` which contains a function named `new` that returns a new record and other functions to read and set the values:
 
-```elixir
-file_info = FileInfo.new(atime: { 2010, 4, 17 })
-file_info.atime                   #=> Returns the value of atime
-
-file_info = file_info.atime({ 2012, 10, 13 }) #=> Updates the value of atime
-file_info
+```iex
+iex> file_info = FileInfo.new(atime: { 2010, 4, 17 }, accesses: 42)
+iex> file_info.atime
+{2010, 4, 17}
+iex> file_info.atime({ 2012, 10, 13 }) #=> Returns a new FileInfo
+FileInfo[atime: {2012, 10, 13}, accesses: 42]
+iex> file_info.atime
+{2010, 4, 17}
 ```
 
 Notice that when we change the `atime` field of the record, we re-store the record in the `file_info` variable. This is because as almost everything else in Elixir, records are immutable. So changing the `atime` field does not update the record in place. Instead, it returns a new record with the new value set.
