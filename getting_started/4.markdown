@@ -257,27 +257,27 @@ iex> inspect HashDict.new, raw: true
 "{HashDict,0,[]}"
 ```
 
-* `Binary.Chars` - specifies how to convert a data structure with characters to binary. It's exposed via the `to_binary` function:
+* `String.Chars` - specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
 
 ```iex
-iex> to_binary :hello
+iex> to_string :hello
 "hello"
 ```
 
-  Notice that string interpolation in Elixir calls the `to_binary` function:
+  Notice that string interpolation in Elixir calls the `to_string` function:
 
 ```iex
 iex> "age: #{25}"
 "age: 25"
 ```
 
-  The example above only works because numbers implement the `Binary.Chars` protocol. Passing a tuple, for example, will lead to an error:
+  The example above only works because numbers implement the `String.Chars` protocol. Passing a tuple, for example, will lead to an error:
 
 ```iex
 iex> tuple = {1, 2, 3}
 {1, 2, 3}
 iex> "tuple: #{tuple}"
-** (Protocol.UndefinedError) protocol Binary.Chars not implemented for {1, 2, 3}
+** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}
 ```
 
   When there is a need to "print" a more complex data structure, one can simply use the `inspect` function:
