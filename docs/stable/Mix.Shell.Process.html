@@ -45,40 +45,53 @@ is also a <a href="#flush/1"><code>flush/1</code></a> function responsible for f
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/shell/process.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#cmd/1">cmd/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#error/1">error/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flush/1">flush/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#info/1">info/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#yes?/1">yes?/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#cmd/1">cmd(command)</a></td>
+  
+    <td class="summary_synopsis"><p>Executes the given command and fowards its messages to
+the current process.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#error/1">error(message)</a></td>
+  
+    <td class="summary_synopsis"><p>Forwards the message to the current process.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flush/1">flush(callback // fn x -&gt; x end)</a></td>
+  
+    <td class="summary_synopsis"><p>Flush all <code>:mix_shell</code> and <code>:mix_shell_input</code> messages from the current process.
+If a callback is given, it is invoked for each received message.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#info/1">info(message)</a></td>
+  
+    <td class="summary_synopsis"><p>Forwards the message to the current process.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#yes?/1">yes?(message)</a></td>
+  
+    <td class="summary_synopsis"><p>Forwards the message to the current process.
+It also checks the inbox for an input message matching:</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -99,7 +112,7 @@ is also a <a href="#flush/1"><code>flush/1</code></a> function responsible for f
 the current process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/shell/process.ex#L46" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -110,7 +123,7 @@ the current process.</p>
   <div class="docstring"><p>Forwards the message to the current process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/shell/process.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -123,11 +136,11 @@ If a callback is given, it is invoked for each received message.</p>
 
 <h2>Examples</h2>
 
-<pre><code>flush IO.inspect(&amp;1)
+<pre><code>flush &amp;IO.inspect(&amp;1)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L29" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/shell/process.ex#L29" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -138,7 +151,7 @@ If a callback is given, it is invoked for each received message.</p>
   <div class="docstring"><p>Forwards the message to the current process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L56" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/shell/process.ex#L56" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -156,7 +169,7 @@ It also checks the inbox for an input message matching:</p>
 process inputs given. Value must be <code>true</code> or <code>false</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/shell/process.ex#L78" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/shell/process.ex#L78" target="_blank" class="view_source">Source</a>
   
 </div>
 

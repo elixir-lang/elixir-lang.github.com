@@ -59,7 +59,7 @@ information.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/case.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/case.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -67,14 +67,23 @@ information.</p>
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#test/3">test/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#test/3">test(message, var // quote() do
+  _
+end, contents)</a></td>
+  
+    <td class="summary_synopsis"><p>Provides a convenient macro that allows a test to be
+defined with a string. This macro automatically inserts
+the atom :ok as the last line of the test. That said,
+a passing test always returns :ok, but, more important,
+it forces Elixir to not tail call optimize the test and
+therefore avoiding hiding lines from the backtrace.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -108,7 +117,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/case.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/case.ex#L74" target="_blank" class="view_source">Source</a>
   
 </div>
 

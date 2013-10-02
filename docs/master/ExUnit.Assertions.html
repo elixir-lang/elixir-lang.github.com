@@ -46,107 +46,154 @@ common cases such as checking a floating point number or handling exceptions.</p
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L20" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L20" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#assert/2">assert/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#assert/4">assert/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#assert_in_delta/4">assert_in_delta/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#assert_raise/2">assert_raise/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#assert_raise/3">assert_raise/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flunk/1">flunk/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#refute/2">refute/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#refute_in_delta/4">refute_in_delta/4</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#assert/2">assert(expected, message)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>expected</code> value is true.
+If it fails, raises the given <code>message</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assert/4">assert(value, expected, actual, content)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>expected</code> value is true.
+If it fails, it raises an expectation error
+using the given <code>expected</code> and <code>actual</code> values.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assert_in_delta/4">assert_in_delta(expected, received, delta, message // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>expected</code> and <code>received</code> are within <code>delta</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assert_raise/2">assert_raise(exception, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>exception</code> is raised during <code>function</code> execution.
+Returns the rescued exception, fails otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assert_raise/3">assert_raise(exception, message, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>exception</code> is raised during <code>function</code> execution with
+the <code>expected_message</code>. Returns the rescued exception, fails otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flunk/1">flunk(message // &quot;Flunked!&quot;)</a></td>
+  
+    <td class="summary_synopsis"><p>Fails with a message.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#refute/2">refute(not_expected, message)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>not_expected</code> value is <code>nil</code> or <code>false</code>.
+In case it is a truthy value, raises the given message.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#refute_in_delta/4">refute_in_delta(expected, received, delta, message // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>expected</code> and <code>received</code> are not within <code>delta</code>.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#assert/1">assert/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#assert_receive/3">assert_receive/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#assert_received/2">assert_received/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#catch_error/1">catch_error/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#catch_exit/1">catch_exit/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#catch_throw/1">catch_throw/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#refute/1">refute/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#refute_receive/3">refute_receive/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#refute_received/2">refute_received/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#assert/1">assert(expected)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the <code>expected</code> value is true.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assert_receive/3">assert_receive(expected, timeout // 100, message // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts a message was or is going to be received. Unlike
+<code>assert_received</code>, it has a default timeout of 100 milliseconds.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#assert_received/2">assert_received(expected, message // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts a message was received and is in the current process&#39; mailbox.
+Timeout is set to 0, so there is no waiting time.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#catch_error/1">catch_error(expression)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the given <code>expression</code> will cause an error.
+Returns the error or fails otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#catch_exit/1">catch_exit(expression)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the given <code>expression</code> will exit.
+Returns the exit status/message or fails otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#catch_throw/1">catch_throw(expression)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts the given <code>expression</code> will throw a value.
+Returns the thrown value or fails otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#refute/1">refute(expected)</a></td>
+  
+    <td class="summary_synopsis"><p>Refutes the <code>expected</code> value is true.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#refute_receive/3">refute_receive(not_expected, timeout // 100, message // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts a message was not received and won&#39;t be within
+the <code>timeout</code> period.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#refute_received/2">refute_received(not_expected, message // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Asserts a message was not received (i.e. it is not in the current process mailbox).
+The <code>not_expected</code> argument must be a match pattern.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -170,7 +217,7 @@ If it fails, raises the given <code>message</code>.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L221" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L221" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -188,7 +235,7 @@ using the given <code>expected</code> and <code>actual</code> values.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L236" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L236" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -205,7 +252,7 @@ assert_in_delta 10, 15, 4
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L366" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L369" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -224,7 +271,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L340" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L343" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -243,7 +290,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L315" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L318" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -266,7 +313,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L512" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L515" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -283,7 +330,7 @@ In case it is a truthy value, raises the given message.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L434" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L437" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -300,7 +347,7 @@ refute_in_delta 10, 11, 2
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L495" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L498" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -330,7 +377,7 @@ reporting whenever there is a failure. For example,
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L52" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L52" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -339,9 +386,9 @@ reporting whenever there is a failure. For example,
   </p>
   
   <div class="docstring"><p>Asserts a message was or is going to be received. Unlike
-<code>assert_received</code>, it has a default timeout of 100 miliseconds.</p>
+<code>assert_received</code>, it has a default timeout of 100 milliseconds.</p>
 
-<p>The given <code>expected</code> argument must be a pattern.</p>
+<p>The given <code>expected</code> argument has to be a pattern.</p>
 
 <h2>Examples</h2>
 
@@ -356,10 +403,13 @@ reporting whenever there is a failure. For example,
 <p>You can also match against specific patterns:</p>
 
 <pre><code>assert_receive { :hello, _ }
+
+x = 5
+assert_receive { :count, ^x }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L267" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L270" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -367,10 +417,10 @@ reporting whenever there is a failure. For example,
     <strong>assert_received(expected, message // nil)</strong>
   </p>
   
-  <div class="docstring"><p>Asserts a message was received and is in the current process mailbox.
-The given <code>expected</code> argument must to be a match pattern.</p>
+  <div class="docstring"><p>Asserts a message was received and is in the current process&#39; mailbox.
+Timeout is set to 0, so there is no waiting time.</p>
 
-<p>Timeout is set to 0, so there is no waiting time.</p>
+<p>The given <code>expected</code> argument has to be a pattern.</p>
 
 <h2>Examples</h2>
 
@@ -385,7 +435,7 @@ assert_received { :hello, _ }
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L288" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L291" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -402,7 +452,7 @@ Returns the error or fails otherwise.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L408" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L411" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -419,7 +469,7 @@ Returns the exit status/message or fails otherwise.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L395" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L398" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -436,7 +486,7 @@ Returns the thrown value or fails otherwise.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L382" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L385" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -455,7 +505,7 @@ reporting whenever there is a failure.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L81" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L81" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -479,7 +529,7 @@ the <code>timeout</code> period.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L453" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L456" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -499,7 +549,7 @@ refute_received :bye
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/ex_unit/lib/ex_unit/assertions.ex#L469" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/ex_unit/lib/ex_unit/assertions.ex#L472" target="_blank" class="view_source">Source</a>
   
 </div>
 

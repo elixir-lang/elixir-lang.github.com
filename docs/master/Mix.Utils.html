@@ -43,85 +43,124 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#camelize/1">camelize/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#command_to_module/2">command_to_module/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#command_to_module_name/1">command_to_module_name/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#config_merge/2">config_merge/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#extract_files/2">extract_files/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#extract_stale/2">extract_stale/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#mix_home/0">mix_home/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#mix_paths/0">mix_paths/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#module_name_to_command/2">module_name_to_command/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#read_manifest/1">read_manifest/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#read_path!/1">read_path!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#stale?/2">stale?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#underscore/1">underscore/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#write_manifest/2">write_manifest/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#camelize/1">camelize(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts the given string to CamelCase format.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#command_to_module/2">command_to_module(command, at // Elixir)</a></td>
+  
+    <td class="summary_synopsis"><p>Takes a <code>command</code> name and attempts to load a module
+with the command name converted to a module name
+in the given <code>at</code> scope.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#command_to_module_name/1">command_to_module_name(s)</a></td>
+  
+    <td class="summary_synopsis"><p>Takes a command and converts it to the module name format.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#config_merge/2">config_merge(old, new)</a></td>
+  
+    <td class="summary_synopsis"><p>Merges two configs recursively, merging keyword lists
+and concatenating normal lists.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#extract_files/2">extract_files(paths, exts_or_pattern)</a></td>
+  
+    <td class="summary_synopsis"><p>Extract files from a list of paths.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#extract_stale/2">extract_stale(sources, targets)</a></td>
+  
+    <td class="summary_synopsis"><p>Extract all stale <code>sources</code> compared to the given <code>targets</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mix_home/0">mix_home()</a></td>
+  
+    <td class="summary_synopsis"><p>Gets the mix home. It defaults to <code>~/.mix</code> unless the
+<code>MIX_HOME</code> environment variable is set.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mix_paths/0">mix_paths()</a></td>
+  
+    <td class="summary_synopsis"><p>Gets all extra paths defined in the environment variable
+<code>MIX_PATH</code>. <code>MIX_PATH</code> may contain multiple paths. If on Windows,
+those paths should be separated by <code>;</code>, if on unix systems,
+use <code>:</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#module_name_to_command/2">module_name_to_command(module, nesting // 0)</a></td>
+  
+    <td class="summary_synopsis"><p>Takes a module and converts it to a command. The nesting
+argument can be given in order to remove the nesting of a
+module.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#read_manifest/1">read_manifest(file)</a></td>
+  
+    <td class="summary_synopsis"><p>Reads the given file as a manifest and returns each entry
+as a list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#read_path!/1">read_path!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Opens and reads content from either a URL or a local filesystem path.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stale?/2">stale?(sources, targets)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns <code>true</code> if any of the <code>sources</code> are stale
+compared to the given <code>targets</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#underscore/1">underscore(atom)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts the given atom or binary to underscore format.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#write_manifest/2">write_manifest(file, entries)</a></td>
+  
+    <td class="summary_synopsis"><p>Writes a manifest file with the given <code>entries</code> list.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -146,7 +185,7 @@
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L233" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -168,7 +207,7 @@ exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L60" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -185,7 +224,7 @@ exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L299" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L299" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -197,7 +236,7 @@ exists and is loaded, <code>{ :error, reason }</code> otherwise.</p>
 and concatenating normal lists.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L159" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L159" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -212,7 +251,7 @@ recursively searching for the given extensions or the given pattern.
 When looking up directories, files starting with &quot;.&quot; are ignored.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L137" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L137" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -223,7 +262,7 @@ When looking up directories, files starting with &quot;.&quot; are ignored.</p>
   <div class="docstring"><p>Extract all stale <code>sources</code> compared to the given <code>targets</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L76" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L76" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -235,7 +274,7 @@ When looking up directories, files starting with &quot;.&quot; are ignored.</p>
 <code>MIX_HOME</code> environment variable is set.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L21" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L21" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -249,7 +288,7 @@ those paths should be separated by <code>;</code>, if on unix systems,
 use <code>:</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L31" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -271,7 +310,7 @@ module_name_to_command(&quot;Mix.Tasks.Compile.Elixir&quot;, 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L279" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L279" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -289,7 +328,7 @@ entry must always be a path to a compiled artifact.</p>
 <p>In case there is no manifest file, returns an empty list.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L115" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L115" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -306,7 +345,7 @@ installation either from a URL or a local file.</p>
 file or url are invalid.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L326" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L326" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -318,7 +357,7 @@ file or url are invalid.</p>
 compared to the given <code>targets</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -346,7 +385,7 @@ Mix.Utils.camelize   &quot;sap_example&quot; #=&gt; &quot;SapExample&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L192" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L192" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -357,7 +396,7 @@ Mix.Utils.camelize   &quot;sap_example&quot; #=&gt; &quot;SapExample&quot;
   <div class="docstring"><p>Writes a manifest file with the given <code>entries</code> list.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/utils.ex#L125" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/utils.ex#L125" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -110,9 +110,6 @@ expose the record definition. The <code>user</code> macro used above, for
 example, is only available inside the <code>User</code> module and nowhere else.
 You can find more information in <code>Kernel.defrecordp/2</code> docs.</p>
 
-<p>In general, though, records are used as part of a module&#39;s public
-interface. For such use cases, Elixir provides record modules.</p>
-
 <h2>defrecord</h2>
 
 <p>By using <code>defrecord</code>, a developer can make a Record definition
@@ -132,7 +129,7 @@ user()        #=&gt; User[name: &quot;José&quot;, age: 25]
 user(age: 26) #=&gt; User[name: &quot;José&quot;, age: 26]
 </code></pre>
 
-<p>Notice that now, since the record definition is accessible, Elixir
+<p>Notice that now since the record definition is accessible, Elixir
 shows the record nicely formatted, no longer as a simple tuple. We
 can get the raw formatting by passing <code>raw: true</code> to <code>inspect</code>:</p>
 
@@ -149,9 +146,9 @@ User[]        #=&gt; User[name: &quot;José&quot;, age: 25]
 User[age: 26] #=&gt; User[name: &quot;José&quot;, age: 26]
 </code></pre>
 
-<p>The macro name is replaced by the module name and the parenthesis
-are replaced by brackets. When the shortcut syntax is used, there
-is no need to import the record.</p>
+<p>The macro name is replaced by the module name and the parentheses
+are replaced by brackets. When this syntax is used, there is no
+need to import the record.</p>
 
 <p>Before we sum up the differences between <code>defrecord</code> and
 <code>defrecordp</code>, there is one last functionality introduced by
@@ -179,6 +176,12 @@ user.update(age: 26)
 <p>All the calls above happen at runtime. It gives Elixir
 records flexibility at the cost of performance since
 there is more work happening at runtime.</p>
+
+<p>The above calls (new and update) can interchangeably accept both
+atom and string keys for field names, however not both at the same time.
+Please also note that atom keys are faster. This feature allows to
+&quot;sanitize&quot; untrusted dictionaries and initialize/update records without
+using <code>binary_to_existing_atom/1</code>.</p>
 
 <p>To sum up, <code>defrecordp</code> should be used when you don&#39;t want
 to expose the record information while <code>defrecord</code> should be used
@@ -216,52 +219,70 @@ end
 &quot;2013-W26-4&quot;
 </code></pre>
 
-<p>A protocol can be implemented for any record defined via <code>defrecord</code>.</p>
+<p>A protocol can be implemented for any record.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#deffunctions/2">deffunctions/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#defmacros/4">defmacros/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#deftypes/3">deftypes/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#extract/2">extract/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#deffunctions/2">deffunctions(values, env)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines record functions skipping the module definition.
+This is called directly by <code>defrecord</code>. It expects the record
+values, a set of options and the module environment.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#defmacros/4">defmacros(name, values, env, tag // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines macros for manipulating records. This is called
+directly by <code>defrecordp</code>. It expects the macro name, the
+record values and the environment.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#deftypes/3">deftypes(values, types, env)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines types and specs for the record.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#extract/2">extract(name, opts)</a></td>
+  
+    <td class="summary_synopsis"><p>Extract record information from an Erlang file and
+return the fields as a list of tuples.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#import/2">import/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#import/2">import(module, list2)</a></td>
+  
+    <td class="summary_synopsis"><p>Imports a public record definition as a set of private macros,
+as defined by <code>Kernel.defrecordp/2</code>. This is useful when one
+desires to manipulate a record via a set of macros instead
+of the regular access syntax.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -273,6 +294,7 @@ end
   <p class="typespec" id="t:t/0">
     <a href="#t:t/0">t</a> :: {}
   </p>
+  
 </div>
 
         </div>
@@ -299,7 +321,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L295" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L298" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -319,7 +341,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L353" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L356" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -330,7 +352,7 @@ end
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L322" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L325" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -347,7 +369,7 @@ return the fields as a list of tuples.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L192" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L195" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -377,7 +399,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/record.ex#L211" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L214" target="_blank" class="view_source">Source</a>
   
 </div>
 

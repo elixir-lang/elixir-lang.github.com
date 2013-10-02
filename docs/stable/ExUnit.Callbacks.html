@@ -111,7 +111,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/callbacks.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -119,29 +119,47 @@ end
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#setup/2">setup/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#setup_all/2">setup_all/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#teardown/2">teardown/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#teardown_all/2">teardown_all/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#setup/2">setup(var // quote() do
+  _
+end, block)</a></td>
+  
+    <td class="summary_synopsis"><p>Called before the start of each test.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#setup_all/2">setup_all(var // quote() do
+  _
+end, block)</a></td>
+  
+    <td class="summary_synopsis"><p>Called before the start of a case, i.e. called once before the first test in
+the current module and before any <code>setup</code> callbacks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#teardown/2">teardown(var // quote() do
+  _
+end, block)</a></td>
+  
+    <td class="summary_synopsis"><p>Called after the finish of each test. Note that if the test crashed with an :exit
+message, <code>teardown</code> will not be run.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#teardown_all/2">teardown_all(var // quote() do
+  _
+end, block)</a></td>
+  
+    <td class="summary_synopsis"><p>Called once after the last test finishes without emitting an :exit message.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -163,7 +181,7 @@ end, block)</strong>
   <div class="docstring"><p>Called before the start of each test.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L109" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/callbacks.ex#L109" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -177,7 +195,7 @@ end, block)</strong>
 the current module and before any <code>setup</code> callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L133" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/callbacks.ex#L133" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -191,7 +209,7 @@ end, block)</strong>
 message, <code>teardown</code> will not be run.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/callbacks.ex#L121" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -204,7 +222,7 @@ end, block)</strong>
   <div class="docstring"><p>Called once after the last test finishes without emitting an :exit message.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/callbacks.ex#L144" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/callbacks.ex#L144" target="_blank" class="view_source">Source</a>
   
 </div>
 

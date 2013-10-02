@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Overview</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+	
+    <h1>Elixir v0.10.4-dev</h1>
+
+    <div id="content">
+      
+        <h2 id="modules_summary">Modules summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Application.Behaviour.html">Application.Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>This module is a convenience to define application module callbacks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Behaviour.html">Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>A convenience module for defining behaviours.
+Behaviours can be referenced by other modules
+in order to ensure they implement the proper
+callbacks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Bitwise.html">Bitwise</a></td>
+  
+    <td class="summary_synopsis"><p>This module provide macros and operators for bitwise operators.
+These macros can be used in guards.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Code.html">Code</a></td>
+  
+    <td class="summary_synopsis"><p>The Code module is responsible for managing code compilation,
+code evaluation and code loading.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Dict.html">Dict</a></td>
+  
+    <td class="summary_synopsis"><p>This module specifies the Dict API expected to be
+implemented by different dictionaries. It also provides
+functions that redirect to the underlying Dict, allowing
+a developer to work with different Dict implementations
+using one API.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Dict.Behaviour.html">Dict.Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>This module makes it easier to create your own <code>Dict</code> compliant
+module, by providing default implementations for some required functions.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="EEx.html">EEx</a></td>
+  
+    <td class="summary_synopsis"><p>EEx stands for Embedded Elixir. It allows you to embed
+Elixir code inside a string in a robust way:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="EEx.AssignsEngine.html">EEx.AssignsEngine</a></td>
+  
+    <td class="summary_synopsis"><p>An abstract engine that, when used with the
+<code>TransformerEngine</code>, allows a developer to access
+assigns using <code>@</code> as syntax.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="EEx.Engine.html">EEx.Engine</a></td>
+  
+    <td class="summary_synopsis"><p>This is the basic EEx engine that ships with Elixir.
+An engine needs to implement two functions:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="EEx.SmartEngine.html">EEx.SmartEngine</a></td>
+  
+    <td class="summary_synopsis"><p>An engine meant for end-user usage that includes
+<code>EEx.AssignsEngine</code> and other conveniences. Read
+<code>EEx.AssignsEngine</code> for examples.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="EEx.TransformerEngine.html">EEx.TransformerEngine</a></td>
+  
+    <td class="summary_synopsis"><p>An abstract engine that is meant to be used and
+built upon in other modules. This engine implements
+the <code>EEx.Engine</code> behavior and provides a <code>transform</code>
+overridable directive that allows a developer to
+customize the expression returned by the engine.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Enum.html">Enum</a></td>
+  
+    <td class="summary_synopsis"><p>Provides a set of algorithms that enumerate over collections according to the
+<code>Enumerable</code> protocol:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.html">ExUnit</a></td>
+  
+    <td class="summary_synopsis"><p>Basic unit testing framework for Elixir.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.Assertions.html">ExUnit.Assertions</a></td>
+  
+    <td class="summary_synopsis"><p>This module contains a set of assertion functions that are
+imported by default into your test cases.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.Callbacks.html">ExUnit.Callbacks</a></td>
+  
+    <td class="summary_synopsis"><p>This module defines four callbacks: <code>setup_all</code>, <code>teardown_all</code>,
+<code>setup</code> and <code>teardown</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.CaptureIO.html">ExUnit.CaptureIO</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides functionality to capture IO to test it.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.Case.html">ExUnit.Case</a></td>
+  
+    <td class="summary_synopsis"><p>This module is meant to be used in other modules
+as a way to configure and prepare them for testing.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.CaseTemplate.html">ExUnit.CaseTemplate</a></td>
+  
+    <td class="summary_synopsis"><p>This module allows a developer to define a test case
+template to be used throughout his tests. This is useful
+when there are a set of functions that should be shared
+between tests or a set of setup/teardown callbacks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.DocTest.html">ExUnit.DocTest</a></td>
+  
+    <td class="summary_synopsis"><p>ExUnit.DocTest implements functionality similar to <a href="http://docs.python.org/2/library/doctest.html">Python&#39;s
+doctest</a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.Formatter.html">ExUnit.Formatter</a></td>
+  
+    <td class="summary_synopsis"><p>This module simply defines the callbacks
+expected by an ExUnit.Formatter.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Exception.html">Exception</a></td>
+  
+    <td class="summary_synopsis"><p>Several convenience functions to work with and pretty print
+exceptions and stacktraces.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="File.html">File</a></td>
+  
+    <td class="summary_synopsis"><p>This module contains functions to manipulate files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="GenEvent.Behaviour.html">GenEvent.Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>This module is a convenience for defining GenEvent callbacks in Elixir.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="GenFSM.Behaviour.html">GenFSM.Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>This module is a convenience for defining GenFSM callbacks in Elixir.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="GenServer.Behaviour.html">GenServer.Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>This module is a convenience for defining GenServer callbacks in Elixir.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="HashDict.html">HashDict</a></td>
+  
+    <td class="summary_synopsis"><p>A key-value store.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="HashSet.html">HashSet</a></td>
+  
+    <td class="summary_synopsis"><p>A set store.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="IEx.html">IEx</a></td>
+  
+    <td class="summary_synopsis"><p>Welcome to IEx.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="IEx.Helpers.html">IEx.Helpers</a></td>
+  
+    <td class="summary_synopsis"><p>Welcome to Interactive Elixir. You are currently
+seeing the documentation for the module <code>IEx.Helpers</code>
+which provides many helpers to make Elixir&#39;s shell
+more joyful to work with.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="IEx.Options.html">IEx.Options</a></td>
+  
+    <td class="summary_synopsis"><p>Provides an interface for adjusting options of the running IEx session.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="IO.html">IO</a></td>
+  
+    <td class="summary_synopsis"><p>Module responsible for doing IO. Many functions in this
+module expects an IO device and an io data encoded in UTF-8.
+Use the bin* functions if the data is binary, useful when
+working with raw bytes or when no unicode conversion should
+be performed.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="IO.ANSI.html">IO.ANSI</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides functionality to render ANSI escape sequences
+(<a href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</a>) —  characters embedded
+in the text used to control formatting, color, and other output options
+on video text terminals.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Inspect.Algebra.html">Inspect.Algebra</a></td>
+  
+    <td class="summary_synopsis"><p>A set of functions for creating and manipulating algebra
+documents, as described in [&quot;Strictly Pretty&quot; (2000) by Christian Lindig][0].</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Integer.html">Integer</a></td>
+  
+    <td class="summary_synopsis"><p>Functions for working with integers.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Kernel.html">Kernel</a></td>
+  
+    <td class="summary_synopsis"><p><code>Kernel</code> provides the default macros and functions
+Elixir imports into your environment. These macros and functions
+can be skipped or cherry-picked via the <code>import</code> macro. For
+instance, if you want to tell Elixir not to import the <code>case</code>
+macro, you can do:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Kernel.ParallelCompiler.html">Kernel.ParallelCompiler</a></td>
+  
+    <td class="summary_synopsis"><p>A module responsible for compiling files in parallel.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Kernel.ParallelRequire.html">Kernel.ParallelRequire</a></td>
+  
+    <td class="summary_synopsis"><p>A module responsible for requiring files in parallel.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Kernel.SpecialForms.html">Kernel.SpecialForms</a></td>
+  
+    <td class="summary_synopsis"><p>In this module we define Elixir special forms. Special forms
+cannot be overriden by the developer and are the basic
+building blocks of Elixir code.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Kernel.Typespec.html">Kernel.Typespec</a></td>
+  
+    <td class="summary_synopsis"><p>Provides macros and functions for working with typespecs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Keyword.html">Keyword</a></td>
+  
+    <td class="summary_synopsis"><p>A keyword is a list of tuples where the first element
+of the tuple is an atom and the second element can be
+any value.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="List.html">List</a></td>
+  
+    <td class="summary_synopsis"><p>Implements functions that only make sense for lists
+and cannot be part of the Enum protocol. In general,
+favor using the Enum API instead of List.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ListDict.html">ListDict</a></td>
+  
+    <td class="summary_synopsis"><p>A Dict implementation that works on lists of two-items tuples.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Macro.html">Macro</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides conveniences for working with macros.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.html">Mix</a></td>
+  
+    <td class="summary_synopsis"><p>Mix is a build tool that provides tasks for creating, compiling, testing
+(and soon deploying) Elixir projects. Mix is inspired by the Leiningen
+build tool for Clojure and was written by one of its contributors.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Archive.html">Mix.Archive</a></td>
+  
+    <td class="summary_synopsis"><p>Module responsible for managing <a href="http://www.erlang.org/doc/man/code.html">archives</a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Deps.html">Mix.Deps</a></td>
+  
+    <td class="summary_synopsis"><p>A module with common functions to work with dependencies.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Generator.html">Mix.Generator</a></td>
+  
+    <td class="summary_synopsis"><p>Conveniences for working with paths and generating content.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Project.html">Mix.Project</a></td>
+  
+    <td class="summary_synopsis"><p>A module that provides conveniences for defining and working
+with projects.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.SCM.html">Mix.SCM</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides helper functions and defines the
+behavior required by any SCM used by mix.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Shell.html">Mix.Shell</a></td>
+  
+    <td class="summary_synopsis"><p>Defines Mix.Shell contract.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Shell.IO.html">Mix.Shell.IO</a></td>
+  
+    <td class="summary_synopsis"><p>This is Mix&#39;s default shell.
+It simply prints messages to stdio and stderr.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Shell.Process.html">Mix.Shell.Process</a></td>
+  
+    <td class="summary_synopsis"><p>This is a Mix shell that uses the current process mailbox
+for communication instead of IO.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Task.html">Mix.Task</a></td>
+  
+    <td class="summary_synopsis"><p>A simple module that provides conveniences for creating,
+loading and manipulating tasks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.App.Start.html">Mix.Tasks.App.Start</a></td>
+  
+    <td class="summary_synopsis"><p>Starts all registered apps. If no apps key exists,
+it starts the current application.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Archive.html">Mix.Tasks.Archive</a></td>
+  
+    <td class="summary_synopsis"><p>Packages the current project (though not its dependencies) into a
+zip file according to the specification of the
+<a href="http://www.erlang.org/doc/man/code.html">Erlang Archive Format</a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Clean.html">Mix.Tasks.Clean</a></td>
+  
+    <td class="summary_synopsis"><p>Clean generated application files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Cmd.html">Mix.Tasks.Cmd</a></td>
+  
+    <td class="summary_synopsis"><p>Executes the given command.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Compile.html">Mix.Tasks.Compile</a></td>
+  
+    <td class="summary_synopsis"><p>A meta task that compiles source files. It simply runs the
+compilers registered in your project. At the end of compilation
+it ensures load paths are set.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Compile.App.html">Mix.Tasks.Compile.App</a></td>
+  
+    <td class="summary_synopsis"><p>Writes an .app file.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Compile.Elixir.html">Mix.Tasks.Compile.Elixir</a></td>
+  
+    <td class="summary_synopsis"><p>A task to compile Elixir source files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Compile.Erlang.html">Mix.Tasks.Compile.Erlang</a></td>
+  
+    <td class="summary_synopsis"><p>A task to compile Erlang source files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Compile.Leex.html">Mix.Tasks.Compile.Leex</a></td>
+  
+    <td class="summary_synopsis"><p>A task to compile Leex source files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Compile.Yecc.html">Mix.Tasks.Compile.Yecc</a></td>
+  
+    <td class="summary_synopsis"><p>A task to compile Yecc source files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.html">Mix.Tasks.Deps</a></td>
+  
+    <td class="summary_synopsis"><p>List all dependencies and their status.
+The output is given as follows:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Check.html">Mix.Tasks.Deps.Check</a></td>
+  
+    <td class="summary_synopsis"><p>Checks if all dependencies are valid and if not, abort.
+Prints the invalid dependencies&#39; status before aborting.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Clean.html">Mix.Tasks.Deps.Clean</a></td>
+  
+    <td class="summary_synopsis"><p>Remove the given dependencies&#39; files.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Compile.html">Mix.Tasks.Deps.Compile</a></td>
+  
+    <td class="summary_synopsis"><p>Compile dependencies.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Get.html">Mix.Tasks.Deps.Get</a></td>
+  
+    <td class="summary_synopsis"><p>Get all out of date dependencies, i.e. dependencies
+that are not available or have an invalid lock.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Loadpaths.html">Mix.Tasks.Deps.Loadpaths</a></td>
+  
+    <td class="summary_synopsis"><p>Loads all dependencies. This is invoked directly
+by <code>loadpaths</code> when the CLI boots.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Unlock.html">Mix.Tasks.Deps.Unlock</a></td>
+  
+    <td class="summary_synopsis"><p>Unlock the given dependencies.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Deps.Update.html">Mix.Tasks.Deps.Update</a></td>
+  
+    <td class="summary_synopsis"><p>Update the given dependencies.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Do.html">Mix.Tasks.Do</a></td>
+  
+    <td class="summary_synopsis"><p>Executes the tasks separated by comma.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Escriptize.html">Mix.Tasks.Escriptize</a></td>
+  
+    <td class="summary_synopsis"><p>Generates an escript for the project.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Help.html">Mix.Tasks.Help</a></td>
+  
+    <td class="summary_synopsis"><p>If given a task name, prints the documentation for that task.
+If no task name is given, prints the short form documentation
+for all tasks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Loadpaths.html">Mix.Tasks.Loadpaths</a></td>
+  
+    <td class="summary_synopsis"><p>Load the application and its dependencies paths.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Local.html">Mix.Tasks.Local</a></td>
+  
+    <td class="summary_synopsis"><p>List local tasks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Local.Install.html">Mix.Tasks.Local.Install</a></td>
+  
+    <td class="summary_synopsis"><p>Install an archive locally.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Local.Rebar.html">Mix.Tasks.Local.Rebar</a></td>
+  
+    <td class="summary_synopsis"><p>Fetch a copy of rebar from the given path or url. It defaults to a
+rebar copy that ships with Elixir source if available or fetches it from
+<a href="https://github.com/elixir-lang/elixir/raw/3cf4c21ad1f4627585b80394c37ac9f4d39d3aa8/rebar">https://github.com/elixir-lang/elixir/raw/3cf4c21ad1f4627585b80394c37ac9f4d39d3aa8/rebar</a>.
+The local copy is stored in your MIX_HOME (defaults to ~/.mix).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Local.Uninstall.html">Mix.Tasks.Local.Uninstall</a></td>
+  
+    <td class="summary_synopsis"><p>Uninstall local tasks:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.New.html">Mix.Tasks.New</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a new Elixir project.
+It expects the path of the project as argument.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Run.html">Mix.Tasks.Run</a></td>
+  
+    <td class="summary_synopsis"><p>Runs the given file or expression in the context of the application.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Test.html">Mix.Tasks.Test</a></td>
+  
+    <td class="summary_synopsis"><p>Run the tests for a project.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Utils.html">Mix.Utils</a></td>
+  
+    <td class="summary_synopsis"><p>Utilities used throughout Mix and tasks.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Module.html">Module</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides many functions to deal with modules during
+compilation time. It allows a developer to dynamically attach
+documentation, add, delete and register attributes and so forth.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Node.html">Node</a></td>
+  
+    <td class="summary_synopsis"><p>Functions related to Erlang nodes.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="OptionParser.html">OptionParser</a></td>
+  
+    <td class="summary_synopsis"><p>This module contains functions to parse command line arguments.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Path.html">Path</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides conveniences for manipulating or
+retrieving file system paths.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Port.html">Port</a></td>
+  
+    <td class="summary_synopsis"><p>Functions related to Erlang ports.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Process.html">Process</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides convenience functions around processes and
+the process dictionary. In Erlang, most of these functions are
+auto-imported, but in Elixir they are grouped in a module for
+convenience. Notice that these functions, different from Erlang&#39;s,
+always return nil instead of undefined. You can use their Erlang
+version if you want the undefined value.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Record.html">Record</a></td>
+  
+    <td class="summary_synopsis"><p>Convenience functions for working with Records.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Regex.html">Regex</a></td>
+  
+    <td class="summary_synopsis"><p>Regular expressions for Elixir built on top of the <code>re</code> module
+in the Erlang Standard Library. More information can be found
+in the <a href="http://www.erlang.org/doc/man/re.html"><code>re</code> documentation</a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Set.html">Set</a></td>
+  
+    <td class="summary_synopsis"><p>This module specifies the Set API expected to be
+implemented by different representations.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Stream.html">Stream</a></td>
+  
+    <td class="summary_synopsis"><p>Module for creating and composing streams.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="String.html">String</a></td>
+  
+    <td class="summary_synopsis"><p>A String in Elixir is a UTF-8 encoded binary.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Supervisor.Behaviour.html">Supervisor.Behaviour</a></td>
+  
+    <td class="summary_synopsis"><p>This module is a convenience to define Supervisor
+callbacks in Elixir. By using this module, you get
+the module behaviour automatically tagged as
+<code>:supervisor</code> and some helper functions are imported
+to make defining supervisors easier.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="System.html">System</a></td>
+  
+    <td class="summary_synopsis"><p>The System module provides access to some variables used or
+maintained by the VM and to functions that interact strongly
+with the VM or the host system.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="URI.html">URI</a></td>
+  
+    <td class="summary_synopsis"><p>Utilities for working with and creating URIs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Version.html">Version</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides functions for parsing and matching
+versions with requirements.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <h2 id="records_summary">Records summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="ArgumentError.html">ArgumentError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ArithmeticError.html">ArithmeticError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="BadArityError.html">BadArityError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="BadFunctionError.html">BadFunctionError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="CaseClauseError.html">CaseClauseError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Code.LoadError.html">Code.LoadError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="CompileError.html">CompileError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="EEx.SyntaxError.html">EEx.SyntaxError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Enum.EmptyError.html">Enum.EmptyError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Enum.OutOfBoundsError.html">Enum.OutOfBoundsError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ErlangError.html">ErlangError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.AssertionError.html">ExUnit.AssertionError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.DocTest.Error.html">ExUnit.DocTest.Error</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.ExpectationError.html">ExUnit.ExpectationError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.Test.html">ExUnit.Test</a></td>
+  
+    <td class="summary_synopsis"><p>A record that keeps information about the test.
+It is received by formatters and also accessible
+in the metadata under the key <code>:test</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="ExUnit.TestCase.html">ExUnit.TestCase</a></td>
+  
+    <td class="summary_synopsis"><p>A record that keeps information about the test case.
+It is received by formatters and also accessible
+in the metadata under the key <code>:case</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="File.CopyError.html">File.CopyError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="File.Error.html">File.Error</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="File.Stat.html">File.Stat</a></td>
+  
+    <td class="summary_synopsis"><p>A record responsible to hold file information. Its fields are:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="FunctionClauseError.html">FunctionClauseError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="IO.StreamError.html">IO.StreamError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="KeyError.html">KeyError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Macro.Env.html">Macro.Env</a></td>
+  
+    <td class="summary_synopsis"><p>A record that holds compile time environment information.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="MatchError.html">MatchError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Dep.html">Mix.Dep</a></td>
+  
+    <td class="summary_synopsis"><p>This is a record that keeps information about your project
+dependencies. It contains:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.ElixirVersionError.html">Mix.ElixirVersionError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Error.html">Mix.Error</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.InvalidTaskError.html">Mix.InvalidTaskError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.NoProjectError.html">Mix.NoProjectError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.NoTaskError.html">Mix.NoTaskError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Protocol.UndefinedError.html">Protocol.UndefinedError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Range.html">Range</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a Range.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Regex.CompileError.html">Regex.CompileError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="RuntimeError.html">RuntimeError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="String.UnicodeConversionError.html">String.UnicodeConversionError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="SyntaxError.html">SyntaxError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="System.NoAccessCwdError.html">System.NoAccessCwdError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="System.NoHomeError.html">System.NoHomeError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="System.NoTmpDirError.html">System.NoTmpDirError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="SystemLimitError.html">SystemLimitError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="TokenMissingError.html">TokenMissingError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="UndefinedFunctionError.html">UndefinedFunctionError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Version.InvalidRequirement.html">Version.InvalidRequirement</a></td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <h2 id="protocols_summary">Protocols summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Access.html">Access</a></td>
+  
+    <td class="summary_synopsis"><p>The Access protocol is the underlying protocol invoked
+when the brackets syntax is used. For instance, <code>foo[bar]</code>
+is translated to <code>access foo, bar</code> which, by default,
+invokes the <code>Access.access</code> protocol.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Enumerable.html">Enumerable</a></td>
+  
+    <td class="summary_synopsis"><p>This is the protocol used by the <code>Enum</code> module.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Inspect.html">Inspect</a></td>
+  
+    <td class="summary_synopsis"><p>The <code>Inspect</code> protocol is responsible for converting any Elixir
+data structure into an algebra document. This document is then
+formatted, either in pretty printing format or a regular one.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="List.Chars.html">List.Chars</a></td>
+  
+    <td class="summary_synopsis"><p>The List.Chars protocol is responsible for
+converting a structure to a list (only if applicable).
+The only function required to be implemented is
+<code>to_char_list</code> which does the conversion.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Range.Iterator.html">Range.Iterator</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="String.Chars.html">String.Chars</a></td>
+  
+    <td class="summary_synopsis"><p>The String.Chars protocol is responsible for
+converting a structure to a Binary (only if applicable).
+The only function required to be implemented is
+<code>to_string</code> which does the conversion.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+    </div>
+  </body>
+</html>

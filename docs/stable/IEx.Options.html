@@ -62,50 +62,68 @@ by the shell.
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#get/0">get/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#get/1">get/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#help/1">help/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#list/0">list/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#print_help/1">print_help/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#set/1">set/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#set/2">set/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#get/0">get()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all supported IEx options with their respective values as a keyword
+list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get/1">get(name)</a></td>
+  
+    <td class="summary_synopsis"><p>Get current value of the option <code>name</code>. Raises <code>ArgumentError</code> if <code>name</code> is not a
+known option.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#help/1">help(name)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a string with the option&#39;s description. Raises <code>ArgumentError</code>
+if <code>name</code> is not a known option.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#list/0">list()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all supported options as a list of names.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#print_help/1">print_help(name)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#help/1"><code>help/1</code></a> but instead of returning a string, prints it.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#set/1">set(opts)</a></td>
+  
+    <td class="summary_synopsis"><p>Set all options at once by providing a keyword list with option names and
+their corresponding values. This is generally obtained from <a href="#get/0"><code>get/0</code></a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#set/2">set(name, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets the value for the option <code>name</code> to <code>value</code>.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -126,7 +144,7 @@ by the shell.
 list.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L42" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L42" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -138,7 +156,7 @@ list.</p>
 known option.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L52" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L52" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -150,7 +168,7 @@ known option.</p>
 if <code>name</code> is not a known option.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L121" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -161,7 +179,7 @@ if <code>name</code> is not a known option.</p>
   <div class="docstring"><p>Returns all supported options as a list of names.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -172,7 +190,7 @@ if <code>name</code> is not a known option.</p>
   <div class="docstring"><p>Same as <a href="#help/1"><code>help/1</code></a> but instead of returning a string, prints it.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -186,7 +204,7 @@ their corresponding values. This is generally obtained from <a href="#get/0"><co
 <p>Returns a keyword list of old option values.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L75" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L75" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -202,7 +220,7 @@ their corresponding values. This is generally obtained from <a href="#get/0"><co
 <code>ArgumentError</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/iex/lib/iex/options.ex#L89" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/options.ex#L89" target="_blank" class="view_source">Source</a>
   
 </div>
 

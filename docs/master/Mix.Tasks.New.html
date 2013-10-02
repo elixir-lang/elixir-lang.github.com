@@ -30,16 +30,17 @@
           <p>Creates a new Elixir project.
 It expects the path of the project as argument.</p>
 
-<pre><code>mix new PATH [--sup] [--module MODULE] [--umbrella]
+<pre><code>mix new PATH [--bare] [--module MODULE] [--umbrella]
 </code></pre>
 
 <p>A project at the given PATH  will be created. The
 application name and module name will be retrieved
 from the path, unless <code>--module</code> is given.</p>
 
-<p>A <code>--sup</code> option can be given to generate an
-app with a supervisor and an application module
-that starts the supervisor.</p>
+<p>A <code>--bare</code> option can be given to not generate an OTP
+application skeleton. Normally an app is generated with
+a supervisor and an application module that starts the
+supervisor.</p>
 
 <p>An <code>--umbrella</code> option can be given to generate an
 umbrella project.</p>
@@ -54,28 +55,27 @@ umbrella project.</p>
 <pre><code>mix new hello_world --module HelloWorld
 </code></pre>
 
-<p>To generate an app with supervisor and application behaviours:</p>
+<p>To generate an app without supervisor and application behaviours:</p>
 
-<pre><code>mix new hello_world --sup
+<pre><code>mix new hello_world --bare
 </code></pre>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/tasks/new.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/tasks/new.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#run/1">run/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#run/1">run(argv)</a></td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -94,7 +94,7 @@ umbrella project.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/mix/lib/mix/tasks/new.ex#L39" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/mix/lib/mix/tasks/new.ex#L40" target="_blank" class="view_source">Source</a>
   
 </div>
 

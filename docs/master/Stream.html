@@ -35,7 +35,7 @@ Elixir&#39;s <code>Range</code> is a stream:</p>
 
 <pre><code>iex&gt; range = 1..5
 1..5
-iex&gt; Enum.map range, &amp;1 * 2
+iex&gt; Enum.map range, &amp;(&amp;1 * 2)
 [2,4,6,8,10]
 </code></pre>
 
@@ -44,8 +44,8 @@ enumerated were created one by one, during enumeration. The <code>Stream</code>
 module allows us to map the range, without triggering its enumeration:</p>
 
 <pre><code>iex&gt; range = 1..3
-iex&gt; stream = Stream.map(range, &amp;1 * 2)
-iex&gt; Enum.map(stream, &amp;1 + 1)
+iex&gt; stream = Stream.map(range, &amp;(&amp;1 * 2))
+iex&gt; Enum.map(stream, &amp;(&amp;1 + 1))
 [3,5,7]
 </code></pre>
 
@@ -63,9 +63,9 @@ computations that are executed at a later moment. Let&#39;s see another
 example:</p>
 
 <pre><code>1..3 |&gt;
-  Enum.map(IO.inspect(&amp;1)) |&gt;
-  Enum.map(&amp;1 * 2) |&gt;
-  Enum.map(IO.inspect(&amp;1))
+  Enum.map(&amp;IO.inspect(&amp;1)) |&gt;
+  Enum.map(&amp;(&amp;1 * 2)) |&gt;
+  Enum.map(&amp;IO.inspect(&amp;1))
 1
 2
 3
@@ -80,9 +80,9 @@ element by 2 and finally printed each new value. In this example, the list
 was iterated three times. Let&#39;s see an example with streams:</p>
 
 <pre><code>stream = 1..3 |&gt;
-  Stream.map(IO.inspect(&amp;1)) |&gt;
-  Stream.map(&amp;1 * 2) |&gt;
-  Stream.map(IO.inspect(&amp;1))
+  Stream.map(&amp;IO.inspect(&amp;1)) |&gt;
+  Stream.map(&amp;(&amp;1 * 2)) |&gt;
+  Stream.map(&amp;IO.inspect(&amp;1))
 Enum.to_list(stream)
 1
 2
@@ -114,8 +114,8 @@ streams, some examples are:</p>
 
 <p>This module also allows us to create streams from any enumerable:</p>
 
-<pre><code>iex&gt; stream = Stream.map([1,2,3], &amp;1 * 2)
-iex&gt; Enum.map(stream, &amp;1 + 1)
+<pre><code>iex&gt; stream = Stream.map([1,2,3], &amp;(&amp;1 * 2))
+iex&gt; Enum.map(stream, &amp;(&amp;1 + 1))
 [3,5,7]
 </code></pre>
 
@@ -129,85 +129,131 @@ multiply the items in the list by 2 on enumeration.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#concat/1">concat/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#concat/2">concat/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cycle/1">cycle/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#drop/2">drop/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#drop_while/2">drop_while/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#filter/2">filter/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flat_map/2">flat_map/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#iterate/2">iterate/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#map/2">map/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#reject/2">reject/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#repeatedly/1">repeatedly/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#take/2">take/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#take_while/2">take_while/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#with_index/1">with_index/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#concat/1">concat(enumerables)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that enumerates each enumerable in an enumerable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#concat/2">concat(first, second)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that enumerates the first argument, followed by the second.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cycle/1">cycle(enumerable)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that cycles through the given enumerable,
+infinitely.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#drop/2">drop(enumerable, n)</a></td>
+  
+    <td class="summary_synopsis"><p>Lazily drops the next <code>n</code> items from the enumerable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#drop_while/2">drop_while(enumerable, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Lazily drops elements of the enumerable while the given
+function returns true.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#filter/2">filter(enumerable, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that will filter elements according to
+the given function on enumeration.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flat_map/2">flat_map(enumerable, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that will apply the given function on enumeration and
+flatten the result.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iterate/2">iterate(start_value, next_fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Emit a sequence of values, starting with <code>start_value</code>. Successive
+values are generated by calling <code>next_fun</code> on the previous value.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#map/2">map(enumerable, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that will apply the given function on
+enumeration.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#reject/2">reject(enumerable, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream that will reject elements according to
+the given function on enumeration.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#repeatedly/1">repeatedly(generator_fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a stream generated by calling <code>generator_fun</code> repeatedly.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#take/2">take(enumerable, n)</a></td>
+  
+    <td class="summary_synopsis"><p>Lazily takes the next <code>n</code> items from the enumerable and stops
+enumeration.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#take_while/2">take_while(enumerable, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Lazily takes elements of the enumerable while the given
+function returns true.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unfold/2">unfold(acc, f)</a></td>
+  
+    <td class="summary_synopsis"><p>Emit a sequence of values and accumulators. Successive values are generated by
+calling <code>next_fun</code> with the previous accumulator.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#with_index/1">with_index(enumerable)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a stream where each item in the enumerable will
+be accompanied by its index.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -219,28 +265,33 @@ multiply the items in the list by 2 on enumeration.</p>
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t</a> :: <a href="Stream.Lazy.html#t:t/0">Stream.Lazy.t</a> | (<a href="#t:acc/0">acc</a>, (<a href="#t:element/0">element</a>, <a href="#t:acc/0">acc</a> -> <a href="#t:acc/0">acc</a>) -> <a href="#t:acc/0">acc</a>)
+    <a href="#t:t/0">t</a> :: <a href="http://elixir-lang.org/docs/master/Stream.Lazy.html#t:t/0">Stream.Lazy.t</a> | (<a href="#t:acc/0">acc</a>, (<a href="#t:element/0">element</a>, <a href="#t:acc/0">acc</a> -> <a href="#t:acc/0">acc</a>) -> <a href="#t:acc/0">acc</a>)
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:acc/0">
     <a href="#t:acc/0">acc</a> :: any
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:element/0">
     <a href="#t:element/0">element</a> :: any
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:index/0">
     <a href="#t:index/0">index</a> :: non_neg_integer
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:default/0">
     <a href="#t:default/0">default</a> :: any
   </p>
+  
 </div>
 
         </div>
@@ -271,7 +322,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L148" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L148" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -302,7 +353,7 @@ iex&gt; Enum.take(stream, 6)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L169" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L169" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -328,7 +379,7 @@ iex&gt; Enum.take(stream, 5)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L189" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L189" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -353,7 +404,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L209" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L209" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -373,13 +424,13 @@ function returns true.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; stream = Stream.drop_while(1..10, &amp;1 &lt;= 5)
+<pre><code>iex&gt; stream = Stream.drop_while(1..10, &amp;(&amp;1 &lt;= 5))
 iex&gt; Enum.to_list(stream)
 [6,7,8,9,10]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L234" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L234" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -405,7 +456,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L259" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L259" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -431,7 +482,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L325" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L325" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -451,12 +502,12 @@ values are generated by calling <code>next_fun</code> on the previous value.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Stream.iterate(0, &amp;1+1) |&gt; Enum.take(5)
+<pre><code>iex&gt; Stream.iterate(0, &amp;(&amp;1+1)) |&gt; Enum.take(5)
 [0,1,2,3,4]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L280" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L280" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -482,7 +533,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L303" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L303" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -508,7 +559,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L346" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L346" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -532,7 +583,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L366" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L366" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -562,7 +613,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L391" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L391" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -582,13 +633,40 @@ function returns true.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; stream = Stream.take_while(1..100, &amp;1 &lt;= 5)
+<pre><code>iex&gt; stream = Stream.take_while(1..100, &amp;(&amp;1 &lt;= 5))
 iex&gt; Enum.to_list(stream)
 [1,2,3,4,5]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L416" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L416" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="unfold/2">
+    <strong>unfold(acc, f)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>unfold(<a href="#t:acc/0">acc</a>, (<a href="#t:acc/0">acc</a> -> {<a href="#t:element/0">element</a>, <a href="#t:acc/0">acc</a>} | nil)) :: <a href="#t:t/0">t</a></li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Emit a sequence of values and accumulators. Successive values are generated by
+calling <code>next_fun</code> with the previous accumulator.</p>
+
+<p>If the return value is nil iteration ends.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Stream.unfold(5, fn 0 -&gt; nil; n -&gt; {n, n-1} end) |&gt; Enum.to_list()
+[5, 4, 3, 2, 1]
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L442" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -614,7 +692,7 @@ iex&gt; Enum.to_list(stream)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/stream.ex#L442" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/stream.ex#L467" target="_blank" class="view_source">Source</a>
   
 </div>
 

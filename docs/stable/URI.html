@@ -32,60 +32,87 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#decode/1">decode/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#decode_query/2">decode_query/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#default_port/1">default_port/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#default_port/2">default_port/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#encode/1">encode/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#encode_query/1">encode_query/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#normalize_scheme/1">normalize_scheme/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#parse/1">parse/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#query_decoder/1">query_decoder/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#decode/1">decode(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Unpercent (URL) decodes a URI.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#decode_query/2">decode_query(q, dict // HashDict.new())</a></td>
+  
+    <td class="summary_synopsis"><p>Given a query string of the form &quot;key1=value1&amp;key=value2...&quot;, produces an
+orddict with one entry for each key-value pair. Each key and value will be a
+binary. It also does percent-unescaping of both keys and values.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#default_port/1">default_port(scheme)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the default port for a given scheme.
+If the scheme is unknown to URI, returns <code>nil</code>.
+Any scheme may be registered via <a href="#default_port/2"><code>default_port/2</code></a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#default_port/2">default_port(scheme, port)</a></td>
+  
+    <td class="summary_synopsis"><p>Registers a scheme with a default port.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encode/1">encode(s)</a></td>
+  
+    <td class="summary_synopsis"><p>Percent (URL) encodes a URI.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encode_query/1">encode_query(l)</a></td>
+  
+    <td class="summary_synopsis"><p>Takes an enumerable (containing a sequence of two-item tuples)
+and returns a string of the form &quot;k=v&amp;k2=v2...&quot; where keys and values are
+URL encoded as per <a href="#encode/1"><code>encode/1</code></a>. Keys and values can be any term
+that implements the <code>String.Chars</code> protocol (i.e. can be converted
+to a binary).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#normalize_scheme/1">normalize_scheme(scheme)</a></td>
+  
+    <td class="summary_synopsis"><p>Normalizes the scheme according to the spec by downcasing it.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#parse/1">parse(s)</a></td>
+  
+    <td class="summary_synopsis"><p>Parses a URI into components.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#query_decoder/1">query_decoder(q)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns an iterator function over the query string that decodes
+the query string in steps.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -105,7 +132,7 @@
   <div class="docstring"><p>Unpercent (URL) decodes a URI.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L129" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L129" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -120,7 +147,7 @@ binary. It also does percent-unescaping of both keys and values.</p>
 <p>Use <a href="#query_decoder/1"><code>query_decoder/1</code></a> if you want to iterate over each value manually.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L66" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L66" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -133,7 +160,7 @@ If the scheme is unknown to URI, returns <code>nil</code>.
 Any scheme may be registered via <a href="#default_port/2"><code>default_port/2</code></a>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L23" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L23" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -144,7 +171,7 @@ Any scheme may be registered via <a href="#default_port/2"><code>default_port/2<
   <div class="docstring"><p>Registers a scheme with a default port.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L45" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L45" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -155,7 +182,7 @@ Any scheme may be registered via <a href="#default_port/2"><code>default_port/2<
   <div class="docstring"><p>Percent (URL) encodes a URI.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L107" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L107" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -170,7 +197,7 @@ that implements the <code>String.Chars</code> protocol (i.e. can be converted
 to a binary).</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L57" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L57" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -181,7 +208,7 @@ to a binary).</p>
   <div class="docstring"><p>Normalizes the scheme according to the spec by downcasing it.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L22" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L22" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -207,7 +234,7 @@ for that particular scheme. Take a look at <code>URI.HTTPS</code> for an
 example of one of these extension modules.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -219,7 +246,7 @@ example of one of these extension modules.</p>
 the query string in steps.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/uri.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/uri.ex#L74" target="_blank" class="view_source">Source</a>
   
 </div>
 

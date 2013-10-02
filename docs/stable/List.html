@@ -39,105 +39,164 @@ first argument.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#delete/2">delete/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#duplicate/2">duplicate/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flatten/1">flatten/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flatten/2">flatten/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#foldl/3">foldl/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#foldr/3">foldr/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#insert_at/3">insert_at/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keydelete/3">keydelete/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keyfind/4">keyfind/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keymember?/3">keymember?/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keyreplace/4">keyreplace/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keysort/2">keysort/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keystore/4">keystore/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#last/1">last/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#replace_at/3">replace_at/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unzip/1">unzip/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#wrap/1">wrap/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#zip/1">zip/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#delete/2">delete(list, item)</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes the given item from the list. Returns a list without the item.
+If the item occurs more than once in the list, just the first occurrence
+is removed.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#duplicate/2">duplicate(elem, n)</a></td>
+  
+    <td class="summary_synopsis"><p>Duplicates the given element <code>n</code> times in a list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flatten/1">flatten(list)</a></td>
+  
+    <td class="summary_synopsis"><p>Flattens the given <code>list</code> of nested lists.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flatten/2">flatten(list, tail)</a></td>
+  
+    <td class="summary_synopsis"><p>Flattens the given <code>list</code> of nested lists. 
+The list <code>tail</code> will be added at the end of
+the flattened list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#foldl/3">foldl(list, acc, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Folds (reduces) the given list to the left with
+a function. Requires an accumulator.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#foldr/3">foldr(list, acc, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Folds (reduces) the given list to the right with
+a function. Requires an accumulator.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#insert_at/3">insert_at(list, index, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list with <code>value</code> inserted at the specified <code>index</code>. Note that <code>index</code>
+is capped at the list length. Negative indices indicate an offset from the
+end of the list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keydelete/3">keydelete(list, key, position)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of tuples and deletes the first tuple
+where the item at <code>position</code> matches the
+given <code>item</code>. Returns the new list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keyfind/4">keyfind(list, key, position, default // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of tuples and returns the first tuple
+where the item at <code>position</code> in the tuple matches the
+given <code>item</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keymember?/3">keymember?(list, key, position)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of tuples and returns <code>true</code> if there is
+a tuple where the item at <code>position</code> in the tuple matches
+the given <code>item</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keyreplace/4">keyreplace(list, key, position, new_tuple)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of tuples and replaces the item
+identified by <code>key</code> at <code>position</code> if it exists.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keysort/2">keysort(list, position)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of tuples and sorts the items
+at <code>position</code> of the tuples. The sort is stable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keystore/4">keystore(list, key, position, new_tuple)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of tuples and replaces the item
+identified by <code>key</code> at <code>position</code>. If the item
+does not exist, it is added to the end of the list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#last/1">last(list)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the last element in <code>list</code> or <code>nil</code> if <code>list</code> is empty.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#replace_at/3">replace_at(list, index, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list with a replaced value at the specified <code>index</code>. Negative indices
+indicate an offset from the end of the list. If <code>index</code> is out of bounds, the
+original <code>list</code> is returned.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unzip/1">unzip(list)</a></td>
+  
+    <td class="summary_synopsis"><p>Unzips the given list of lists or tuples into separate lists and returns a
+list of lists.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#wrap/1">wrap(list)</a></td>
+  
+    <td class="summary_synopsis"><p>Wraps the argument in a list.
+If the argument is already a list, returns the list.
+If the argument is <code>nil</code>, returns an empty list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#zip/1">zip(list_of_lists)</a></td>
+  
+    <td class="summary_synopsis"><p>Zips corresponding elements from each list in <code>list_of_lists</code>.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -168,7 +227,7 @@ iex&gt; List.delete([1, 2, 2, 3], 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L41" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L29" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -188,7 +247,7 @@ iex&gt; List.duplicate([1, 2], 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L56" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L44" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -205,7 +264,7 @@ iex&gt; List.duplicate([1, 2], 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L57" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -224,7 +283,7 @@ the flattened list.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L84" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L72" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -245,7 +304,7 @@ iex&gt; List.foldl([1, 2, 3, 4], 0, fn (x, acc) -&gt; x - acc end)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L101" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L89" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -263,7 +322,7 @@ a function. Requires an accumulator.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L115" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L103" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -291,7 +350,7 @@ iex&gt; List.insert_at([1, 2, 3], -10, 0)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L333" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L321" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -316,7 +375,7 @@ iex&gt; List.keydelete([a: 1, b: 2], :c, 0)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L246" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L234" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -341,7 +400,7 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L143" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -366,7 +425,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L176" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -384,7 +443,7 @@ identified by <code>key</code> at <code>position</code> if it exists.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L190" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L178" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -405,7 +464,7 @@ iex&gt; List.keysort([a: 5, c: 1, b: 3], 0)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L207" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L195" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -427,7 +486,7 @@ iex&gt; List.keystore([a: 1, b: 2], :c, 0, { :c, 3 })
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L225" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L213" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -448,7 +507,7 @@ iex&gt; List.last([1, 2, 3])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L132" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L120" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -476,7 +535,7 @@ iex&gt; List.replace_at([1, 2, 3], -10, 0)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L361" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L349" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -497,7 +556,7 @@ iex&gt; List.unzip([{1, :a, &quot;apple&quot;}, {2, :b, &quot;banana&quot;}, {3,
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L309" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L297" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -522,7 +581,7 @@ iex&gt; List.wrap(nil)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L267" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L255" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -542,7 +601,7 @@ iex&gt; List.zip([[1, 2], [3], [5, 6]])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/list.ex#L291" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/list.ex#L279" target="_blank" class="view_source">Source</a>
   
 </div>
 

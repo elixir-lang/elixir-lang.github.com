@@ -73,260 +73,405 @@ file cannot be read (i.e. it is literally an exception).</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L57" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L50" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#binstream!/3">binstream!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cd/1">cd/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cd!/1">cd!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cd!/2">cd!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#chgrp/2">chgrp/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#chgrp!/2">chgrp!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#chmod/2">chmod/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#chmod!/2">chmod!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#chown/2">chown/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#chown!/2">chown!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#close/1">close/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#copy/3">copy/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#copy!/3">copy!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cp/3">cp/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cp!/3">cp!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cp_r/3">cp_r/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cp_r!/3">cp_r!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cwd/0">cwd/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#cwd!/0">cwd!/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#dir?/1">dir?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#exists?/1">exists?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#ls/1">ls/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#ls!/1">ls!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#mkdir/1">mkdir/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#mkdir!/1">mkdir!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#mkdir_p/1">mkdir_p/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#mkdir_p!/1">mkdir_p!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#open/2">open/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#open/3">open/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#open!/2">open!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#open!/3">open!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#read/1">read/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#read!/1">read!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#regular?/1">regular?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#rm/1">rm/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#rm!/1">rm!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#rm_rf/1">rm_rf/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#rm_rf!/1">rm_rf!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#rmdir/1">rmdir/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#rmdir!/1">rmdir!/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#stat/2">stat/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#stat!/2">stat!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#stream!/3">stream!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#touch/2">touch/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#touch!/2">touch!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#write/3">write/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#write!/3">write!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#write_stat/3">write_stat/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#write_stat!/3">write_stat!/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#binstream!/3">binstream!(file, mode // [], line_or_bytes // :line)</a></td>
+  
+    <td class="summary_synopsis"><p>Opens the given <code>file</code> with the given <code>mode</code> and returns
+a binstream for each <code>:line</code> (default) or for a given number
+of bytes given by <code>line_or_bytes</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cd/1">cd(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets the current working directory. Returns <code>:ok</code> if successful,
+<code>{ :error, reason }</code> otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cd!/1">cd!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>The same as <a href="#cd/1"><code>cd/1</code></a>, but raises an exception if it fails.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cd!/2">cd!(path, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Changes the current directory to the given <code>path</code>,
+executes the given function and then revert back
+to the previous path regardless if there is an exception.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chgrp/2">chgrp(file, gid)</a></td>
+  
+    <td class="summary_synopsis"><p>Changes the user group given by the group id <code>gid</code>
+for a given <code>file</code>. Returns <code>:ok</code> on success, or
+<code>{:error, reason}</code> on failure.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chgrp!/2">chgrp!(file, gid)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#chgrp/2"><code>chgrp/2</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chmod/2">chmod(file, mode)</a></td>
+  
+    <td class="summary_synopsis"><p>Changes the unix file <code>mode</code> for a given <code>file</code>.
+Returns <code>:ok</code> on success, or <code>{:error, reason}</code>
+on failure.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chmod!/2">chmod!(file, mode)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#chmod/2"><code>chmod/2</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chown/2">chown(file, uid)</a></td>
+  
+    <td class="summary_synopsis"><p>Changes the owner given by the user id <code>gid</code>
+for a given <code>file</code>. Returns <code>:ok</code> on success,
+or <code>{:error, reason}</code> on failure.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chown!/2">chown!(file, gid)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#chown/2"><code>chown/2</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#close/1">close(io_device)</a></td>
+  
+    <td class="summary_synopsis"><p>Closes the file referenced by <code>io_device</code>. It mostly returns <code>:ok</code>, except
+for some severe errors such as out of memory.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#copy/3">copy(source, destination, bytes_count // :infinity)</a></td>
+  
+    <td class="summary_synopsis"><p>Copies the contents of <code>source</code> to <code>destination</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#copy!/3">copy!(source, destination, bytes_count // :infinity)</a></td>
+  
+    <td class="summary_synopsis"><p>The same as <a href="#copy/3"><code>copy/3</code></a> but raises an <code>File.CopyError</code> if it fails.
+Returns the <code>bytes_copied</code> otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cp/3">cp(source, destination, callback // fn _, _ -&gt; true end)</a></td>
+  
+    <td class="summary_synopsis"><p>Copies the contents in <code>source</code> to <code>destination</code> preserving its mode.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cp!/3">cp!(source, destination, callback // fn _, _ -&gt; true end)</a></td>
+  
+    <td class="summary_synopsis"><p>The same as <a href="#cp/3"><code>cp/3</code></a>, but raises <code>File.CopyError</code> if it fails.
+Returns the list of copied files otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cp_r/3">cp_r(source, destination, callback // fn _, _ -&gt; true end)</a></td>
+  
+    <td class="summary_synopsis"><p>Copies the contents in source to destination.
+Similar to the command <code>cp -r</code> in Unix systems,
+this function behaves differently depending
+if <code>source</code> and <code>destination</code> are a file or a directory.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cp_r!/3">cp_r!(source, destination, callback // fn _, _ -&gt; true end)</a></td>
+  
+    <td class="summary_synopsis"><p>The same as <a href="#cp_r/3"><code>cp_r/3</code></a>, but raises <code>File.CopyError</code> if it fails.
+Returns the list of copied files otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cwd/0">cwd()</a></td>
+  
+    <td class="summary_synopsis"><p>Gets the current working directory. In rare circumstances, this function can
+fail on Unix. It may happen if read permission does not exist for the parent
+directories of the current directory. For this reason, returns <code>{ :ok, cwd }</code>
+in case of success, <code>{ :error, reason }</code> otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#cwd!/0">cwd!()</a></td>
+  
+    <td class="summary_synopsis"><p>The same as <a href="#cwd/0"><code>cwd/0</code></a>, but raises an exception if it fails.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#dir?/1">dir?(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns <code>true</code> if the path is a directory.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#exists?/1">exists?(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns <code>true</code> if the given path exists.
+It can be regular file, directory, socket,
+symbolic link, named pipe or device file.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#ls/1">ls(path // &quot;.&quot;)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns list of files in the given directory.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#ls!/1">ls!(dir // &quot;.&quot;)</a></td>
+  
+    <td class="summary_synopsis"><p>The same as <a href="#ls/1"><code>ls/1</code></a> but raises <code>File.Error</code>
+in case of an error.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mkdir/1">mkdir(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Tries to create the directory <code>path</code>. Missing parent directories are not created.
+Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mkdir!/1">mkdir!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#mkdir/1"><code>mkdir/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mkdir_p/1">mkdir_p(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Tries to create the directory <code>path</code>. Missing parent directories are created.
+Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mkdir_p!/1">mkdir_p!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#mkdir_p/1"><code>mkdir_p/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#open/2">open(path, modes // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Opens the given <code>path</code> according to the given list of modes.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#open/3">open(path, modes, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Similar to <a href="#open/2"><code>open/2</code></a> but expects a function as last argument.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#open!/2">open!(path, modes // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#open/2"><code>open/2</code></a> but raises an error if file could not be opened.
+Returns the <code>io_device</code> otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#open!/3">open!(path, modes, function)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#open/3"><code>open/3</code></a> but raises an error if file could not be opened.
+Returns the function result otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#read/1">read(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns <code>{:ok, binary}</code>, where <code>binary</code> is a binary data object that contains the contents
+of <code>path</code>, or <code>{:error, reason}</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#read!/1">read!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns binary with the contents of the given filename or raises
+<code>File.Error</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#regular?/1">regular?(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns <code>true</code> if the path is a regular file.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rm/1">rm(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Tries to delete the file <code>path</code>.
+Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rm!/1">rm!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#rm/1"><code>rm/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rm_rf/1">rm_rf(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Remove files and directories recursively at the given <code>path</code>.
+Symlinks are not followed but simply removed, non-existing
+files are simply ignored (i.e. doesn&#39;t make this function fail).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rm_rf!/1">rm_rf!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#rm_rf/1"><code>rm_rf/1</code></a> but raises <code>File.Error</code> in case of failures,
+otherwise the list of files or directories removed.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rmdir/1">rmdir(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Tries to delete the dir at <code>path</code>.
+Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rmdir!/1">rmdir!(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#rmdir/1"><code>rmdir/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stat/2">stat(path, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Returns information about the <code>path</code>. If it exists, it
+returns a <code>{ :ok, info }</code> tuple, where info is a
+<code>File.Info</code> record. Retuns <code>{ :error, reason }</code> with
+the same reasons as <a href="#read/1"><code>read/1</code></a> if a failure occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stat!/2">stat!(path, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#stat/2"><code>stat/2</code></a> but returns the <code>File.Stat</code> directly and
+throws <code>File.Error</code> if an error is returned.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stream!/3">stream!(file, mode // [], line_or_bytes // :line)</a></td>
+  
+    <td class="summary_synopsis"><p>Opens the given <code>file</code> with the given <code>mode</code> and returns
+a stream for each <code>:line</code> (default) or for a given number
+of bytes given by <code>line_or_bytes</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#touch/2">touch(path, time // :calendar.local_time())</a></td>
+  
+    <td class="summary_synopsis"><p>Updates modification time (mtime) and access time (atime) of
+the given file. File is created if it doesn’t exist.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#touch!/2">touch!(path, time // :calendar.local_time())</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#touch/2"><code>touch/2</code></a> but raises an exception if it fails.
+Returns <code>:ok</code> otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#write/3">write(path, content, modes // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Writes <code>content</code> to the file <code>path</code>. The file is created if it
+does not exist. If it exists, the previous contents are overwritten.
+Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an error occurs.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#write!/3">write!(path, content, modes // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#write/3"><code>write/3</code></a> but raises an exception if it fails, returns <code>:ok</code> otherwise.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#write_stat/3">write_stat(path, stat, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Writes the given <code>File.Stat</code> back to the filesystem at the given
+path. Returns <code>:ok</code> or <code>{ :error, reason }</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#write_stat!/3">write_stat!(path, stat, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#write_stat/3"><code>write_stat/3</code></a> but raises an exception if it fails.
+Returns <code>:ok</code> otherwise.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -351,7 +496,7 @@ of bytes given by <code>line_or_bytes</code>.</p>
 Note that the file is opened only when streaming begins.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1004" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L997" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -363,7 +508,7 @@ Note that the file is opened only when streaming begins.</p>
 <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L907" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L900" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -374,7 +519,7 @@ Note that the file is opened only when streaming begins.</p>
   <div class="docstring"><p>The same as <a href="#cd/1"><code>cd/1</code></a>, but raises an exception if it fails.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L914" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L907" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -390,7 +535,7 @@ to the previous path regardless if there is an exception.</p>
 directory fails.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L930" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L923" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -403,7 +548,7 @@ for a given <code>file</code>. Returns <code>:ok</code> on success, or
 <code>{:error, reason}</code> on failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1040" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L1033" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -414,7 +559,7 @@ for a given <code>file</code>. Returns <code>:ok</code> on success, or
   <div class="docstring"><p>Same as <a href="#chgrp/2"><code>chgrp/2</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1047" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L1040" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -427,7 +572,7 @@ Returns <code>:ok</code> on success, or <code>{:error, reason}</code>
 on failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1020" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L1013" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -438,7 +583,7 @@ on failure.</p>
   <div class="docstring"><p>Same as <a href="#chmod/2"><code>chmod/2</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1027" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L1020" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -451,7 +596,7 @@ for a given <code>file</code>. Returns <code>:ok</code> on success,
 or <code>{:error, reason}</code> on failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1060" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L1053" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -462,7 +607,7 @@ or <code>{:error, reason}</code> on failure.</p>
   <div class="docstring"><p>Same as <a href="#chown/2"><code>chown/2</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L1067" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L1060" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -478,7 +623,7 @@ for some severe errors such as out of memory.</p>
 See <a href="#open/2"><code>open/2</code></a>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L973" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L966" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -508,7 +653,7 @@ the file mode after copy.</p>
 <a href="#read/1"><code>read/1</code></a> and <a href="#write/3"><code>write/3</code></a>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L335" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L328" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -520,7 +665,7 @@ the file mode after copy.</p>
 Returns the <code>bytes_copied</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L343" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L336" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -547,7 +692,7 @@ or do a straight copy from a source to a destination without
 preserving modes, check <a href="#copy/3"><code>copy/3</code></a> instead.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L371" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L364" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -559,7 +704,7 @@ preserving modes, check <a href="#copy/3"><code>copy/3</code></a> instead.</p>
 Returns the list of copied files otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L390" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L383" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -613,7 +758,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L446" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L439" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -625,7 +770,7 @@ end
 Returns the list of copied files otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L465" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L458" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -639,7 +784,7 @@ directories of the current directory. For this reason, returns <code>{ :ok, cwd 
 in case of success, <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L885" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L878" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -650,7 +795,7 @@ in case of success, <code>{ :error, reason }</code> otherwise.</p>
   <div class="docstring"><p>The same as <a href="#cwd/0"><code>cwd/0</code></a>, but raises an exception if it fails.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L895" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L888" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -661,7 +806,7 @@ in case of success, <code>{ :error, reason }</code> otherwise.</p>
   <div class="docstring"><p>Returns <code>true</code> if the path is a directory.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L114" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -686,7 +831,7 @@ File.exists?(&quot;/dev/null&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L142" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L135" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -700,7 +845,7 @@ File.exists?(&quot;/dev/null&quot;)
 <code>{ :error, reason }</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L946" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L939" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -712,7 +857,7 @@ File.exists?(&quot;/dev/null&quot;)
 in case of an error.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L957" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L950" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -735,7 +880,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L159" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L152" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -746,7 +891,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
   <div class="docstring"><p>Same as <a href="#mkdir/1"><code>mkdir/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L166" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L159" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -766,7 +911,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L184" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L177" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -777,7 +922,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
   <div class="docstring"><p>Same as <a href="#mkdir_p/1"><code>mkdir_p/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L191" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L184" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -841,7 +986,7 @@ File.close(file)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L812" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L805" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -870,7 +1015,7 @@ end)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L843" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L836" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -882,7 +1027,7 @@ end)
 Returns the <code>io_device</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L859" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L852" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -894,7 +1039,7 @@ Returns the <code>io_device</code> otherwise.</p>
 Returns the function result otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L871" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L864" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -920,7 +1065,7 @@ of <code>path</code>, or <code>{:error, reason}</code> if an error occurs.</p>
 <p>You can use <code>:file.format_error/1</code> to get a descriptive string of the error.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L215" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L208" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -932,7 +1077,7 @@ of <code>path</code>, or <code>{:error, reason}</code> if an error occurs.</p>
 <code>File.Error</code> if an error occurs.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L223" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L216" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -948,7 +1093,7 @@ of <code>path</code>, or <code>{:error, reason}</code> if an error occurs.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L114" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L107" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -980,7 +1125,7 @@ File.rm(&#39;tmp_dir/&#39;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L608" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L601" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -991,7 +1136,7 @@ File.rm(&#39;tmp_dir/&#39;)
   <div class="docstring"><p>Same as <a href="#rm/1"><code>rm/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L615" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L608" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1017,7 +1162,7 @@ File.rm_rf &quot;unknown&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L669" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L662" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1029,7 +1174,7 @@ File.rm_rf &quot;unknown&quot;
 otherwise the list of files or directories removed.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L743" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L736" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1050,7 +1195,7 @@ File.rmdir(&#39;file.txt&#39;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L636" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L629" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1061,7 +1206,7 @@ File.rmdir(&#39;file.txt&#39;)
   <div class="docstring"><p>Same as <a href="#rmdir/1"><code>rmdir/1</code></a>, but raises an exception in case of failure. Otherwise <code>:ok</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L643" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L636" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1084,7 +1229,7 @@ Default is <code>:local</code>.</li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L246" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L239" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1096,7 +1241,7 @@ Default is <code>:local</code>.</li>
 throws <code>File.Error</code> if an error is returned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L259" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L252" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1112,7 +1257,7 @@ of bytes given by <code>line_or_bytes</code>.</p>
 Note that the file is opened only when streaming begins.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L985" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L978" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1124,7 +1269,7 @@ Note that the file is opened only when streaming begins.</p>
 the given file. File is created if it doesn’t exist.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L291" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L284" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1136,7 +1281,7 @@ the given file. File is created if it doesn’t exist.</p>
 Returns <code>:ok</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L305" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L298" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1160,7 +1305,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L571" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L564" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1171,7 +1316,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
   <div class="docstring"><p>Same as <a href="#write/3"><code>write/3</code></a> but raises an exception if it fails, returns <code>:ok</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L578" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L571" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1183,7 +1328,7 @@ Returns <code>:ok</code> if successful, or <code>{:error, reason}</code> if an e
 path. Returns <code>:ok</code> or <code>{ :error, reason }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L271" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L264" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1195,7 +1340,7 @@ path. Returns <code>:ok</code> or <code>{ :error, reason }</code>.</p>
 Returns <code>:ok</code> otherwise.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/file.ex#L279" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/file.ex#L272" target="_blank" class="view_source">Source</a>
   
 </div>
 

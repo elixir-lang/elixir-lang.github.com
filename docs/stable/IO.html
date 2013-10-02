@@ -28,7 +28,10 @@
       
         <div id="moduledoc" class="docstring">
           <p>Module responsible for doing IO. Many functions in this
-module expects an IO device and an io data encoded in UTF-8.</p>
+module expects an IO device and an io data encoded in UTF-8.
+Use the bin* functions if the data is binary, useful when
+working with raw bytes or when no unicode conversion should
+be performed.</p>
 
 <p>An IO device must be a pid or an atom representing a process.
 For convenience, Elixir provides <code>:stdio</code> and <code>:stderr</code> as
@@ -43,82 +46,123 @@ this entry being an integer with the codepoint value;</p></li>
 <li><p>A binary in which unicode characters are represented
 with many bytes (Elixir&#39;s default representation);</p></li>
 <li><p>A list of binaries or a list of char lists (as described above);</p></li>
-<li><p>If none of the above, <code>to_string</code> is invoked on the
-given argument;</p></li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L8" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#binread/2">binread/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#binstream/2">binstream/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#binwrite/2">binwrite/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#getn/2">getn/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#getn/3">getn/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#gets/2">gets/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#inspect/2">inspect/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#inspect/3">inspect/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#puts/2">puts/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#read/2">read/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#stream/2">stream/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#write/2">write/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#binread/2">binread(device // group_leader, chars_or_line)</a></td>
+  
+    <td class="summary_synopsis"><p>Reads <code>count</code> bytes from the IO device or until
+the end of the line if <code>:line</code> is given. It returns:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#binstream/2">binstream(device, line_or_bytes)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts the io device into a Stream. The device is
+iterated line by line.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#binwrite/2">binwrite(device // group_leader(), item)</a></td>
+  
+    <td class="summary_synopsis"><p>Writes the given argument to the given device
+as a binary, no unicode conversion happens.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getn/2">getn(prompt, count // 1)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets a number of bytes from the io device. If the
+io device is a unicode device, <code>count</code> implies
+the number of unicode codepoints to be retrieved.
+Otherwise, <code>count</code> is the number of raw bytes to be retrieved.
+It returns:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#getn/3">getn(device, prompt, count)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets a number of bytes from the io device. If the
+io device is a unicode device, <code>count</code> implies
+the number of unicode codepoints to be retrieved.
+Otherwise, <code>count</code> is the number of raw bytes to be retrieved.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#gets/2">gets(device // group_leader(), prompt)</a></td>
+  
+    <td class="summary_synopsis"><p>Reads a line from the IO device. It returns:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#inspect/2">inspect(item, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Inspects and writes the given argument to the device
+followed by a newline. A set of options can be given.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#inspect/3">inspect(device, item, opts)</a></td>
+  
+    <td class="summary_synopsis"><p>Inspects the item with options using the given device.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#puts/2">puts(device // group_leader(), item)</a></td>
+  
+    <td class="summary_synopsis"><p>Writes the argument to the device, similar to <a href="#write/2"><code>write/2</code></a>,
+but adds a newline at the end. The argument is expected
+to be a chardata.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#read/2">read(device // group_leader, chars_or_line)</a></td>
+  
+    <td class="summary_synopsis"><p>Reads <code>count</code> characters from the IO device or until
+the end of the line if <code>:line</code> is given. It returns:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stream/2">stream(device, line_or_bytes)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts the io device into a Stream. The device is
+iterated line by line if :line is given or by a given
+number of codepoints.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#write/2">write(device // group_leader(), item)</a></td>
+  
+    <td class="summary_synopsis"><p>Writes the given argument to the given device.
+By default the device is the standard output.
+The argument is expected to be a chardata (i.e.
+a char list or an unicode binary).</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -147,7 +191,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L68" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L75" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -161,7 +205,7 @@ iterated line by line.</p>
 <p>This reads the io as a raw binary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L242" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L243" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -175,7 +219,7 @@ as a binary, no unicode conversion happens.</p>
 <p>Check <a href="#write/2"><code>write/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L118" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -186,7 +230,7 @@ as a binary, no unicode conversion happens.</p>
   <div class="docstring"><p>Gets a number of bytes from the io device. If the
 io device is a unicode device, <code>count</code> implies
 the number of unicode codepoints to be retrieved.
-Otherwise, <code>count</code> is the number of raw bytes to be retrieved. 
+Otherwise, <code>count</code> is the number of raw bytes to be retrieved.
 It returns:</p>
 
 <ul>
@@ -198,7 +242,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L174" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L181" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -212,7 +256,7 @@ the number of unicode codepoints to be retrieved.
 Otherwise, <code>count</code> is the number of raw bytes to be retrieved.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L190" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L197" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -232,7 +276,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L206" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L213" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -253,7 +297,7 @@ of 80 characters.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L138" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L145" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -264,7 +308,7 @@ of 80 characters.</p>
   <div class="docstring"><p>Inspects the item with options using the given device.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L145" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L152" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -277,7 +321,7 @@ but adds a newline at the end. The argument is expected
 to be a chardata.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L120" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L127" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -297,7 +341,7 @@ NFS file system.</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L53" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -317,11 +361,11 @@ number of codepoints.</p>
 <p>Here is an example on how we mimic an echo server
 from the command line:</p>
 
-<pre><code>Enum.each IO.stream(:stdio, :line), IO.write(&amp;1)
+<pre><code>Enum.each IO.stream(:stdio, :line), &amp;IO.write(&amp;1)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L226" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -346,7 +390,7 @@ IO.write :stderr, &quot;error&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/io.ex#L101" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/io.ex#L108" target="_blank" class="view_source">Source</a>
   
 </div>
 

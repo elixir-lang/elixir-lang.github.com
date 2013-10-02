@@ -35,69 +35,69 @@ expected by an ExUnit.Formatter.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#format_test_case_failure/3">format_test_case_failure/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_test_failure/3">format_test_failure/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_time/2">format_time/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#format_test_case_failure/3">format_test_case_failure(test_case, counter, color)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a test case and formats its failure.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_test_failure/3">format_test_failure(test, counter, color)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a test and formats its failure.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_time/2">format_time(run_us, load_us)</a></td>
+  
+    <td class="summary_synopsis"><p>Formats time taken running the test suite.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
 
       
         <h2 id="callbacks_summary">Callbacks summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#suite_started/1">suite_started/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#suite_finished/3">suite_finished/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#case_started/2">case_started/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#case_finished/2">case_finished/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#test_started/2">test_started/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#test_finished/2">test_finished/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#suite_started/1">suite_started(opts :: [])</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#suite_finished/3">suite_finished(id(), run_us(), load_us())</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#case_started/2">case_started(id(), test_case())</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#case_finished/2">case_finished(id(), test_case())</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#test_started/2">test_started(id(), test())</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#test_finished/2">test_finished(id(), test())</a></td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -107,31 +107,37 @@ expected by an ExUnit.Formatter.</p>
   <p class="typespec" id="t:id/0">
     <a href="#t:id/0">id</a> :: term
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:test_case/0">
     <a href="#t:test_case/0">test_case</a> :: <a href="ExUnit.TestCase.html#t:t/0">ExUnit.TestCase.t</a>
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:test/0">
     <a href="#t:test/0">test</a> :: <a href="ExUnit.Test.html#t:t/0">ExUnit.Test.t</a>
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:result/0">
     <a href="#t:result/0">result</a> :: {kind :: atom, reason :: term, stacktrace :: []} | nil
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:run_us/0">
     <a href="#t:run_us/0">run_us</a> :: pos_integer
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:load_us/0">
     <a href="#t:load_us/0">load_us</a> :: pos_integer | nil
   </p>
+  
 </div>
 
         </div>
@@ -148,7 +154,7 @@ expected by an ExUnit.Formatter.</p>
   <div class="docstring"><p>Receives a test case and formats its failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L85" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -159,7 +165,7 @@ expected by an ExUnit.Formatter.</p>
   <div class="docstring"><p>Receives a test and formats its failure.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L74" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L74" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -192,7 +198,7 @@ iex&gt; format_time(10000, 200000)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L46" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -211,7 +217,7 @@ iex&gt; format_time(10000, 200000)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L16" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L16" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -221,7 +227,7 @@ iex&gt; format_time(10000, 200000)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L17" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L17" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -231,7 +237,7 @@ iex&gt; format_time(10000, 200000)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L19" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L19" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -241,7 +247,7 @@ iex&gt; format_time(10000, 200000)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L20" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L20" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -251,7 +257,7 @@ iex&gt; format_time(10000, 200000)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L22" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L22" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -261,7 +267,7 @@ iex&gt; format_time(10000, 200000)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/ex_unit/lib/ex_unit/formatter.ex#L23" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit/formatter.ex#L23" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -32,70 +32,110 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#escape/2">escape/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#expand/2">expand/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#expand_all/2">expand_all/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#expand_once/2">expand_once/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#extract_args/1">extract_args/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#safe_term/1">safe_term/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#to_string/2">to_string/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unescape_string/1">unescape_string/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unescape_string/2">unescape_string/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unescape_tokens/1">unescape_tokens/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unescape_tokens/2">unescape_tokens/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#escape/2">escape(expr, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Recursively escapes a value so it can be inserted
+into a syntax tree.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#expand/2">expand(tree, env)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a AST node and expands it until it no longer represents
+a macro. Check <a href="#expand_once/2"><code>expand_once/2</code></a> for more information on how
+expansion works and <a href="#expand_all/2"><code>expand_all/2</code></a> for recursive expansion.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#expand_all/2">expand_all(tree, env)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a AST node and expands it until it no longer represents
+a macro. Then it expands all of its children recursively.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#expand_once/2">expand_once(ast, env)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a AST node and expands it once. The following contents are expanded:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#extract_args/1">extract_args(expr)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives an expresion representing a possible definition
+and extracts its arguments. It returns a tuple with the
+function name and the arguments list or <code>:error</code> if not
+a valid call syntax.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#safe_term/1">safe_term(terms)</a></td>
+  
+    <td class="summary_synopsis"><p>Recurs the quoted expression checking if all sub-terms are
+safe (i.e. they represent data structures and don&#39;t actually
+evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
+which is returned as <code>{ :unsafe, term }</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_string/2">to_string(tree, fun // fn _ast, string -&gt; string end)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts the given expression to a binary.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unescape_string/1">unescape_string(chars)</a></td>
+  
+    <td class="summary_synopsis"><p>Unescape the given chars. This is the unescaping behavior
+used by default in Elixir single- and double-quoted strings.
+Check <a href="#unescape_string/2"><code>unescape_string/2</code></a> for information on how to customize
+the escaping map.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unescape_string/2">unescape_string(chars, map)</a></td>
+  
+    <td class="summary_synopsis"><p>Unescape the given chars according to the map given.
+Check <a href="#unescape_string/1"><code>unescape_string/1</code></a> if you want to use the same map
+as Elixir single- and double-quoted strings.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unescape_tokens/1">unescape_tokens(tokens)</a></td>
+  
+    <td class="summary_synopsis"><p>Unescape the given tokens according to the default map.
+Check <a href="#unescape_string/1"><code>unescape_string/1</code></a> and <a href="#unescape_string/2"><code>unescape_string/2</code></a> for more
+information about unescaping.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unescape_tokens/2">unescape_tokens(tokens, map)</a></td>
+  
+    <td class="summary_synopsis"><p>Unescape the given tokens according to the given map.
+Check <a href="#unescape_tokens/1"><code>unescape_tokens/1</code></a> and <a href="#unescape_string/2"><code>unescape_string/2</code></a> for more information.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -109,6 +149,9 @@
   <p class="typespec" id="t:t/0">
     <a href="#t:t/0">t</a> :: {<a href="#t:t/0">t</a>, <a href="#t:t/0">t</a>} | {<a href="#t:t/0">t</a>, <a href="Keyword.html#t:t/0">Keyword.t</a>, <a href="#t:t/0">t</a>} | atom | number | binary | []
   </p>
+  
+      <div class="typespec_doc">Abstract Syntax Tree (AST) node</div>
+  
 </div>
 
         </div>
@@ -149,7 +192,7 @@ iex&gt; Macro.escape({ :unquote, [], [1] }, unquote: true)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L94" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L95" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -162,7 +205,7 @@ a macro. Check <a href="#expand_once/2"><code>expand_once/2</code></a> for more 
 expansion works and <a href="#expand_all/2"><code>expand_all/2</code></a> for recursive expansion.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L622" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L611" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -200,7 +243,7 @@ the whole Elixir compiler by actually executing the code, which
 is beyond the scope of this function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L667" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L656" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -289,7 +332,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L520" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L509" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -321,7 +364,7 @@ extract_args(quote do: 1.(1, 2, 3))  == :error
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L68" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -335,7 +378,7 @@ evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
 which is returned as <code>{ :unsafe, term }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L702" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L691" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -359,7 +402,7 @@ which is returned as <code>{ :unsafe, term }</code>.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L220" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L209" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -397,7 +440,7 @@ string.</p>
 and we return a version with it unescaped.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L133" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L122" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -452,11 +495,11 @@ returns false for ?x.</p>
 
 <p>Using the unescape_map defined above is easy:</p>
 
-<pre><code>Macro.unescape_string &quot;example\\n&quot;, unescape_map(&amp;1)
+<pre><code>Macro.unescape_string &quot;example\\n&quot;, &amp;unescape_map(&amp;1)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L181" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -481,7 +524,7 @@ sigils. Check the implementation of <code>Kernel.sigil_b</code>
 for examples.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L196" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L185" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -500,7 +543,7 @@ for examples.</p>
 Check <a href="#unescape_tokens/1"><code>unescape_tokens/1</code></a> and <a href="#unescape_string/2"><code>unescape_string/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/macro.ex#L205" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/macro.ex#L194" target="_blank" class="view_source">Source</a>
   
 </div>
 

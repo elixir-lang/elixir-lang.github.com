@@ -109,52 +109,70 @@ required by the template is not specified at compilation time.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#compile_file/2">compile_file/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#compile_string/2">compile_string/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#eval_file/3">eval_file/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#eval_string/3">eval_string/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#compile_file/2">compile_file(filename, options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Get a <code>filename</code> and generate a quoted expression
+that can be evaluated by Elixir or compiled to a function.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#compile_string/2">compile_string(source, options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Get a string <code>source</code> and generate a quoted expression
+that can be evaluated by Elixir or compiled to a function.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#eval_file/3">eval_file(filename, bindings // [], options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Get a <code>filename</code> and evaluate the values using the <code>bindings</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#eval_string/3">eval_string(source, bindings // [], options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Get a string <code>source</code> and evaluate the values using the <code>bindings</code>.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#function_from_file/5">function_from_file/5</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#function_from_string/5">function_from_string/5</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#function_from_file/5">function_from_file(kind, name, file, args // [], options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Generates a function definition from the file contents.
+The kind (<code>:def</code> or <code>:defp</code>) must be given, the
+function name, its arguments and the compilation options.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#function_from_string/5">function_from_string(kind, name, source, args // [], options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Generates a function definition from the string.
+The kind (<code>:def</code> or <code>:defp</code>) must be given, the
+function name, its arguments and the compilation options.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -173,7 +191,7 @@ required by the template is not specified at compilation time.</p>
 that can be evaluated by Elixir or compiled to a function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L157" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L157" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -185,7 +203,7 @@ that can be evaluated by Elixir or compiled to a function.</p>
 that can be evaluated by Elixir or compiled to a function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L149" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L149" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -206,7 +224,7 @@ EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L189" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L189" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -223,7 +241,7 @@ EEx.eval_file &quot;sample.ex&quot;, [bar: &quot;baz&quot;]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L171" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L171" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -261,7 +279,7 @@ Sample.sample(1, 2) #=&gt; &quot;3&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L131" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -284,7 +302,7 @@ Sample.sample(1, 2) #=&gt; &quot;3&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/eex/lib/eex.ex#L95" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/eex/lib/eex.ex#L95" target="_blank" class="view_source">Source</a>
   
 </div>
 

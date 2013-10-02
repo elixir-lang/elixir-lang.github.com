@@ -75,35 +75,48 @@ compiler. <code>:debug_info</code> is enabled by default.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.erlang.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/tasks/compile.erlang.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#compile_mappings/6">compile_mappings/6</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#manifests/0">manifests/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#run/1">run/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#to_erl_file/1">to_erl_file/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#compile_mappings/6">compile_mappings(manifest, mappings, src_ext, dest_ext, force, callback)</a></td>
+  
+    <td class="summary_synopsis"><p>Extracts the extensions from the mappings, automatically
+invoking the callback for each stale input and output pair
+(or for all if <code>force</code> is true) and removing files that no
+longer have a source, while keeping the manifest up
+to date.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#manifests/0">manifests()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns Erlang manifests.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#run/1">run(args)</a></td>
+  
+    <td class="summary_synopsis"><p>Runs this task.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_erl_file/1">to_erl_file(file)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts the given file to a format accepted by
+the Erlang compilation tools.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -158,7 +171,7 @@ of error. An error is raised at the end if any of the
 files failed to compile.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.erlang.ex#L136" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/tasks/compile.erlang.ex#L136" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -169,7 +182,7 @@ files failed to compile.</p>
   <div class="docstring"><p>Returns Erlang manifests.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.erlang.ex#L98" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/tasks/compile.erlang.ex#L98" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -180,7 +193,7 @@ files failed to compile.</p>
   <div class="docstring"><p>Runs this task.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.erlang.ex#L65" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/tasks/compile.erlang.ex#L65" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -192,7 +205,7 @@ files failed to compile.</p>
 the Erlang compilation tools.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/tasks/compile.erlang.ex#L148" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/tasks/compile.erlang.ex#L148" target="_blank" class="view_source">Source</a>
   
 </div>
 

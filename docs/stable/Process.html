@@ -37,175 +37,269 @@ version if you want the undefined value.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#alive?/1">alive?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#delete/0">delete/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#delete/1">delete/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#demonitor/2">demonitor/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#exit/2">exit/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flag/2">flag/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#flag/3">flag/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#get/0">get/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#get/2">get/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#get_keys/1">get_keys/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#group_leader/0">group_leader/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#group_leader/2">group_leader/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#info/1">info/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#info/2">info/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#link/1">link/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#list/0">list/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#monitor/1">monitor/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#put/2">put/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#register/2">register/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#registered/0">registered/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#self/0">self/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn/1">spawn/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn/2">spawn/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn/3">spawn/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn/4">spawn/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn_link/1">spawn_link/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn_link/3">spawn_link/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn_monitor/1">spawn_monitor/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#spawn_monitor/3">spawn_monitor/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unlink/1">unlink/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#unregister/1">unregister/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#whereis/1">whereis/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#alive?/1">alive?(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns true if the process exists and is alive, that is,
+is not exiting and has not exited. Otherwise, returns false.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#delete/0">delete()</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes all items in the dictionary.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#delete/1">delete(key)</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes the given key from the dictionary.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#demonitor/2">demonitor(monitor_ref, options // [])</a></td>
+  
+    <td class="summary_synopsis"><p>If monitor_ref is a reference which the calling process
+obtained by calling monitor/1, this monitoring is turned off.
+If the monitoring is already turned off, nothing happens.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#exit/2">exit(pid, reason)</a></td>
+  
+    <td class="summary_synopsis"><p>Sends an exit signal with the given reason to the pid.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flag/2">flag(flag, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets certain flags for the process which calls this function.
+Returns the old value of the flag.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#flag/3">flag(pid, flag, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets certain flags for the process Pid, in the same manner as flag/2.
+Returns the old value of the flag. The allowed values for Flag are
+only a subset of those allowed in flag/2, namely: save_calls.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get/0">get()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all key-values in the dictionary.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get/2">get(key, default // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the value for the given key.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get_keys/1">get_keys(value)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all keys that have the given <code>value</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#group_leader/0">group_leader()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of the group leader for the process which evaluates the function.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#group_leader/2">group_leader(leader, pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Sets the group leader of Pid to GroupLeader. Typically, this is used when a processes
+started from a certain shell should have another group leader than <code>:init</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#info/1">info(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns information about the process identified by pid or nil if the process
+is not alive.
+Use this only for debugging information.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#info/2">info(pid, spec)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns information about the process identified by pid
+or nil if the process is not alive.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#link/1">link(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a link between the calling process and another process
+(or port) <code>pid</code>, if there is not such a link already.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#list/0">list()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list of process identifiers corresponding to all the
+processes currently existing on the local node.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#monitor/1">monitor(item)</a></td>
+  
+    <td class="summary_synopsis"><p>The calling process starts monitoring the item given.
+It returns the monitor reference.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#put/2">put(key, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Stores the given key-value in the process dictionary.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#register/2">register(pid, name)</a></td>
+  
+    <td class="summary_synopsis"><p>Associates the name with a pid or a port identifier. name, which must
+be an atom, can be used instead of the pid / port identifier in the
+send operator (name &lt;- message).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#registered/0">registered()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list of names which have been registered using register/2.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#self/0">self()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid (process identifier) of the calling process.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn/1">spawn(fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of <code>fun</code>.
+It behaves exactly the same as <a href="Kernel.html#spawn/1"><code>Kernel.spawn/1</code></a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn/2">spawn(fun, opts)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of <code>fun</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn/3">spawn(mod, fun, args)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of
+<code>module.function(args)</code>. The new process created will be placed in the system
+scheduler queue and be run some time later.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn/4">spawn(mod, fun, args, opts)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of
+<code>module.function(args)</code>. The new process created will be placed in the system
+scheduler queue and be run some time later.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn_link/1">spawn_link(fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of <code>fun</code>.
+A link is created between the calling process and the new
+process, atomically.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn_link/3">spawn_link(mod, fun, args)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of
+<code>module.function(args)</code>. A link is created between the calling process
+and the new process, atomically. Otherwise works like spawn/3.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn_monitor/1">spawn_monitor(fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid of a new process started by the application of <code>fun</code>
+and reference for a monitor created to the new process.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#spawn_monitor/3">spawn_monitor(mod, fun, args)</a></td>
+  
+    <td class="summary_synopsis"><p>A new process is started by the application of <code>module.function(args)</code>
+and the process is monitored at the same time. Returns the pid and a
+reference for the monitor. Otherwise works like spawn/3.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unlink/1">unlink(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Removes the link, if there is one, between the calling process and
+the process or port referred to by <code>pid</code>. Returns true and does not
+fail, even if there is no link or <code>id</code> does not exist</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unregister/1">unregister(name)</a></td>
+  
+    <td class="summary_synopsis"><p>Removes the registered name, associated with a pid or a port identifier.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#whereis/1">whereis(name)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the pid or port identifier with the registered name.
+Returns nil if the name is not registered.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -219,11 +313,13 @@ version if you want the undefined value.</p>
   <p class="typespec" id="t:spawn_opt/0">
     <a href="#t:spawn_opt/0">spawn_opt</a> :: :link | :monitor | {:priority, :low | :normal | :high} | {:fullsweep_after, non_neg_integer} | {:min_heap_size, non_neg_integer} | {:min_bin_vheap_size, non_neg_integer}
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:spawn_opts/0">
     <a href="#t:spawn_opts/0">spawn_opts</a> :: [<a href="#t:spawn_opt/0">spawn_opt</a>]
   </p>
+  
 </div>
 
         </div>
@@ -250,7 +346,7 @@ is not exiting and has not exited. Otherwise, returns false.</p>
 <p><code>pid</code> must refer to a process at the local node.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L18" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L18" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -268,7 +364,7 @@ is not exiting and has not exited. Otherwise, returns false.</p>
   <div class="docstring"><p>Deletes all items in the dictionary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -286,7 +382,7 @@ is not exiting and has not exited. Otherwise, returns false.</p>
   <div class="docstring"><p>Deletes the given key from the dictionary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L72" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L72" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -308,7 +404,7 @@ If the monitoring is already turned off, nothing happens.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#demonitor-2">http://www.erlang.org/doc/man/erlang.html#demonitor-2</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L223" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L223" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -346,7 +442,7 @@ If the monitoring is already turned off, nothing happens.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -367,7 +463,7 @@ Returns the old value of the flag.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_flag-2">http://www.erlang.org/doc/man/erlang.html#process_flag-2</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L333" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L333" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -389,7 +485,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_flag-3">http://www.erlang.org/doc/man/erlang.html#process_flag-3</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L345" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L345" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -407,7 +503,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
   <div class="docstring"><p>Returns all key-values in the dictionary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L26" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L26" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -425,7 +521,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
   <div class="docstring"><p>Returns the value for the given key.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L35" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L35" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -443,7 +539,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
   <div class="docstring"><p>Returns all keys that have the given <code>value</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L48" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L48" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -461,7 +557,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
   <div class="docstring"><p>Returns the pid of the group leader for the process which evaluates the function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L302" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L302" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -480,7 +576,7 @@ only a subset of those allowed in flag/2, namely: save_calls.</p>
 started from a certain shell should have another group leader than <code>:init</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L311" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L311" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -502,7 +598,7 @@ Use this only for debugging information.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_info-1">http://www.erlang.org/doc/man/erlang.html#process_info-1</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L357" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L357" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -523,7 +619,7 @@ or nil if the process is not alive.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#process_info-2">http://www.erlang.org/doc/man/erlang.html#process_info-2</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L368" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L368" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -544,7 +640,7 @@ or nil if the process is not alive.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#link-1">http://www.erlang.org/doc/man/erlang.html#link-1</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L249" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L249" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -569,7 +665,7 @@ but its process identifier will be part of the result returned.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#processes-0">http://www.erlang.org/doc/man/erlang.html#processes-0</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L238" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L238" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -590,7 +686,7 @@ It returns the monitor reference.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#monitor-2">http://www.erlang.org/doc/man/erlang.html#monitor-2</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L210" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L210" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -608,7 +704,7 @@ It returns the monitor reference.</p>
   <div class="docstring"><p>Stores the given key-value in the process dictionary.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L56" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L56" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -630,7 +726,7 @@ send operator (name &lt;- message).</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#register-2">http://www.erlang.org/doc/man/erlang.html#register-2</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L273" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L273" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -648,7 +744,7 @@ send operator (name &lt;- message).</p>
   <div class="docstring"><p>Returns a list of names which have been registered using register/2.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L319" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L319" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -666,7 +762,7 @@ send operator (name &lt;- message).</p>
   <div class="docstring"><p>Returns the pid (process identifier) of the calling process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L108" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L108" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -685,7 +781,7 @@ send operator (name &lt;- message).</p>
 It behaves exactly the same as <a href="Kernel.html#spawn/1"><code>Kernel.spawn/1</code></a>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L117" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L117" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -706,7 +802,7 @@ It behaves exactly the same as <a href="Kernel.html#spawn/1"><code>Kernel.spawn/
 check <a href="http://www.erlang.org/doc/man/erlang.html#spawn_opt-2">http://www.erlang.org/doc/man/erlang.html#spawn_opt-2</a></p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L134" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L134" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -728,7 +824,7 @@ scheduler queue and be run some time later.</p>
 <p>It behaves exactly the same as the <a href="Kernel.html#spawn/3"><code>Kernel.spawn/3</code></a> function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L146" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L146" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -751,7 +847,7 @@ scheduler queue and be run some time later.</p>
 check <a href="http://www.erlang.org/doc/man/erlang.html#spawn_opt-4">http://www.erlang.org/doc/man/erlang.html#spawn_opt-4</a></p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L160" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L160" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -771,7 +867,7 @@ A link is created between the calling process and the new
 process, atomically.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -791,7 +887,7 @@ process, atomically.</p>
 and the new process, atomically. Otherwise works like spawn/3.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L180" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L180" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -810,7 +906,7 @@ and the new process, atomically. Otherwise works like spawn/3.</p>
 and reference for a monitor created to the new process.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L189" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L189" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -830,7 +926,7 @@ and the process is monitored at the same time. Returns the pid and a
 reference for the monitor. Otherwise works like spawn/3.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L199" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L199" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -852,7 +948,7 @@ fail, even if there is no link or <code>id</code> does not exist</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#unlink-1">http://www.erlang.org/doc/man/erlang.html#unlink-1</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L261" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L261" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -872,7 +968,7 @@ fail, even if there is no link or <code>id</code> does not exist</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#unregister-1">http://www.erlang.org/doc/man/erlang.html#unregister-1</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L283" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L283" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -893,7 +989,7 @@ Returns nil if the name is not registered.</p>
 <p>See <a href="http://www.erlang.org/doc/man/erlang.html#whereis-1">http://www.erlang.org/doc/man/erlang.html#whereis-1</a> for more info.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/process.ex#L294" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/process.ex#L294" target="_blank" class="view_source">Source</a>
   
 </div>
 

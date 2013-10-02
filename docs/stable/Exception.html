@@ -33,55 +33,82 @@ exceptions and stacktraces.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L97" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L97" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#format_caller/1">format_caller/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_fa/2">format_fa/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_file_line/3">format_file_line/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_mfa/3">format_mfa/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_stacktrace/1">format_stacktrace/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#format_stacktrace_entry/2">format_stacktrace_entry/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#normalize/1">normalize/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#normalize/2">normalize/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#format_caller/1">format_caller(trace // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Formats the caller, i.e. the first entry in the stacktrace.
+Notice that due to tail call optimization, the stacktrace
+may not report the direct caller of the function.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_fa/2">format_fa(fun, arity)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives an anonymous function and arity and formats it as
+shown in stacktraces. The arity may also be a list of arguments.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_file_line/3">format_file_line(file, line, cwd // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Formats the given file and line as shown in stacktraces.
+If any of the values are nil, they are omitted.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_mfa/3">format_mfa(module, fun, arity)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a module, fun and arity and formats it
+as shown in stacktraces. The arity may also be a list
+of arguments.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_stacktrace/1">format_stacktrace(trace // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Formats the stacktrace.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_stacktrace_entry/2">format_stacktrace_entry(entry, cwd // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a tuple representing a stacktrace entry and formats it.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#normalize/1">normalize(exception)</a></td>
+  
+    <td class="summary_synopsis"><p>Normalizes an exception, converting Erlang exceptions
+to Elixir exceptions. Useful when interfacing Erlang
+code with Elixir code.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#normalize/2">normalize(arg1, exception)</a></td>
+  
+    <td class="summary_synopsis"><p>Normalizes an exception, converting Erlang exceptions
+to Elixir exceptions. It takes the kind spilled by
+<code>catch</code> as an argument as a convenience for converting only
+<code>:errors</code>, ignorning the others.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -103,7 +130,7 @@ Notice that due to tail call optimization, the stacktrace
 may not report the direct caller of the function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L225" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L225" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -121,7 +148,7 @@ shown in stacktraces. The arity may also be a list of arguments.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L249" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L249" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -148,7 +175,7 @@ iex&gt; Exception.format_file_line(nil, nil)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L305" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L305" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -169,7 +196,7 @@ iex&gt; Exception.format_mfa Foo, :bar, []
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L271" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L271" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -184,7 +211,7 @@ calculates the current stacktrace and formats it. As a consequence,
 the value of <code>System.stacktrace</code> is changed.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L205" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L205" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -198,7 +225,7 @@ the value of <code>System.stacktrace</code> is changed.</p>
 otherwise one is automatically retrieved.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L173" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L173" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -211,7 +238,7 @@ to Elixir exceptions. Useful when interfacing Erlang
 code with Elixir code.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L117" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L117" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -225,7 +252,7 @@ to Elixir exceptions. It takes the kind spilled by
 <code>:errors</code>, ignorning the others.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/elixir/lib/exception.ex#L109" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/exception.ex#L109" target="_blank" class="view_source">Source</a>
   
 </div>
 

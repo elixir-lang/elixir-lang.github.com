@@ -32,25 +32,31 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/option_parser.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#parse/2">parse/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#parse_head/2">parse_head/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#parse/2">parse(argv, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Parses <code>argv</code> and returns a tuple with the parsed options, its
+arguments, and a list options that couldn&#39;t be parsed.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#parse_head/2">parse_head(argv, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Similar to <a href="#parse/2"><code>parse/2</code></a> but only parses the head of <code>argv</code>;
+as soon as it finds a non-switch, it stops parsing.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -151,7 +157,7 @@ booleans and never parse the next value:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/option_parser.ex#L82" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/option_parser.ex#L82" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -174,7 +180,7 @@ iex&gt; OptionParser.parse_head([&quot;--verbose&quot;, &quot;--source&quot;, &q
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/option_parser.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/option_parser.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 

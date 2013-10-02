@@ -35,47 +35,60 @@ the action to be performed via <code>Mix.shell</code>.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/generator.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/generator.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#create_directory/1">create_directory/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#create_file/2">create_file/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#create_directory/1">create_directory(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a directory if one does not exist yet.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#create_file/2">create_file(path, contents)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a file with the given contents.
+If the file already exists, asks for user confirmation.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#embed_template/2">embed_template/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#embed_text/2">embed_text/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#from_file/1">from_file/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#embed_template/2">embed_template(name, contents)</a></td>
+  
+    <td class="summary_synopsis"><p>Embed a template given by <code>contents</code> into the current module.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#embed_text/2">embed_text(name, contents)</a></td>
+  
+    <td class="summary_synopsis"><p>Embeds a text given by <code>contents</code> into the current module.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from_file/1">from_file(path)</a></td>
+  
+    <td class="summary_synopsis"><p>Reads the content from a file relative to the current
+file and not relative to the cwd. Useful when used with
+embed macros:</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -93,7 +106,7 @@ the action to be performed via <code>Mix.shell</code>.</p>
   <div class="docstring"><p>Creates a directory if one does not exist yet.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/generator.ex#L24" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/generator.ex#L24" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -105,7 +118,7 @@ the action to be performed via <code>Mix.shell</code>.</p>
 If the file already exists, asks for user confirmation.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/generator.ex#L13" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/generator.ex#L13" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -132,7 +145,7 @@ template using the <code>@</code> macro.</p>
 <p>For more information, check <code>EEx.SmartEngine</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/generator.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/generator.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -146,7 +159,7 @@ template using the <code>@</code> macro.</p>
 <code>_text</code> that expects no argument.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/generator.ex#L77" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/generator.ex#L77" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -162,7 +175,7 @@ embed macros:</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.10.2/lib/mix/lib/mix/generator.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/generator.ex#L46" target="_blank" class="view_source">Source</a>
   
 </div>
 

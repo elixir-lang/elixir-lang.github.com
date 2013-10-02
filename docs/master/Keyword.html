@@ -42,120 +42,180 @@ entries for a given key are removed when invoked.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#delete/2">delete/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#delete_first/2">delete_first/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#equal?/2">equal?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#fetch/2">fetch/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#fetch!/2">fetch!/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#from_enum/1">from_enum/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#get/3">get/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#get_values/2">get_values/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#has_key?/2">has_key?/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keys/1">keys/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#keyword?/1">keyword?/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#merge/2">merge/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#merge/3">merge/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#new/0">new/0</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#new/1">new/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#new/2">new/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#put/3">put/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#put_new/3">put_new/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#update/4">update/4</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#update!/3">update!/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#values/1">values/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#delete/2">delete(keywords, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes all entries in the keyword list for a specific <code>key</code>.
+If the <code>key</code> does not exist, returns the keyword list unchanged.
+Use <code>delete_first</code> to delete just the first entry in case of
+duplicated keys.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#delete_first/2">delete_first(keywords, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes the first entry in the keyword list for a specific <code>key</code>.
+If the <code>key</code> does not exist, returns the keyword list unchanged.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#equal?/2">equal?(left, right)</a></td>
+  
+    <td class="summary_synopsis"><p>Checks if two keywords are equal. I.e. they contain
+the same keys and those keys contain the same values.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#fetch/2">fetch(keywords, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Fetches the value for a specific <code>key</code> and returns it in a tuple.
+If the <code>key</code> does not exist, returns <code>:error</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#fetch!/2">fetch!(keywords, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Fetches the value for specific <code>key</code>. If <code>key</code> does not exist,
+a <code>KeyError</code> is raised.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from_enum/1">from_enum(enum)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a Keyword from an enum. Unlike <code>Keyword.new</code>
+which behaves as a dict, <code>Keyword.from_enum</code> does not remove
+duplicated entries.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get/3">get(keywords, key, default // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets the value for a specific <code>key</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get_values/2">get_values(keywords, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Gets all values for a specific <code>key</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#has_key?/2">has_key?(keywords, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns whether a given <code>key</code> exists in the given <code>keywords</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keys/1">keys(keywords)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all keys from the keyword list. Duplicated
+keys appear duplicated in the final list of keys.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#keyword?/1">keyword?(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Checks if the given argument is a keywords list or not</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#merge/2">merge(d1, d2)</a></td>
+  
+    <td class="summary_synopsis"><p>Merges two keyword lists into one. If they have duplicated
+entries, the one given as second argument wins.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#merge/3">merge(d1, d2, fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Merges two keyword lists into one. If they have duplicated
+entries, the given function is invoked to solve conflicts.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#new/0">new()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns an empty keyword list, i.e. an empty list.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#new/1">new(pairs)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a Keyword from an enumerable. Similar to dicts,
+duplicated entries are removed, the latest one prevails.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#new/2">new(pairs, transform)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a Keyword from an enumerable with the
+help of the transformation function. Duplicated
+entries are removed, the latest one prevails.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#put/3">put(keywords, key, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Puts the given <code>value</code> under <code>key</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#put_new/3">put_new(keywords, key, value)</a></td>
+  
+    <td class="summary_synopsis"><p>Puts the given <code>value</code> under <code>key</code> unless the entry <code>key</code>
+already exists.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#update/4">update(list1, key, initial, fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Updates the <code>key</code> with the given function. If the <code>key</code> does
+not exist, inserts the given <code>initial</code> value.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#update!/3">update!(list1, key, fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Updates the <code>key</code> with the given function. If the <code>key</code> does
+not exist, raises <code>KeyError</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#values/1">values(keywords)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all values from the keyword list.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -169,16 +229,19 @@ entries for a given key are removed when invoked.</p>
   <p class="typespec" id="t:key/0">
     <a href="#t:key/0">key</a> :: atom
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:value/0">
     <a href="#t:value/0">value</a> :: any
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:t/0">
     <a href="#t:t/0">t</a> :: [{<a href="#t:key/0">key</a>, <a href="#t:value/0">value</a>}]
   </p>
+  
 </div>
 
         </div>
@@ -217,7 +280,7 @@ iex&gt; Keyword.delete([b: 2], :a)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L225" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L225" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -245,7 +308,7 @@ iex&gt; Keyword.delete_first([b: 2], :a)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L243" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L243" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -270,7 +333,7 @@ true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L298" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L298" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -298,7 +361,7 @@ iex&gt; Keyword.fetch([a: 1], :b)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L132" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L132" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -326,7 +389,7 @@ iex&gt; Keyword.fetch!([a: 1], :b)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L153" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L153" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -346,7 +409,7 @@ which behaves as a dict, <code>Keyword.from_enum</code> does not remove
 duplicated entries.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L26" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L26" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -381,7 +444,7 @@ iex&gt; Keyword.get([a: 1], :b, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L111" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -405,7 +468,7 @@ iex&gt; Keyword.get([a: 1], :b, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -432,7 +495,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L355" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L355" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -460,7 +523,7 @@ iex&gt; Keyword.keys([a: 1, b: 2, a: 3])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L188" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L188" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -478,7 +541,7 @@ iex&gt; Keyword.keys([a: 1, b: 2, a: 3])
   <div class="docstring"><p>Checks if the given argument is a keywords list or not</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L38" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L38" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -503,7 +566,7 @@ entries, the one given as second argument wins.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L313" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L313" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -530,7 +593,7 @@ iex&gt; end)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L330" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L330" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -548,7 +611,7 @@ iex&gt; end)
   <div class="docstring"><p>Returns an empty keyword list, i.e. an empty list.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -573,7 +636,7 @@ duplicated entries are removed, the latest one prevails.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -599,7 +662,7 @@ entries are removed, the latest one prevails.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L82" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L82" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -629,7 +692,7 @@ iex&gt; Keyword.put([a: 1, b: 2, a: 4], :a, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L263" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L263" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -657,7 +720,7 @@ iex&gt; Keyword.put_new([a: 1, b: 2], :a, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L280" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L280" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -677,15 +740,15 @@ not exist, inserts the given <code>initial</code> value.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Keyword.update([a: 1], :a, 13, &amp;1 * 2)
+<pre><code>iex&gt; Keyword.update([a: 1], :a, 13, &amp;(&amp;1 * 2))
 [a: 2]
 
-iex&gt; Keyword.update([a: 1], :b, 11, &amp;1 * 2)
+iex&gt; Keyword.update([a: 1], :b, 11, &amp;(&amp;1 * 2))
 [a: 1, b: 11]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L405" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L399" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -705,15 +768,15 @@ not exist, raises <code>KeyError</code>.</p>
 
 <h2>Examples</h2>
 
-<pre><code>iex&gt; Keyword.update!([a: 1], :a, &amp;1 * 2)
+<pre><code>iex&gt; Keyword.update!([a: 1], :a, &amp;(&amp;1 * 2))
 [a: 2]
 
-iex&gt; Keyword.update!([a: 1], :b, &amp;1 * 2)
+iex&gt; Keyword.update!([a: 1], :b, &amp;(&amp;1 * 2))
 ** (KeyError) key not found: :b
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L379" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L373" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -737,7 +800,7 @@ iex&gt; Keyword.update!([a: 1], :b, &amp;1 * 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/keyword.ex#L202" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/keyword.ex#L202" target="_blank" class="view_source">Source</a>
   
 </div>
 

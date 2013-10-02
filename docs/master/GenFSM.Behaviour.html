@@ -86,7 +86,7 @@ behaviour of the CVM in its original state might encur.</p>
     end
 
     def short_paid(:coin, state_data) do
-      { :next_state, :paid_in_full, state_data.update_coins(&amp;1 + 1) }
+      { :next_state, :paid_in_full, &amp;state_data.update_coins(&amp;1 + 1) }
     end
 
     def short_paid(:request_coffee, state_data) do
@@ -110,7 +110,7 @@ behaviour of the CVM in its original state might encur.</p>
 
 
     def paid_in_full(:coin, state_data) do
-      { :next_state, :paid_in_full, state_data.update_coins(&amp;1 + 1) }
+      { :next_state, :paid_in_full, &amp;state_data.update_coins(&amp;1 + 1) }
     end
 
     def paid_in_full(:request_coffee, _state_data) do
@@ -211,7 +211,7 @@ following:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/87be134a5b91773643ea292b521c9a8ec8167894/lib/elixir/lib/gen_fsm/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/gen_fsm/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
