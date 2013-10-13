@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -52,15 +52,7 @@ into a syntax tree.</p>
   
     <td class="summary_synopsis"><p>Receives a AST node and expands it until it no longer represents
 a macro. Check <a href="#expand_once/2"><code>expand_once/2</code></a> for more information on how
-expansion works and <a href="#expand_all/2"><code>expand_all/2</code></a> for recursive expansion.</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#expand_all/2">expand_all(tree, env)</a></td>
-  
-    <td class="summary_synopsis"><p>Receives a AST node and expands it until it no longer represents
-a macro. Then it expands all of its children recursively.</p>
+expansion works and <code>expand_all/2</code> for recursive expansion.</p>
 </td>
   
 </tr>
@@ -192,7 +184,7 @@ iex&gt; Macro.escape({ :unquote, [], [1] }, unquote: true)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L95" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L95" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -202,48 +194,10 @@ iex&gt; Macro.escape({ :unquote, [], [1] }, unquote: true)
   
   <div class="docstring"><p>Receives a AST node and expands it until it no longer represents
 a macro. Check <a href="#expand_once/2"><code>expand_once/2</code></a> for more information on how
-expansion works and <a href="#expand_all/2"><code>expand_all/2</code></a> for recursive expansion.</p>
+expansion works and <code>expand_all/2</code> for recursive expansion.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L611" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="expand_all/2">
-    <strong>expand_all(tree, env)</strong>
-  </p>
-  
-  <div class="docstring"><p>Receives a AST node and expands it until it no longer represents
-a macro. Then it expands all of its children recursively.</p>
-
-<p>The documentation for <a href="#expand_once/2"><code>expand_once/2</code></a> goes into more detail
-on how expansion works. Keep in mind that <a href="#expand_all/2"><code>expand_all/2</code></a> is
-naive as it doesn&#39;t mutate the environment. Take this example:</p>
-
-<pre><code>quoted = quote do: __MODULE__
-Macro.to_string Macro.expand_all(quoted, __ENV__)
-#=&gt; &quot;nil&quot;
-</code></pre>
-
-<p>The example above, works as expected. Outside of a module,
-<code>__MODULE__</code> returns <code>nil</code>. Now consider this variation:</p>
-
-<pre><code>quoted = quote do
-  defmodule Foo, do: __MODULE__
-end
-Macro.to_string Macro.expand_all(quoted, __ENV__)
-#=&gt; &quot;defmodule(Foo) do\n  nil\nend&quot;
-</code></pre>
-
-<p>One would expect <code>__MODULE__</code> to be expanded to <code>Foo</code>
-but that is not the case since all the expansion is done
-based on the environment <code>__ENV__</code>. This behaviour is on
-purpose, as the proper expansion would require passing through
-the whole Elixir compiler by actually executing the code, which
-is beyond the scope of this function.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L656" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L611" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -263,7 +217,7 @@ is beyond the scope of this function.</p>
 <p>In case the expression cannot be expanded, it returns the expression
 itself. Notice that <a href="#expand_once/2"><code>expand_once/2</code></a> performs the expansion just
 once and it is not recursive. Check <a href="#expand/2"><code>expand/2</code></a> for expansion
-until the node no longer represents a macro and <a href="#expand_all/2"><code>expand_all/2</code></a>
+until the node no longer represents a macro and <code>expand_all/2</code>
 for recursive expansion.</p>
 
 <h2>Examples</h2>
@@ -332,7 +286,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L509" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L509" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -364,7 +318,7 @@ extract_args(quote do: 1.(1, 2, 3))  == :error
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L69" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -378,7 +332,7 @@ evaluate code) and returns <code>:ok</code> unless a given term is unsafe,
 which is returned as <code>{ :unsafe, term }</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L691" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L665" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -402,7 +356,7 @@ which is returned as <code>{ :unsafe, term }</code>.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L209" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L209" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -440,7 +394,7 @@ string.</p>
 and we return a version with it unescaped.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L122" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -499,7 +453,7 @@ returns false for ?x.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L170" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -524,7 +478,7 @@ sigils. Check the implementation of <code>Kernel.sigil_b</code>
 for examples.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L185" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L185" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -543,7 +497,7 @@ for examples.</p>
 Check <a href="#unescape_tokens/1"><code>unescape_tokens/1</code></a> and <a href="#unescape_string/2"><code>unescape_string/2</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/macro.ex#L194" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/macro.ex#L194" target="_blank" class="view_source">Source</a>
   
 </div>
 

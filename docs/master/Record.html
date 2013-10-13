@@ -157,8 +157,8 @@ need to import the record.</p>
 <h2>Runtime access</h2>
 
 <p>All the functionality discussed above happens at compilation time.
-This means that both <code>user(user, age: 26)</code> and <code>User[user, age: 26]</code>
-will be transformed into a simple tuple operation at compile time.</p>
+This means that both <code>user(age: 26)</code> and <code>User[age: 26]</code> are expanded
+into a tuple at compile time.</p>
 
 <p>However, there are some situations where we want to set or update
 fields dynamically. <code>defrecord</code> (and <code>defrecord</code> only) supports
@@ -173,20 +173,23 @@ user.update(age: 26)
 #=&gt; User[name: &quot;Hello&quot;, age: 26]
 </code></pre>
 
-<p>All the calls above happen at runtime. It gives Elixir
-records flexibility at the cost of performance since
-there is more work happening at runtime.</p>
+<p>All the calls above happen at runtime. It gives Elixir records
+flexibility at the cost of performance since there is more work
+happening at runtime.</p>
 
-<p>The above calls (new and update) can interchangeably accept both
-atom and string keys for field names, however not both at the same time.
-Please also note that atom keys are faster. This feature allows to
-&quot;sanitize&quot; untrusted dictionaries and initialize/update records without
-using <code>binary_to_existing_atom/1</code>.</p>
+<p>The above calls (<code>new</code> and <code>update</code>) can accept both atom and string
+keys for field names, however not both at the same time. This feature
+allows to &quot;sanitize&quot; untrusted dictionaries and initialize/update
+records without using <code>binary_to_existing_atom/1</code>.</p>
 
-<p>To sum up, <code>defrecordp</code> should be used when you don&#39;t want
-to expose the record information while <code>defrecord</code> should be used
-whenever you want to share a record within your code or with other
-libraries or whenever you need to dynamically set or update fields.</p>
+<p>To sum up, <code>defrecordp</code> should be used when you don&#39;t want to expose
+the record information while <code>defrecord</code> should be used whenever you
+want to share a record within your code or with other libraries or
+whenever you need to dynamically set or update fields.</p>
+
+<p>The standard library contains excellent examples about both use cases,
+with <code>HashDict</code> being implemented with <code>defrecordp</code> and <code>Range</code> with
+<code>defrecord</code>.</p>
 
 <p>You can learn more about records in the <a href="Kernel.html#defrecord/3"><code>Kernel.defrecord/3</code></a> docs. Now
 let&#39;s discuss the usefulness of combining records with protocols.</p>
@@ -219,12 +222,13 @@ end
 &quot;2013-W26-4&quot;
 </code></pre>
 
-<p>A protocol can be implemented for any record.</p>
+<p>A protocol can be implemented for any record, regardless if
+generated with <code>defrecordp</code> or <code>defrecord</code>.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -321,7 +325,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L298" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/record.ex#L302" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -341,7 +345,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L356" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/record.ex#L360" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -352,7 +356,7 @@ end
   <div class="docstring"><p>Defines types and specs for the record.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L325" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/record.ex#L329" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -369,7 +373,7 @@ return the fields as a list of tuples.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L195" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/record.ex#L199" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -399,7 +403,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/cb023c49349b0be4f12709e5ac115d783c77890f/lib/elixir/lib/record.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/record.ex#L218" target="_blank" class="view_source">Source</a>
   
 </div>
 
