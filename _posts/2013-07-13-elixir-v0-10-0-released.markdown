@@ -80,6 +80,6 @@ Other notable improvements are:
 
 * Meta-programming in Elixir was also improved by the addition of the `binding/0` and `binding/1` macros plus the additions of `Macro.expand_once/2` and `Macro.expand_all/2` to the [`Macro` module](http://elixir-lang.org/docs/stable/Macro.html);
 
-There are also improvements to typespecs, error messages, many bug fixes and some backwards incompatible changes. We have posted a detailed [upgrade instructions on the mailing list](https://groups.google.com/forum/?fromgroups#!topic/elixir-lang-talk/ksrefrgK1eY). For a general overview, [check out the CHANGELOG]((https://github.com/elixir-lang/elixir/blob/v0.10.0/CHANGELOG.md)).
+There are also improvements to typespecs, error messages, many bug fixes and some backwards incompatible changes. We have posted a detailed [upgrade instructions on the mailing list](https://groups.google.com/forum/?fromgroups#!topic/elixir-lang-talk/ksrefrgK1eY). For a general overview, [check out the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.10.0/CHANGELOG.md).
 
 Give Elixir a try! You can start with our [getting started guide](http://elixir-lang.org/getting_started/1.html), or check out our sidebar for other learning resources.
