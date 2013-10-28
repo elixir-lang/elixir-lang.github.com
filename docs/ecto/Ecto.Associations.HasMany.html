@@ -32,25 +32,39 @@
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/associations/has_many.ex#L4" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#new/2">new/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#to_list/1">to_list/1</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#loaded?/1">loaded?(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns <code>true</code> if the association is loaded.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#new/2">new(params // [], arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a new record of the associated entity with the foreign key field set
+to the primary key of the parent entity.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_list/1">to_list(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list of the associated records. Raises <code>AssociationNotLoadedError</code>
+if the association is not loaded.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -63,6 +77,18 @@
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
+  <p class="signature" id="loaded?/1">
+    <strong>loaded?(arg1)</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns <code>true</code> if the association is loaded.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/associations/has_many.ex#L44" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
   <p class="signature" id="new/2">
     <strong>new(params // [], arg2)</strong>
   </p>
@@ -71,6 +97,9 @@
 to the primary key of the parent entity.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/associations/has_many.ex#L21" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="to_list/1">
@@ -78,8 +107,11 @@ to the primary key of the parent entity.</p>
   </p>
   
   <div class="docstring"><p>Returns a list of the associated records. Raises <code>AssociationNotLoadedError</code>
-if the association was not loaded.</p>
+if the association is not loaded.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/associations/has_many.ex#L31" target="_blank" class="view_source">Source</a>
   
 </div>
 

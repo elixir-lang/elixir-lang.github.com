@@ -27,13 +27,26 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Used to define a model. See <code>Ecto.Model.Queryable</code>, that is imported when
-<code>Ecto.Model</code> is used, for how to define a queryable model.</p>
+          <p>Models are Elixir modules with Ecto-specific behaviour.</p>
+
+<p>Entities in Ecto are simply data, all the behaviour exists in models.
+This module is an &quot;umbrella&quot; module that adds a bunch of functionality
+to your module:</p>
+
+<ul>
+<li><code>Ecto.Model.Queryable</code> - provides the API necessary to generate queries;</li>
+<li><code>Ecto.Model.Callbacks</code> - to be implemented;</li>
+<li><code>Ecto.Model.Validations</code> - helpers for validations;</li>
+</ul>
+
+<p>By using <code>Ecto.Model</code> all the functionality above is included,
+but you can cherry pick the ones you want to use.</p>
 
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 

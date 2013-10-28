@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Validator.Predicates</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Validator.Predicates
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>A handful of predicates to be used in validations.</p>
+
+<p>The examples in this module use the syntax made
+available via <code>Ecto.Model.Validations</code> in your
+model.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/validator/predicates.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#absent/3">absent(attr, value, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the attribute is absent (i.e. nil,
+an empty list or an empty string).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#matches/4">matches(attr, value, match_on, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the attribute matches a given regular expression.
+Nil values are not matched against (skipped).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#member_of/4">member_of(attr, value, enum, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the attribute is member of the given enumerable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#not_member_of/4">not_member_of(attr, value, enum, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the attribute is not a member of the given enumerable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#present/3">present(attr, value, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the attribute is present (i.e. not nil,
+nor an empty list nor an empty string).</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:maybe_error/0">
+    <a href="#t:maybe_error/0">maybe_error</a> :: nil | <a href="http://elixir-lang.org/docs/master/Keyword.html#t:t/0">Keyword.t</a>
+  </p>
+  
+</div>
+
+        </div>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="absent/3">
+    <strong>absent(attr, value, opts // [])</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>absent(atom, term, <a href="http://elixir-lang.org/docs/master/Keyword.html#t:t/0">Keyword.t</a>) :: <a href="#t:maybe_error/0">maybe_error</a></li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Validates the attribute is absent (i.e. nil,
+an empty list or an empty string).</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:message</code> - defaults to &quot;must be blank&quot;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>validate user,
+  honeypot: absent()
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/validator/predicates.ex#L53" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="matches/4">
+    <strong>matches(attr, value, match_on, opts // [])</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>matches(atom, term, <a href="http://elixir-lang.org/docs/master/Regex.html#t:t/0">Regex.t</a> | binary, <a href="http://elixir-lang.org/docs/master/Keyword.html#t:t/0">Keyword.t</a>) :: <a href="#t:maybe_error/0">maybe_error</a></li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Validates the attribute matches a given regular expression.
+Nil values are not matched against (skipped).</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:message</code> - defaults to &quot;is invalid&quot;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>validate user,
+  email: matches(%r/@/)
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/validator/predicates.ex#L78" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="member_of/4">
+    <strong>member_of(attr, value, enum, opts // [])</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>member_of(atom, term, <a href="http://elixir-lang.org/docs/master/Enumerable.html#t:t/0">Enumerable.t</a>, <a href="http://elixir-lang.org/docs/master/Keyword.html#t:t/0">Keyword.t</a>) :: <a href="#t:maybe_error/0">maybe_error</a></li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Validates the attribute is member of the given enumerable.</p>
+
+<p>This validator has the same semantics as calling <code>Enum.member?/2</code>
+with the given enumerable and value.</p>
+
+<p>Nil values are not matched against (skipped).</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:message</code> - defaults to &quot;is not included in the list&quot;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>validate user,
+  gender: member_of(%w(male female other))
+
+validate user,
+  age: member_of(0..99)
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/validator/predicates.ex#L108" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="not_member_of/4">
+    <strong>not_member_of(attr, value, enum, opts // [])</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>not_member_of(atom, term, <a href="http://elixir-lang.org/docs/master/Enumerable.html#t:t/0">Enumerable.t</a>, <a href="http://elixir-lang.org/docs/master/Keyword.html#t:t/0">Keyword.t</a>) :: <a href="#t:maybe_error/0">maybe_error</a></li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Validates the attribute is not a member of the given enumerable.</p>
+
+<p>This validator has the same semantics as calling
+<code>not Enum.member?/2</code> with the given enumerable and value.</p>
+
+<p>Nil values are not matched against (skipped).</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:message</code> - defaults to &quot;is reserved&quot;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>validate user,
+  username: not_member_of(%w(admin superuser))
+
+validate user,
+  password: not_member_of([user.username, user.name],
+                          message: &quot;cannot be the same as username or first name&quot;)
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/validator/predicates.ex#L139" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="present/3">
+    <strong>present(attr, value, opts // [])</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>present(atom, term, <a href="http://elixir-lang.org/docs/master/Keyword.html#t:t/0">Keyword.t</a>) :: <a href="#t:maybe_error/0">maybe_error</a></li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Validates the attribute is present (i.e. not nil,
+nor an empty list nor an empty string).</p>
+
+<h2>Options</h2>
+
+<ul>
+<li><code>:message</code> - defaults to &quot;can&#39;t be blank&quot;</li>
+</ul>
+
+<h2>Examples</h2>
+
+<pre><code>validate user,
+  name: present()
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/validator/predicates.ex#L28" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

@@ -115,7 +115,8 @@ in the keywords query and in the query expression formats.</p>
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -123,64 +124,118 @@ in the keywords query and in the query expression formats.</p>
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#from/1">from/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#from/2">from/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#group_by/3">group_by/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#having/3">having/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#join/5">join/5</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#limit/3">limit/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#offset/3">offset/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#order_by/3">order_by/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#preload/3">preload/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#select/3">select/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#where/3">where/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#from/1">from(kw)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a query with a from query expression.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from/2">from(expr, kw)</a></td>
+  
+    <td class="summary_synopsis"><p>Creates a query. It can either be a keyword query or a query expression. If it
+is a keyword query the first argument should be an <code>in</code> expression and the
+second argument a keyword query where they keys are expression types and the
+values are expressions.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#group_by/3">group_by(query, binding, expr)</a></td>
+  
+    <td class="summary_synopsis"><p>A group by query expression. Groups together rows from the entity that have
+the same values in the given fields. Using <code>group_by</code> &quot;groups&quot; the query
+giving it different semantics in the <code>select</code> expression. If a query is
+grouped only fields that were referenced in the <code>group_by</code> can be used in the
+<code>select</code> or if the field is given as an argument to an aggregate function.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#having/3">having(query, binding, expr)</a></td>
+  
+    <td class="summary_synopsis"><p>A having query expression. Like <code>where</code> <code>having</code> filters rows from the entity,
+but after the grouping is performed giving it the same semantics as <code>select</code>
+for a grouped query (see <a href="#group_by/3"><code>group_by/3</code></a>). <code>having</code> groups the query even if the
+query has no <code>group_by</code> expression.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#join/5">join(query, qual, binding, expr, on // nil)</a></td>
+  
+    <td class="summary_synopsis"><p>A join query expression. Receives an entity that is to be joined to the query
+and a condition to do the joining on. The join condition can be any expression
+that evaluates to a boolean value. The join is by default an inner join, the
+qualifier can be changed by giving the atoms: <code>:inner</code>, <code>:left</code>, <code>:right</code> or
+<code>:full</code>. For a keyword query the <code>:join</code> keyword can be changed to:
+<code>:inner_join</code>, <code>:left_join</code>, <code>:right_join</code> or <code>:full_join</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#limit/3">limit(query, binding // [], expr)</a></td>
+  
+    <td class="summary_synopsis"><p>A limit query expression. Limits the number of rows selected from the entity.
+Can be any expression but have to evaluate to an integer value. Can&#39;t include
+entity fields.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#offset/3">offset(query, binding // [], expr)</a></td>
+  
+    <td class="summary_synopsis"><p>An offset query expression. Limits the number of rows selected from the
+entity. Can be any expression but have to evaluate to an integer value.
+Can&#39;t include entity fields.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#order_by/3">order_by(query, binding, expr)</a></td>
+  
+    <td class="summary_synopsis"><p>An order by query expression. Orders the fields based on one or more entity
+fields. It accepts a single field or a list field, the direction can be
+specified in a keyword list as shown in the examples. There can be several
+order by expressions in a query.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#preload/3">preload(query, binding // [], expr)</a></td>
+  
+    <td class="summary_synopsis"><p>A preload query expression. Preloads the specified fields on the entity in the
+from expression. Loads all associated records for each entity in the result
+set based on the association. The fields have to be association fields and the
+entity has to be in the select expression.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#select/3">select(query, binding, expr)</a></td>
+  
+    <td class="summary_synopsis"><p>A select query expression. Selects which fields will be selected from the
+entity and any transformations that should be performed on the fields, any
+expression that is accepted in a query can be a select field. There can only
+be one select expression in a query, if the select expression is omitted, the
+query will by default select the full entity (only works when there is a
+single from expression and no group by).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#where/3">where(query, binding, expr)</a></td>
+  
+    <td class="summary_synopsis"><p>A where query expression. Filters the rows from the entity. If there are more
+than one where expressions they will be combined in conjunction. A where
+expression have to evaluate to a boolean value.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -192,6 +247,7 @@ in the keywords query and in the query expression formats.</p>
   <p class="typespec" id="t:t/0">
     <a href="#t:t/0">t</a> :: Query.t
   </p>
+  
 </div>
 
         </div>
@@ -214,6 +270,9 @@ in the keywords query and in the query expression formats.</p>
 <pre><code>from(c in City)
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L195" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -279,6 +338,9 @@ end
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L163" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="group_by/3">
@@ -297,6 +359,11 @@ grouped only fields that were referenced in the <code>group_by</code> can be use
 from(p in Post,
   group_by: p.category,
   select: { p.category, count(p.id) })
+
+# Group on all fields on the Post entity
+from(p in Post,
+  group_by: p,
+  select: p)
 </code></pre>
 
 <h2>Expressions examples</h2>
@@ -304,6 +371,9 @@ from(p in Post,
 <pre><code>from(Post) |&gt; group_by([p], p.category) |&gt; select([p], count(p.id))
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L453" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -335,10 +405,13 @@ from(p in Post,
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L487" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="join/5">
-    <strong>join(query, binding, qual // nil, expr, on // nil)</strong>
+    <strong>join(query, qual, binding, expr, on // nil)</strong>
   </p>
   
   <div class="docstring"><p>A join query expression. Receives an entity that is to be joined to the query
@@ -366,14 +439,17 @@ select: { p, c }
 <h2>Expressions examples</h2>
 
 <pre><code>from(Comment)
-  |&gt; join([c], p in Post, c.post_id == p.id)
+  |&gt; join(:inner, [c], p in Post, c.post_id == p.id)
   |&gt; select([c, p], { p.title, c.text })
 
 from(Post)
-  |&gt; join([p], :left, c in p.comments)
+  |&gt; join(:left, [p], c in p.comments)
   |&gt; select([p, c], { p, c })
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L242" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -396,6 +472,9 @@ entity fields.</p>
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L392" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="offset/3">
@@ -417,6 +496,9 @@ from(p in Post, limit: 10, offset: 30)
 <pre><code>from(p in Post) |&gt; limit(10) |&gt; offset(30)
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L418" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -442,6 +524,9 @@ from(c in City, order_by: [asc: c.name, desc: c.population])
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L366" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="preload/3">
@@ -466,6 +551,9 @@ from(p in Post,
 <pre><code>from(Post) |&gt; preload(:comments) |&gt; select([p], p)
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L516" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -506,6 +594,9 @@ from(c in City) |&gt; select([c], { c.name, c.country })
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L311" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="where/3">
@@ -526,6 +617,9 @@ expression have to evaluate to a boolean value.</p>
 <pre><code>from(c in City) |&gt; where([c], c.state == &quot;Sweden&quot;)
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query.ex#L337" target="_blank" class="view_source">Source</a>
   
 </div>
 

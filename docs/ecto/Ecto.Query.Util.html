@@ -32,60 +32,78 @@
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
       
         <h2 id="functions_summary">Functions summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#find_expr/2">find_expr/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#find_model/2">find_model/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#locate_var/2">locate_var/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#model_var/2">model_var/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#normalize/2">normalize/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#validate/3">validate/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#validate_delete/2">validate_delete/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#validate_get/2">validate_get/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#validate_update/3">validate_update/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#find_expr/2">find_expr(arg1, arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Look up the expression where the variable was bound.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#find_model/2">find_model(models, arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Look up a model with a variable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#locate_var/2">locate_var(list, var)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#model_var/2">model_var(query, model)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#normalize/2">normalize(query, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Normalizes the query. Should be called before validation and compilation by
+the query adapter.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#validate/3">validate(query, query_apis, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the query to check if it is correct. Should be called before
+compilation by the query adapter.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#validate_delete/2">validate_delete(query, query_apis)</a></td>
+  
+    <td class="summary_synopsis"><p>Validates a delete query to check if it is correct. Should be called before
+compilation by the query adapter.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#validate_get/2">validate_get(query, query_apis)</a></td>
+  
+    <td class="summary_synopsis"><p>Validates a get query to check if it is correct. Should be called before
+compilation by the query adapter.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#validate_update/3">validate_update(query, query_apis, values)</a></td>
+  
+    <td class="summary_synopsis"><p>Validates an update query to check if it is correct. Should be called before
+compilation by the query adapter.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -105,6 +123,9 @@
   <div class="docstring"><p>Look up the expression where the variable was bound.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L66" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="find_model/2">
@@ -114,6 +135,9 @@
   <div class="docstring"><p>Look up a model with a variable.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L55" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="locate_var/2">
@@ -122,6 +146,9 @@
   
   <div class="docstring"></div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L215" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="model_var/2">
@@ -129,6 +156,9 @@
   </p>
   
   <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L207" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -140,6 +170,9 @@
 the query adapter.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L48" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="validate/3">
@@ -149,6 +182,9 @@ the query adapter.</p>
   <div class="docstring"><p>Validates the query to check if it is correct. Should be called before
 compilation by the query adapter.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L16" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -160,6 +196,9 @@ compilation by the query adapter.</p>
 compilation by the query adapter.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L32" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="validate_get/2">
@@ -170,6 +209,9 @@ compilation by the query adapter.</p>
 compilation by the query adapter.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L40" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="validate_update/3">
@@ -179,6 +221,9 @@ compilation by the query adapter.</p>
   <div class="docstring"><p>Validates an update query to check if it is correct. Should be called before
 compilation by the query adapter.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/query/util.ex#L24" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ecto.Query.Query</title>
+    <title>Ecto.InvalidEntity</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,15 +21,16 @@
 
     <div id="content">
       <h1>
-        Ecto.Query.Query
+        Ecto.InvalidEntity
         
-          <small>record</small>
+          <small>exception</small>
         
       </h1>
 
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/exceptions.ex#L34" target="_blank" class="view_source">Source</a>
 
       
         <h2>Fields <small>(and defaults)</small></h2>
@@ -37,73 +38,46 @@
           
             <li>
               <span class="summary_signature">
-                <strong>models:</strong> nil
+                <strong>entity:</strong> nil
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
-                <strong>from:</strong> nil
+                <strong>field:</strong> nil
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
-                <strong>joins:</strong> []
+                <strong>type:</strong> nil
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
-                <strong>wheres:</strong> []
+                <strong>expected_type:</strong> nil
               </span>
             </li>
           
             <li>
               <span class="summary_signature">
-                <strong>select:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>order_bys:</strong> []
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>limit:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>offset:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>group_bys:</strong> []
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>havings:</strong> []
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>preloads:</strong> []
+                <strong>reason:</strong> nil
               </span>
             </li>
           
         </ul>
       
 
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#message/1">message(e)</a></td>
+  
+</tr>
+
+        </table>
       
 
       
@@ -115,18 +89,36 @@
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t</a> :: {Ecto.Query.Query, term, term, term, term, term, term, term, term, term, term, term}
+    <a href="#t:t/0">t</a> :: {Ecto.InvalidEntity, term, term, term, term, term, term}
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:options/0">
-    <a href="#t:options/0">options</a> :: [{:preloads, term} | ({:havings, term} | ({:group_bys, term} | ({:offset, term} | ({:limit, term} | ({:order_bys, term} | ({:select, term} | ({:wheres, term} | ({:joins, term} | ({:from, term} | {:models, term})))))))))]
+    <a href="#t:options/0">options</a> :: [{:reason, term} | ({:expected_type, term} | ({:type, term} | ({:field, term} | ({:entity, term} | {:__exception__, term}))))] | [{<a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>, term | (term | (term | (term | (term | term))))}]
   </p>
+  
 </div>
 
         </div>
       
 
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="message/1">
+    <strong>message(e)</strong>
+  </p>
+  
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/exceptions.ex#L35" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
       
 
       

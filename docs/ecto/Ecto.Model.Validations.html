@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Model.Validations</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Model.Validations
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Conveniences for defining module-level validations in models.</p>
+
+<p>This module provides two macros <code>validate</code> and <code>validatep</code> that
+wrap around <code>Ecto.Validator</code>. Let&#39;s see an example:</p>
+
+<pre><code>defmodule User do
+  use Ecto.Model
+
+  queryable &quot;users&quot; do
+    field :name, :string
+    field :age, :string
+    field :filename, :string
+    field :format, :string
+  end
+
+  validate user,
+         name: present(),
+          age: present(message: &quot;must be present&quot;),
+         also: validate_attachments
+
+  validatep validate_attachments(user),
+     filename: matches(%r/\w+/),
+       format: member_of(%w(jpg gif png))
+end
+</code></pre>
+
+<p>By calling <code>validate user</code>, a <code>validate(user)</code> function is defined
+that validates each attribute according to the given predicates.
+A special attribute called <code>:also</code> is supported, useful to wire
+different validations together.</p>
+
+<p>The validations can be executed by calling the <code>validate</code> function:</p>
+
+<pre><code>User.validate(User.new)
+#=&gt; [name: &quot;can&#39;t be blank&quot;, age: &quot;must be present&quot;]
+</code></pre>
+
+<p>This function returns a list with the validation errors, with the
+attribute as key and the error message as value. You can match on
+an empty list to know if there were validation errors or not:</p>
+
+<pre><code>case User.validate(user) do
+  []     -&gt; # no errors
+  errors -&gt; # got errors
+end
+</code></pre>
+
+<p><code>validatep</code> works the same as <code>validate</code> but defines a private
+function. Note both macros can pass a function name as first
+argument which is the function to be defined. For <code>validatep</code>, we
+defined a <code>validate_attachments</code> function. All validation functions
+must receive the current entity as argument. We can call the
+<code>validate_attachments/1</code> locally as:</p>
+
+<pre><code>validate_attachments(user)
+</code></pre>
+
+<h2>Predicates</h2>
+
+<p>Validations are executed via a series of predicates:</p>
+
+<pre><code>validate user,
+  name: present(),
+   age: present(message: &quot;must be present&quot;),
+  also: validate_attachments
+</code></pre>
+
+<p>Each predicate above is going to receive the attribute being validated
+and its current value as argument. For example, the <code>present</code> predicate
+above is going to be called as:</p>
+
+<pre><code>present(:name, user.name)
+present(:age, user.age, message: &quot;must be present&quot;)
+</code></pre>
+
+<p>The predicate given to <code>:also</code> is special as it simply receives the
+current record as argument. In this example, <code>validate_attachments</code>
+will be invoked as:</p>
+
+<pre><code>validate_attachments(user)
+</code></pre>
+
+<p>Which matches the API of the private <code>validate_attachments(user)</code>
+function we have defined below. Note all predicates must return a
+keyword list, with the attribute error as key and the validation
+message as value.</p>
+
+<h2>Custom predicates</h2>
+
+<p>By using <code>Ecto.Model.Validations</code>, all predicates defined at
+<code>Ecto.Validator.Predicates</code> are automatically imported into your
+model.</p>
+
+<p>However, defining custom predicates is easy. As we have seen in
+the previous section, a custom predicate is simply a function that
+receives a particular set of arguments. For example, imagine we want
+to change the predicates below:</p>
+
+<pre><code>validatep validate_attachments(user),
+   filename: matches(%r/\w+/),
+     format: member_of(%w(jpg gif png))
+</code></pre>
+
+<p>To a custom predicate for image attachments:</p>
+
+<pre><code>validatep validate_attachments(user),
+   filename: image_attachment()
+</code></pre>
+
+<p>It could be implemented as:</p>
+
+<pre><code>def image_attachments(attr, value, opts // []) do
+  if Path.extname(value) in %w(jpg gif png) do
+    []
+  else
+    [{ attr, opts[:message] || &quot;is not an image attachment&quot; }]
+  end
+end
+</code></pre>
+
+<p>Note that predicates can also be called over remote functions as
+long as it complies with the predicate API:</p>
+
+<pre><code>validatep validate_attachments(user),
+   filename: Image.valid_attachment
+</code></pre>
+
+<h2>Function scope</h2>
+
+<p>Note that calling <code>validate</code> and <code>validatep</code> starts a new function,
+with its own scope. That said, the following is invalid:</p>
+
+<pre><code>values = %w(jpg gif png)
+
+validatep validate_attachments(user),
+   filename: matches(%r/\w+/),
+     format: member_of(values)
+</code></pre>
+
+<p>You can use module attributes instead:</p>
+
+<pre><code>@values %w(jpg gif png)
+
+validatep validate_attachments(user),
+   filename: matches(%r/\w+/),
+     format: member_of(@values)
+</code></pre>
+
+<p>On the plus side, it means you can also call other functions from
+the validator:</p>
+
+<pre><code>validatep validate_attachments(user),
+   filename: matches(%r/\w+/),
+     format: member_of(valid_formats)
+
+defp valid_formats(), do: %w(jpg gif png)
+</code></pre>
+
+<p>or even receive arguments:</p>
+
+<p>validatep validate<em>attachments(user, valid</em>formats // %w(jpg gif png)),
+      filename: matches(%r/\w+/),
+        format: member<em>of(valid</em>formats)</p>
+
+<p>or:</p>
+
+<pre><code>validatep validate_attachments(user, validate_format),
+   filename: matches(%r/\w+/),
+     format: member_of(%w(jpg gif png)) when validate_format
+</code></pre>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model/validations.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+        <h2 id="macros_summary">Macros summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#validate/2">validate(function, keywords)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a public function that runs the given validations.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#validatep/2">validatep(function, keywords)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a private function that runs the given validations.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="validate/2">
+    <strong>validate(function, keywords)</strong>
+  </p>
+  
+  <div class="docstring"><p>Defines a public function that runs the given validations.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model/validations.ex#L173" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="validatep/2">
+    <strong>validatep(function, keywords)</strong>
+  </p>
+  
+  <div class="docstring"><p>Defines a private function that runs the given validations.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model/validations.ex#L180" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>

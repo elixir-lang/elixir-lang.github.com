@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecto.Adapter.Migrations</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Ecto.Adapter.Migrations
+        
+          <small>behaviour</small>
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>This module specifies the migrations API that an adapter is required to
+implement.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter/migrations.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+
+      
+        <h2 id="callbacks_summary">Callbacks summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#migrate_up/3">migrate_up(Ecto.Repo.t(), integer(), binary())</a></td>
+  
+    <td class="summary_synopsis"><p>Running a migration with a specific version.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#migrate_down/3">migrate_down(Ecto.Repo.t(), integer(), binary())</a></td>
+  
+    <td class="summary_synopsis"><p>Running a migration with a specific version.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#migrated_versions/1">migrated_versions(Ecto.Repo.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Returns all versions migrated in the database.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="callbacks_details" class="details_list">
+          <h2>Callbacks</h2>
+          <div class="detail">
+  <p class="signature" id="migrate_up/3">
+    <strong>migrate_up(Ecto.Repo.t(), integer(), binary())</strong>
+  </p>
+  
+  <div class="docstring"><p>Running a migration with a specific version.</p>
+
+<h2>Examples</h2>
+
+<p>MyRepo.migrate_up(Repo, 20080906120000, &quot;CREATE TABLE users(id serial, name varchar(50));&quot;)</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter/migrations.ex#L17" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="migrate_down/3">
+    <strong>migrate_down(Ecto.Repo.t(), integer(), binary())</strong>
+  </p>
+  
+  <div class="docstring"><p>Running a migration with a specific version.</p>
+
+<h2>Examples</h2>
+
+<p>MyRepo.migrate_down(Repo, 20080906120000, &quot;DROP TABLE users;&quot;)</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter/migrations.ex#L27" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="migrated_versions/1">
+    <strong>migrated_versions(Ecto.Repo.t())</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns all versions migrated in the database.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter/migrations.ex#L32" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+    </div>
+  </body>
+</html>

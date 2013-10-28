@@ -35,7 +35,8 @@ implement.</p>
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -45,56 +46,88 @@ implement.</p>
 
       
         <h2 id="callbacks_summary">Callbacks summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#__using__/1">__using__/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#start_link/1">start_link/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#stop/1">stop/1</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#all/2">all/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#create/2">create/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#update/2">update/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#update_all/3">update_all/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#delete/2">delete/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#delete_all/2">delete_all/2</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#__using__/1">__using__</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#start_link/2">start_link(Ecto.Repo.t(), Keyword.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Starts any connection pooling or supervision and return <code>{ :ok, pid }</code>
+or just <code>:ok</code> if nothing needs to be done.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#stop/1">stop(Ecto.Repo.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Stops any connection pooling or supervision started with <code>start_link/1</code>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#all/2">all(Ecto.Repo.t(), Ecto.Query.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Fetchs all results from the data store based on the given query.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#create/2">create(Ecto.Repo.t(), Ecto.Entity.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Stores a single new entity in the data store. And return a primary key
+if one was created for the entity.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#update/2">update(Ecto.Repo.t(), Ecto.Entity.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Updates an entity using the primary key as key.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#update_all/3">update_all(Ecto.Repo.t(), Ecto.Query.t(), values :: Keyword.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Updates all entities matching the given query with the values given. The
+query will only have where expressions and a single from expression. Returns
+the number of affected entities.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#delete/2">delete(Ecto.Repo.t(), Ecto.Entity.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes an entity using the primary key as key.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#delete_all/2">delete_all(Ecto.Repo.t(), Ecto.Query.t())</a></td>
+  
+    <td class="summary_synopsis"><p>Deletes all entities matching the given query. The query will only have
+where expressions and a single from expression. Returns the number of affected
+entities.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
+      
+        <div id="types_details" class="details_list">
+          <h2>Types</h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:t/0">
+    <a href="#t:t/0">t</a> :: module
+  </p>
+  
+</div>
+
+        </div>
       
 
       
@@ -111,84 +144,113 @@ implement.</p>
   
   <div class="docstring"></div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L10" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
-  <p class="signature" id="start_link/1">
-    <strong>start_link(module())</strong>
+  <p class="signature" id="start_link/2">
+    <strong>start_link(Ecto.Repo.t(), Keyword.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should start any connection pooling or supervision and return <code>{ :ok, pid }</code>
-or just <code>:ok</code> if nothing needs to be done. Return <code>{ :error, error }</code> if
-something went wrong.</p>
+  <div class="docstring"><p>Starts any connection pooling or supervision and return <code>{ :ok, pid }</code>
+or just <code>:ok</code> if nothing needs to be done.</p>
+
+<p>Returns <code>{ :error, { :already_started, pid } }</code> if the repo already
+started or <code>{ :error, term }</code> in case anything else goes wrong.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L19" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="stop/1">
-    <strong>stop(module())</strong>
+    <strong>stop(Ecto.Repo.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should stop any connection pooling or supervision started with <a href="#start_link/1"><code>start_link/1</code></a>.</p>
+  <div class="docstring"><p>Stops any connection pooling or supervision started with <code>start_link/1</code>.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L25" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="all/2">
-    <strong>all(module(), Ecto.Query.t())</strong>
+    <strong>all(Ecto.Repo.t(), Ecto.Query.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should fetch all results from the data store based on the given query.</p>
+  <div class="docstring"><p>Fetchs all results from the data store based on the given query.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L30" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="create/2">
-    <strong>create(module(), Record.t())</strong>
+    <strong>create(Ecto.Repo.t(), Ecto.Entity.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should store a single new entity in the data store. And return a primary key
+  <div class="docstring"><p>Stores a single new entity in the data store. And return a primary key
 if one was created for the entity.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L36" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="update/2">
-    <strong>update(module(), Record.t())</strong>
+    <strong>update(Ecto.Repo.t(), Ecto.Entity.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should update an entity using the primary key as key.</p>
+  <div class="docstring"><p>Updates an entity using the primary key as key.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L41" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="update_all/3">
-    <strong>update_all(module(), Ecto.Query.t(), Keyword.t())</strong>
+    <strong>update_all(Ecto.Repo.t(), Ecto.Query.t(), values :: Keyword.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should update all entities matching the given query with the values given. The
+  <div class="docstring"><p>Updates all entities matching the given query with the values given. The
 query will only have where expressions and a single from expression. Returns
 the number of affected entities.</p>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L48" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="delete/2">
-    <strong>delete(module(), Record.t())</strong>
+    <strong>delete(Ecto.Repo.t(), Ecto.Entity.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should delete an entity using the primary key as key.</p>
+  <div class="docstring"><p>Deletes an entity using the primary key as key.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L53" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="delete_all/2">
-    <strong>delete_all(module(), Ecto.Query.t())</strong>
+    <strong>delete_all(Ecto.Repo.t(), Ecto.Query.t())</strong>
   </p>
   
-  <div class="docstring"><p>Should delete all entities matching the given query. The query will only have
+  <div class="docstring"><p>Deletes all entities matching the given query. The query will only have
 where expressions and a single from expression. Returns the number of affected
 entities.</p>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/adapter.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div>
 

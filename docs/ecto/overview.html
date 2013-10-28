@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Overview</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+	
+    <h1>Ecto v0.0.1</h1>
+
+    <div id="content">
+      
+        <h2 id="modules_summary">Modules summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Ecto.Adapter.html">Ecto.Adapter</a></td>
+  
+    <td class="summary_synopsis"><p>This module specifies the adapter API that an adapter is required to
+implement.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Adapter.Migrations.html">Ecto.Adapter.Migrations</a></td>
+  
+    <td class="summary_synopsis"><p>This module specifies the migrations API that an adapter is required to
+implement.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Associations.html">Ecto.Associations</a></td>
+  
+    <td class="summary_synopsis"><p>Utilities on associations.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Associations.BelongsTo.html">Ecto.Associations.BelongsTo</a></td>
+  
+    <td class="summary_synopsis"><p>A belongs_to association.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Associations.HasMany.html">Ecto.Associations.HasMany</a></td>
+  
+    <td class="summary_synopsis"><p>A has_many association.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Associations.HasOne.html">Ecto.Associations.HasOne</a></td>
+  
+    <td class="summary_synopsis"><p>A has_one association.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Entity.html">Ecto.Entity</a></td>
+  
+    <td class="summary_synopsis"><p>This module is used to define an entity. An entity is a record with associated
+meta data that is persisted to a repository.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Migration.html">Ecto.Migration</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Migrator.html">Ecto.Migrator</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides the migration API.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Model.html">Ecto.Model</a></td>
+  
+    <td class="summary_synopsis"><p>Models are Elixir modules with Ecto-specific behaviour.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Model.Queryable.html">Ecto.Model.Queryable</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a model as queryable.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Model.Validations.html">Ecto.Model.Validations</a></td>
+  
+    <td class="summary_synopsis"><p>Conveniences for defining module-level validations in models.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Query.html">Ecto.Query</a></td>
+  
+    <td class="summary_synopsis"><p>This module is the query DSL. Queries are used to fetch data from a repository
+(see <code>Ecto.Repo</code>).</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Query.API.html">Ecto.Query.API</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Query.Util.html">Ecto.Query.Util</a></td>
+  
+    <td class="summary_synopsis"><p>This module provide utility functions on queries.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Repo.html">Ecto.Repo</a></td>
+  
+    <td class="summary_synopsis"><p>This module is used to define a repository. A repository maps to a data
+store, for example an SQL database. A repository must implement <a href="#url/0"><code>url/0</code></a> and
+set an adapter (see <code>Ecto.Adapter</code>) to be used for the repository.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Utils.html">Ecto.Utils</a></td>
+  
+    <td class="summary_synopsis"><p>Convenience functions used throughout Ecto and
+imported into users modules.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Validator.html">Ecto.Validator</a></td>
+  
+    <td class="summary_synopsis"><p>Validates a given record or dict given a set of predicates.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.Validator.Predicates.html">Ecto.Validator.Predicates</a></td>
+  
+    <td class="summary_synopsis"><p>A handful of predicates to be used in validations.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Ecto.Gen.Migration.html">Mix.Tasks.Ecto.Gen.Migration</a></td>
+  
+    <td class="summary_synopsis"><p>Generates a migration for the given repository.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Ecto.Gen.Repo.html">Mix.Tasks.Ecto.Gen.Repo</a></td>
+  
+    <td class="summary_synopsis"><p>Generates a new repository.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Mix.Tasks.Ecto.Migrate.html">Mix.Tasks.Ecto.Migrate</a></td>
+  
+    <td class="summary_synopsis"><p>Runs the pending migrations for the given repository.
+Migrations are expected to be found inside the migrations
+directory returned by the priv function defined in the
+repository.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <h2 id="records_summary">Records summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Ecto.AdapterError.html">Ecto.AdapterError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.AssociationNotLoadedError.html">Ecto.AssociationNotLoadedError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.InvalidEntity.html">Ecto.InvalidEntity</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.InvalidQuery.html">Ecto.InvalidQuery</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.InvalidURL.html">Ecto.InvalidURL</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.MigrationError.html">Ecto.MigrationError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.NoPrimaryKey.html">Ecto.NoPrimaryKey</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.NotSingleResult.html">Ecto.NotSingleResult</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Ecto.TypeCheckError.html">Ecto.TypeCheckError</a></td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <h2 id="protocols_summary">Protocols summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Ecto.Queryable.html">Ecto.Queryable</a></td>
+  
+    <td class="summary_synopsis"><p>The <code>Queryable</code> protocol is responsible for converting a structure to an
+<code>Ecto.Query.Query</code> record. The only function required to implement is
+<code>to_query</code> which does the conversion.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+    </div>
+  </body>
+</html>

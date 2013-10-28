@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ecto.DateTime</title>
+    <title>Ecto.MigrationError</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -21,15 +21,16 @@
 
     <div id="content">
       <h1>
-        Ecto.DateTime
+        Ecto.MigrationError
         
-          <small>record</small>
+          <small>exception</small>
         
       </h1>
 
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/exceptions.ex#L78" target="_blank" class="view_source">Source</a>
 
       
         <h2>Fields <small>(and defaults)</small></h2>
@@ -37,37 +38,7 @@
           
             <li>
               <span class="summary_signature">
-                <strong>year:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>month:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>day:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>hour:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>min:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>sec:</strong> nil
+                <strong>message:</strong> nil
               </span>
             </li>
           
@@ -85,13 +56,15 @@
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t</a> :: {Ecto.DateTime, term, term, term, term, term, term}
+    <a href="#t:t/0">t</a> :: {Ecto.MigrationError, term, binary}
   </p>
+  
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:options/0">
-    <a href="#t:options/0">options</a> :: [{:sec, term} | ({:min, term} | ({:hour, term} | ({:day, term} | ({:month, term} | {:year, term}))))]
+    <a href="#t:options/0">options</a> :: [message: binary, __exception__: term] | [{<a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>, binary | term}]
   </p>
+  
 </div>
 
         </div>

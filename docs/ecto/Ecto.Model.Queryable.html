@@ -27,13 +27,52 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Macros for defining a queryable model. A name for the queryable is given (for
-example the table name in a SQL database) and the <code>Ecto.Entity</code> to be used.</p>
+          <p>Defines a model as queryable.</p>
+
+<p>In order to create queries in Ecto, you need to pass a queryable
+data structure as argument. By using <code>Ecto.Model.Queryable</code> in
+your model, it imports the <a href="#queryable/2"><code>queryable/2</code></a> macro.</p>
+
+<p>Assuming you have an entity named <code>Weather.Entity</code>, you can associate
+it with a model via:</p>
+
+<pre><code>defmodule Weather do
+  use Ecto.Model
+  queryable &quot;weather&quot;, Weather.Entity
+end
+</code></pre>
+
+<p>Since this is a common pattern, Ecto allows developers to define an entity
+inlined in a model:</p>
+
+<pre><code>defmodule Weather do
+  use Ecto.Model
+
+  queryable &quot;weather&quot; do
+    field :city,    :string
+    field :temp_lo, :integer
+    field :temp_hi, :integer
+    field :prcp,    :float, default: 0.0
+  end
+end
+</code></pre>
+
+<p>By making it queryable, three functions are added to the model:</p>
+
+<ul>
+<li><code>new/0</code> - simply delegates to <code>entity.new/0</code></li>
+<li><code>new/1</code> - simply delegates to <code>entity.new/1</code></li>
+<li><code>__model__/1</code> - reflection functions about the model</li>
+</ul>
+
+<p>This module also automatically imports <code>from/1</code> and <code>from/2</code>
+from <code>Ecto.Query</code> as a convenience.</p>
 
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model/queryable.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -41,19 +80,24 @@ example the table name in a SQL database) and the <code>Ecto.Entity</code> to be
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#queryable/2">queryable/2</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#queryable/3">queryable/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#queryable/2">queryable(source, entity)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a queryable name and its entity.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#queryable/3">queryable(source, opts // [], entity)</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a queryable name and the entity definition inline. <code>opts</code> will be
+given to the <code>use Ecto.Entity</code> call, see <code>Ecto.Entity</code>.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -67,10 +111,13 @@ example the table name in a SQL database) and the <code>Ecto.Entity</code> to be
           <h2>Macros</h2>
           <div class="detail">
   <p class="signature" id="queryable/2">
-    <strong>queryable(name, entity)</strong>
+    <strong>queryable(source, entity)</strong>
   </p>
   
-  <div class="docstring"><p>Defines a queryable name and the entity that defines the dataset.</p>
+  <div class="docstring"><p>Defines a queryable name and its entity.</p>
+
+<p>The source and entity can be accessed during the model compilation
+via <code>@ecto_source</code> and <code>@ecto_entity</code>.</p>
 
 <h2>Example</h2>
 
@@ -81,13 +128,17 @@ end
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model/queryable.ex#L63" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="queryable/3">
-    <strong>queryable(name, opts // [], list3)</strong>
+    <strong>queryable(source, opts // [], entity)</strong>
   </p>
   
-  <div class="docstring"><p>Defines a queryable name and the entity definition inline.</p>
+  <div class="docstring"><p>Defines a queryable name and the entity definition inline. <code>opts</code> will be
+given to the <code>use Ecto.Entity</code> call, see <code>Ecto.Entity</code>.</p>
 
 <h2>Examples</h2>
 
@@ -104,7 +155,7 @@ defmodule Post do
   use Ecto.Model
 
   defmodule Entity do
-    use Ecto.Entity
+    use Ecto.Entity, model: Post
     field :text, :string
   end
 
@@ -112,6 +163,9 @@ defmodule Post do
 end
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/model/queryable.ex#L92" target="_blank" class="view_source">Source</a>
   
 </div>
 

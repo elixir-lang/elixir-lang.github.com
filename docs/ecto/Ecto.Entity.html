@@ -64,6 +64,16 @@ User.Entity.new
 #=&gt; User.Entity[]
 </code></pre>
 
+<p>When used, it allows the following options:</p>
+
+<ul>
+<li><code>:model</code> - Sets the default associated model;</li>
+<li><code>:primary_key</code> - Sets the primary key, if this option is not set a primary
+               key named <em>id</em> of type <em>integer</em> will be generated. If
+               set to <code>false</code> no primary key will be generated, to set
+               a custom primary key give <code>{ name, type }</code> to the option.</li>
+</ul>
+
 <p>In addition to the record functionality, Ecto also defines accessors and updater
 functions for the primary key will be generated on the entity, specifically
 <code>primary_key/1</code>, <code>primary_key/2</code> and <code>update_primary_key/2</code>.</p>
@@ -71,7 +81,8 @@ functions for the primary key will be generated on the entity, specifically
         </div>
       
 
-      <a href="" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/entity.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -79,29 +90,46 @@ functions for the primary key will be generated on the entity, specifically
 
       
         <h2 id="macros_summary">Macros summary</h2>
-        <ul class="summary">
-          <li>
-  <span class="summary_signature">
-    <a href="#belongs_to/3">belongs_to/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#field/3">field/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#has_many/3">has_many/3</a>
-  </span>
-</li>
-<li>
-  <span class="summary_signature">
-    <a href="#has_one/3">has_one/3</a>
-  </span>
-</li>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#belongs_to/3">belongs_to(name, queryable, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Indicates a one-to-one association with another queryable, this entity
+belongs to zero or one records of the queryable structure. The other queryable
+often has a <code>has_one</code> or a <code>has_many</code> field with the reverse association.
+Compared to <code>has_one</code> this association should be used where you would place
+the foreign key on a SQL table.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#field/3">field(name, type // :string, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Defines a field on the entity with given name and type, will also create a
+record field. If the type is <code>:virtual</code> it wont be persisted.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#has_many/3">has_many(name, queryable, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Indicates a one-to-many association with another queryable, where this entity
+has zero or more records of the queryable structure. The other queryable often
+has a <code>belongs_to</code> field with the reverse association.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#has_one/3">has_one(name, queryable, opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Indicates a one-to-one association with another queryable, where this entity
+has zero or one records of the queryable structure. The other queryable often
+has a <code>belongs_to</code> field with the reverse association.</p>
+</td>
+  
+</tr>
 
-        </ul>
+        </table>
       
 
       
@@ -113,6 +141,7 @@ functions for the primary key will be generated on the entity, specifically
   <p class="typespec" id="t:t/0">
     <a href="#t:t/0">t</a> :: <a href="http://elixir-lang.org/docs/master/Record.html#t:t/0">Record.t</a>
   </p>
+  
 </div>
 
         </div>
@@ -128,14 +157,21 @@ functions for the primary key will be generated on the entity, specifically
     <strong>belongs_to(name, queryable, opts // [])</strong>
   </p>
   
-  <div class="docstring"><p>Indiciates a one-to-one association with another queryable, this entity
+  <div class="docstring"><p>Indicates a one-to-one association with another queryable, this entity
 belongs to zero or one records of the queryable structure. The other queryable
-often has a <code>has_one</code> or a <code>has_many</code> field with the reverse association.</p>
+often has a <code>has_one</code> or a <code>has_many</code> field with the reverse association.
+Compared to <code>has_one</code> this association should be used where you would place
+the foreign key on a SQL table.</p>
 
 <p>Creates a virtual field called <code>name</code>. The association can be accessed via
 this field, see <code>Ecto.Associations.BelongsTo</code> for more information. Check the
 examples to see how to perform queries on the association and
-<code>Ecto.Query.join/3</code> for joins. Will also generate a foreign key field.</p>
+<code>Ecto.Query.join/3</code> for joins.</p>
+
+<p>Will generate a foreign key field. A <code>field/2</code> function will be generated with
+the name of the field, this function will update what is loaded on the
+association. Note that Ecto never persists associations when an entity is
+persisted so this function should be used with care.</p>
 
 <h2>Options</h2>
 
@@ -167,10 +203,13 @@ comment.post.get #=&gt; Post.Entity[...]
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/entity.ex#L212" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="field/3">
-    <strong>field(name, type, opts // [])</strong>
+    <strong>field(name, type // :string, opts // [])</strong>
   </p>
   
   <div class="docstring"><p>Defines a field on the entity with given name and type, will also create a
@@ -181,10 +220,12 @@ record field. If the type is <code>:virtual</code> it wont be persisted.</p>
 <ul>
 <li><code>:default</code> - Sets the default value on the entity and the record;</li>
 <li><code>:primary_key</code> - Sets the field to be the primary key, the default
-primary key have to be overridden by setting its name to <code>nil</code>, see
-<code>Ecto.Entity.dataset</code>;</li>
+primary key have to be overridden by setting its name to <code>nil</code>;</li>
 </ul>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/entity.ex#L65" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -201,11 +242,16 @@ this field, see <code>Ecto.Associations.HasMany</code> for more information. Che
 examples to see how to perform queries on the association and
 <code>Ecto.Query.join/3</code> for joins.</p>
 
+<p>A <code>field/2</code> function will be generated with the name of the field, this
+function will update what is loaded on the association. Note that Ecto never
+persists associations when an entity is persisted so this function should be
+used with care.</p>
+
 <h2>Options</h2>
 
 <ul>
-<li><code>:foreign_key</code> - Sets the foreign key that is used on the other entity,
-                 defaults to: <code>:&quot;#{model}_id&quot;</code>;</li>
+<li><code>:foreign_key</code> - Sets the foreign key, this should map to a field on the
+                 other entity, defaults to: <code>:&quot;#{model}_id&quot;</code>;</li>
 <li><code>:primary_key</code> - Sets the key on the current entity to be used for the
                  association, defaults to the primary key on the entity;</li>
 </ul>
@@ -235,6 +281,9 @@ post.comments.to_list #=&gt; [ Comment.Entity[...], ... ]
 </code></pre>
 </div>
   
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/entity.ex#L116" target="_blank" class="view_source">Source</a>
+  
 </div>
 <div class="detail">
   <p class="signature" id="has_one/3">
@@ -250,11 +299,16 @@ this field, see <code>Ecto.Associations.HasOne</code> for more information. Chec
 examples to see how to perform queries on the association and
 <code>Ecto.Query.join/3</code> for joins.</p>
 
+<p>A <code>field/2</code> function will be generated with the name of the field, this
+function will update what is loaded on the association. Note that Ecto never
+persists associations when an entity is persisted so this function should be
+used with care.</p>
+
 <h2>Options</h2>
 
 <ul>
-<li><code>:foreign_key</code> - Sets the foreign key that is used on the other entity,
-                 defaults to: <code>:&quot;#{model}_id&quot;</code>;</li>
+<li><code>:foreign_key</code> - Sets the foreign key, this should map to a field on the
+                 other entity, defaults to: <code>:&quot;#{model}_id&quot;</code>;</li>
 <li><code>:primary_key</code> - Sets the key on the current entity to be used for the
                  association, defaults to the primary key on the entity;</li>
 </ul>
@@ -279,6 +333,9 @@ post.permalink.get #=&gt; Permalink.Entity[...]
 post.permalink.get #=&gt; Permalink.Entity[...]
 </code></pre>
 </div>
+  
+    <a href="https://github.com/elixir-lang/ecto/blob/1d6f70467b80e6fecf2ab4178902394252086a70
+/lib/ecto/entity.ex#L163" target="_blank" class="view_source">Source</a>
   
 </div>
 

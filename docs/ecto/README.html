@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>README</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>Ecto</h1>
+
+<p>Ecto is a domain specific language for writing queries and interacting with databases in Elixir. Here is an example:</p>
+
+<pre><code class="elixir">defmodule Repo do
+  use Ecto.Repo, adapter: Ecto.Adapters.Postgres
+
+  def url do
+    &quot;ecto://postgres:postgres@localhost/ecto_simple&quot;
+  end
+end
+
+defmodule Weather do
+  use Ecto.Model
+
+  queryable &quot;weather&quot; do
+    field :city     # Defaults to type :string
+    field :temp_lo, :integer
+    field :temp_hi, :integer
+    field :prcp,    :float, default: 0.0
+  end
+end
+
+defmodule Simple do
+  import Ecto.Query
+
+  def sample_query do
+    query = from w in Weather,
+          where: w.prcp &gt; 0 or w.prcp == nil,
+         select: w
+    Repo.all(query)
+  end
+end
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Add Ecto as a dependency in your <code>mix.exs</code> file. If you are using PostgreSQL, you will also need the library that Ecto&#39;s PostgreSQL adapter is using.</p>
+
+<pre><code class="elixir">def deps do
+  [ { :postgrex, github: &quot;ericmj/postgrex&quot; },
+    { :ecto, github: &quot;elixir-lang/ecto&quot; } ]
+end
+</code></pre>
+
+<p>After you are done, run <code>mix deps.get</code> in your shell to fetch and compile the dependencies.</p>
+
+<h2>Important links</h2>
+
+<ul>
+<li><a href="https://groups.google.com/forum/#!forum/elixir-ecto">Mailing list</a></li>
+<li><a href="http://elixir-lang.org/docs/ecto">Documentation</a></li>
+<li><a href="https://github.com/elixir-lang/ecto/tree/master/examples">Examples</a></li>
+</ul>
+
+<h2>Introduction</h2>
+
+<p>When using Ecto, we think about 4 main components:</p>
+
+<ul>
+<li><a href="http://elixir-lang.org/docs/ecto/Ecto.Repo.html">Repositories</a>: repositories are wrappers around the database. Via the repository, we can create, update, destroy and query existing entries. A repository needs an adapter and a URL to communicate to the database;</li>
+<li><a href="http://elixir-lang.org/docs/ecto/Ecto.Entity.html">Entities</a>: entities are data with an identity. They are Elixir records that represent a row in the database;</li>
+<li><a href="http://elixir-lang.org/docs/ecto/Ecto.Model.html">Models</a>: models represent behaviour. Validations, callbacks and query handling are all behaviours tied to a model;</li>
+<li><a href="http://elixir-lang.org/docs/ecto/Ecto.Query.html">Queries</a>: written in Elixir syntax, queries are used to retrieve information from a given repository. Queries in Ecto are secure, avoiding common problems like SQL Injetion, and also type-safe. Queries are also composable via the <code>Ecto.Queryable</code> protocol.</li>
+</ul>
+
+<p>Note how the storage (repositories), the data (entities) and behaviour (models) are decoupled in Ecto. In the following sections, we will describe those components and how they interact with each other. This README will follow the code outlined in the application at <a href="https://github.com/elixir-lang/ecto/tree/master/examples/simple">examples/simple</a>. Please follow the instructions outlined there to get it up and running.</p>
+
+<h3>Repositories</h3>
+
+<p>A repository is a wrapper around the database. We can define a repository as follow:</p>
+
+<pre><code class="elixir">defmodule Repo do
+  use Ecto.Repo, adapter: Ecto.Adapters.Postgres
+
+  def url do
+    &quot;ecto://postgres:postgres@localhost/ecto_simple&quot;
+  end
+end
+</code></pre>
+
+<p>Currently we just support the Postgres adapter. The repository is also responsible for defining the url that locates the database. The URL should be in the following format:</p>
+
+<pre class="codeblock"><code>ecto://USERNAME:PASSWORD@HOST/DATABASE
+</code></pre>
+
+<p>Besides, a set of options can be passed to the adatpter as:</p>
+
+<pre class="codeblock"><code>ecto://USERNAME:PASSWORD@HOST/DATABASE?KEY=VALUE
+</code></pre>
+
+<p>Each repository in Ecto defines a <code>start_link/0</code> function that needs to be invoked before using the repository. In general, this function is not called directly, but via the supervisor chain, as shown <a href="https://github.com/elixir-lang/ecto/tree/master/examples/simple">in the simple example</a>:</p>
+
+<pre><code class="elixir">defmodule Simple.App do
+  use Application.Behaviour
+
+  def start(_type, _args) do
+    Simple.Sup.start_link
+  end
+end
+
+defmodule Simple.Sup do
+  use Supervisor.Behaviour
+
+  def start_link do
+    :supervisor.start_link({ :local, __MODULE__ }, __MODULE__, [])
+  end
+
+  def init([]) do
+    tree = [ worker(Repo, []) ]
+    supervise(tree, strategy: :one_for_all)
+  end
+end
+</code></pre>
+
+<p>You can read more about <a href="http://elixir-lang.org/docs/ecto/Ecto.Repo.html">the Repository API in the docs</a>.</p>
+
+<h3>Entities</h3>
+
+<p>Entities in Ecto (docs) are used to represent data. An entity can defined as follow:</p>
+
+<pre><code class="elixir">defmodule Weather.Entity do
+  use Ecto.Entity
+
+  field :city,    :string
+  field :temp_lo, :integer
+  field :temp_hi, :integer
+  field :prcp,    :float, default: 0.0
+end
+</code></pre>
+
+<p>Since entities are records, they are equally immutable and all the record functionality is available:</p>
+
+<pre><code class="elixir">weather = Weather.Entity.new
+weather = weather.temp_lo(30
+weather.temp_lo #=&gt; 30
+</code></pre>
+
+<p>However, entities bring extra functionalities on top of records. First of all, all entities have an id field, with type integer, used as primary key:</p>
+
+<pre><code class="elixir">weather = Weather.Entity.new(id: 13)
+weather.id #=&gt; 13
+weather.primary_key #=&gt; 13
+</code></pre>
+
+<p>Entities also provide casting and associations, which are explored in later sections.</p>
+
+<h3>Models</h3>
+
+<p>Entities in Ecto are simply data. All the behaviour exists in models which is nothing more than an Elixir module. Ecto provides many convenience functions that makes it easy to implement common model functionality, like callbacks and validations. The functionalities provided by <code>Ecto.Model</code> are:</p>
+
+<ul>
+<li><a href="http://elixir-lang.org/docs/ecto/Ecto.Model.Queryable.html"><code>Ecto.Model.Queryable</code></a> - defines a model as queryable;</li>
+<li><a href="http://elixir-lang.org/docs/ecto/Ecto.Model.Validations.html"><code>Ecto.Model.Validations</code></a> - conveniences for defining module-level validations in models;</li>
+<li><code>Ecto.Model.Callbacks</code> - to be implemented;</li>
+</ul>
+
+<p>By using <code>Ecto.Model</code> all the functionality above is included, but you can cherry pick the ones you want to use. For this introduction, we will explore only the queryable functionality as it is the basic functionality.</p>
+
+<p>The queryable functionality connects an entity to a database table, allowing us to finally interact with a repository. Given the <code>Weather.Entity</code> defined above, we can integrate it with a model as follows:</p>
+
+<pre><code class="elixir">defmodule Weather do
+  use Ecto.Model
+  queryable &quot;weather&quot;, Weather.Entity
+end
+</code></pre>
+
+<p>Since this is a common pattern, Ecto allows developers to define an entity inlined in a model. We can bundle the <code>Weather</code> and <code>Weather.Entity</code> modules together as follows:</p>
+
+<pre><code class="elixir">defmodule Weather do
+  use Ecto.Model
+
+  queryable &quot;weather&quot; do
+    field :city,    :string
+    field :temp_lo, :integer
+    field :temp_hi, :integer
+    field :prcp,    :float, default: 0.0
+  end
+end
+</code></pre>
+
+<p>This compact model/entity definition is the preferred format (unless you need a decoupled entity) and will be format used from now on. The model also defines <code>Weather.new/1</code> as shortcut that simply delegates to <code>Weather.Entity</code>:</p>
+
+<pre><code class="elixir">weather = Weather.new(temp_lo: 0, temp_hi: 23)
+#=&gt; Weather.Entity[temp_lo: 0, temp_hi: 23]
+</code></pre>
+
+<p>A repository in Elixir only works with queryable structures. Since we have defined our model as a queryable structure, we can finally interact with the repository:</p>
+
+<pre><code class="elixir">weather = Weather.new(temp_lo: 0, temp_hi: 23)
+Repo.create(weather)
+</code></pre>
+
+<p>After persisting <code>weather</code> to the database, it will return a new copy of weather with the primary key (the <code>id</code>) set. We can use this value to read an entity back from the repository:</p>
+
+<pre><code class="elixir"># Get the entity back
+weather = Repo.get Weather, 1
+#=&gt; Weather.Entity[id: 1, ...]
+
+# Update it
+weather = weather.temp_lo(10)
+Repo.update(weather)
+#=&gt; :ok
+
+# Delete it
+Repo.delete(weather)
+</code></pre>
+
+<p>Notice how the storage (repository), the data (entity) and the behaviour (model) are decoupled, with the model acting as a thin layer connecting the repository and the data. This provides many benefits:</p>
+
+<ul>
+<li>By containing just data, we guarantee that entities are light-weight, serializable structures. In many languages, the entities are represented by large, complex objects, with entwined state transactions, which makes serialization particularly hard;</li>
+<li>By providing behaviour in modules, they are easy to compose (it is a matter of composing functions). You can easily have different entities sharing the same set of validations. Or the same entity being controlled by a different set of validations and rules on different parts of the application. For example, a Weather entity may require a different set of validations and data integrity rules depending on the role of the user manipulating the data;</li>
+<li>By concerning only with storage, operations on the repository are simple and fast. You control the steps your data pass through before entering the repository. We don&#39;t pollute the repository with unecessary overhead, providing straight-forward and performant access to storage;</li>
+</ul>
+
+<p>For example, after the remaining model functionality is added, this is how an <code>update</code> action in a REST endpoint could look like:</p>
+
+<pre><code class="elixir">def update(id, params) do
+  weather = Repo.get(Weather, id).update(params)
+
+  case Weather.validate(weather) do
+    []     -&gt; json weather: Repo.create(weather)
+    errors -&gt; json errors: errors
+  end
+end
+</code></pre>
+
+<h3>Query</h3>
+
+<p>Last but not least, Ecto allows you to write queries in Elixir and send them to the repository, which translates them to the underlying database. Let&#39;s see an example:</p>
+
+<pre><code class="elixir">import Ecto.Query, only: [from: 2]
+
+query = from w in Weather,
+      where: w.prcp &gt; 0 or w.prcp == nil,
+     select: w
+
+Repo.all(query)
+</code></pre>
+
+<p>Queries are defined and extended with the <code>from</code> macro. The supported keywords are:</p>
+
+<ul>
+<li><code>:where</code></li>
+<li><code>:order_by</code></li>
+<li><code>:offset</code></li>
+<li><code>:limit</code></li>
+<li><code>:group_by</code></li>
+<li><code>:having</code></li>
+<li><code>:join</code></li>
+<li><code>:select</code> - although we used <code>:select</code> above, it is optional and by default it simply returns the entity tied to the model being queried</li>
+<li><code>:preload</code> - used for preloading associations</li>
+</ul>
+
+<p>You can find more info about queries and the supported keywords in the <a href="http://elixir-lang.org/docs/ecto/Ecto.Query.html"><code>Ecto.Query</code> module</a>.</p>
+
+<p>In the previous section, we have defined our model as queryable. This is what allows our model to be used in the query as: <code>from w in Weather</code>. The right-hand side of <code>in</code> must implement the <code>Ecto.Queryable</code> protocol, which is done automatically for models that use the queryable feature.</p>
+
+<p>Since queries also implement <code>Ecto.Queryable</code>, we can compose queries:</p>
+
+<pre><code class="elixir">query = from w in Weather,
+      where: w.prcp &gt; 0 or w.prcp == nil
+
+Repo.all(from q in query, limit: 30)
+</code></pre>
+
+<p>When writing a query, you are inside Ecto&#39;s query syntax. In order to access external values or invoke functions, you need to use the <code>^</code> operator, which is overloaded by Ecto:</p>
+
+<pre><code class="elixir">def min_prcp(min) do
+  from w in Weather, where: w.prcp &gt; ^min or w.prcp == nil
+end
+</code></pre>
+
+<p>This comes with the extra benefit that queries in Ecto can easily access database functions. For example, <code>upcase</code>, <code>downcase</code>, <code>pow</code> are all available inside Ecto query syntax and are sent directly to the database. You can see the full list of supported functions at <a href="http://elixir-lang.org/docs/ecto/Ecto.Query.API.html"><code>Ecto.Query.API</code></a>.</p>
+
+<p>Finally, notice that queries in Ecto must be type-safe. The following example will fail:</p>
+
+<pre><code class="elixir">Repo.all(from w in Weather, where: w.prcp == &quot;oops&quot;)
+</code></pre>
+
+<p>with the following error message:</p>
+
+<pre><code class="elixir">** (Ecto.TypeCheckError) the following expression does not type check:
+
+    &amp;0.prcp() == &quot;foo&quot;
+
+Allowed types for ==/2:
+
+    number == number
+    var == var
+    nil == _
+    _ == nil
+
+Got: float == string
+</code></pre>
+
+<p>The error message is saying that, the database operator <code>==/2</code> can compare numbers with numbers, be them integer or floats, it can compare any value with other value of the same type (<code>var == var</code>), and it can compare any other value with <code>nil</code>.</p>
+
+<p>With this, we finish our introduction. The next section goes into more details on other Ecto features, like generators, associations and more.</p>
+
+<h2>Other topics</h2>
+
+<h3>Mix tasks and generators</h3>
+
+<p>Ecto provides many tasks to help your workflow as well as code generators. You can find all available tasks by typing <code>mix help</code> inside a project with Ecto.</p>
+
+<p>Ecto generators will automatically open the generated files if you have <code>ECTO_EDITOR</code> set in your environment variable. You can set this variable for different editors as follows:</p>
+
+<ul>
+<li>Textmate: <code>mate -a</code></li>
+</ul>
+
+<h3>Types and casting</h3>
+
+<p>When defining each entity field, a type needs to be given. Those types are specific to Ecto and must be one of:</p>
+
+<ul>
+<li><code>:integer</code></li>
+<li><code>:float</code></li>
+<li><code>:boolean</code></li>
+<li><code>:binary</code> - for binaries;</li>
+<li><code>:string</code> - for utf-8 encoded binaries;</li>
+<li><code>:list</code></li>
+<li><code>:datetime</code></li>
+<li><code>:virtual</code> - virtual types can have any value and they are not sent to the database;</li>
+</ul>
+
+<p>When manipulating the entity via the record functions, it is responsibility of the developer to ensure the fields are cast to the proper value. For example:</p>
+
+<pre><code class="elixir">weather = Weather.Entity.new(temp_lo: &quot;0&quot;)
+weather.temp_lo #=&gt; &quot;0&quot;
+</code></pre>
+
+<p>As seen before, Ecto validates the types when a query is being prepared to be sent to the database. So if you attempt to persist the entity above, an error will be raised.</p>
+
+<h3>Associations</h3>
+
+<p>Ecto supports defining associations on entities:</p>
+
+<pre><code class="elixir">defmodule Post do
+  use Ecto.Model
+
+  queryable &quot;posts&quot; do
+    has_many :comments, Comment
+  end
+end
+
+defmodule Comment do
+  use Ecto.Model
+
+  queryable &quot;comments&quot; do
+    field :title, :string
+    belongs_to :post, Post
+  end
+end
+</code></pre>
+
+<p>For each association, Ecto defines a function in <code>Post</code> to retrieve the association metadata with the associated entity. For example:</p>
+
+<pre><code class="elixir">post = Repo.get(Post, 42)
+post.comments #=&gt; Ecto.Association.HasMany[...]
+</code></pre>
+
+<p>The association record above provides a couple conveniences. First of all, <code>post.comments</code> is a queryable structure, which means we can use it in queries:</p>
+
+<pre><code class="elixir"># Get all comments for the given post
+Repo.all(post.comments)
+
+# Build a query on top of the associated comments
+query = from c in post.comments, where: c.title != nil
+Repo.all(query)
+</code></pre>
+
+<p>Ecto also supports joins with associations:</p>
+
+<pre><code class="elixir">query = from p in Post,
+      where: p.id == 42,
+  left_join: c in p.comments,
+     select: assoc(p, c)
+
+[post] = Repo.all(query)
+
+post.comments.to_list #=&gt; [Comment.Entity[...], Comment.Entity[...]]
+</code></pre>
+
+<p>Notice we used the <code>assoc</code> helper to associate the returned posts and comments while assembling the query results.</p>
+
+<p>It is easy to see above though that a developer simply wants to get all comments associated to each post. There is no filtering based on the underlying comment. For such, Ecto support preloads:</p>
+
+<pre><code class="elixir">posts = Repo.all(from p in Post, preload: [:comments])
+hd(posts).comments.to_list #=&gt; [Comment.Entity[...], Comment.Entity[...]]
+</code></pre>
+
+<p>When preloading, Ecto first fetches all posts and then Ecto does a separate query to retrieve all comments associated with the returned posts.</p>
+
+<p>Notice that Ecto does not lazy load associations. While lazily loading associations may sound convenient at first, in the long run it becomes a source of confusion and performance issues. That said, if you call <code>to_list</code> in an association that is not currently loaded, Ecto will raise an error:</p>
+
+<pre><code class="elixir">post = Repo.get(Post, 42)
+post.comments.to_list #=&gt; ** (Ecto.AssociationNotLoadedError)
+</code></pre>
+
+<p>Besides <code>has_many</code>, Ecto also supports <code>has_one</code> and <code>belongs_to</code> associations. They work similarly, except retrieving the association value is done via <code>get</code>, instead of <code>to_list</code>:</p>
+
+<pre><code class="elixir">query = from(c in Comment, where: c.id == 42, preload: :post)
+[comment] = Repo.all(query)
+comment.post.get #=&gt; Post.Entity[...]
+</code></pre>
+
+<p>You can find more information about defining associations and each respective association module <a href="http://elixir-lang.org/docs/ecto/Ecto.Entity.html">in <code>Ecto.Entity</code> docs</a>.</p>
+
+<h3>Migrations</h3>
+
+<p>Ecto supports migrations with plain SQL. In order to generate a new migration you first need to a define a <code>priv/0</code> function inside your repository pointing to a directory that will keep repo data. We recommend it to be placed inside the <code>priv</code> in your application directory:</p>
+
+<pre><code class="elixir">defmodule Repo do
+  use Ecto.Repo, adapter: Ecto.Adapters.Postgres
+
+  def priv do
+    app_dir(:YOUR_APP_NAME, &quot;priv/repo&quot;)
+  end
+end
+</code></pre>
+
+<p>Where <code>:YOUR_APP_NAME</code> is your application name (as in the <code>mix.exs</code> file). Now a migration can be generated with:</p>
+
+<pre class="codeblock"><code>$ mix ecto.gen.migration Repo create_posts
+</code></pre>
+
+<p>This will create a new file inside <code>priv/repo/migrations</code> with the following contents:</p>
+
+<pre><code class="elixir">defmodule Repo.CreatePosts do
+  use Ecto.Migration
+
+  def up do
+    &quot;&quot;
+  end
+
+  def down do
+    &quot;&quot;
+  end
+end
+</code></pre>
+
+<p>Simply write the SQL commands for updating the database (<code>up</code>) and for rolling it back (<code>down</code>) and you are ready to go!</p>
+
+<p>Note the generated file (and all migration files) starts with a timestamp, which identifies the migration version. By running migrations, a <code>schema_migrations</code> table will be created in your database to keep which migrations are &quot;up&quot; (already executed) and which ones are &quot;down&quot;.</p>
+
+<h2>Contributing</h2>
+
+<p>Ecto is on the bleeding edge of Elixir so the latest master build is most likely needed, see <a href="https://github.com/elixir-lang/elixir">Elixir&#39;s README</a> on how to build from source.</p>
+
+<p>To contribute you need to compile Ecto from source and test it:</p>
+
+<pre class="codeblock"><code>$ git clone https://github.com/elixir-lang/ecto.git
+$ cd ecto
+$ mix test
+</code></pre>
+
+<p>If you are contributing to the Postgres adapter you need to run the integration tests for the adapter (it is a good idea to run the integration tests even if you are not contributing to the adapter). You need a Postgres user with username <code>postgres</code> and password <code>postgres</code> or with trust authentication. To run the tests the <code>MIX_ENV</code> environment variable needs to be set to <code>pg</code> when running the tests. To run only the integration tests: <code>MIX_ENV=pg mix test</code> or to run all tests: <code>MIX_ENV=all mix test</code>.</p>
+
+<h2>License</h2>
+
+<p>Copyright 2012-2013 Elixir Lang.</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at</p>
+
+<pre class="codeblock"><code>  http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+
+<p>Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.</p>
+
+    </div>
+  </body>
+</html>
+
