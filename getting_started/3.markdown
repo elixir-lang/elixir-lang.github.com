@@ -350,7 +350,13 @@ In this case, we are importing only the function `duplicate` (with arity 2) from
 For example, to import all macros, one could write:
 
 ```elixir
-import :macros, MyMacros
+import MyMacros, only: :macros
+```
+
+Or to import all functions, you could write:
+
+```elixir
+import MyFunctions, only: :functions
 ```
 
 Note that `import` is also **lexically scoped**, this means we can import specific macros inside specific functions:
