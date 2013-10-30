@@ -296,11 +296,11 @@ Besides the `:registered`, `:applications` and `:mod` keys we have seen above, a
 Still in the command line, try:
 
 ```iex
-iex> :application.get_key(:stacker, :foo)
+iex> :application.get_env(:stacker, :foo)
 :undefined
-iex> :application.set_key(:stacker, :foo, :bar)
+iex> :application.set_env(:stacker, :foo, :bar)
 :ok
-iex> :application.get_key(:stacker, :foo)
+iex> :application.get_env(:stacker, :foo)
 { :ok, :bar }
 ```
 
