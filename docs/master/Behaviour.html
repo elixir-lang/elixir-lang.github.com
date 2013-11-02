@@ -27,13 +27,13 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>A convenience module for defining behaviours.
-Behaviours can be referenced by other modules
-in order to ensure they implement the proper
-callbacks.</p>
+          <p>Utilities for defining behaviour intefaces.</p>
+
+<p>Behaviours can be referenced by other modules
+to ensure they implement required callbacks.</p>
 
 <p>For example, you can specify the <code>URI.Parser</code>
-behaviour as follow:</p>
+behaviour as follows:</p>
 
 <pre><code>defmodule URI.Parser do
   use Behaviour
@@ -46,7 +46,7 @@ behaviour as follow:</p>
 end
 </code></pre>
 
-<p>And then a specific module may use it as:</p>
+<p>And then a module may use it as:</p>
 
 <pre><code>defmodule URI.HTTP do
   @behaviour URI.Parser
@@ -55,17 +55,18 @@ end
 end
 </code></pre>
 
-<p>In case the behaviour changes or URI.HTTP does
+<p>If the behaviour changes or <code>URI.HTTP</code> does
 not implement one of the callbacks, a warning
 will be raised.</p>
 
 <h2>Implementation</h2>
 
-<p>Behaviours since Erlang R15 must be defined via
+<p>Since Erlang R15, behaviours must be defined via
 <code>@callback</code> attributes. <code>defcallback</code> is a simple
 mechanism that defines the <code>@callback</code> attribute
-according to the type specification and also allows
-docs and defines a custom function signature.</p>
+according to the given type specification. <code>defcallback</code> allows
+documentsion to be created for the callback and defines 
+a custom function signature.</p>
 
 <p>The callbacks and their documentation can be retrieved
 via the <code>__behaviour__</code> callback function.</p>
@@ -73,7 +74,7 @@ via the <code>__behaviour__</code> callback function.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -85,14 +86,14 @@ via the <code>__behaviour__</code> callback function.</p>
           <tr>
   <td class="summary_signature"><a href="#defcallback/1">defcallback(fun)</a></td>
   
-    <td class="summary_synopsis"><p>Defines a callback according to the given type specification.</p>
+    <td class="summary_synopsis"><p>Define a function callback according to the given type specification.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#defmacrocallback/1">defmacrocallback(fun)</a></td>
   
-    <td class="summary_synopsis"><p>Defines a macro callback according to the given type specification.</p>
+    <td class="summary_synopsis"><p>Define a macro callback according to the given type specification.</p>
 </td>
   
 </tr>
@@ -114,10 +115,10 @@ via the <code>__behaviour__</code> callback function.</p>
     <strong>defcallback(fun)</strong>
   </p>
   
-  <div class="docstring"><p>Defines a callback according to the given type specification.</p>
+  <div class="docstring"><p>Define a function callback according to the given type specification.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/behaviour.ex#L48" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/behaviour.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -125,10 +126,10 @@ via the <code>__behaviour__</code> callback function.</p>
     <strong>defmacrocallback(fun)</strong>
   </p>
   
-  <div class="docstring"><p>Defines a macro callback according to the given type specification.</p>
+  <div class="docstring"><p>Define a macro callback according to the given type specification.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/behaviour.ex#L59" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/behaviour.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div>
 

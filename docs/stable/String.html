@@ -44,7 +44,7 @@ of those can be found in the <code>Kernel</code> module, as:</p>
 <li><a href="Kernel.html#binary_part/3"><code>Kernel.binary_part/3</code></a> - retrieves part of the binary</li>
 <li><a href="Kernel.html#bit_size/1"><code>Kernel.bit_size/1</code></a> and <a href="Kernel.html#byte_size/1"><code>Kernel.byte_size/1</code></a> - size related functions</li>
 <li><a href="Kernel.html#is_bitstring/1"><code>Kernel.is_bitstring/1</code></a> and <a href="Kernel.html#is_binary/1"><code>Kernel.is_binary/1</code></a> - type checking function</li>
-<li>Plus a number of conversion functions, like <a href="Kernel.html#binary_to_atom/2"><code>Kernel.binary_to_atom/2</code></a>,
+<li>Plus a number of conversion functions, like <a href="Kernel.html#binary_to_atom/1"><code>Kernel.binary_to_atom/1</code></a>,
 <a href="Kernel.html#binary_to_integer/2"><code>Kernel.binary_to_integer/2</code></a>, <a href="Kernel.html#binary_to_term/1"><code>Kernel.binary_to_term/1</code></a> and their inverses,
 like <a href="Kernel.html#integer_to_binary/2"><code>Kernel.integer_to_binary/2</code></a></li>
 </ul>
@@ -59,9 +59,14 @@ Character, which may be represented by one or more bytes.
 For example, the character &quot;é&quot; is represented with two
 bytes:</p>
 
-<pre><code>iex&gt; string = &quot;é&quot;
-...&gt; byte_size(string)
+<pre><code>iex&gt; byte_size(&quot;é&quot;)
 2
+</code></pre>
+
+<p>However, this module returns the proper length:</p>
+
+<pre><code>iex&gt; String.length(&quot;é&quot;)
+1
 </code></pre>
 
 <p>Furthermore, this module also presents the concept of
@@ -73,6 +78,8 @@ by the letter &quot;e&quot; followed by the accent ́:</p>
 <pre><code>iex&gt; string = &quot;\x{0065}\x{0301}&quot;
 ...&gt; byte_size(string)
 3
+iex&gt; String.length(string)
+1
 </code></pre>
 
 <p>Although the example above is made of two characters, it is
@@ -87,6 +94,11 @@ module.</p>
 <p>In general, the functions in this module rely on the Unicode
 Standard, but does not contain any of the locale specific
 behaviour.</p>
+
+<p>More information about graphemes can be found in the <a href="http://www.unicode.org/reports/tr29/">Unicode
+Standard Annex #29</a>.
+This current Elixir version implements Extended Grapheme Cluster
+algorithm.</p>
 
 <h2>Integer codepoints</h2>
 
@@ -139,7 +151,7 @@ responsible to check the validity of the encoding.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L3" target="_blank" class="view_source">Source</a>
 
       
 
@@ -224,7 +236,9 @@ nil if the string is empty.</p>
 <tr>
   <td class="summary_signature"><a href="#graphemes/1">graphemes(string)</a></td>
   
-    <td class="summary_synopsis"><p>Returns unicode graphemes in the string.</p>
+    <td class="summary_synopsis"><p>Returns unicode graphemes in the string as per Extended Grapheme
+Cluster algorithm outlined in the <a href="http://www.unicode.org/reports/tr29/">Unicode Standard Annex #29,
+Unicode Text Segmentation</a>.</p>
 </td>
   
 </tr>
@@ -339,6 +353,14 @@ has been removed.</p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#slice/2">slice(string, range)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a substring from the offset given by the start of the
+range to the offset given by the end of the range.</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#slice/3">slice(string, start, len)</a></td>
   
     <td class="summary_synopsis"><p>Returns a substring starting at the offset given by the first, and
@@ -350,7 +372,7 @@ If the offset is greater than string length, than it returns <code>nil</code>.</
 <tr>
   <td class="summary_signature"><a href="#split/1">split(binary)</a></td>
   
-    <td class="summary_synopsis"><p>Splits a string on substrings at each Unicode whitespace
+    <td class="summary_synopsis"><p>Divides a string into substrings at each Unicode whitespace
 occurrence with leading and trailing whitespace ignored.</p>
 </td>
   
@@ -401,24 +423,6 @@ respective integer value.</p>
   
     <td class="summary_synopsis"><p>Converts a string into a char list converting each codepoint to its
 respective integer value.</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#to_float/1">to_float(string)</a></td>
-  
-    <td class="summary_synopsis"><p>Converts a string to a float. If successful, returns a
-tuple of the form <code>{float, remainder of string}</code>.
-If unsuccessful, returns <code>:error</code>.</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#to_integer/1">to_integer(string)</a></td>
-  
-    <td class="summary_synopsis"><p>Converts a string to an integer. If successful, returns a
-tuple of the form <code>{integer, remainder of string}</code>. If unsuccessful,
-returns <code>:error</code>.</p>
 </td>
   
 </tr>
@@ -509,7 +513,7 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L786" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L794" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -543,7 +547,7 @@ iex&gt; String.capitalize(&quot;josé&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L281" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L294" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -571,7 +575,7 @@ iex&gt; String.codepoints(&quot;ἅἪῼ&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L586" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L599" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -600,7 +604,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L1030" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L1051" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -628,7 +632,7 @@ iex&gt; String.downcase(&quot;JOSÉ&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L259" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L272" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -656,7 +660,7 @@ iex&gt; String.duplicate(&quot;abc&quot;, 2)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L568" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L581" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -685,7 +689,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L991" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L1012" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -712,7 +716,7 @@ iex&gt; String.first(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L714" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L722" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -738,7 +742,7 @@ iex&gt; String.from_char_list([0x0061, 0x0062, 0x0063])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L1131" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L1152" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -766,7 +770,7 @@ iex&gt; String.from_char_list!([0x0061, 0x0062, 0x0063])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L1158" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L1179" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -781,7 +785,9 @@ iex&gt; String.from_char_list!([0x0061, 0x0062, 0x0063])
       
     </ul>
   
-  <div class="docstring"><p>Returns unicode graphemes in the string.</p>
+  <div class="docstring"><p>Returns unicode graphemes in the string as per Extended Grapheme
+Cluster algorithm outlined in the <a href="http://www.unicode.org/reports/tr29/">Unicode Standard Annex #29,
+Unicode Text Segmentation</a>.</p>
 
 <h2>Examples</h2>
 
@@ -790,7 +796,7 @@ iex&gt; String.from_char_list!([0x0061, 0x0062, 0x0063])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L683" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L690" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -817,7 +823,7 @@ iex&gt; String.last(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L734" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L742" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -843,7 +849,7 @@ iex&gt; String.length(&quot;եոգլի&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L756" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L764" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -871,7 +877,7 @@ iex&gt; String.ljust(&quot;abc&quot;, 5, ?-)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L444" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L457" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -888,7 +894,7 @@ iex&gt; String.ljust(&quot;abc&quot;, 5, ?-)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L448" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L461" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -906,7 +912,7 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L349" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L362" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -930,7 +936,7 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L363" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L376" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -963,7 +969,7 @@ be returned by this function.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L607" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L621" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -991,7 +997,7 @@ the String reached its end.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L699" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L707" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1016,7 +1022,7 @@ true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L121" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L134" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1067,7 +1073,7 @@ iex&gt; String.replace(&quot;a,b,c&quot;, &quot;,&quot;, &quot;[]&quot;, insert_
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L509" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L522" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1095,7 +1101,7 @@ iex&gt; String.reverse(&quot;hello ∂og&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L544" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L557" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1124,7 +1130,7 @@ iex&gt; String.rjust(&quot;abc&quot;, 5, ?-)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L420" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L433" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1141,7 +1147,7 @@ iex&gt; String.rjust(&quot;abc&quot;, 5, ?-)
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L424" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L437" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1166,7 +1172,7 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L297" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L310" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1190,7 +1196,57 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L310" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L323" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="slice/2">
+    <strong>slice(string, range)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>slice(<a href="#t:t/0">t</a>, <a href="Range.html#t:t/0">Range.t</a>) :: <a href="#t:t/0">t</a> | nil</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Returns a substring from the offset given by the start of the
+range to the offset given by the end of the range.</p>
+
+<p>If the start of the range is not a valid offset for the given
+string or if the range is in reverse order, returns <code>nil</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; String.slice(&quot;elixir&quot;, 1..3)
+&quot;lix&quot;
+iex&gt; String.slice(&quot;elixir&quot;, 1..10)
+&quot;lixir&quot;
+iex&gt; String.slice(&quot;elixir&quot;, 10..3)
+nil
+
+iex&gt; String.slice(&quot;elixir&quot;, -4..-1)
+&quot;ixir&quot;
+iex&gt; String.slice(&quot;elixir&quot;, 2..-1)
+&quot;ixir&quot;
+iex&gt; String.slice(&quot;elixir&quot;, -4..6)
+&quot;ixir&quot;
+iex&gt; String.slice(&quot;elixir&quot;, -1..-4)
+nil
+iex&gt; String.slice(&quot;elixir&quot;, -10..-7)
+nil
+
+iex&gt; String.slice(&quot;a&quot;, 0..1500)
+&quot;a&quot;
+iex&gt; String.slice(&quot;a&quot;, 1..1500)
+&quot;&quot;
+iex&gt; String.slice(&quot;a&quot;, 2..1500)
+nil
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L899" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1230,7 +1286,7 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L835" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L843" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1245,7 +1301,7 @@ nil
       
     </ul>
   
-  <div class="docstring"><p>Splits a string on substrings at each Unicode whitespace
+  <div class="docstring"><p>Divides a string into substrings at each Unicode whitespace
 occurrence with leading and trailing whitespace ignored.</p>
 
 <h2>Examples</h2>
@@ -1259,7 +1315,7 @@ iex&gt; String.split(&quot; foo bar &quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L156" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L169" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1325,7 +1381,7 @@ iex&gt; String.split(&quot;abc&quot;, &quot;&quot;, global: false)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L208" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L221" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1354,7 +1410,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L955" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L976" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1379,7 +1435,7 @@ has been removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L383" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L396" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1404,7 +1460,7 @@ removed.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L399" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L412" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1431,7 +1487,7 @@ iex&gt; String.to_char_list(&quot;abc&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L1077" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L1098" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1461,69 +1517,7 @@ iex&gt; String.to_char_list!(&quot;abc&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L1106" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="to_float/1">
-    <strong>to_float(string)</strong>
-  </p>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>to_float(<a href="#t:t/0">t</a>) :: {integer, <a href="#t:t/0">t</a>} | :error</li>
-      
-    </ul>
-  
-  <div class="docstring"><p>Converts a string to a float. If successful, returns a
-tuple of the form <code>{float, remainder of string}</code>.
-If unsuccessful, returns <code>:error</code>.</p>
-
-<h2>Examples</h2>
-
-<pre><code>iex&gt; String.to_float(&quot;34&quot;)
-{34.0,&quot;&quot;}
-iex&gt; String.to_float(&quot;34.25&quot;)
-{34.25,&quot;&quot;}
-iex&gt; String.to_float(&quot;56.5xyz&quot;)
-{56.5,&quot;xyz&quot;}
-iex&gt; String.to_float(&quot;pi&quot;)
-:error
-</code></pre>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L925" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="to_integer/1">
-    <strong>to_integer(string)</strong>
-  </p>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>to_integer(<a href="#t:t/0">t</a>) :: {integer, <a href="#t:t/0">t</a>} | :error</li>
-      
-    </ul>
-  
-  <div class="docstring"><p>Converts a string to an integer. If successful, returns a
-tuple of the form <code>{integer, remainder of string}</code>. If unsuccessful,
-returns <code>:error</code>.</p>
-
-<h2>Examples</h2>
-
-<pre><code>iex&gt; String.to_integer(&quot;34&quot;)
-{34,&quot;&quot;}
-iex&gt; String.to_integer(&quot;34.5&quot;)
-{34,&quot;.5&quot;}
-iex&gt; String.to_integer(&quot;three&quot;)
-:error
-</code></pre>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L898" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L1127" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1551,7 +1545,7 @@ iex&gt; String.upcase(&quot;josé&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L243" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L256" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1581,7 +1575,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L633" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L647" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1615,7 +1609,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/string.ex#L661" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/string.ex#L675" target="_blank" class="view_source">Source</a>
   
 </div>
 

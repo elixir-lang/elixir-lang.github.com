@@ -217,7 +217,7 @@ IEx.Options.set :inspect, limit: 3
 $ iex
 Erlang R16B (erts-5.10.1) [...]
 
-Interactive Elixir (0.9.1.dev) - press Ctrl+C to exit (type h() ENTER for help)
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)&gt; [1, 2, 3, 4, 5]
 [1,2,3,...]
 </code></pre>
@@ -260,7 +260,7 @@ pending expression and return to its normal state:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/iex/lib/iex.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/iex/lib/iex.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -301,6 +301,18 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
       
 
       
+        <h2 id="macros_summary">Macros summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#pry/1">pry(timeout // 1000)</a></td>
+  
+    <td class="summary_synopsis"><p>Pries into the process environment.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
 
       
 
@@ -317,7 +329,7 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
   <div class="docstring"><p>Returns registered <code>after_spawn</code> callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/iex/lib/iex.ex#L226" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/iex/lib/iex.ex#L226" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -328,7 +340,7 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
   <div class="docstring"><p>Registers a function to be invoked after the IEx process is spawned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/iex/lib/iex.ex#L219" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/iex/lib/iex.ex#L219" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -340,7 +352,7 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
 ANSI escapes in <code>string</code> are not processed in any way.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/iex/lib/iex.ex#L242" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/iex/lib/iex.ex#L242" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -351,13 +363,85 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
   <div class="docstring"><p>Returns <code>true</code> if IEx was properly started.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/iex/lib/iex.ex#L234" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/iex/lib/iex.ex#L234" target="_blank" class="view_source">Source</a>
   
 </div>
 
         </div>
       
 
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="pry/1">
+    <strong>pry(timeout // 1000)</strong>
+  </p>
+  
+  <div class="docstring"><p>Pries into the process environment.</p>
+
+<p>This is useful for debugging a particular chunk of code
+and inspect the state of a particular process. The process
+is temporarily changed to trap exits (i.e. the process flag
+<code>:trap_exit</code> is set to true) and has the <code>group_leader</code> changed
+to support ANSI escape codes. Those values are reverted by
+calling <code>respawn</code>, which starts a new IEx shell, freeing up
+the pried one.</p>
+
+<p>When a process is pried, all code runs inside IEx and, as
+such, it is evaluated and cannot access private functions
+of the module being pried. Module functions still need to be
+accessed via <code>Mod.fun(args)</code>.</p>
+
+<p>Status: This feature is experimental.</p>
+
+<h2>Examples</h2>
+
+<p>Let&#39;s suppose you want to investigate what is happening
+with some particular function. By invoking <code>IEx.pry</code> from
+the function, IEx will allow you to access its binding
+(variables), verify its lexical information and access
+the process information. Let&#39;s see an example:</p>
+
+<pre><code>import Enum, only: [map: 2]
+
+def add(a, b) do
+  c = a + b
+  IEx.pry
+end
+</code></pre>
+
+<p>When invoking <code>add(1, 2)</code>, you will receive a message in
+your shell to pry the given environment. By allowing it,
+the shell will be reset and you gain access to all variables
+and the lexical scope from above:</p>
+
+<pre><code>iex(1)&gt; map([a,b,c], &amp;IO.inspect(&amp;1))
+1
+2
+3
+</code></pre>
+
+<p>Keep in mind that <code>IEx.pry</code> runs in the caller process,
+blocking the caller during the evaluation cycle. The caller
+process can be freed by calling <code>respawn</code>, which starts a
+new IEx evaluation cycle, letting this one go:</p>
+
+<pre><code>iex(2)&gt; respawn
+true
+
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+</code></pre>
+
+<p>Setting variables or importing modules in IEx does not
+affect the caller the environment (hence it is called <code>pry</code>).</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/iex/lib/iex.ex#L305" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
       
 
       

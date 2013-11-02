@@ -37,6 +37,11 @@ depending on your terminal. In particular, if you get a message
 saying that the smart terminal could not be run, some of the
 features described here won&#39;t work.</p>
 
+<h2>Helpers</h2>
+
+<p>IEx provides a bunch of helpers. They can be accessed by typing
+<code>h()</code> into the shell or as a documentation for the <code>IEx.Helpers</code> module.</p>
+
 <h2>The Break command</h2>
 
 <p>Inside IEx, hitting <code>Ctrl+C</code> will open up the <code>BREAK</code> menu. In this
@@ -72,7 +77,7 @@ Create a new variable called <code>hello</code> and assign some value to it:</p>
 <p>Now, try to access the <code>hello</code> variable again:</p>
 
 <pre><code>hello
-** (UndefinedFunctionError) undefined function: IEx.Helpers.hello/0
+** (UndefinedFunctionError) undefined function: hello/0
 </code></pre>
 
 <p>The command above fails because we have switched shells.
@@ -80,9 +85,81 @@ Since shells are isolated from each other, you can&#39;t access the
 variables defined in one shell from the other one.</p>
 
 <p>The user switch command menu also allows developers to connect to remote
-shells using the <code>r</code> command. Keep in mind that you can&#39;t connect to a
-remote node if you haven&#39;t given a name to the current node
-(i.e. <code>Process.is_alive?</code> must return <code>true</code>).</p>
+shells using the <code>r</code> command. A topic which we will discuss next.</p>
+
+<h2>Remote shells</h2>
+
+<p>IEx allows you to connect to another node in two fashions.
+First of all, we can only connect to a shell if we give names
+both to the current shell and the shell we want to connect to.</p>
+
+<p>Let&#39;s give it a try. First start a new shell:</p>
+
+<pre><code>$ iex --sname foo
+iex(foo@HOST)1&gt;
+</code></pre>
+
+<p>The string in between parenthesis in the prompt is the name
+of your node. We can retrieve it by calling the <code>node()</code>
+function:</p>
+
+<pre><code>iex(foo@HOST)1&gt; node()
+:&quot;foo@HOST&quot;
+iex(foo@HOST)2&gt; is_alive()
+true
+</code></pre>
+
+<p>For fun, let&#39;s define a simple module in this shell too:</p>
+
+<pre><code>iex(foo@HOST)3&gt; defmodule Hello do
+...(foo@HOST)3&gt;   def world, do: &quot;it works!&quot;
+...(foo@HOST)3&gt; end
+</code></pre>
+
+<p>Now, let&#39;s start another shell, giving it a name as well:</p>
+
+<pre><code>$ iex --sname bar
+iex(bar@HOST)1&gt;
+</code></pre>
+
+<p>If we try to dispatch to <code>Hello.world</code>, it won&#39;t be available
+as it was defined only in the other shell:</p>
+
+<pre><code>iex(bar@HOST)1&gt; Hello.world
+** (UndefinedFunctionError) undefined function: Hello.world/0
+</code></pre>
+
+<p>However, we can connect to the other shell remotely. Open up
+the User Switch prompt (Ctrl+G) and type:</p>
+
+<pre><code>User switch command
+ --&gt; r &#39;foo@HOST&#39; &#39;Elixir.IEx&#39;
+ --&gt; c
+</code></pre>
+
+<p>Now we are connected into the remote node, as the prompt shows us,
+and we can access the information and modules defined over there:</p>
+
+<pre><code>rem(foo@macbook)1&gt; Hello.world
+&quot;it works&quot;
+</code></pre>
+
+<p>In fact, connecting to remote shells is so common that we provide
+a shortcut via the command line as well:</p>
+
+<pre><code>$ iex --sname baz --remsh foo@HOST
+</code></pre>
+
+<p>Where &quot;remsh&quot; means &quot;remote shell&quot;. In general, Elixir supports:</p>
+
+<ul>
+<li>remsh from an elixir node to an elixir node</li>
+<li>remsh from a plain erlang node to an elixir node (through the ^G menu)</li>
+<li>remsh from an elixir node to a plain erlang node (and get an erl shell there)</li>
+</ul>
+
+<p>Connecting an Elixir shell to a remote node without Elixir is
+<strong>not</strong> supported.</p>
 
 <h2>The .iex file</h2>
 
@@ -109,10 +186,10 @@ value = 13
 results in</p>
 
 <pre><code>$ iex
-Erlang R15B03 (erts-5.9.3.1) [...]
+Erlang R16B [...]
 
 hello world
-Interactive Elixir (0.8.3.dev) - press Ctrl+C to exit (type h() ENTER for help)
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)&gt; value
 13
 </code></pre>
@@ -123,7 +200,7 @@ supplying the <code>--dot-iex</code> option to iex. See <code>iex --help</code>.
 <h2>Configuring the shell</h2>
 
 <p>There are a number of customization options provided by the shell. Take a look
-at the docs for the <code>IEx.Options</code> module.</p>
+at the docs for the <code>IEx.Options</code> module by typing <code>h IEx.Options</code>.</p>
 
 <p>The main functions there are <a href="IEx.Options.html#get/1"><code>IEx.Options.get/1</code></a> and <a href="IEx.Options.html#set/2"><code>IEx.Options.set/2</code></a>. One
 can also use <a href="IEx.Options.html#list/0"><code>IEx.Options.list/0</code></a> to get the list of all supported options.
@@ -140,7 +217,7 @@ IEx.Options.set :inspect, limit: 3
 $ iex
 Erlang R16B (erts-5.10.1) [...]
 
-Interactive Elixir (0.9.1.dev) - press Ctrl+C to exit (type h() ENTER for help)
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)&gt; [1, 2, 3, 4, 5]
 [1,2,3,...]
 </code></pre>
@@ -183,7 +260,7 @@ pending expression and return to its normal state:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex.ex#L4" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -224,6 +301,18 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
       
 
       
+        <h2 id="macros_summary">Macros summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#pry/1">pry(timeout // 1000)</a></td>
+  
+    <td class="summary_synopsis"><p>Pries into the process environment.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
 
       
 
@@ -240,7 +329,7 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
   <div class="docstring"><p>Returns registered <code>after_spawn</code> callbacks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex.ex#L162" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex.ex#L226" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -251,7 +340,7 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
   <div class="docstring"><p>Registers a function to be invoked after the IEx process is spawned.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex.ex#L155" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex.ex#L219" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -263,7 +352,7 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
 ANSI escapes in <code>string</code> are not processed in any way.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex.ex#L178" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex.ex#L242" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -274,13 +363,85 @@ ANSI escapes in <code>string</code> are not processed in any way.</p>
   <div class="docstring"><p>Returns <code>true</code> if IEx was properly started.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex.ex#L234" target="_blank" class="view_source">Source</a>
   
 </div>
 
         </div>
       
 
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="pry/1">
+    <strong>pry(timeout // 1000)</strong>
+  </p>
+  
+  <div class="docstring"><p>Pries into the process environment.</p>
+
+<p>This is useful for debugging a particular chunk of code
+and inspect the state of a particular process. The process
+is temporarily changed to trap exits (i.e. the process flag
+<code>:trap_exit</code> is set to true) and has the <code>group_leader</code> changed
+to support ANSI escape codes. Those values are reverted by
+calling <code>respawn</code>, which starts a new IEx shell, freeing up
+the pried one.</p>
+
+<p>When a process is pried, all code runs inside IEx and, as
+such, it is evaluated and cannot access private functions
+of the module being pried. Module functions still need to be
+accessed via <code>Mod.fun(args)</code>.</p>
+
+<p>Status: This feature is experimental.</p>
+
+<h2>Examples</h2>
+
+<p>Let&#39;s suppose you want to investigate what is happening
+with some particular function. By invoking <code>IEx.pry</code> from
+the function, IEx will allow you to access its binding
+(variables), verify its lexical information and access
+the process information. Let&#39;s see an example:</p>
+
+<pre><code>import Enum, only: [map: 2]
+
+def add(a, b) do
+  c = a + b
+  IEx.pry
+end
+</code></pre>
+
+<p>When invoking <code>add(1, 2)</code>, you will receive a message in
+your shell to pry the given environment. By allowing it,
+the shell will be reset and you gain access to all variables
+and the lexical scope from above:</p>
+
+<pre><code>iex(1)&gt; map([a,b,c], &amp;IO.inspect(&amp;1))
+1
+2
+3
+</code></pre>
+
+<p>Keep in mind that <code>IEx.pry</code> runs in the caller process,
+blocking the caller during the evaluation cycle. The caller
+process can be freed by calling <code>respawn</code>, which starts a
+new IEx evaluation cycle, letting this one go:</p>
+
+<pre><code>iex(2)&gt; respawn
+true
+
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+</code></pre>
+
+<p>Setting variables or importing modules in IEx does not
+affect the caller the environment (hence it is called <code>pry</code>).</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex.ex#L305" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
       
 
       

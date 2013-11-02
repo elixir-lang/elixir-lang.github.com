@@ -82,7 +82,7 @@ overriden from the Mixfile:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L21" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L21" target="_blank" class="view_source">Source</a>
 
       
 
@@ -92,7 +92,7 @@ overriden from the Mixfile:</p>
           <tr>
   <td class="summary_signature"><a href="#all/0">all()</a></td>
   
-    <td class="summary_synopsis"><p>Return all dependencies recursively as a <code>Mix.Dep</code> record.</p>
+    <td class="summary_synopsis"><p>Returns all dependencies recursively as a <code>Mix.Dep</code> record.</p>
 </td>
   
 </tr>
@@ -128,14 +128,15 @@ Logs a message if the dependency could not be found.</p>
 <tr>
   <td class="summary_signature"><a href="#children/0">children()</a></td>
   
-    <td class="summary_synopsis"><p>Return all direct child dependencies for the current project.</p>
+    <td class="summary_synopsis"><p>Returns all children dependencies for the current project.
+Umbrella projects have their apps treated as direct dependencies.</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#compile_paths/1">compile_paths(arg1)</a></td>
+  <td class="summary_signature"><a href="#compile_path/1">compile_path(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Return all compile paths for the dependency.</p>
+    <td class="summary_synopsis"><p>Returns all compile paths for the dependency.</p>
 </td>
   
 </tr>
@@ -149,7 +150,7 @@ Logs a message if the dependency could not be found.</p>
 <tr>
   <td class="summary_signature"><a href="#format_status/1">format_status(dep)</a></td>
   
-    <td class="summary_synopsis"><p>Format the status of a dependency.</p>
+    <td class="summary_synopsis"><p>Formats the status of a dependency.</p>
 </td>
   
 </tr>
@@ -163,16 +164,9 @@ project onto the project stack.</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#in_umbrella?/2">in_umbrella?(arg1, apps_path)</a></td>
-  
-    <td class="summary_synopsis"><p>Check if a dependency is part of an umbrella project as a top level project.</p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#load_paths/1">load_paths(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Return all load paths for the dependency.</p>
+    <td class="summary_synopsis"><p>Returns all load paths for the dependency.</p>
 </td>
   
 </tr>
@@ -200,7 +194,7 @@ project onto the project stack.</p>
 <tr>
   <td class="summary_signature"><a href="#out_of_date?/1">out_of_date?(dep)</a></td>
   
-    <td class="summary_synopsis"><p>Check if a dependency is out of date, considering its
+    <td class="summary_synopsis"><p>Check if a dependency is out of date considering its
 lock status. Therefore, be sure to call <code>check_lock</code> before
 invoking this function.</p>
 </td>
@@ -216,14 +210,14 @@ invoking this function.</p>
 <tr>
   <td class="summary_signature"><a href="#update/1">update(dep)</a></td>
   
-    <td class="summary_synopsis"><p>Update the dependency inside the given project.</p>
+    <td class="summary_synopsis"><p>Updates the dependency.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#with_depending/2">with_depending(deps, all_deps // all)</a></td>
   
-    <td class="summary_synopsis"><p>Return all given dependencies and their depending dependencies.</p>
+    <td class="summary_synopsis"><p>Returns all given dependencies and their depending dependencies.</p>
 </td>
   
 </tr>
@@ -245,7 +239,7 @@ invoking this function.</p>
     <strong>all()</strong>
   </p>
   
-  <div class="docstring"><p>Return all dependencies recursively as a <code>Mix.Dep</code> record.</p>
+  <div class="docstring"><p>Returns all dependencies recursively as a <code>Mix.Dep</code> record.</p>
 
 <h2>Exceptions</h2>
 
@@ -253,7 +247,7 @@ invoking this function.</p>
 provided in the project are in the wrong format.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L76" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L76" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -272,7 +266,7 @@ by first fetching the parent and then updating the tree as it goes.</p>
 as arguments. The accumulator is returned as result.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L92" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L92" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -283,7 +277,7 @@ as arguments. The accumulator is returned as result.</p>
   <div class="docstring"><p>Check if a dependency is available.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L262" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L280" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -295,7 +289,7 @@ as arguments. The accumulator is returned as result.</p>
 Logs a message if the dependency could not be found.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L133" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L134" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -306,7 +300,7 @@ Logs a message if the dependency could not be found.</p>
   <div class="docstring"><p>Check the lock for the given dependency and update its status accordingly.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L229" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L240" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -314,7 +308,8 @@ Logs a message if the dependency could not be found.</p>
     <strong>children()</strong>
   </p>
   
-  <div class="docstring"><p>Return all direct child dependencies for the current project.</p>
+  <div class="docstring"><p>Returns all children dependencies for the current project.
+Umbrella projects have their apps treated as direct dependencies.</p>
 
 <h2>Exceptions</h2>
 
@@ -322,18 +317,18 @@ Logs a message if the dependency could not be found.</p>
 provided in the project are in the wrong format.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L105" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L106" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="compile_paths/1">
-    <strong>compile_paths(arg1)</strong>
+  <p class="signature" id="compile_path/1">
+    <strong>compile_path(arg1)</strong>
   </p>
   
-  <div class="docstring"><p>Return all compile paths for the dependency.</p>
+  <div class="docstring"><p>Returns all compile paths for the dependency.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L300" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L312" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -344,7 +339,7 @@ provided in the project are in the wrong format.</p>
   <div class="docstring"><p>Format a dependency for printing.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L287" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L299" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -352,10 +347,10 @@ provided in the project are in the wrong format.</p>
     <strong>format_status(dep)</strong>
   </p>
   
-  <div class="docstring"><p>Format the status of a dependency.</p>
+  <div class="docstring"><p>Formats the status of a dependency.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L186" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L190" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -366,20 +361,12 @@ provided in the project are in the wrong format.</p>
   <div class="docstring"><p>Run the given <code>fun</code> inside the given dependency project by
 changing the current working directory and loading the given
 project onto the project stack.</p>
+
+<p>In case the project is a rebar dependency, a <code>Mix.Rebar</code> project
+will be pushed into the stack to simulate the rebar configuration.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L158" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="in_umbrella?/2">
-    <strong>in_umbrella?(arg1, apps_path)</strong>
-  </p>
-  
-  <div class="docstring"><p>Check if a dependency is part of an umbrella project as a top level project.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L270" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L162" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -387,10 +374,10 @@ project onto the project stack.</p>
     <strong>load_paths(arg1)</strong>
   </p>
   
-  <div class="docstring"><p>Return all load paths for the dependency.</p>
+  <div class="docstring"><p>Returns all load paths for the dependency.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L313" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L325" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -401,7 +388,7 @@ project onto the project stack.</p>
   <div class="docstring"><p>Return <code>true</code> if dependency is a make project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L354" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L365" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -412,7 +399,7 @@ project onto the project stack.</p>
   <div class="docstring"><p>Return <code>true</code> if dependency is a mix project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L340" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L351" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -423,7 +410,7 @@ project onto the project stack.</p>
   <div class="docstring"><p>Check if a dependency is ok.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L256" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L274" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -431,12 +418,12 @@ project onto the project stack.</p>
     <strong>out_of_date?(dep)</strong>
   </p>
   
-  <div class="docstring"><p>Check if a dependency is out of date, considering its
+  <div class="docstring"><p>Check if a dependency is out of date considering its
 lock status. Therefore, be sure to call <code>check_lock</code> before
 invoking this function.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L279" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L290" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -447,7 +434,7 @@ invoking this function.</p>
   <div class="docstring"><p>Return <code>true</code> if dependency is a rebar project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L347" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L358" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -455,10 +442,14 @@ invoking this function.</p>
     <strong>update(dep)</strong>
   </p>
   
-  <div class="docstring"><p>Update the dependency inside the given project.</p>
+  <div class="docstring"><p>Updates the dependency.</p>
+
+<p>This function is useful when the given dependency changes
+(for example, it was just checked out) and you want to refetch
+its information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L251" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L269" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -466,10 +457,10 @@ invoking this function.</p>
     <strong>with_depending(deps, all_deps // all)</strong>
   </p>
   
-  <div class="docstring"><p>Return all given dependencies and their depending dependencies.</p>
+  <div class="docstring"><p>Returns all given dependencies and their depending dependencies.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/mix/lib/mix/deps.ex#L110" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L111" target="_blank" class="view_source">Source</a>
   
 </div>
 

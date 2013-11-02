@@ -27,42 +27,44 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module is a convenience to define application module callbacks.</p>
+          <p>Default callbacks for applications.</p>
 
 <p>In Erlang/OTP, an application is a component that can be started
-and stopped as a unit, and which can be re-used in other systems
-as well.</p>
+and stopped as a unit, and which can be reused in other systems.</p>
 
-<p>The first step to achieve this is to define an application specification.
+<p>The first step in creating an application is to define an application specification.
 For example, if your application is named <code>:my_app</code>, an app specification
 should exist at <code>ebin/my_app.app</code>. This file is usually defined by
 build tools like Mix.</p>
 
-<p>Then, with the app specification in hands, we must also define an
-application module callback that controls how to start and stop
-such applications. This module is about defining such callbacks.</p>
+<p>With the app specification in hand, we must define
+application module callbacks that control how to start and stop
+instances of the application. This module is about defining such callbacks.</p>
 
-<p>There are two callbacks required to be implemented:</p>
+<p>There are two callbacks which must be implemented:</p>
 
 <ol>
-<li><p><code>start(type, args)</code> - It must return <code>{ :ok, pid }</code> or
+<li><p><code>start(type, args)</code> - must return <code>{ :ok, pid }</code> or
 <code>{ :ok, pid, state }</code>, where <code>pid</code> is the process identifier
-of the supervisor tree root;</p></li>
-<li><p><code>stop(state)</code> receives the state returned by <code>start</code> and should
-do any necessary cleaning up. Notice that shutting down the supervisor
+of the supervisor tree root and <code>state</code> is application defined 
+state information;</p></li>
+<li><p><code>stop(state)</code> - receives the <code>state</code> returned by <code>start</code> and should
+do any necessary clean up. Notice that shutting down the supervisor
 is automatically handled by the VM;</p></li>
 </ol>
 
-<p>When using this module, it simply tags the module behaviour as
-<code>:application</code> and defines a default <code>stop/1</code> callback. The <code>start/2</code>
-still needs to be defined by the user.</p>
+<p>When using this module, it tags the module behaviour as
+<code>:application</code> and provides a default <code>stop/1</code> callback. The <code>start/2</code> callback
+still needs to be implemented by the user.</p>
 
 <p>You can learn more about the <code>:application</code> module, the application
-specification and the application module callbacks below:</p>
+specification and the application module callbacks from these sources:</p>
 
-<p><a href="http://www.erlang.org/doc/man/application.html">http://www.erlang.org/doc/man/application.html</a>
-<a href="http://www.erlang.org/doc/design_principles/applications.html">http://www.erlang.org/doc/design_principles/applications.html</a>
-<a href="http://learnyousomeerlang.com/building-otp-applications">http://learnyousomeerlang.com/building-otp-applications</a></p>
+<ul>
+<li><a href="http://www.erlang.org/doc/man/application.html">http://www.erlang.org/doc/man/application.html</a></li>
+<li><a href="http://www.erlang.org/doc/design_principles/applications.html">http://www.erlang.org/doc/design_principles/applications.html</a></li>
+<li><a href="http://learnyousomeerlang.com/building-otp-applications">http://learnyousomeerlang.com/building-otp-applications</a></li>
+</ul>
 
 <h2>Example</h2>
 
@@ -78,7 +80,7 @@ end
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/application/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/application/behaviour.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 

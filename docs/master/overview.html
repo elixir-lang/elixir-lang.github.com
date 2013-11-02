@@ -19,7 +19,7 @@
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
 	
-    <h1>Elixir v0.10.4-dev</h1>
+    <h1>Elixir v0.11.1-dev</h1>
 
     <div id="content">
       
@@ -28,17 +28,14 @@
           <tr>
   <td class="summary_signature"><a href="Application.Behaviour.html">Application.Behaviour</a></td>
   
-    <td class="summary_synopsis"><p>This module is a convenience to define application module callbacks.</p>
+    <td class="summary_synopsis"><p>Default callbacks for applications.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="Behaviour.html">Behaviour</a></td>
   
-    <td class="summary_synopsis"><p>A convenience module for defining behaviours.
-Behaviours can be referenced by other modules
-in order to ensure they implement the proper
-callbacks.</p>
+    <td class="summary_synopsis"><p>Utilities for defining behaviour intefaces.</p>
 </td>
   
 </tr>
@@ -53,8 +50,7 @@ These macros can be used in guards.</p>
 <tr>
   <td class="summary_signature"><a href="Code.html">Code</a></td>
   
-    <td class="summary_synopsis"><p>The Code module is responsible for managing code compilation,
-code evaluation and code loading.</p>
+    <td class="summary_synopsis"><p>Utilities for managing code compilation, code evaluation and code loading.</p>
 </td>
   
 </tr>
@@ -210,6 +206,13 @@ exceptions and stacktraces.</p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="Float.html">Float</a></td>
+  
+    <td class="summary_synopsis"><p>Functions for working with floating point numbers.</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="GenEvent.Behaviour.html">GenEvent.Behaviour</a></td>
   
     <td class="summary_synopsis"><p>This module is a convenience for defining GenEvent callbacks in Elixir.</p>
@@ -271,20 +274,16 @@ more joyful to work with.</p>
 <tr>
   <td class="summary_signature"><a href="IO.html">IO</a></td>
   
-    <td class="summary_synopsis"><p>Module responsible for doing IO. Many functions in this
-module expects an IO device and an io data encoded in UTF-8.
-Use the bin* functions if the data is binary, useful when
-working with raw bytes or when no unicode conversion should
-be performed.</p>
+    <td class="summary_synopsis"><p>Functions handling IO.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="IO.ANSI.html">IO.ANSI</a></td>
   
-    <td class="summary_synopsis"><p>This module provides functionality to render ANSI escape sequences
+    <td class="summary_synopsis"><p>Functionality to render ANSI escape sequences
 (<a href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</a>) —  characters embedded
-in the text used to control formatting, color, and other output options
+in text used to control formatting, color, and other output options
 on video text terminals.</p>
 </td>
   
@@ -313,6 +312,10 @@ can be skipped or cherry-picked via the <code>import</code> macro. For
 instance, if you want to tell Elixir not to import the <code>case</code>
 macro, you can do:</p>
 </td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Kernel.LexicalTracker.html">Kernel.LexicalTracker</a></td>
   
 </tr>
 <tr>
@@ -741,7 +744,7 @@ consolidation.</p>
 <tr>
   <td class="summary_signature"><a href="Record.html">Record</a></td>
   
-    <td class="summary_synopsis"><p>Convenience functions for working with Records.</p>
+    <td class="summary_synopsis"><p>Functions for working with Records.</p>
 </td>
   
 </tr>
@@ -790,9 +793,16 @@ to make defining supervisors easier.</p>
 <tr>
   <td class="summary_signature"><a href="System.html">System</a></td>
   
-    <td class="summary_synopsis"><p>The System module provides access to some variables used or
-maintained by the VM and to functions that interact strongly
+    <td class="summary_synopsis"><p>The System module provides access to variables used or
+maintained by the VM and to functions that interact directly
 with the VM or the host system.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Tuple.html">Tuple</a></td>
+  
+    <td class="summary_synopsis"><p>Functions for working with tuples.</p>
 </td>
   
 </tr>
@@ -806,8 +816,7 @@ with the VM or the host system.</p>
 <tr>
   <td class="summary_signature"><a href="Version.html">Version</a></td>
   
-    <td class="summary_synopsis"><p>This module provides functions for parsing and matching
-versions with requirements.</p>
+    <td class="summary_synopsis"><p>Functions for parsing and matching versions against requirements.</p>
 </td>
   
 </tr>
@@ -1003,6 +1012,10 @@ dependencies. It contains:</p>
 </tr>
 <tr>
   <td class="summary_signature"><a href="TokenMissingError.html">TokenMissingError</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="TryClauseError.html">TryClauseError</a></td>
   
 </tr>
 <tr>

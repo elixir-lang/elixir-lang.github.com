@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tuple</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Tuple
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Functions for working with tuples.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/tuple.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#delete_at/2">delete_at(tuple, index)</a></td>
+  
+    <td class="summary_synopsis"><p>Remove an element from a tuple.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#duplicate/2">duplicate(data, size)</a></td>
+  
+    <td class="summary_synopsis"><p>Create a new tuple.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#insert_at/3">insert_at(tuple, index, term)</a></td>
+  
+    <td class="summary_synopsis"><p>Insert an element into a tuple.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="delete_at/2">
+    <strong>delete_at(tuple, index)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>delete_at({}, non_neg_integer) :: {}</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Remove an element from a tuple.</p>
+
+<p>Deletes the element at the zero-based <code>index</code> from <code>tuple</code>.
+Raises an <code>ArgumentError</code> if <code>index</code> is greater than 
+or equal to the length of <code>tuple</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; tuple = { :foo, :bar, :baz }
+...&gt; Tuple.delete_at(tuple, 0)
+{ :bar, :baz }
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/tuple.ex#L57" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="duplicate/2">
+    <strong>duplicate(data, size)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>duplicate(term, non_neg_integer) :: {}</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Create a new tuple.</p>
+
+<p>Creates a tuple of size <code>size</code> containing the
+given <code>data</code> at every position.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Tuple.duplicate(:hello, 3)
+{ :hello, :hello, :hello }
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/tuple.ex#L19" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="insert_at/3">
+    <strong>insert_at(tuple, index, term)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>insert_at({}, non_neg_integer, term) :: {}</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Insert an element into a tuple.</p>
+
+<p>Inserts <code>value</code> into <code>tuple</code> at the given zero-based <code>index</code>.
+Raises an <code>ArgumentError</code> if <code>index</code> is greater than the
+length of <code>tuple</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; tuple = { :bar, :baz }
+...&gt; Tuple.insert_at(tuple, 0, :foo)
+{ :foo, :bar, :baz }
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/tuple.ex#L38" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

@@ -35,51 +35,50 @@
 
 <pre><code># File: assertion_test.exs
 
-# 1) Start ExUnit. You can pass some options
-#    (see [`configure/1`](#configure/1) for the list of options)
+# 1) Start ExUnit.
 ExUnit.start
 
-# 2) Create a new test module (test case) and use ExUnit.Case
+# 2) Create a new test module (test case) and use `ExUnit.Case`.
 defmodule AssertionTest do
-  # 3) Notice we pass async: true, this runs the test case
+  # 3) Notice we pass `async: true`, this runs the test case
   #    concurrently with other test cases
   use ExUnit.Case, async: true
 
   # 4) A test is a function whose name starts with
-  #    test and receives a context
+  #    `test` and receives a context.
   def test_always_pass(_) do
     assert true
   end
 
-  # 5) It is recommended to use the &quot;test&quot; macro instead of def
+  # 5) Use the `test` macro instead of `def` for clarity.
   test &quot;the truth&quot; do
     assert true
   end
 end
 </code></pre>
 
-<p>To run the test above, all you need to do is to run the file
-using <code>elixir</code> from the command line. Assuming you named your file
+<p>To run the tests above, run the file
+using <code>elixir</code> from the command line. Assuming you named the file
 <code>assertion_test.exs</code>, you can run it as:</p>
 
 <pre><code>bin/elixir assertion_test.exs
 </code></pre>
 
-<h2>Case, callbacks and assertions</h2>
+<h2>Case, Callbacks and Assertions</h2>
 
-<p>See <code>ExUnit.Case</code> and <code>ExUnit.Callbacks</code> for more information about
+<p>See <a href="ExUnit.Case.html"><code>ExUnit.Case</code></a> and <a href="ExUnit.Callbacks.html"><code>ExUnit.Callbacks</code></a> for more information about
 defining test cases.</p>
 
-<p>The <code>ExUnit.Assertions</code> module contains a set of macros to easily
+<p>The <a href="ExUnit.Assertions.html"><code>ExUnit.Assertions</code></a> module contains a set of macros to easily
 generate assertions with appropriate error messages.</p>
 
 <h2>Integration with Mix</h2>
 
 <p>Mix is the project management and build tool for Elixir. Invoking <code>mix test</code>
-from the command line will run tests in each file matching the pattern
+from the command line will run the tests in each file matching the pattern
 <code>*_test.exs</code> found in the <code>test</code> directory of your project.</p>
 
-<p>By convention, you could also create a <code>test_helper.exs</code> file inside the
+<p>You must create a <code>test_helper.exs</code> file inside the
 <code>test</code> directory and put the code common to all tests there.</p>
 
 <p>The minimum example of a <code>test_helper.exs</code> file would be:</p>
@@ -88,19 +87,14 @@ from the command line will run tests in each file matching the pattern
 ExUnit.start
 </code></pre>
 
-<p>Then, in each test file, require <code>test_helper.exs</code> before defining test modules
-(or cases):</p>
-
-<pre><code># test/myproject_test.exs
-Code.require_file &quot;test_helper.exs&quot;, __DIR__
-
-# ... test cases follow
-</code></pre>
+<p>Mix will load the <code>test_helper.exs</code> file before executing the tests. 
+It is not necessary to <code>require</code> the <code>test_helper.exs</code> file in your test files.
+See <a href="Mix.Tasks.Test.html"><code>Mix.Tasks.Test</code></a> for more information.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/ex_unit/lib/ex_unit.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -125,7 +119,7 @@ Code.require_file &quot;test_helper.exs&quot;, __DIR__
   <td class="summary_signature"><a href="#run/0">run()</a></td>
   
     <td class="summary_synopsis"><p>API used to run the tests. It is invoked automatically
-if ExUnit is started via <code>ExUnit.start</code>.</p>
+if ExUnit is started via <a href="ExUnit.html#start/1"><code>ExUnit.start/1</code></a>.</p>
 </td>
   
 </tr>
@@ -159,7 +153,7 @@ VM terminates. It accepts a set of options to configure <code>ExUnit</code>
   <div class="docstring"><p>Returns ExUnit configuration.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit.ex#L153" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/ex_unit/lib/ex_unit.ex#L149" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -174,17 +168,19 @@ VM terminates. It accepts a set of options to configure <code>ExUnit</code>
 <p>ExUnit supports the following options:</p>
 
 <ul>
-<li><p><code>:color</code> - When color should be used by specific formatters;</p></li>
+<li><p><code>:color</code> - When color should be used by specific formatters.
+         Defaults to the result of <a href="IO.ANSI.html#terminal?/1"><code>IO.ANSI.terminal?/1</code></a>;</p></li>
 <li><p><code>:formatter</code> - The formatter that will print results.
              Defaults to <code>ExUnit.CLIFormatter</code>;</p></li>
 <li><p><code>:max_cases</code> - Maximum number of cases to run in parallel.
              Defaults to <code>:erlang.system_info(:schedulers_online)</code>;</p></li>
-<li><p><code>:trace</code> - Set ExUnit into trace mode, this sets <code>:max_cases</code> to 1
+<li><p><code>:trace</code> - Set ExUnit into trace mode, this sets <code>:max_cases</code> to <code>1</code>
          and prints each test case and test while running;</p></li>
+<li><p><code>:autorun</code> - If ExUnit should run by default on exit, defaults to <code>true</code>;</p></li>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit.ex#L144" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/ex_unit/lib/ex_unit.ex#L140" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -193,12 +189,12 @@ VM terminates. It accepts a set of options to configure <code>ExUnit</code>
   </p>
   
   <div class="docstring"><p>API used to run the tests. It is invoked automatically
-if ExUnit is started via <code>ExUnit.start</code>.</p>
+if ExUnit is started via <a href="ExUnit.html#start/1"><code>ExUnit.start/1</code></a>.</p>
 
 <p>Returns the number of failures.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/ex_unit/lib/ex_unit.ex#L159" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -210,11 +206,10 @@ if ExUnit is started via <code>ExUnit.start</code>.</p>
 VM terminates. It accepts a set of options to configure <code>ExUnit</code>
 (the same ones accepted by <a href="#configure/1"><code>configure/1</code></a>).</p>
 
-<p>If you want to run tests manually, skip calling this
-function and rely on <a href="#configure/1"><code>configure/1</code></a> and <a href="#run/0"><code>run/0</code></a> instead.</p>
+<p>If you want to run tests manually, you can set <code>:autorun</code> to <code>false</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/ex_unit/lib/ex_unit.ex#L104" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/ex_unit/lib/ex_unit.ex#L98" target="_blank" class="view_source">Source</a>
   
 </div>
 

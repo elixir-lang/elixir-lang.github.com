@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Protocol.Consolidation</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Protocol.Consolidation
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Module responsible for consolidating protocols and helpers for
+extracting protocols and implementations from code paths for
+consolidation.</p>
+
+        </div>
+      
+
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/protocol/consolidation.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#apply_to/2">apply_to(protocol, types)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a protocol and a list of implementations and
+consolidates the given protocol. Consolidation happens
+by changing the protocol <code>impl_for</code> in the abstract
+format to have fast lookup rules.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#extract_impls/2">extract_impls(protocol, paths)</a></td>
+  
+    <td class="summary_synopsis"><p>Extract all types implemented for the given protocol from
+the given paths.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#extract_protocols/1">extract_protocols(paths)</a></td>
+  
+    <td class="summary_synopsis"><p>Extract all protocols from the given paths.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="apply_to/2">
+    <strong>apply_to(protocol, types)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>apply_to(module, [module]) :: {:ok, binary} | {:error, :not_a_protocol} | {:error, :no_beam_info}</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Receives a protocol and a list of implementations and
+consolidates the given protocol. Consolidation happens
+by changing the protocol <code>impl_for</code> in the abstract
+format to have fast lookup rules.</p>
+
+<p>It returns the updated version of the protocol bytecode.
+A given bytecode or protocol implementation can be checked
+to be consolidated or not by analyzing the protocol
+attribute:</p>
+
+<pre><code>Enumerable.__info__(:attributes)[:protocol]
+</code></pre>
+
+<p>If the first element of the tuple is true, it means
+the protocol was consolidated.</p>
+
+<p>This function does not load the protocol at any point
+nor loads the new bytecode for the compiled module.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/protocol/consolidation.ex#L127" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="extract_impls/2">
+    <strong>extract_impls(protocol, paths)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>extract_impls(module, [char_list | <a href="String.html#t:t/0">String.t</a>]) :: [atom]</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Extract all types implemented for the given protocol from
+the given paths.</p>
+
+<p>The paths can be either a char list or a string. Internally
+they are worked on as char lists, so passing them as lists
+avoid extra conversion.</p>
+
+<h2>Examples</h2>
+
+<pre><code># Get Elixir&#39;s ebin and retrieve all protocols
+iex&gt; path = :code.lib_dir(:elixir, :ebin)
+iex&gt; mods = Protocol.Consolidation.extract_impls(Enumerable, [path])
+iex&gt; List in mods
+true
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/protocol/consolidation.ex#L53" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="extract_protocols/1">
+    <strong>extract_protocols(paths)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>extract_protocols([char_list | <a href="String.html#t:t/0">String.t</a>]) :: [atom]</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Extract all protocols from the given paths.</p>
+
+<p>The paths can be either a char list or a string. Internally
+they are worked on as char lists, so passing them as lists
+avoid extra conversion.</p>
+
+<h2>Examples</h2>
+
+<pre><code># Get Elixir&#39;s ebin and retrieve all protocols
+iex&gt; path = :code.lib_dir(:elixir, :ebin)
+iex&gt; mods = Protocol.Consolidation.extract_protocols([path])
+iex&gt; Enumerable in mods
+true
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/protocol/consolidation.ex#L25" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>

@@ -27,16 +27,14 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>This module provides functions for parsing and matching
-versions with requirements.</p>
+          <p>Functions for parsing and matching versions against requirements.</p>
 
-<p>A version is a string or a <code>Version.Schema</code> generated
-after parsing via <a href="Version.html#parse/1"><code>Version.parse/1</code></a>. A requirement is
-a string that follows a specific format.</p>
+<p>A version is a string in a specific format or a <code>Version.Schema</code> 
+generated after parsing via <a href="Version.html#parse/1"><code>Version.parse/1</code></a>.</p>
 
-<p><code>Version</code> parsing and requirements follows
+<p><code>Version</code> parsing and requirements follow
 <a href="http://semver.org/">SemVer 2.0 schema</a> and you will get
-the most of Mix&#39; version system by following it. In order
+the most of Mix&#39;s version system by following it. In order
 to support integration with projects that may
 follow different versioning schemas, Elixir won&#39;t choke
 on unknown versions, however you won&#39;t be able to use
@@ -63,7 +61,7 @@ Mix requirements with such unformatted versions.</p>
 
 <p>Requirements allow you to specify which versions of a given
 dependency you are willing to work against. It supports common
-operators like <code>&gt;=</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>==</code> and friends that would
+operators like <code>&gt;=</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>==</code> and friends that 
 work as one would expect:</p>
 
 <pre><code># Only version 2.0.0
@@ -88,7 +86,7 @@ be expressed as:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/version.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/version.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -98,35 +96,35 @@ be expressed as:</p>
           <tr>
   <td class="summary_signature"><a href="#from_matchable/1">from_matchable(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Convert a matchable to a <code>Version</code>.</p>
+    <td class="summary_synopsis"><p>Convert a matchable to a <code>Version.Schema</code>.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#match?/2">match?(version, requirement)</a></td>
   
-    <td class="summary_synopsis"><p>Checks if the given version matches the specification.</p>
+    <td class="summary_synopsis"><p>Check if the given version matches the specification.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#parse/1">parse(string)</a></td>
   
-    <td class="summary_synopsis"><p>Parse a version into a matchable value.</p>
+    <td class="summary_synopsis"><p>Parse a version string into a <code>Version.Schema</code>.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#to_matchable/1">to_matchable(string)</a></td>
   
-    <td class="summary_synopsis"><p>Get the matchable representation.</p>
+    <td class="summary_synopsis"><p>Convert a version to a <code>Version.matchable</code></p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#valid?/1">valid?(string)</a></td>
   
-    <td class="summary_synopsis"><p>Checks if a version string is compatible with <a href="http://semver.org/">semver</a>.</p>
+    <td class="summary_synopsis"><p>Check if a version string is compatible with <a href="http://semver.org/">semver</a>.</p>
 </td>
   
 </tr>
@@ -178,10 +176,16 @@ be expressed as:</p>
       
     </ul>
   
-  <div class="docstring"><p>Convert a matchable to a <code>Version</code>.</p>
+  <div class="docstring"><p>Convert a matchable to a <code>Version.Schema</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>&gt; Version.from_matchable({2, 0, 1, [&quot;alpha&quot;, 1]})
+#Version.Schema&lt;2.0.1-alpha.1&gt;
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/version.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/version.ex#L198" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -196,10 +200,21 @@ be expressed as:</p>
       
     </ul>
   
-  <div class="docstring"><p>Checks if the given version matches the specification.</p>
+  <div class="docstring"><p>Check if the given version matches the specification.</p>
+
+<p>Returns <code>true</code> if <code>version</code> satisfies <code>requirement</code>, <code>false</code> otherwise.
+Raises a <code>Version.InvalidRequirement</code> exception if <code>requirement</code> is not parseable. </p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Version.match?(&quot;2.0&quot;, &quot;&gt;1.0&quot;)
+true
+iex&gt; Version.match?(&quot;2.0&quot;, &quot;==1.0&quot;)
+false
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/version.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/version.ex#L94" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -210,14 +225,20 @@ be expressed as:</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>parse(<a href="String.html#t:t/0">String.t</a>) :: {:ok, <a href="http://elixir-lang.org/docs/master/Version.Schema.html#t:t/0">Version.Schema.t</a>} | {:error, term}</li>
+        <li>parse(<a href="String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/master/Version.Schema.html#t:t/0">Version.Schema.t</a></li>
       
     </ul>
   
-  <div class="docstring"><p>Parse a version into a matchable value.</p>
+  <div class="docstring"><p>Parse a version string into a <code>Version.Schema</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>&gt; Version.parse(&quot;2.0.1-alpha1&quot;)
+#Version.Schema&lt;2.0.1-alpha1&gt;
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/version.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/version.ex#L145" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -232,10 +253,16 @@ be expressed as:</p>
       
     </ul>
   
-  <div class="docstring"><p>Get the matchable representation.</p>
+  <div class="docstring"><p>Convert a version to a <code>Version.matchable</code></p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Version.to_matchable(&quot;2.0.1-alpha.1&quot;)
+{2, 0, 1, [&quot;alpha&quot;, 1]}
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/version.ex#L143" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/version.ex#L172" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -250,10 +277,18 @@ be expressed as:</p>
       
     </ul>
   
-  <div class="docstring"><p>Checks if a version string is compatible with <a href="http://semver.org/">semver</a>.</p>
+  <div class="docstring"><p>Check if a version string is compatible with <a href="http://semver.org/">semver</a>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Version.valid?(&quot;2.0&quot;)
+true
+iex&gt; Version.valid?(&quot;invalid&quot;)
+false
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/version.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/version.ex#L128" target="_blank" class="view_source">Source</a>
   
 </div>
 

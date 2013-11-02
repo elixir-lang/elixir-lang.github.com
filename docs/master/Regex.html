@@ -37,15 +37,14 @@ or using the special form with <code>%r</code>:</p>
 <pre><code># A simple regular expressions that matches foo anywhere in the string
 %r/foo/
 
-# A regular expression with case insensitive options and handling for unicode chars
-%r/foo/iu
+# A regular expression with case insensitive options
+%r/foo/i
 </code></pre>
 
 <p>The <code>re</code> module provides several options, the ones available in Elixir, followed by
 their shortcut in parenthesis, are:</p>
 
 <ul>
-<li><code>unicode</code> (u) - enables unicode specific patterns like \p</li>
 <li><code>caseless</code> (i) - add case insensitivity</li>
 <li><code>dotall</code> (s) - causes dot to match newlines and also set newline to anycrlf.
 The new line setting can be overridden by setting <code>(*CR)</code> or <code>(*LF)</code> or
@@ -77,7 +76,7 @@ a binary, a char list will return a char list).</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -196,7 +195,7 @@ If no number of parts is given, it defaults to <code>:infinity</code>.</p>
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t</a> :: {Regex, term, binary, binary, [atom]}
+    <a href="#t:t/0">t</a> :: {Regex, term, binary, binary, [atom] | nil}
   </p>
   
 </div>
@@ -215,7 +214,7 @@ If no number of parts is given, it defaults to <code>:infinity</code>.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>compile(binary, binary | [term]) :: <a href="#t:t/0">t</a></li>
+        <li>compile(binary, binary | [term]) :: {:ok, <a href="#t:t/0">t</a>} | {:error, any}</li>
       
     </ul>
   
@@ -237,7 +236,7 @@ iex&gt; Regex.compile(&quot;*foo&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L70" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -249,7 +248,7 @@ iex&gt; Regex.compile(&quot;*foo&quot;)
 Fails with <code>Regex.CompileError</code> if the regex cannot be compiled.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L102" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L103" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -275,7 +274,7 @@ iex&gt; Regex.escape(&quot;\\what if&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L349" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L350" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -292,7 +291,7 @@ iex&gt; Regex.escape(&quot;\\what if&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L221" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L222" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -311,7 +310,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L120" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L121" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -333,7 +332,7 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L173" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L174" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -350,7 +349,7 @@ nil
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L208" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L209" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -361,7 +360,7 @@ nil
   <div class="docstring"><p>Returns the underlying <code>re_pattern</code> in the regular expression.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L182" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L183" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -392,7 +391,7 @@ iex&gt; Regex.replace(%r/(b)/, &quot;abc&quot;, &quot;[\\1]&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L327" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L328" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -417,7 +416,7 @@ iex&gt; Regex.run(%r/c(d)/, &quot;abcd&quot;, return: :index)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L141" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L142" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -447,7 +446,7 @@ iex&gt; Regex.scan(%r/e/, &quot;abcd&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L247" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L248" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -464,7 +463,7 @@ iex&gt; Regex.scan(%r/e/, &quot;abcd&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L195" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L196" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -490,7 +489,7 @@ iex&gt; Regex.split(%r//, &quot;abc&quot;, trim: true)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/regex.ex#L283" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/regex.ex#L284" target="_blank" class="view_source">Source</a>
   
 </div>
 

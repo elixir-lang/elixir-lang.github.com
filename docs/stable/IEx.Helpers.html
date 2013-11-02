@@ -39,24 +39,25 @@ arguments).</p>
 <p>There are many other helpers available:</p>
 
 <ul>
-<li><a href="#c/2"><code>c/2</code></a>     — compiles a file at the given path</li>
-<li><a href="#cd/1"><code>cd/1</code></a>    — changes the current directory</li>
-<li><a href="#clear/0"><code>clear/0</code></a> — clears the screen</li>
-<li><a href="#flush/0"><code>flush/0</code></a> — flushes all messages sent to the shell</li>
-<li><a href="#h/0"><code>h/0</code></a>     — prints this help message</li>
-<li><a href="#h/1"><code>h/1</code></a>     — prints help for the given module, function or macro</li>
-<li><a href="#l/1"><code>l/1</code></a>     — loads the given module&#39;s beam code and purges the current version</li>
-<li><code>ls/0</code>    — lists the contents of the current directory</li>
-<li><a href="#ls/1"><code>ls/1</code></a>    — lists the contents of the specified directory</li>
-<li><a href="#m/0"><code>m/0</code></a>     — prints loaded modules</li>
-<li><a href="#pwd/0"><code>pwd/0</code></a>   — prints the current working directory</li>
-<li><a href="#r/1"><code>r/1</code></a>     — recompiles and reloads the given module&#39;s source file</li>
-<li><a href="#s/1"><code>s/1</code></a>     — prints spec information</li>
-<li><a href="#t/1"><code>t/1</code></a>     — prints type information</li>
-<li><a href="#v/0"><code>v/0</code></a>     — prints the history of commands evaluated in the session</li>
-<li><a href="#v/1"><code>v/1</code></a>     — retrieves the nth value from the history</li>
+<li><a href="#c/2"><code>c/2</code></a>       — compiles a file at the given path</li>
+<li><a href="#cd/1"><code>cd/1</code></a>      — changes the current directory</li>
+<li><a href="#clear/0"><code>clear/0</code></a>   — clears the screen</li>
+<li><a href="#flush/0"><code>flush/0</code></a>   — flushes all messages sent to the shell</li>
+<li><a href="#h/0"><code>h/0</code></a>       — prints this help message</li>
+<li><a href="#h/1"><code>h/1</code></a>       — prints help for the given module, function or macro</li>
+<li><a href="#l/1"><code>l/1</code></a>       — loads the given module&#39;s beam code and purges the current version</li>
+<li><code>ls/0</code>      — lists the contents of the current directory</li>
+<li><a href="#ls/1"><code>ls/1</code></a>      — lists the contents of the specified directory</li>
+<li><a href="#m/0"><code>m/0</code></a>       — prints loaded modules</li>
+<li><a href="#pwd/0"><code>pwd/0</code></a>     — prints the current working directory</li>
+<li><a href="#r/1"><code>r/1</code></a>       — recompiles and reloads the given module&#39;s source file</li>
+<li><a href="#respawn/0"><code>respawn/0</code></a> — respawns the current shell</li>
+<li><a href="#s/1"><code>s/1</code></a>       — prints spec information</li>
+<li><a href="#t/1"><code>t/1</code></a>       — prints type information</li>
+<li><a href="#v/0"><code>v/0</code></a>       — prints the history of commands evaluated in the session</li>
+<li><a href="#v/1"><code>v/1</code></a>       — retrieves the nth value from the history</li>
 <li><a href="#import_file/1"><code>import_file/1</code></a>
-        — evaluates the given file in the shell&#39;s context</li>
+          — evaluates the given file in the shell&#39;s context</li>
 </ul>
 
 <p>Help for functions in this module can be consulted
@@ -77,7 +78,7 @@ h(Enum.reverse/1)
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -156,6 +157,14 @@ their corresponding <code>.beam</code> files.</p>
   <td class="summary_signature"><a href="#r/1">r(module)</a></td>
   
     <td class="summary_synopsis"><p>Recompiles and reloads the specified module&#39;s source file.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#respawn/0">respawn()</a></td>
+  
+    <td class="summary_synopsis"><p>Respawns the current shell by starting a new
+process and a new scope. Returns true if it worked.</p>
 </td>
   
 </tr>
@@ -244,7 +253,7 @@ c &quot;baz.ex&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L65" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -255,7 +264,7 @@ c &quot;baz.ex&quot;
   <div class="docstring"><p>Changes the current working directory to the given path.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L359" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L360" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -266,7 +275,7 @@ c &quot;baz.ex&quot;
   <div class="docstring"><p>Clear the console screen.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L85" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L86" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -277,7 +286,7 @@ c &quot;baz.ex&quot;
   <div class="docstring"><p>Flushes all messages sent to the shell and prints them out.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L325" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L326" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -288,7 +297,7 @@ c &quot;baz.ex&quot;
   <div class="docstring"><p>Prints the documentation for <code>IEx.Helpers</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L109" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L110" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -300,7 +309,7 @@ c &quot;baz.ex&quot;
 old version was properly purged before).</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L317" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L318" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -312,7 +321,7 @@ old version was properly purged before).</p>
 If <code>path</code> points to a file, prints its full path.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L371" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L372" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -324,7 +333,7 @@ If <code>path</code> points to a file, prints its full path.</p>
 their corresponding <code>.beam</code> files.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L94" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L95" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -335,7 +344,7 @@ their corresponding <code>.beam</code> files.</p>
   <div class="docstring"><p>Prints the current working directory.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L352" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L353" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -349,7 +358,19 @@ their corresponding <code>.beam</code> files.</p>
 are recompiled and reloaded.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L292" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L293" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="respawn/0">
+    <strong>respawn()</strong>
+  </p>
+  
+  <div class="docstring"><p>Respawns the current shell by starting a new
+process and a new scope. Returns true if it worked.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L436" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -361,7 +382,7 @@ are recompiled and reloaded.</p>
 their results.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L266" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L267" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -375,7 +396,7 @@ their results.</p>
 For instance, v(-1) returns the result of the last evaluated expression.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L282" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L283" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -416,7 +437,7 @@ h &quot;&lt;&gt;&quot;
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L138" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L139" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -442,7 +463,7 @@ iex(2)&gt; value
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L448" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L462" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -466,7 +487,7 @@ s(list_to_atom/1)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L232" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L233" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -487,7 +508,7 @@ t(Enum.t)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/iex/lib/iex/helpers.ex#L199" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/iex/lib/iex/helpers.ex#L200" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -47,7 +47,7 @@ element in the collection and cons&#39;ing the element with the accumulated list
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -62,9 +62,18 @@ element in the collection and cons&#39;ing the element with the accumulated list
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#impl_for/1">impl_for(data)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#impl_for!/1">impl_for!(data)</a></td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#member?/2">member?(collection, value)</a></td>
   
-    <td class="summary_synopsis"><p>The function is used to check if a value exists within the collection.</p>
+    <td class="summary_synopsis"><p>The function is used to check if a value exists within the collection.
+Membership should be tested with the match (<code>===</code>) operator.</p>
 </td>
   
 </tr>
@@ -90,7 +99,7 @@ element with the accumulated value.</p>
           <h2>Types</h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t</a> :: [] | {} | (... -> any)
+    <a href="#t:t/0">t</a> :: term
   </p>
   
 </div>
@@ -109,7 +118,41 @@ element with the accumulated value.</p>
   <div class="docstring"><p>The function is used to retrieve the collection&#39;s size.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/enum.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/enum.ex#L48" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="impl_for/1">
+    <strong>impl_for(data)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>impl_for(term) :: module | nil</li>
+      
+    </ul>
+  
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="impl_for!/1">
+    <strong>impl_for!(data)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>impl_for!(term) :: module | no_return</li>
+      
+    </ul>
+  
+  <div class="docstring"></div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/enum.ex#L1" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -117,10 +160,11 @@ element with the accumulated value.</p>
     <strong>member?(collection, value)</strong>
   </p>
   
-  <div class="docstring"><p>The function is used to check if a value exists within the collection.</p>
+  <div class="docstring"><p>The function is used to check if a value exists within the collection.
+Membership should be tested with the match (<code>===</code>) operator.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/enum.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/enum.ex#L43" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -149,7 +193,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/enum.ex#L39" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/enum.ex#L37" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -27,21 +27,21 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Convenience functions for working with Records.</p>
+          <p>Functions for working with Records.</p>
 
 <p>A record is a tagged tuple which contains one or more elements
 where the first element is an atom. We can manually create a record
 by simply defining such a tuple:</p>
 
-<pre><code>iex&gt; record = { User, &quot;josé&quot;, 25 }
+<pre><code>iex&gt; record = { User, &quot;José&quot;, 25 }
 iex&gt; is_record(record, User)
 true
 </code></pre>
 
 <p>However, manually constructing tuples can be quite error prone.
-In case we need to add a new field to our User, it would require
+If we need to add a new field to our User, it would require
 us to carefully change all places where the tuple is used.
-Furthermore, as more and more items are added to the tuple, they
+Furthermore, as more items are added to the tuple, they
 lose semantic value.</p>
 
 <p>This module solves these problems by allowing us to name each
@@ -67,7 +67,7 @@ end
 <p>In the example above, <code>defrecordp</code> is going to generate a set of
 macros named <code>user</code> that allows us to create, update and match
 on a record. Our record is going to have two fields, a <code>name</code> with
-default value of &quot;José&quot; and <code>age</code> of 25.</p>
+default value of &quot;José&quot; and <code>age</code> with default value 25.</p>
 
 <p>Let&#39;s see some examples:</p>
 
@@ -108,7 +108,7 @@ user(sample_user, new_values)
 <p>As the name says, <code>defrecordp</code> is useful when you don&#39;t want to
 expose the record definition. The <code>user</code> macro used above, for
 example, is only available inside the <code>User</code> module and nowhere else.
-You can find more information in <code>Kernel.defrecordp/2</code> docs.</p>
+You can find more information in <a href="Kernel.html#defrecordp/3"><code>Kernel.defrecordp/3</code></a> docs.</p>
 
 <h2>defrecord</h2>
 
@@ -157,12 +157,12 @@ need to import the record.</p>
 <h2>Runtime access</h2>
 
 <p>All the functionality discussed above happens at compilation time.
-This means that both <code>user(user, age: 26)</code> and <code>User[user, age: 26]</code>
-will be transformed into a simple tuple operation at compile time.</p>
+This means that both <code>user(age: 26)</code> and <code>User[age: 26]</code> are expanded
+into a tuple at compile time.</p>
 
 <p>However, there are some situations where we want to set or update
-fields dynamically. <code>defrecord</code> (and <code>defrecord</code> only) supports
-it out of the box:</p>
+fields dynamically. <code>defrecord</code> (and not <code>defrecordp</code> ) supports
+this behaviour out of the box:</p>
 
 <pre><code>defrecord User, name: &quot;José&quot;, age: 25
 
@@ -173,20 +173,23 @@ user.update(age: 26)
 #=&gt; User[name: &quot;Hello&quot;, age: 26]
 </code></pre>
 
-<p>All the calls above happen at runtime. It gives Elixir
-records flexibility at the cost of performance since
-there is more work happening at runtime.</p>
+<p>All the calls above happen at runtime. It gives Elixir records
+flexibility at the cost of performance since there is more work
+happening at runtime.</p>
 
-<p>The above calls (new and update) can interchangeably accept both
-atom and string keys for field names, however not both at the same time.
-Please also note that atom keys are faster. This feature allows to
-&quot;sanitize&quot; untrusted dictionaries and initialize/update records without
-using <code>binary_to_existing_atom/1</code>.</p>
+<p>The above calls (<code>new</code> and <code>update</code>) can accept both atom and string
+keys for field names, however not both at the same time. This feature
+allows to &quot;sanitize&quot; untrusted dictionaries and initialize/update
+records without using <a href="Kernel.html#binary_to_existing_atom/1"><code>Kernel.binary_to_existing_atom/1</code></a>.</p>
 
-<p>To sum up, <code>defrecordp</code> should be used when you don&#39;t want
-to expose the record information while <code>defrecord</code> should be used
-whenever you want to share a record within your code or with other
-libraries or whenever you need to dynamically set or update fields.</p>
+<p>To sum up, <code>defrecordp</code> should be used when you don&#39;t want to expose
+the record information while <code>defrecord</code> should be used whenever you
+want to share a record within your code or with other libraries or
+whenever you need to dynamically set or update fields.</p>
+
+<p>The standard library contains excellent examples of both use cases,
+with <a href="HashDict.html"><code>HashDict</code></a> being implemented with <code>defrecordp</code> 
+and <a href="Range.html"><code>Range</code></a> with <code>defrecord</code>.</p>
 
 <p>You can learn more about records in the <a href="Kernel.html#defrecord/3"><code>Kernel.defrecord/3</code></a> docs. Now
 let&#39;s discuss the usefulness of combining records with protocols.</p>
@@ -213,18 +216,19 @@ our record:</p>
 end
 </code></pre>
 
-<p>Now we can explicitly convert our WeekDate:</p>
+<p>Now we can explicitly convert our <code>WeekDate</code>:</p>
 
 <pre><code>to_string WeekDate[year: 2013, week: 26, week_day: 4]
 &quot;2013-W26-4&quot;
 </code></pre>
 
-<p>A protocol can be implemented for any record.</p>
+<p>A protocol can be implemented for any record, whether
+generated with <code>defrecordp</code> or <code>defrecord</code>.</p>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/record.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -234,33 +238,28 @@ end
           <tr>
   <td class="summary_signature"><a href="#deffunctions/2">deffunctions(values, env)</a></td>
   
-    <td class="summary_synopsis"><p>Defines record functions skipping the module definition.
-This is called directly by <code>defrecord</code>. It expects the record
-values, a set of options and the module environment.</p>
+    <td class="summary_synopsis"><p>Define record functions skipping the module definition.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#defmacros/4">defmacros(name, values, env, tag // nil)</a></td>
   
-    <td class="summary_synopsis"><p>Defines macros for manipulating records. This is called
-directly by <code>defrecordp</code>. It expects the macro name, the
-record values and the environment.</p>
+    <td class="summary_synopsis"><p>Define macros for manipulating records. </p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#deftypes/3">deftypes(values, types, env)</a></td>
   
-    <td class="summary_synopsis"><p>Defines types and specs for the record.</p>
+    <td class="summary_synopsis"><p>Define types and specs for the record.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#extract/2">extract(name, opts)</a></td>
   
-    <td class="summary_synopsis"><p>Extract record information from an Erlang file and
-return the fields as a list of tuples.</p>
+    <td class="summary_synopsis"><p>Extract record information from an Erlang file. </p>
 </td>
   
 </tr>
@@ -274,10 +273,7 @@ return the fields as a list of tuples.</p>
           <tr>
   <td class="summary_signature"><a href="#import/2">import(module, list2)</a></td>
   
-    <td class="summary_synopsis"><p>Imports a public record definition as a set of private macros,
-as defined by <code>Kernel.defrecordp/2</code>. This is useful when one
-desires to manipulate a record via a set of macros instead
-of the regular access syntax.</p>
+    <td class="summary_synopsis"><p>Import a public record definition as a set of private macros.</p>
 </td>
   
 </tr>
@@ -308,8 +304,9 @@ of the regular access syntax.</p>
     <strong>deffunctions(values, env)</strong>
   </p>
   
-  <div class="docstring"><p>Defines record functions skipping the module definition.
-This is called directly by <code>defrecord</code>. It expects the record
+  <div class="docstring"><p>Define record functions skipping the module definition.</p>
+
+<p>This is called directly by <a href="Kernel.html#defrecord/3"><code>Kernel.defrecord/3</code></a>. It expects the record
 values, a set of options and the module environment.</p>
 
 <h2>Examples</h2>
@@ -321,7 +318,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/record.ex#L298" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/record.ex#L311" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -329,8 +326,10 @@ end
     <strong>defmacros(name, values, env, tag // nil)</strong>
   </p>
   
-  <div class="docstring"><p>Defines macros for manipulating records. This is called
-directly by <code>defrecordp</code>. It expects the macro name, the
+  <div class="docstring"><p>Define macros for manipulating records. </p>
+
+<p>This is called
+directly by <a href="Kernel.html#defrecordp/3"><code>Kernel.defrecordp/3</code></a>. It expects the macro name, the
 record values and the environment.</p>
 
 <h2>Examples</h2>
@@ -341,7 +340,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/record.ex#L356" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/record.ex#L371" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -349,10 +348,10 @@ end
     <strong>deftypes(values, types, env)</strong>
   </p>
   
-  <div class="docstring"><p>Defines types and specs for the record.</p>
+  <div class="docstring"><p>Define types and specs for the record.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/record.ex#L325" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/record.ex#L338" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -360,16 +359,23 @@ end
     <strong>extract(name, opts)</strong>
   </p>
   
-  <div class="docstring"><p>Extract record information from an Erlang file and
-return the fields as a list of tuples.</p>
+  <div class="docstring"><p>Extract record information from an Erlang file. </p>
+
+<p>Returns the fields as a list of tuples.</p>
 
 <h2>Examples</h2>
 
-<pre><code>defrecord FileInfo, Record.extract(:file_info, from_lib: &quot;kernel/include/file.hrl&quot;)
+<pre><code>&gt; Record.extract(:file_info, from_lib: &quot;kernel/include/file.hrl&quot;)
+[size: :undefined, type: :undefined, access: :undefined, atime: :undefined,
+   mtime: :undefined, ctime: :undefined, mode: :undefined, links: :undefined,
+    major_device: :undefined, minor_device: :undefined, inode: :undefined,
+     uid: :undefined, gid: :undefined]
+
+defrecord FileInfo, Record.extract(:file_info, from_lib: &quot;kernel/include/file.hrl&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/record.ex#L195" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/record.ex#L206" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -384,8 +390,9 @@ return the fields as a list of tuples.</p>
     <strong>import(module, list2)</strong>
   </p>
   
-  <div class="docstring"><p>Imports a public record definition as a set of private macros,
-as defined by <code>Kernel.defrecordp/2</code>. This is useful when one
+  <div class="docstring"><p>Import a public record definition as a set of private macros.</p>
+
+<p>Macros defined as in <a href="Kernel.html#defrecordp/3"><code>Kernel.defrecordp/3</code></a>. This is useful when one
 desires to manipulate a record via a set of macros instead
 of the regular access syntax.</p>
 
@@ -399,7 +406,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/6a770579105f7b58877ac1a0e0b039513a8e85fc/lib/elixir/lib/record.ex#L214" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/elixir/lib/record.ex#L226" target="_blank" class="view_source">Source</a>
   
 </div>
 

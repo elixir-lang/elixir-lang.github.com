@@ -63,10 +63,16 @@ protocol:</p>
 end)
 </code></pre>
 
+<h2>Match</h2>
+
+<p>Dictionaries are required to implement all operations
+using the match (<code>===</code>) operator. Any deviation from
+this behaviour should be avoided and explicitly documented.</p>
+
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -99,8 +105,8 @@ Any non-member keys are ignored.</p>
 <tr>
   <td class="summary_signature"><a href="#equal?/2">equal?(a, b)</a></td>
   
-    <td class="summary_synopsis"><p>Check if two dicts are equal. If the dicts are of different types, they are
-first converted to lists.</p>
+    <td class="summary_synopsis"><p>Check if two dicts are equal using <code>===</code>. If the dicts are
+of different types, they are first converted to lists.</p>
 </td>
   
 </tr>
@@ -204,7 +210,7 @@ contains only entries from <code>dict</code> with keys not in <code>keys</code><
   <td class="summary_signature"><a href="#take/2">take(dict, keys)</a></td>
   
     <td class="summary_synopsis"><p>Returns a new dict where only the keys in <code>keys</code> from <code>dict</code> are
-included. 
+included.
 Any non-member keys are ignored.</p>
 </td>
   
@@ -421,7 +427,7 @@ true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L252" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L257" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -453,7 +459,7 @@ iex&gt; d = dict_impl.new([a: 1, b: 2])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L417" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L422" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -479,7 +485,7 @@ iex&gt; d = dict_impl.new([a: 1, b: 2])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L456" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L461" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -494,8 +500,8 @@ iex&gt; d = dict_impl.new([a: 1, b: 2])
       
     </ul>
   
-  <div class="docstring"><p>Check if two dicts are equal. If the dicts are of different types, they are
-first converted to lists.</p>
+  <div class="docstring"><p>Check if two dicts are equal using <code>===</code>. If the dicts are
+of different types, they are first converted to lists.</p>
 
 <h2>Examples</h2>
 
@@ -511,7 +517,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L478" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L483" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -539,7 +545,7 @@ iex&gt; Dict.fetch(d, :b)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L180" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L185" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -567,7 +573,7 @@ iex&gt; Dict.fetch!(d, :b)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L198" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L203" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -597,7 +603,7 @@ iex&gt; Dict.get(d, :b, 3)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L162" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L167" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -624,7 +630,7 @@ false
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L143" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L148" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -650,7 +656,7 @@ The keys are not guaranteed to be in any order.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L95" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -682,7 +688,7 @@ where the first element represents the key and the second the value.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L274" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L279" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -716,7 +722,7 @@ where the first element represents the key and the second the value.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L298" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L303" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -753,7 +759,7 @@ iex&gt; dict = dict_impl.new [a: 1]
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L325" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L330" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -780,7 +786,7 @@ If <code>dict</code> already has <code>key</code>, the stored value is replaced 
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L215" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L220" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -806,7 +812,7 @@ If <code>dict</code> already has <code>key</code>, the stored value is replaced 
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L231" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L236" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -831,7 +837,7 @@ If <code>dict</code> already has <code>key</code>, the stored value is replaced 
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L126" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L131" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -871,7 +877,7 @@ iex&gt; d = dict_impl.new([a: 1, b: 2])
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L395" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L400" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -887,7 +893,7 @@ iex&gt; d = dict_impl.new([a: 1, b: 2])
     </ul>
   
   <div class="docstring"><p>Returns a new dict where only the keys in <code>keys</code> from <code>dict</code> are
-included. 
+included.
 Any non-member keys are ignored.</p>
 
 <h2>Examples</h2>
@@ -904,7 +910,7 @@ Any non-member keys are ignored.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L440" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L445" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -923,7 +929,7 @@ Any non-member keys are ignored.</p>
 No particular order is enforced.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L499" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L504" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -951,7 +957,7 @@ value.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L365" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L370" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -978,7 +984,7 @@ value. An exception is generated if <code>key</code> is not present in the dict.
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L342" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L347" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1004,7 +1010,7 @@ The values are not guaranteed to be in any order.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L111" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L116" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -1023,7 +1029,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L43" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L48" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1033,7 +1039,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L49" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1043,7 +1049,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L45" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L50" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1053,7 +1059,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L46" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L51" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1063,7 +1069,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L47" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L52" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1073,7 +1079,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L48" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L53" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1083,7 +1089,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L49" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L54" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1093,7 +1099,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L50" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L55" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1103,7 +1109,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L51" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L56" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1113,7 +1119,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L52" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L57" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1123,7 +1129,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L53" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L58" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1133,7 +1139,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L54" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L59" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1143,7 +1149,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L55" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L60" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1153,7 +1159,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L56" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L61" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1163,7 +1169,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L57" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L62" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1173,7 +1179,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L58" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L63" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1183,7 +1189,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L59" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L64" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1193,7 +1199,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L60" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L65" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1203,7 +1209,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L61" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L66" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1213,7 +1219,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L62" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L67" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1223,7 +1229,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L63" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L68" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1233,7 +1239,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L69" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1243,7 +1249,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L65" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L70" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1253,7 +1259,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L66" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L71" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1263,7 +1269,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L67" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L72" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -1273,7 +1279,7 @@ The values are not guaranteed to be in any order.</p>
   
   <div class="docstring"></div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/dict.ex#L68" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/dict.ex#L73" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -32,10 +32,22 @@
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/integer.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/integer.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
+      
+        <h2 id="functions_summary">Functions summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#parse/1">parse(bin)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts a binary to an integer. </p>
+</td>
+  
+</tr>
+
+        </table>
       
 
       
@@ -44,14 +56,14 @@
           <tr>
   <td class="summary_signature"><a href="#even?/1">even?(n)</a></td>
   
-    <td class="summary_synopsis"><p>Returns true if <code>n</code> is an even number, otherwise false.</p>
+    <td class="summary_synopsis"><p>Determines if an integer is even.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#odd?/1">odd?(n)</a></td>
   
-    <td class="summary_synopsis"><p>Returns true if <code>n</code> is an odd number, otherwise false.</p>
+    <td class="summary_synopsis"><p>Determines if an integer is odd.</p>
 </td>
   
 </tr>
@@ -64,6 +76,42 @@
       
 
       
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <p class="signature" id="parse/1">
+    <strong>parse(bin)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>parse(binary) :: {integer, binary} | :error</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Converts a binary to an integer. </p>
+
+<p>If successful, returns a tuple of the form <code>{ integer, remainder_of_binary }</code>.
+Otherwise <code>:error</code>.</p>
+
+<h2>Examples</h2>
+
+<pre><code>iex&gt; Integer.parse(&quot;34&quot;)
+{34,&quot;&quot;}
+iex&gt; Integer.parse(&quot;34.5&quot;)
+{34,&quot;.5&quot;}
+iex&gt; Integer.parse(&quot;three&quot;)
+:error
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/integer.ex#L45" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
 
       
         <div id="macros_details" class="details_list">
@@ -73,10 +121,13 @@
     <strong>even?(n)</strong>
   </p>
   
-  <div class="docstring"><p>Returns true if <code>n</code> is an even number, otherwise false.</p>
+  <div class="docstring"><p>Determines if an integer is even.</p>
+
+<p>Returns <code>true</code> if <code>n</code> is an even number, otherwise <code>false</code>.
+Implemented as a macro so it is allowed in guard clauses.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/integer.ex#L16" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/integer.ex#L24" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -84,10 +135,13 @@
     <strong>odd?(n)</strong>
   </p>
   
-  <div class="docstring"><p>Returns true if <code>n</code> is an odd number, otherwise false.</p>
+  <div class="docstring"><p>Determines if an integer is odd.</p>
+
+<p>Returns <code>true</code> if <code>n</code> is an odd number, otherwise <code>false</code>.
+Implemented as a macro so it is allowed in guard clauses.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/378f6ee0e2e14bd283746a489b1de54fd47e0be5/lib/elixir/lib/integer.ex#L9" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/elixir/lib/integer.ex#L14" target="_blank" class="view_source">Source</a>
   
 </div>
 
