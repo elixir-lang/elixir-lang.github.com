@@ -6,7 +6,7 @@ category: Releases
 excerpt: Elixir v0.11.0 is out and it focus on improving and optimizing the patterns often used by the community.
 ---
 
-After 4 months, Elixir v0.11.0 has been released with 832 commits since the previous minor release, done by 20 contributors. Although we have some great features in this release, the major focus in those 4 months was improving the common patterns used by the community and streamlining the existing workflows.
+After 4 months, Elixir v0.11.0 has been released with 832 commits since the previous minor release, done by more than 40 contributors. Although we have some great features in this release, the major focus in those 4 months was improving the common patterns used by the community and streamlining the existing workflows.
 
 ## IEx
 
