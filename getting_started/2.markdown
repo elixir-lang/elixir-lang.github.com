@@ -469,7 +469,7 @@ Many independent guard clauses can also be given at the same time. For example, 
 
 ```elixir
 def first_is_zero?(tuple_or_list) when
-  elem(tuple_or_list, 1) == 0 or hd(tuple_or_list) == 0 do
+  elem(tuple_or_list, 0) == 0 or hd(tuple_or_list) == 0 do
   true
 end
 ```
@@ -478,7 +478,7 @@ However, the example above will always fail. If the argument is a list, calling 
 
 ```elixir
 def first_is_zero?(tuple_or_list)
-    when elem(tuple_or_list, 1) == 0
+    when elem(tuple_or_list, 0) == 0
     when hd(tuple_or_list) == 0 do
   true
 end
