@@ -87,7 +87,7 @@ For more information on records, [check out the documentation for the `defrecord
 
 ## 4.2 Protocols
 
-Protocols is a mechanism to achieve polymorphism in Elixir. Dispatching a protocol is available to any data type as long as it implements the protocol. Let's consider a practical example.
+Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching a protocol is available to any data type as long as it implements the protocol. Let's consider a practical example.
 
 In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
 
@@ -103,8 +103,8 @@ end
 The protocol expects a function called `blank?` that receives one argument to be implemented. We can implement this protocol for some Elixir data types in the following way:
 
 ```elixir
-# Numbers are never blank
-defimpl Blank, for: Number do
+# Integers are never blank
+defimpl Blank, for: Integer do
   def blank?(_), do: false
 end
 
@@ -129,7 +129,8 @@ And we would do so for all native data types. The types available are:
 * `Atom`
 * `List`
 * `BitString`
-* `Number`
+* `Integer`
+* `Float`
 * `Function`
 * `PID`
 * `Port`
@@ -151,28 +152,25 @@ iex> Blank.blank?("hello")
 ** (UndefinedFunctionError) undefined function: Blank.BitString.blank?/1
 ```
 
-Implementing the protocol for all 9 types above can be cumbersome, but Elixir gives us some tools to select which protocols we want to implement explicitly.
+### 4.2.1 Fallback to any
 
-### 4.2.1 Selecting implementations
-
-Implementing the protocol for all types can be a bit of work, and in some cases even unnecessary. Going back to our `Blank` protocol, the types `Number`, `Function`, `PID`, `Port` and `Reference` are never going to be blank. To make things easier, Elixir allows us to declare the fact that we are going to implement the protocol just for some types, as follows:
+In some cases, it may be convenient to provide a default implementation for all types. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
 
 ```elixir
 defprotocol Blank do
-  @only [Atom, Record, Tuple, List, BitString, Any]
+  @fallback_to_any true
   def blank?(data)
 end
 ```
 
-Since we also specified `Any` as a data type, if the data type is not any of `Atom`, `Record`, `Tuple`, `List` or `BitString`, it will automatically fall back to `Any`:
+Which can now be implemented as:
 
 ```elixir
 defimpl Blank, for: Any do
   def blank?(_), do: false
 end
 ```
-
-Now all data types that we have not specified will be automatically considered non-blank.
+Now all data types that we have not implemented the `Blank` protocol for will be considered non-blank.
 
 ### 4.2.2 Using protocols with records
 
