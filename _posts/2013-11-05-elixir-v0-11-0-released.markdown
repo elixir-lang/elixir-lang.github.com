@@ -30,7 +30,7 @@ In Elixir, your code runs in many processes that talk to each other and the Elix
 
 Another simple but significant change in ExUnit was the change in the default formatter to print changes as they come, instead of waiting until the suite is done running:
 
-![ExUnit Fast Fail](/images/contents/iex-pry.png)
+![ExUnit Fast Fail](/images/contents/fast-fail.png)
 
 This change allows developer to get faster feedback from their test suites.
 
