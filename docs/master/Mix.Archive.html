@@ -37,7 +37,7 @@ name, e.g. the root of the zip file should be <code>my_app/ebin/Elixir.My.App.be
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/mix/lib/mix/archive.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/mix/lib/mix/archive.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -47,9 +47,7 @@ name, e.g. the root of the zip file should be <code>my_app/ebin/Elixir.My.App.be
           <tr>
   <td class="summary_signature"><a href="#create/2">create(archive_file, project_path // &quot;.&quot;)</a></td>
   
-    <td class="summary_synopsis"><p>Creates an application archive from the current project.
-The path will be the root of the project and must contain an ebin folder.
-The archive file will be created in archive_path.</p>
+    <td class="summary_synopsis"><p>Creates an application archive.</p>
 </td>
   
 </tr>
@@ -85,12 +83,15 @@ The archive file will be created in archive_path.</p>
     <strong>create(archive_file, project_path // &quot;.&quot;)</strong>
   </p>
   
-  <div class="docstring"><p>Creates an application archive from the current project.
-The path will be the root of the project and must contain an ebin folder.
-The archive file will be created in archive_path.</p>
+  <div class="docstring"><p>Creates an application archive.</p>
+
+<p>It receives the archive file in the format
+<code>path/to/archive/app-vsn.ez</code> and the path to the root of
+the project to be archived. Everything in the <code>ebin</code> and
+<code>priv</code> directories is archived.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/mix/lib/mix/archive.ex#L44" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/mix/lib/mix/archive.ex#L47" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -107,7 +108,7 @@ The archive file will be created in archive_path.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/mix/lib/mix/archive.ex#L35" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/mix/lib/mix/archive.ex#L35" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -127,7 +128,7 @@ iex&gt; Mix.Archive.name(&quot;foo&quot;, &quot;0.1.0&quot;)
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/c5cf8a34703a5ca108c6f592d7828a2b546616a9/lib/mix/lib/mix/archive.ex#L23" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/mix/lib/mix/archive.ex#L23" target="_blank" class="view_source">Source</a>
   
 </div>
 

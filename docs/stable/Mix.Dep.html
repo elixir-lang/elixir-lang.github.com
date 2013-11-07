@@ -38,17 +38,18 @@ dependencies. It contains:</p>
 <li><code>requirement</code> - a binary or regex with the dependency&#39;s requirement</li>
 <li><code>status</code> - the current status of the dependency, check <a href="Mix.Deps.html#format_status/1"><code>Mix.Deps.format_status/1</code></a> for more info;</li>
 <li><code>opts</code> - the options given by the developer</li>
-<li><code>deps</code> - dependencies of this dependency</li>
-<li><code>source</code> - any possible configuration associated with the <code>manager</code> field,
-<code>rebar.config</code> for rebar or the <code>Mix.Project</code> for Mix</li>
+<li><code>deps</code> - the app names of the dependencies of this dependency</li>
 <li><code>manager</code> - the project management, possible values: <code>:rebar</code> | <code>:mix</code> | <code>:make</code> | <code>nil</code></li>
 <li><code>from</code> - path to the file where the dependency was defined</li>
+<li><code>extra</code> - a slot for adding extra configuration based on the scm.
+        the information on this field is private to the scm and
+        should not be relied on.</li>
 </ul>
 
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/deps.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L1" target="_blank" class="view_source">Source</a>
 
       
         <h2>Fields <small>(and defaults)</small></h2>
@@ -92,7 +93,7 @@ dependencies. It contains:</p>
           
             <li>
               <span class="summary_signature">
-                <strong>source:</strong> nil
+                <strong>extra:</strong> nil
               </span>
             </li>
           
@@ -128,7 +129,7 @@ dependencies. It contains:</p>
 </div>
 <div class="type_detail">
   <p class="typespec" id="t:options/0">
-    <a href="#t:options/0">options</a> :: [{:from, term} | ({:manager, term} | ({:source, term} | ({:deps, term} | ({:opts, term} | ({:status, term} | ({:requirement, term} | ({:app, term} | {:scm, term})))))))] | [{<a href="String.html#t:t/0">String.t</a>, term | (term | (term | (term | (term | (term | (term | (term | term)))))))}]
+    <a href="#t:options/0">options</a> :: [{:from, term} | ({:manager, term} | ({:extra, term} | ({:deps, term} | ({:opts, term} | ({:status, term} | ({:requirement, term} | ({:app, term} | {:scm, term})))))))] | [{<a href="String.html#t:t/0">String.t</a>, term | (term | (term | (term | (term | (term | (term | (term | term)))))))}]
   </p>
   
 </div>

@@ -32,10 +32,38 @@
           <p>A simple module that provides conveniences for creating,
 loading and manipulating tasks.</p>
 
+<p>A Mix task can be defined by simply using <code>Mix.Task</code>
+in a module starting with <code>Mix.Tasks.</code> and defining
+the <a href="#run/1"><code>run/1</code></a> function:</p>
+
+<pre><code>defmodule Mix.Tasks.Hello do
+  use Mix.Task
+
+  def run(_) do
+    IO.puts &quot;hello&quot;
+  end
+end
+</code></pre>
+
+<p>The <a href="#run/1"><code>run/1</code></a> function will receive all arguments passed
+to the command line.</p>
+
+<h2>Attributes</h2>
+
+<p>There are a couple attributes available in Mix tasks to
+configure them in Mix:</p>
+
+<ul>
+<li><code>@shortdoc</code> - shows a short description that appears
+on <code>mix help</code></li>
+<li><code>@hidden</code> - do not show the task in <code>mix help</code></li>
+<li><code>@recursive</code> - run the task recursively in umbrella projects</li>
+</ul>
+
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -53,13 +81,12 @@ won&#39;t show up. Check <a href="#load_all/0"><code>load_all/0</code></a> if yo
 <tr>
   <td class="summary_signature"><a href="#clear/0">clear()</a></td>
   
-    <td class="summary_synopsis"><p>Clears all invoked tasks, allowing them to be reinvoked.
-Returns an ordset with all the tasks invoked thus far.</p>
+    <td class="summary_synopsis"><p>Clears all invoked tasks, allowing them to be reinvoked.</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#get/1">get(task)</a></td>
+  <td class="summary_signature"><a href="#get!/1">get!(task)</a></td>
   
     <td class="summary_synopsis"><p>Receives a task name and retrieves the task module.</p>
 </td>
@@ -167,7 +194,7 @@ a list of command line args.</p>
 won&#39;t show up. Check <a href="#load_all/0"><code>load_all/0</code></a> if you want to preload all tasks.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L53" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L79" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -175,16 +202,15 @@ won&#39;t show up. Check <a href="#load_all/0"><code>load_all/0</code></a> if yo
     <strong>clear()</strong>
   </p>
   
-  <div class="docstring"><p>Clears all invoked tasks, allowing them to be reinvoked.
-Returns an ordset with all the tasks invoked thus far.</p>
+  <div class="docstring"><p>Clears all invoked tasks, allowing them to be reinvoked.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L183" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L201" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="get/1">
-    <strong>get(task)</strong>
+  <p class="signature" id="get!/1">
+    <strong>get!(task)</strong>
   </p>
   
   <div class="docstring"><p>Receives a task name and retrieves the task module.</p>
@@ -197,7 +223,7 @@ Returns an ordset with all the tasks invoked thus far.</p>
 </ul>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L122" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L149" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -208,7 +234,7 @@ Returns an ordset with all the tasks invoked thus far.</p>
   <div class="docstring"><p>Checks if the task is hidden or not. Returns a boolean.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L89" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L115" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -219,7 +245,7 @@ Returns an ordset with all the tasks invoked thus far.</p>
   <div class="docstring"><p>Loads all tasks in all code paths.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L28" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L54" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -230,7 +256,7 @@ Returns an ordset with all the tasks invoked thus far.</p>
   <div class="docstring"><p>Loads all tasks in the given <code>paths</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L33" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L59" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -242,7 +268,7 @@ Returns an ordset with all the tasks invoked thus far.</p>
 Returns the moduledoc or <code>nil</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L68" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L94" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -254,7 +280,7 @@ Returns the moduledoc or <code>nil</code>.</p>
 umbrella projects. Returns <code>true</code>, <code>false</code> or <code>:both</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L100" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L126" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -266,7 +292,7 @@ umbrella projects. Returns <code>true</code>, <code>false</code> or <code>:both<
 an umbrella project reenables a task it is reenabled for all sub projects.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L191" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L209" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -283,10 +309,10 @@ returns the result.</p>
 again and simply aborts with <code>:noop</code>.</p>
 
 <p>It may raise an exception if the task was not found
-or it is invalid. Check <a href="#get/1"><code>get/1</code></a> for more information.</p>
+or it is invalid. Check <a href="#get!/1"><code>get!/1</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L147" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L174" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -298,7 +324,7 @@ or it is invalid. Check <a href="#get/1"><code>get/1</code></a> for more informa
 Returns the shortdoc or <code>nil</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L79" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L105" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -309,7 +335,7 @@ Returns the shortdoc or <code>nil</code>.</p>
   <div class="docstring"><p>Returns the task name for the given <code>module</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L110" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L136" target="_blank" class="view_source">Source</a>
   
 </div>
 
@@ -330,7 +356,7 @@ Returns the shortdoc or <code>nil</code>.</p>
 a list of command line args.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.0/lib/mix/lib/mix/task.ex#L13" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/task.ex#L39" target="_blank" class="view_source">Source</a>
   
 </div>
 
