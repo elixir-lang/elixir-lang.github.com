@@ -265,7 +265,8 @@ defmodule A.Mixfile do
 
   def project do
     [ app: :a,
-      version: "0.0.1",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
       deps: deps ]
   end
 
@@ -274,6 +275,8 @@ defmodule A.Mixfile do
   end
 end
 ```
+
+Note the `deps_path` and `lockfile` options in the subproject above. If you have these options in all the subprojects in the umbrella they will share their dependencies. `mix new` inside the apps directory will automatically create a project with these options pre-set.
 
 ## 1.6 Environments
 
