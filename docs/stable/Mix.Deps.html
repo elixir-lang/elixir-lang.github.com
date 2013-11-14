@@ -43,13 +43,13 @@ SCM or options used by Mix. Each set of options is documented below.</p>
 
 <p>Inside Mix, those dependencies are converted to a <code>Mix.Dep</code> record.
 This module provides conveniences to work with those dependencies
-and the dependencies are usually in two specific states: fetched and
-unfetched.</p>
+and the dependencies are usually in two specific states: loaded and
+unloaded.</p>
 
-<p>When a dependency is unfetched, it means Mix only parsed its specification
-and made no attempt to actually fetch the dependency or validate its
-status. When the dependency is fetched, it means Mix attempted to fetch
-and validate it, the status is set in the status field.</p>
+<p>When a dependency is unloaded, it means Mix only parsed its specification
+and made no attempt to actually load the dependency or validate its
+status. When the dependency is loaded, it means Mix attempted to fetch,
+load and validate it, the status is set in the status field.</p>
 
 <h2>Mix options</h2>
 
@@ -93,7 +93,7 @@ overriden from the Mixfile:</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L21" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L21" target="_blank" class="view_source">Source</a>
 
       
 
@@ -103,8 +103,8 @@ overriden from the Mixfile:</p>
           <tr>
   <td class="summary_signature"><a href="#available?/1">available?(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Check if a dependency is available. Available dependencies
-are the ones that can be compiled, loaded, etc.</p>
+    <td class="summary_synopsis"><p>Checks if a dependency is available. Available dependencies
+are the ones that can be loaded.</p>
 </td>
   
 </tr>
@@ -121,30 +121,14 @@ are the ones that can be compiled, loaded, etc.</p>
     <td class="summary_synopsis"><p>Returns all children dependencies for the current project,
 as well as the defined apps in case of umbrella projects.
 The children dependencies returned by this function were
-not fetched yet.</p>
+not loaded yet.</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#compile_path/1">compile_path(arg1)</a></td>
+  <td class="summary_signature"><a href="#compilable?/1">compilable?(dep)</a></td>
   
-    <td class="summary_synopsis"><p>Returns all compile paths for the dependency.
-Expects a fetched dependency.</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#fetched/0">fetched()</a></td>
-  
-    <td class="summary_synopsis"><p>Returns fetched dependencies recursively as a <code>Mix.Dep</code> record.</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#fetched_by_name/2">fetched_by_name(given, all_deps // fetched)</a></td>
-  
-    <td class="summary_synopsis"><p>Receives a list of  dependency names and returns fetched dependency
-records. Logs a message if the dependency could not be found.</p>
+    <td class="summary_synopsis"><p>Checks if a dependency can be compiled.</p>
 </td>
   
 </tr>
@@ -172,10 +156,25 @@ project onto the project stack.</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#load_paths/1">load_paths(arg1)</a></td>
+  <td class="summary_signature"><a href="#load_paths/1">load_paths(dep)</a></td>
   
-    <td class="summary_synopsis"><p>Returns all load paths for the dependency.
-Expects a fetched dependency.</p>
+    <td class="summary_synopsis"><p>Returns all load paths for the given dependency. Automatically
+derived from source paths.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#loaded/0">loaded()</a></td>
+  
+    <td class="summary_synopsis"><p>Returns loaded dependencies recursively as a <code>Mix.Dep</code> record.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#loaded_by_name/2">loaded_by_name(given, all_deps // loaded)</a></td>
+  
+    <td class="summary_synopsis"><p>Receives a list of  dependency names and returns loaded dependency
+records. Logs a message if the dependency could not be found.</p>
 </td>
   
 </tr>
@@ -196,14 +195,14 @@ Expects a fetched dependency.</p>
 <tr>
   <td class="summary_signature"><a href="#ok?/1">ok?(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Check if a dependency is ok.</p>
+    <td class="summary_synopsis"><p>Checks if a dependency is ok.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#out_of_date?/1">out_of_date?(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Check if a dependency is out of date, also considering its
+    <td class="summary_synopsis"><p>Checks if a dependency is out of date, also considering its
 lock status. Therefore, be sure to call <code>check_lock</code> before
 invoking this function.</p>
 </td>
@@ -217,14 +216,21 @@ invoking this function.</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#unfetched/2">unfetched(acc, callback)</a></td>
+  <td class="summary_signature"><a href="#source_paths/1">source_paths(arg1)</a></td>
   
-    <td class="summary_synopsis"><p>Maps and reduces over all unfetched dependencies, one by one.</p>
+    <td class="summary_synopsis"><p>Returns all source paths.</p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#unfetched_by_name/3">unfetched_by_name(given, acc, callback)</a></td>
+  <td class="summary_signature"><a href="#unloaded/2">unloaded(acc, callback)</a></td>
+  
+    <td class="summary_synopsis"><p>Maps and reduces over all unloaded dependencies, one by one.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unloaded_by_name/3">unloaded_by_name(given, acc, callback)</a></td>
   
     <td class="summary_synopsis"><p>Receives a list of dependency names and maps and reduces over
 them.</p>
@@ -234,7 +240,7 @@ them.</p>
 <tr>
   <td class="summary_signature"><a href="#updatable?/1">updatable?(dep)</a></td>
   
-    <td class="summary_synopsis"><p>Check if a dependency can be updated.</p>
+    <td class="summary_synopsis"><p>Checks if a dependency can be updated.</p>
 </td>
   
 </tr>
@@ -256,11 +262,11 @@ them.</p>
     <strong>available?(arg1)</strong>
   </p>
   
-  <div class="docstring"><p>Check if a dependency is available. Available dependencies
-are the ones that can be compiled, loaded, etc.</p>
+  <div class="docstring"><p>Checks if a dependency is available. Available dependencies
+are the ones that can be loaded.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L290" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L293" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -271,7 +277,7 @@ are the ones that can be compiled, loaded, etc.</p>
   <div class="docstring"><p>Checks the lock for the given dependency and update its status accordingly.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L262" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L261" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -282,7 +288,7 @@ are the ones that can be compiled, loaded, etc.</p>
   <div class="docstring"><p>Returns all children dependencies for the current project,
 as well as the defined apps in case of umbrella projects.
 The children dependencies returned by this function were
-not fetched yet.</p>
+not loaded yet.</p>
 
 <h2>Exceptions</h2>
 
@@ -290,52 +296,21 @@ not fetched yet.</p>
 provided in the project are in the wrong format.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L90" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L90" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="compile_path/1">
-    <strong>compile_path(arg1)</strong>
+  <p class="signature" id="compilable?/1">
+    <strong>compilable?(dep)</strong>
   </p>
   
-  <div class="docstring"><p>Returns all compile paths for the dependency.
-Expects a fetched dependency.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L334" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="fetched/0">
-    <strong>fetched()</strong>
-  </p>
-  
-  <div class="docstring"><p>Returns fetched dependencies recursively as a <code>Mix.Dep</code> record.</p>
+  <div class="docstring"><p>Checks if a dependency can be compiled.</p>
 
-<h2>Exceptions</h2>
-
-<p>This function raises an exception if any of the dependencies
-provided in the project are in the wrong format.</p>
+<p>All available dependencies can be compiled except for
+umbrella applications.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L100" target="_blank" class="view_source">Source</a>
-  
-</div>
-<div class="detail">
-  <p class="signature" id="fetched_by_name/2">
-    <strong>fetched_by_name(given, all_deps // fetched)</strong>
-  </p>
-  
-  <div class="docstring"><p>Receives a list of  dependency names and returns fetched dependency
-records. Logs a message if the dependency could not be found.</p>
-
-<h2>Exceptions</h2>
-
-<p>This function raises an exception if any of the dependencies
-provided in the project are in the wrong format.</p>
-</div>
-  
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L114" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L306" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -346,7 +321,7 @@ provided in the project are in the wrong format.</p>
   <div class="docstring"><p>Formats a dependency for printing.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L320" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L333" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -357,7 +332,7 @@ provided in the project are in the wrong format.</p>
   <div class="docstring"><p>Formats the status of a dependency.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L199" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L198" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -369,23 +344,55 @@ provided in the project are in the wrong format.</p>
 changing the current working directory and loading the given
 project onto the project stack.</p>
 
-<p>This function only works for mix dependencies.
-It is expected a fetched dependency as argument.</p>
+<p>It is expected a loaded dependency as argument.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L182" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L181" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="load_paths/1">
-    <strong>load_paths(arg1)</strong>
+    <strong>load_paths(dep)</strong>
   </p>
   
-  <div class="docstring"><p>Returns all load paths for the dependency.
-Expects a fetched dependency.</p>
+  <div class="docstring"><p>Returns all load paths for the given dependency. Automatically
+derived from source paths.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L348" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L347" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="loaded/0">
+    <strong>loaded()</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns loaded dependencies recursively as a <code>Mix.Dep</code> record.</p>
+
+<h2>Exceptions</h2>
+
+<p>This function raises an exception if any of the dependencies
+provided in the project are in the wrong format.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L100" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="loaded_by_name/2">
+    <strong>loaded_by_name(given, all_deps // loaded)</strong>
+  </p>
+  
+  <div class="docstring"><p>Receives a list of  dependency names and returns loaded dependency
+records. Logs a message if the dependency could not be found.</p>
+
+<h2>Exceptions</h2>
+
+<p>This function raises an exception if any of the dependencies
+provided in the project are in the wrong format.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L114" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -396,7 +403,7 @@ Expects a fetched dependency.</p>
   <div class="docstring"><p>Return <code>true</code> if dependency is a make project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L388" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L393" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -407,7 +414,7 @@ Expects a fetched dependency.</p>
   <div class="docstring"><p>Return <code>true</code> if dependency is a mix project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L374" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L379" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -415,10 +422,10 @@ Expects a fetched dependency.</p>
     <strong>ok?(arg1)</strong>
   </p>
   
-  <div class="docstring"><p>Check if a dependency is ok.</p>
+  <div class="docstring"><p>Checks if a dependency is ok.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L283" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L286" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -426,14 +433,14 @@ Expects a fetched dependency.</p>
     <strong>out_of_date?(arg1)</strong>
   </p>
   
-  <div class="docstring"><p>Check if a dependency is out of date, also considering its
+  <div class="docstring"><p>Checks if a dependency is out of date, also considering its
 lock status. Therefore, be sure to call <code>check_lock</code> before
 invoking this function.</p>
 
 <p>Out of date dependencies are fixed by simply running <code>deps.get</code>.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L310" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L323" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -444,15 +451,29 @@ invoking this function.</p>
   <div class="docstring"><p>Return <code>true</code> if dependency is a rebar project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L381" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L386" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="unfetched/2">
-    <strong>unfetched(acc, callback)</strong>
+  <p class="signature" id="source_paths/1">
+    <strong>source_paths(arg1)</strong>
   </p>
   
-  <div class="docstring"><p>Maps and reduces over all unfetched dependencies, one by one.</p>
+  <div class="docstring"><p>Returns all source paths.</p>
+
+<p>Source paths are the directories that contains ebin files for a given
+dependency. All managers, except rebar, have only one source path.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L360" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="unloaded/2">
+    <strong>unloaded(acc, callback)</strong>
+  </p>
+  
+  <div class="docstring"><p>Maps and reduces over all unloaded dependencies, one by one.</p>
 
 <p>This is useful in case you want to retrieve the dependency
 tree for a project but process and change them along the way.
@@ -468,12 +489,12 @@ as arguments. The accumulator is returned as result.</p>
 provided in the project are in the wrong format.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L148" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L148" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
-  <p class="signature" id="unfetched_by_name/3">
-    <strong>unfetched_by_name(given, acc, callback)</strong>
+  <p class="signature" id="unloaded_by_name/3">
+    <strong>unloaded_by_name(given, acc, callback)</strong>
   </p>
   
   <div class="docstring"><p>Receives a list of dependency names and maps and reduces over
@@ -485,7 +506,7 @@ them.</p>
 provided in the project are in the wrong format.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L162" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L162" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -493,10 +514,10 @@ provided in the project are in the wrong format.</p>
     <strong>updatable?(dep)</strong>
   </p>
   
-  <div class="docstring"><p>Check if a dependency can be updated.</p>
+  <div class="docstring"><p>Checks if a dependency can be updated.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/deps.ex#L300" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/deps.ex#L313" target="_blank" class="view_source">Source</a>
   
 </div>
 

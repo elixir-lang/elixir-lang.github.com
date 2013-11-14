@@ -59,7 +59,7 @@ defined.</p>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -67,27 +67,59 @@ defined.</p>
         <h2 id="functions_summary">Functions summary</h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#compile_path/0">compile_path()</a></td>
+  <td class="summary_signature"><a href="#app_path/1">app_path(config // config())</a></td>
   
-    <td class="summary_synopsis"><p>Returns the paths this project compiles to,
-collecting all <code>:compile_path</code> in case of umbrella apps.</p>
+    <td class="summary_synopsis"><p>Returns the application path inside the build.
+The returned path will be expanded.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#build_path/1">build_path(config // config())</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the build path for this project.
+The returned path will be expanded.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#build_structure/2">build_structure(config // config(), opts // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Builds the project structure for the current application.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#compile_path/1">compile_path(config // config())</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the paths this project compiles to.
+The returned path will be expanded.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#config/0">config()</a></td>
   
-    <td class="summary_synopsis"><p>Returns the project configuration for the current environment.</p>
+    <td class="summary_synopsis"><p>Returns the project configuration for the current environment.
+This configuration is cached once the project is pushed into the stack.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#config_files/0">config_files()</a></td>
   
-    <td class="summary_synopsis"><p>Returns a list of project configuration files, for example,
-<code>mix.exs</code> and <code>mix.lock</code>. This function is usually used
-in compilation tasks to trigger a full recompilation
-whenever such configuration files change.</p>
+    <td class="summary_synopsis"><p>Returns a list of project configuration files as known by
+this project. This function is usually used in compilation
+tasks to trigger a full recompilation whenever such
+configuration files change.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#deps_path/1">deps_path(config // config())</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the path to store dependencies for this project.
+The returned path will be expanded.</p>
 </td>
   
 </tr>
@@ -108,7 +140,7 @@ project).</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#in_project/4">in_project(app, app_path, post_config // [], fun)</a></td>
+  <td class="summary_signature"><a href="#in_project/4">in_project(app, path, post_config // [], fun)</a></td>
   
     <td class="summary_synopsis"><p>Runs the given <code>fun</code> inside the given project by changing
 the current working directory and loading the given project
@@ -120,6 +152,15 @@ onto the project stack.</p>
   <td class="summary_signature"><a href="#load_paths/0">load_paths()</a></td>
   
     <td class="summary_synopsis"><p>Returns all load paths for this project.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#manifest_path/1">manifest_path(config // config())</a></td>
+  
+    <td class="summary_synopsis"><p>The path to store manifests. By default they are
+stored in the same app path but it may be changed
+in future releases.</p>
 </td>
   
 </tr>
@@ -144,15 +185,77 @@ onto the project stack.</p>
         <div id="functions_details" class="details_list">
           <h2>Functions</h2>
           <div class="detail">
-  <p class="signature" id="compile_path/0">
-    <strong>compile_path()</strong>
+  <p class="signature" id="app_path/1">
+    <strong>app_path(config // config())</strong>
   </p>
   
-  <div class="docstring"><p>Returns the paths this project compiles to,
-collecting all <code>:compile_path</code> in case of umbrella apps.</p>
+  <div class="docstring"><p>Returns the application path inside the build.
+The returned path will be expanded.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Project.app_path
+#=&gt; &quot;/path/to/project/_build/shared/lib/app&quot;
+</code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L163" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L234" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="build_path/1">
+    <strong>build_path(config // config())</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns the build path for this project.
+The returned path will be expanded.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Project.build_path
+#=&gt; &quot;/path/to/project/_build/shared&quot;
+</code></pre>
+
+<p>If :build<em>per</em>environment is set to true, it
+will create a new build per environment:</p>
+
+<pre><code>Mix.env
+#=&gt; :dev
+Mix.Project.build_path
+#=&gt; &quot;/path/to/project/_build/dev&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L199" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="build_structure/2">
+    <strong>build_structure(config // config(), opts // [])</strong>
+  </p>
+  
+  <div class="docstring"><p>Builds the project structure for the current application.</p>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L264" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="compile_path/1">
+    <strong>compile_path(config // config())</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns the paths this project compiles to.
+The returned path will be expanded.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Project.compile_path
+#=&gt; &quot;/path/to/project/_build/shared/lib/app/priv&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L257" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -160,10 +263,11 @@ collecting all <code>:compile_path</code> in case of umbrella apps.</p>
     <strong>config()</strong>
   </p>
   
-  <div class="docstring"><p>Returns the project configuration for the current environment.</p>
+  <div class="docstring"><p>Returns the project configuration for the current environment.
+This configuration is cached once the project is pushed into the stack.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L105" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L111" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -171,13 +275,33 @@ collecting all <code>:compile_path</code> in case of umbrella apps.</p>
     <strong>config_files()</strong>
   </p>
   
-  <div class="docstring"><p>Returns a list of project configuration files, for example,
-<code>mix.exs</code> and <code>mix.lock</code>. This function is usually used
-in compilation tasks to trigger a full recompilation
-whenever such configuration files change.</p>
+  <div class="docstring"><p>Returns a list of project configuration files as known by
+this project. This function is usually used in compilation
+tasks to trigger a full recompilation whenever such
+configuration files change.</p>
+
+<p>By default it includes the mix.exs file and the lock manifest.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L118" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L126" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="deps_path/1">
+    <strong>deps_path(config // config())</strong>
+  </p>
+  
+  <div class="docstring"><p>Returns the path to store dependencies for this project.
+The returned path will be expanded.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Project.deps_path
+#=&gt; &quot;/path/to/project/deps&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L177" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -194,7 +318,7 @@ requirement of the current task, you should call
 <a href="#get!/0"><code>get!/0</code></a> instead.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L82" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L87" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -211,12 +335,12 @@ function raises <code>Mix.NoProjectError</code> in case no project
 is available.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L98" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L103" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
   <p class="signature" id="in_project/4">
-    <strong>in_project(app, app_path, post_config // [], fun)</strong>
+    <strong>in_project(app, path, post_config // [], fun)</strong>
   </p>
   
   <div class="docstring"><p>Runs the given <code>fun</code> inside the given project by changing
@@ -224,7 +348,7 @@ the current working directory and loading the given project
 onto the project stack.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L141" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L149" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -235,7 +359,28 @@ onto the project stack.</p>
   <div class="docstring"><p>Returns all load paths for this project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L170" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L289" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="manifest_path/1">
+    <strong>manifest_path(config // config())</strong>
+  </p>
+  
+  <div class="docstring"><p>The path to store manifests. By default they are
+stored in the same app path but it may be changed
+in future releases.</p>
+
+<p>The returned path will be expanded.</p>
+
+<h2>Examples</h2>
+
+<pre><code>Mix.Project.manifest_path
+#=&gt; &quot;/path/to/project/_build/shared/lib/app&quot;
+</code></pre>
+</div>
+  
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L220" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -246,7 +391,7 @@ onto the project stack.</p>
   <div class="docstring"><p>Returns <code>true</code> if project is an umbrella project.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.1/lib/mix/lib/mix/project.ex#L132" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/v0.11.2/lib/mix/lib/mix/project.ex#L140" target="_blank" class="view_source">Source</a>
   
 </div>
 

@@ -73,16 +73,22 @@ before the compilation starts.</p>
 <p>When just a module is provided, the function/macro is assumed to be
 <code>__before_compile__/1</code>.</p>
 
+<p>Note: differently from <code>@after_compile</code>, the callback function/macro must
+be placed in a separate module (because when the callback is invoked,
+the current module does not yet exist).</p>
+
 <h3>Example</h3>
 
-<pre><code>defmodule M do
-  @before_compile __MODULE__
-
+<pre><code>defmodule A do
   defmacro __before_compile__(_env) do
     quote do
       def hello, do: &quot;world&quot;
     end
   end
+end
+
+defmodule B do
+  @before_compile A
 end
 </code></pre></li>
 <li><p><code>@behaviour</code>   (notice the british spelling)</p>
@@ -300,7 +306,7 @@ macros it defines, extract its docstrings, etc. See <a href="#__info__/1"><code>
         </div>
       
 
-      <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L1" target="_blank" class="view_source">Source</a>
+      <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L1" target="_blank" class="view_source">Source</a>
 
       
 
@@ -526,7 +532,7 @@ module. See <a href="http://erlang.org/doc/reference_manual/modules.html#id74571
 more information.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L298" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L304" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -550,7 +556,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L495" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L501" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -572,7 +578,7 @@ Foo.Bar
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L406" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L412" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -594,7 +600,7 @@ Foo.Bar
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L424" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L430" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -632,7 +638,7 @@ when defining the module, while <code>defmodule</code> automatically
 shares the same environment.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L381" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L387" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -653,7 +659,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L592" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L598" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -675,7 +681,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L612" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L618" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -694,7 +700,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L632" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L638" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -715,7 +721,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L651" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L657" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -734,7 +740,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L783" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L789" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -771,7 +777,7 @@ Foo.sum(1, 2) #=&gt; 3
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L337" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L343" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -788,7 +794,7 @@ true
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L475" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L481" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -828,7 +834,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L753" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L759" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -842,7 +848,7 @@ developer to customize it. See <code>Kernel.defoverridable</code> for
 more information and documentation.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L663" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L669" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -854,7 +860,7 @@ more information and documentation.</p>
 and its attributes and functions can be modified.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L304" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L310" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -865,7 +871,7 @@ and its attributes and functions can be modified.</p>
   <div class="docstring"><p>Returns true if the given tuple in module is marked as overridable.</p>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L688" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L694" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -885,7 +891,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L704" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L710" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -925,7 +931,7 @@ end
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L820" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L826" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -948,7 +954,7 @@ List.Chars
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L443" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L449" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -971,7 +977,7 @@ List.Chars
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L462" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L468" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -988,7 +994,7 @@ List.Chars
 </code></pre>
 </div>
   
-    <a href="https://github.com/elixir-lang/elixir/blob/e6be0628ce014ee70a2407e09f7f0e3a9f778ed8/lib/elixir/lib/module.ex#L844" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/elixir-lang/elixir/blob/c4d039da372d8aba11d1c4006388f378c36f7c43/lib/elixir/lib/module.ex#L850" target="_blank" class="view_source">Source</a>
   
 </div>
 
