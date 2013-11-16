@@ -61,7 +61,7 @@ fun.(1..3)
 
 You can learn more about the [new capture operator in our docs](http://elixir-lang.org/docs/stable/Kernel.SpecialForms.html#&/1).
 
-We have also pushed improvements to [the String module](http://elixir-lang.org/docs/stable/String.html), including new APIs. In particular, in order to know that `String.length("josé")` has length 4 (even though it takes 5 bytes to be represented in UTF-8), we need to implement some algorithms defined by the Unicode Standard. These have been updated as specified in the [extended grapheme cluster algorithm, defined in the version 6.3.0 of the Unicode Standard](http://www.unicode.org/reports/tr29/).
+We have also pushed improvements to [the String module](http://elixir-lang.org/docs/stable/String.html), including new APIs. In particular, in order to know that `String.length("josé")` has length 4 (even though it takes 5 bytes to be represented in UTF-8), we need to use some algorithms defined by the Unicode Standard. These have been implemented as specified in the [extended grapheme cluster algorithm, defined in the version 6.3.0 of the Unicode Standard](http://www.unicode.org/reports/tr29/).
 
 In the optimization front, we have pushed the first iteration of a [feature called Protocol consolidation](https://groups.google.com/forum/#!topic/elixir-lang-core/RoXAUtoyjk4), which speeds up the polymorphic dispatch done by protocols, sometimes reducing the dispatching time to 10% of the original time. We will continue working in upcoming releases to integrate protocol consolidation as a regular part of the developer workflow.
 
