@@ -16,7 +16,7 @@ The IEx helper `h`, responsible for showing documentation for existing modules a
 
 ![String module docs](/images/contents/string-help.png)
 
-This change goes inline with Elixir's goal of providing first-class documentation, which makes documentation easily accessible at runtime, support to doctests and more.
+This change goes in line with Elixir's goal of providing first-class documentation, which makes documentation easily accessible at runtime, support to doctests and more.
 
 In this new release, IEx also supports a very simple debugging mechanism called `IEx.pry`. Let's see an screenshot of it in action:
 
