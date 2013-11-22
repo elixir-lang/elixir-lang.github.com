@@ -245,7 +245,7 @@ is_atom :"Multiple words"   #=> true
 
 The syntax for tuples is the same in both languages, but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
 
-1. The `subject` of the function is always the first argument. 
+1. The `subject` of the function is always the first argument.
 2. All data structures functions employ zero-based access.
 
 That said, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `setelem`:
@@ -870,4 +870,4 @@ Elixir also provides a [Getting Started Guide][6] and has [documentation availab
 [4]: http://www.erlang.org/doc/programming_examples/users_guide.html
 [5]: http://schemecookbook.org/Erlang/TOC
 [6]: http://elixir-lang.org/getting_started/1.html
-[7]: http://elixir-lang.org/docs
+[7]: http://elixir-lang.org/docs.html

@@ -16,7 +16,7 @@ The [online docs][1] are finally up! This means easier navigation and integrated
 The docs are generated with the help of the [ExDoc][0] utility which is itself written in Elixir.
 
   [0]: https://github.com/elixir-lang/ex_doc
-  [1]: http://elixir-lang.org/docs/
+  [1]: http://elixir-lang.org/docs.html
 
 
 ## API Changes ##
