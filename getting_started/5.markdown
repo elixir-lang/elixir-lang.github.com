@@ -28,7 +28,7 @@ Operators are also represented as such tuples:
 
 ```iex
 iex> quote do: 1 + 2
-{ :+, [], [1, 2] }
+{:+, [context: Elixir, import: Kernel], [1, 2]}
 ```
 
 Even a tuple is represented as a call to `{}`:
@@ -49,7 +49,7 @@ When quoting more complex expressions, we can see the representation is composed
 
 ```iex
 iex> quote do: sum(1, 2 + 3, 4)
-{ :sum, [], [1, { :+, [], [2, 3] }, 4] }
+{:sum, [], [1, {:+, [context: Elixir, import: Kernel], [2, 3]}, 4]}
 ```
 
 In general, each node (tuple) above follows the following format:
