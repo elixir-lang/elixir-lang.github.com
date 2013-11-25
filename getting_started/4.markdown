@@ -188,7 +188,7 @@ If we inspect our `HashDict`, we can see it is a simple tuple:
 
 ```elixir
 inspect(dict, raw: true)
-#=> { HashDict, 1, [{:hello,"world"}] }
+#=> "{HashDict, 1, [[:hello | \"world\"]]}"
 ```
 
 Since `HashDict` is a data structure that contains values, it would be convenient to implement the `Blank` protocol for it too:
