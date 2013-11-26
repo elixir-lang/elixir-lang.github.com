@@ -177,13 +177,13 @@ iex> fun.("hello")
 A capture also allows the captured functions to be partially applied, for example:
 
 ```iex
-iex> fun = &atom_to_binary(&1, :utf8)
-#Function<6.17052888 in :erl_eval.expr/5>
-iex> fun.(:hello)
-"hello"
+iex> fun = &rem(&1, 2)                  
+#Function<6.80484245 in :erl_eval.expr/5>
+iex> fun.(4)
+0
 ```
 
-In the example above, we use `&1` as a placeholder, generating a function with one argument. The capture above is equivalent to `fn(x) -> atom_to_binary(x, :utf8) end`.
+In the example above, we use `&1` as a placeholder, generating a function with one argument. The capture above is equivalent to `fn(x) -> rem(x, 2) end`.
 
 Since operators are treated as regular function calls in Elixir, they are also supported, although they require explicit parentheses:
 
