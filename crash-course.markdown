@@ -376,14 +376,14 @@ Each Erlang module lives in its own file which has the following structure:
 
 ```erlang
 -module(hello_module).
--export([some_fun/0, fun/1]).
+-export([some_fun/0, some_fun/1]).
 
 % A "Hello world" function
 some_fun() ->
   io:format('~s~n', ['Hello world!']).
 
 % This one works only with lists
-fun(List) when is_list(List) ->
+some_fun(List) when is_list(List) ->
   io:format('~s~n', List).
 
 % Non-exported functions are private
