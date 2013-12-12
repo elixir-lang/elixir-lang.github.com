@@ -150,29 +150,44 @@ Using the power of suspension it is now possible to create an interleave
 function.
 
 ```elixir
-def interleave(a, b) do
-  step = fn x, acc -> [x|acc] end
-  af = &Enumerable.reduce(a, &1, step)
-  bf = &Enumerable.reduce(b, &1, step)
-  do_interleave(af, bf, []) |> :lists.reverse()
-end
+defmodule Interleave do
+  def interleave(a, b) do
+    step = fn x, acc -> { :suspend, [x|acc] } end
+    af = &Enumerable.reduce(a, &1, step)
+    bf = &Enumerable.reduce(b, &1, step)
+    do_interleave(af, bf, []) |> :lists.reverse()
+  end
 
-defp do_interleave(a, b, acc) do
-  case a.({ :cont, acc }) do
-    { :suspended, acc, a } ->
-      case b.({ :cont, acc }) do
-        { :suspended, acc, b } ->
-          do_interleave(a, b, acc)
-        { :done, acc } ->
-          # Get remainder of a's entries
-          { :done, acc } = a.({ :cont, acc }, fn x, acc -> [x|acc] end)
-          acc
-      end
-    { :done, acc } ->
-      { :done, acc } = b.({ :cont, acc }, fn x, acc -> [x|acc] end)
-      acc
+  defp do_interleave(a, b, acc) do
+    case a.({ :cont, acc }) do
+      { :suspended, acc, a } ->
+        case b.({ :cont, acc }) do
+          { :suspended, acc, b } ->
+            do_interleave(a, b, acc)
+          { :halt, acc } ->
+            acc
+          { :done, acc } ->
+            finish_interleave(a, acc)
+        end
+      { :halt, acc } ->
+        acc
+      { :done, acc } ->
+        finish_interleave(b, acc)
+    end
+  end
+
+  defp finish_interleave(a_or_b, acc) do
+    case a_or_b.({ :cont, acc }) do
+      { :suspended, acc, a_or_b } ->
+        finish_interleave(a_or_b, acc)
+      { _, acc } ->
+        acc
+    end
   end
 end
+
+Interleave.interleave([1,2], [:a, :b, :c, :d])
+#=> [1, :a, 2, :b, :c, :d]
 ```
 
 Lets go through this step by step. The main `interleave` function first
