@@ -191,17 +191,6 @@ sometimes the accumulator value proper. It's a bit confusing, yes.
 This example shows that through clever combination of an outer function
 (`do_interleave`) and an inner function `step` two producers can be interleaved.
 
-## `Enum.reduce` and `Enumerable.reduce` are now slightly different
-
-In the old system `Enum.reduce/3` simply called `Enumerable.reduce/3` with the
-same arguments. In order to keep the `Enum.reduce/3` function simple to use this
-is no longer the case in the new system. `Enum.reduce/3` now calls
-`Enumerable.reduce/3`
-with a very simple wrapper around the passed function: `fn x, acc -> { :cont,
-f.(x, acc) } end`. Thus `Enum.reduce/3` works just as it has always done, it
-calls the supplied function for every produced element without the possibility
-of halting or suspending the producer.
-
 ## Conclusion
 
 The new system of enumerators certainly makes things a bit more complicated but
