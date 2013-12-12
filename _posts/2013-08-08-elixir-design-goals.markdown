@@ -88,7 +88,7 @@ This simple example illustrates how a developer can leverage macros to provide a
 
 Those examples are just scratching the surface of what can be achieved with macros in Elixir. For example, we are currently using macros to compile routes from a web application into a bunch of patterns that are highly optimizable by the VM, providing an expressive but heavily optimized routing algorithm.
 
-The macro system also caused a huge imapct on the syntax, which we will discuss briefly before moving to the last goal.
+The macro system also caused a huge impact on the syntax, which we will discuss briefly before moving to the last goal.
 
 ### Syntax
 
