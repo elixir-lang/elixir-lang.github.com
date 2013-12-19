@@ -41,7 +41,7 @@ Mix has also added support to optional dependencies and improved common patterns
 
 ## Welcome, Eric!
 
-With this release, we also want to welcome [Eric MJ](https://github.com/ericmj) to the Elixir Team. He has done a fantastic work on Elixir so far, helping us maintain the codebase and working on many of the important features from previous releases.
+With this release, we also want to welcome [Eric MJ](https://github.com/ericmj) to the Elixir Team. He has done fantastic work on Elixir, helping us maintain the codebase and working on many of the important features from previous releases and now many more to come.
 
 Eric is also maintainer of both [Ecto](https://github.com/elixir-lang/ecto) and [Postgrex](https://github.com/ericmj/postgrex) projects. Which are proving to be very useful to the Elixir community too!
 
