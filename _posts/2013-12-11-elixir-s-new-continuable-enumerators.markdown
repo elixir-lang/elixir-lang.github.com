@@ -164,12 +164,12 @@ defmodule Interleave do
         case b.({ :cont, acc }) do
           { :suspended, acc, b } ->
             do_interleave(a, b, acc)
-          { :halt, acc } ->
+          { :halted, acc } ->
             acc
           { :done, acc } ->
             finish_interleave(a, acc)
         end
-      { :halt, acc } ->
+      { :halted, acc } ->
         acc
       { :done, acc } ->
         finish_interleave(b, acc)
