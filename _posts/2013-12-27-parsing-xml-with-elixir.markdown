@@ -14,6 +14,64 @@ parsing XML via the built in `xmerl` library in Erlang.
 
 [Here is the project built in this episode, for you to download.](http://elixirsips.com/downloads/028_parsing_xml.tar.gz)
 
+You can watch the video for a complete rundown where we use tests to explore the
+`xmerl` library and how we can use it from Elixir.  If you just want to see the
+results, here's the test file we ended up with, commented for clarity:
+
+```elixir
+# If you want to pattern-match on a record defined in an erlang library, you
+# need to use Record.extract to turn it into an Elixir record data structure.
+# Here, we extract xmlElement and xmlText from xmerl.
+defrecord :xmlElement, Record.extract(:xmlElement, from_lib: "xmerl/include/xmerl.hrl")
+defrecord :xmlText, Record.extract(:xmlText, from_lib: "xmerl/include/xmerl.hrl")
+
+defmodule XmlParsingTest do
+  use ExUnit.Case
+
+  # Here we define some simple XML that we'll work with in our tests.
+  def sample_xml do
+    """
+    <html>
+      <head>
+        <title>XML Parsing</title>
+      </head>
+      <body>
+        <p>Neato</p>
+        <ul>
+          <li>First</li>
+          <li>Second</li>
+        </ul>
+      </body>
+    </html>
+    """
+  end
+
+  test "parsing the title out" do
+    { xml, _rest } = :xmerl_scan.string(bitstring_to_list(sample_xml))
+    [ title_element ] = :xmerl_xpath.string('/html/head/title', xml)
+    [ title_text ] = title_element.content
+    title = title_text.value
+
+    assert title == 'XML Parsing'
+  end
+
+  test "parsing the p tag" do
+    { xml, _rest } = :xmerl_scan.string(bitstring_to_list(sample_xml))
+    [ p_text ] = :xmerl_xpath.string('/html/body/p/text()', xml)
+
+    assert p_text.value == 'Neato'
+  end
+
+  test "parsing the li tags and mapping them" do
+    { xml, _rest } = :xmerl_scan.string(bitstring_to_list(sample_xml))
+    li_texts = :xmerl_xpath.string('/html/body/ul/li/text()', xml)
+    texts = li_texts |> Enum.map(fn(x) -> x.value end)
+
+    assert texts == ['First', 'Second']
+  end
+end
+```
+
 ## Resources
 - [xmerl user guide](http://www.erlang.org/doc/apps/xmerl/xmerl_ug.html)
 - [xmerl manual](http://www.erlang.org/doc/man/xmerl_scan.html)
