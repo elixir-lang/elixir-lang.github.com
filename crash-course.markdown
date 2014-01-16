@@ -101,7 +101,6 @@ Some operators are spelled differently.
     | =/=            | !==            | A negative match                        |
     | /=             | !=             | Not equals                              |
     | =<             | <=             | Less than or equals                     |
-    | !              | <-             | Send messages                           |
 
 
 ### Delimiters
@@ -815,7 +814,7 @@ end.
 ```elixir
 pid = Kernel.self
 
-pid <- { :hello }
+send pid, { :hello }
 
 receive do
   { :hello } -> :ok
