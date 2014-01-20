@@ -6,17 +6,16 @@ category: examples
 excerpt: An example of interoperating with Erlang's built-in `xmerl` library to parse XML.
 ---
 
-In the latest free video, [ElixirSips](http://www.elixirsips.com) [Episode
-028](http://elixirsips.com/episodes/028_parsing_xml.html) provides an example of
-parsing XML via the built in `xmerl` library in Erlang.
+One of the latest episodes of [ElixirSips](http://elixirsips.com/episodes/028_parsing_xml.html)
+provided an example of parsing XML via the built in `xmerl` library in Erlang:
 
 <iframe src="//fast.wistia.net/embed/iframe/pi407o195d" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="640" height="360"></iframe>
 
-[Here is the project built in this episode, for you to download.](http://elixirsips.com/downloads/028_parsing_xml.tar.gz)
-
-You can watch the video for a complete rundown where we use tests to explore the
-`xmerl` library and how we can use it from Elixir.  If you just want to see the
-results, here's the test file we ended up with, commented for clarity:
+Parsing XML is a common need to different applications. The example also show cases
+how to integrate with existing Erlang libraries. You can watch the video for a complete
+rundown where we use tests to explore the `xmerl` library and how we can use it from
+Elixir. If you just want to see the results, here's the test file we ended up with,
+commented for clarity:
 
 ```elixir
 # If you want to pattern-match on a record defined in an erlang library, you
@@ -72,7 +71,11 @@ defmodule XmlParsingTest do
 end
 ```
 
+The project built in the episode is also
+[available for download](http://elixirsips.com/downloads/028_parsing_xml.tar.gz).
+
 ## Resources
+
 - [xmerl user guide](http://www.erlang.org/doc/apps/xmerl/xmerl_ug.html)
 - [xmerl manual](http://www.erlang.org/doc/man/xmerl_scan.html)
 - [erlsom](https://github.com/willemdj/erlsom)
