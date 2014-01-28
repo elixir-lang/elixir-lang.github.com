@@ -260,7 +260,7 @@ setelement(1, { a, b, c }, d) %=> { d, b, c }
 
 ```elixir
 elem({ :a, :b, :c }, 0)        #=> :a
-setelem({ :a, :b, :c }, 0, :d) #=> { :d, :b, :c }
+set_elem({ :a, :b, :c }, 0, :d) #=> { :d, :b, :c }
 ```
 
 ### Lists and Binaries
