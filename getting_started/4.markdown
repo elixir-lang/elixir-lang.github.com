@@ -242,7 +242,7 @@ iex> HashDict.new
 #HashDict<[]>
 ```
 
-  Keep in mind that whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. For those, the true representation can be retrieved by calling `inspect` directly and passing `raw` as an option:
+  Keep in mind that, by convention, whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. For those, the true representation can be retrieved by calling `inspect` directly and passing `raw` as an option:
 
 ```iex
 iex> inspect HashDict.new, raw: true
