@@ -87,7 +87,7 @@ For more information on records, [check out the documentation for the `defrecord
 
 ## 4.2 Protocols
 
-Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching a protocol is available to any data type as long as it implements the protocol. Let's consider a practical example.
+Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Lets consider a practical example.
 
 In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
 
@@ -174,7 +174,7 @@ Now all data types that we have not implemented the `Blank` protocol for will be
 
 ### 4.2.2 Using protocols with records
 
-The power of Elixir extensibility comes when protocols and records are mixed.
+The power of Elixir's extensibility comes when protocols and records are mixed.
 
 For instance, Elixir provides a `HashDict` implementation that is an efficient data structure to store many keys. Let's take a look at how it works:
 
@@ -207,13 +207,7 @@ Blank.blank?(dict)         #=> false
 Blank.blank?(HashDict.new) #=> true
 ```
 
-Excellent! The best of all is that we implemented the `Blank` protocol for an existing data structure (`HashDict`) without a need to wrap it or recompile it, which allows developers to easily extend previously defined protocols. Note this only worked because, when we defined the protocol, we have added `Record` to the list of types supported by the protocol:
-
-```elixir
-@only [Atom, Record, Tuple, List, BitString, Any]
-```
-
-Keep in mind that `Record` needs to come before `Tuple`, since all records are tuples (but not all tuples are records).  For this reason, in case a record does not implement a given protocol, Elixir will fall back to the tuple implementation of that protocol if one exists. So one can add a default protocol implementation for all records by simply defining a default implementation for tuples.
+Excellent! The best of all is that we implemented the `Blank` protocol for an existing data structure (`HashDict`) without a need to wrap it or recompile it, which allows developers to easily extend previously defined protocols.
 
 ### 4.2.3 Built-in protocols
 
