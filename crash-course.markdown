@@ -312,14 +312,14 @@ re:run("abc ", Pattern).
 **Elixir**
 
 ```elixir
-Regex.run %r/abc\s/, "abc "
+Regex.run ~r/abc\s/, "abc "
 #=> ["abc "]
 ```
 
 Regexes are also supported in heredocs, which is convenient when defining multiline regexes:
 
 ```elixir
-is_regex %r"""
+is_regex ~r"""
 This is a regex
 spawning several
 lines.
