@@ -129,7 +129,7 @@ Named functions also support default arguments:
 
 ```elixir
 defmodule Concat do
-  def join(a, b, sep // " ") do
+  def join(a, b, sep \\ " ") do
     a <> sep <> b
   end
 end
@@ -142,7 +142,7 @@ Any expression is allowed to serve as a default value, but it won't be evaluated
 
 ```elixir
 defmodule DefaultTest do
-  def dowork(x // IO.puts "hello") do
+  def dowork(x \\ IO.puts "hello") do
     x
   end
 end
@@ -160,7 +160,7 @@ If a function with default values has multiple clauses, it is recommended to cre
 
 ```elixir
 defmodule Concat do
-  def join(a, b // nil, sep // " ")
+  def join(a, b \\ nil, sep \\ " ")
 
   def join(a, b, _sep) when nil?(b) do
     a
@@ -185,7 +185,7 @@ defmodule Concat do
     a <> b
   end
 
-  def join(a, b, sep // " ") do
+  def join(a, b, sep \\ " ") do
     IO.puts "***Second join"
     a <> sep <> b
   end

@@ -565,7 +565,7 @@ sum "a", "b"
 In addition, Elixir allows for default values for arguments, whereas Erlang does not.
 
 ```elixir
-def mul_by(x, n // 2) do
+def mul_by(x, n \\ 2) do
   x * n
 end
 
