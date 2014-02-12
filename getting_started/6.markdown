@@ -11,27 +11,27 @@ This chapter contains different small topics that are part of Elixir's day to da
 
 ## 6.1 String sigils
 
-Elixir provides string sigils via the token `%`:
+Elixir provides string sigils via the token `~`:
 
 ```elixir
-%s(String with escape codes \x26 interpolation)
-%S(String without escape codes and without #{interpolation})
+~s(String with escape codes \x26 interpolation)
+~S(String without escape codes and without #{interpolation})
 ```
 
 Sigils starting with an uppercase letter never escape characters or do interpolation. Notice the separators are not necessarily parenthesis, but any non-alphanumeric character:
 
 ```elixir
-%s-another string-
+~s-another string-
 ```
 
-Internally, `%s` is translated as a call to `sigil_s`. For instance, the docs for `%s` are available in the macro [`sigil_s/2`](/docs/stable/Kernel.html#sigil_s/2) defined in `Kernel` module.
+Internally, `~s` is translated as a call to `sigil_s`. For instance, the docs for `~s` are available in the macro [`sigil_s/2`](/docs/stable/Kernel.html#sigil_s/2) defined in the `Kernel` module.
 
 The sigils defined in Elixir by default are:
 
-* `%c` and `%C` - Returns a char list;
-* `%r` and `%R` - Returns a regular expression;
-* `%s` and `%S` - Returns a string;
-* `%w` and `%W` - Returns a list of "words" split by whitespace;
+* `~c` and `~C` - Returns a char list;
+* `~r` and `~R` - Returns a regular expression;
+* `~s` and `~S` - Returns a string;
+* `~w` and `~W` - Returns a list of "words" split by whitespace;
 
 ## 6.2 Heredocs
 
@@ -58,7 +58,7 @@ String heredocs in Elixir use """
 Notice the sigils discussed in the previous section are also available as heredocs:
 
 ```elixir
-%S"""
+~S"""
 A heredoc without escaping or interpolation
 """
 ```
@@ -124,7 +124,7 @@ As you can see, invoking `h()` prints the documentation of `IEx.Helpers`. From t
 
 ```iex
 iex> h(c/2)
-* def c(files, path // ".")
+* def c(files, path \\ ".")
 ...
 :ok
 ```
@@ -287,7 +287,6 @@ iex> bc <<c>> inbits " hello world ", c != ?\s, do: <<c>>
 Elixir provides a set of pseudo-variables. These variables can only be read and never assigned to. They are:
 
 * `__MODULE__` - Returns an atom representing the current module or nil;
-* `__FILE__` - Returns a string representing the current file;
 * `__DIR__` - Returns a string representing the current directory;
 * `__ENV__` - Returns a [Macro.Env](/docs/stable/Macro.Env.html) record with information about the compilation environment. Here we can access the current module, function, line, file and others;
 * `__CALLER__` - Also returns a [Macro.Env](/docs/stable/Macro.Env.html) record but with information of the calling site. `__CALLER__` is available only inside macros;
