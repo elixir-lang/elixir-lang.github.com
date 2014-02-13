@@ -9,7 +9,7 @@ total_guides: 3
 
 Where do we keep state in Elixir?
 
-Our software needs to keep state, configuration values, data about the running system, etc. We have learned in previous sections how we can use processes/actors to keep state, receiving and responding to messages in a loop but this approach seems to be brittle. What happens if there is an error in our actor and it crashes? Even more, is it really required to create a new process when all we want to do is to keep simple configuration values?
+Our software needs to keep state, configuration values, data about the running system, etc. We have learned in [previous sections](../2.html#receive) how we can use processes/actors to keep state, receiving and responding to messages in a loop but this approach seems to be brittle. What happens if there is an error in our actor and it crashes? Even more, is it really required to create a new process when all we want to do is to keep simple configuration values?
 
 In this chapter, we will answer those questions by building an OTP application. In practice, we don't need Mix in order to build such applications, however Mix provides some conveniences that we are going to explore throughout this chapter.
 
