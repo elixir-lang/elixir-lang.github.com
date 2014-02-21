@@ -143,6 +143,45 @@ serve_drinks User.get("John")
   </div>
 
   <div class="hentry post">
+    <h4>Tooling included</h4>
+
+    <div class="entry-summary">
+      <p>Elixir ships with a great set of tools to ease development. Mix allows you to easily create your new project, manage tasks and dependencies:</p>
+
+{% highlight text %}
+$ mix new my_app
+$ cd my_app
+$ mix test
+.
+
+Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
+1 tests, 0 failures
+{% endhighlight %}
+
+      <p>In the example above, we have created a new project and ran its initial test suite powered by the ExUnit test framework.</p>
+
+      <p>Elixir also ships with an Interactive Shell, called IEx, which provides a great set of helpers for writing code, like easy access to documentation (shown above), code reloading and so on. It is also great companion for production, as it allows, for example, connecting to remote nodes. Here is a quick example you can try locally. In one terminal, do:</p>
+
+{% highlight text %}
+$ iex --name hello
+iex(hello@machine)1> defmodule Hello do
+...(hello@machine)1>   def world, do: IO.puts "Distributed hello world"
+...(hello@machine)1> end
+{% endhighlight %}
+
+      <p>See the name in between parenthesis starting with hello? Copy that, open up another terminal and pass it to <code>--remsh</code> (short for remote shell):</p>
+
+{% highlight text %}
+$ iex --name world --remsh "hello@machine"
+iex(hello@machine)1> Hello.world
+"Distributed hello world"
+{% endhighlight %}
+
+      <p>Notice we were able to invoke a function from a module defined in the other terminal! Even the node names are the same. This will work in between machines in the same network as long as they have the same value in the <code>~/.erlang.cookie</code> file!</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
     <h4>Erlang all the way down</h4>
 
     <div class="entry-summary">
