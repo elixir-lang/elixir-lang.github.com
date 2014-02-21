@@ -4,13 +4,17 @@ layout: default
 ---
 
 <div class="hfeed">
-  <div class="hentry post">
+  <div class="hentry post no-border">
     <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
 
     <div class="entry-summary">
       <p>Elixir is a functional, meta-programming aware language built on top of the Erlang VM. It is a dynamic language with flexible syntax and macro support that leverages Erlang's abilities to build concurrent, distributed and fault-tolerant applications with hot code upgrades.</p>
       <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs.html">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>. Or you can just keep on reading for a few code samples!</p>
     </div>
+  </div>
+
+  <div class="hentry post">
+    <h3>Language highlights</h3>
   </div>
 
   <div class="hentry post">
@@ -159,8 +163,14 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 {% endhighlight %}
 
       <p>In the example above, we have created a new project and ran its initial test suite powered by the ExUnit test framework.</p>
+    </div>
+  </div>
 
-      <p>Elixir also ships with an Interactive Shell, called IEx, which provides a great set of helpers for writing code, like easy access to documentation (shown above), code reloading and so on. It is also great companion for production, as it allows, for example, connecting to remote nodes. Here is a quick example you can try locally. In one terminal, do:</p>
+  <div class="hentry post">
+    <h4>Interactive (and remote) shells</h4>
+
+    <div class="entry-summary">
+      <p>Elixir also ships with an Interactive Shell, called IEx, which provides a great set of helpers for writing code, like easy access to documentation (shown above), code reloading and so on. It is also a great companion for production, as it allows for example connecting to remote nodes. Here is a quick example you can try locally. In one terminal, do:</p>
 
 {% highlight text %}
 $ iex --name hello
@@ -185,7 +195,7 @@ iex(hello@machine)1> Hello.world
     <h4>Erlang all the way down</h4>
 
     <div class="entry-summary">
-      <p>After all, Elixir is still Erlang. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+      <p>After all, Elixir runs in the Erlang VM. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
 
 {% highlight elixir %}
 :application.start(:crypto)
