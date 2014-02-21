@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Elixir v0.7.1 released and the end of a journey
+title: Elixir v0.7.1 released
 author: José Valim
 category: Releases
 excerpt: Elixir v0.7.1 was released to celebrate the end of a two months journey traveling around Europe, United States and Brazil talking about Elixir.
