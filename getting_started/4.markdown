@@ -140,7 +140,7 @@ iex> x
 2
 ```
 
-Finally, notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
+Notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
 
 ```iex
 iex> {x, x} = {1, 1}
@@ -149,4 +149,29 @@ iex> {x, x} = {1, 2}
 ** (MatchError) no match of right hand side value: {1, 2}
 ```
 
-This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs and, if you are not familiar with it from other languages, you will get the hang of it with just a bit of practice! So let's talk some control flow structures, like `case` and `cond`, before we move towards more advanced data-types, likes binaries, keyword lists and maps.
+In some cases, you don't care about a particular value in a pattern. In those cases, it is a common practice to bind the value to underscore `_`. For example, if only the head of the list matters to us, we can assign the tail to underscore:
+
+```iex
+iex> [h | _] = [1, 2, 3]
+[1, 2, 3]
+iex> h
+1
+```
+
+The variable `_` in Elixir is special in that it can never be read from. Trying to read from it gives an unbound variable error:
+
+```iex
+iex> _
+** (CompileError) iex:1: unbound variable _
+```
+
+Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:
+
+```iex
+iex> length([1,[2],3]) = 3
+** (ErlangError) erlang error :illegal_pattern
+```
+
+This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs. If you are not familiar with it from other languages, you will get the hang of it with just a bit of practice!
+
+So let's talk some control flow structures, like `case` and `cond`, before we move towards more advanced data-types, likes binaries, keyword lists and maps.
