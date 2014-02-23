@@ -147,7 +147,7 @@ world
 
 Notice the `IO.puts/1` function returns the atom `:ok` as result after printing.
 
-Strings in Elixir are represented internally by binaries (i.e. a bunch of bytes). We usually check if a value is a string or not by using the `is_binary/1` function:
+Strings in Elixir are represented internally by binaries (i.e. a sequence of bytes):
 
 ```iex
 iex> is_binary("hellö")
@@ -223,7 +223,7 @@ iex> x
 42
 ```
 
-## 2.6 Lists
+## 2.6 (Linked) Lists
 
 Elixir uses square brackets to specify a list of values. Values can be of any type:
 
@@ -234,7 +234,7 @@ iex> length [1, 2, 3]
 3
 ```
 
-Two lists can be concatenated and subtracted using the `++/2` operator:
+Two lists can be concatenated and subtracted using the `++/2` and `--/2` operators:
 
 ```iex
 iex> [1, 2, 3] ++ [4, 5, 6]
@@ -307,7 +307,9 @@ iex> File.read("path/to/unknown/file")
 
 If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as first element and the contents as second. Otherwise, it returns `:error` and the error reason.
 
-The difference in between tuples and lists is important because it reflects on the operations you will perform on them. Tuples are fast when you need to get its size or access one element in a particular position. On the other hand, those operations are linear on lists: if you need to access the nth-item in a list, Elixir needs to go item by item until we retrieve the desired one. For this reason, we provide a `elem/2` function to access a tuple item but there is no builtin equivalent for lists:
+The difference in between tuples and lists is important because it reflects on the operations you will perform on them. Tuples are fast when you need to get its size or access one element in a particular position. On the other hand, those operations are linear on lists: if you need to access the nth-item of a list, Elixir needs to go item by item until we retrieve the desired one.
+
+This is the reason there is a `elem/2` function to access a tuple item but there is no builtin equivalent for lists:
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -320,6 +322,6 @@ iex> elem(tuple, 1)
 
 Finally, notice we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of characters in a string). Their naming is not arbitrary.
 
-`length` is used when the number of elements needs to be calculated. For example, calling `length` will iterate the whole list to find the number of elements in that list. `size` is the opposite, it means the value is pre-calculated and stored somewhere and therefore retrieving its value is a cheap operation. That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
+`length` is used when the number of elements needs to be calculated. For example, calling `length` will iterate the whole list to find the number of elements in that list. `size` is the opposite, it means the value is pre-calculated and stored somewhere, therefore retrieving it is a cheap operation. That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
 
 Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operator to use with our basic types.
