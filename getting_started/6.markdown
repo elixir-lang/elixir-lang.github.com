@@ -176,19 +176,4 @@ iex> to_string 1
 "1"
 ```
 
-Note that those functions are polymorphic. They not only convert char lists to strings, but also integers to strings, atoms to strings and so on.
-
-Before we finish this chapter, we need to briefly talk about `iodata` and `char_data`. Most of the IO operations in Elixir do not only accept strings or char lists but actually a combination of those:
-
-```iex
-iex> IO.puts "hello world"
-hello world
-:ok
-iex> IO.puts ['hello', ?\s, "world"]
-hello world
-:ok
-```
-
-When the elements of a list represents bytes (i.e. their maximum value is 255), we have a `iodata`. However, when the elements of a list represents codepoints, we have a `char_data`. We use `iodata` when a file is opened in raw mode. Since we don't know how the file is encoded, we can't accept UTF-8 data, so we just use raw binaries and lists. However, if the file is opened in UTF-8 mode, we can work with the higher-level char data.
-
-Elixir provides `iodata_to_binary` to convert any `iodata` to binary. The functions `String.from_char_data!` and `List.from_char_data!` can be used to convert char data into strings or char lists respectively.
+Note that those functions are polymorphic. They not only convert char lists to strings, but also integers to strings, atoms to strings and so on. With binaries, strings and char lists out of the way, it is time to talk about key-value data structures.
