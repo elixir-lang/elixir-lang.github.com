@@ -73,7 +73,7 @@ iex> if(false, [do: :this, else: :that])
 
 I.e. when the keyword list is the last argument of a function, the square brackets are optional.
 
-In order to manipulate keyword lists, Elixir provides [the `Keyword` module](http://elixir-lang.org/docs/stable/Keyword.html). Remember though keyword lists are simply lists and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count how many items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key maps to at maximum one-value, you should use maps instead.
+In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/Keyword.html). Remember though keyword lists are simply lists and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count how many items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key maps to at maximum one-value, you should use maps instead.
 
 Note we can also pattern match on keyword lists:
 
@@ -150,15 +150,15 @@ iex> %{map | :c => 3}
 
 The update syntax above requires the given keys to exist. For example, the last line failed because there is no `:c` in the map. This is very useful when you are working with maps on a tight loop and you expect only certain keys to exist. In future chapters, we will also learn about structs, which provide compile-time guarantees and the foundation for polymorphism in Elixir. Structs are built on top of maps where the update guarantees above are proven to be quite useful.
 
-Manipulating maps is done via [the `Map` module](http://elixir-lang.org/docs/stable/Map.html) module and that it provides a very similar API to the `Keyword` module. This is because both modules implement the `Dict` behaviour.
+Manipulating maps is done via [the `Map` module](/docs/stable/Map.html) module and that it provides a very similar API to the `Keyword` module. This is because both modules implement the `Dict` behaviour.
 
-> Maps were recently introduced into the Erlang VM with [the `EEP 43`](www.erlang.org/eeps/eep-0043.html). Erlang 17 provides a partial implementation of the EEP, where only "small maps" are supported. This means maps have good performance characteristics only when storing at maximum a couple dozens keys. To fill in this gap, Elixir also provides [the `HashDict` module](http://elixir-lang.org/docs/stable/HashDict.html) which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands keys with good performance.
+> Maps were recently introduced into the Erlang VM with [the `EEP 43`](www.erlang.org/eeps/eep-0043.html). Erlang 17 provides a partial implementation of the EEP, where only "small maps" are supported. This means maps have good performance characteristics only when storing at maximum a couple dozens keys. To fill in this gap, Elixir also provides [the `HashDict` module](/docs/stable/HashDict.html) which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands keys with good performance.
 
 ## 7.3 Dicts
 
 In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps implement this interface.
 
-This interface is defined in the [the `Dict` module](http://elixir-lang.org/docs/stable/Dict.html) module which also provides an API that delegates to the underyling implementations:
+This interface is defined in the [the `Dict` module](/docs/stable/Dict.html) module which also provides an API that delegates to the underyling implementations:
 
 ```iex
 iex> keyword = []
