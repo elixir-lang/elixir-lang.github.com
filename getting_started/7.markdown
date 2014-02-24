@@ -75,20 +75,20 @@ I.e. when the keyword list is the last argument of a function, the square bracke
 
 In order to manipulate keyword lists, Elixir provides [the `Keyword` module](http://elixir-lang.org/docs/stable/Keyword.html). Remember though keyword lists are simply lists and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count how many items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key maps to at maximum one-value, you should use maps instead.
 
-> Note we can also pattern match on keyword lists:
->
-> ```iex
-> iex> [a: a] = [a: 1]
-> [a: 1]
-> iex> a
-> 1
-> iex> [a: a] = [a: 1, b: 2]
-> ** (MatchError) no match of right hand side value: [a: 1, b: 2]
-> iex> [b: b, a: a] = [a: 1, b: 2]
-> ** (MatchError) no match of right hand side value: [a: 1, b: 2]
-> ```
->
-> However this is rarely done in practice since pattern matching on lists require the number of items and their internal order to match.
+Note we can also pattern match on keyword lists:
+
+```iex
+iex> [a: a] = [a: 1]
+[a: 1]
+iex> a
+1
+iex> [a: a] = [a: 1, b: 2]
+** (MatchError) no match of right hand side value: [a: 1, b: 2]
+iex> [b: b, a: a] = [a: 1, b: 2]
+** (MatchError) no match of right hand side value: [a: 1, b: 2]
+```
+
+However this is rarely done in practice since pattern matching on lists require the number of items and their internal order to match.
 
 ## 7.2 Maps
 
