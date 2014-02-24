@@ -1,31 +1,7 @@
 ---
 layout: getting_started
-title: 12 IO
-guide: 12
+title: 11 Module attributes
+guide: 11
 ---
 
 # {{ page.title }}
-
-
-## 8.X `iodata` and `char_data`
-
-In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
-
-The functions in `IO` and `File` also allow lists to given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
-
-```iex
-iex> IO.puts 'hello world'
-hello world
-:ok
-iex> IO.puts ['hello', ?\s, "world"]
-hello world
-:ok
-```
-
-However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends when on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
-
-On the other hand, the `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
-
-This is a subtle difference but you only need to be aware of it if you intend to pass lists to those functions. Since strings are always encoded as UTF-8 in binaries and binaries contains bytes, their representation is always raw.
-
-Overall, Elixir provides `iodata_to_binary` to convert any `iodata` to binary. The functions `String.from_char_data!` and `List.from_char_data!` can be used to convert char data into strings or char lists respectively.
