@@ -150,9 +150,9 @@ IO.puts "Running MyPlug with Cowboy on http://localhost:4000"
 Plug.Adapters.Cowboy.http MyPlug, []
 ```
 
-In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given arguments as a list in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback (registered via the `@before_compile` module attribute) that will then compile all `@plugs` into actual code.
+In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given arguments as a list in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback (registered via the `@before_compile` module attribute) that will then compile all `@plugs` into actual function calls.
 
-In order to understand the underlying code, we'd need macros, so we will revisit this pattern later on. However, the focus here is exactly on how using module attributes as storage allow developers to create DSLs. Note only they are elegant DSLs but using them with a combination of `@before_compile` callback allows developers to generate code that performs extremely well.
+In order to understand the underlying code, we'd need macros, so we will revisit this pattern later on. However, the focus here is exactly on how using module attributes as storage allow developers to create DSLs. Note only they are elegant DSLs but using them with a combination of `@before_compile` callbacks allows developers to generate code that performs well.
 
 Another example comes from the ExUnit framework, that uses module attributes as annotation and storage:
 
@@ -167,6 +167,6 @@ defmodule MyTest do
 end
 ```
 
-Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, so you don't run external tests by default in locally, since they can be slow, while you can leave them enabled in your builds. Internally, those tags are stored in temporary module attributes, associating each test to their tags, so it can be later fetched by the test framework.
+Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, so you don't run external tests by default locally, since they can be slow, while you can leave them enabled in your builds. Internally, those tags are stored in temporary module attributes, associating each test to their respective tags, so it can be later fetched and filtered by the test framework.
 
-We hope this section shows some light on how Elixir supports meta-programming and how module attributes play an important role when building DSLs. In the next chapters, we will talk about some common modules in Elixir, like `IO` and `Enum`, before finally going into more advanced topics, like macros.
+We hope this section shows some light on how Elixir supports meta-programming and how module attributes play an important role when doing so. In the next chapters, we will talk about some common modules in Elixir, like `IO` and `Enum`, before finally going into more advanced topics, like macros.
