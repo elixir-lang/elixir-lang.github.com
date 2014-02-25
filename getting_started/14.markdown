@@ -17,7 +17,14 @@ iex> spawn fn -> 1 + 2 end
 #PID<0.43.0>
 ```
 
-Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done.
+Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
+
+```iex
+iex> pid = spawn fn -> 1 + 2 end
+#PID<0.44.0>
+iex> Process.alive?(pid)
+false
+```
 
 > Note: you will likely get different process identifiers than the ones we are getting in the tutorial.
 
@@ -26,6 +33,8 @@ We can retrieve the PID of the current process by calling `self/0`:
 ```iex
 iex> self()
 #PID<0.41.0>
+iex> Process.alive?(self())
+true
 ```
 
 Process get much more interesting when we are able to send and receive messages.
@@ -112,7 +121,7 @@ receive do
 end
 ```
 
-This time the process failed and brought the parent process down as they are linked.
+This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/2`. We recommend you to take a look at [the `Process` module](/docs/stable/Process.html) for other functionality provided by processes.
 
 Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process die and start a new process in its place.
 
