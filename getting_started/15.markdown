@@ -1,0 +1,57 @@
+---
+layout: getting_started
+title: 15 IO
+guide: 15
+---
+
+# {{ page.title }}
+
+This chapter is a quick introduction to input/output mechanisms in Elixir and related modules, like [IO](/docs/stable/IO.html), [Path](/docs/stable/Path.html), [File](/docs/stable/File.html) and [StringIO](/docs/stabke/StringIO.html).
+
+## 13.1 The IO module
+
+The IO module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
+
+```iex
+iex> IO.puts "hello world"
+"hello world"
+:ok
+iex> IO.gets "yes or no? "
+yes or no? yes
+"yes\n"
+```
+
+By default, the functions in the IO module use the standard input and output. We can pass the `:stderr` as argument to write to the standard error device:
+
+```iex
+iex> IO.puts :stderr, "hello world"
+"hello world"
+:ok
+```
+
+## 13.2 The Path and File modules
+
+The File module contains functions that allows us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the IO module. Opening a file
+
+## 13.X `iodata` and `char_data`
+
+In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
+
+The functions in `IO` and `File` also allow lists to given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
+
+```iex
+iex> IO.puts 'hello world'
+hello world
+:ok
+iex> IO.puts ['hello', ?\s, "world"]
+hello world
+:ok
+```
+
+However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends when on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
+
+On the other hand, the `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
+
+This is a subtle difference but you only need to be aware of it if you intend to pass lists to those functions. Since strings are always encoded as UTF-8 in binaries and binaries contains bytes, their representation is always raw.
+
+Overall, Elixir provides `iodata_to_binary` to convert any `iodata` to binary. The functions `String.from_char_data!` and `List.from_char_data!` can be used to convert char data into strings or char lists respectively.
