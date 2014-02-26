@@ -5,3 +5,70 @@ guide: 16
 ---
 
 # {{ page.title }}
+
+In early chapters, we have learned about maps:
+
+```iex
+iex> map = %{a: 1, b: 2}
+%{a: 1, b: 2}
+iex> map[:a]
+1
+iex> %{map | a: 3}
+%{a: 3, b: 2}
+```
+
+Structs are extensions on top of maps that bring default values, compile-time guarantees and polymorphism into Elixir.
+
+To define a struct, we just need to call `defstruct/1` inside a module:
+
+```iex
+iex> defmodule User do
+...>   defstruct name: "jose", age: 27
+...> end
+{:module, User,
+ <<70, 79, 82, ...>>, {:__struct__, 0}}
+```
+
+We can now create "instances" of this struct by using the `%User{}` syntax:
+
+```iex
+iex> %User{}
+%User{name: "jose", age: 27}
+iex> %User{name: "eric"}
+%User{name: "eric", age: 27}
+iex> is_map(%User{})
+true
+```
+
+Structs give compile-time guarantees that the provided fields exist in the struct:
+
+```iex
+iex> %User{oops: :field}
+** (CompileError) iex:3: unknown key :oops for struct User
+```
+
+When discussing maps, we demonstrated how we can access and update existing fields of a map. The same applies to structs:
+
+```iex
+iex> jose = %User{}
+%User{name: "jose", age: 27}
+iex> jose.name
+"jose"
+iex> eric = %{jose | name: "eric"}
+%User{name: "eric", age: 27}
+iex> %{user | oops: :field}
+** (ArgumentError) argument error
+```
+
+By using the update syntax, the VM is aware no new keys will be added to the map/struct, leading the different maps created a long the way to share their structure. In the example above, both `jose` and `eric` share the same structure.
+
+A struct is just a bare map with default fields. Notice we say it is a bare map because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
+
+```iex
+iex> user = %User{}
+%User{name: "jose", age: 27}
+iex> user[:name]
+** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "jose"}
+```
+
+We will cover how structs interacts with protocols in the next chapter.

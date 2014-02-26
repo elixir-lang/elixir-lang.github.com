@@ -137,18 +137,22 @@ iex> %{:c => c} = %{:a => 1, 2 => :b}
 
 As shown above, a map matches as long as the given keys exist on the given map. Therefore, an empty map matches all maps.
 
-One interesting property about maps is that they provide a special syntax for update:
+One interesting property about maps is that they provide syntaxes for update and accessing atom keys:
 
 ```iex
 iex> map = %{:a => 1, 2 => :b}
 %{:a => 1, 2 => :b}
+iex> map.a
+1
 iex> %{map | :a => 2}
 %{:a => 2, 2 => :b}
 iex> %{map | :c => 3}
 ** (ArgumentError) argument error
 ```
 
-The update syntax above requires the given keys to exist. For example, the last line failed because there is no `:c` in the map. This is very useful when you are working with maps on a tight loop and you expect only certain keys to exist. In future chapters, we will also learn about structs, which provide compile-time guarantees and the foundation for polymorphism in Elixir. Structs are built on top of maps where the update guarantees above are proven to be quite useful.
+Both access and update syntaxes above require the given keys to exist. For example, the last line failed because there is no `:c` in the map. This is very useful when you are working with maps on a tight loop and you expect only certain keys to exist.
+
+In future chapters, we will also learn about structs, which provide compile-time guarantees and the foundation for polymorphism in Elixir. Structs are built on top of maps where the update guarantees above are proven to be quite useful.
 
 Manipulating maps is done via [the `Map` module](/docs/stable/Map.html) module and that it provides a very similar API to the `Keyword` module. This is because both modules implement the `Dict` behaviour.
 
