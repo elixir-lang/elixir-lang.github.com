@@ -62,7 +62,25 @@ iex> %{user | oops: :field}
 
 By using the update syntax, the VM is aware no new keys will be added to the map/struct, leading the different maps created a long the way to share their structure. In the example above, both `jose` and `eric` share the same structure.
 
-A struct is just a bare map with default fields. Notice we say it is a bare map because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
+Structs can also be used in pattern matching and they guarantee the structs are of the same type:
+
+```iex
+iex> %User{name: name} = jose
+%User{name: "jose", age: 27}
+iex> name
+"jose"
+iex> %User{} = %{}
+** (MatchError) no match of right hand side value: %{}
+```
+
+Matching works because structs store a field named `__struct__` inside the map:
+
+```iex
+iex> jose.__struct__
+User
+```
+
+Overall, a struct is just a bare map with default fields. Notice we say it is a bare map because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
 
 ```iex
 iex> user = %User{}
