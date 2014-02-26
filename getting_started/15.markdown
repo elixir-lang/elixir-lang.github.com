@@ -170,7 +170,7 @@ On the other hand, `:stdio` and files opened with `:utf8` encoding work with the
 
 Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
 
-When working with iodata and char data, Elixir provides `iodata_to_binary` to convert any `iodata` to binary. The functions `String.from_char_data!` and `List.from_char_data!` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
+When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
 
 This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and when how to use lists for IO operations.
 
