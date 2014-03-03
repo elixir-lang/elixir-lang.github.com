@@ -28,7 +28,7 @@ iex> 2 = x
 ** (MatchError) no match of right hand side value: 1
 ```
 
-Notice we `1 = x` is a valid expression and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is reported.
+Notice that `1 = x` is a valid expression and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
 
 Also, in Elixir parlance, we don't say a variable is assigned. We say a variable is bound or not. A variable can only be bound while on the left side:
 
@@ -87,7 +87,7 @@ iex> a
 1
 ```
 
-Lists also supporting matching on its head and tail:
+Lists also support matching on its head and tail:
 
 ```iex
 iex> [head | tail] = [1, 2, 3]
