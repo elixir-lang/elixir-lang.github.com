@@ -12,7 +12,7 @@ We have originally sketched this chapter to come much earlier in the getting sta
 
 ## 15.1 The IO module
 
-The IO module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
+The `IO` module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
 
 ```iex
 iex> IO.puts "hello world"
@@ -53,7 +53,7 @@ iex> {:ok, file} = File.open "another", [:write, :utf8]
 {:ok, #PID<0.48.0>}
 ```
 
-Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For exmaple, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
+Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
 
 You will also notice that functions in the File module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
 
@@ -164,7 +164,7 @@ hello world
 :ok
 ```
 
-However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends when on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
+However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
 
 On the other hand, `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
 

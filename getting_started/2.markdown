@@ -31,7 +31,7 @@ iex> 10 / 2
 5.0
 ```
 
-Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
+Notice that `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir, the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
 ```iex
 iex> div(10, 2)
@@ -44,7 +44,7 @@ iex> rem 10, 3
 
 Notice that parentheses are not required in order to invoke a function.
 
-Elixir also supports shorcut notations for entering binaries, octals and hexadecimal numbers:
+Elixir also supports shortcut notations for entering binary, octal and hexadecimal numbers:
 
 ```iex
 iex> 0x1F
@@ -64,7 +64,7 @@ iex> 1.0e-10
 1.0e-10
 ```
 
-Floats in Elixir are double precision, accurate up to 16 digits.
+Floats in Elixir are 64 bit double precision.
 
 ## 2.2 Booleans
 
@@ -86,7 +86,7 @@ iex> is_boolean(1)
 false
 ```
 
-Throughout this tutorial and in Elixir documentation, you will see functions mentioned in the format `is_boolean/1`. The first part is the function name and the number is its arity, i.e. the number of arguments the function expects.
+Throughout this tutorial and in Elixir documentation, you will see functions mentioned in the format `is_boolean/1`. The first part is the function name and the number is the arity, i.e. the number of arguments the function expects.
 
 You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check if an argument is an integer, float or any of them.
 
@@ -147,7 +147,7 @@ world
 
 Notice the `IO.puts/1` function returns the atom `:ok` as result after printing.
 
-Strings in Elixir are represented internally by binaries (i.e. a sequence of bytes):
+Strings in Elixir are represented internally by binaries which are sequences of bytes:
 
 ```iex
 iex> is_binary("hellö")
@@ -212,7 +212,7 @@ iex> add_two.(2)
 4
 ```
 
-Keep in mind that a variable defined inside the function does not affect its surroundings:
+Keep in mind that a variable assigned to inside a function does not affect its surrounding environment:
 
 ```iex
 iex> x = 42
@@ -243,7 +243,7 @@ iex> [1, true, 2, false, 3, true] -- [true, false]
 [1, 2, 3, true]
 ```
 
-Throughout the tutorial, we will talk a lot about head and tail of a list. A head is the first element of a list and tail is the remaining of a list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
+Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of a list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
 
 ```iex
 iex> list = [1,2,3]
@@ -262,7 +262,7 @@ iex> hd []
 
 Oops!
 
-We will revisit lists a couple times in the following chapters. If you want to look ahead, the "Pattern matching", "Binaries, strings and char lists" and "Enumerables and streams" chapters are particularly interesting.
+We will revisit lists a couple of times in the following chapters. If you want to look ahead, the "Pattern matching", "Binaries, strings and char lists" and "Enumerables and streams" chapters are particularly interesting.
 
 ## 2.7 Tuples
 
@@ -292,9 +292,9 @@ Notice that `set_elem/3` returned a new tuple. The original tuple stored in the 
 
 ## 2.8 Lists or tuples?
 
-You are probably wondering: what is the difference in between a list and a tuple?
+You are probably wondering what the difference is between lists and tuples?
 
-That's an excellent question. Tuples are useful when you have a fixed number of fields or when you usually access those items by position. Lists, on the other hand, are useful when the items need to be enumerated.
+Tuples are useful when you have a fixed number of fields or when you usually access those items by position. Lists, on the other hand, are useful when the items need to be enumerated.
 
 One very common use case for tuples is to use them to return extra information from a function. For example, we can use the `File.read/1` function to read a file:
 
@@ -307,9 +307,9 @@ iex> File.read("path/to/unknown/file")
 
 If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as first element and the contents as second. Otherwise, it returns `:error` and the error reason.
 
-The difference in between tuples and lists is important because it reflects on the operations you will perform on them. Tuples are fast when you need to get its size or access one element in a particular position. On the other hand, those operations are linear on lists: if you need to access the nth-item of a list, Elixir needs to go item by item until we retrieve the desired one.
+The difference between tuples and lists is important because it reflects on the operations you will perform on them. Tuples are fast when you need to get its size or access one element in a particular position. On the other hand, those operations are linear on lists: if you need to access the nth-item of a list, Elixir needs to go item by item until we retrieve the desired one.
 
-This is the reason there is a `elem/2` function to access a tuple item but there is no builtin equivalent for lists:
+This is the reason there is a `elem/2` function to access a tuple item but there is no built-in equivalent for lists:
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -324,4 +324,4 @@ Finally, notice we have used 4 counting functions so far: `byte_size/1` (for the
 
 `length` is used when the number of elements needs to be calculated. For example, calling `length` will iterate the whole list to find the number of elements in that list. `size` is the opposite, it means the value is pre-calculated and stored somewhere, therefore retrieving it is a cheap operation. That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
 
-Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operator to use with our basic types.
+Elixir also provides `Port`, `Reference` and `PID` as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operators to use with our basic types.
