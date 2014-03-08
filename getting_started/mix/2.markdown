@@ -126,7 +126,7 @@ Since our servers may eventually crash, it is common to supervise them, and that
 
 ## 2.2 Supervising our servers
 
-When building applications in Erlang/Elixir, a common philosophy is to "let it crash". Resources are going to become unavailable, timeout in between services are going to happen and other possible failures exist. That's why it is important to recover and react to such failures. With this in mind, we are going to write a supervisor for our server.
+When building applications in Erlang/Elixir, a common philosophy is to fail fast. Resources are going to become unavailable, timeout in between services are going to happen and other possible failures exist. That's why it is important to recover and react to such failures. With this in mind, we are going to write a supervisor for our server.
 
 Create a file at `lib/stacker/supervisor.ex` with the following:
 
