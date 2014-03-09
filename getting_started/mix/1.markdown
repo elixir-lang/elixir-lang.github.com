@@ -235,7 +235,7 @@ Use `mix help` to get more information.
 
 ### 1.4.5 Dependencies of dependencies
 
-If your dependency is another Mix or rebar project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project have two dependencies that share the same dependency and the SCM information for the shared dependency doesn't match between the parent dependencies, Mix will mark that dependency as diverged and emit a warning. To solve this issue you can declare the shared dependency in your project and Mix will use that SCM information to fetch the dependency.
+If your dependency is another Mix or rebar project, Mix does the right thing: it will automatically fetch and handle all dependencies of your dependencies. However, if your project has two dependencies that share the same dependency and the SCM information for the shared dependency doesn't match between the parent dependencies, Mix will mark that dependency as diverged and emit a warning. To solve this issue you can declare the shared dependency in your project with the option `override: true` and Mix will use that SCM information to fetch the dependency.
 
 ## 1.5 Umbrella projects
 
