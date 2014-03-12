@@ -274,7 +274,7 @@ iex> :application.start(:stacker)
 
 In this case, since the application was previously started, it returns so as an error message.
 
-Mix does not only starts your application but all of your application dependencies. Notice there is a difference between your project dependencies (the ones defined under the `deps` key we have discussed in the previous chapter) and the application dependencies.
+Mix not only starts your application but all of your application dependencies. Notice there is a difference between your project dependencies (the ones defined under the `deps` key we have discussed in the previous chapter) and the application dependencies.
 
 The project dependencies may contain your test framework or a compile-time only dependency. The application dependency is everything you depend on at runtime. Any application dependency needs to be explicitly added to the `application` function too:
 
