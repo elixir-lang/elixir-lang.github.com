@@ -7,31 +7,33 @@ total_guides: 7
 
 # {{ page.title }}
 
-This chapter contains different small topics that are part of Elixir's day to day work. We will learn about writing documentation, list and binary comprehensions, partial function application and more!
+This chapter contains a number of small topics that are the kinds of things you do every day in Elixir. We'll learn about writing documentation, comprehensions, partial function application and more!
 
-## 6.1 String sigils
+## 6.1 Sigils
 
-Elixir provides string sigils via the token `~`:
-
-```elixir
-~s(String with escape codes \x26 interpolation)
-~S(String without escape codes and without #{interpolation})
-```
-
-Sigils starting with an uppercase letter never escape characters or do interpolation. Notice the separators are not necessarily parenthesis, but any non-alphanumeric character:
-
-```elixir
-~s-another string-
-```
-
-Internally, `~s` is translated as a call to `sigil_s`. For instance, the docs for `~s` are available in the macro [`sigil_s/2`](/docs/stable/Kernel.html#sigil_s/2) defined in the `Kernel` module.
-
-The sigils defined in Elixir by default are:
+Sigils are a way of representing constants that contain character data. They all start with  `~`.
 
 * `~c` and `~C` - Returns a char list;
 * `~r` and `~R` - Returns a regular expression;
 * `~s` and `~S` - Returns a string;
 * `~w` and `~W` - Returns a list of "words" split by whitespace;
+
+Sigils starting with an uppercase letter never escape characters or do interpolation.
+
+Following the letter, the body of a sigil is delimited by one of the character pairs `<>`, `{}`, `[]`, `()`, or by the single characters `||`, `//`, `"` or `'`.
+
+```elixir
+~s(String with escape codes \x26 interpolation)
+~S(String without escape codes and without #{interpolation})
+~s|another string|
+~r/a regular expression/
+~w{ cat dog elk fox }
+```
+
+Internally, `~s` is translated as a call to `sigil_s`. For instance, the docs for `~s` are available in the macro [`sigil_s/2`](/docs/stable/Kernel.html#sigil_s/2) defined in the `Kernel` module.
+
+You are free to define your own sigils—for the sigil `~q` define a function `sigil_q/2`.
+
 
 ## 6.2 Heredocs
 
@@ -228,57 +230,72 @@ In general, we recommend APIs to provide a `__using__` hook in case they want to
 
 ## 6.7 Comprehensions
 
-Elixir also provides list and bit comprehensions. List comprehensions allow you to quickly build a list from another list:
+Comprehensions allow you to quickly build a collection from one or more other collections or binaries, optionally applying filters and transformations:
 
 ```iex
-iex> lc n inlist [1,2,3,4], do: n * 2
+iex> for n <- [1,2,3,4], do: n * 2
 [2,4,6,8]
 ```
 
-Or, using keywords blocks:
+Or, using the block form of `do`:
 
 ```elixir
-lc n inlist [1,2,3,4] do
+for n <- [1,2,3,4] do
   n * 2
 end
 ```
 
-A comprehension accepts many generators (given by `inlist` or `inbits` operators) as well as filters:
+The phrase `n <- [1,2,3,4]` is an example of a _generator_. The right hand side is any enumerable value, and the left is a pattern. The enumerable is iterated, and successive values are matched against the pattern.
+
+The generator can also extract values from a binary. The syntax for this is
+
+```iex
+iex> binary = "hello"
+"hello"
+iex> for << x <- binary >>, do: { x }
+[{104}, {101}, {108}, {108}, {111}]
+
+# THe binary can be a literal, too
+iex> for << x <- << 1, 2, 3 >> >>, do:  64+x 
+'ABC'
+```
+
+A comprehension accepts many generators as well as filters:
 
 ```iex
 # A comprehension with a generator and a filter
-iex> lc n inlist [1,2,3,4,5,6], rem(n, 2) == 0, do: n
-[2,4,6]
+iex> for n <- [1,2,3,4,5,6], rem(n, 2) == 0, do: n
+[2, 4, 6]
 
-# A comprehension with two generators
-iex> lc x inlist [1,2], y inlist [2,3], do: x*y
-[2,3,4,6]
+# A comprehension with two generators and a filter
+iex> for x <- 1..10, y <- [3,5], x < y, do: x*y
+[3, 5, 6, 10, 15, 20]
 ```
 
-Elixir provides generators for both lists and bitstrings:
+The default result of a comprehension is a list containing the values returned by the `do` block. You can modify this using the `into:` option. This takes any value that implements `Collectable`, and fills it with successive values from the `do` block.
 
 ```iex
-# A list generator:
-iex> lc n inlist [1,2,3,4], do: n * 2
-[2,4,6,8]
+# Insert values into an empty map
+iex> for n <- [1,2,3,4], into: %{}, do: {n, n*2}
+%{1 => 2, 2 => 4, 3 => 6, 4 => 8}
 
-# A bit string generator:
-iex> lc <<n>> inbits <<1,2,3,4>>, do: n * 2
-[2,4,6,8]
+# Insert values into a non-empty binary (string)
+iex> for ch <- 65..69, into: "The result is: ", do: <<ch, ch+32>>
+"The result is: AaBbCcDdEe"
 ```
 
 Bit string generators are quite useful when you need to organize streams:
 
 ```iex
 iex> pixels = <<213,45,132,64,76,32,76,0,0,234,32,15>>
-iex> lc <<r :: size(8), g :: size(8), b :: size(8)>> inbits pixels, do: {r,g,b}
-[{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
+iex> for << <<r :: size(8), g :: size(8), b :: size(8)>> <- pixels >>, do: {r,g,b}
+[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
 ```
 
-Remember, as strings are binaries and a binary is a bitstring, we can also use strings in comprehensions. For instance, the example below removes all white space characters from a string via bit comprehensions:
+Remember, as strings are binaries and a binary is a bitstring, we can also use strings in comprehensions. For instance, the example below removes all white space characters from a string:
 
 ```iex
-iex> bc <<c>> inbits " hello world ", c != ?\s, do: <<c>>
+iex> for << <<ch>> <- " hello world ">>, ch != ?\s, into: "", do: <<ch>>
 "helloworld"
 ```
 
