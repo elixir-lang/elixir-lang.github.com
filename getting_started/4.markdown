@@ -30,7 +30,7 @@ iex> 2 = x
 
 Notice that `1 = x` is a valid expression and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
 
-Also, in Elixir parlance, we don't say a variable is assigned. We say a variable is bound or not. A variable can only be bound while on the left side:
+Also, in Elixir parlance, we don't say a variable is assigned. We say a variable is bound or not. A variable can only be bound just on the left side of `=`:
 
 ```iex
 iex> 1 = unknown
@@ -41,7 +41,7 @@ Since there is no variable unknown previously defined, Elixir imagined you were 
 
 ## 4.2 Pattern matching
 
-The match operator cannot only be used to match against direct values but they are also useful for destructuring more complex data types. For example, we can pattern match on tuples:
+The match operator is not only used to match against simple values but they are also useful for destructuring more complex data types. For example, we can pattern match on tuples:
 
 ```iex
 iex> {a, b, c} = {:hello, "world", 42}
@@ -114,7 +114,7 @@ iex> [0|list]
 [0, 1, 2, 3]
 ```
 
-Pattern matching allows developers to easily destruct data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
+Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
 
 ## 4.3 The pin operator
 
@@ -127,7 +127,7 @@ iex> x = 2
 2
 ```
 
-The pin operator `^` can be used when there is no interest in rebinding a variable but rather matching against its value (prior to the match):
+The pin operator `^` can be used when there is no interest in rebinding a variable but rather in matching against its value prior to the match:
 
 ```iex
 iex> x = 1
@@ -172,6 +172,4 @@ iex> length([1,[2],3]) = 3
 ** (ErlangError) erlang error :illegal_pattern
 ```
 
-This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs. If you are not familiar with it from other languages, you will get the hang of it with just a bit of practice!
-
-So let's talk some control flow structures, like `case` and `cond`, before we move towards more advanced data-types, likes binaries, keyword lists and maps.
+This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs.

@@ -14,7 +14,7 @@ for(i = 0; i < array.length; i++) {
 }
 ```
 
-In the example above, we are mutating the array which is not possible in Elixir. Therefore, functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
+In the example above we are mutating the array which is not possible in Elixir. Instead functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
 
 ```elixir
 defmodule Math do
@@ -27,7 +27,7 @@ defmodule Math do
   end
 end
 
-Math.sum_list([1,2,3], 0) #=> 6
+Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
 In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. When a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to `0`.
@@ -35,8 +35,8 @@ In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initi
 Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
 
 ```elixir
-sum_list [1,2,3], 0
-sum_list [2,3], 1
+sum_list [1, 2, 3], 0
+sum_list [2, 3], 1
 sum_list [3], 3
 sum_list [], 6
 ```
@@ -46,14 +46,21 @@ When the list is empty, it will match the final clause which returns the final r
 Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops, especially in cases where processes need to wait and respond to messages. However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already provides many conveniences for working not only with lists but different kinds of Enumerables. For instance, the example above could be simply written as:
 
 ```iex
-iex> Enum.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
+iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
 6
 ```
 
 Or using the capture syntax:
 
 ```iex
-iex> Enum.reduce([1,2,3], 0, &+/2)
+iex> Enum.reduce([1, 2, 3], 0, &+/2)
+6
+```
+
+Or finally the `sum/1` function:
+
+```iex
+iex> Enum.sum([1, 2, 3])
 6
 ```
 

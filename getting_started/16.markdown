@@ -60,7 +60,7 @@ iex> %{user | oops: :field}
 ** (ArgumentError) argument error
 ```
 
-By using the update syntax, the VM is aware no new keys will be added to the map/struct, leading the different maps created a long the way to share their structure. In the example above, both `jose` and `eric` share the same structure.
+By using the update syntax, the VM is aware no new keys will be added to the map/struct, allowing the maps to share their structure in memory. In the example above, both `jose` and `eric` share the same key structure in memory.
 
 Structs can also be used in pattern matching and they guarantee the structs are of the same type:
 
@@ -87,6 +87,13 @@ iex> user = %User{}
 %User{name: "jose", age: 27}
 iex> user[:name]
 ** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "jose"}
+```
+
+A struct also is not a dictionary and therefore can't be used with the `Dict` module:
+
+```iex
+iex> Dict.get(%User{}, :name)
+** (ArgumentError) unsupported dict: %User{name: "jose", age: 27}
 ```
 
 We will cover how structs interacts with protocols in the next chapter.

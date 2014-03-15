@@ -6,7 +6,7 @@ guide: 5
 
 # {{ page.title }}
 
-In this chapter, we will learn about `case`, `cond` and `if` control-flow structures.
+In this chapter we will learn about `case`, `cond` and `if` control-flow structures.
 
 ## 5.1 case
 
@@ -34,7 +34,7 @@ iex> case 10 do
 ...> end
 ```
 
-Clauses also support special conditions to be specified via guards:
+Clauses also allow extra conditions to be specified via guards:
 
 ```iex
 iex> case {1, 2, 3} do
@@ -90,7 +90,7 @@ The first clause above will only match when `x` is positive. The Erlang VM only 
     * `trunc(number)`
     * `tuple_size(tuple)`
 
-Keep in mind errors in guards do not leak but simply let the guard fail:
+Keep in mind errors in guards do not leak but simply make the guard fail:
 
 ```iex
 iex> hd(1)
@@ -135,7 +135,7 @@ The number of arguments in each anonymous function clause needs to be the same, 
 ```iex
 iex> cond do
 ...>   2 + 2 == 5 ->
-...>     "This will be true"
+...>     "This will not be true"
 ...>   2 * 2 == 3 ->
 ...>     "Nor this"
 ...>   1 + 1 == 2 ->
@@ -144,9 +144,9 @@ iex> cond do
 "But this will"
 ```
 
-This is equivalent to `else if` clauses in many imperative languages.
+This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
 
-If none of the conditions return true, an error is raised. For this reason, it is common to see a last condition equal to `true`, which will always match:
+If none of the conditions return true, an error is raised. For this reason, it may be necessary to add a last condition equal to `true`, which will always match:
 
 ```iex
 iex> cond do
@@ -197,7 +197,7 @@ iex> if nil do
 "This will"
 ```
 
-An interesting thing about `if/2` and `unless/2` is that they are implemented as macros in the language, they are not keywords (as they would be in many languages). You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
+An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language, they are not keywords (as they would be in many languages). You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
 ### 5.4 `do` blocks
 
@@ -246,7 +246,7 @@ iex> is_number(if true) do
 ...> end
 ```
 
-Which leads to an undefined function error, since `do` is being passed to the `is_number` function, which is then being called with two arguments, and `if` is being called with only one argument. Adding explicit parentheses is enough to resolve the ambiguity:
+Which leads to an undefined function error, since `do` is being passed to the `is_number` function, which is then called with two arguments while `if` is called with only one. Adding explicit parentheses is enough to resolve the ambiguity:
 
 ```iex
 iex> is_number(if true do
@@ -262,4 +262,4 @@ iex> case 1, do: (x -> "Got #{x}")
 "Got 1"
 ```
 
-Although it is rare to use the keyword syntax with `case` and `cond`, we will see keyword lists play an important role in the language and are quite common in my functions and macros. We will explore them a bit more in a future chapter, but before, it is time to talk about "Binaries, strings and char lists".
+Although it is rare to use the keyword syntax with `case` and `cond`, we will see keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter, now it is time to talk about "Binaries, strings and char lists".

@@ -21,23 +21,14 @@ end
 From now on, any reference to `List` will automatically expand to `Math.List`. In case one wants to access the original `List`, it can be done by accessing the module via `Elixir`:
 
 ```elixir
-List.values             #=> uses Math.List.values
-Elixir.List.values      #=> uses List.values
-Elixir.Math.List.values #=> uses Math.List.values
+List.flatten             #=> uses Math.List.flatten
+Elixir.List.flatten      #=> uses List.flatten
+Elixir.Math.List.flatten #=> uses Math.List.flatten
 ```
 
-> Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit the Elixir main namespace.
+> Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit "Elixir." when referencing them.
 
-Aliases are frequently used to define shortcuts:
-
-```iex
-iex> alias String, as: S
-nil
-iex> S.length "hello"
-5
-```
-
-Calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
+Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
 
 ```elixir
 alias Math.List
@@ -68,7 +59,7 @@ In the example above, since we are invoking `alias` inside the function `plus/2`
 
 ### 11.2 require
 
-Elixir provides macros.
+Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
 
 Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the `require` directive:
 
@@ -83,7 +74,7 @@ true
 
 In Elixir, `Integer.odd?/1` is defined as a macro so it can be used as guards. This means that, in order to invoke `Integer.odd?/1`, we need to first require the `Integer` module.
 
-In general, a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
+In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
 ### 11.3 import
 
@@ -127,9 +118,9 @@ Note that importing a module automatically requires it.
 
 ## 11.4 Aliases
 
-At this point, you may be wondering, what exactly an Elixir alias is an how it is represented?
+At this point, you may be wondering, what exactly an Elixir alias is and how it is represented?
 
-An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom representing a module during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
+An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
 
 ```iex
 iex> is_atom(String)
@@ -183,4 +174,4 @@ defmodule Elixir.Foo do
 end
 ```
 
-As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic. With this, we are almost finishing our tour about Elixir modules, the last topic to cover is module attributes.
+As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic. With this we are almost finishing our tour about Elixir modules, the last topic to cover is module attributes.
