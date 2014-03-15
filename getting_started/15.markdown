@@ -46,7 +46,7 @@ iex> File.read "hello"
 {:ok, "world"}
 ```
 
-A file can also be opened with `:utf8` encoding which allows the remaining function in the `IO` module to be used:
+A file can also be opened with `:utf8` encoding which allows the remaining functions in the `IO` module to be used:
 
 ```iex
 iex> {:ok, file} = File.open "another", [:write, :utf8]
@@ -55,7 +55,7 @@ iex> {:ok, file} = File.open "another", [:write, :utf8]
 
 Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
 
-You will also notice that functions in the File module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
+You will also notice that functions in the `File` module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
 
 ```iex
 iex> File.read "hello"
@@ -123,7 +123,7 @@ iex> IO.write(pid, "hello")
 ** (ErlangError) erlang error: :terminated
 ```
 
-After `IO.write/2`, we can see the request sent by the IO module, which then fails since the IO module expected some kind of result, which we did not supply.
+After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result, which we did not supply.
 
 The [`StringIO`](/docs/stable/StringIO.html) module provides an implementation of the IO device messages on top of a string:
 
@@ -134,7 +134,7 @@ iex> IO.read(pid, 2)
 "he"
 ```
 
-By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to, for example, exchange file processes and read/write files in between nodes. Of all IO devices, there  is one that is special to each process, called group leader.
+By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes and read/write files in between nodes. Of all IO devices, there is one that is special to each process, called group leader.
 
 When you write to `:stdio`, you are actually sending a message to the group leader, which writes to `:stdio`:
 
@@ -147,7 +147,7 @@ hello
 :ok
 ```
 
-The group leader can be configured per process and is used in many situations, for example, to redirect input and output when connected to another node remotely.
+The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
 
 ## 15.5 `iodata` and `char_data`
 
@@ -172,6 +172,6 @@ Although this is a subtle difference, you only need to worry about those details
 
 When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
 
-This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and when how to use lists for IO operations.
+This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) lists for IO operations.
 
 In the next chapters, we will explore structs and protocols, before moving to exception handling and other constructs like sigils and comprehensions.

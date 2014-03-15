@@ -6,7 +6,7 @@ guide: 7
 
 # {{ page.title }}
 
-So far, we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call them different names, like dictionaries, hashes, associative arrays, maps, etc.
+So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call them different names, like dictionaries, hashes, associative arrays, maps, etc.
 
 In Elixir, we have two main associative data structures: keyword lists and maps. It is time to learn more about them!
 
@@ -45,7 +45,7 @@ iex> new_list[:a]
 
 Keyword lists are important because they have two special characteristics:
 
-* They keep the user order;
+* They keep the keys ordered as given by the developer;
 * They allow a key to be given more than once;
 
 For example, [the Ecto library](https://github.com/elixir-lang/ecto) makes use of both features to provide an elegant DSL for writing database queries:
@@ -71,9 +71,9 @@ iex> if(false, [do: :this, else: :that])
 :that
 ```
 
-I.e. when the keyword list is the last argument of a function, the square brackets are optional.
+In general, when the keyword list is the last argument of a function, the square brackets are optional.
 
-In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/Keyword.html). Remember though keyword lists are simply lists and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count how many items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key maps to at maximum one-value, you should use maps instead.
+In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/Keyword.html). Remember though keyword lists are simply lists and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count how many items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
 Note we can also pattern match on keyword lists:
 
@@ -88,7 +88,7 @@ iex> [b: b, a: a] = [a: 1, b: 2]
 ** (MatchError) no match of right hand side value: [a: 1, b: 2]
 ```
 
-However this is rarely done in practice since pattern matching on lists require the number of items and their internal order to match.
+However this is rarely done in practice since pattern matching on lists require the number of items and their order to match.
 
 ## 7.2 Maps
 
@@ -106,7 +106,7 @@ iex> map[2]
 Compared to keyword lists, we can already see two differences:
 
 * Maps allow any value as key;
-* Maps do not have any specific order;
+* Maps keys do not follow any ordering;
 
 If you pass duplicate keys when creating a map, the last one wins:
 
@@ -137,7 +137,7 @@ iex> %{:c => c} = %{:a => 1, 2 => :b}
 
 As shown above, a map matches as long as the given keys exist on the given map. Therefore, an empty map matches all maps.
 
-One interesting property about maps is that they provide syntaxes for update and accessing atom keys:
+One interesting property about maps is that they provide a particular syntax for updating and accessing atom keys:
 
 ```iex
 iex> map = %{:a => 1, 2 => :b}
@@ -160,7 +160,7 @@ Manipulating maps is done via [the `Map` module](/docs/stable/Map.html), it prov
 
 ## 7.3 Dicts
 
-In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps implement this interface.
+In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps modules implement this interface.
 
 This interface is defined in the [the `Dict` module](/docs/stable/Dict.html) module which also provides an API that delegates to the underlying implementations:
 
@@ -177,7 +177,7 @@ iex> Dict.put(map, :a, 1)
 
 The `Dict` module allows any developer to implement their own variation of `Dict`, with specific characteristics, and hook into existing Elixir code. The `Dict` module also provides functions that are meant to work across dictionaries. For example, `Dict.equal?/2` can compare two dictionaries of any kind.
 
-That said, you may be wondering, which of `Keyword`, `Map` or `Dict` modules you should use in your code? The answer is: it depends.
+That said, you may be wondering, which of `Keyword`, `Map` or `Dict` modules should you use in your code? The answer is: it depends.
 
 If your code is expecting a keyword as argument, explicitly use the `Keyword` module. If a map, the `Map` module. However, if your API is meant to work with any dictionary, use the `Dict` module (and make sure to write tests that pass different dict implementations as arguments).
 

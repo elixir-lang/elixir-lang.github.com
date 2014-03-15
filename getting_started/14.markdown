@@ -26,7 +26,7 @@ iex> Process.alive?(pid)
 false
 ```
 
-> Note: you will likely get different process identifiers than the ones we are getting in the tutorial.
+> Note: you will likely get different process identifiers than the ones we are getting in this guide.
 
 We can retrieve the PID of the current process by calling `self/0`:
 
@@ -123,6 +123,6 @@ end
 
 This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/2`. We recommend you to take a look at [the `Process` module](/docs/stable/Process.html) for other functionality provided by processes.
 
-Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process die and start a new process in its place.
+Process and links play an important role when building fault-tolerant systems. In Elixir applications we often link our processes to supervisors which will detect when a process die and start a new process in its place. This is only possible because processes don't share anything by default so there is no way the crash of a process can corrupt the state of another process!
 
 While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting process fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
