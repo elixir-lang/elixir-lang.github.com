@@ -1,110 +1,128 @@
 ---
 layout: getting_started
-title: 13 Enumerables and Streams
+title: 13 Processes
 guide: 13
 ---
 
 # {{ page.title }}
 
-## 13.1 Enumerables
+In Elixir, all of your code run inside processes. Those processes are isolated from each other and they communicate with message passing. In this chapter, we will learn about the basic constructs for spawning new processes, sending and receiving messages.
 
-Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
+## 13.1 spawn
 
-```iex
-iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
-[2, 4, 6]
-iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)
-[2, 12]
-```
-
-The `Enum` module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code.
-
-Elixir also provides ranges:
+The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
 
 ```iex
-iex> Enum.map(1..3, fn x -> x * 2 end)
-[2, 4, 6]
-iex> Enum.reduce(1..3, 0, &+/2)
-6
+iex> spawn fn -> 1 + 2 end
+#PID<0.43.0>
 ```
 
-Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](/docs/stable/List.html), as it would make little sense to insert a value into, for example, a range.
-
-We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
-
-## 13.2 Eager vs Lazy
-
-All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
+Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
 
 ```iex
-iex> require Integer
-nil
-iex> Enum.filter(1..3, &Integer.odd?/1)
-[1, 3]
+iex> pid = spawn fn -> 1 + 2 end
+#PID<0.44.0>
+iex> Process.alive?(pid)
+false
 ```
 
-This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
+> Note: you will likely get different process identifiers than the ones we are getting in this guide.
+
+We can retrieve the PID of the current process by calling `self/0`:
 
 ```iex
-iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(&Integer.odd?/1) |> Enum.sum
-7500000000
+iex> self()
+#PID<0.41.0>
+iex> Process.alive?(self())
+true
 ```
 
-The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with `100_000` items. Then we keep all odd elements from the list, generating a new list, now with `50_000` items, and then we sum all entries.
+Processes get much more interesting when we are able to send and receive messages.
 
-As an alternative, Elixir provides [the `Stream` module](/docs/stable/Stream.html) which supports lazy operations:
+## 13.2 send and receive
+
+We can send messages with `send/2` and receive them with `receive/1`:
 
 ```iex
-iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(&Integer.odd?/1) |> Enum.sum
-7500000000
+iex> send self(), {:hello, "world"}
+{:hello, "world"}
+iex> receive do
+...>   {:hello, msg}  -> msg
+...>   {:world, msg} -> "won't match"
+...> end
+"world"
 ```
 
-Instead of generating intermediate lists, streams create a series of computations that are invoked only when we pass it to the `Enum` module. Streams are useful when working with large, *possibly infinite*, collections.
+When a message is sent to a process, the message is stored in the process mailbox. The `receive/2` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports many clauses, like `case/2`, as well as guards in the clauses.
 
-## 13.3 Streams
-
-Streams are lazy, composable enumerables.
-
-They are lazy because, as shown in the example above, `1..100_000 |> Stream.map(&(&1 * 3))` returns a data type, an actual stream, that represents the `map` computation over the range `1..100_000`:
+If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
 
 ```iex
-iex> 1..100_000 |> Stream.map(&(&1 * 3))
-#Stream<1..100_000, funs: [#Function<34.16982430/1 in Stream.map/2>]>
+iex> receive do
+...>   {:hello, msg}  -> msg
+...> after
+...>   1_000 -> "nothing after 1s"
+...> end
+"nothing after 1s"
 ```
 
-Furthermore, they are composable because we can pipe many stream operations:
+A timeout of 0 can be given when you already expect the message to be in the mailbox.
+
+Let's put all together and send messages in between processes:
 
 ```iex
-iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(&Integer.odd?/1)
-#Stream<1..100_000, funs: [...]>
+iex> parent = self()
+#PID<0.41.0>
+iex> spawn fn -> send(parent, {:hello, self()}) end
+#PID<0.48.0>
+iex> receive do
+...>   {:hello, pid} -> "Got hello from #{inspect pid}"
+...> end
+"Got hello from #PID<0.48.0>"
 ```
 
-Many functions in the `Stream` module accept any enumerable as argument and return a stream as result. It also provides functions for creating streams, possibly infinite. For example, `Stream.cycle/1` can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like `Enum.map/2` on such streams, as they would cycle forever:
-
-    ```iex
-    iex> stream = Stream.cycle([1, 2, 3])
-    #Function<15.16982430/2 in Stream.cycle/1>
-    iex> Enum.take(stream, 10)
-    [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
-    ```
-
-On the other hand, `Stream.unfold/2` can be used to generate values from a given initial value:
-
-    ```iex
-    iex> stream = Stream.unfold("hełło", &String.next_codepoint/1)
-    #Function<15.16982430/2 in Stream.cycle/1>
-    iex> Enum.take(stream, 3)
-    ["h", "e", "ł"]
-    ```
-
-Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in case of failures. For example, we can use it to stream a file:
+While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
 
 ```iex
-iex> stream = File.stream!("path/to/file")
-#Function<18.16982430/2 in Stream.resource/3>
-iex> Enum.take(stream, 10)
+iex> send self(), :hello
+:hello
+iex> flush()
+:hello
+:ok
 ```
 
-The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources.
+Before we finish this chapter, let's talk about process links.
 
-The amount of functions and functionality in [`Enum`](/docs/stable/Enum.html) and [`Stream`](/docs/stable/Stream.html) modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.
+## 13.3 Links
+
+The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fail:
+
+```iex
+iex> spawn fn -> raise "oops" end
+#PID<0.58.0>
+```
+
+Well... nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
+
+```iex
+iex> spawn_link fn -> raise "oops" end
+#PID<0.60.0>
+** (EXIT from #PID<0.60.0>) {RuntimeError[message: "oops"], [{:erlang, :apply, 2, []}]}
+```
+
+When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
+
+```iex
+# spawn.exs
+spawn_link fn -> raise "oops" end
+
+receive do
+  :hello -> "let's wait until the process fails"
+end
+```
+
+This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/2`. We recommend you to take a look at [the `Process` module](/docs/stable/Process.html) for other functionality provided by processes.
+
+Process and links play an important role when building fault-tolerant systems. In Elixir applications we often link our processes to supervisors which will detect when a process die and start a new process in its place. This is only possible because processes don't share anything by default so there is no way the crash of a process can corrupt the state of another process!
+
+While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting process fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!

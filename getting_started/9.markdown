@@ -1,94 +1,67 @@
 ---
 layout: getting_started
-title: 9 Default arguments
+title: 9 Recursion
 guide: 9
 ---
 
 # {{ page.title }}
 
-Named functions in Elixir also support default arguments:
+Due to immutability, loops in Elixir (and in functional programming languages) are written differently from conventional imperative languages. For example, in an imperative language, one would write:
+
+```c
+for(i = 0; i < array.length; i++) {
+  array[i] = array[i] * 2
+}
+```
+
+In the example above we are mutating the array which is not possible in Elixir. Instead functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
 
 ```elixir
-defmodule Concat do
-  def join(a, b, sep \\ " ") do
-    a <> sep <> b
+defmodule Math do
+  def sum_list([h|t], acc) do
+    sum_list(t, h + acc)
+  end
+
+  def sum_list([], acc) do
+    acc
   end
 end
 
-IO.puts Concat.join("Hello", "world")      #=> Hello world
-IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
+Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
-Any expression is allowed to serve as a default value but it won't be evaluated during the function definition; it will simply be stored for later use. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated:
+In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. When a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to `0`.
+
+Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
 
 ```elixir
-defmodule DefaultTest do
-  def dowork(x \\ IO.puts "hello") do
-    x
-  end
-end
+sum_list [1, 2, 3], 0
+sum_list [2, 3], 1
+sum_list [3], 3
+sum_list [], 6
 ```
+
+When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stack (in which our execution path is kept) would grow until it reaches a limit. Elixir, however, does tail call optimization in which the stack does not grow when a function exits by calling another function.
+
+Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops, especially in cases where processes need to wait and respond to messages. However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already provides many conveniences for working not only with lists but different kinds of Enumerables. For instance, the example above could be simply written as:
 
 ```iex
-iex> DefaultTest.dowork 123
-123
-iex> DefaultTest.dowork
-hello
-:ok
+iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
+6
 ```
 
-If a function with default values has multiple clauses, it is recommended to create a separate clause without an actual body, just for declaring defaults:
-
-```elixir
-defmodule Concat do
-  def join(a, b \\ nil, sep \\ " ")
-
-  def join(a, b, _sep) when nil?(b) do
-    a
-  end
-
-  def join(a, b, sep) do
-    a <> sep <> b
-  end
-end
-
-IO.puts Concat.join("Hello", "world")      #=> Hello world
-IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
-IO.puts Concat.join("Hello")               #=> Hello
-```
-
-When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
-
-```elixir
-defmodule Concat do
-  def join(a, b) do
-    IO.puts "***First join"
-    a <> b
-  end
-
-  def join(a, b, sep \\ " ") do
-    IO.puts "***Second join"
-    a <> sep <> b
-  end
-end
-```
-
-If we save the code above in a file named "concat.ex" and compile it, Elixir will emit the following warning:
-
-    concat.exs:7: this clause cannot match because a previous clause at line 2 always matches
-
-The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
-
-    $ iex concat.exs
+Or using the capture syntax:
 
 ```iex
-iex> Concat.join "Hello", "world"
-***First join
-"Helloworld"
+iex> Enum.reduce([1, 2, 3], 0, &+/2)
+6
 ```
 
+Or finally the `sum/1` function:
+
 ```iex
-iex> Concat.join "Hello", "world", "_"
-***Second join
-"Hello_world"
+iex> Enum.sum([1, 2, 3])
+6
 ```
+
+We will learn more about Enumerables in the "Enumerables and streams" chapter.

@@ -1,128 +1,177 @@
 ---
 layout: getting_started
-title: 14 Processes
+title: 14 IO
 guide: 14
 ---
 
 # {{ page.title }}
 
-In Elixir, all of your code run inside processes. Those processes are isolated from each other and they communicate with message passing. In this chapter, we will learn about the basic constructs for spawning new processes, sending and receiving messages.
+This chapter is a quick introduction to input/output mechanisms in Elixir and related modules, like [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html) and [`Path`](/docs/stable/Path.html).
 
-## 14.1 spawn
+We have originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to bring some philosophies and curiosities about Elixir and the VM.
 
-The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
+## 14.1 The IO module
+
+The `IO` module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
 
 ```iex
-iex> spawn fn -> 1 + 2 end
-#PID<0.43.0>
+iex> IO.puts "hello world"
+"hello world"
+:ok
+iex> IO.gets "yes or no? "
+yes or no? yes
+"yes\n"
 ```
 
-Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
+By default, the functions in the IO module use the standard input and output. We can pass the `:stderr` as argument to write to the standard error device:
 
 ```iex
-iex> pid = spawn fn -> 1 + 2 end
-#PID<0.44.0>
-iex> Process.alive?(pid)
-false
-```
-
-> Note: you will likely get different process identifiers than the ones we are getting in this guide.
-
-We can retrieve the PID of the current process by calling `self/0`:
-
-```iex
-iex> self()
-#PID<0.41.0>
-iex> Process.alive?(self())
-true
-```
-
-Processes get much more interesting when we are able to send and receive messages.
-
-## 14.2 send and receive
-
-We can send messages with `send/2` and receive them with `receive/1`:
-
-```iex
-iex> send self(), {:hello, "world"}
-{:hello, "world"}
-iex> receive do
-...>   {:hello, msg}  -> msg
-...>   {:world, msg} -> "won't match"
-...> end
-"world"
-```
-
-When a message is sent to a process, the message is stored in the process mailbox. The `receive/2` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports many clauses, like `case/2`, as well as guards in the clauses.
-
-If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
-
-```iex
-iex> receive do
-...>   {:hello, msg}  -> msg
-...> after
-...>   1_000 -> "nothing after 1s"
-...> end
-"nothing after 1s"
-```
-
-A timeout of 0 can be given when you already expect the message to be in the mailbox.
-
-Let's put all together and send messages in between processes:
-
-```iex
-iex> parent = self()
-#PID<0.41.0>
-iex> spawn fn -> send(parent, {:hello, self()}) end
-#PID<0.48.0>
-iex> receive do
-...>   {:hello, pid} -> "Got hello from #{inspect pid}"
-...> end
-"Got hello from #PID<0.48.0>"
-```
-
-While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
-
-```iex
-iex> send self(), :hello
-:hello
-iex> flush()
-:hello
+iex> IO.puts :stderr, "hello world"
+"hello world"
 :ok
 ```
 
-Before we finish this chapter, let's talk about process links.
+## 14.2 The File module
 
-## 14.3 Links
-
-The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fail:
+The [`File`](/docs/stable/File.html) module contains functions that allows us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
 ```iex
-iex> spawn fn -> raise "oops" end
-#PID<0.58.0>
+iex> {:ok, file} = File.open "hello", [:write]
+{:ok, #PID<0.47.0>}
+iex> IO.binwrite file, "world"
+:ok
+iex> File.close file
+:ok
+iex> File.read "hello"
+{:ok, "world"}
 ```
 
-Well... nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
+A file can also be opened with `:utf8` encoding which allows the remaining functions in the `IO` module to be used:
 
 ```iex
-iex> spawn_link fn -> raise "oops" end
-#PID<0.60.0>
-** (EXIT from #PID<0.60.0>) {RuntimeError[message: "oops"], [{:erlang, :apply, 2, []}]}
+iex> {:ok, file} = File.open "another", [:write, :utf8]
+{:ok, #PID<0.48.0>}
 ```
 
-When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
+Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
+
+You will also notice that functions in the `File` module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
 
 ```iex
-# spawn.exs
-spawn_link fn -> raise "oops" end
+iex> File.read "hello"
+{:ok, "world"}
+iex> File.read! "hello"
+"world"
+iex> File.read "unknwon"
+{:error, :enoent}
+iex> File.read! "unknown"
+** (File.Error) could not read file unknown: no such file or directory
+```
 
-receive do
-  :hello -> "let's wait until the process fails"
+Notice that when the file does not exist, the version with `!` raises an error. That said, the version without `!` is preferred when you want to handle different outcomes with pattern matching. However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. That said, never write:
+
+```elixir
+{:ok, body} = File.read(file)
+```
+
+Instead write:
+
+```elixir
+case File.read(file) do
+  {:ok, body} -> # handle ok
+  {:error, r} -> # handle error
 end
 ```
 
-This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/2`. We recommend you to take a look at [the `Process` module](/docs/stable/Process.html) for other functionality provided by processes.
+or
 
-Process and links play an important role when building fault-tolerant systems. In Elixir applications we often link our processes to supervisors which will detect when a process die and start a new process in its place. This is only possible because processes don't share anything by default so there is no way the crash of a process can corrupt the state of another process!
+```elixir
+File.read!(file)
+```
 
-While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting process fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
+## 14.3 The Path module
+
+The majority of the functions in the File module expects paths as arguments. Most commonly, those paths will be binaries and they can be manipulated with the [`Path`](/docs/stable/Path.html) module:
+
+```iex
+iex> Path.join("foo", "bar")
+"foo/bar"
+iex> Path.expand("~/hello")
+"/Users/jose/hello"
+```
+
+With this, we have covered the main modules for doing IO and interacting with the filesystem. However there are some advanced topics to discuss regarding IO but feel free to skip them if you are in a hurry.
+
+## 14.4 Processes and group leaders
+
+You may have noticed that `File.open/2` returned a tuple containing a PID:
+
+```iex
+iex> {:ok, file} = File.open "hello", [:write]
+{:ok, #PID<0.47.0>}
+```
+
+That's because the IO module actually works with processes. When you say `IO.write(pid, binary)`, the IO module will send a message to the process to the desired operation. Let's see what happens if we use our own process:
+
+```iex
+iex> pid = spawn fn ->
+...>  receive do: (msg -> IO.inspect msg)
+...> end
+#PID<0.57.0>
+iex> IO.write(pid, "hello")
+{:io_request, #PID<0.41.0>, #PID<0.57.0>, {:put_chars, :unicode, "hello"}}
+** (ErlangError) erlang error: :terminated
+```
+
+After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result, which we did not supply.
+
+The [`StringIO`](/docs/stable/StringIO.html) module provides an implementation of the IO device messages on top of a string:
+
+```iex
+iex> {:ok, pid} = StringIO.start("hello")
+{:ok, #PID<0.43.0>}
+iex> IO.read(pid, 2)
+"he"
+```
+
+By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes and read/write files in between nodes. Of all IO devices, there is one that is special to each process, called group leader.
+
+When you write to `:stdio`, you are actually sending a message to the group leader, which writes to `:stdio`:
+
+```iex
+iex> IO.puts :stdio, "hello"
+hello
+:ok
+iex> IO.puts Process.group_leader, "hello"
+hello
+:ok
+```
+
+The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
+
+## 14.5 `iodata` and `char_data`
+
+In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
+
+The functions in `IO` and `File` also allow lists to given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
+
+```iex
+iex> IO.puts 'hello world'
+hello world
+:ok
+iex> IO.puts ['hello', ?\s, "world"]
+hello world
+:ok
+```
+
+However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
+
+On the other hand, `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
+
+Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
+
+When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
+
+This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) lists for IO operations.
+
+In the next chapters, we will explore structs and protocols, before moving to exception handling and other constructs like sigils and comprehensions.
