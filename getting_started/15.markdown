@@ -1,177 +1,99 @@
 ---
 layout: getting_started
-title: 15 IO
+title: 15 Structs
 guide: 15
 ---
 
 # {{ page.title }}
 
-This chapter is a quick introduction to input/output mechanisms in Elixir and related modules, like [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html) and [`Path`](/docs/stable/Path.html).
-
-We have originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to bring some philosophies and curiosities about Elixir and the VM.
-
-## 15.1 The IO module
-
-The `IO` module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
+In early chapters, we have learned about maps:
 
 ```iex
-iex> IO.puts "hello world"
-"hello world"
-:ok
-iex> IO.gets "yes or no? "
-yes or no? yes
-"yes\n"
+iex> map = %{a: 1, b: 2}
+%{a: 1, b: 2}
+iex> map[:a]
+1
+iex> %{map | a: 3}
+%{a: 3, b: 2}
 ```
 
-By default, the functions in the IO module use the standard input and output. We can pass the `:stderr` as argument to write to the standard error device:
+Structs are extensions on top of maps that bring default values, compile-time guarantees and polymorphism into Elixir.
+
+To define a struct, we just need to call `defstruct/1` inside a module:
 
 ```iex
-iex> IO.puts :stderr, "hello world"
-"hello world"
-:ok
-```
-
-## 15.2 The File module
-
-The [`File`](/docs/stable/File.html) module contains functions that allows us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
-
-```iex
-iex> {:ok, file} = File.open "hello", [:write]
-{:ok, #PID<0.47.0>}
-iex> IO.binwrite file, "world"
-:ok
-iex> File.close file
-:ok
-iex> File.read "hello"
-{:ok, "world"}
-```
-
-A file can also be opened with `:utf8` encoding which allows the remaining functions in the `IO` module to be used:
-
-```iex
-iex> {:ok, file} = File.open "another", [:write, :utf8]
-{:ok, #PID<0.48.0>}
-```
-
-Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
-
-You will also notice that functions in the `File` module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
-
-```iex
-iex> File.read "hello"
-{:ok, "world"}
-iex> File.read! "hello"
-"world"
-iex> File.read "unknwon"
-{:error, :enoent}
-iex> File.read! "unknown"
-** (File.Error) could not read file unknown: no such file or directory
-```
-
-Notice that when the file does not exist, the version with `!` raises an error. That said, the version without `!` is preferred when you want to handle different outcomes with pattern matching. However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. That said, never write:
-
-```elixir
-{:ok, body} = File.read(file)
-```
-
-Instead write:
-
-```elixir
-case File.read(file) do
-  {:ok, body} -> # handle ok
-  {:error, r} -> # handle error
-end
-```
-
-or
-
-```elixir
-File.read!(file)
-```
-
-## 15.3 The Path module
-
-The majority of the functions in the File module expects paths as arguments. Most commonly, those paths will be binaries and they can be manipulated with the [`Path`](/docs/stable/Path.html) module:
-
-```iex
-iex> Path.join("foo", "bar")
-"foo/bar"
-iex> Path.expand("~/hello")
-"/Users/jose/hello"
-```
-
-With this, we have covered the main modules for doing IO and interacting with the filesystem. However there are some advanced topics to discuss regarding IO but feel free to skip them if you are in a hurry.
-
-## 15.4 Processes and group leaders
-
-You may have noticed that `File.open/2` returned a tuple containing a PID:
-
-```iex
-iex> {:ok, file} = File.open "hello", [:write]
-{:ok, #PID<0.47.0>}
-```
-
-That's because the IO module actually works with processes. When you say `IO.write(pid, binary)`, the IO module will send a message to the process to the desired operation. Let's see what happens if we use our own process:
-
-```iex
-iex> pid = spawn fn ->
-...>  receive do: (msg -> IO.inspect msg)
+iex> defmodule User do
+...>   defstruct name: "jose", age: 27
 ...> end
-#PID<0.57.0>
-iex> IO.write(pid, "hello")
-{:io_request, #PID<0.41.0>, #PID<0.57.0>, {:put_chars, :unicode, "hello"}}
-** (ErlangError) erlang error: :terminated
+{:module, User,
+ <<70, 79, 82, ...>>, {:__struct__, 0}}
 ```
 
-After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result, which we did not supply.
-
-The [`StringIO`](/docs/stable/StringIO.html) module provides an implementation of the IO device messages on top of a string:
+We can now create "instances" of this struct by using the `%User{}` syntax:
 
 ```iex
-iex> {:ok, pid} = StringIO.start("hello")
-{:ok, #PID<0.43.0>}
-iex> IO.read(pid, 2)
-"he"
+iex> %User{}
+%User{name: "jose", age: 27}
+iex> %User{name: "eric"}
+%User{name: "eric", age: 27}
+iex> is_map(%User{})
+true
 ```
 
-By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes and read/write files in between nodes. Of all IO devices, there is one that is special to each process, called group leader.
-
-When you write to `:stdio`, you are actually sending a message to the group leader, which writes to `:stdio`:
+Structs give compile-time guarantees that the provided fields exist in the struct:
 
 ```iex
-iex> IO.puts :stdio, "hello"
-hello
-:ok
-iex> IO.puts Process.group_leader, "hello"
-hello
-:ok
+iex> %User{oops: :field}
+** (CompileError) iex:3: unknown key :oops for struct User
 ```
 
-The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
-
-## 15.5 `iodata` and `char_data`
-
-In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
-
-The functions in `IO` and `File` also allow lists to given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
+When discussing maps, we demonstrated how we can access and update existing fields of a map. The same applies to structs:
 
 ```iex
-iex> IO.puts 'hello world'
-hello world
-:ok
-iex> IO.puts ['hello', ?\s, "world"]
-hello world
-:ok
+iex> jose = %User{}
+%User{name: "jose", age: 27}
+iex> jose.name
+"jose"
+iex> eric = %{jose | name: "eric"}
+%User{name: "eric", age: 27}
+iex> %{user | oops: :field}
+** (ArgumentError) argument error
 ```
 
-However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
+By using the update syntax, the VM is aware no new keys will be added to the map/struct, allowing the maps to share their structure in memory. In the example above, both `jose` and `eric` share the same key structure in memory.
 
-On the other hand, `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
+Structs can also be used in pattern matching and they guarantee the structs are of the same type:
 
-Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
+```iex
+iex> %User{name: name} = jose
+%User{name: "jose", age: 27}
+iex> name
+"jose"
+iex> %User{} = %{}
+** (MatchError) no match of right hand side value: %{}
+```
 
-When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
+Matching works because structs store a field named `__struct__` inside the map:
 
-This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) lists for IO operations.
+```iex
+iex> jose.__struct__
+User
+```
 
-In the next chapters, we will explore structs and protocols, before moving to exception handling and other constructs like sigils and comprehensions.
+Overall, a struct is just a bare map with default fields. Notice we say it is a bare map because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
+
+```iex
+iex> user = %User{}
+%User{name: "jose", age: 27}
+iex> user[:name]
+** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "jose"}
+```
+
+A struct also is not a dictionary and therefore can't be used with the `Dict` module:
+
+```iex
+iex> Dict.get(%User{}, :name)
+** (ArgumentError) unsupported dict: %User{name: "jose", age: 27}
+```
+
+We will cover how structs interacts with protocols in the next chapter.
