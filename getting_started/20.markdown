@@ -1,146 +1,43 @@
 ---
 layout: getting_started
-title: 20 Quote and unquote
+title: 20 Where to go next
 guide: 20
+last: true
 ---
 
 # {{ page.title }}
 
-An Elixir program can be represented by its own data structures. In this chapter, we will learn how those structures look like and how to compose them. The concepts learned in this chapter are the building blocks for macros, which we are going to take a deeper look at the next chapter.
+Eager to learn more? Keep on reading!
 
-## 20.1 Quoting
+## 20.1 Build your first Elixir project
 
-The building block of an Elixir program is a tuple with three elements. For example, the function call `sum(1,2,3)` is represented internally as:
+In order to get your first project started, Elixir ships with a build tool called [`Mix`](/getting_started/mix/1.html). You can get your new project started by simply running:
 
-```elixir
-{:sum, [], [1, 2, 3]}
-```
+    mix new path/to/new/project
 
-You can get the representation of any expression by using the `quote` macro:
+You can learn more about Mix and other applications that ships with Elixir in the links below:
 
-```iex
-iex> quote do: sum(1, 2, 3)
-{:sum, [], [1, 2, 3]}
-```
+* [Mix - a build tool for Elixir](/getting_started/mix/1.html)
+* [ExUnit - a unit test framework](/getting_started/ex_unit/1.html)
 
-The first element is the function name, the second is a keyword list containing metadata and the third is the arguments list.
+## 20.2 Community and other resources
 
-Operators are also represented as such tuples:
+On the sidebar, you can find the link to some Elixir books and screencasts. They are plenty of Elixir resources out there, like conference talks, open source projects, and other learning material produced by the community.
 
-```iex
-iex> quote do: 1 + 2
-{:+, [context: Elixir, import: Kernel], [1, 2]}
-```
+Remember that in case of any difficulties, you can always visit the **#elixir-lang** channel on **irc.freenode.net** or send a message to the [mailing list](http://groups.google.com/group/elixir-lang-talk). You can be sure that there will be someone willing to help. And to keep posted on the latest news and announcements, follow the [blog][9] and follow language developments on the [elixir-core mailing list](http://groups.google.com/group/elixir-lang-core).
 
-Even a map is represented as a call to `%{}`:
+Don't forget [you can also check the source code of Elixir itself](https://github.com/elixir-lang/elixir), which is mostly written in Elixir (mainly the `lib` directory), or [explore Elixir's documentation](http://elixir-lang.org/docs.html).
 
-```iex
-iex> quote do: %{1 => 2}
-{:%{}, [], [{1, 2}]}
-```
+## 20.3 A Byte of Erlang
 
-Variables are also represented using such triplets, except the last element is an atom, instead of a list:
+As the main page of this site puts it:
 
-```iex
-iex> quote do: x
-{ :x, [], Elixir }
-```
+> Elixir is a programming language built on top of the Erlang VM.
 
-When quoting more complex expressions, we can see the code is represented in such tuples, often nested inside each other resembling a tree. Many languages would call those representations the Abstract Syntax Tree (AST). Elixir calls them quoted expressions:
+Sooner than later, an Elixir developer will want to interface with existing Erlang libraries. Here's a list of online resources that cover Erlang's fundamentals and its more advanced features:
 
-```iex
-iex> quote do: sum(1, 2 + 3, 4)
-{:sum, [], [1, {:+, [context: Elixir, import: Kernel], [2, 3]}, 4]}
-```
+* This [Erlang Syntax: A Crash Course](http://elixir-lang.org/crash-course.html) provides a concise intro to Erlang's syntax. Each code snippet is accompanied by equivalent code in Elixir. This is an opportunity for you to not only get some exposure to the Erlang's syntax but also review some of the things you have learned in the present guide.
 
-Sometimes when working with quoted expressions, it may be useful to get the textual code representation back. This can be done with `Macro.to_string/1`:
+* Erlang's official website has a short [tutorial](http://www.erlang.org/course/concurrent_programming.html) with pictures that briefly describe Erlang's primitives for concurrent programming.
 
-```iex
-iex> Macro.to_string(quote do: sum(1, 2 + 3, 4))
-"sum(1, 2 + 3, 4)"
-```
-
-In general, the tuples above follow the following format:
-
-```elixir
-{ tuple | atom, list, list | atom }
-```
-
-* The first element is an atom or another tuple in the same representation;
-* The second element is a keyword list containing information like metadata like numbers and contexts;
-* The third element is either a list of arguments for the function call or an atom. When an atom, it means the tuple represents a variable.
-
-Besides the tuple defined above, there are five Elixir literals that when quoted return themselves (and not a tuple). They are:
-
-```elixir
-:sum         #=> Atoms
-1.0          #=> Numbers
-[1,2]        #=> Lists
-"strings"    #=> Strings
-{key, value} #=> Tuples with two elements
-```
-
-Most of Elixir code has straight-forward translation to its underlying quoted expression. We recommend you to try out different code samples and see what gets out of it. For example, what `String.upcase("foo")` expands to? We have also learned that `if(true, do: this, else: that)` is the same as `if true do this else that end`. How does this affirmation hold with quoted expressions?
-
-## 20.2 Unquoting
-
-Quote is about retrieving the inner representation of some particular chunk of code. However, sometimes it may be necessary to inject some other particular chunk of code inside the representation we want to retrieve.
-
-For example, imagine you have a variable `number` which contains the number you want to inject inside a quoted expression. The number can be injected into the quoted representation by using `unquote`:
-
-```iex
-iex> number = 13
-iex> Macro.to_string(quote do: 11 + unquote(number))
-"11 + 13"
-```
-
-`unquote` can even be used to inject function names:
-
-```iex
-iex> fun = :hello
-iex> Macro.to_string(quote do: unquote(hello)(:world))
-"hello(:world)"
-```
-
-In some cases, it may be necessary to inject many values inside a list. For example, imagine you have a list containing `[1, 2, 6]` and we want to inject `[3, 4, 5]` into it. Using `unquote` won't yield the desired result:
-
-```iex
-iex> inner = [3, 4, 5]
-iex> Macro.to_string(quote do: [1, 2, unquote(inner), 6])
-[1, 2, [3, 4, 5], 6]
-```
-
-That's when `unquote_splicing` becomes handy:
-
-```iex
-iex> inner = [3, 4, 5]
-iex> Macro.to_string(quote do: [1, 2, unquote_splicing(inner), 6])
-[1, 2, 3, 4, 5, 6]
-```
-
-Unquoting is very useful when working with macros. When writing macros, developers are able to receive code chunks and inject them inside other code chunks, being able to transform code or write code that generates code during compilation.
-
-## 20.3 Escaping
-
-As we have seen at the beginning of this chapter, only some values are valid quoted expressions. For example, a map is not a valid quoted expression. Nor a tuple with three elements. However, we have seen before those values *can* be expressed as a quoted expression:
-
-```iex
-iex> quote do: %{1 => 2}
-{:%{}, [], [{1, 2}]}
-```
-
-In some cases, you may need to inject such *values* into *quoted expressions*. To do that, we need to first escape those values into quoted expressions with the help of `Macro.escape/1`:
-
-```iex
-iex> map = %{hello: :world}
-iex> Macro.escape(map)
-{%{}, [], [hello: :world]}
-```
-
-In other words, it is important to make a distinction in between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values like integers, atoms and strings have a quoted expression equal to the value itself. Other values like maps needs to be explicitly converted. Finally, some values like functions and references cannot be converted to a quoted expression at all.
-
-Macros receive quoted expressions and must return quoted expressions. However, sometimes during the function of a macro, you may need to work with values and making a distinction in between them may be required.
-
-You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other quoted expressions related functions can be found in the [`Macro` module](/docs/stable/Macro.html).
-
-With this introduction we have laid the ground to finally write out first macro, so let's move to the next chapter.
+* [Learn You Some Erlang for Great Good!](http://learnyousomeerlang.com/) is an excellent introduction to Erlang, its design principles, standard library, best practices and much more. If you are serious about Elixir, you'll want to get a solid understanding of Erlang principles. Once you have read through the crash course mentioned above, you'll be able to safely skip the first couple of chapters in the book that mostly deal with the syntax. When you reach [The Hitchhiker's Guide to Concurrency](http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency) chapter, that's where the real fun starts.

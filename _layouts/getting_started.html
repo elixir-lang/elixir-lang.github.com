@@ -1,6 +1,5 @@
 ---
 section: getting_started
-total_guides: 21
 ---
 
 {% include top.html %}
@@ -30,10 +29,7 @@ total_guides: 21
       <li><a class="spec" href="/getting_started/17.html">try, catch and rescue</a></li>
       <li><a class="spec" href="/getting_started/18.html">Comprehensions</a></li>
       <li><a class="spec" href="/getting_started/19.html">Sigils</a></li>
-      <li><a class="spec" href="/getting_started/20.html">Quote and unquote</a></li>
-      <li><a class="spec" href="/getting_started/21.html">Macros</a></li>
-      <li><a class="spec" href="/getting_started/22.html">Domain Specific Languages</a></li>
-      <li><a class="spec" href="/getting_started/23.html">Where to go next</a></li>
+      <li><a class="spec" href="/getting_started/20.html">Where to go next</a></li>
     </ol>
   </div>
   <div class="widget">
@@ -48,6 +44,14 @@ total_guides: 21
     <h3 class="widget-title">ExUnit - a unit test framework</h3>
     <ol>
       <li><a class="spec" href="/getting_started/ex_unit/1.html">Introduction to ExUnit</a></li>
+    </ol>
+  </div>
+  <div class="widget">
+    <h3 class="widget-title">Meta-programming in Elixir</h3>
+    <ol>
+      <li><a class="spec" href="/getting_started/meta/1.html">Quote and unquote</a></li>
+      <li><a class="spec" href="/getting_started/meta/2.html">Macros</a></li>
+      <li><a class="spec" href="/getting_started/meta/3.html">Domain Specific Languages</a></li>
     </ol>
   </div>
 
@@ -66,9 +70,9 @@ total_guides: 21
       <a href="{{page.guide | minus:1}}.html" class="previous page-numbers spec">&larr; Previous</a>
     {% endif %}
       <a class="page-numbers spec" href="#container">Top</a>
-    {% if page.guide < page.total_guides %}
+    {% unless page.last %}
       <a href="{{page.guide | plus:1}}.html" class="next page-numbers spec">Next &rarr;</a>
-    {% endif %}
+    {% endunless %}
   </div>
   {% endif %}
 </div><!-- #content -->
