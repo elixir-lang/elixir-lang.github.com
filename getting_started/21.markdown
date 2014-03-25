@@ -223,7 +223,28 @@ end
 
 At the moment the module is being defined, there isn't **yet** a function named `full?` defined in the module, so `IO.puts full?` will cause the compilation to fail.
 
-## 21.4 Private macros
+## 21.4 The environment
+
+When using `Macro.expand_once/2` earlier in this chapter, we have used the special form `__ENV__`.
+
+`__ENV__` returns an instance of `Macro.Env` which contains useful information about the compilation environment. It contains useful information like the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on.
+
+Let's give it a try:
+
+```iex
+iex> __ENV__.module
+nil
+iex> __ENV__.file
+"iex"
+iex> __ENV__.requires
+[IEx.Helpers, Kernel, Kernel.Typespec]
+iex> require Integer
+[IEx.Helpers, Integer, Kernel, Kernel.Typespec]
+```
+
+Many of the functions in the `Macro` module expect an environment. You can read more about them in [the docs for the `Macro` module](/docs/stable/Macro.html) and learn mor about the compilation environment with [`Macro.Env`](/docs/stable/Macro.Env.html).
+
+## 21.5 Private macros
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time.
 
@@ -237,7 +258,7 @@ iex> defmodule Sample do
 ** (CompileError) iex:2: function two/0 undefined
 ```
 
-## 21.5 Write macros responsibly
+## 21.6 Write macros responsibly
 
 Macros are a powerful construct and Elixir provides many mechanisms to ensure they are used responsibly:
 
