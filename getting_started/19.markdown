@@ -5,3 +5,177 @@ guide: 19
 ---
 
 # {{ page.title }}
+
+We have already learned Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms are, for example, another structure which are mostly created via the `:atom` representation.
+
+One of Elixir's goals is extensibility: developers should be able to extend the language to particular domains. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Our best bet is to rather make the language extensible, so developers, companies and communities can extend the language to their relevant domains.
+
+In the chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations.
+
+## 19.1 Regular expressions
+
+Sigils start with the tilde (`~`) character which is followed by a letter and then a separator. The most common sigil in Elixir is `~r` for [regular expressions](https://en.wikipedia.org/wiki/Regular_Expressions):
+
+```iex
+# A regular expression that returns true if the text has foo or bar
+iex> regex = ~r/foo|bar/
+~r/foo|bar/
+iex> "foo" =~ regex
+true
+iex> "bat" =~ regex
+false
+```
+
+Elixir provides Perl-compatible regular expressions (regexes), as provided by the [PCRE](http://www.pcre.org/) library. Regexes also support modifiers. For example, the `i` modifier makes a regular expression case insensitive:
+
+```iex
+iex> "HELLO" =~ ~r/hello/
+false
+iex> "HELLO" =~ ~r/hello/i
+true
+```
+
+Check out the [`Regex` module](/docs/stable/Regex.html) for more information on other modifiers and the supported operations with regular expressions.
+
+So far, all examples have used `/` to delimit a regular expression. However sigils support 8 different separators:
+
+```
+~r/hello/
+~r|hello|
+~r"hello"
+~r'hello'
+~r(hello)
+~r[hello]
+~r{hello}
+~r<hello>
+```
+
+The reasoning in supporting different operators is that different separators can be more convenient to different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for for other sigils, as we will see in the next section.
+
+## 19.2 Strings, char lists and words sigils
+
+Besides regular expressions, Elixir ships with three other sigils.
+
+The `~s` sigil is used to generate strings, similar to double quotes:
+
+```iex
+iex> ~s(this is a string with "quotes")
+"this is a string with \"quotes\""
+```
+
+While `~c` is used to generate char lists:
+
+```iex
+iex> ~c(this is a string with "quotes")
+'this is a string with "quotes"'
+```
+
+The `~w` sigil is used to generate a list of words separated by white space:
+
+```iex
+iex> ~w(foo bar bat)
+["foo", "bar", "bat"]
+```
+
+The `~w` sigil also accepts the `c`, `s` and `a` modifiers to choose the format of the result:
+
+```iex
+iex> ~w(foo bar bat)a
+[:foo, :bar, :bat]
+```
+
+Besides lowercase sigils, Elixir supports uppercase sigils. While both `~s` and `~S` will return strings, the first one allows escape codes and interpolation while the second does not:
+
+```elixir
+iex> ~s(String with escape codes \x26 interpolation)
+"String with escape codes & interpolation"
+iex> ~S(String without escape codes and without #{interpolation})
+"String without escape codes and without \#{interpolation}"
+```
+
+The following escape codes applies to strings and char lists:
+
+* `\"` – double quote
+* `\'` – single quote
+* `\\` – single backslash
+* `\a` – bell/alert
+* `\b` – backspace
+* `\d` - delete
+* `\e` - escape
+* `\f` - form feed
+* `\n` – newline
+* `\r` – carriage return
+* `\s` – space
+* `\t` – tab
+* `\v` – vertial tab
+* `\DDD`, `\DD`, `\D` - character with octal representation DDD, DD or D (example: `\377`)
+* `\xDD`	- character with hexadecimal representation DD (example: `\x13`)
+* `\x{D...}` -	character with hexadecimal representation with one or more hexadecimal characters (example: `\x{abc13}`)
+
+Sigils also support heredocs which is when tripe double- or single-quotes are used as separators:
+
+```iex
+iex> ~s"""
+...> this is
+...> a heredoc string
+...> """
+```
+
+The most common case for heredoc sigils is when writing documentation. For example, if you need to write escape characters in your documentation, it can become error prone as we would need to double escape some characters:
+
+```elixir
+@doc """
+Converts double-quotes to single-quotes.
+
+## Examples
+
+    iex> convert("\\\"foo\\\"")
+    "'foo'"
+
+"""
+def convert(...)
+```
+
+By using using `~S`, we can avoid this problem altogether:
+
+```elixir
+@doc ~S"""
+Converts double-quotes to single-quotes.
+
+## Examples
+
+    iex> convert("\"foo\"")
+    "'foo'"
+
+"""
+def convert(...)
+```
+
+## 19.3 Custom sigils
+
+As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, the sigil `~r/foo/i` is equivalent to calling the `sigil_r` function with two arguments:
+
+```iex
+iex> sigil_r(<<"foo">>, 'i')
+~r"foo"i
+```
+
+That said, we can access the documentation for the `~r` sigil via the `sigil_r` function:
+
+```iex
+iex> h sigil_r
+...
+```
+
+We can also provide our own sigils by simply implementing the proper function. For example, let's implement the `~i(13)` sigil that returns an integer:
+
+```iex
+iex> defmodule MySigils do
+...>   def sigil_i(binary, []), do: binary_to_integer(binary)
+...> end
+iex> import MySigils
+iex> ~i(13)
+13
+```
+
+Sigils can also be used to do compile-time work when required. For example, regular expressions in Elixir are compiled during compilation time, therefore avoiding doing repetitive work at runtime. However, in order to understand how such works, we need to talk about macros. And that's the direction we will take in the next chapters.
