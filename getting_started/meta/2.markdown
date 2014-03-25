@@ -1,7 +1,7 @@
 ---
 layout: getting_started
-title: 21 Macros
-guide: 21
+title: 2 Macros
+guide: 2
 ---
 
 # {{ page.title }}
@@ -10,7 +10,7 @@ Macros can be defined in Elixir using `defmacro/2`.
 
 > For this chapter, we will be using files instead of running code samples in IEx. That's because the code samples will spawn multiple lines of code and typing them all in IEx can be counter-productive. You should be able to run the code samples by saving them into a `macros.exs` file and running it with `elixir macros.exs` or `iex macros.exs`.
 
-## 21.1 Our first macro
+## 2.1 Our first macro
 
 In order to better understand how macros work, let's create a new module where we are going to implement `unless`, which does the opposite of `if`, as a macro and as a function:
 
@@ -95,7 +95,7 @@ Not only `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2` and many constructs 
 
 We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
 
-## 21.2 Macros hygiene
+## 2.2 Macros hygiene
 
 Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
@@ -161,7 +161,7 @@ Notice that the third element in the quoted variable is the atom `Sample`, inste
 
 Elixir provides similar mechanisms for imports and aliases too. This guarantees macros will behave as specified by its source module rather than conflicting with the target module where the macro is expanded.
 
-## 21.3 Compile-time vs. runtime
+## 2.3 Compile-time vs. runtime
 
 Macros are expanded at compile-time. That's a very important distinction to make when working with macros and failing to understand this distinction can cause a lot of confusion when working with macros.
 
@@ -223,7 +223,7 @@ end
 
 At the moment the module is being defined, there isn't **yet** a function named `full?` defined in the module, so `IO.puts full?` will cause the compilation to fail.
 
-## 21.4 The environment
+## 2.4 The environment
 
 When using `Macro.expand_once/2` earlier in this chapter, we have used the special form `__ENV__`.
 
@@ -244,7 +244,7 @@ iex> require Integer
 
 Many of the functions in the `Macro` module expect an environment. You can read more about them in [the docs for the `Macro` module](/docs/stable/Macro.html) and learn mor about the compilation environment with [`Macro.Env`](/docs/stable/Macro.Env.html).
 
-## 21.5 Private macros
+## 2.5 Private macros
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time.
 
@@ -258,7 +258,7 @@ iex> defmodule Sample do
 ** (CompileError) iex:2: function two/0 undefined
 ```
 
-## 21.6 Write macros responsibly
+## 2.6 Write macros responsibly
 
 Macros are a powerful construct and Elixir provides many mechanisms to ensure they are used responsibly:
 
