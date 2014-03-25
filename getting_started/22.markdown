@@ -4,3 +4,155 @@ title: 22 Domain Specific Languages
 guide: 22
 ---
 
+# {{ page.title }}
+
+[Domain Specific Languages](https://en.wikipedia.org/wiki/Domain-specific_language) allows developers to specialize their application to a particular domain. There are many language features that come together to aid developers to write Domain Specific Languages and in this chapter we will focus on just one of them.
+
+In particular, we will focus on how macros and module attributes can be used together to create domain specific modules, that are focused on solving one particular example. To showcase our implementation, we will write a very simple test case implementation.
+
+The goal is to build a module named `TestCase` that allows us to write the following:
+
+```elixir
+defmodule MyTest do
+  use TestCase
+
+  test "arithmetic operations" do
+    4 = 2 + 2
+  end
+
+  test "list operations" do
+    [1, 2, 3] = [1, 2] ++ [3]
+  end
+end
+
+MyTest.run
+```
+
+In the example above, by using `TestCase`, we can define tests using the `test` macro and it automatically defines a function named `run` that will automatically run all tests for us. Our prototype will also simply rely on the match operator (`=`) as a mechanism to do assertions.
+
+## 22.1 The `test` macro
+
+Let's start by defining a module that simply defines and imports the `test` macro when used:
+
+```elixir
+defmodule TestCase do
+  # Callback invoked when by `use`.
+  #
+  # For now it simply returns a quoted expression that
+  # imports the module itself into the user code.
+  @doc false
+  defmacro __using__(_opts) do
+    quote do
+      import TestCase
+    end
+  end
+
+  @doc """
+  Defines a test case with the given description.
+
+  ## Examples
+
+      test "arithmetic operations" do
+        4 = 2 + 2
+      end
+
+  """
+  defmacro test(description, do: block) do
+    function_name = binary_to_atom("test " <> description)
+    quote do
+      def unquote(function_name)(), do: unquote(block)
+    end
+  end
+end
+```
+
+Asuming we defined `TestCase` in a file named `tests.exs`, we can open it up `iex tests.exs` and define our first tests:
+
+```iex
+iex> defmodule MyTest do
+...>   use TestCase
+...>
+...>   test "hello" do
+...>     "hello" = "world"
+...>   end
+...> end
+```
+
+For now we don't have a mechanism to run tests, but we know that a function named "test hello" was defined behind the scenes, so we can invoke it and it should fail:
+
+```iex
+iex> MyTest."test hello"()
+** (MatchError) no match of right hand side value: "world"
+```
+
+## 22.2 Storing information with attributes
+
+In order to finish our `TestCase` implementation, we need to be able to retrieve all defined test cases. One way of doing such is by retrieving the tests at runtime via `__MODULE__.__info__(:functions)` which returns a list of all functions in a given module. However, considering that we may want to store more information with each tests beyond the test name, are more flexible approach is required.
+
+When discussing module attributes in early chapters, we have discussed how they can be used as temporary storage and that's exactly what we will do in this section.
+
+In the `__using__/1` implementation, we will initialize a module attribute named `@tests` to an empty list, then store each defined test in this attribute until we compile into into a `run` function.
+
+Here is the updated code for the `TestCase` module:
+
+```elixir
+defmodule TestCase do
+  @doc false
+  defmacro __using__(_opts) do
+    quote do
+      import TestCase
+
+      # Initialize @tests to an empty list
+      @tests []
+
+      # Invoke TestCase.__before_compile__/1 before the module is compiled
+      @before_compile TestCase
+    end
+  end
+
+  @doc """
+  ...
+  """
+  defmacro test(description, do: block) do
+    function_name = binary_to_atom("test " <> description)
+    quote do
+      # Prepend the newly defined test to the list of tests
+      @tests [unquote(function_name)|@tests]
+      def unquote(function_name)(), do: unquote(block)
+    end
+  end
+
+  # This will be invoked right before the target module is compiled
+  # giving us the perfect opportunity to inject the `run/0` function
+  @doc false
+  defmacro __before_compile__(env) do
+    quote do
+      def run do
+        Enum.each @tests, fn name ->
+          IO.puts "Running #{name}"
+          apply(__MODULE__, name, [])
+        end
+      end
+    end
+  end
+end
+```
+
+By starting a new IEx session, we can now define our tests and run them:
+
+```iex
+iex> defmodule MyTest do
+...>   use TestCase
+...>
+...>   test "hello" do
+...>     "hello" = "world"
+...>   end
+...> end
+iex> MyTest.run
+Running test hello
+** (MatchError) no match of right hand side value: "world"
+```
+
+Although we have glanced over some details, the bulk of how we can create domain specific modules in Elixir is here. Macros allows us to return quoted expressions that are executed in the caller, which in turn we use to transform code and to store relevant information in the target module via module attributes. Finally, with callbacks such as `@before_compile`, we have the perfect opportunity to inject code into the module when its definition is complete.
+
+Besides `@before_compile`, there are other useful module attributes, like `@on_definition` and `@after_compile` and you can more about read them in [the docs for the `Module` module](/docs/stable/Module.html). You can also find useful documentation about macros in the [`Macro` module](/docs/stable/Macro.html) and about the compilation environment in [`Macro.Env`](/docs/stable/Macro.Env.html).
