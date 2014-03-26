@@ -249,10 +249,12 @@ As seen in this announcement, this release dictates many of the developments tha
 
 The next months will also focus on integrating Elixir more tightly to OTP. During the keynote at Erlang Factory, [Catalyse Change](http://www.youtube.com/watch?v=Djv4C9H9yz4), Dave Thomas and I argued that are many useful patterns, re-implemented everyday by developers, that can make development more productive within the Erlang VM if exposed accordingly.
 
-That said, in the next months we plan to explore how to:
+That said, in the next months we plan to:
 
 * Integrate applications configuration (provided by OTP) right into Mix;
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces;
 * Properly expose the functionality provided by Applications, Supervisors, GenServers and GenEvents and study how they can integrate with Elixir. For example, how to consume events from GenEvent as a [stream of data](/docs/stable/Stream.html)?
 * Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://erlang.org/doc/man/rpc.html);
+* Rewrite the Mix and ExUnit guides to focus on applications and OTP as a whole, rebranding it to "Building Apps with Mix and OTP";
 
+You can learn more about Elixir in our [Getting Started guide](/getting_started/1.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0).
