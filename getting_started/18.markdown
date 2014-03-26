@@ -71,7 +71,7 @@ A bitstring generator can be mixed with the "regular" enumerable generators and 
 
 ## 18.3 Into
 
-In the examples above, the comprehension was return a list as a result.
+In the examples above, the comprehension returned a list as a result.
 
 However, the result of a comprehension can be inserted into different data structures by passing the `:into` option. For example, we can use bitstring generators with the `:into` option to easily remove all spaces in a string:
 
@@ -82,7 +82,7 @@ iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 
 Sets, maps and other dictionaries can also be given with the `:into` option. In general, the `:into` accepts any structure as long as it implements the `Collectable` protocol.
 
-For example, the `IO` module provides streams, that are both `Enumerable` and `Collectable`. You can easily implement an upcase echo terminal using comprehensions:
+For example, the `IO` module provides streams, that are both `Enumerable` and `Collectable`. You can implement an echo terminal that returns whatever is typed, but in upcase, using comprehensions:
 
 ```iex
 iex> stream = IO.stream(:stdio, :line)
