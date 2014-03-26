@@ -15,15 +15,15 @@ iex> is_binary string
 true
 ```
 
-In this chapter, we will understand what binaries are, how they associate with strings and what a single-quoted value, `'like this'`, means in Elixir.
+In this chapter, we will understand what binaries are, how they associate with strings, and what a single-quoted value, `'like this'`, means in Elixir.
 
 ## 6.1 UTF-8 and Unicode
 
-A string is a UTF-8 encoded binary. In order to understand exactly what we mean by that, we need to understand the difference in between bytes and codepoints.
+A string is a UTF-8 encoded binary. In order to understand exactly what we mean by that, we need to understand the difference between bytes and codepoints.
 
-The Unicode standard assigns codepoints to many of the characters we know. For example, the letter `a` has codepoint `97` while the letter `ł` has codepoint `322`. When writing the string `"hełło"` to disk, we need to convert this codepoint to bytes. Since a byte can represent a number from `0` to `255`, if we adopted a rule that said one byte represents one codepoint, we wouldn't be able to write `"hełło"`, because it uses the codepoint `322`. But of course, given you can actually read `"hełło"` in your screen, it means it is represented *somehow*. That's when encodings come in.
+The Unicode standard assigns codepoints to many of the characters we know. For example, the letter `a` has codepoint `97` while the letter `ł` has codepoint `322`. When writing the string `"hełło"` to disk, we need to convert this codepoint to bytes. Since a byte can represent a number from `0` to `255`, if we adopted a rule that said one byte represents one codepoint, we wouldn't be able to write `"hełło"`, because it uses the codepoint `322`. But of course, given you can actually read `"hełło"` on your screen, it means it is represented *somehow*. That's when encodings come in.
 
-When representing codepoints in bytes, we need to encode them somehow, and Elixir chose the UTF-8 encoding as its main and default encoding. When we say a string is a UTF-8 encoded binary, we mean a string is a bunch of bytes, organized in way to represent certain codepoints, as specified by the UTF-8 encoding.
+When representing codepoints in bytes, we need to encode them somehow. Elixir chose the UTF-8 encoding as its main and default encoding. When we say a string is a UTF-8 encoded binary, we mean a string is a bunch of bytes organized in a way to represent certain codepoints, as specified by the UTF-8 encoding.
 
 Since we have codepoints like `ł` assigned with the number `322`, we actually need more than one byte to represent it. That's why we see a difference when we calculate the `byte_size/1` of a string compared to its `String.length/1`:
 
@@ -52,9 +52,9 @@ iex> String.codepoints("hełło")
 ["h", "e", "ł", "ł", "o"]
 ```
 
-You will see that Elixir has excellent support for working with strings and it also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/) article.
+You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/) article.
 
-However, strings are just part of the story. If a string is a binary and we have used a `is_binary/1` function, Elixir probably has an underlying type empowering strings, and that is exactly true. Let's talk about binaries!
+However, strings are just part of the story. If a string is a binary and we have used the `is_binary/1` function, Elixir probably has an underlying type empowering strings, and that is exactly true. Let's talk about binaries!
 
 ## 6.2 Binaries (and bitstrings)
 
@@ -67,7 +67,7 @@ iex> byte_size <<0, 1, 2, 3>>
 4
 ```
 
-A binary is just a sequence of bytes. Of course those bytes can be organized in any way and they can be organized in a sequence that do not make them a valid string:
+A binary is just a sequence of bytes. Of course, those bytes can be organized in any way, even in a sequence that does not make them a valid string:
 
 ```iex
 iex> String.valid?(<239, 191, 191>>)
@@ -81,7 +81,7 @@ iex> <<0, 1>> <> <<2, 3>>
 <<0, 1, 2, 3>>
 ```
 
-There is a common trick used in Elixir which is to concatenate the null byte `<<0>>` to a string to see its inner binary representation:
+A common trick in Elixir is to concatenate the null byte `<<0>>` to a string to see its inner binary representation:
 
 ```iex
 iex> "hełło" <> <<0>>
@@ -118,7 +118,7 @@ iex> bit_size(<< 1 :: size(1)>>)
 1
 ```
 
-Interesting... the value is no longer a binary, but a bitstring! I.e. it is just a bunch of bits. So a binary is a bitstring where the number of bits is divisible by 8!
+The value is no longer a binary, but a bitstring -- just a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8!
 
 We can also pattern match on binaries / bitstrings:
 
@@ -140,7 +140,7 @@ iex> x
 <<2, 3>>
 ```
 
-The pattern above only works if the binary is at the end of `<<>>`. Similar results can retrieved with the string concatenation operator `<>`:
+The pattern above only works if the binary is at the end of `<<>>`. Similar results can be retrieved with the string concatenation operator `<>`:
 
 ```iex
 iex> "he" <> rest = "hello"
@@ -161,7 +161,7 @@ iex> 'hełło'
 iex> is_list 'hełło'
 ```
 
-You can see that, instead of containing bytes, a char list contains the codepoints of the characters in between single-quotes. So while a double-quotes represents a string (i.e. a binary), single-quotes represents a char list (i.e. a list).
+You can see that, instead of containing bytes, a char list contains the codepoints of the characters in between single-quotes. So while double-quotes represents a string (i.e. a binary), single-quotes represents a char list (i.e. a list).
 
 In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_char_list/1` functions:
 
@@ -176,4 +176,4 @@ iex> to_string 1
 "1"
 ```
 
-Note that those functions are polymorphic. They not only convert char lists to strings, but also integers to strings, atoms to strings and so on. With binaries, strings and char lists out of the way, it is time to talk about key-value data structures.
+Note that those functions are polymorphic. They not only convert char lists to strings, but also integers to strings, atoms to strings, and so on. With binaries, strings, and char lists out of the way, it is time to talk about key-value data structures.
