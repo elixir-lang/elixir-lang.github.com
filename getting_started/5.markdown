@@ -6,7 +6,7 @@ guide: 5
 
 # {{ page.title }}
 
-In this chapter we will learn about `case`, `cond` and `if` control-flow structures.
+In this chapter, we will learn about `case`, `cond` and `if` control-flow structures.
 
 ## 5.1 case
 
@@ -47,11 +47,11 @@ iex> case {1, 2, 3} do
 
 The first clause above will only match when `x` is positive. The Erlang VM only allows a limited set of expressions in guards:
 
-* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`);
-* boolean operators (`and`, `or`) and negation operators (`not`, `!`);
-* arithmetic operators (`+`, `-`, `*`, `/`);
-* `<>` and `++` as long as the left side is a literal;
-* the `in` operator;
+* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`)
+* boolean operators (`and`, `or`) and negation operators (`not`, `!`)
+* arithmetic operators (`+`, `-`, `*`, `/`)
+* `<>` and `++` as long as the left side is a literal
+* the `in` operator
 * all the following type check functions:
 
     * `is_atom/1`
@@ -184,9 +184,9 @@ iex> unless true do
 nil
 ```
 
-If the condition given to `if/2` returns `false` or `nil`, the body given in between `do/end` is not executed and it simply returns `nil`. The opposite happens with `unless/2`.
+If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and it simply returns `nil`. The opposite happens with `unless/2`.
 
-They also supports `else` blocks:
+They also support `else` blocks:
 
 ```iex
 iex> if nil do
@@ -197,11 +197,11 @@ iex> if nil do
 "This will"
 ```
 
-An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language, they are not keywords (as they would be in many languages). You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
+An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they are not keywords (as they would be in many languages). You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
 ### 5.4 `do` blocks
 
-At this point, we have learned 4 control structures, `case`, `cond`, `if` and `unless`, and they were all wrapped in `do`/`end` blocks. It happens we could also write `if` as follows:
+At this point, we have learned four control structures, `case`, `cond`, `if` and `unless`, and they were all wrapped in `do`/`end` blocks. It happens we could also write `if` as follows:
 
 ```iex
 iex> if true, do: 1 + 2
@@ -246,7 +246,7 @@ iex> is_number(if true) do
 ...> end
 ```
 
-Which leads to an undefined function error, since `do` is being passed to the `is_number` function, which is then called with two arguments while `if` is called with only one. Adding explicit parentheses is enough to resolve the ambiguity:
+That leads to an undefined function error.  `do` is being passed to the `is_number` function, which is then called with two arguments while `if` is called with only one. Adding explicit parentheses is enough to resolve the ambiguity:
 
 ```iex
 iex> is_number(if true do
@@ -262,4 +262,6 @@ iex> case 1, do: (x -> "Got #{x}")
 "Got 1"
 ```
 
-Although it is rare to use the keyword syntax with `case` and `cond`, we will see keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter, now it is time to talk about "Binaries, strings and char lists".
+Although it is rare to use the keyword syntax with `case` and `cond`, we will see keyword lists play an important role in the language. They are quite common in many functions and macros. We will explore them a bit more in a future chapter.  
+
+Now it is time to talk about "Binaries, strings and char lists".
