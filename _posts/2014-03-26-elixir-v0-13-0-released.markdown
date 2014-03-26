@@ -54,7 +54,9 @@ iex> %{"other" => value} = map
 ** (MatchError) no match of right hand side value
 ```
 
-Developers can use the functions in the [`Map` module](/docs/stable/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](/getting_started/7.html).
+A map pattern will match any map that has the given keys and values. For example, `%{"hello" => world}` will match any map that has the key `"hello"`. An empty map therefore matches all maps.
+
+Developers can use the functions in the [`Map` module](/docs/stable/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](/getting_started/7.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html)).
 
 Finally, maps also provide special syntax for creating, accessing and updating maps with atom keys:
 
