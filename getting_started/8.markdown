@@ -26,7 +26,7 @@ iex> Math.sum(1, 2)
 3
 ```
 
-In the following sections, our examples are going to get a bit more complex and it can be tricky to type them all in the shell. It is about time for us to learn how to compile Elixir code and also how to run Elixir scripts.
+In the following sections, our examples are going to get a bit more complex. It can be tricky to type them all in the shell. It is time for us to learn how to compile Elixir code and run Elixir scripts.
 
 ## 8.1 Compilation
 
@@ -44,7 +44,7 @@ This file can be compiled using `elixirc`:
 
     elixirc math.ex
 
-This will generate a file named `Elixir.Math.beam` containing the bytecode for the defined module. If we start `iex` again, our module definition will be available (considering `iex` is being started in the same directory the bytecode file is):
+This will generate a file named `Elixir.Math.beam` containing the bytecode for the defined module. If we start `iex` again, our module definition will be available (assuming `iex` is being started in the same directory as the bytecode file):
 
 ```iex
 iex> Math.sum(1, 2)
@@ -61,7 +61,7 @@ When working on actual projects, our build tool called `mix` will be responsible
 
 ## 8.2 Scripted mode
 
-In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting, without the need for compilation. For instance, one can create a file called `math.exs`:
+In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way; the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting without the need for compilation. For instance, one can create a file called `math.exs`:
 
 ```elixir
 defmodule Math do
@@ -77,7 +77,7 @@ And execute it as:
 
     elixir math.exs
 
-The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you to write your code into script files and execute them as shown above.
+The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend that you write your code into script files and execute them as shown above.
 
 ## 8.3 Named functions
 
@@ -137,7 +137,7 @@ iex> fun.(0)
 true
 ````
 
-Local or imported functions, like `is_function/1`, we can be captured without the module:
+Local or imported functions, like `is_function/1`, can be captured without the module:
 
 ```iex
 iex> &is_function/1
@@ -155,7 +155,7 @@ iex> fun.(1)
 2
 ```
 
-The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/Kernel.SpecialForms.html).
+The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. This syntax is useful for short function definitions. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/Kernel.SpecialForms.html).
 
 ## 8.5 Default arguments
 
@@ -172,7 +172,7 @@ IO.puts Concat.join("Hello", "world")      #=> Hello world
 IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 ```
 
-Any expression is allowed to serve as a default value but it won't be evaluated during the function definition; it will simply be stored for later use. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated:
+Any expression is allowed to serve as a default value, but it won't be evaluated during the function definition; it will simply be stored for later use. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated:
 
 ```elixir
 defmodule DefaultTest do
@@ -246,4 +246,4 @@ iex> Concat.join "Hello", "world", "_"
 "Hello_world"
 ```
 
-This finishes our short introduction to modules. In the next chapters, we will learn how to use named functions for recursion, explore Elixir lexical directives that can be used for importing functions from other modules, as well as module attributes.
+This finishes our short introduction to modules. In the next chapters, we will learn how to use named functions for recursion, explore Elixir lexical directives that can be used for importing functions from other modules, and module attributes.
