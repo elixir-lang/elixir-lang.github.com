@@ -14,7 +14,7 @@ for(i = 0; i < array.length; i++) {
 }
 ```
 
-In the example above we are mutating the array which is not possible in Elixir. Instead functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
+In the example above, we are mutating the array. That's not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
 
 ```elixir
 defmodule Math do
@@ -30,9 +30,9 @@ end
 Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
-In the example above, we invoke `sum_list` giving a list `[1,2,3]` and the initial value `0` as arguments. When a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to `0`.
+We invoke `sum_list` with a list `[1,2,3]` and the initial value `0` as arguments. When a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to `0`.
 
-Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
+Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
 
 ```elixir
 sum_list [1, 2, 3], 0
@@ -50,7 +50,7 @@ iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
 6
 ```
 
-Or using the capture syntax:
+Or, using the capture syntax:
 
 ```iex
 iex> Enum.reduce([1, 2, 3], 0, &+/2)
