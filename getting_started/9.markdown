@@ -29,12 +29,12 @@ defmodule Recursion do
 end
 
 Recursion.print_multiple_times("Hello!", 3)
-# "Hello!"
-# "Hello!"
-# "Hello!"
+# Hello!
+# Hello!
+# Hello!
 ```
 
-A function may have many "clauses" or definitions which will be executed when the arguments passed to the function match according to the pattern matching rules seen earlier and any guards on the clause evaluate to true.
+Similar to case, a function may have many clauses. A particular clause is executed when the arguments passed to the function match the clause's argument patterns and its guard evaluates to `true`.
 
 Above when `print_multiple_times/2` is initially called, the argument `n` is equal to `3`.
 
@@ -77,23 +77,23 @@ When the list is empty, it will match the final clause which returns the final r
 
 The process of taking a list and "reducing" it down to one value is known as a "reduce" algorithm and is central to functional programming.
 
-But what if we instead want to add 5 to all of the values in our list?
+What if we instead want to double all of the values in our list?
 
 ```elixir
 defmodule Math do
-  def double_each([head|tail], accumulator) do
-    double_each(tail, accumulator ++ [head * 2])
+  def double_each([head|tail]) do
+    [head * 2| double_each(tail)]
   end
 
-  def double_each([], new_list) do
-    new_list
+  def double_each([]) do
+    []
   end
 end
 
-Math.double_each([1, 2, 3], []) #=> [2, 4, 6]
+Math.double_each([1, 2, 3]) #=> [2, 4, 6]
 ```
 
-Here we have used our recursive capabilities to traverse a list doubling each element and returning a whole new list. The process of taking a list and "mapping" over it is known as a "map" algorithm.
+Here we have used recursion to traverse a list doubling each element and returning a new list. The process of taking a list and "mapping" over it is known as a "map" algorithm.
 
 Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops. However, when programming Elixir you will rarely use recursion as above to manipulate lists. [The `Enum` module](/docs/stable/Enum.html) already provides many conveniences for working with lists. For instance, the examples above could be written as:
 
