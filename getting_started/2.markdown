@@ -325,7 +325,7 @@ The first operation is fast because we are simply adding a new cons that points 
 
 Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding element to tuples is expensive because it requires copying the whole tuple in memory.
 
-Those performance characteristics dictates the usage of those data structures. For example, one very common use case for tuples is to use them to return extra information from a function, as seen in the `File.read/1` function:
+Those performance characteristics dictates the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents and it returns tuples:
 
 ```iex
 iex> File.read("path/to/existing/file")
@@ -334,7 +334,7 @@ iex> File.read("path/to/unknown/file")
 {:error, :enoent}
 ```
 
-If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as first element and the file contents as second. Otherwise, it returns `:error` and the error reason.
+If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as first element and the file contents as second. Otherwise, it returns a tuple with `:error` and the error reason.
 
 Most of the time, Elixir is going to guide you to do the right thing. For example, there is a `elem/2` function to access a tuple item but there is no built-in equivalent for lists:
 
