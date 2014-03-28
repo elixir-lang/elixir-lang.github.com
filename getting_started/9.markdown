@@ -14,25 +14,57 @@ for(i = 0; i < array.length; i++) {
 }
 ```
 
-In the example above, we are mutating the array. That's not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached. Consider the example below that manually sums all the items in the list:
+In the example above, we are mutating the array and the helper variable `i`. That's not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached that stops the recursive action from continuing. Consider the example below that prints a string an arbitrary amount of times:
+
+```elixir
+defmodule Recursion do
+  def print_multiple_times(msg, n) when n <= 1 do
+    IO.puts msg
+  end
+
+  def print_multiple_times(msg, n) do
+    IO.puts msg
+    print_multiple_times(msg, n - 1)
+  end
+end
+
+Recursion.print_multiple_times("Hello!", 3)
+# "Hello!"
+# "Hello!"
+# "Hello!"
+```
+
+A function may have many "clauses" or definitions which will be executed when the arguments passed to the function match according to the pattern matching rules seen earlier and any guards on the clause evaluate to true.
+
+Above when `print_multiple_times/2` is initially called, the argument `n` is equal to `3`.
+
+The first clause has a guard which says use this definition if and only if `n` is less than or equal to `1`. Since this is not the case, Elixir proceeds to the next clause's definition.
+
+The second definition matches the pattern and has no guard so it will be executed. It first prints our `msg` and then calls itself passing `n - 1` (`2`) as the second argument. Our `msg` is printed and `print_multiple_times/2` is called again this time with the second argument set to `1`.
+
+Because `n` is now set to `1`, the guard to our first definition of `print_multiple_times/2` evaluates to true, and we execute this particular definition. The `msg` is printed, and there is nothing left to execute.
+
+We defined `print_multiple_times/2` so that no matter what number is passed as the second argument it either triggers our first definition (known as a "base case") or it triggers our second definition which will ensure that we get exactly 1 step closer to our base case.
+
+Let's now see how we can use the power of recursion to sum a list of numbers.
 
 ```elixir
 defmodule Math do
-  def sum_list([h|t], acc) do
-    sum_list(t, h + acc)
+  def sum_list([head|tail], accumulator) do
+    sum_list(tail, head + accumulator)
   end
 
-  def sum_list([], acc) do
-    acc
+  def sum_list([], accumulator) do
+    accumulator
   end
 end
 
 Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
-We invoke `sum_list` with a list `[1,2,3]` and the initial value `0` as arguments. When a function has many clauses, we will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[h|t]` which assigns `h = 1` and `t = [2,3]` while `acc` is set to `0`.
+We invoke `sum_list` with a list `[1,2,3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1,2,3]` matches against `[head|tail]` which assigns `head = 1` and `tail = [2,3]` while `accumulator` is set to `0`.
 
-Then, we add the head of the list to the accumulator `h + acc` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[h|t]` until the list is empty, as seen below:
+Then, we add the head of the list to the accumulator `head + accumulator` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[head|tail]` until the list is empty, as seen below:
 
 ```elixir
 sum_list [1, 2, 3], 0
@@ -41,13 +73,35 @@ sum_list [3], 3
 sum_list [], 6
 ```
 
-When the list is empty, it will match the final clause which returns the final result of `6`. In imperative languages, such implementation would usually fail for large lists because the stack (in which our execution path is kept) would grow until it reaches a limit. Elixir, however, does tail call optimization in which the stack does not grow when a function exits by calling another function.
+When the list is empty, it will match the final clause which returns the final result of `6`.
 
-Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops, especially in cases where processes need to wait and respond to messages. However, recursion as above is rarely used to manipulate lists, since [the `Enum` module](/docs/stable/Enum.html) already provides many conveniences for working not only with lists but different kinds of Enumerables. For instance, the example above could be simply written as:
+The process of taking a list and "reducing" it down to one value is known as a "reduce" algorithm and is central to functional programming.
+
+But what if we instead want to add 5 to all of the values in our list?
+
+```elixir
+defmodule Math do
+  def double_each([head|tail], accumulator) do
+    double_each(tail, accumulator ++ [head * 2])
+  end
+
+  def double_each([], new_list) do
+    new_list
+  end
+end
+
+Math.double_each([1, 2, 3], []) #=> [2, 4, 6]
+```
+
+Here we have used our recursive capabilities to traverse a list doubling each element and returning a whole new list. The process of taking a list and "mapping" over it is known as a "map" algorithm.
+
+Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops. However, when programming Elixir you will rarely use recursion as above to manipulate lists. [The `Enum` module](/docs/stable/Enum.html) already provides many conveniences for working with lists. For instance, the examples above could be written as:
 
 ```iex
 iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
 6
+iex> Enum.map([1, 2, 3], fn(x) -> x * 2 end)
+[2, 4, 6]
 ```
 
 Or, using the capture syntax:
@@ -55,9 +109,11 @@ Or, using the capture syntax:
 ```iex
 iex> Enum.reduce([1, 2, 3], 0, &+/2)
 6
+iex> Enum.map([1, 2, 3], &(&1 * 2))
+[2, 4, 6]
 ```
 
-Or finally the `sum/1` function:
+Our reduce example can even be written with the `sum/1` function:
 
 ```iex
 iex> Enum.sum([1, 2, 3])
