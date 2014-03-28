@@ -197,7 +197,7 @@ iex> if nil do
 "This will"
 ```
 
-> Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they are not keywords (as they would be in many languages). You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
+> Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they are special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
 ### 5.4 `do` blocks
 
@@ -246,7 +246,7 @@ iex> is_number(if true) do
 ...> end
 ```
 
-That leads to an undefined function error.  `do` is being passed to the `is_number` function, which is then called with two arguments while `if` is called with only one. Adding explicit parentheses is enough to resolve the ambiguity:
+Which leads to an undefined function error as Elixir attempts to invoke `is_number/2`. Adding explicit parentheses is enough to resolve the ambiguity:
 
 ```iex
 iex> is_number(if true do
@@ -255,13 +255,4 @@ iex> is_number(if true do
 true
 ```
 
-The same rules regarding `do`/`end` blocks also apply to `case`, `cond`, etc:
-
-```iex
-iex> case 1, do: (x -> "Got #{x}")
-"Got 1"
-```
-
-Although it is rare to use the keyword syntax with `case` and `cond`, we will see keyword lists play an important role in the language. They are quite common in many functions and macros. We will explore them a bit more in a future chapter.
-
-Now it is time to talk about "Binaries, strings and char lists".
+Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings and char lists".
