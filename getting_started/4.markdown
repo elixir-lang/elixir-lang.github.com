@@ -28,9 +28,9 @@ iex> 2 = x
 ** (MatchError) no match of right hand side value: 1
 ```
 
-Notice that `1 = x` is a valid expression and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
+Notice that `1 = x` is a valid expression, and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
 
-Also, in Elixir parlance, we don't say a variable is assigned. We say a variable is bound or not. A variable can only be bound just on the left side of `=`:
+Also, in Elixir parlance, we don't say a variable is assigned. We say a variable is bound or not. A variable can only be bound on the left side of `=`:
 
 ```iex
 iex> 1 = unknown
@@ -41,7 +41,7 @@ Since there is no variable unknown previously defined, Elixir imagined you were 
 
 ## 4.2 Pattern matching
 
-The match operator is not only used to match against simple values but they are also useful for destructuring more complex data types. For example, we can pattern match on tuples:
+The match operator is not only used to match against simple values, but it is also useful for destructuring more complex data types. For example, we can pattern match on tuples:
 
 ```iex
 iex> {a, b, c} = {:hello, "world", 42}
@@ -66,7 +66,7 @@ iex> {a, b, c} = [:hello, "world", "!"]
 ** (MatchError) no match of right hand side value: [:hello, "world", "!"]
 ```
 
-More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side in case the right side is a tuple that starts with the atom `:ok`:
+More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side when the right side is a tuple that starts with the atom `:ok`:
 
 ```iex
 iex> {:ok, result} = {:ok, 13}
@@ -105,7 +105,7 @@ iex> [h|t] = []
 ** (MatchError) no match of right hand side value: []
 ```
 
-The `[head | tail]` format is not only used on pattern matching, but also for prepending items to a list:
+The `[head | tail]` format is not only used on pattern matching but also for prepending items to a list:
 
 ```iex
 iex> list = [1, 2, 3]
