@@ -31,7 +31,7 @@ iex> 10 / 2
 5.0
 ```
 
-Notice that `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir, the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
+Notice that `10 / 2` returned a float `5.0` instead of an integer `5`. This is expected. In Elixir, the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
 ```iex
 iex> div(10, 2)
@@ -88,11 +88,11 @@ iex> is_boolean(1)
 false
 ```
 
-You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, float or any of them.
+You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, a float or either.
 
 ## 2.3 Atoms
 
-Atoms are constants where their name is their own value. Some other languages call them symbols.
+Atoms are constants where their name is their own value. Some other languages call these symbols.
 
 ```iex
 iex> :hello
@@ -112,7 +112,7 @@ true
 
 ## 2.4 Strings
 
-Strings in Elixir are inserted in between double quotes and they are encoded in UTF-8:
+Strings in Elixir are inserted in between double quotes, and they are encoded in UTF-8:
 
 ```iex
 iex> "hellö"
@@ -182,7 +182,7 @@ iex> 'hellö' == "hellö"
 false
 ```
 
-We will talk more about Unicode support and the difference in between single and double-quoted strings in the "Binaries, strings and char lists" chapter.
+We will talk more about Unicode support and the difference between single and double-quoted strings in the "Binaries, strings and char lists" chapter.
 
 ## 2.5 Anonymous functions
 
@@ -201,9 +201,11 @@ iex> add.(1, 2)
 3
 ```
 
-Functions can be passed as argument to other functions. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned true. We can also check the arity of the function by calling `is_function/2`. Note a dot (`.`) in between the variable and parenthesis is required to invoke an anonymous function.
+Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions just as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
 
-Anonymous functions are closures and as such they can access variables defined prior to the function definition:
+Note a dot (`.`) in between the variable and parenthesis is required to invoke an anonymous function.
+
+Anonymous functions are closures, and as such they can access variables that are in scope when the function is defined:
 
 ```iex
 iex> add_two = fn a -> add(a, 2) end
@@ -212,7 +214,7 @@ iex> add_two.(2)
 4
 ```
 
-Keep in mind that a variable assigned to inside a function does not affect its surrounding environment:
+Keep in mind that a variable assigned inside a function does not affect its surrounding environment:
 
 ```iex
 iex> x = 42
@@ -297,7 +299,7 @@ iex> tuple
 
 Notice that `set_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry if a particular code is mutating your data structure in place.
 
-By being immutable, Elixir also helps eliminate common cases where concurrent code have race conditions because two different entities are trying to change a data structure at the same time.
+By being immutable, Elixir also helps eliminate common cases where concurrent code has race conditions because two different entities are trying to change a data structure at the same time.
 
 ## 2.8 Lists or tuples?
 
@@ -343,7 +345,7 @@ iex> elem(tuple, 1)
 "hello"
 ```
 
-When "counting" the number of elements in a data structure, Elixir also abides to a simple rule: the function should be named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation requires explicit counting.
+When "counting" the number of elements in a data structure, Elixir also abides by a simple rule: the function should be named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation requires explicit counting.
 
 For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of characters in a string). That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
 
