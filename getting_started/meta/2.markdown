@@ -45,7 +45,7 @@ iex> Unless.fun_unless true, IO.puts "this should never be printed"
 nil
 ```
 
-Note that in our macro implementation, the sentence was not printed, although it was printed in our function implementation. That's because the arguments to a function call are evaluated before calling the function. However macros do not evaluate the arguments, instead they receive the arguments as quoted expressions which are then transformed into other quoted expressions. In this case, we have rewriten our `unless` macro to become an `if` behind the scenes.
+Note that in our macro implementation, the sentence was not printed, although it was printed in our function implementation. That's because the arguments to a function call are evaluated before calling the function. However macros do not evaluate the arguments, instead they receive the arguments as quoted expressions which are then transformed into other quoted expressions. In this case, we have rewritten our `unless` macro to become an `if` behind the scenes.
 
 In other words, when invoked as:
 
@@ -239,10 +239,12 @@ iex> __ENV__.file
 iex> __ENV__.requires
 [IEx.Helpers, Kernel, Kernel.Typespec]
 iex> require Integer
+nil
+iex> __ENV__.requires
 [IEx.Helpers, Integer, Kernel, Kernel.Typespec]
 ```
 
-Many of the functions in the `Macro` module expect an environment. You can read more about them in [the docs for the `Macro` module](/docs/stable/Macro.html) and learn mor about the compilation environment with [`Macro.Env`](/docs/stable/Macro.Env.html).
+Many of the functions in the `Macro` module expect an environment. You can read more about them in [the docs for the `Macro` module](/docs/stable/Macro.html) and learn more about the compilation environment with [`Macro.Env`](/docs/stable/Macro.Env.html).
 
 ## 2.5 Private macros
 
