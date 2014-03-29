@@ -1,128 +1,177 @@
 ---
 layout: getting_started
-title: 13 Processes
-guide: 13
+title: 10 alias, require and import
+guide: 10
 ---
 
 # {{ page.title }}
 
-In Elixir, all of your code run inside processes. Those processes are isolated from each other and they communicate with message passing. In this chapter, we will learn about the basic constructs for spawning new processes, sending and receiving messages.
+In order to facilitate software reuse, Elixir provides three directives. As we are going to see below, they are called directives because they have **lexical scope**.
 
-## 13.1 spawn
+### 10.1 alias
 
-The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
+`alias` allows you to set up aliases for any given module name. Imagine our `Math` module uses a special list implementation for doing math specific operations:
 
-```iex
-iex> spawn fn -> 1 + 2 end
-#PID<0.43.0>
-```
-
-Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
-
-```iex
-iex> pid = spawn fn -> 1 + 2 end
-#PID<0.44.0>
-iex> Process.alive?(pid)
-false
-```
-
-> Note: you will likely get different process identifiers than the ones we are getting in this guide.
-
-We can retrieve the PID of the current process by calling `self/0`:
-
-```iex
-iex> self()
-#PID<0.41.0>
-iex> Process.alive?(self())
-true
-```
-
-Processes get much more interesting when we are able to send and receive messages.
-
-## 13.2 send and receive
-
-We can send messages with `send/2` and receive them with `receive/1`:
-
-```iex
-iex> send self(), {:hello, "world"}
-{:hello, "world"}
-iex> receive do
-...>   {:hello, msg}  -> msg
-...>   {:world, msg} -> "won't match"
-...> end
-"world"
-```
-
-When a message is sent to a process, the message is stored in the process mailbox. The `receive/2` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports many clauses, like `case/2`, as well as guards in the clauses.
-
-If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
-
-```iex
-iex> receive do
-...>   {:hello, msg}  -> msg
-...> after
-...>   1_000 -> "nothing after 1s"
-...> end
-"nothing after 1s"
-```
-
-A timeout of 0 can be given when you already expect the message to be in the mailbox.
-
-Let's put all together and send messages in between processes:
-
-```iex
-iex> parent = self()
-#PID<0.41.0>
-iex> spawn fn -> send(parent, {:hello, self()}) end
-#PID<0.48.0>
-iex> receive do
-...>   {:hello, pid} -> "Got hello from #{inspect pid}"
-...> end
-"Got hello from #PID<0.48.0>"
-```
-
-While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
-
-```iex
-iex> send self(), :hello
-:hello
-iex> flush()
-:hello
-:ok
-```
-
-Before we finish this chapter, let's talk about process links.
-
-## 13.3 Links
-
-The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fail:
-
-```iex
-iex> spawn fn -> raise "oops" end
-#PID<0.58.0>
-```
-
-Well... nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
-
-```iex
-iex> spawn_link fn -> raise "oops" end
-#PID<0.60.0>
-** (EXIT from #PID<0.60.0>) {RuntimeError[message: "oops"], [{:erlang, :apply, 2, []}]}
-```
-
-When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
-
-```iex
-# spawn.exs
-spawn_link fn -> raise "oops" end
-
-receive do
-  :hello -> "let's wait until the process fails"
+```elixir
+defmodule Math do
+  alias Math.List, as: List
 end
 ```
 
-This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/2`. We recommend you to take a look at [the `Process` module](/docs/stable/Process.html) for other functionality provided by processes.
+From now on, any reference to `List` will automatically expand to `Math.List`. In case one wants to access the original `List`, it can be done by accessing the module via `Elixir`:
 
-Process and links play an important role when building fault-tolerant systems. In Elixir applications we often link our processes to supervisors which will detect when a process die and start a new process in its place. This is only possible because processes don't share anything by default so there is no way the crash of a process can corrupt the state of another process!
+```elixir
+List.flatten             #=> uses Math.List.flatten
+Elixir.List.flatten      #=> uses List.flatten
+Elixir.Math.List.flatten #=> uses Math.List.flatten
+```
 
-While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting process fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
+> Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit "Elixir." when referencing them.
+
+Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
+
+```elixir
+alias Math.List
+```
+
+Is the same as:
+
+```elixir
+alias Math.List, as: List
+```
+
+Note that `alias` is **lexically scoped**, which allows you to set aliases inside specific functions:
+
+```elixir
+defmodule Math do
+  def plus(a, b) do
+    alias Math.List
+    # ...
+  end
+
+  def minus(a, b) do
+    # ...
+  end
+end
+```
+
+In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
+
+### 10.2 require
+
+Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
+
+Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the `require` directive:
+
+```iex
+iex> Integer.odd?(3)
+** (CompileError) iex:1: you must require Integer before invoking the macro Integer.odd?/1
+iex> require Integer
+nil
+iex> Integer.odd?(3)
+true
+```
+
+In Elixir, `Integer.odd?/1` is defined as a macro so it can be used as guards. This means that, in order to invoke `Integer.odd?/1`, we need to first require the `Integer` module.
+
+In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
+
+### 10.3 import
+
+We use `import` whenever we want to easily access functions or macros from other modules without using the qualified name. For instance, if we want to use the `duplicate` function from `List` several times, we can simply import it:
+
+```iex
+iex> import List, only: [duplicate: 2]
+nil
+iex> duplicate :ok, 3
+[:ok, :ok, :ok]
+```
+
+In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `only:` is optional, its usage is recommended. `except` could also be given as an option.
+
+`import` also supports `:macros` and `:functions` to be given to `:only`. For example, to import all macros, one could write:
+
+```elixir
+import Integer, only: :macros
+```
+
+Or to import all functions, you could write:
+
+```elixir
+import Integer, only: :functions
+```
+
+Note that `import` is also **lexically scoped**, this means we can import specific macros inside specific functions:
+
+```elixir
+defmodule Math do
+  def some_function do
+    import List, only: [duplicate: 2]
+    # call duplicate
+  end
+end
+```
+
+In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter).
+
+Note that importing a module automatically requires it.
+
+## 10.4 Aliases
+
+At this point, you may be wondering, what exactly an Elixir alias is and how it is represented?
+
+An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
+
+```iex
+iex> is_atom(String)
+true
+iex> to_string(String)
+"Elixir.String"
+iex> :"Elixir.String"
+String
+```
+
+By using the `alias/2` directive, we are simply changing what an alias translates to.
+
+Aliases work as described because in the Erlang VM (and consequently Elixir), modules are represented by atoms. For example, that's the mechanism we use to call Erlang modules:
+
+```iex
+iex> :lists.flatten([1,[2],3])
+[1, 2, 3]
+```
+
+This is also the mechanism that allows us to dynamically call a given function in a module:
+
+```iex
+iex> mod = :lists
+:lists
+iex> mod.flatten([1,[2],3])
+[1,2,3]
+```
+
+In other words, we are simply calling the function `flatten` on the atom `:lists`.
+
+## 10.5 Nesting
+
+Now that we have talked about aliases, we can talk about nesting and how it works in Elixir. Consider the following example:
+
+```elixir
+defmodule Foo do
+  defmodule Bar do
+  end
+end
+```
+
+The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same lexical scope. If later the developer decides to move `Bar` to another file, it will need to be referenced by its full name (`Foo.Bar`) or an alias needs to be set using the `alias` directive discussed above.
+
+In other words, the code above is exactly the same as:
+
+```elixir
+defmodule Elixir.Foo do
+  defmodule Elixir.Foo.Bar do
+  end
+  alias Elixir.Foo.Bar, as: Bar
+end
+```
+
+As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic. With this we are almost finishing our tour about Elixir modules, the last topic to cover is module attributes.
