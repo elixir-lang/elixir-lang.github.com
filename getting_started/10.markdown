@@ -1,177 +1,112 @@
 ---
 layout: getting_started
-title: 10 alias, require and import
-guide: 10
+title: 12 Enumerables and Streams
+guide: 12
 ---
 
 # {{ page.title }}
 
-In order to facilitate software reuse, Elixir provides three directives. As we are going to see below, they are called directives because they have **lexical scope**.
+## 12.1 Enumerables
 
-### 10.1 alias
-
-`alias` allows you to set up aliases for any given module name. Imagine our `Math` module uses a special list implementation for doing math specific operations:
-
-```elixir
-defmodule Math do
-  alias Math.List, as: List
-end
-```
-
-From now on, any reference to `List` will automatically expand to `Math.List`. In case one wants to access the original `List`, it can be done by accessing the module via `Elixir`:
-
-```elixir
-List.flatten             #=> uses Math.List.flatten
-Elixir.List.flatten      #=> uses List.flatten
-Elixir.Math.List.flatten #=> uses Math.List.flatten
-```
-
-> Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit "Elixir." when referencing them.
-
-Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
-
-```elixir
-alias Math.List
-```
-
-Is the same as:
-
-```elixir
-alias Math.List, as: List
-```
-
-Note that `alias` is **lexically scoped**, which allows you to set aliases inside specific functions:
-
-```elixir
-defmodule Math do
-  def plus(a, b) do
-    alias Math.List
-    # ...
-  end
-
-  def minus(a, b) do
-    # ...
-  end
-end
-```
-
-In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
-
-### 10.2 require
-
-Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
-
-Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the `require` directive:
+Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
 
 ```iex
-iex> Integer.odd?(3)
-** (CompileError) iex:1: you must require Integer before invoking the macro Integer.odd?/1
-iex> require Integer
-nil
-iex> Integer.odd?(3)
-true
+iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
+[2, 4, 6]
+iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)
+[2, 12]
 ```
 
-In Elixir, `Integer.odd?/1` is defined as a macro so it can be used as guards. This means that, in order to invoke `Integer.odd?/1`, we need to first require the `Integer` module.
+The `Enum` module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code.
 
-In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
-
-### 10.3 import
-
-We use `import` whenever we want to easily access functions or macros from other modules without using the qualified name. For instance, if we want to use the `duplicate` function from `List` several times, we can simply import it:
+Elixir also provides ranges:
 
 ```iex
-iex> import List, only: [duplicate: 2]
-nil
-iex> duplicate :ok, 3
-[:ok, :ok, :ok]
+iex> Enum.map(1..3, fn x -> x * 2 end)
+[2, 4, 6]
+iex> Enum.reduce(1..3, 0, &+/2)
+6
 ```
 
-In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `only:` is optional, its usage is recommended. `except` could also be given as an option.
+Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](/docs/stable/List.html), as it would make little sense to insert a value into, for example, a range.
 
-`import` also supports `:macros` and `:functions` to be given to `:only`. For example, to import all macros, one could write:
+We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
 
-```elixir
-import Integer, only: :macros
-```
+## 12.2 Eager vs Lazy
 
-Or to import all functions, you could write:
-
-```elixir
-import Integer, only: :functions
-```
-
-Note that `import` is also **lexically scoped**, this means we can import specific macros inside specific functions:
-
-```elixir
-defmodule Math do
-  def some_function do
-    import List, only: [duplicate: 2]
-    # call duplicate
-  end
-end
-```
-
-In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter).
-
-Note that importing a module automatically requires it.
-
-## 10.4 Aliases
-
-At this point, you may be wondering, what exactly an Elixir alias is and how it is represented?
-
-An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
+All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
 
 ```iex
-iex> is_atom(String)
-true
-iex> to_string(String)
-"Elixir.String"
-iex> :"Elixir.String"
-String
+iex> odd? = &(rem(&1, 2) != 0)
+#Function<6.80484245/1 in :erl_eval.expr/5>
+iex> Enum.filter(1..3, odd?)
+[1, 3]
 ```
 
-By using the `alias/2` directive, we are simply changing what an alias translates to.
-
-Aliases work as described because in the Erlang VM (and consequently Elixir), modules are represented by atoms. For example, that's the mechanism we use to call Erlang modules:
+This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
 
 ```iex
-iex> :lists.flatten([1,[2],3])
-[1, 2, 3]
+iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
+7500000000
 ```
 
-This is also the mechanism that allows us to dynamically call a given function in a module:
+The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with `100_000` items. Then we keep all odd elements from the list, generating a new list, now with `50_000` items, and then we sum all entries.
+
+As an alternative, Elixir provides [the `Stream` module](/docs/stable/Stream.html) which supports lazy operations:
 
 ```iex
-iex> mod = :lists
-:lists
-iex> mod.flatten([1,[2],3])
-[1,2,3]
+iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum
+7500000000
 ```
 
-In other words, we are simply calling the function `flatten` on the atom `:lists`.
+Instead of generating intermediate lists, streams create a series of computations that are invoked only when we pass it to the `Enum` module. Streams are useful when working with large, *possibly infinite*, collections.
 
-## 10.5 Nesting
+## 12.3 Streams
 
-Now that we have talked about aliases, we can talk about nesting and how it works in Elixir. Consider the following example:
+Streams are lazy, composable enumerables.
 
-```elixir
-defmodule Foo do
-  defmodule Bar do
-  end
-end
+They are lazy because, as shown in the example above, `1..100_000 |> Stream.map(&(&1 * 3))` returns a data type, an actual stream, that represents the `map` computation over the range `1..100_000`:
+
+```iex
+iex> 1..100_000 |> Stream.map(&(&1 * 3))
+#Stream<1..100_000, funs: [#Function<34.16982430/1 in Stream.map/2>]>
 ```
 
-The example above will define two modules `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same lexical scope. If later the developer decides to move `Bar` to another file, it will need to be referenced by its full name (`Foo.Bar`) or an alias needs to be set using the `alias` directive discussed above.
+Furthermore, they are composable because we can pipe many stream operations:
 
-In other words, the code above is exactly the same as:
-
-```elixir
-defmodule Elixir.Foo do
-  defmodule Elixir.Foo.Bar do
-  end
-  alias Elixir.Foo.Bar, as: Bar
-end
+```iex
+iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?)
+#Stream<1..100_000, funs: [...]>
 ```
 
-As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic. With this we are almost finishing our tour about Elixir modules, the last topic to cover is module attributes.
+Many functions in the `Stream` module accept any enumerable as argument and return a stream as result. It also provides functions for creating streams, possibly infinite. For example, `Stream.cycle/1` can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like `Enum.map/2` on such streams, as they would cycle forever:
+
+    ```iex
+    iex> stream = Stream.cycle([1, 2, 3])
+    #Function<15.16982430/2 in Stream.cycle/1>
+    iex> Enum.take(stream, 10)
+    [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
+    ```
+
+On the other hand, `Stream.unfold/2` can be used to generate values from a given initial value:
+
+    ```iex
+    iex> stream = Stream.unfold("hełło", &String.next_codepoint/1)
+    #Function<15.16982430/2 in Stream.cycle/1>
+    iex> Enum.take(stream, 3)
+    ["h", "e", "ł"]
+    ```
+
+Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in case of failures. For example, we can use it to stream a file:
+
+```iex
+iex> stream = File.stream!("path/to/file")
+#Function<18.16982430/2 in Stream.resource/3>
+iex> Enum.take(stream, 10)
+```
+
+The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources.
+
+The amount of functions and functionality in [`Enum`](/docs/stable/Enum.html) and [`Stream`](/docs/stable/Stream.html) modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.
+
+Next we'll look at a feature central to Elixir, Processes, which allow us to write concurrent, parallel and distributed programs in an easy and understandable way.
