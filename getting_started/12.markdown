@@ -1,110 +1,175 @@
 ---
 layout: getting_started
-title: 12 Enumerables and Streams
-guide: 12
+title: 14 IO
+guide: 14
 ---
 
 # {{ page.title }}
 
-## 12.1 Enumerables
+This chapter is a quick introduction to input/output mechanisms in Elixir and related modules, like [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html) and [`Path`](/docs/stable/Path.html).
 
-Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
+We have originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to bring some philosophies and curiosities about Elixir and the VM.
 
-```iex
-iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
-[2, 4, 6]
-iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)
-[2, 12]
-```
+## 14.1 The IO module
 
-The `Enum` module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code.
-
-Elixir also provides ranges:
+The `IO` module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
 
 ```iex
-iex> Enum.map(1..3, fn x -> x * 2 end)
-[2, 4, 6]
-iex> Enum.reduce(1..3, 0, &+/2)
-6
+iex> IO.puts "hello world"
+"hello world"
+:ok
+iex> IO.gets "yes or no? "
+yes or no? yes
+"yes\n"
 ```
 
-Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](/docs/stable/List.html), as it would make little sense to insert a value into, for example, a range.
-
-We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
-
-## 12.2 Eager vs Lazy
-
-All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
+By default, the functions in the IO module use the standard input and output. We can pass the `:stderr` as argument to write to the standard error device:
 
 ```iex
-iex> require Integer
-nil
-iex> Enum.filter(1..3, &Integer.odd?/1)
-[1, 3]
+iex> IO.puts :stderr, "hello world"
+"hello world"
+:ok
 ```
 
-This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
+## 14.2 The File module
+
+The [`File`](/docs/stable/File.html) module contains functions that allows us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
 ```iex
-iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(&Integer.odd?/1) |> Enum.sum
-7500000000
+iex> {:ok, file} = File.open "hello", [:write]
+{:ok, #PID<0.47.0>}
+iex> IO.binwrite file, "world"
+:ok
+iex> File.close file
+:ok
+iex> File.read "hello"
+{:ok, "world"}
 ```
 
-The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with `100_000` items. Then we keep all odd elements from the list, generating a new list, now with `50_000` items, and then we sum all entries.
-
-As an alternative, Elixir provides [the `Stream` module](/docs/stable/Stream.html) which supports lazy operations:
+A file can also be opened with `:utf8` encoding which allows the remaining functions in the `IO` module to be used:
 
 ```iex
-iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(&Integer.odd?/1) |> Enum.sum
-7500000000
+iex> {:ok, file} = File.open "another", [:write, :utf8]
+{:ok, #PID<0.48.0>}
 ```
 
-Instead of generating intermediate lists, streams create a series of computations that are invoked only when we pass it to the `Enum` module. Streams are useful when working with large, *possibly infinite*, collections.
+Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
 
-## 12.3 Streams
-
-Streams are lazy, composable enumerables.
-
-They are lazy because, as shown in the example above, `1..100_000 |> Stream.map(&(&1 * 3))` returns a data type, an actual stream, that represents the `map` computation over the range `1..100_000`:
+You will also notice that functions in the `File` module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
 
 ```iex
-iex> 1..100_000 |> Stream.map(&(&1 * 3))
-#Stream<1..100_000, funs: [#Function<34.16982430/1 in Stream.map/2>]>
+iex> File.read "hello"
+{:ok, "world"}
+iex> File.read! "hello"
+"world"
+iex> File.read "unknwon"
+{:error, :enoent}
+iex> File.read! "unknown"
+** (File.Error) could not read file unknown: no such file or directory
 ```
 
-Furthermore, they are composable because we can pipe many stream operations:
+Notice that when the file does not exist, the version with `!` raises an error. That said, the version without `!` is preferred when you want to handle different outcomes with pattern matching. However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. That said, never write:
+
+```elixir
+{:ok, body} = File.read(file)
+```
+
+Instead write:
+
+```elixir
+case File.read(file) do
+  {:ok, body} -> # handle ok
+  {:error, r} -> # handle error
+end
+```
+
+or
+
+```elixir
+File.read!(file)
+```
+
+## 14.3 The Path module
+
+The majority of the functions in the File module expects paths as arguments. Most commonly, those paths will be binaries and they can be manipulated with the [`Path`](/docs/stable/Path.html) module:
 
 ```iex
-iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(&Integer.odd?/1)
-#Stream<1..100_000, funs: [...]>
+iex> Path.join("foo", "bar")
+"foo/bar"
+iex> Path.expand("~/hello")
+"/Users/jose/hello"
 ```
 
-Many functions in the `Stream` module accept any enumerable as argument and return a stream as result. It also provides functions for creating streams, possibly infinite. For example, `Stream.cycle/1` can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like `Enum.map/2` on such streams, as they would cycle forever:
+With this, we have covered the main modules for doing IO and interacting with the filesystem. However there are some advanced topics to discuss regarding IO but feel free to skip them if you are in a hurry.
 
-    ```iex
-    iex> stream = Stream.cycle([1, 2, 3])
-    #Function<15.16982430/2 in Stream.cycle/1>
-    iex> Enum.take(stream, 10)
-    [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
-    ```
+## 14.4 Processes and group leaders
 
-On the other hand, `Stream.unfold/2` can be used to generate values from a given initial value:
-
-    ```iex
-    iex> stream = Stream.unfold("hełło", &String.next_codepoint/1)
-    #Function<15.16982430/2 in Stream.cycle/1>
-    iex> Enum.take(stream, 3)
-    ["h", "e", "ł"]
-    ```
-
-Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in case of failures. For example, we can use it to stream a file:
+You may have noticed that `File.open/2` returned a tuple containing a PID:
 
 ```iex
-iex> stream = File.stream!("path/to/file")
-#Function<18.16982430/2 in Stream.resource/3>
-iex> Enum.take(stream, 10)
+iex> {:ok, file} = File.open "hello", [:write]
+{:ok, #PID<0.47.0>}
 ```
 
-The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources.
+That's because the IO module actually works with processes. When you say `IO.write(pid, binary)`, the IO module will send a message to the process to the desired operation. Let's see what happens if we use our own process:
 
-The amount of functions and functionality in [`Enum`](/docs/stable/Enum.html) and [`Stream`](/docs/stable/Stream.html) modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.
+```iex
+iex> pid = spawn fn ->
+...>  receive do: (msg -> IO.inspect msg)
+...> end
+#PID<0.57.0>
+iex> IO.write(pid, "hello")
+{:io_request, #PID<0.41.0>, #PID<0.57.0>, {:put_chars, :unicode, "hello"}}
+** (ErlangError) erlang error: :terminated
+```
+
+After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result, which we did not supply.
+
+The [`StringIO`](/docs/stable/StringIO.html) module provides an implementation of the IO device messages on top of a string:
+
+```iex
+iex> {:ok, pid} = StringIO.start("hello")
+{:ok, #PID<0.43.0>}
+iex> IO.read(pid, 2)
+"he"
+```
+
+By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes and read/write files in between nodes. Of all IO devices, there is one that is special to each process, called group leader.
+
+When you write to `:stdio`, you are actually sending a message to the group leader, which writes to `:stdio`:
+
+```iex
+iex> IO.puts :stdio, "hello"
+hello
+:ok
+iex> IO.puts Process.group_leader, "hello"
+hello
+:ok
+```
+
+The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
+
+## 14.5 `iodata` and `char_data`
+
+In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
+
+The functions in `IO` and `File` also allow lists to given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
+
+```iex
+iex> IO.puts 'hello world'
+hello world
+:ok
+iex> IO.puts ['hello', ?\s, "world"]
+hello world
+:ok
+```
+
+However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
+
+On the other hand, `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
+
+Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
+
+When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
+
+This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) lists for IO operations.
