@@ -1,177 +1,174 @@
 ---
 layout: getting_started
-title: 14 IO
-guide: 14
+title: 11 Module attributes
+guide: 11
 ---
 
 # {{ page.title }}
 
-This chapter is a quick introduction to input/output mechanisms in Elixir and related modules, like [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html) and [`Path`](/docs/stable/Path.html).
+Module attributes in Elixir serves three purposes:
 
-We have originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to bring some philosophies and curiosities about Elixir and the VM.
+1. They serve to annotate the module, often with information to be used by the user or the VM;
+2. They work as constants;
+3. They work as a temporary module storage to be used during compilation;
 
-## 14.1 The IO module
+Let's check each case, one by one.
 
-The `IO` module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
+## 11.1 As annotations
 
-```iex
-iex> IO.puts "hello world"
-"hello world"
-:ok
-iex> IO.gets "yes or no? "
-yes or no? yes
-"yes\n"
-```
-
-By default, the functions in the IO module use the standard input and output. We can pass the `:stderr` as argument to write to the standard error device:
-
-```iex
-iex> IO.puts :stderr, "hello world"
-"hello world"
-:ok
-```
-
-## 14.2 The File module
-
-The [`File`](/docs/stable/File.html) module contains functions that allows us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
-
-```iex
-iex> {:ok, file} = File.open "hello", [:write]
-{:ok, #PID<0.47.0>}
-iex> IO.binwrite file, "world"
-:ok
-iex> File.close file
-:ok
-iex> File.read "hello"
-{:ok, "world"}
-```
-
-A file can also be opened with `:utf8` encoding which allows the remaining functions in the `IO` module to be used:
-
-```iex
-iex> {:ok, file} = File.open "another", [:write, :utf8]
-{:ok, #PID<0.48.0>}
-```
-
-Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
-
-You will also notice that functions in the `File` module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
-
-```iex
-iex> File.read "hello"
-{:ok, "world"}
-iex> File.read! "hello"
-"world"
-iex> File.read "unknwon"
-{:error, :enoent}
-iex> File.read! "unknown"
-** (File.Error) could not read file unknown: no such file or directory
-```
-
-Notice that when the file does not exist, the version with `!` raises an error. That said, the version without `!` is preferred when you want to handle different outcomes with pattern matching. However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. That said, never write:
+Elixir brings the concept of module attributes from Erlang. For example:
 
 ```elixir
-{:ok, body} = File.read(file)
-```
-
-Instead write:
-
-```elixir
-case File.read(file) do
-  {:ok, body} -> # handle ok
-  {:error, r} -> # handle error
+defmodule MyServer do
+  @vsn 2
 end
 ```
 
-or
+In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang VM to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
+
+Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones:
+
+* `@moduledoc` - provides documentation for the current module;
+* `@doc` - provides documentation for the function or macro that follows the attribute;
+* `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour;
+* `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation;
+
+`@moduledoc` and `@doc` are by far the most used attributes and we expect you to use them a lot. Elixir treats documentation as first-class and provide many functions to access documentation:
+
+```iex
+iex> defmodule MyModule do
+...>  @moduledoc "It does **x**"
+...>
+...>  @doc """
+...>  Returns the version
+...>  """
+...>  def version, do: 1
+...> end
+{:module, MyModule, <<70, 79, 82, ...>>, {:version, 0}}
+iex> h MyModule
+* MyModule
+
+It does **x**
+
+iex> h MyModule.version
+* def version()
+
+Returns the version
+
+```
+
+Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text:
 
 ```elixir
-File.read!(file)
+defmodule Math do
+  @moduledoc """
+  This module provides mathematical functions
+  as sin, cos and constants like pi.
+
+  ## Examples
+
+      Math.pi
+      #=> 3.1415...
+
+  """
+end
 ```
 
-## 14.3 The Path module
+We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages with the documentation.
 
-The majority of the functions in the File module expects paths as arguments. Most commonly, those paths will be binaries and they can be manipulated with the [`Path`](/docs/stable/Path.html) module:
+You can take a look at the docs for [Module](/docs/stable/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/Kernel.Typespec.html), via:
 
-```iex
-iex> Path.join("foo", "bar")
-"foo/bar"
-iex> Path.expand("~/hello")
-"/Users/jose/hello"
+* `@spec` - provides a specification for a function;
+* `@callback` - provides a specification for the behavior callback;
+* `@type` - defines a type to be used in `@spec`;
+* `@typep` - defines a private type to be used in `@spec`;
+* `@opaque` - defines an opaque type to be used in `@spec`;
+
+This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
+
+## 11.2 As constants
+
+Elixir developers will often use module attributes to be used as constants:
+
+```elixir
+defmodule MyServer do
+  @initial_state %{host: "117.0.0.1", port: 3456}
+  IO.inspect @initial_state
+end
 ```
 
-With this, we have covered the main modules for doing IO and interacting with the filesystem. However there are some advanced topics to discuss regarding IO but feel free to skip them if you are in a hurry.
+> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](/docs/stable/Module.html#register_attribute/3).
 
-## 14.4 Processes and group leaders
+Trying to access an attribute that was not defined will print a warning:
 
-You may have noticed that `File.open/2` returned a tuple containing a PID:
-
-```iex
-iex> {:ok, file} = File.open "hello", [:write]
-{:ok, #PID<0.47.0>}
+```elixir
+defmodule MyServer do
+  @unknown
+end
+warning: undefined module attribute @unknown, please remove access to @unknown or explicitly set it to nil before access
 ```
 
-That's because the IO module actually works with processes. When you say `IO.write(pid, binary)`, the IO module will send a message to the process to the desired operation. Let's see what happens if we use our own process:
+Finally, attributes can also be read inside functions:
 
-```iex
-iex> pid = spawn fn ->
-...>  receive do: (msg -> IO.inspect msg)
-...> end
-#PID<0.57.0>
-iex> IO.write(pid, "hello")
-{:io_request, #PID<0.41.0>, #PID<0.57.0>, {:put_chars, :unicode, "hello"}}
-** (ErlangError) erlang error: :terminated
+```elixir
+defmodule MyServer do
+  @my_data 11
+  def first_data, do: @my_data
+  @my_data 13
+  def second_data, do: @my_data
+end
+
+MyServer.first_data #=> 11
+MyServer.second_data #=> 13
 ```
 
-After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result, which we did not supply.
+Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during the module compilation.
 
-The [`StringIO`](/docs/stable/StringIO.html) module provides an implementation of the IO device messages on top of a string:
+## 11.3 As temporary storage
 
-```iex
-iex> {:ok, pid} = StringIO.start("hello")
-{:ok, #PID<0.43.0>}
-iex> IO.read(pid, 2)
-"he"
+One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
+
+The Plug library also allows developers to define their own plugs which can be run in a web server:
+
+```elixir
+defmodule MyPlug do
+  use Plug.Builder
+
+  plug :set_header
+  plug :send_ok
+
+  def set_header(conn, _opts) do
+    put_resp_header(conn, "x-header", "set")
+  end
+
+  def send_ok(conn, _opts) do
+    send(conn, 200, "ok")
+  end
+end
+
+IO.puts "Running MyPlug with Cowboy on http://localhost:4000"
+Plug.Adapters.Cowboy.http MyPlug, []
 ```
 
-By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes and read/write files in between nodes. Of all IO devices, there is one that is special to each process, called group leader.
+In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given arguments as a list in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback that will then compile all `@plugs` into actual function calls.
 
-When you write to `:stdio`, you are actually sending a message to the group leader, which writes to `:stdio`:
+In order to understand the underlying code, we'd need macros, so we will revisit this pattern later on. However, the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
 
-```iex
-iex> IO.puts :stdio, "hello"
-hello
-:ok
-iex> IO.puts Process.group_leader, "hello"
-hello
-:ok
+Another example comes from the ExUnit framework, that uses module attributes as annotation and storage:
+
+```elixir
+defmodule MyTest do
+  use ExUnit.Case
+
+  @tag :external
+  test "contacts external service" do
+    # ...
+  end
+end
 ```
 
-The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
+Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, so you don't run external tests by default unless explicitly desired. Internally, those tags are stored in temporary module attributes, associating each test to their respective tags, so tests with particular tags can be later fetched and filtered by the test framework.
 
-## 14.5 `iodata` and `char_data`
+We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so.
 
-In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
-
-The functions in `IO` and `File` also allow lists to given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
-
-```iex
-iex> IO.puts 'hello world'
-hello world
-:ok
-iex> IO.puts ['hello', ?\s, "world"]
-hello world
-:ok
-```
-
-However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
-
-On the other hand, `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
-
-Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
-
-When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
-
-This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) lists for IO operations.
-
-In the next chapters, we will explore structs and protocols, before moving to exception handling and other constructs like sigils and comprehensions.
+In the next chapters we'll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions.

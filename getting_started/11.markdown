@@ -1,172 +1,130 @@
 ---
 layout: getting_started
-title: 11 Module attributes
-guide: 11
+title: 13 Processes
+guide: 13
 ---
 
 # {{ page.title }}
 
-Module attributes in Elixir serves three purposes:
+In Elixir, all of your code run inside processes. Those processes are isolated from each other and they communicate with message passing. In this chapter, we will learn about the basic constructs for spawning new processes, sending and receiving messages.
 
-1. They serve to annotate the module, often with information to be used by the user or the VM;
-2. They work as constants;
-3. They work as a temporary module storage to be used during compilation;
+## 13.1 spawn
 
-Let's check each case, one by one.
-
-## 11.1 As annotations
-
-Elixir brings the concept of module attributes from Erlang. For example:
-
-```elixir
-defmodule MyServer do
-  @vsn 2
-end
-```
-
-In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang VM to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
-
-Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones:
-
-* `@moduledoc` - provides documentation for the current module;
-* `@doc` - provides documentation for the function or macro that follows the attribute;
-* `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour;
-* `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation;
-
-`@moduledoc` and `@doc` are by far the most used attributes and we expect you to use them a lot. Elixir treats documentation as first-class and provide many functions to access documentation:
+The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
 
 ```iex
-iex> defmodule MyModule do
-...>  @moduledoc "It does **x**"
-...>
-...>  @doc """
-...>  Returns the version
-...>  """
-...>  def version, do: 1
+iex> spawn fn -> 1 + 2 end
+#PID<0.43.0>
+```
+
+Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
+
+```iex
+iex> pid = spawn fn -> 1 + 2 end
+#PID<0.44.0>
+iex> Process.alive?(pid)
+false
+```
+
+> Note: you will likely get different process identifiers than the ones we are getting in this guide.
+
+We can retrieve the PID of the current process by calling `self/0`:
+
+```iex
+iex> self()
+#PID<0.41.0>
+iex> Process.alive?(self())
+true
+```
+
+Processes get much more interesting when we are able to send and receive messages.
+
+## 13.2 send and receive
+
+We can send messages with `send/2` and receive them with `receive/1`:
+
+```iex
+iex> send self(), {:hello, "world"}
+{:hello, "world"}
+iex> receive do
+...>   {:hello, msg}  -> msg
+...>   {:world, msg} -> "won't match"
 ...> end
-{:module, MyModule, <<70, 79, 82, ...>>, {:version, 0}}
-iex> h MyModule
-* MyModule
-
-It does **x**
-
-iex> h MyModule.version
-* def version()
-
-Returns the version
-
+"world"
 ```
 
-Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text:
+When a message is sent to a process, the message is stored in the process mailbox. The `receive/2` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports many clauses, like `case/2`, as well as guards in the clauses.
 
-```elixir
-defmodule Math do
-  @moduledoc """
-  This module provides mathematical functions
-  as sin, cos and constants like pi.
+If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
 
-  ## Examples
+```iex
+iex> receive do
+...>   {:hello, msg}  -> msg
+...> after
+...>   1_000 -> "nothing after 1s"
+...> end
+"nothing after 1s"
+```
 
-      Math.pi
-      #=> 3.1415...
+A timeout of 0 can be given when you already expect the message to be in the mailbox.
 
-  """
+Let's put all together and send messages in between processes:
+
+```iex
+iex> parent = self()
+#PID<0.41.0>
+iex> spawn fn -> send(parent, {:hello, self()}) end
+#PID<0.48.0>
+iex> receive do
+...>   {:hello, pid} -> "Got hello from #{inspect pid}"
+...> end
+"Got hello from #PID<0.48.0>"
+```
+
+While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
+
+```iex
+iex> send self(), :hello
+:hello
+iex> flush()
+:hello
+:ok
+```
+
+Before we finish this chapter, let's talk about process links.
+
+## 13.3 Links
+
+The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fail:
+
+```iex
+iex> spawn fn -> raise "oops" end
+#PID<0.58.0>
+```
+
+Well... nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
+
+```iex
+iex> spawn_link fn -> raise "oops" end
+#PID<0.60.0>
+** (EXIT from #PID<0.60.0>) {RuntimeError[message: "oops"], [{:erlang, :apply, 2, []}]}
+```
+
+When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
+
+```iex
+# spawn.exs
+spawn_link fn -> raise "oops" end
+
+receive do
+  :hello -> "let's wait until the process fails"
 end
 ```
 
-We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages with the documentation.
+This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/2`. We recommend you to take a look at [the `Process` module](/docs/stable/Process.html) for other functionality provided by processes.
 
-You can take a look at the docs for [Module](/docs/stable/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/Kernel.Typespec.html), via:
+Process and links play an important role when building fault-tolerant systems. In Elixir applications we often link our processes to supervisors which will detect when a process die and start a new process in its place. This is only possible because processes don't share anything by default so there is no way the crash of a process can corrupt the state of another process!
 
-* `@spec` - provides a specification for a function;
-* `@callback` - provides a specification for the behavior callback;
-* `@type` - defines a type to be used in `@spec`;
-* `@typep` - defines a private type to be used in `@spec`;
-* `@opaque` - defines an opaque type to be used in `@spec`;
+While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting process fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
 
-This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
-
-## 11.2 As constants
-
-Elixir developers will often use module attributes to be used as constants:
-
-```elixir
-defmodule MyServer do
-  @initial_state %{host: "117.0.0.1", port: 3456}
-  IO.inspect @initial_state
-end
-```
-
-> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](/docs/stable/Module.html#register_attribute/3).
-
-Trying to access an attribute that was not defined will print a warning:
-
-```elixir
-defmodule MyServer do
-  @unknown
-end
-warning: undefined module attribute @unknown, please remove access to @unknown or explicitly set it to nil before access
-```
-
-Finally, attributes can also be read inside functions:
-
-```elixir
-defmodule MyServer do
-  @my_data 11
-  def first_data, do: @my_data
-  @my_data 13
-  def second_data, do: @my_data
-end
-
-MyServer.first_data #=> 11
-MyServer.second_data #=> 13
-```
-
-Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during the module compilation.
-
-## 11.3 As temporary storage
-
-One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
-
-The Plug library also allows developers to define their own plugs which can be run in a web server:
-
-```elixir
-defmodule MyPlug do
-  use Plug.Builder
-
-  plug :set_header
-  plug :send_ok
-
-  def set_header(conn, _opts) do
-    put_resp_header(conn, "x-header", "set")
-  end
-
-  def send_ok(conn, _opts) do
-    send(conn, 200, "ok")
-  end
-end
-
-IO.puts "Running MyPlug with Cowboy on http://localhost:4000"
-Plug.Adapters.Cowboy.http MyPlug, []
-```
-
-In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given arguments as a list in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback that will then compile all `@plugs` into actual function calls.
-
-In order to understand the underlying code, we'd need macros, so we will revisit this pattern later on. However, the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
-
-Another example comes from the ExUnit framework, that uses module attributes as annotation and storage:
-
-```elixir
-defmodule MyTest do
-  use ExUnit.Case
-
-  @tag :external
-  test "contacts external service" do
-    # ...
-  end
-end
-```
-
-Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, so you don't run external tests by default unless explicitly desired. Internally, those tags are stored in temporary module attributes, associating each test to their respective tags, so tests with particular tags can be later fetched and filtered by the test framework.
-
-We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so. In the next chapters, we will talk about some common modules in Elixir, like `IO` and `Enum`, before finally going into more advanced topics.
+Next we'll explore the world of IO.
