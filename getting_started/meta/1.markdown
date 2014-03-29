@@ -98,7 +98,7 @@ iex> Macro.to_string(quote do: 11 + unquote(number))
 
 ```iex
 iex> fun = :hello
-iex> Macro.to_string(quote do: unquote(hello)(:world))
+iex> Macro.to_string(quote do: unquote(fun)(:world))
 "hello(:world)"
 ```
 
@@ -107,7 +107,7 @@ In some cases, it may be necessary to inject many values inside a list. For exam
 ```iex
 iex> inner = [3, 4, 5]
 iex> Macro.to_string(quote do: [1, 2, unquote(inner), 6])
-[1, 2, [3, 4, 5], 6]
+"[1, 2, [3, 4, 5], 6]"
 ```
 
 That's when `unquote_splicing` becomes handy:
@@ -115,7 +115,7 @@ That's when `unquote_splicing` becomes handy:
 ```iex
 iex> inner = [3, 4, 5]
 iex> Macro.to_string(quote do: [1, 2, unquote_splicing(inner), 6])
-[1, 2, 3, 4, 5, 6]
+"[1, 2, 3, 4, 5, 6]"
 ```
 
 Unquoting is very useful when working with macros. When writing macros, developers are able to receive code chunks and inject them inside other code chunks, being able to transform code or write code that generates code during compilation.
