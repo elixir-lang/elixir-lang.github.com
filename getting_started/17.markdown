@@ -6,7 +6,7 @@ guide: 17
 
 # {{ page.title }}
 
-Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks when each should be used.
+Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.
 
 ## 17.1 Errors
 
@@ -25,7 +25,7 @@ iex> raise "oops"
 ** (RuntimeError) oops
 ```
 
-Other error can be raised with `raise/2` passing the error name and a list of keyword arguments:
+Other errors can be raised with `raise/2` passing the error name and a list of keyword arguments:
 
 ```iex
 iex> raise ArgumentError, message: "invalid argument foo"
@@ -53,7 +53,7 @@ iex> try do
 RuntimeError[message: "oops"]
 ```
 
-The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice Elixir developers rarely use the `try/rescue` construct though. For example, many languages would force you to rescue an error when a file cannot open succcessfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information if the file was open with success or not:
+The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice Elixir developers rarely use the `try/rescue` construct though. For example, many languages would force you to rescue an error when a file cannot open succcessfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information if the file was opened with success or not:
 
 ```iex
 iex> File.read "hello"
@@ -73,7 +73,7 @@ iex> case File.read "hello" do
 ...> end
 ```
 
-At the end of the day, it is up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose in exceptions on `File.read/1` and many other functions. Instead we leave it up to the developer to choose the best way to proceed.
+At the end of the day, it is up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead we leave it up to the developer to choose the best way to proceed.
 
 For the cases where you do expect a file to exist (and the lack of a file is truly an error) you can simply use `File.read!/1`:
 
@@ -87,7 +87,7 @@ In other words, we avoid using `try/rescue` because **we don't use errors for co
 
 ## 17.2 Throws
 
-In Elixir, one can throw a value to be caught later. `throw` and `catch` are reserved to situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
+In Elixir, one can throw a value to be caught later. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
 
 Those situations are quite uncommon in practice unless when interfacing with a library that does not provide the proper APIs. For example, let's imagine the `Enum` module did not provide any API for finding a value and we need to find the first number that is a multiple of 13:
 
