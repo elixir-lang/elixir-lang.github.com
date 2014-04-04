@@ -1,7 +1,7 @@
 ---
 layout: getting_started
-title: 14 IO
-guide: 14
+title: 12 IO
+guide: 12
 ---
 
 # {{ page.title }}
@@ -10,7 +10,7 @@ This chapter is a quick introduction to input/output mechanisms in Elixir and re
 
 We have originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to bring some philosophies and curiosities about Elixir and the VM.
 
-## 14.1 The IO module
+## 12.1 The IO module
 
 The `IO` module in Elixir is the main mechanism for reading and writing to the standard io (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straight-forward:
 
@@ -31,7 +31,7 @@ iex> IO.puts :stderr, "hello world"
 :ok
 ```
 
-## 14.2 The File module
+## 12.2 The File module
 
 The [`File`](/docs/stable/File.html) module contains functions that allows us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
@@ -89,7 +89,7 @@ or
 File.read!(file)
 ```
 
-## 14.3 The Path module
+## 12.3 The Path module
 
 The majority of the functions in the File module expects paths as arguments. Most commonly, those paths will be binaries and they can be manipulated with the [`Path`](/docs/stable/Path.html) module:
 
@@ -100,9 +100,9 @@ iex> Path.expand("~/hello")
 "/Users/jose/hello"
 ```
 
-With this, we have covered the main modules for doing IO and interacting with the filesystem. However there are some advanced topics to discuss regarding IO but feel free to skip them if you are in a hurry.
+With this we have covered the main modules for doing IO and interacting with the filesystem. Next we will discuss some curiosities and advanced topics regarding IO. Those sections are not necessary to write Elixir code, so feel free to skip them, but they do provide an overview of how the IO system is implemented in the VM and other curiosities.
 
-## 14.4 Processes and group leaders
+## 12.4 Processes and group leaders
 
 You may have noticed that `File.open/2` returned a tuple containing a PID:
 
@@ -149,7 +149,7 @@ hello
 
 The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
 
-## 14.5 `iodata` and `char_data`
+## 12.5 `iodata` and `char_data`
 
 In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
 

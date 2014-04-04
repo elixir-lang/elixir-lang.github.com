@@ -95,7 +95,9 @@ Math.double_each([1, 2, 3]) #=> [2, 4, 6]
 
 Here we have used recursion to traverse a list doubling each element and returning a new list. The process of taking a list and "mapping" over it is known as a "map" algorithm.
 
-Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops. However, when programming Elixir you will rarely use recursion as above to manipulate lists. [The `Enum` module](/docs/stable/Enum.html) already provides many conveniences for working with lists. For instance, the examples above could be written as:
+Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops. However, when programming Elixir you will rarely use recursion as above to manipulate lists.
+
+The [`Enum` module](/docs/stable/Enum.html), which we are going to study in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:
 
 ```iex
 iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
@@ -113,4 +115,4 @@ iex> Enum.map([1, 2, 3], &(&1 * 2))
 [2, 4, 6]
 ```
 
-Next we'll take a deeper look at Enumerables and Streams.
+So let's take a deeper look at Enumerables and Streams.

@@ -1,14 +1,14 @@
 ---
 layout: getting_started
-title: 13 Processes
-guide: 13
+title: 11 Processes
+guide: 11
 ---
 
 # {{ page.title }}
 
 In Elixir, all of your code run inside processes. Those processes are isolated from each other and they communicate with message passing. In this chapter, we will learn about the basic constructs for spawning new processes, sending and receiving messages.
 
-## 13.1 spawn
+## 11.1 spawn
 
 The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
 
@@ -39,7 +39,7 @@ true
 
 Processes get much more interesting when we are able to send and receive messages.
 
-## 13.2 send and receive
+## 11.2 send and receive
 
 We can send messages with `send/2` and receive them with `receive/1`:
 
@@ -93,7 +93,7 @@ iex> flush()
 
 Before we finish this chapter, let's talk about process links.
 
-## 13.3 Links
+## 11.3 Links
 
 The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fail:
 

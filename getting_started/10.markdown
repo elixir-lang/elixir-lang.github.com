@@ -1,12 +1,12 @@
 ---
 layout: getting_started
-title: 12 Enumerables and Streams
-guide: 12
+title: 10 Enumerables and Streams
+guide: 10
 ---
 
 # {{ page.title }}
 
-## 12.1 Enumerables
+## 10.1 Enumerables
 
 Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
 
@@ -14,7 +14,7 @@ Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/
 iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
 [2, 4, 6]
 iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)
-[2, 12]
+[2, 10]
 ```
 
 The `Enum` module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code.
@@ -32,7 +32,7 @@ Since the Enum module was designed to work across different data types, its API 
 
 We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
 
-## 12.2 Eager vs Lazy
+## 10.2 Eager vs Lazy
 
 All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
 
@@ -61,7 +61,7 @@ iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum
 
 Instead of generating intermediate lists, streams create a series of computations that are invoked only when we pass it to the `Enum` module. Streams are useful when working with large, *possibly infinite*, collections.
 
-## 12.3 Streams
+## 10.3 Streams
 
 Streams are lazy, composable enumerables.
 

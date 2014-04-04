@@ -1,7 +1,7 @@
 ---
 layout: getting_started
-title: 11 Module attributes
-guide: 11
+title: 14 Module attributes
+guide: 14
 ---
 
 # {{ page.title }}
@@ -14,7 +14,7 @@ Module attributes in Elixir serves three purposes:
 
 Let's check each case, one by one.
 
-## 11.1 As annotations
+## 14.1 As annotations
 
 Elixir brings the concept of module attributes from Erlang. For example:
 
@@ -86,13 +86,13 @@ You can take a look at the docs for [Module](/docs/stable/Module.html) for a com
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
-## 11.2 As constants
+## 14.2 As constants
 
 Elixir developers will often use module attributes to be used as constants:
 
 ```elixir
 defmodule MyServer do
-  @initial_state %{host: "117.0.0.1", port: 3456}
+  @initial_state %{host: "147.0.0.1", port: 3456}
   IO.inspect @initial_state
 end
 ```
@@ -112,19 +112,19 @@ Finally, attributes can also be read inside functions:
 
 ```elixir
 defmodule MyServer do
-  @my_data 11
+  @my_data 14
   def first_data, do: @my_data
   @my_data 13
   def second_data, do: @my_data
 end
 
-MyServer.first_data #=> 11
+MyServer.first_data #=> 14
 MyServer.second_data #=> 13
 ```
 
 Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during the module compilation.
 
-## 11.3 As temporary storage
+## 14.3 As temporary storage
 
 One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
 
@@ -150,9 +150,9 @@ IO.puts "Running MyPlug with Cowboy on http://localhost:4000"
 Plug.Adapters.Cowboy.http MyPlug, []
 ```
 
-In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given arguments as a list in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback that will then compile all `@plugs` into actual function calls.
+In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given argument in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback that will then compile all `@plugs` into the `call/2` used to serve requests.
 
-In order to understand the underlying code, we'd need macros, so we will revisit this pattern later on. However, the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
+In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
 
 Another example comes from the ExUnit framework, that uses module attributes as annotation and storage:
 
@@ -167,7 +167,7 @@ defmodule MyTest do
 end
 ```
 
-Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, so you don't run external tests by default unless explicitly desired. Internally, those tags are stored in temporary module attributes, associating each test to their respective tags, so tests with particular tags can be later fetched and filtered by the test framework.
+Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, for example, you can avoid running external tests in your machine because they are slow and dependent on other services, while they can still be enabled in your build system.
 
 We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so.
 
