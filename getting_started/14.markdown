@@ -6,11 +6,11 @@ guide: 14
 
 # {{ page.title }}
 
-Module attributes in Elixir serves three purposes:
+Module attributes in Elixir serve three purposes:
 
-1. They serve to annotate the module, often with information to be used by the user or the VM;
-2. They work as constants;
-3. They work as a temporary module storage to be used during compilation;
+1. They serve to annotate the module, often with information to be used by the user or the VM.
+2. They work as constants.
+3. They work as a temporary module storage to be used during compilation.
 
 Let's check each case, one by one.
 
@@ -28,12 +28,12 @@ In the example above, we are explicitly setting the version attribute for that m
 
 Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones:
 
-* `@moduledoc` - provides documentation for the current module;
-* `@doc` - provides documentation for the function or macro that follows the attribute;
-* `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour;
-* `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation;
+* `@moduledoc` - provides documentation for the current module.
+* `@doc` - provides documentation for the function or macro that follows the attribute.
+* `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour.
+* `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
 
-`@moduledoc` and `@doc` are by far the most used attributes and we expect you to use them a lot. Elixir treats documentation as first-class and provide many functions to access documentation:
+`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation:
 
 ```iex
 iex> defmodule MyModule do
@@ -74,15 +74,15 @@ defmodule Math do
 end
 ```
 
-We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages with the documentation.
+We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 
 You can take a look at the docs for [Module](/docs/stable/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/Kernel.Typespec.html), via:
 
-* `@spec` - provides a specification for a function;
-* `@callback` - provides a specification for the behavior callback;
-* `@type` - defines a type to be used in `@spec`;
-* `@typep` - defines a private type to be used in `@spec`;
-* `@opaque` - defines an opaque type to be used in `@spec`;
+* `@spec` - provides a specification for a function.
+* `@callback` - provides a specification for the behavior callback.
+* `@type` - defines a type to be used in `@spec`.
+* `@typep` - defines a private type to be used in `@spec`.
+* `@opaque` - defines an opaque type to be used in `@spec`.
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
@@ -122,7 +122,7 @@ MyServer.first_data #=> 14
 MyServer.second_data #=> 13
 ```
 
-Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during the module compilation.
+Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during module compilation.
 
 ## 14.3 As temporary storage
 
@@ -150,11 +150,11 @@ IO.puts "Running MyPlug with Cowboy on http://localhost:4000"
 Plug.Adapters.Cowboy.http MyPlug, []
 ```
 
-In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given argument in a `@plugs` attribute. At the end, before the module is compiled, Plug runs a callback that will then compile all `@plugs` into the `call/2` used to serve requests.
+In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given argument in a `@plugs` attribute. Just before the module is compiled, Plug runs a callback that defines a method (`call/2`) which handles http requests. This method will run all plugs inside `@plugs` in order.
 
 In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
 
-Another example comes from the ExUnit framework, that uses module attributes as annotation and storage:
+Another example comes from the ExUnit framework which uses module attributes as annotation and storage:
 
 ```elixir
 defmodule MyTest do
@@ -167,7 +167,7 @@ defmodule MyTest do
 end
 ```
 
-Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests, for example, you can avoid running external tests in your machine because they are slow and dependent on other services, while they can still be enabled in your build system.
+Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests. For example, you can avoid running external tests on your machine because they are slow and dependent on other services, while they can still be enabled in your build system.
 
 We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so.
 
