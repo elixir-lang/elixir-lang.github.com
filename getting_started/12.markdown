@@ -8,7 +8,7 @@ guide: 12
 
 This chapter is a quick introduction to input/output mechanisms in Elixir and related modules, like [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html) and [`Path`](/docs/stable/Path.html).
 
-We have originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to bring some philosophies and curiosities about Elixir and the VM.
+We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the VM.
 
 ## 12.1 The IO module
 
@@ -62,7 +62,7 @@ iex> File.read "hello"
 {:ok, "world"}
 iex> File.read! "hello"
 "world"
-iex> File.read "unknwon"
+iex> File.read "unknown"
 {:error, :enoent}
 iex> File.read! "unknown"
 ** (File.Error) could not read file unknown: no such file or directory
@@ -111,7 +111,7 @@ iex> {:ok, file} = File.open "hello", [:write]
 {:ok, #PID<0.47.0>}
 ```
 
-That's because the IO module actually works with processes. When you say `IO.write(pid, binary)`, the IO module will send a message to the process to the desired operation. Let's see what happens if we use our own process:
+That's because the IO module actually works with processes. When you say `IO.write(pid, binary)`, the IO module will send a message to the process with the desired operation. Let's see what happens if we use our own process:
 
 ```iex
 iex> pid = spawn fn ->
