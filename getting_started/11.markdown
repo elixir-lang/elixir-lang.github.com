@@ -6,7 +6,11 @@ guide: 11
 
 # {{ page.title }}
 
-In Elixir, all of your code run inside processes. Those processes are isolated from each other and they communicate with message passing. In this chapter, we will learn about the basic constructs for spawning new processes, sending and receiving messages.
+In Elixir, all code runs inside processes. Processes are isolated from each other, run concurrent to one another and communicate via message passing. Processes are not only the basis for concurrency in Elixir, but they also provide the means for building distributed and highly fault-tolerant programs.
+
+Processes are extremely lightweight in terms of memory and CPU (unlike threads in many other programming languages). Because of this, it is not uncommon to have thousands of processes running simultaneously.
+
+In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between different processes.
 
 ## 11.1 spawn
 
@@ -16,6 +20,8 @@ The basic mechanism for spawning new processes is with the auto-imported `spawn/
 iex> spawn fn -> 1 + 2 end
 #PID<0.43.0>
 ```
+
+`spawn/1` takes a function which it will execute in another process.
 
 Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
 
@@ -41,7 +47,7 @@ Processes get much more interesting when we are able to send and receive message
 
 ## 11.2 send and receive
 
-We can send messages with `send/2` and receive them with `receive/1`:
+We can send messages to a process with `send/2` and receive them with `receive/1`:
 
 ```iex
 iex> send self(), {:hello, "world"}
