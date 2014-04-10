@@ -282,7 +282,80 @@ iex> bc <<c>> inbits " hello world ", c != ?\s, do: <<c>>
 "helloworld"
 ```
 
-## 6.8 Pseudo variables
+## 6.8 Pipes
+
+Elixir provides a nice syntax to apply a sequence of functions to an expression using the operator `|>`. As an example, let us consider the three following
+functions:
+
+```elixir
+def get_first {x,_} do x end
+
+def add_one x do x + 1 end
+
+def to_string x do "#{x}" end
+
+```
+
+This three functions can be used to obtain from a string representing an integer (for example "29") a new string representing the next integer ("39"). A
+first implementation could be:
+
+```elixir
+def get_next string do           # let us assume that string="29"
+    tuple = Integer.parse string # tuple={29,""}
+    first = get_first tuple      # first=29
+    next = add_one first         # next=30
+    result = to_string next      # result="30"
+    result
+end
+```
+
+We could also write this programme in a more concise but less readable way:
+
+
+```elixir
+def get_next string do
+    to_string(add_one(get_first(Integer.parse string)))
+end
+```
+
+The pipe operator `|>` allows us to write this code in a very elegant way  where the first function is the first applied and where no intermediate variables
+are used
+
+```elixir
+def get_next string do
+    string |> Integer.parse
+           |> get_first
+           |> add_one
+           |> to_string
+end
+```
+
+In practice, the pipe use the expression before the operator as the first argument of the function that follows it. For instance,  the notation “`x |>
+function(y,z)`” is equivalent to “`function(x,y,z)`”
+
+**Warning :** when functions with more than one argument are used, parenthesis are needed. Indeed, the expression
+
+```iex
+iex> x |> function1 x1 |> function2 x2
+```
+
+is **not** interpreted as
+
+```iex
+iex> x |> function1(x1) |> function2(x2)
+```
+
+but is interpreted  as the following
+
+```iex
+iex> x |> function1(x1 |> function2 x2)
+```
+
+
+In fact the precedence rule are the same that for other operators like `+` where `function x + function y ` is interpreted as  `function(x + function(y))`.
+
+
+## 6.9 Pseudo variables
 
 Elixir provides a set of pseudo-variables. These variables can only be read and never assigned to. They are:
 
