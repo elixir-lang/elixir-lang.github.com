@@ -10,7 +10,7 @@ In this chapter, we will show how the `=` operator in Elixir is actually a match
 
 ## 4.1 The match operator
 
-We have used the `=` operator a couple times to "assign" variables in Elixir.
+We have used the `=` operator a couple times to assign variables in Elixir.
 
 ```iex
 iex> x = 1
@@ -19,7 +19,7 @@ iex> x
 1
 ```
 
-However, the `=` operator is actually called *the match operator*. Let's see why:
+In Elixir, the `=` operator is actually called *the match operator*. Let's see why:
 
 ```iex
 iex> 1 = x
@@ -30,14 +30,14 @@ iex> 2 = x
 
 Notice that `1 = x` is a valid expression, and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
 
-Also, in Elixir parlance, we don't say a variable is assigned. We say a variable is bound or not. A variable can only be bound on the left side of `=`:
+A variable can only be assigned on the left side of `=`:
 
 ```iex
 iex> 1 = unknown
 ** (RuntimeError) undefined function: unknown/0
 ````
 
-Since there is no variable unknown previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but there isn't such function.
+Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but there isn't such function.
 
 ## 4.2 Pattern matching
 
