@@ -10,13 +10,26 @@ section: getting_started
   <div class="widget">
     <h3 class="widget-title">Index</h3>
     <ol>
-      <li><a class="spec" href="/getting_started/1.html">Introduction</a></li>
-      <li><a class="spec" href="/getting_started/2.html">Diving in</a></li>
-      <li><a class="spec" href="/getting_started/3.html">Modules</a></li>
-      <li><a class="spec" href="/getting_started/4.html">Records, Protocols &amp; Exceptions</a></li>
-      <li><a class="spec" href="/getting_started/5.html">Macros</a></li>
-      <li><a class="spec" href="/getting_started/6.html">Other topics</a></li>
-      <li><a class="spec" href="/getting_started/7.html">Where to go next</a></li>
+      <li><a class="spec" href="/getting_started/1.html">Interactive Elixir (IEx)</a></li>
+      <li><a class="spec" href="/getting_started/2.html">Basic types</a></li>
+      <li><a class="spec" href="/getting_started/3.html">Basic operators</a></li>
+      <li><a class="spec" href="/getting_started/4.html">Pattern matching</a></li>
+      <li><a class="spec" href="/getting_started/5.html">case, cond and if</a></li>
+      <li><a class="spec" href="/getting_started/6.html">Binaries, strings and char lists</a></li>
+      <li><a class="spec" href="/getting_started/7.html">Keywords, maps and dicts</a></li>
+      <li><a class="spec" href="/getting_started/8.html">Modules</a></li>
+      <li><a class="spec" href="/getting_started/9.html">Recursion</a></li>
+      <li><a class="spec" href="/getting_started/10.html">Enumerables and streams</a></li>
+      <li><a class="spec" href="/getting_started/11.html">Processes</a></li>
+      <li><a class="spec" href="/getting_started/12.html">IO</a></li>
+      <li><a class="spec" href="/getting_started/13.html">alias, require and import</a></li>
+      <li><a class="spec" href="/getting_started/14.html">Module attributes</a></li>
+      <li><a class="spec" href="/getting_started/15.html">Structs</a></li>
+      <li><a class="spec" href="/getting_started/16.html">Protocols</a></li>
+      <li><a class="spec" href="/getting_started/17.html">try, catch and rescue</a></li>
+      <li><a class="spec" href="/getting_started/18.html">Comprehensions</a></li>
+      <li><a class="spec" href="/getting_started/19.html">Sigils</a></li>
+      <li><a class="spec" href="/getting_started/20.html">Where to go next</a></li>
     </ol>
   </div>
   <div class="widget">
@@ -34,9 +47,12 @@ section: getting_started
     </ol>
   </div>
   <div class="widget">
-    <h3 class="widget-title">Other</h3>
+    <h3 class="widget-title">Meta-programming in Elixir</h3>
     <ol>
-      <li><a class="spec" href="/crash-course.html">Erlang/Elixir Syntax: A Crash Course</a></li>
+      <li><a class="spec" href="/getting_started/meta/1.html">Quote and unquote</a></li>
+      <li><a class="spec" href="/getting_started/meta/2.html">Macros</a></li>
+      <li><a class="spec" href="/getting_started/meta/3.html">Domain Specific Languages</a></li>
+      <li><a class="spec" href="/getting_started/meta/3.html">Binding and unquote fragments</a></li>
     </ol>
   </div>
 
@@ -55,9 +71,9 @@ section: getting_started
       <a href="{{page.guide | minus:1}}.html" class="previous page-numbers spec">&larr; Previous</a>
     {% endif %}
       <a class="page-numbers spec" href="#container">Top</a>
-    {% if page.guide < page.total_guides %}
+    {% unless page.last %}
       <a href="{{page.guide | plus:1}}.html" class="next page-numbers spec">Next &rarr;</a>
-    {% endif %}
+    {% endunless %}
   </div>
   {% endif %}
 </div><!-- #content -->

@@ -1,358 +1,175 @@
 ---
 layout: getting_started
-title: 4 Records, Protocols & Exceptions
+title: 4 Pattern matching
 guide: 4
-total_guides: 7
 ---
 
 # {{ page.title }}
 
-Elixir provides both records and protocols. This chapter will outline the main features of both and provide some examples. More specifically, we will learn how to use `defrecord`, `defprotocol` and `defimpl`. At the end, we will briefly talk about exceptions in Elixir.
+In this chapter, we will show how the `=` operator in Elixir is actually a match operator and how to use it to pattern match inside data structures. Finally, we will learn about the pin operator `^` used to access previously bound values.
 
-## 4.1 Records
+## 4.1 The match operator
 
-Records are simple structures that hold values. For example, we can define a `FileInfo` record that is supposed to store information about files as follows:
-
-```elixir
-defrecord FileInfo, atime: nil, accesses: 0
-```
-
-The line above will define a module named `FileInfo` which contains a function named `new` that returns a new record and other functions to read and set the values:
+We have used the `=` operator a couple times to assign variables in Elixir.
 
 ```iex
-iex> file_info = FileInfo.new(atime: { 2010, 4, 17 }, accesses: 42)
-iex> file_info.atime
-{2010, 4, 17}
-iex> file_info.atime({ 2012, 10, 13 }) #=> Returns a new FileInfo
-FileInfo[atime: {2012, 10, 13}, accesses: 42]
-iex> file_info.atime
-{2010, 4, 17}
-```
-
-Notice that when we change the `atime` field of the record, we re-store the record in the `file_info` variable. This is because as almost everything else in Elixir, records are immutable. So changing the `atime` field does not update the record in place. Instead, it returns a new record with the new value set.
-
-A record is simply a tuple where the first element is the record module name. We can get the record raw representation as follows:
-
-```elixir
-inspect FileInfo.new, raw: true
-#=> "{ FileInfo, nil, 0 }"
-```
-
-Besides defining readers and writers for each attribute, Elixir records also define an `update_#{attribute}` function to update values. Such functions expect a function as argument that receives the current value and must return the new one. For example, every time the file is accessed, the accesses counter can be incremented with:
-
-```elixir
-file_info = FileInfo.new(accesses: 10)
-file_info = file_info.update_accesses(fn(x) -> x + 1 end)
-file_info.accesses #=> 11
-```
-
-### 4.1.1 Pattern matching
-
-Elixir also allows one to pattern match against records. For example, imagine we want to check if a file was accessed or not based on the `FileInfo` record above, we could implement it as follows:
-
-```elixir
-defmodule FileAccess do
-  def was_accessed?(FileInfo[accesses: 0]), do: false
-  def was_accessed?(FileInfo[]),            do: true
-end
-```
-
-The first clause will only match if a `FileInfo` record is given and its `accesses` field is equal to zero. The second clause will match any `FileInfo` record and nothing more. We can also link the value of `accesses` to a variable as follows:
-
-```elixir
-def was_accessed?(FileInfo[accesses: accesses]), do: accesses > 0
-```
-
-The pattern matching syntax can also be used to create new records:
-
-```elixir
-file_info = FileInfo[accesses: 0]
-```
-
-Whenever using the bracket syntax above, Elixir expands the record to a tuple at compilation time. That said, the clause above:
-
-```elixir
-def was_accessed?(FileInfo[accesses: 0]), do: false
-```
-
-Is effectively the same as:
-
-```elixir
-def was_accessed?({ FileInfo, _, 0 }), do: false
-```
-
-Using the bracket syntax is a powerful mechanism not only due to pattern matching but also regarding performance, since it provides faster times compared to `FileInfo.new` and `file_info.accesses`. The downside is that we hardcode the record name. For this reason, Elixir allows you to mix and match both styles as you may find fit.
-
-For more information on records, [check out the documentation for the `defrecord` macro](http://elixir-lang.org/docs/master/Kernel.html#defrecord/3)
-
-## 4.2 Protocols
-
-Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Lets consider a practical example.
-
-In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
-
-We could define this protocol as follows:
-
-```elixir
-defprotocol Blank do
-  @doc "Returns true if data is considered blank/empty"
-  def blank?(data)
-end
-```
-
-The protocol expects a function called `blank?` that receives one argument to be implemented. We can implement this protocol for some Elixir data types in the following way:
-
-```elixir
-# Integers are never blank
-defimpl Blank, for: Integer do
-  def blank?(_), do: false
-end
-
-# Just empty list is blank
-defimpl Blank, for: List do
-  def blank?([]), do: true
-  def blank?(_),  do: false
-end
-
-# Just the atoms false and nil are blank
-defimpl Blank, for: Atom do
-  def blank?(false), do: true
-  def blank?(nil),   do: true
-  def blank?(_),     do: false
-end
-```
-
-And we would do so for all native data types. The types available are:
-
-* `Record`
-* `Tuple`
-* `Atom`
-* `List`
-* `BitString`
-* `Integer`
-* `Float`
-* `Function`
-* `PID`
-* `Port`
-* `Reference`
-* `Any`
-
-Now, with the protocol defined and implementations in hand, we can invoke it:
-
-```elixir
-Blank.blank?(0)       #=> false
-Blank.blank?([])      #=> true
-Blank.blank?([1,2,3]) #=> false
-```
-
-Notice however that passing a data type that does not implement the protocol raises an error:
-
-```iex
-iex> Blank.blank?("hello")
-** (UndefinedFunctionError) undefined function: Blank.BitString.blank?/1
-```
-
-### 4.2.1 Fallback to any
-
-In some cases, it may be convenient to provide a default implementation for all types. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
-
-```elixir
-defprotocol Blank do
-  @fallback_to_any true
-  def blank?(data)
-end
-```
-
-Which can now be implemented as:
-
-```elixir
-defimpl Blank, for: Any do
-  def blank?(_), do: false
-end
-```
-Now all data types that we have not implemented the `Blank` protocol for will be considered non-blank.
-
-### 4.2.2 Using protocols with records
-
-The power of Elixir's extensibility comes when protocols and records are mixed.
-
-For instance, Elixir provides a `HashDict` implementation that is an efficient data structure to store many keys. Let's take a look at how it works:
-
-```elixir
-dict = HashDict.new
-dict = HashDict.put(dict, :hello, "world")
-HashDict.get(dict, :hello) #=> "world"
-```
-
-If we inspect our `HashDict`, we can see it is a simple tuple:
-
-```elixir
-inspect(dict, raw: true)
-#=> "{HashDict, 1, [[:hello | \"world\"]]}"
-```
-
-Since `HashDict` is a data structure that contains values, it would be convenient to implement the `Blank` protocol for it too:
-
-```elixir
-defimpl Blank, for: HashDict do
-  def blank?(dict), do: HashDict.size(dict) == 0
-end
-```
-
-And now we can test it:
-
-```elixir
-dict = HashDict.new(hello: "world")
-Blank.blank?(dict)         #=> false
-Blank.blank?(HashDict.new) #=> true
-```
-
-Excellent! The best of all is that we implemented the `Blank` protocol for an existing data structure (`HashDict`) without a need to wrap it or recompile it, which allows developers to easily extend previously defined protocols.
-
-### 4.2.3 Built-in protocols
-
-Elixir ships with some built-in protocols. Here are a couple of them:
-
-* `Access` - specifies how to access an element. This is the protocol that empowers bracket access in Elixir. For example:
-
-```iex
-iex> x = [a: 1, b: 2]
-[{:a, 1}, {:b, 2}]
-iex> x[:a]
+iex> x = 1
 1
-iex> x[:b]
+iex> x
+1
+```
+
+In Elixir, the `=` operator is actually called *the match operator*. Let's see why:
+
+```iex
+iex> 1 = x
+1
+iex> 2 = x
+** (MatchError) no match of right hand side value: 1
+```
+
+Notice that `1 = x` is a valid expression, and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
+
+A variable can only be assigned on the left side of `=`:
+
+```iex
+iex> 1 = unknown
+** (RuntimeError) undefined function: unknown/0
+````
+
+Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but there isn't such function.
+
+## 4.2 Pattern matching
+
+The match operator is not only used to match against simple values, but it is also useful for destructuring more complex data types. For example, we can pattern match on tuples:
+
+```iex
+iex> {a, b, c} = {:hello, "world", 42}
+{:hello, "world", 42}
+iex> a
+:hello
+iex> b
+"world"
+```
+
+A pattern match will error in case the sides can't match. This is, for example, the case when the tuples have different sizes:
+
+```iex
+iex> {a, b, c} = {:hello, "world"}
+** (MatchError) no match of right hand side value: {:hello, "world"}
+```
+
+And also when comparing different types:
+
+```iex
+iex> {a, b, c} = [:hello, "world", "!"]
+** (MatchError) no match of right hand side value: [:hello, "world", "!"]
+```
+
+More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side when the right side is a tuple that starts with the atom `:ok`:
+
+```iex
+iex> {:ok, result} = {:ok, 13}
+{:ok, 13}
+iex> result
+13
+
+iex> {:ok, result} = {:error, :oops}
+** (MatchError) no match of right hand side value: {:error, :oops}
+```
+
+We can pattern match on lists:
+
+```iex
+iex> [a, b, c] = [1, 2, 3]
+[1, 2, 3]
+iex> a
+1
+```
+
+A list also supports matching on its own head and tail:
+
+```iex
+iex> [head | tail] = [1, 2, 3]
+[1, 2, 3]
+iex> head
+1
+iex> tail
+[2, 3]
+```
+
+Similar to the `hd/1` and `tl/1` functions, we can't match an empty list with a head and tail pattern:
+
+```iex
+iex> [h|t] = []
+** (MatchError) no match of right hand side value: []
+```
+
+The `[head | tail]` format is not only used on pattern matching but also for prepending items to a list:
+
+```iex
+iex> list = [1, 2, 3]
+[1, 2, 3]
+iex> [0|list]
+[0, 1, 2, 3]
+```
+
+Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
+
+## 4.3 The pin operator
+
+Variables in Elixir can be rebound:
+
+```iex
+iex> x = 1
+1
+iex> x = 2
 2
 ```
 
-* `Enumerable` - any data structures that can be enumerated must implement this protocol. This protocol is consumed by the `Enum` module which provides functions like `map`, `reduce` and others:
+The pin operator `^` can be used when there is no interest in rebinding a variable but rather in matching against its value prior to the match:
 
 ```iex
-iex> Enum.map [1,2,3], fn(x) -> x * 2 end
-[2,4,6]
-iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
-6
+iex> x = 1
+1
+iex> ^x = 2
+** (MatchError) no match of right hand side value: 2
+iex> {x, ^x} = {2, 1}
+{2, 1}
+iex> x
+2
 ```
 
-* `Inspect` - this protocol is used to transform any data structure into a readable textual representation. This is what tools like IEx use to print results:
+Notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
 
 ```iex
-iex> { 1, 2, 3 }
-{1,2,3}
-iex> HashDict.new
-#HashDict<[]>
+iex> {x, x} = {1, 1}
+1
+iex> {x, x} = {1, 2}
+** (MatchError) no match of right hand side value: {1, 2}
 ```
 
-  Keep in mind that, by convention, whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. For those, the true representation can be retrieved by calling `inspect` directly and passing `raw` as an option:
+In some cases, you don't care about a particular value in a pattern. It is a common practice to bind those values to the underscore, `_`. For example, if only the head of the list matters to us, we can assign the tail to underscore:
 
 ```iex
-iex> inspect HashDict.new, raw: true
-"{HashDict,0,[]}"
+iex> [h | _] = [1, 2, 3]
+[1, 2, 3]
+iex> h
+1
 ```
 
-* `String.Chars` - specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
+The variable `_` is special in that it can never be read from. Trying to read from it gives an unbound variable error:
 
 ```iex
-iex> to_string :hello
-"hello"
+iex> _
+** (CompileError) iex:1: unbound variable _
 ```
 
-  Notice that string interpolation in Elixir calls the `to_string` function:
+Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:
 
 ```iex
-iex> "age: #{25}"
-"age: 25"
+iex> length([1,[2],3]) = 3
+** (ErlangError) erlang error :illegal_pattern
 ```
 
-  The example above only works because numbers implement the `String.Chars` protocol. Passing a tuple, for example, will lead to an error:
-
-```iex
-iex> tuple = {1, 2, 3}
-{1, 2, 3}
-iex> "tuple: #{tuple}"
-** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}
-```
-
-  When there is a need to "print" a more complex data structure, one can simply use the `inspect` function:
-
-```iex
-iex> "tuple: #{inspect tuple}"
-"tuple: {1, 2, 3}"
-```
-
-Elixir defines other protocols which can be verified in Elixir's documentation. Frameworks and libraries that you use may define a couple of specific protocols as well. Use them wisely to write code that is easy to maintain and extend.
-
-## 4.3 Exceptions
-
-Exception handling would have its own chapter in many languages, but here they play a much lesser role.
-
-An exception can be rescued inside a `try` block with the `rescue` keyword:
-
-```elixir
-# rescue only runtime error
-try do
-  raise "some error"
-rescue
-  RuntimeError -> "rescued"
-end
-
-# rescue runtime and argument errors
-try do
-  raise "some error"
-rescue
-  [RuntimeError, ArgumentError] -> "rescued"
-end
-
-# rescue and assign to x
-try do
-  raise "some error"
-rescue
-  x in [RuntimeError] ->
-    # all exceptions have a message
-    x.message
-end
-```
-
-Notice that `rescue` works with exception names and doesn't allow guards nor pattern matching. This limitation is intentional: developers should not use exception values to drive their software. In fact, **exceptions in Elixir should only be used under exceptional circumstances**.
-
-For example, software that does log partitioning and rotation over the network may face network issues or an eventual instability when accessing the file system. These scenarios are not exceptional in this particular software and must be handled accordingly. Therefore, the software can read some file using `File.read` and match the result:
-
-```elixir
-case File.read(file) do
-  { :ok, contents }  ->
-    # We were able to access the file
-    # Proceed as expected
-  { :error, reason } ->
-    # Oops, something went wrong
-    # We need to handle the error accordingly
-end
-```
-
-Notice that `File.read` does not raise an exception in case something goes wrong; it returns a tuple containing `{ :ok, contents }` in case of success and `{ :error, reason }` in case of failure. This allows us to use Elixir's pattern matching constructs to control how our application should behave.
-
-On the other hand, a CLI interface that needs to access or manipulate a file given by the user may necessarily expect a file to be there. If the given file does not exist, there is nothing to do but fail. Then you may use `File.read!`, which raises an exception instead:
-
-```iex
-iex> contents = File.read!("/inexistent/file")
-** (File.Error) could not read file /inexistent/file: no such file or directory
-```
-
-This pattern is common throughout the Elixir standard library, and many libraries provide both forms.
-
-Finally, exceptions are simply records and can be defined with `defexception`, which has a similar API to `defrecord`. But remember, in Elixir you will use those sparingly.
-
-This showcases Elixir's philosophy of not using exceptions for control-flow. If you feel like you need to rescue an exception in order to change how your code works, you should probably return an atom or tuple instead to allow pattern matching.
-
-Next, let's take a look at how Elixir tackles productivity by building some macros using `defmacro` and `defmacrop`!
-
-> Note: In order to ease integration with Erlang APIs, Elixir also supports "catching errors" coming from Erlang with `try/catch`, as it works in Erlang:
->
->
->     try do
->       :erlang.error(:oops)
->     catch
->       :error, :oops ->
->         "Got Erlang error"
->     end
->
->
-> The first atom can be one of `:error`, `:throw` or `:exit`. Keep in mind that catching errors is as discouraged as rescuing exceptions in Elixir.
+This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs.

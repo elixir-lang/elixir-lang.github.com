@@ -2,7 +2,7 @@
 layout: getting_started
 title: 1 Introduction to ExUnit
 guide: 1
-total_guides: 1
+last: true
 ---
 
 # {{ page.title }}
@@ -23,7 +23,11 @@ defmodule MyTest do
 end
 ```
 
-In general, we just need to invoke `ExUnit.start`, define a test case using `ExUnit.Case` and our batch of tests. Assuming we saved this file as `assertion_test.exs`, we can run it directly:
+In general, we just need to invoke `ExUnit.start`, define a test case using `ExUnit.Case` and our batch of tests. Most tests will be invoked as part of a [Mix](http://elixir-lang.org/getting_started/mix/1.html) project.
+
+    mix test
+
+Otherwise, assuming we saved this file as `assertion_test.exs`, we can run it directly:
 
     bin/elixir assertion_test.exs
 

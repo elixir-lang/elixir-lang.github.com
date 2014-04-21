@@ -1,0 +1,94 @@
+---
+layout: getting_started
+title: 18 Comprehensions
+guide: 18
+---
+
+# {{ page.title }}
+
+In Elixir, it is common to loop over Enumerables, often filtering some results, and mapping to another list of values. Comprehensions are syntax sugar for such constructs, grouping those common tasks into the `for` special form.
+
+For example, we can get all the square values of elements in a list as follows:
+
+```iex
+iex> for n <- [1, 2, 3, 4], do: n * n
+[1, 4, 9, 16]
+```
+
+A comprehension is made of three parts: generators, filters and collectables.
+
+## 18.1 Generators and filters
+
+In the expression above, `n <- [1, 2, 3, 4]` is the generator. It is literally generating values to be used in the comprehensions. Any enumerable can be passed in the right-hand side the generator expression:
+
+```iex
+iex> for n <- 1..4, do: n * n
+[1, 4, 9, 16]
+```
+
+Generator expressions also support pattern matching, ignoring all non-matching patterns. Imagine that instead of a range, we have a keyword list where the key is the atom `:good` or `:bad` and we only want to calculate the square of the good values:
+
+```iex
+iex> values = [good: 1, good: 2, bad: 3, good: 4]
+iex> for {:good, n} <- values, do: n * n
+[1, 4, 16]
+```
+
+Alternatively, filters can be used to filter some particular elements out. For example, we can get the square of only odd numbers:
+
+```iex
+iex> require Integer
+iex> for n <- 1..4, Integer.odd?(n), do: n * n
+[1, 9]
+```
+
+A filter will keep all values except `nil` or `false`.
+
+Comprehensions in general provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and deletes all files in those directories:
+
+```elixir
+for dir  <- dirs,
+    file <- File.ls!(dir),
+    path = Path.join(dir, file),
+    File.regular?(path) do
+  File.rm!(path)
+end
+```
+
+Keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.
+
+## 18.2 Bitstring generators
+
+Bitstring generators are also supported and are very useful when you need to organize bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and convert them into triplets:
+
+```iex
+iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>
+iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
+[{213,45,132},{64,76,32},{76,0,0},{234,32,15}]
+```
+
+A bitstring generator can be mixed with the "regular" enumerable generators and provide filters as well.
+
+## 18.3 Into
+
+In the examples above, the comprehension returned a list as a result.
+
+However, the result of a comprehension can be inserted into different data structures by passing the `:into` option. For example, we can use bitstring generators with the `:into` option to easily remove all spaces in a string:
+
+```iex
+iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
+"helloworld"
+```
+
+Sets, maps and other dictionaries can also be given with the `:into` option. In general, the `:into` accepts any structure as long as it implements the `Collectable` protocol.
+
+For example, the `IO` module provides streams, that are both `Enumerable` and `Collectable`. You can implement an echo terminal that returns whatever is typed, but in upcase, using comprehensions:
+
+```iex
+iex> stream = IO.stream(:stdio, :line)
+iex> for line <- stream, into: stream do
+...>   String.upcase(line) <> "\n"
+...> end
+```
+
+Now type any string into the terminal and you will see the same value will be printed in upcase. Unfortunately, this example also got your shell stuck in the comprehension, so you will need to hit `Ctrl+C` twice to get out of it. :)
