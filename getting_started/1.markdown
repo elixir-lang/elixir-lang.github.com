@@ -1,37 +1,38 @@
 ---
 layout: getting_started
-title: 1 Introduction
+title: 1 Interactive Elixir
 guide: 1
-total_guides: 7
 ---
 
 # {{ page.title }}
 
-Welcome! In this tutorial we are going to show you how to get started with Elixir. We will start with how to install Elixir, how to use its interactive shell, basic data types and operators. In later chapters, we are going to discuss more advanced subjects such as macros, protocols and other features provided by Elixir.
+Welcome!
 
-To see Elixir in action, check out these introductory screencasts by Dave Thomas. The first one, [Nine Minutes of Elixir](http://www.youtube.com/watch?v=hht9s6nAAx8), provides a brief tour of the language. The second one is a 30-minute [introduction to Elixir](http://www.youtube.com/watch?v=a-off4Vznjs) that'll help you get started writing your first functions and creating your first processes in Elixir. Be sure to follow the next section of this guide to install Elixir on your machine and then follow along with the videos.
+In this tutorial we are going to show you how to get started with Elixir. This chapter will cover installation and how to get started with the Interactive Elixir shell called IEx.
 
-PeepCode also has a two hour video with Jos&eacute; Valim called [Meet Elixir](https://peepcode.com/products/elixir).
+If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com). If you suspect it is a language bug, [please let us know in the language issue tracker](https://github.com/elixir-lang/elixir/issues).
 
-Keep in mind that Elixir is still in development, so if at any point you receive an error message and you are not sure how to proceed, [please let us know in the issues tracker](https://github.com/elixir-lang/elixir/issues). Having explanative and consistent error messages is one of the many features we aim for in Elixir.
+Let's get started!
 
-## 1.1 Installation
+## 1.1 Installing Erlang
 
-The only prerequisite for Elixir is Erlang, version R16B or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](http://docs.basho.com/riak/1.3.0/tutorials/installation/Installing-Erlang/).
+The only prerequisite for Elixir is Erlang, version 17.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](http://docs.basho.com/riak/1.3.0/tutorials/installation/Installing-Erlang/).
 
 For Windows developers, we recommend the precompiled packages. Those on a UNIX platform can probably get Erlang installed via one of the many package management tools.
 
+> Note: Although many package management tools provide Erlang, Elixir requires Erlang 17 which has been released just recently. So have that in mind before picking your Erlang installation.
+
 After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:
 
-    Erlang R16B (erts-5.10.1) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
+    Erlang/OTP 17 (erts-6) [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
 
-Notice that depending on how you installed Erlang, it will not add Erlang binaries to your environment. Be sure to have Erlang binaries in your [PATH](http://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
+Notice that depending on how you installed Erlang, Erlang binaries won't be available in your PATH. Be sure to have Erlang binaries in your [PATH](http://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
 
 After Erlang is up and running, it is time to install Elixir. You can do that via Distributions, Precompiled package or Compiling from Source.
 
-### 1.1.1 Distributions
+### 1.2 Distributions
 
-This tutorial requires Elixir v0.12.4 or later and it may be available in some distributions:
+This tutorial requires Elixir v0.13 or later and it may be available in some distributions:
 
 * Homebrew for Mac OS X
   * Update your homebrew to latest with `brew update`
@@ -50,11 +51,11 @@ This tutorial requires Elixir v0.12.4 or later and it may be available in some d
 
 If you don't use any of the distributions above, don't worry, we also provide a precompiled package!
 
-### 1.1.2 Precompiled package
+### 1.3 Precompiled package
 
 Elixir provides a [precompiled package for every release](https://github.com/elixir-lang/elixir/releases/). After downloading and unzip-ing the package, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you also add Elixir's `bin` path to your PATH environment variable to ease development.
 
-### 1.1.3 Compiling from source (Unix and MinGW)
+### 1.4 Compiling from source (Unix and MinGW)
 
 You can download and compile Elixir in few steps. You can get the [latest stable release here](https://github.com/elixir-lang/elixir/releases/), unpack it and then run `make` inside the unpacked directory. After that, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you add Elixir's `bin` path to your PATH environment variable to ease development:
 
@@ -68,240 +69,19 @@ In case you are feeling a bit more adventurous, you can also compile from master
 
 If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
 
-## 1.2 Interactive mode
+## 1.5 Interactive mode
 
 When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
-For now, let's start by running `iex` which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result straight away. Let's warm up with some basic arithmetic expressions:
+For now, let's start by running `iex` which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result straight away. Let's warm up with some basic expressions:
 
-```iex
-iex> 1 + 1
-2
-iex> 10 - 5
-5
-iex> 10 / 2
-5.0
-```
+```text
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
 
-Notice `10 / 2` returned a float `5.0` instead of an integer. This is expected. In Elixir the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
-
-```iex
-iex> div(10, 2)
-5
-iex> div 10, 2
-5
-iex> rem 10, 3
-1
-```
-
-In the example above, we called two functions called `div` and `rem`. Notice that parentheses are not required in order to invoke a function. We are going to discuss more about this later. Let's move forward and see what other data types we have in Elixir.
-
-## 1.3 Basic types
-
-Some basic types are:
-
-```iex
-iex> 1          # integer
-iex> 0x1F       # integer
-iex> 1.0        # float
-iex> :atom      # atom / symbol
-iex> {1,2,3}    # tuple
-iex> [1,2,3]    # list
-iex> <<1,2,3>>  # bitstring
-```
-
-Elixir by default imports many functions to work on these types:
-
-```iex
-iex> size { 1, 2, 3 }
-3
-
-iex> length [ 1, 2, 3 ]
-3
-```
-
-Elixir also supports UTF-8 encoded strings:
-
-```iex
-iex> "hellö"
-"hellö"
-```
-
-Strings support interpolation, too:
-
-```iex
-iex> name = "world"
-iex> "hello #{name}"
+iex> 40 + 2
+42
+iex> "hello" <> " world"
 "hello world"
 ```
 
-At the end of the day, strings are nothing more than a bunch of bytes packed together. We can verify this using the `is_binary` function:
-
-```iex
-iex> is_binary("hello")
-true
-iex> byte_size("hello")
-5
-```
-
-And a binary is nothing more than a bunch of bits packed together:
-
-```iex
-iex> is_bitstring("hello")
-true
-iex> bit_size("hello")
-40
-```
-
-Elixir allows you to create "raw" binaries too. Let's create a binary with three null bytes:
-
-```iex
-iex> is_binary <<0, 0, 0>>
-true
-```
-
-Note that a single-quoted expression in Elixir is a char list and is not the same as a double-quoted one:
-
-```iex
-iex> is_binary('hello')
-false
-iex> is_list('hello')
-true
-```
-
-We will go into more details about char lists in the next chapter. Elixir also provides `true` and `false` as booleans:
-
-```iex
-iex> true
-true
-iex> is_boolean false
-true
-```
-
-Booleans are represented internally as atoms:
-
-```iex
-iex> is_atom(true)
-true
-```
-
-Elixir also provides anonymous functions (note the dot between the variable and arguments when calling an anonymous function):
-
-```iex
-# function
-iex> x = fn(a, b) -> a + b end
-#Fun<erl_eval.12.111823515>
-iex> x.(1, 2)
-3
-```
-
-Elixir also provides `Port`, `Reference`s and `PID`s as data types (usually used in process communication), but they are out of the scope of a getting started tutorial. For now, let's take a look at the basic operators in Elixir before we move on to the next chapter.
-
-## 1.4 Operators
-
-As we saw earlier, Elixir provides `+`, `-`, `*`, `/` as arithmetic operators.
-
-Elixir also provides `++` and `--` to manipulate lists:
-
-```iex
-iex> [1,2,3] ++ [4,5,6]
-[1,2,3,4,5,6]
-iex> [1,2,3] -- [2]
-[1,3]
-```
-
-String concatenation is done via `<>`:
-
-```iex
-iex> "foo" <> "bar"
-"foobar"
-```
-
-Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect a boolean (`true` or `false`) as their first argument:
-
-```iex
-iex> true and true
-true
-iex> false or is_atom(:example)
-true
-```
-
-Providing a non-boolean will raise an exception:
-
-```iex
-iex> 1 and true
-** (ArgumentError) argument error
-```
-
-`or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
-
-```iex
-iex> false and error("This error will never be raised")
-false
-
-iex> true or error("This error will never be raised")
-true
-```
-
-> Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
-
-Besides these boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
-
-```iex
-# or
-iex> 1 || true
-1
-iex> false || 11
-11
-
-# and
-iex> nil && 13
-nil
-iex> true && 17
-17
-
-# !
-iex> !true
-false
-iex> !1
-false
-iex> !nil
-true
-```
-
-As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`.
-
-Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
-
-```iex
-iex> 1 == 1
-true
-iex> 1 != 2
-true
-iex> 1 < 2
-true
-```
-
-The difference between `==` and `===` is that the latter is more strict when comparing integers and floats:
-
-```iex
-iex> 1 == 1.0
-true
-iex> 1 === 1.0
-false
-```
-
-In Elixir, we can compare two different data types:
-
-```iex
-iex> 1 < :atom
-true
-```
-
-The reason we can compare different data types is for pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
-
-    number < atom < reference < functions < port < pid < tuple < list < bitstring
-
-You don't actually need to memorize this ordering, but it is important just to know an order exists.
-
-Well, that is it for the introduction. In the next chapter, we are going to discuss some basic functions, data types conversions and a bit of control-flow.
+It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.

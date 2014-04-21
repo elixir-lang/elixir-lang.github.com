@@ -1,300 +1,258 @@
 ---
 layout: getting_started
-title: 5 Macros
+title: 5 case, cond and if
 guide: 5
-total_guides: 7
 ---
 
 # {{ page.title }}
 
-An Elixir program can be represented by its own data structures. This chapter will describe what those structures look like and how to manipulate them to create your own macros.
+In this chapter, we will learn about the `case`, `cond` and `if` control-flow structures.
 
-## 5.1 Building blocks of an Elixir program
+## 5.1 case
 
-The building block of Elixir is a tuple with three elements. The function call `sum(1,2,3)` is represented in Elixir as:
-
-```elixir
-{ :sum, [], [1, 2, 3] }
-```
-
-You can get the representation of any expression by using the `quote` macro:
+`case` allows us to compare a value against many patterns until we find a matching one:
 
 ```iex
-iex> quote do: sum(1, 2, 3)
-{ :sum, [], [1, 2, 3] }
+iex> case {1, 2, 3} do
+...>   {4, 5, 6} ->
+...>     "This clause won't match"
+...>   {1, x, 3} ->
+...>     "This clause will match and bind x to 2 in this clause"
+...>   _ ->
+...>     "This clause would match any value"
+...> end
 ```
 
-Operators are also represented as such tuples:
+If you want to pattern match against an existing variable, you need to use the `^` operator:
 
 ```iex
-iex> quote do: 1 + 2
-{:+, [context: Elixir, import: Kernel], [1, 2]}
+iex> x = 1
+1
+iex> case 10 do
+...>   ^x -> "Won't match"
+...>   _  -> "Will match"
+...> end
 ```
 
-Even a tuple is represented as a call to `{}`:
+Clauses also allow extra conditions to be specified via guards:
 
 ```iex
-iex> quote do: { 1, 2, 3 }
-{ :{}, [], [1, 2, 3] }
+iex> case {1, 2, 3} do
+...>   {1, x, 3} when x > 0 ->
+...>     "Will match"
+...>   _ ->
+...>     "Won't match"
+...> end
 ```
 
-Variables are also represented using tuples, except the last element is an atom, instead of a list:
+The first clause above will only match when `x` is positive. The Erlang VM only allows a limited set of expressions in guards:
+
+* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`)
+* boolean operators (`and`, `or`) and negation operators (`not`, `!`)
+* arithmetic operators (`+`, `-`, `*`, `/`)
+* `<>` and `++` as long as the left side is a literal
+* the `in` operator
+* all the following type check functions:
+
+    * `is_atom/1`
+    * `is_binary/1`
+    * `is_bitstring/1`
+    * `is_boolean/1`
+    * `is_float/1`
+    * `is_function/1`
+    * `is_function/2`
+    * `is_integer/1`
+    * `is_list/1`
+    * `is_map/1`
+    * `is_number/1`
+    * `is_pid/1`
+    * `is_port/1`
+    * `is_reference/1`
+    * `is_tuple/1`
+
+* plus these functions:
+
+    * `abs(number)`
+    * `bit_size(bitstring)`
+    * `byte_size(bitstring)`
+    * `div(integer, integer)`
+    * `elem(tuple, n)`
+    * `hd(list)`
+    * `length(list)`
+    * `map_size(map)`
+    * `node()`
+    * `node(pid | ref | port)`
+    * `rem(integer, integer)`
+    * `round(number)`
+    * `self()`
+    * `size(tuple | bitstring)`
+    * `tl(list)`
+    * `trunc(number)`
+    * `tuple_size(tuple)`
+
+Keep in mind errors in guards do not leak but simply make the guard fail:
 
 ```iex
-iex> quote do: x
-{ :x, [], Elixir }
+iex> hd(1)
+** (ArgumentError) argument error
+    :erlang.hd(1)
+iex> case 1 do
+...>   x when hd(x) -> "Won't match"
+...>   x -> "Got: #{x}"
+...> end
+"Got 1"
 ```
 
-When quoting more complex expressions, we can see the representation is composed of such tuples, which are nested on each other resembling a tree where each tuple is a node:
+If none of the clauses match, an error is raised:
 
 ```iex
-iex> quote do: sum(1, 2 + 3, 4)
-{:sum, [], [1, {:+, [context: Elixir, import: Kernel], [2, 3]}, 4]}
+iex> case :ok do
+...>   :error -> "Won't match"
+...> end
+** (CaseClauseError) no case clause matching: :ok
 ```
 
-In general, each node (tuple) above follows the following format:
+Note anonymous functions can also have multiple clauses and guards:
 
 ```elixir
-{ tuple | atom, list, list | atom }
+iex> f = fn
+...>   x, y when x > 0 -> x + y
+...>   x, y -> x * y
+...> end
+#Function<12.71889879/2 in :erl_eval.expr/5>
+iex> f.(1, 3)
+4
+iex> f.(-1, 3)
+-3
 ```
 
-* The first element of the tuple is an atom or another tuple in the same representation;
-* The second element of the tuple is an list of metadata, it may hold information like the node line number;
-* The third element of the tuple is either a list of arguments for the function call or an atom. When an atom, it means the tuple represents a variable.
+The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised.
 
-Besides the node defined above, there are also five Elixir literals that when quoted return themselves (and not a tuple). They are:
+### 5.2 cond
 
-```elixir
-:sum         #=> Atoms
-1.0          #=> Numbers
-[1,2]        #=> Lists
-"binaries"   #=> Strings
-{key, value} #=> Tuples with two elements
+`case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:
+
+```iex
+iex> cond do
+...>   2 + 2 == 5 ->
+...>     "This will not be true"
+...>   2 * 2 == 3 ->
+...>     "Nor this"
+...>   1 + 1 == 2 ->
+...>     "But this will"
+...> end
+"But this will"
 ```
 
-With those basic structures in mind, we are ready to define our own macro.
+This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
 
-## 5.2 Defining our own macro
+If none of the conditions return true, an error is raised. For this reason, it may be necessary to add a last condition equal to `true`, which will always match:
 
-A macro can be defined using `defmacro`. For instance, in just a few lines of code we can define a macro called `unless` which does the opposite of `if`:
-
-```elixir
-defmodule MyMacro do
-  defmacro unless(clause, options) do
-    quote do: if(!unquote(clause), unquote(options))
-  end
-end
+```iex
+iex> cond do
+...>   2 + 2 == 5 ->
+...>     "This is never true"
+...>   2 * 2 == 3 ->
+...>     "Nor this"
+...>   true ->
+...>     "This is always true (equivalent to else)"
+...> end
 ```
 
-Similarly to `if`, `unless` expects two arguments: a `clause` and `options`:
+Finally, note `cond` considers any value besides `nil` and `false` to be true:
 
-```elixir
-require MyMacro
-MyMacro.unless var, do: IO.puts "false"
+```iex
+iex> cond do
+...>   hd([1,2,3]) ->
+...>     "1 is considered as true"
+...> end
+"1 is considered as true"
 ```
 
-However, since `unless` is a macro, its arguments are not evaluated when it's invoked but are instead passed literally. For example, if one calls:
+### 5.3 if and unless
 
-```elixir
-unless 2 + 2 == 5, do: call_function()
+Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for just one condition:
+
+```iex
+iex> if true do
+...>   "This works!"
+...> end
+"This works!"
+iex> unless true do
+...>   "This will never be seen"
+...> end
+nil
 ```
 
-Our `unless` macro will receive the following:
+If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and it simply returns `nil`. The opposite happens with `unless/2`.
 
-```elixir
-unless({:==, [], [{:+, [], [2, 2]}, 5]}, { :call_function, [], [] })
+They also support `else` blocks:
+
+```iex
+iex> if nil do
+...>   "This won't be seen"
+...> else
+...>   "This will"
+...> end
+"This will"
 ```
 
-Then our `unless` macro will call `quote` to return a tree representation of the `if` clause. This means we are transforming our `unless` into an `if`!
+> Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they are special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
-There is a common mistake when quoting expressions which is that developers usually forget to `unquote` the proper expression. In order to understand what `unquote` does, let's simply remove it:
+### 5.4 `do` blocks
 
-```elixir
-defmacro unless(clause, options) do
-  quote do: if(!clause, options)
-end
+At this point, we have learned four control structures: `case`, `cond`, `if` and `unless`, and they were all wrapped in `do`/`end` blocks. It happens we could also write `if` as follows:
+
+```iex
+iex> if true, do: 1 + 2
+3
 ```
 
-When called as `unless 2 + 2 == 5, do: call_function()`, our `unless` would then literally return:
+In Elixir, `do`/`end` blocks are a convenience for passing a group of expressions to `do:`. These are equivalent:
 
-```elixir
-if(!clause, options)
+```iex
+iex> if true do
+...>   a = 1 + 2
+...>   a + 10
+...> end
+13
+iex> if true, do: (
+...>   a = 1 + 2
+...>   a + 10
+...> )
+13
 ```
 
-Which would fail because the clause and options variables are not defined in the current scope. If we add `unquote` back:
+We say the second syntax is using **keyword lists**. We can pass `else` using this syntax:
 
-```elixir
-defmacro unless(clause, options) do
-  quote do: if(!unquote(clause), unquote(options))
-end
+```iex
+iex> if false, do: :this, else: :that
+:that
 ```
 
-`unless` will then return:
+It is important to keep one small detail in mind when using `do`/`end` blocks: they always bind to the farthest function call. For example, the following expression:
 
-```elixir
-if(!(2 + 2 == 5), do: call_function())
+```iex
+iex> is_number if true do
+...>  1 + 2
+...> end
 ```
 
-In other words, `unquote` is a mechanism to inject expressions into the tree being quoted and it is an essential tool for meta-programming. Elixir also provides `unquote_splicing` allowing us to inject many expressions at once.
+Would be parsed as:
 
-We can define any macro we want, including ones that override the built-in macros provided by Elixir. For instance, you can redefine `case`, `receive`, `+`, etc. The only exceptions are Elixir special forms that cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](/docs/stable/Kernel.SpecialForms.html).
-
-## 5.3 Macros hygiene
-
-Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
-
-```elixir
-defmodule Hygiene do
-  defmacro no_interference do
-    quote do: a = 1
-  end
-end
-
-defmodule HygieneTest do
-  def go do
-    require Hygiene
-    a = 13
-    Hygiene.no_interference
-    a
-  end
-end
-
-HygieneTest.go
-# => 13
+```iex
+iex> is_number(if true) do
+...>  1 + 2
+...> end
 ```
 
-In the example above, even if the macro injects `a = 1`, it does not affect the variable `a` defined by the `go` function. In case the macro wants to explicitly affect the context, it can use `var!`:
+Which leads to an undefined function error as Elixir attempts to invoke `is_number/2`. Adding explicit parentheses is enough to resolve the ambiguity:
 
-```elixir
-defmodule Hygiene do
-  defmacro interference do
-    quote do: var!(a) = 1
-  end
-end
-
-defmodule HygieneTest do
-  def go do
-    require Hygiene
-    a = 13
-    Hygiene.interference
-    a
-  end
-end
-
-HygieneTest.go
-# => 1
+```iex
+iex> is_number(if true do
+...>  1 + 2
+...> end)
+true
 ```
 
-Variables hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined at the line 3 of a module, would be represented as:
-
-    { :x, [line: 3], nil }
-
-However, a quoted variable is represented as:
-
-```elixir
-defmodule Sample do
-  def quoted do
-    quote do: x
-  end
-end
-
-Sample.quoted #=> { :x, [line: 3], Sample }
-```
-
-Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers those two variables come from different contexts and handle them accordingly.
-
-Elixir provides similar mechanisms for imports and aliases too. This guarantees macros will behave as specified by its source module rather than conflicting with the target module.
-
-## 5.4 Private macros
-
-Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time. A common use case for private macros is to define guards that are frequently used in the same module:
-
-```elixir
-defmodule MyMacros do
-  defmacrop is_even?(x) do
-    quote do
-      rem(unquote(x), 2) == 0
-    end
-  end
-
-  def add_even(a, b) when is_even?(a) and is_even?(b) do
-    a + b
-  end
-end
-```
-
-It is important that the macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
-
-```elixir
-defmodule MyMacros do
-  def four, do: two + two
-  defmacrop two, do: 2
-end
-
-MyMacros.four #=> ** (UndefinedFunctionError) undefined function: two/0
-```
-
-## 5.5 Code execution
-
-To finish our discussion about macros, we are going to briefly discuss how code execution works in Elixir. Code execution in Elixir is done in two steps:
-
-1) All the macros in the code are expanded recursively;
-
-2) The expanded code is compiled to Erlang bytecode and executed
-
-This behavior is important to understand because it affects how we think about our code structure. Consider the following code:
-
-```elixir
-defmodule Sample do
-  case System.get_env("FULL") do
-    "true" ->
-      def full?(), do: true
-    _ ->
-      def full?(), do: false
-  end
-end
-```
-
-The code above will define a function `full?` which will return true or false depending on the value of the environment variable `FULL` at **compilation time**. In order to execute this code, Elixir will first expand all macros. Considering that `defmodule` and `def` are macros, the code will expand to something like:
-
-```elixir
-:elixir_module.store Sample, fn ->
-  case System.get_env("FULL") do
-    "true" ->
-      :elixir_def.store(Foo, :def, :full?, [], true)
-    _ ->
-      :elixir_def.store(Foo, :def, :full?, [], false)
-end
-```
-
-This code will then be executed, define a module `Foo` and store the appropriate function based on the value of the environment variable `FULL`. We achieve this by using the modules `:elixir_module` and `:elixir_def`, which are Elixir internal modules written in Erlang.
-
-There are two lessons to take away from this example:
-
-1) a macro is always expanded, regardless if it is inside a `case` branch that won't actually match when executed;
-
-2) we cannot invoke a function or macro just after it is defined in a module. For example, consider:
-
-```elixir
-defmodule Sample do
-  def full?, do: true
-  IO.puts full?
-end
-```
-
-  The example above will fail because it translates to:
-
-```elixir
-:elixir_module.store Sample, fn ->
-  :elixir_def.store(Foo, :def, :full?, [], true)
-  IO.puts full?
-end
-```
-
-At the moment the module is being defined, there isn't **yet** a function named `full?` defined in the module, so `IO.puts full?` will cause the compilation to fail.
-
-## 5.6 Don't write macros
-
-Although macros are a powerful construct, the first rule of the macro club is **don't write macros**. Macros are harder to write than ordinary Elixir functions, and it's considered to be bad style to use them when they're not necessary. Elixir already provides elegant mechanisms to write your every day code and macros should be saved as last resort.
-
-With those lessons, we finish our introduction to macros. Next, let's move to the next chapter which will discuss several topics such as documentation, partial application and others.
+Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings and char lists".

@@ -18,7 +18,7 @@ In Elixir, we could write this code as follows:
       parent = Process.self()
       child  = spawn_link(fn ->
         :elixir_compiler.file_to_path(current, output)
-        parent <- { :compiled, Process.self() }
+        send parent, { :compiled, Process.self() }
       end)
       receive do
         { :compiled, ^child } ->
@@ -95,7 +95,7 @@ As discussed in the previous section, we want to extend the error handler to act
             []
           { :error, _ } ->
             parent = Process.get(:elixir_parent_compiler)
-            parent <- { :waiting, Process.self, module }
+            send parent, { :waiting, Process.self, module }
             receive do
               { :release, ^parent } -> ensure_loaded(module)
             end
@@ -114,7 +114,7 @@ With our error handler code in place, the first thing we need to do is to change
       Process.flag(:error_handler, Elixir.ErrorHandler)
 
       :elixir_compiler.file_to_path(current, output)
-      parent <- { :compiled, Process.self() }
+      send parent, { :compiled, Process.self() }
     end)
 
 Notice that we have two small additions. First we store the `:elixir_parent_compiler` PID in the process dictionary so we are able to read it from the error handler and then we proceed to configure a flag in our process so our new error handler is invoked whenever a module or function cannot be found.
@@ -125,7 +125,7 @@ Second, our main process can now receive a new `{ :waiting, child, module }` mes
       parent = Process.self()
       child  = spawn_link(fn ->
         :elixir_compiler.file_to_path(current, output)
-        parent <- { :compiled, Process.self() }
+        send parent, { :compiled, Process.self() }
       end)
       wait_for_messages(files, output, [child|stack])
     end
@@ -147,7 +147,7 @@ Notice we added an extra clause to `spawn_compilers` so we can properly handle t
         { :compiled, child } ->
           new_stack = List.delete(stack, child)
           Enum.each new_stack, fn(pid) ->
-            pid <- { :release, Process.self }
+            send pid, { :release, Process.self }
           end
           spawn_compilers(files, output, new_stack)
         { :waiting, _child, _module } ->

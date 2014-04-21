@@ -298,6 +298,53 @@ lines.
 #=> true
 ```
 
+### Keyword list
+
+Elixir offers a literal syntax for creating a list of two-item tuples where the first item in the tuple is an atom and calls them keyword lists:
+
+**Erlang**
+
+```erlang
+[{another_key,20},{key,10}]
+```
+
+**Elixir**
+
+```elixir
+kw = [another_key: 20, key: 10]
+kw[:another_key] #=> 20
+```
+
+### Maps
+
+Erlang R17 introduced maps, a key-value store, with no ordering. Keys and values can be any term. Creating, updating and matching maps in both languages is shown below:
+
+**Erlang**
+
+```erlang
+Map = #{key => 0}
+Updated = Map#{key := 1}
+#{key := Value} = Updated
+Value =:= 1
+```
+
+**Elixir**
+
+```elixir
+map = %{:key => 0}
+map = %{map | :key => 1}
+#{:key => value} = map
+value === 1
+```
+
+If the keys are all atoms, Elixir allows developers to use `key: 0` for defining the map as well as using `.key` for accessing fields:
+
+```elixir
+map = %{key: 0}
+map = %{map | key: 1}
+map.value === 1
+```
+
 ### Regular expressions
 
 Elixir supports a literal syntax for regular expressions. Such syntax allows regexes to be compiled at compilation time instead of runtime and does not require you to double escape special regex characters:
@@ -326,47 +373,6 @@ spawning several
 lines.
 """
 ```
-
-### Keyword list
-
-Elixir offers a literal syntax for creating a list of two-item tuples where the first item in the tuple is an atom and calls them keyword lists:
-
-**Erlang**
-
-```erlang
-[{another_key,20},{key,10}]
-```
-
-**Elixir**
-
-```elixir
-kw = [another_key: 20, key: 10]
-kw[:another_key] #=> 20
-```
-
-### Records
-
-The syntax for records differs significantly between Erlang and Elixir. Please refer to [this section][1] in the Erlang book to read a detailed introduction to records in Erlang. And [this chapter][2] from Elixir's Getting Started guide provides a description of records in Elixir.
-
-[1]: http://learnyousomeerlang.com/a-short-visit-to-common-data-structures#records
-[2]: http://elixir-lang.org/getting_started/4.html
-
-In order to translate Erlang records into Elixir records, use `Record.extract()`. For example, to use the `ec2_instance_spec` record from [erlcloud][8]:
-
-```elixir
-defrecord :ec2_instance_spec, Record.extract(:ec2_instance_spec,
-                                from: "deps/erlcloud/include/erlcloud_ec2.hrl")
-
-new_host = :ec2_instance_spec.new(
-    image_id:          "ami-6d3f9704",
-    instance_type:     "t1.micro",
-    availability_zone: "us-east-1b"
-)
-
-IO.puts inspect(new_host)
-```
-
-[8]: https://github.com/gleber/erlcloud/blob/master/include/erlcloud_ec2.hrl#L11
 
 <div id="modules"></div>
 

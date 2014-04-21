@@ -1,0 +1,202 @@
+---
+layout: getting_started
+title: 4 Binding and unquote fragments
+guide: 4
+last: true
+---
+
+# {{ page.title }}
+
+Throughout this tutorial, we have learned about quoted expressions, macros and built a very simple DSL. In this chapter, we will explore more advanced macro facilities and how to use `bind_quoted` and unquote fragments to avoid common macro pitfalls.
+
+## 4.1 Unquote fragments
+
+In order to facilitate the dynamic generation of functions, `def/2`, `defp/2` and friends allow unquote fragments to be injected into their source. The example we will use throughout this chapter is a `defkv/1` macro that receives a keyword list and generates function names given by key and return the respective values when invoked.
+
+Unquote fragments allows us to generate those function names without providing a macro:
+
+```elixir
+defmodule KV do
+  kv = [foo: 1, bar: 2, baz: 3]
+
+  for {key, value} <- kv do
+    def unquote(key)(), do: unquote(value)
+  end
+end
+
+KV.foo
+#=> 1
+```
+
+The functionality above works because, as `def/2` and friends are implemented as macros, they control how unquote is expanded, effectively injecting those values during the function definition.
+
+However, the example above is useful for one-off cases. If there is a frequent need for defining functions based on a keyword list, it would be convenient to implement such as a macro. Let's give it a try:
+
+```elixir
+defmodule KV do
+  defmacro defkv(kv) do
+    for {key, value} <- kv do
+      quote do
+        def unquote(key)(), do: unquote(value)
+      end
+    end
+  end
+end
+
+defmodule MyModule do
+  import KV
+  defkv [foo: 1, bar: 2]
+end
+
+MyModule.foo
+#=> 1
+```
+
+Excellent! Our example works as expected... or does it?
+
+## 4.2 Bind quoted
+
+Our `defkv` macro implementation above has fallen into a common pitfall: we are expecting values to have a specific shape at compilation time. Let's see what happens if we try to define values dynamically:
+
+```elixir
+defmodule OtherModule do
+  import KV
+  kv = [foo: 1, bar: 2]
+  defkv kv
+end
+```
+
+The example above is going to fail because our `defkv` is expecting to receive a keyword list at compilation time. However, in the example above, our macro is receiving the quoted expression for the variable `kv`.
+
+The solution to this problem is to avoid work inside the macro body. Instead we should pass the variable as is to the quoted expression and use unquote fragments to generate the desired functions. Our first attempt at such macro would look like:
+
+```elixir
+defmodule KV do
+  defmacro defkv(kv) do
+    quote do
+      for {key, value} <- unquote(kv) do
+        def unquote(key)(), do: unquote(value)
+      end
+    end
+  end
+end
+```
+
+However, if you try to compile the code above, you will notice it fail with "undefined variable or function key/0". This happens because the macro is attempting to `unquote(key)` and the variable `key` is not available inside the macro, only inside the quoted expression. The issue here is that we have two unquotes, `unquote(kv)` and `unquote(key)`, and we want them to be executed at different times.
+
+We could attempt to disable unquoting in the quote expression. However, by doing so, we would be unable to inject the value for `kv` inside the quoted expression:
+
+```iex
+iex> Macro.to_string quote unquote: false, do: unquote(kv)
+"unquote(kv)"
+```
+
+The `bind_quoted` option exists to solve exactly this problem. By using `bind_quoted`, we can inject values inside the quoted expression without the need to unquote them. Furthermore, when `bind_quoted` is given, `unquote` is also automatically set to false. Let's rewrite the macro:
+
+```elixir
+defmodule KV do
+  defmacro defkv(kv) do
+    quote bind_quoted: [kv: kv] do
+      for {key, value} <- kv do
+        def unquote(key)(), do: unquote(value)
+      end
+    end
+  end
+end
+```
+
+In the example above, we have introduced the `kv` value inside the quoted expression with `bind_quoted` and used unquote fragments to generate the values dynamically. Using `bind_quoted` is considered a good practice as it helps avoid many common macro pitfalls.
+
+## 4.3 To escape or not to escape?
+
+There is one final limitation in our macro: it only accepts values that are valid quoted expressions. In order to make it easier to understand the issue, let's define our key and values by hand once again:
+
+```elixir
+defmodule KV do
+  kv = [foo: {1, 2, 3}]
+
+  for {key, value} <- kv do
+    def unquote(key)(), do: unquote(value)
+  end
+end
+** (CompileError) iex: invalid quoted expression: {1, 2, 3}
+```
+
+The code above failed to compile because we are trying to unquote `{1, 2, 3}`. Remember that `unquote/1` expects valid quoted expressions and `{1, 2, 3}` is not one of them. The solution here is to escape the value bejore unquoting it:
+
+```elixir
+defmodule KV do
+  kv = [foo: {1, 2, 3}]
+
+  for {key, value} <- kv do
+    def unquote(key)(), do: unquote(Macro.escape(value))
+  end
+end
+** (CompileError) iex: invalid quoted expression: {1, 2, 3}
+```
+
+To fix our macro, we just need to escape the values there too.
+
+## 4.4 Macros expansion
+
+Macros are expanded at compile-time. That's a very important distinction to make when working with macros and failing to understand this distinction can cause a lot of confusion when working with macros.
+
+In general, code execution in Elixir is done in two steps:
+
+1. All the macros in the code are expanded recursively;
+
+2. The expanded code is compiled to Erlang bytecode and executed
+
+This behavior is important to understand because it affects how we think about our code structure. Consider the following code:
+
+```elixir
+defmodule Sample do
+  case System.get_env("FULL") do
+    "true" ->
+      def full?(), do: true
+    _ ->
+      def full?(), do: false
+  end
+end
+```
+
+The code above will define a function `full?` which will return true or false depending on the value of the environment variable `FULL` at **compilation time**. In order to execute this code, Elixir will first expand all macros. Considering that `defmodule/2` and `def/2` are macros, the code will expand to something like:
+
+```elixir
+:elixir_module.define Sample, fn ->
+  case System.get_env("FULL") do
+    "true" ->
+      :elixir_def.define(Foo, :def, :full?, [], true)
+    _ ->
+      :elixir_def.define(Foo, :def, :full?, [], false)
+  end
+end
+```
+
+This code will then be executed, define a module `Sample` and define the appropriate function based on the value of the environment variable `FULL`. We achieve this by using the modules `:elixir_module` and `:elixir_def` which are Elixir internal modules written in Erlang responsible for module and function compilation.
+
+There are two lessons to take away from this example:
+
+1. a macro is always expanded, regardless if it is inside a `case` branch that won't actually match when executed;
+
+2. we cannot invoke a function or macro just after it is defined in a module. For example, consider:
+
+```elixir
+defmodule Sample do
+  def full?, do: true
+  IO.puts full?
+end
+```
+
+  The example above will fail because it translates to:
+
+```elixir
+:elixir_module.store Sample, fn ->
+  :elixir_def.store(Foo, :def, :full?, [], true)
+  IO.puts full?
+end
+```
+
+At the moment the module is being defined, there isn't **yet** a function named `full?` defined in the module so `IO.puts full?` will cause the compilation to fail.
+
+With those notes, we finish our discussion about macros. When working with macros, there are pitfalls developers should be aware of and while Elixir helps developers to avoid many of them, like by having hygiene being on by default, other pitfalls can only be avoided if developers use the proper idioms, like `bind_quoted`, when implementing their own macros.
