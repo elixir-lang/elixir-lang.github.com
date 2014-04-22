@@ -2,6 +2,7 @@
 layout: getting_started
 title: 3 Domain Specific Languages
 guide: 3
+last: true
 ---
 
 # {{ page.title }}
@@ -111,7 +112,14 @@ defmodule TestCase do
   end
 
   @doc """
-  ...
+  Defines a test case with the given description.
+
+  ## Examples
+
+      test "arithmetic operations" do
+        4 = 2 + 2
+      end
+
   """
   defmacro test(description, do: block) do
     function_name = binary_to_atom("test " <> description)
