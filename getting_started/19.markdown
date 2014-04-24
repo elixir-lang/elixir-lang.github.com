@@ -26,7 +26,7 @@ iex> "bat" =~ regex
 false
 ```
 
-Elixir provides Perl-compatible regular expressions (regexes), as provided by the [PCRE](http://www.pcre.org/) library. Regexes also support modifiers. For example, the `i` modifier makes a regular expression case insensitive:
+Elixir provides Perl-compatible regular expressions (regexes), as implemented by the [PCRE](http://www.pcre.org/) library. Regexes also support modifiers. For example, the `i` modifier makes a regular expression case insensitive:
 
 ```iex
 iex> "HELLO" =~ ~r/hello/
@@ -50,7 +50,7 @@ So far, all examples have used `/` to delimit a regular expression. However sigi
 ~r<hello>
 ```
 
-The reasoning in supporting different operators is that different separators can be more convenient to different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for for other sigils, as we will see in the next section.
+The reasoning in supporting different operators is that different separators can be more convenient to different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for other sigils, as we will see in the next section.
 
 ## 19.2 Strings, char lists and words sigils
 
@@ -93,7 +93,7 @@ iex> ~S(String without escape codes and without #{interpolation})
 "String without escape codes and without \#{interpolation}"
 ```
 
-The following escape codes applies to strings and char lists:
+The following escape codes can be used in strings and char lists:
 
 * `\"` – double quote
 * `\'` – single quote
@@ -110,7 +110,7 @@ The following escape codes applies to strings and char lists:
 * `\v` – vertial tab
 * `\DDD`, `\DD`, `\D` - character with octal representation DDD, DD or D (example: `\377`)
 * `\xDD`	- character with hexadecimal representation DD (example: `\x13`)
-* `\x{D...}` -	character with hexadecimal representation with one or more hexadecimal characters (example: `\x{abc13}`)
+* `\x{D...}` -	character with hexadecimal representation with one or more hexadecimal digits (example: `\x{abc13}`)
 
 Sigils also support heredocs which is when tripe double- or single-quotes are used as separators:
 
@@ -121,7 +121,7 @@ iex> ~s"""
 ...> """
 ```
 
-The most common case for heredoc sigils is when writing documentation. For example, if you need to write escape characters in your documentation, it can become error prone as we would need to double escape some characters:
+The most common case for heredoc sigils is when writing documentation. For example, if you need to write escape characters in your documentation, it can become error prone as we would need to double-escape some characters:
 
 ```elixir
 @doc """
@@ -178,4 +178,4 @@ iex> ~i(13)
 13
 ```
 
-Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled during compilation time, therefore skipping the compilation step at runtime. If you have interest on the subject, we recommend you to check to learn more about macros and check how those sigils are implemented in the `Kernel` module.
+Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled into efficient representation during compilation of the source code, therefore skipping this step at runtime. If you have interest in the subject, we recommend you to learn more about macros and check how those sigils are implemented in the `Kernel` module.
