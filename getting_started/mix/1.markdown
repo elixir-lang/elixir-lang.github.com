@@ -48,9 +48,9 @@ defmodule MyProject.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :my_project,
-      version: "0.0.1",
-      deps: deps ]
+    [app: :my_project,
+     version: "0.0.1",
+     deps: deps]
   end
 
   # Configuration for the OTP application
@@ -59,10 +59,10 @@ defmodule MyProject.Mixfile do
   end
 
   # Returns the list of dependencies in the format:
-  # { :foobar, git: "https://github.com/elixir-lang/foobar.git", tag: "0.1" }
+  # {:foobar, git: "https://github.com/elixir-lang/foobar.git", tag: "0.1"}
   #
   # To specify particular versions, regardless of the tag, do:
-  # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
+  # {:barbat, "~> 0.1", github: "elixir-lang/barbat"}
   defp deps do
     []
   end
@@ -142,20 +142,22 @@ Mix is also able to manage dependencies. Dependencies should be listed in the pr
 
 ```elixir
 def project do
-  [ app: :my_project,
-    version: "0.0.1",
-    deps: deps ]
+  [app: :my_project,
+   version: "0.0.1",
+   deps: deps]
 end
 
 defp deps do
-  [ { :some_project, github: "some_project/other", tag: "0.3.0" },
-    { :another_project, ">= 1.0.2", git: "https://example.com/another/repo.git" } ]
+  [{:some_project, ">= 0.3.0"},
+   {:another_project, git: "https://example.com/another/repo.git", tag: "v1.0.2"}]
 end
 ```
 
 **Note:** Although not required, it is common to split dependencies into their own function.
 
-The dependency is represented by an atom, followed by an optional the version requirement and some options detailed in the next section. Since most of the dependencies are git repositories, it is recommended to depend on a particular tag. However, if you want to depend on master or in a particular branch, you can define a version requirement to specify which versions of a given dependency you are willing to work against. It supports common operators like `>=`, `<=`, `>`, `==` as follows:
+The dependency is represented by an atom, followed by a requirement and some options. By default, Mix uses [hex.pm](https://hex.pm) to fetch dependencies but it can also fetch them from a git repository or directly from the filesystem.
+
+When using Hex, you must use requirements to specify which versions of a given dependency you accept. It supports common operators like `>=`, `<=`, `>`, `==` as follows:
 
     # Only version 2.0.0
     "== 2.0.0"
@@ -172,7 +174,7 @@ Since the example above is such a common requirement, it can be expressed as:
 
     "~> 2.0.0"
 
-Note that setting the version requirement does not affect the branch or tag that is checked out, so while a definition like the following is possible:
+Note that setting the version requirement for git repositories does not affect the branch or tag that is checked out, so while a definition like the following is possible:
 
     { :some_project, "~> 0.5.0", github: "some_project/other", tag: "0.3.0" }
 
@@ -180,7 +182,7 @@ It will lead to a dependency that will never be satisfied, because the tag being
 
 ### 1.4.1 Source Code Management (SCM)
 
-In the example above, we have used `git` to specify our dependencies. Mix is designed in a way it can support multiple SCM tools, shipping with `:git` and `:path` support by default. The most common options are:
+Mix is designed in a way it can support multiple SCM tools, Hex packages being the default, while `:git` and `:path` are supported as options. The most common options are:
 
 * `:git` - the dependency is a git repository that is retrieved and updated by Mix;
 * `:path` - the dependency is simply a path in the filesystem;
@@ -206,7 +208,7 @@ In order to compile a dependency, Mix looks into the repository for the best way
 If the dependency does not contain any of the above, you can specify a command directly with the `:compile` option:
 
 ```elixir
-    compile: "./configure && make"
+{:some_dep, git: "...", compile: "./configure && make"}
 ```
 
 If `:compile` is set to false, nothing is done.
@@ -249,7 +251,7 @@ defmodule Project.Mixfile do
   use Mix.Project
 
   def project do
-    [ apps_path: "apps" ]
+    [apps_path: "apps"]
   end
 end
 ```
@@ -263,14 +265,14 @@ defmodule A.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :a,
-      deps_path: "../../deps",
-      lockfile: "../../mix.lock",
-      deps: deps ]
+    [app: :a,
+     deps_path: "../../deps",
+     lockfile: "../../mix.lock",
+     deps: deps]
   end
 
   defp deps do
-    [ { :b, in_umbrella: true } ]
+    [{ :b, in_umbrella: true }]
   end
 end
 ```
@@ -285,13 +287,15 @@ Mix has the concept of environments that allows a developer to customize compila
 * `test` - used by `mix test`;
 * `prod` - the environment in which dependencies are loaded and compiled;
 
-By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done using the `env:` option:
+By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done by accessing `Mix.env`:
 
 ```elixir
 def project do
-  [ env: [
-    prod: [compile_path: "prod_ebin"] ] ]
+  [deps_path: deps_path(Mix.env)]
 end
+
+defp deps_path(:prod), do: "prod_deps"
+defp deps_path(_), do: "deps"
 ```
 
 Mix will default to the `dev` environment (except for tests). The environment can be changed via the `MIX_ENV` environment variable:
