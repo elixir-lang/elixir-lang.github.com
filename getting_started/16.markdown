@@ -107,7 +107,7 @@ iex> Blank.blank?(%User{})
 Instead of sharing protocol implementation with maps, structs require their own protocol implementation:
 
 ```elixir
-defprotocol Blank, for: User do
+defimpl Blank, for: User do
   def blank?(_), do: false
 end
 ```
