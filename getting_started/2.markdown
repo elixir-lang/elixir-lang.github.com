@@ -47,12 +47,12 @@ Notice that parentheses are not required in order to invoke a function.
 Elixir also supports shortcut notations for entering binary, octal and hexadecimal numbers:
 
 ```iex
-iex> 0x1F
-31
-iex> 0777
-511
 iex> 0b1010
 10
+iex> 0777
+511
+iex> 0x1F
+31
 ```
 
 Float numbers require a dot followed by at least one digit and also support `e` for the exponent number:
@@ -277,7 +277,7 @@ iex> size {:ok, "hello"}
 2
 ```
 
-Tuples stores elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation (indexes start from zero):
+Tuples store elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation (indexes start from zero):
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -325,9 +325,9 @@ iex> list ++ [4]
 
 The first operation is fast because we are simply adding a new cons that points to the remaining of `list`. The second one is slow because we need to rebuild the whole list and add a new element to the end.
 
-Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding element to tuples is expensive because it requires copying the whole tuple in memory.
+Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory.
 
-Those performance characteristics dictates the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents and it returns tuples:
+Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents and it returns tuples:
 
 ```iex
 iex> File.read("path/to/existing/file")
