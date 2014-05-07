@@ -43,7 +43,7 @@ Function world defined
 Hello World
 </pre>
 
-      <p>This allows a module to be defined in terms of many expressions, programmable by the developer, being the basic foundation for meta-programming. This is similar to what Joe Armstrong (creator of Erlang) proposes in his <a href="https://github.com/joearms/erl2" target="_blank">erl2 project</a>.</p>
+      <p>This allows a module to be defined in terms of many expressions, programmable by the developer, being the basic foundation for meta-programming in Elixir.</p>
     </div>
   </div>
 
@@ -64,26 +64,6 @@ end
 {% endhighlight %}
 
       <p>DSLs allow a developer to create abstractions for specific domains, often getting rid of boilerplate code.</p>
-    </div>
-  </div>
-
-  <div class="hentry post">
-    <h4>Polymorphism via protocols</h4>
-
-    <div class="entry-summary">
-      <p>Protocols allow developers to provide type-specific functionality at chosen extension points. For example, the <code>Enum</code> module in Elixir is commonly used to iterate collections:</p>
-
-{% highlight elixir %}
-Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
-{% endhighlight %}
-
-      <p>Since the <code>Enum</code> module is built on top of protocols, it is not limited to the data types that ship with Elixir. A developer can use their own collections with <code>Enum</code> as long as they implement the <code>Enumerable</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
-
-{% highlight elixir %}
-file  = File.stream!("README.md")
-lines = Enum.map(file, fn(line) -> Regex.replace(~r/"/, line, "'") end)
-File.write("README.md", lines)
-{% endhighlight %}
     </div>
   </div>
 
@@ -116,7 +96,27 @@ Documentation for my module. With **formatting**.
 
 {% endhighlight %}
 
-        <p>There is also a documentation generator for Elixir called <a href="https://github.com/elixir-lang/ex_doc">ExDoc</a> that can produce a static site using docstrings extracted from the source code.</p>
+      <p>Our test framework can also extract code samples from docstrings and guarantee the documentation is updated and correct! Finally, there is also a documentation generator for Elixir called <a href="https://github.com/elixir-lang/ex_doc">ExDoc</a> that can produce a static site using docstrings extracted from the source code.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Tooling included</h4>
+
+    <div class="entry-summary">
+      <p>Elixir ships with a great set of tools to ease development. Mix allows you to easily create your new project, manage tasks, dependencies and more:</p>
+
+{% highlight text %}
+$ mix new my_app
+$ cd my_app
+$ mix test
+.
+
+Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
+1 tests, 0 failures
+{% endhighlight %}
+
+      <p>In the example above, we have created a new project, compiled it and ran its initial test suite powered by the ExUnit test framework.</p>
     </div>
   </div>
 
@@ -130,7 +130,7 @@ Documentation for my module. With **formatting**.
 { User, name, age } = User.get("John Doe")
 {% endhighlight %}
 
-      <p>When mixed with guards, pattern matching allows us to easily express our intent:</p>
+      <p>When mixed with guards, pattern matching allows us to elegantly match on the possible scenarios and express our intent accordingly:</p>
 
 {% highlight elixir %}
 def serve_drinks({ User, name, age }) when age < 21 do
@@ -148,30 +148,10 @@ serve_drinks User.get("John")
   </div>
 
   <div class="hentry post">
-    <h4>Tooling included</h4>
-
-    <div class="entry-summary">
-      <p>Elixir ships with a great set of tools to ease development. Mix allows you to easily create your new project, manage tasks and dependencies:</p>
-
-{% highlight text %}
-$ mix new my_app
-$ cd my_app
-$ mix test
-.
-
-Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
-1 tests, 0 failures
-{% endhighlight %}
-
-      <p>In the example above, we have created a new project and ran its initial test suite powered by the ExUnit test framework.</p>
-    </div>
-  </div>
-
-  <div class="hentry post">
     <h4>Interactive (and remote) shells</h4>
 
     <div class="entry-summary">
-      <p>Elixir also ships with an Interactive Shell, called IEx, which provides a great set of helpers for writing code, like easy access to documentation (shown above), code reloading and so on. It is also a great companion for production, as it allows for example connecting to remote nodes. Here is a quick example you can try locally. In one terminal, do:</p>
+      <p>Elixir also ships with an Interactive Shell, called IEx, which provides a great set of helpers for writing code, like easy access to documentation, code reloading, debugging and so on. It is also a great companion for production, as it allows for example connecting to remote nodes. Here is a quick example you can try locally. In one terminal, do:</p>
 
 {% highlight text %}
 $ iex --name hello
@@ -188,7 +168,27 @@ iex(hello@machine)1> Hello.world
 "Distributed hello world"
 {% endhighlight %}
 
-      <p>Notice we were able to invoke a function from a module defined in the other terminal! Even the node names are the same. This will work in between machines in the same network as long as they have the same value in the <code>~/.erlang.cookie</code> file!</p>
+      <p>Notice we were able to connect and invoke a function from a module defined in the other terminal! This will work in between machines in the same network as long as they have the same value in the <code>~/.erlang.cookie</code> file!</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Polymorphism via protocols</h4>
+
+    <div class="entry-summary">
+      <p>Protocols allow developers to provide type-specific functionality at chosen extension points. For example, the <code>Enum</code> module in Elixir is commonly used to enumerate collections:</p>
+
+{% highlight elixir %}
+Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
+{% endhighlight %}
+
+      <p>Since the <code>Enum</code> module is built on top of protocols, it is not limited to the data types that ship with Elixir. A developer can use their own collections with <code>Enum</code> as long as they implement the <code>Enumerable</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
+
+{% highlight elixir %}
+file  = File.stream!("README.md")
+lines = Enum.map(file, fn(line) -> Regex.replace(~r/"/, line, "'") end)
+File.write("README.md", lines)
+{% endhighlight %}
     </div>
   </div>
 
