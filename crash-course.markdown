@@ -342,7 +342,7 @@ If the keys are all atoms, Elixir allows developers to use `key: 0` for defining
 ```elixir
 map = %{key: 0}
 map = %{map | key: 1}
-map.value === 1
+map.key === 1
 ```
 
 ### Regular expressions
