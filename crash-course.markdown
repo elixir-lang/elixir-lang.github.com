@@ -333,7 +333,7 @@ Value =:= 1
 ```elixir
 map = %{:key => 0}
 map = %{map | :key => 1}
-#{:key => value} = map
+%{:key => value} = map
 value === 1
 ```
 
