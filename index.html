@@ -148,6 +148,29 @@ serve_drinks User.get("John")
   </div>
 
   <div class="hentry post">
+    <h4>Lightweight concurrency</h4>
+    <div class="entry-summary">
+      <p>All Elixir code runs inside tiny processes that are isolated and exchange information via messages:</p>
+
+{% highlight elixir %}
+parent = self()
+
+# Spawn a child process
+spawn_link(fn ->
+  send parent, {:msg, "hello world"}
+end)
+
+# Block until the message is received
+receive do
+  {:msg, contents} -> IO.puts contents
+end
+{% endhighlight %}
+
+      <p>Since processes are lightweight and isolated, Elixir it is not uncommon to have dozens of thousands of processes running simultaneously. Proceses are provide the means for building distributed and fault-tolerant applications.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
     <h4>Interactive (and remote) shells</h4>
 
     <div class="entry-summary">
