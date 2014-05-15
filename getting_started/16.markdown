@@ -6,6 +6,8 @@ guide: 16
 
 # {{ page.title }}
 
+  <div class="toc"></div>
+
 Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
 
 In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
@@ -116,7 +118,7 @@ If desired you could come up with your own semantics for a user being blank. Not
 
 In many cases though, developers may want to provide a default implementation for structs, as explicitly implementing the protocol for all structs can be tedious. That's when falling back to Any comes in handy.
 
-### 16.2 Falling back to Any
+## 16.2 Falling back to Any
 
 It may be convenient to provide a default implementation for all types. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
 
@@ -137,7 +139,7 @@ end
 
 Now all data types (including structs) that we have not implemented the `Blank` protocol for will be considered non-blank.
 
-### 16.3 Built-in protocols
+## 16.3 Built-in protocols
 
 Elixir ships with some built-in protocols. In previous chapters, we have discussed the `Enum` module which provides many functions that work with any data structure that implements the `Enumerable` protocol:
 
