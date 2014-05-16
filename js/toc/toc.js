@@ -15,7 +15,9 @@
       // get all headers with an ID
       return this.id;
     }), output = $(this);
-    if (!headers.length || headers.length < 3 || !output.length) {
+    // Show the toc when there are at least 2 headers
+    // --alco
+    if (!headers.length || headers.length < 2 || !output.length) {
       return;
     }
 
