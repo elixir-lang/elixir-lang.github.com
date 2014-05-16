@@ -6,6 +6,8 @@ guide: 2
 
 # {{ page.title }}
 
+  <div class="toc"></div>
+
 Where do we keep state in Elixir?
 
 Our software needs to keep state, configuration values, data about the running system, etc. We have learned in [previous sections](../2.html#receive) how we can use processes/actors to keep state, receiving and responding to messages in a loop but this approach seems to be brittle. What happens if there is an error in our actor and it crashes? Even more, is it really required to create a new process when all we want to do is to keep simple configuration values?
