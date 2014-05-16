@@ -151,7 +151,7 @@ hello
 
 The group leader can be configured per process and is used in different situations, for example, when executing code in remote nodes, it guarantees messages printed in the remote node are redirected and printed in the "executor" one.
 
-## 12.5 `iodata` and `char_data`
+## 12.5 `iodata` and `chardata`
 
 In all examples above, we have used binaries/strings when writing to files. In the chapter "Binaries, strings and char lists", we mentioned how strings are simply bytes while char lists are lists with codepoints.
 
@@ -166,12 +166,10 @@ hello world
 :ok
 ```
 
-However, this requires some attention. A char list needs to be encoded into bytes when written to disk and that depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of bytes and binaries to be given. If you provide a list of codepoints and those codepoints have value more than 255, the operation will fail since we won't know how to encode them.
+However, this requires some attention. A list may represent either a bunch of bytes or a bunch of characters and which one to use depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument, i.e. it expects a list of integers representing bytes and binaries to be given.
 
 On the other hand, `:stdio` and files opened with `:utf8` encoding work with the remaining functions in the `IO` module and those expect a `char_data` as argument, i.e. they expect a list of characters or strings to be given.
 
 Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
 
-When working with iodata and char data, Elixir provides `iodata_to_binary/1` to convert any `iodata` to binary. The functions `String.from_char_data!/1` and `List.from_char_data!/1` can be used to convert char data into strings or char lists respectively. Unless you are working closely with some devices, you will rarely need to use those functions.
-
-This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) lists for IO operations.
+This finishes our tour on IO devices and IO related functionality. We have learned about four Elixir modules, [`IO`](/docs/stable/IO.html), [`File`](/docs/stable/File.html), [`Path`](/docs/stable/Path.html) and [`StringIO`](/docs/stable/StringIO.html), as well as how the VM uses processes for the underlying IO mechanisms and how to use (char and io) data for IO operations.
