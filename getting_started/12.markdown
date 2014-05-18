@@ -130,7 +130,7 @@ After `IO.write/2`, we can see the request sent by the IO module printed, which 
 The [`StringIO`](/docs/stable/StringIO.html) module provides an implementation of the IO device messages on top of a string:
 
 ```iex
-iex> {:ok, pid} = StringIO.start("hello")
+iex> {:ok, pid} = StringIO.open("hello")
 {:ok, #PID<0.43.0>}
 iex> IO.read(pid, 2)
 "he"
