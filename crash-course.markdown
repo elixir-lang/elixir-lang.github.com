@@ -434,9 +434,6 @@ defmodule HelloModule do
     end
   end
 
-  # More on this in the Records section
-  defrecord State, ponies: [:sally]
-
   def dummy do
     :ok
   end
@@ -453,9 +450,6 @@ HelloModule.Utils.util
 
 HelloModule.Utils.priv
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
-
-HelloModule.State.new
-#=> HelloModule.State[ponies: [:sally]]
 ```
 
 <div id="function_syntax"></div>
