@@ -157,7 +157,7 @@ end
 
 **Note:** Although not required, it is common to split dependencies into their own function.
 
-The dependency is represented by an atom, followed by a requirement and some options. By default, Mix uses [hex.pm](https://hex.pm) to fetch dependencies but it can also fetch them from a git repository or directly from the filesystem.
+The dependency is represented by an atom, followed by a requirement and some options. By default, Mix uses [hex.pm](https://hex.pm) to fetch dependencies but it can also fetch them from a git repository or directly from the file system.
 
 When using Hex, you must use requirements to specify which versions of a given dependency you accept. It supports common operators like `>=`, `<=`, `>`, `==` as follows:
 
@@ -187,7 +187,7 @@ It will lead to a dependency that will never be satisfied, because the tag being
 Mix is designed in a way it can support multiple SCM tools, Hex packages being the default, while `:git` and `:path` are supported as options. The most common options are:
 
 * `:git` - the dependency is a git repository that is retrieved and updated by Mix;
-* `:path` - the dependency is simply a path in the filesystem;
+* `:path` - the dependency is simply a path in the file system;
 * `:compile` - how to compile the dependency;
 * `:app` - the path of the application expected to be defined by the dependency;
 * `:env` - the environment to use from the dependency (more info below), defaults to `:prod`;
