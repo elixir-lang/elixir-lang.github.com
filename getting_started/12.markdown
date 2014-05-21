@@ -55,7 +55,7 @@ iex> {:ok, file} = File.open "another", [:write, :utf8]
 {:ok, #PID<0.48.0>}
 ```
 
-Besides functions for opening, reading and writing files, the `File` module has many functions that work on the filesystem. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
+Besides functions for opening, reading and writing files, the `File` module has many functions that work on the file system. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` creates directories guaranteeing their parents exists and there is even `File.cp_r/2` and `File.rm_rf/2` which copy and remove files and directories recursively.
 
 You will also notice that functions in the `File` module have two variants, one with `!` (bang) in its name and others without. For example, when we read the "hello" file above, we have used the one without `!`. Let's try some new examples:
 
@@ -102,7 +102,7 @@ iex> Path.expand("~/hello")
 "/Users/jose/hello"
 ```
 
-With this we have covered the main modules for doing IO and interacting with the filesystem. Next we will discuss some curiosities and advanced topics regarding IO. Those sections are not necessary to write Elixir code, so feel free to skip them, but they do provide an overview of how the IO system is implemented in the VM and other curiosities.
+With this we have covered the main modules for doing IO and interacting with the file system. Next we will discuss some curiosities and advanced topics regarding IO. Those sections are not necessary to write Elixir code, so feel free to skip them, but they do provide an overview of how the IO system is implemented in the VM and other curiosities.
 
 ## 12.4 Processes and group leaders
 

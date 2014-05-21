@@ -22,7 +22,7 @@ Our application is going to be a simple stack that allow us push and pop items a
 
 Our application is going to have one stack which may be accessed by many processes at the same time. To achieve that, we will create a server that is responsible to manage the stack. Clients will send messages to the server whenever they want to push or pop something from the stack.
 
-Since creating such servers is a common pattern when building Erlang and Elixir applications, we have a behavior in OTP that encapsulates common server functionalities called **GenServer**. Let's create a file named `lib/stacker/server.ex` with our first server:
+Since creating such servers is a common pattern when building Erlang and Elixir applications, we have a behavior in OTP that encapsulates common server functionality called **GenServer**. Let's create a file named `lib/stacker/server.ex` with our first server:
 
 ```elixir
 defmodule Stacker.Server do
@@ -208,7 +208,7 @@ iex> :gen_server.call(:stacker, :pop)
 
 It crashes exactly as before but it is restarted right away by the supervisor with the default stack, allowing us to retrieve `:hello` again. Excellent!
 
-By default the supervisor allows a worker to restart at maximum 5 times in a 5 seconds timespan. If the worker crashes more frequently than that, the supervisor gives up on the worker and no longer restarts it. Let's check it by sending 5 unknown messages one right after the other (be fast!):
+By default the supervisor allows a worker to restart at maximum 5 times in a 5 seconds time span. If the worker crashes more frequently than that, the supervisor gives up on the worker and no longer restarts it. Let's check it by sending 5 unknown messages one right after the other (be fast!):
 
 ```iex
 iex> :gen_server.call(:stacker, :unknown)
@@ -223,7 +223,7 @@ The sixth message no longer generates an error report, since our server was no l
 
 ## 2.3 Who supervises the supervisor?
 
-We have built our supervisor but a pertinent question is: who supervises the supervisor? To answer this question, OTP contains the concept of applications. Applications can be started and stopped as an unit and, when doing so, they are often linked to a supervisor.
+We have built our supervisor but a pertinent question is: who supervises the supervisor? To answer this question, OTP contains the concept of applications. Applications can be started and stopped as a unit and, when doing so, they are often linked to a supervisor.
 
 In the previous chapter, we have learned how Mix automatically generates an `.app` file every time we compile our project based on the information contained on the `application` function in our `mix.exs` file.
 
@@ -324,4 +324,4 @@ iex> :application.get_env(:stacker, :foo)
 
 For example, IEx and ExUnit are two applications that ship with Elixir that relies on such configuration values, as seen in their `mix.exs` files: [IEx](https://github.com/elixir-lang/elixir/blob/master/lib/iex/mix.exs) and [ExUnit](https://github.com/elixir-lang/elixir/blob/master/lib/ex_unit/mix.exs). Such applications then provide [wrappers for reading and setting such values](https://github.com/elixir-lang/elixir/blob/d2bfd10299dc0e2df573589f1d33565177d63a7d/lib/ex_unit/lib/ex_unit.ex#L125-L155).
 
-With this note, we finalize this chapter. We have learned how to create servers, supervise them, hook them into our application lifecycle and provide simple configuration options. In the next chapter, we will learn how to create custom tasks in Mix.
+With this note, we finalize this chapter. We have learned how to create servers, supervise them, hook them into our application life cycle and provide simple configuration options. In the next chapter, we will learn how to create custom tasks in Mix.
