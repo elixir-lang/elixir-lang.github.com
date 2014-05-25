@@ -30,11 +30,11 @@ In a nutshell, here is what new:
 
 * The [Getting Started guide](http://elixir-lang.org/getting_started/1.html) was rewritten from scratch. The previous guide was comprised of 7 chapters and was about to become 2 years old. The new guide features 20 chapters, it explores the new maps and structs (which are part of this release), and it goes deeper into topics like IO and File handling. It also includes an extra guide, still in development, about [Meta-Programming in Elixir](http://elixir-lang.org/getting_started/meta/1.html);
 
-* Elixir v0.13 provides a new comprehension syntax that not only works with lists, but with any [`Enumerable`](/docs/stable/Enumerable.html). The output of a comprehension is also extensible via the [`Collectable`](/docs/stable/Collectable.html) protocol;
+* Elixir v0.13 provides a new comprehension syntax that not only works with lists, but with any [`Enumerable`](/docs/stable/elixir/Enumerable.html). The output of a comprehension is also extensible via the [`Collectable`](/docs/stable/elixir/Collectable.html) protocol;
 
 * Mix, Elixir's build tool, has been improved in order to provide better workflows when compiling projects and working with dependencies;
 
-* There are many other changes, like the addition of [StringIO](/docs/stable/StringIO.html), support for [tags and filters in ExUnit](/docs/stable/ExUnit.Case.html) and more. Please check the [CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.13.0/CHANGELOG.md) for the complete list.
+* There are many other changes, like the addition of [StringIO](/docs/stable/elixir/StringIO.html), support for [tags and filters in ExUnit](/docs/stable/ex_unit/ExUnit.Case.html) and more. Please check the [CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.13.0/CHANGELOG.md) for the complete list.
 
 Even with all those improvements, Elixir v0.13.0 is backwards compatible with Elixir v0.12.5 and upgrading should be a clean process. 
 
@@ -68,7 +68,7 @@ iex> %{"other" => value} = map
 
 A map pattern will match any map that has all the keys specified in the pattern. The values for the matching keys must also match. For example, `%{"hello" => world}` will match any map that has the key `"hello"` and assign the value to `world`, while `%{"hello" => "world"}` will match any map that has the key `"hello"` with value equals to `"world"`. An empty map pattern (`%{}`) will match all maps.
 
-Developers can use the functions in the [`Map` module](/docs/stable/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](/getting_started/7.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html)).
+Developers can use the functions in the [`Map` module](/docs/stable/elixir/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](/getting_started/7.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html)).
 
 Maps also provide special syntax for creating, accessing and updating maps with atom keys:
 
@@ -185,7 +185,7 @@ For more information on structs, check out the [Structs chapter in the getting s
 
 With the introduction of maps and structs, some deprecations will arrive on upcoming releases. First of all, the `ListDict` data structure is being deprecated and phased out. Records are also being deprecated from the language, although it is going to be a longer process, as many projects and Elixir itself still use records in diverse occasions.
 
-Note though only Elixir records are being deprecated. Erlang records, which are basically syntax sugar around tuples, will remain in the language for the rare cases Elixir developers need to interact with Erlang libraries that provide records. In particular, the [Record](/docs/stable/Record.html) has been updated to provide the new Record API (while keeping the old one for backwards compatibility).
+Note though only Elixir records are being deprecated. Erlang records, which are basically syntax sugar around tuples, will remain in the language for the rare cases Elixir developers need to interact with Erlang libraries that provide records. In particular, the [Record](/docs/stable/elixir/Record.html) has been updated to provide the new Record API (while keeping the old one for backwards compatibility).
 
 Finally, structs are still in active development and new features, like `@derive`, should land in upcoming Elixir releases. For those interested, the [original maps and structs proposal is still availble](https://gist.github.com/josevalim/b30c881df36801611d13).
 
@@ -222,7 +222,7 @@ iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 "helloworld"
 ```
 
-Sets, maps and other dictionaries can also be given with the `:into` option. In general, the `:into` accepts any structure as long as it implements the [`Collectable` protocol](/docs/stable/Collectable.html).
+Sets, maps and other dictionaries can also be given with the `:into` option. In general, the `:into` accepts any structure as long as it implements the [`Collectable` protocol](/docs/stable/elixir/Collectable.html).
 
 For example, the `IO` module provides streams, that are both `Enumerable` and `Collectable`. You can implement an echo terminal that returns whatever is typed into the shell, but in upcase, using comprehensions:
 
@@ -275,7 +275,7 @@ That said, in the next months we plan to:
 
 * Integrate applications configuration (provided by OTP) right into Mix;
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces;
-* Properly expose the functionality provided by Applications, Supervisors, GenServers and GenEvents and study how they can integrate with Elixir. For example, how to consume events from GenEvent as a [stream of data](/docs/stable/Stream.html)?
+* Properly expose the functionality provided by Applications, Supervisors, GenServers and GenEvents and study how they can integrate with Elixir. For example, how to consume events from GenEvent as a [stream of data](/docs/stable/elixir/Stream.html)?
 * Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://erlang.org/doc/man/rpc.html);
 * Rewrite the Mix and ExUnit guides to focus on applications and OTP as a whole, rebranding it to "Building Apps with Mix and OTP";
 

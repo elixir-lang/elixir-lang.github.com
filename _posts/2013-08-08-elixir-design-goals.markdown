@@ -202,9 +202,9 @@ Enum.map set, fn(x) -> x * 2 end
 #=> [2,4,6]
 ```
 
-Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](http://elixir-lang.org/docs/stable/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.
+Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](http://elixir-lang.org/docs/stable/elixir/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.
 
-There are many other protocols exposed by the language, like [the `Inspect` protocol](http://elixir-lang.org/docs/stable/Inspect.html) for pretty printing data structures and [the `Access` protocol](http://elixir-lang.org/docs/stable/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
+There are many other protocols exposed by the language, like [the `Inspect` protocol](http://elixir-lang.org/docs/stable/elixir/Inspect.html) for pretty printing data structures and [the `Access` protocol](http://elixir-lang.org/docs/stable/elixir/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
 
 ## Summing up
 

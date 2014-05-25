@@ -54,11 +54,11 @@ Stream.repeatedly(fn -> :random.uniform end) |> Enum.take(3)
 #=> [0.4435846174457203, 0.7230402056221108, 0.94581636451987]
 ```
 
-`Stream.repeatedly/1` returns an infinite stream but that's ok we just need its first three elements. You can learn more about [stream and related functions in `Stream` module documentation](http://elixir-lang.org/docs/stable/Stream.html).
+`Stream.repeatedly/1` returns an infinite stream but that's ok we just need its first three elements. You can learn more about [stream and related functions in `Stream` module documentation](http://elixir-lang.org/docs/stable/elixir/Stream.html).
 
 ## Sets
 
-This release also adds [the Sets API](http://elixir-lang.org/docs/stable/Set.html) to Elixir and a HashSet implementation. The HashSet implementation follows [the same design goals as the HashDict implementation](http://elixir-lang.org/blog/2013/01/27/elixir-v0-8-0-released/) released at the beginning of this year, starting with a compact representation and expanding and contracting as needed.
+This release also adds [the Sets API](http://elixir-lang.org/docs/stable/elixir/Set.html) to Elixir and a HashSet implementation. The HashSet implementation follows [the same design goals as the HashDict implementation](http://elixir-lang.org/blog/2013/01/27/elixir-v0-8-0-released/) released at the beginning of this year, starting with a compact representation and expanding and contracting as needed.
 
 This feature was a contribution from [Joseph Wilk](https://github.com/josephwilk) and he talks about its implementation and provides some benchmarks [on his blog](http://blog.josephwilk.net/elixir/sets-in-elixir.html).
 
@@ -66,7 +66,7 @@ This feature was a contribution from [Joseph Wilk](https://github.com/josephwilk
 
 Another addition to this release is pretty printing. The pretty printing started as an implementation of the [Wadler paper](http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf) by [Jonns Mostovoys](https://github.com/manpages) which was then improved by [Gustavo Brunoro](https://github.com/brunoro) under his Google Summer of Code project as described in [Lindig's _Strictly Prettier_ paper](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.34.2200).
 
-As soon as you upgrade to Elixir v0.10.0 and start IEx, you will get pretty printing for all data structures provided by Elixir. We have also added documentation to the `Inspect` module about [adding pretty printing to your own structures](http://elixir-lang.org/docs/stable/Inspect.html) as well as [using the document algebra for any other kind of formatting](http://elixir-lang.org/docs/stable/Inspect.Algebra.html).
+As soon as you upgrade to Elixir v0.10.0 and start IEx, you will get pretty printing for all data structures provided by Elixir. We have also added documentation to the `Inspect` module about [adding pretty printing to your own structures](http://elixir-lang.org/docs/stable/elixir/Inspect.html) as well as [using the document algebra for any other kind of formatting](http://elixir-lang.org/docs/stable/elixir/Inspect.Algebra.html).
 
 ## Other improvements
 
@@ -78,7 +78,7 @@ Other notable improvements are:
 
 * We are also working hard on Windows support, improving its command-line tools and working towards a green test suite, thanks to [Tom Jansens](https://github.com/tojans);
 
-* Meta-programming in Elixir was also improved by the addition of the `binding/0` and `binding/1` macros plus the additions of `Macro.expand_once/2` and `Macro.expand_all/2` to the [`Macro` module](http://elixir-lang.org/docs/stable/Macro.html);
+* Meta-programming in Elixir was also improved by the addition of the `binding/0` and `binding/1` macros plus the additions of `Macro.expand_once/2` and `Macro.expand_all/2` to the [`Macro` module](http://elixir-lang.org/docs/stable/elixir/Macro.html);
 
 There are also improvements to typespecs, error messages, many bug fixes and some backwards incompatible changes. We have posted a detailed [upgrade instructions on the mailing list](https://groups.google.com/forum/?fromgroups#!topic/elixir-lang-talk/ksrefrgK1eY). For a general overview, [check out the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.10.0/CHANGELOG.md).
 
