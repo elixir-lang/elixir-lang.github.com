@@ -120,6 +120,10 @@ Will generate:
 
 Notice the `lib/todo.ex` file was compiled but, not only that, a `todo.app` file was generated too. This `.app` file is generated with the information from the `application/0` function in the `mix.exs` file and we will explore it with details in future chapters.
 
+Once the project is compiled, you can start an iex session inside the project by running:
+
+    $ iex -S mix
+
 ## 1.3 Running tests
 
 Mix also generated the appropriate structure for running our project tests. Mix projects usually follow the convention of having a `_test.exs` file in the `test` directory for each file in the `lib` directory. For this reason, we can already find a `test/todo_test.exs` file, which doesn't do much at this point:
@@ -136,7 +140,7 @@ end
 
 It is important to note a couple things:
 
-1) Notice the file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
+1) Notice the test file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
 2) We define a test module named `TodoTest`, using [`ExUnit.Case`](/docs/stable/ex_unit/ExUnit.Case.html) to inject default behavior and define a simple test using the `test/2` macro;
 

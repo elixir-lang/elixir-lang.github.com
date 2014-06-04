@@ -1,0 +1,193 @@
+---
+layout: getting_started
+title: 2 Agents
+guide: 2
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+In this chapter, we will create a module named `Todo.List`. This module will be responsible to store our todo lists and support them to be read and modified from different processes.
+
+If you have skipped the Getting Started guide or if you read it some time ago, be sure to re-read the chapter about [Processes](/getting_started/11.html). We will use it as starting point in this and upcoming chapters.
+
+## 2.1 The trouble with state
+
+Elixir is an immutable language where nothing is shared by default. If we want to create todo lists, store and access them from multiple places, we have two main options in Elixir:
+
+* Processes
+* [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
+
+We have talked about processes, while ETS is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own process, instead we use any of the many abstractions available in Elixir and OTP:
+
+* [Agent](/docs/stable/elixir/Agent.html) - agents are simple wrappers around state;
+* [GenServer](/docs/stable/elixir/GenServer.html) - generic servers (processes) that encapsulate state, provide sync and async calls, support for code reloading and more;
+* [GenEvent](/docs/stable/elixir/GenEvent.html) - generic event managers and event handlers. If you need to publish events that are consumed by many handlers, you want a GenEvent;
+* [Task](/docs/stable/elixir/Task.html) - tasks are abstractions around computation. If you want to spawn a computation to happen asynchronously and read its value later, tasks are a great fit;
+
+We will explore all of those in this guide. Keep in mind that all of those abstractions are implemented on top of processes using the basic features provided by the VM, like `send`, `receive`, `spawn` and `link`.
+
+## 2.2 Agents
+
+[Agents](/docs/stable/elixir/Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
+
+    $ iex -S mix
+
+And play a bit with agents:
+
+```iex
+iex> {:ok, agent} = Agent.start_link fn -> [] end
+{:ok, #PID<0.57.0>}
+iex> Agent.update(agent, fn list -> ["eggs"|list] end)
+:ok
+iex> Agent.get(agent, fn list -> list end)
+["eggs"]
+iex> Agent.stop(agent)
+:ok
+```
+
+We have started an agent with an initial state of an empty list. Then we issue commands to add a new item to the list and finally retrieved the whole list. Once we are done with the agent, we can call `Agent.stop/1` to terminate the agent process.
+
+Let's implement our `Todo.List` using agents. But before starting the implementation, let's first write some tests. Create a file at `test/todo/list_test.exs` (note the `.exs` extension) with the following:
+
+```elixir
+defmodule Todo.ListTest do
+  use ExUnit.Case, async: true
+
+  test "can store many items" do
+    {:ok, todo} = Todo.List.start_link
+    assert Todo.List.get(todo) == []
+    
+    Todo.List.put(todo, "eggs")
+    assert Todo.List.get(todo) == ["eggs"]
+
+    Todo.List.put(todo, "bread")
+    assert Todo.List.get(todo) == ["bread", "eggs"]
+
+    Agent.stop(todo)
+  end
+end
+```
+
+Our first test is quite straight-forward. We start a new `Todo.List` and perform some `get/1` and `put/2` operations on it, finally using `Agent.stop(todo)` to shut down the todo list process.
+
+Also note that we passed the `async: true` option to `ExUnit.Case`. This option will make this test  case run in parallel with other test cases that set up the `:async` option. This is extremely useful to speed up our test suite by using our cores in our machine. Note though the `:async` true option must only be set if the test case does not rely or change any global value. For example, if the test requires writing to the filesystem, registering processes, accessing a database, you likely don't want to make it async.
+
+Regardless of being async or not, our new test should obviously fail, as none of the functionality is implemented.
+
+In order to fix the failing test, let's create a file at `lib/todo/list.ex` with the contents below. Feel free to give a try at implementing the `Todo.List` module yourself using agents before seeing the implementation below.
+
+```elixir
+defmodule Todo.List do
+  @doc """
+  Starts a new Todo.List process.
+  """
+  def start_link do
+    Agent.start_link(fn -> [] end)
+  end
+
+  @doc """
+  Gets the todo list.
+  """
+  def get(agent) do
+    Agent.get(agent, &(&1))
+  end
+
+  @doc """
+  Puts an item at the top of the todo list.
+  """
+  def put(agent, item) do
+    Agent.update(agent, &[item|&1])
+  end
+end
+```
+
+With the `Todo.List` module defined, our test should pass!
+
+## 2.3 ExUnit callbacks
+
+Before moving on and adding more features to `Todo.List`, let's talk about ExUnit callbacks. As you may expect, all `Todo.List` tests will require a `Todo.List` process to be started during setup and stopped after the test. Luckily, ExUnit support callbacks that allows us to skip such repetitive tasks.
+
+Let's rewrite the test case to use callbacks:
+
+```elixir
+defmodule Todo.ListTest do
+  use ExUnit.Case, async: true
+
+  setup do
+    {:ok, todo} = Todo.List.start_link
+    on_exit(fn -> Agent.stop(todo) end)
+    {:ok, todo: todo}
+  end
+
+  test "can store many items", %{todo: todo} do
+    assert Todo.List.get(todo) == []
+
+    Todo.List.put(todo, "eggs")
+    assert Todo.List.get(todo) == ["eggs"]
+
+    Todo.List.put(todo, "bread")
+    assert Todo.List.get(todo) == ["bread", "eggs"]
+  end
+end
+```
+
+We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself. During setup, we have spawned the the `Todo.List` process and also registered an `on_exit/1` callback that will be invoked once the test is done (more specifically, once the test process exits).
+
+Notice that we need a mechanism to pass the `todo` pid from the callback to the test. We do so by using the test context. When we return `{:ok, todo: todo}` from the callback, ExUnit will merge the second element of the tuple (a dictionary) into the test context. The test context is a map which we can then match during the test definition:
+
+```elixir
+test "can store many items", %{todo: todo} do
+```
+
+You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](/docs/stable/ex_unit/ExUnit.Callbacks.html).
+
+## 2.4 Other Agent actions
+
+Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one tackle via `Agent.get_and_update/2`. Let's implement a `Todo.List.delete/2` function that deletes an item from the todo and returns the previous version of the todo list:
+
+```elixir
+@doc """
+Deletes an item from the todo list.
+
+Returns the previous version of the todo list.
+"""
+def delete(agent, item) do
+  Agent.get_and_update(agent, fn list ->
+    {list, List.delete(list, item)}
+  end)
+end
+```
+
+Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for Agents to learn more about them.
+
+## 2.5 Client/Server in Agents
+
+Before we move on to the next chapter, let's discuss the client/server dichotomy in agents. When we define a function as we did for `Todo.List.delete/2` using agents:
+
+```elixir
+def delete(agent, item) do
+  Agent.get_and_update(agent, fn list ->
+    {list, List.delete(list, item)}
+  end)
+end
+```
+
+Everything that is inside the function passed to the agent happens in the agent process. In this case, since the agent process is the one receiving and responding to our messages, we say the agent is the server. Everything outside the function is happening in the client.
+
+This distinction is important in case there are expensive actions to be done and you must consider if it will be better to perform such in the client or in the server. For example:
+
+```elixir
+def delete(agent, item) do
+  :timer.sleep(1000) # sleeps the client
+  Agent.get_and_update(agent, fn list ->
+    :timer.sleep(1000) # sleeps the server
+    {list, List.delete(list, item)}
+  end)
+end
+```
+
+When a long action is performed in the server, all other requests to that particular server will have to wait until the long action is done. This may eventually lead to timeouts.
+
+In the next chapter we will explore GenServers, where the segregation in between clients and servers is made even more apparenty.
