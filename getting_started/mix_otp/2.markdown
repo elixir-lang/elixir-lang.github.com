@@ -176,7 +176,7 @@ end
 
 Everything that is inside the function passed to the agent happens in the agent process. In this case, since the agent process is the one receiving and responding to our messages, we say the agent is the server. Everything outside the function is happening in the client.
 
-This distinction is important in case there are expensive actions to be done and you must consider if it will be better to perform such in the client or in the server. For example:
+This distinction is important in case there are expensive actions to be done and you must consider if it will be better to perform such on the client or on the server. For example:
 
 ```elixir
 def delete(agent, item) do
@@ -188,6 +188,6 @@ def delete(agent, item) do
 end
 ```
 
-When a long action is performed in the server, all other requests to that particular server will have to wait until the long action is done. This may eventually lead to timeouts.
+When a long action is performed on the server, all other requests to that particular server will wait until the action is done, which may lead some clients to timeout.
 
 In the next chapter we will explore GenServers, where the segregation in between clients and servers is made even more apparenty.

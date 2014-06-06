@@ -1,0 +1,250 @@
+---
+layout: getting_started
+title: 3 GenServers
+guide: 3
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+In the previous chapter we have used agents to store our todo lists. In the first chapter, however, we have specified we would like to name each todo list:
+
+```elixir
+PUT shopping milk
+OK
+
+PUT shopping eggs
+OK
+
+LIST shopping
+* eggs
+* milk
+OK
+```
+
+Since agents are processes, each todo list has a process identifier (pid) but it doesn't have a name. One solution to this problem would be to register each agent. For example, we could create a todo list as:
+
+```iex
+iex> Agent.start_link(fn -> [] end, name: :shopping)
+{:ok, #PID<0.43.0>}
+iex> Todo.List.put(:shopping, "eggs")
+:ok
+iex> Todo.List.get(:shopping)
+["eggs"]
+```
+
+However this a terrible idea! Local names in Elixir must be atoms which means we would need to convert the todo list name, often received from an external client, to atoms and **we should never convert user input to atoms**. The reason for such is that atoms are not garbage collected so, once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory! In practice though it is more likely you will reach the Erlang VM limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
+
+Instead of abusing the name registering facility, we will instead create a new process that will keep a dictionary associating the todo list name to the todo list process. From now on, we will call this new process the **manager process**.
+
+The manager process also needs to guarantee the todo list dictionary is always up to date. For example, in case one of the todo list processes crash (sometimes due to a bug), the manager must clean up the dictionary in order to avoid serving stale entries. In Elixir, we then say the manager needs to **monitor** each todo list process.
+
+Since the manager process needs to do more than just wrap around a state, but also monitor, agents are not a good fit. Instead, we will use a GenServer which is the default abstractions for building generic servers in both Elixir and OTP.
+
+## 3.1 Our first GenServer
+
+A GenServer is implemented in two parts: by specifying the client API and the server callbacks, all in a single module. Create a new file at `lib/todo/manager.ex` with the following contents:
+
+```elixir
+defmodule Todo.Manager do
+  use GenServer
+
+  ## Cient API
+
+  @doc """
+  Starts the `Todo.Manager`.
+  """
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__, :ok, opts)
+  end
+
+  @doc """
+  Looks up the pid for `todo_list_name` stored in `server`.
+
+  Returns `{:ok, pid}` in case a todo list exists,
+  `:error` otherwise.
+  """
+  def lookup(server, todo_list_name) do
+    GenServer.call(server, {:lookup, todo_list_name})
+  end
+
+  @doc """
+  Ensures there is a process associated to the given todo
+  `todo_list_name`.
+  """
+  def create(server, todo_list_name) do
+    GenServer.cast(server, {:create, todo_list_name})
+  end
+
+  ## Server Callbacks
+
+  def init(:ok) do
+    {:ok, HashDict.new}
+  end
+
+  def handle_call({:lookup, todo_list_name}, _from, names) do
+    {:reply, HashDict.fetch(names, todo_list_name), names}
+  end
+
+  def handle_cast({:create, todo_list_name}, names) do
+    if HashDict.get(names, todo_list_name) do
+      {:noreply, names}
+    else
+      {:ok, todo_list} = Todo.List.start_link()
+      {:noreply, HashDict.put(names, todo_list_name, todo_list)}
+    end
+  end
+end
+```
+
+The first function is `start_link/1` which starts a new GenServer passing three arguments: the module where the server callbacks are implemented, in this case the current `__MODULE__` itself, the initialization arguments, in this case the atom `:ok`, and a set of options which can, for example, be the name of the server.
+
+The next two functions, `lookup/2` and `create/2` are responsible to send requests to the server. Those requests are often specified as tuples, in this case, `{:lookup, todo_list_name}` and `{;create, todo_list_name}` respectively.
+
+There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send you a response back to such requests. Casts are asynchronous and the server won't send a response back. In fact, doing a cast does not even guarantee the server has received the message and, for such reasons, must be used sparingly.
+
+On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional though and for now we have only implemented the ones we care about.
+
+The first is the `init/1` callback, that receives the argument given `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new HashDict. Note we are using a HashDict as state instead of a map because in the current Elixir version maps are only efficient when holding a small amount of keys.
+
+For `call` requests, we must implement a `handle_call/3` callback that receives the `request`, the data from the process sending the request `_from` and the current server state (`names`). A `handle_call/3` callback must return a tuple in the format `{:reply, reply, new_state}`, where `reply` is what will be sent to the client and the `new_state` is the new server state. 
+
+For `cast` requests, we must implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). A `handle_call/3` callback must return a tuple in the format `{:noreply, new_state}`.
+
+Actually, there are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `init/1` and `terminate/2` that one could implement, including `code_change/3` for hot code swaps. You are invited to explore the [full GenServer documentation](/docs/stable/elixir/GenServer.html) to learn more about those.
+
+For now, let's write some tests to guarantee our GenServer works as expected.
+
+## 3.2 Testing a GenSever
+
+Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use throughout our tests. Create a file at `test/todo/manager_test.exs` with the following:
+
+```elixir
+defmodule Todo.ManagerTest do
+  use ExUnit.Case, async: true
+
+  setup do
+    {:ok, manager} = Todo.Manager.start_link
+    on_exit(fn -> Todo.Manager.stop(manager) end)
+    {:ok, manager: manager}
+  end
+
+  test "spawns todo lists", %{manager: manager} do
+    assert Todo.Manager.lookup(manager, "shopping") == :error
+    assert Todo.Manager.create(manager, "shopping") == :ok
+
+    assert {:ok, todo} = Todo.Manager.lookup(manager, "shopping")
+    Todo.List.put(todo, "eggs")
+    assert Todo.List.get(todo) == ["eggs"]
+  end
+end
+```
+
+Note that we are using a new function, `Todo.Manager.stop/1` to stop the manager, that we haven't defined yet. Let's define it inside `Todo.Manager` with the appropriate callback:
+
+```elixir
+## Client API
+
+@doc """
+Stops the manager.
+"""
+def stop(server) do
+  GenServer.call(server, :stop)
+end
+
+## Server Callbacks
+
+def handle_call(:stop, _from, state) do
+  {:stop, :normal, :ok, state}
+end
+```
+
+Note our new `handle_call/3` clause is returning the atom `:stop`, along side the reason the server is being stopped `:normal`, the reply `:ok` and the server state.
+
+With those extensions, the manager tests should now pass.
+
+## 3.3 The need for monitoring
+
+Our manager is almost complete. The only remaining issue is that our manager dictionary may become stale in case the todo list process dies. Let's add a test to `Todo.ManagerTest` that exposes this bug:
+
+```elixir
+test "removes todo lists on exit", %{manager: manager} do
+  Todo.Manager.create(manager, "shopping")
+  {:ok, todo} = Todo.Manager.lookup(manager, "shopping")
+  Agent.stop(todo)
+  assert Todo.Manager.lookup(manager, "shopping") == :error
+end
+```
+
+The test above will fail on the assertion as the todo list entry remains on the dictionary even after we stop the todo list process.
+
+In order to fix this bug, we need the manager to monitor every todo list process it spawns. Once we set up a monitor, the manager will receive a notification every time a todo list process exits, allowing us to clean the dictionary up.
+
+Let's first play with monitors by starting a new console with `iex -S mix`:
+
+```iex
+iex> {:ok, pid} = Todo.List.start_link
+{:ok, #PID<0.66.0>}
+iex> Process.monitor(pid)
+#Reference<0.0.0.551>
+iex> Agent.stop(pid)
+:ok
+iex> flush()
+{:DOWN, #Reference<0.0.0.551>, :process, #PID<0.66.0>, :normal}
+```
+
+Note that by calling `Process.monitor(pid)`, a unique reference is returned, allowing us to match upcoming messages to that monitoring reference. Then, after we stop the agent, we can `flush()` all messages and notice a `:DOWN` message arrived, notifying the todo list process exited with reason `:normal`.
+
+Let's reimplement the server callbacks to fix the bug. First we will modify the GenServer state to keep a HashDict containing monitoring references alongside the HashDict that keeps names. Then we need to set up a monitoring reference on create, implement a `handle_info/2` to handle the monitoring messages and finally modify the remaning callbacks. The full server callbacks implementation is shown below:
+
+```elixir
+## Server callbacks
+
+def init(:ok) do
+  names = HashDict.new
+  refs  = HashDict.new
+  {:ok, {names, refs}}
+end
+
+def handle_call({:lookup, todo_list_name}, _from, {names, _} = state) do
+  {:reply, HashDict.fetch(names, todo_list_name), state}
+end
+
+def handle_call(:stop, _from, state) do
+  {:stop, :normal, :ok, state}
+end
+
+def handle_cast({:create, todo_list_name}, {names, refs}) do
+  if HashDict.get(names, todo_list_name) do
+    {:noreply, {names, refs}}
+  else
+    {:ok, pid} = Todo.List.start_link()
+    ref = Process.monitor(pid)
+    refs = HashDict.put(refs, ref, todo_list_name)
+    names = HashDict.put(names, todo_list_name, pid)
+    {:noreply, {names, refs}}
+  end
+end
+
+def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
+  {name, refs} = HashDict.pop(refs, ref)
+  names = HashDict.delete(names, name)
+  {:noreply, {names, refs}}
+end
+```
+
+## 3.4 Monitors or links?
+
+We have learned about links in the [Process chapter of the Getting Started](/getting_started/11.html). Now, with our manager complete, you may be wondering, when should we use monitors and when should we use links?
+
+Links are bi-directional. If you link two process and one of them crashes, the other side will crash too (unless it is trapping exits). A monitor is uni-directional though and only the monitoring process will receive notifications about the the monitored one. Simply put, use links when you want linked crashes, and monitors when you want to simply monitor.
+
+If you watch closely our `handle_cast/2` code, you can see the manager is both linking and monitoring the todo list process:
+
+```elixir
+{:ok, pid} = Todo.List.start_link()
+ref = Process.monitor(pid)
+```
+
+And that is a bad idea as we don't want the manager to crash if a todo list crash, the monitor is enough. We will explore solutions to this problem in the next chapter, when we talk about supervisors. As we'll see, supervisors work with links and that explains why links (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and OTP APIs.
