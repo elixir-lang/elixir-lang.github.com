@@ -1,0 +1,414 @@
+---
+layout: getting_started
+title: 4 Supervisors and Applications
+guide: 4
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+So far we have implemented two process abstractions: the todo list processes and the todo list manager, which is responsible for naming and monitoring the todo list processes.
+
+While we may think our implementation so far is quite good, no software is bug free, and problems are failures are definitely going to happen, even more in production when they become much harder to reproduce and debug!
+
+When things are failing, our first reaction may be: "let's rescue those errors". But we have learned in the getting started guide that in Elixir we don't program defensively nor have the habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "fail fast" or "let it crash". If there is a bug that leads our todo list manager to crash, we have nothing to worry because we are going to setup a supervisor that will start a new, fresh copy, of the todo list manager.
+
+In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use it to build supervisor managers and the todo lists processes.
+
+## 4.1 Our first Supervisor
+
+Creating a supervisor is not much different of creating a GenServer. We are going to define a module named `Todo.Supervisor` inside the `lib/todo/supervisor.ex` file which will use the [Supervisor](/docs/stable/elixir/Supervisor.html) behaviour:
+
+```elixir
+defmodule Todo.Supervisor do
+  use Supervisor
+
+  def start_link do
+    Supervisor.start_link(__MODULE__, :ok)
+  end
+
+  @manager_name Todo.Manager
+
+  def init(:ok) do
+    children = [
+      worker(Todo.Manager, [[name: @manager_name]])
+    ]
+
+    supervise(children, strategy: :one_for_one)
+  end
+end
+```
+
+Our supervisor has one single children, which is represented by the `Todo.Manager` module. This children receives one argument, which is the keyword list `[name: Todo.Manager]`, guaranteeing we can access the manager with the name `Todo.Manager` throughout the application. It is very common to name the children process in a supervision tree and often the children has the name of the module that defines it (this association becomes very handy during debugging).
+
+Finally, we call `supervise/2`, passing the children to supervise, and the strategy of `:one_for_one`.
+
+The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that, if a children dies, only that children is restarted. There are other strategies, like `:one_for_all`, which kills and restarts all children whenever one of them dies, and more. For now, we will use `:one_for_one` and revisit as soon as we add more children to our supervision tree.
+
+If we start a console inside our project using `iex -S mix`, we can manually start the supervision tree:
+
+```iex
+iex> Todo.Supervisor.start_link
+{:ok, #PID<0.66.0>}
+iex> Todo.Manager.create(Todo.Manager, "shopping")
+:ok
+iex> Todo.Manager.lookup(Todo.Manager, "shopping")
+{:ok, #PID<0.70.0>}
+```
+
+When we start the supervision tree, the `Todo.Manager` worker, with name `Todo.Manager` was automatically started, which we then used to create new todo lists.
+
+In practice though, we rarely start the supervision tree manually. Instead, it is always started as part of the application callback.
+
+## 4.2 Understanding applications
+
+You may not have noticed but all this time we have been working with applications. Every time you change a file and run `mix compile`, you see a `Generated todo.app` file in the output.
+
+You can find the generated `.app` file at `_build/dev/lib/todo/ebin/todo.app`. Let's see its contents:
+
+```erlang
+{application,todo,
+             [{registered,[]},
+              {description,"todo"},
+              {applications,[kernel,stdlib,elixir]},
+              {vsn,"0.0.1"},
+              {modules,['Elixir.Todo','Elixir.Todo.List',
+                        'Elixir.Todo.Manager','Elixir.Todo.Supervisor']}]}.
+```
+
+This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, we can have a pretty good idea of what the file contains. It pretty much holds our application definition. It contains a list of applications our `todo` application depends on like Erlang's kernel and elixir itself, as well as the version, and all the modules defined by our application.
+
+It would be pretty boring to update this file manually every time we add a new module to our application, that's why mix generates and maintains one automatically for us.
+
+We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file.
+
+### 4.2.1 Starting applications
+
+When we define an `.app` file, which is the application definition, we are able to start and stop the application as a whole. We haven't worried about this so far due to two reasons:
+
+1. Mix automatically starts our current application for us;
+
+2. Even if Mix didn't start our application for us, our application does not do anything on start yet;
+
+In any case, let's show how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:
+
+```iex
+iex> Application.start(:todo)
+{:error, {:already_started, :todo}}
+```
+
+Oops, already started, I've told you so!
+
+However, we can pass an option to mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
+
+```elixir
+iex> Application.start(:todo)
+:ok
+iex> Application.stop(:todo)
+
+=INFO REPORT==== 6-Jun-2014::18:24:26 ===
+    application: todo
+    exited: stopped
+    type: temporary
+:ok
+```
+
+Nothing really exciting happens but it shows how we can control our application start/stop cycle.
+
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it is just a matter of typing `mix run` and then passing all options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+
+### 4.2.2 The application callback
+
+Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!
+
+We can specify an application callback which is a function that will be invoked when the application starts. And what this function must return as result is `{:ok, pid}` where `pid` is the process identifier of a supervisor process!
+
+We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
+
+```elixir
+def application do
+  [applications: [],
+   mod: {Todo, []}]
+end
+```
+
+Basically the `:module` key specifies a module to be invoked as the application callback, followed by the arguments to be passed to the callback.
+
+Now that we have specified `Todo` as the module callback, we need to change the `Todo` module, defined in `lib/todo.ex` so it implements the [Application](/docs/stable/elixir/Application.html) behaviour:
+
+```elixir
+defmodule Todo do
+  use Application
+
+  def start(_type, _args) do
+    Todo.Supervisor.start_link
+  end
+end
+```
+
+Let's start our project console once again with `iex -S mix` and we will see a process named `Todo.Manager` will already be running:
+
+```iex
+iex> Todo.Manager.create(Todo.Manager, "shopping")
+:ok
+iex> Todo.Manager.lookup(Todo.Manager, "shopping")
+{:ok, #PID<0.88.0>}
+```
+
+Excellent!
+
+### 4.2.3 Projects or applications?
+
+Elixir makes a distinction in between projects and applications. If you open up your `mix.exs` file, we say we have a mix project that defines the `:todo` application. As we will see in later chapters, there are projects that don't define any application and also projects that host an umbrella of applications.
+
+When we say project, you should think about Mix. Mix is the tool that manages your project. It knows how to compile your project, test your project and more. It also knows how to compile the application file relevant to your project.
+
+When we talk about applications, we talk about OTP. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications by the [docs for the Application module](/docs/stable/elixir/Application.html) as well as running `mix help compile.app` to learn more about the `def application` options.
+
+## 4.3 Simple one for one supervisors
+
+We have now successfully defined our supervisor which is automatically started (and stopped) as part of our application lifecycle.
+
+Remember however that our `Todo.Manager` is both linking and monitoring todo lists processes in the `handle_cast/2` callback:
+
+```elixir
+{:ok, pid} = Todo.List.start_link()
+ref = Process.monitor(pid)
+```
+
+This means that, if a todo list process crash, it will crash the manager too. In practice, this won't be a problem now because the supervisor would restart the manager in case of such crashes. However, since we already know this is a bug, we may as well fix it!
+
+Let's write add test to `test/todo/manager_test.exs` that shows this behaviour:
+
+```elixir
+test "removes todo lists on crash", %{manager: manager} do
+  Todo.Manager.create(manager, "shopping")
+  {:ok, todo} = Todo.Manager.lookup(manager, "shopping")
+  kill_with todo, &Process.exit(&1, :shutdown)
+  assert Todo.Manager.lookup(manager, "shopping") == :error
+end
+```
+
+The test is similar to the previous one except that we are being a little bit less polite. Instead of using `Agent.stop/1` we are directly sending an exit signal to shutdown the todo list. Since the todo list is linked to the manager which is linked to test, our test is going to fail due to the `:shutdown` exit reason:
+
+```
+1) test removes todo lists on crash (Todo.ManagerTest)
+   test/todo/manager_test.exs:26
+   ** (EXIT from #PID<0.124.0>) shutdown
+```
+
+One simple solution would be to define a function named `Todo.List.start/0`, that uses `Agent.start/2`, and replace `Todo.List.start_link/0` in the manager. However, this is an issue because our agents would live in the ether of the Erlang VM. They wouldn't be linked to any process which means that, if we stop the application, all todo list processes would still exist and continue running. Instead, it makes much more sense to put them together and it happens we can use supervisors to do it too.
+
+There is one special kind supervisor strategy and it is really special because it behaves slightly different than all the other ones as it allows us to specify a worker template and start many children using this template.
+
+Let's define our `Todo.List.Supervisor` as below:
+
+```elixir
+defmodule Todo.List.Supervisor do
+  use Supervisor
+
+  def start_link(opts \\ []) do
+    Supervisor.start_link(__MODULE__, :ok, opts)
+  end
+
+  def start_todo_list(supervisor) do
+    Supervisor.start_child(supervisor, [])
+  end
+
+  def init(:ok) do
+    children = [
+      worker(Todo.List, [], type: :temporary)
+    ]
+
+    supervise(children, strategy: :simple_one_for_one)
+  end
+end
+```
+
+Note there are two changes in this new supervisor compared to the first one. First, we define a `start_todo_list/1` function that will receive a supevisor pid and start the todo list. This is the function we are going to invoke instead of invoking `Todo.List.start_link` directly.
+
+Second, in the `init/1` callback, are marking the worker as `:temporary`. This means that, if the worker dies, it won't be restarted.  You may be wondering: why are we defining a supervisor if we are not going to restart the children? Remember the supervisor is mainly working as a mechanism to group all todo lists together. Also, the supervisor most not restart tasks automatically as it is the responsibility of the `Todo.Manager` to do so.
+
+Run `iex -S mix` so we can give our new supervisor a try:
+
+```iex
+iex> {:ok, sup} = Todo.List.Supervisor.start_link
+{:ok, #PID<0.70.0>}
+iex> {:ok, todo} = Todo.List.Supervisor.start_todo_list(sup)
+{:ok, #PID<0.72.0>}
+iex> Todo.List.put(todo, "eggs")
+:ok
+iex> Todo.List.get(todo)
+["eggs"]
+```
+
+Excellent. In order to use this new supervisor in our application, we just need to add this new supervisor as a children of `Todo.Supervisor`! Since we start to have supervisors that supervisers supervisors, we start forming the so-called supervision trees.
+
+Open up `lib/todo/supervisor.ex` and change the `init/1` to the following:
+
+```elixir
+@manager_name Todo.Manager
+@list_sup_name Todo.List.Supervisor
+
+def init(:ok) do
+  children = [
+    worker(Todo.Manager, [[name: @manager_name]]),
+    supervisor(Todo.List.Supervisor, [[name: @list_sup_name]])
+  ]
+
+  supervise(children, strategy: :rest_for_one)
+end
+```
+
+This time we have added a supervisor and given it `Todo.List.Supervisor` as name (again, the same name as the module). We have also changed the strategy from `:one_for_one` to `:rest_for_one`.
+
+Remember that `:one_for_one` would restart only the process that died. With `:rest_for_one` however, when a children dies, all the following children in the list will be killed and restarted too. This means that, if the manager dies, the list supervisor will be killed, alongside all todo lists processes. However, if the list supervisor dies, the manager will remain intact.
+
+This works exactly the way we need for two reasons:
+
+1. If the manager dies, we lose all the names to all todo lists processes, so the todo list supervisor must indeed be killed as we won't have any mechanism to reach the tasks
+
+2. If the supervisor dies, all the associated todo list processes will be killed. However, since the manager is already monitoring those tasks, it will know exactly when they die and clean up its dictionary accordingly
+
+There are other strategies and many other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) out.
+
+In order to make our failing test now pass, we just need to change the `Todo.Manager` to spawn new todo list processes via the supervisor instead of doing so directly. Let's change this line in `handle_call/2` callback:
+
+```elixir
+{:ok, pid} = Todo.List.start_link()
+```
+
+by:
+
+```elixir
+{:ok, pid} = Todo.List.Supervisor.start_todo_list(Todo.List.Supervisor)
+```
+
+Basically, we are invoking the function in `Todo.List.Supervisor` passing as argument the process represented by the name of `Todo.List.Supervisor`, which is the name we have given in the supervision tree.
+
+Run the tests and they should pass! Remember the tests pass because the `Todo.List.Supervisor` used by the manager is being started as part of the supervision tree, which is automatically started by our application. While this is convenient, it is not a good idea because the `Todo.List.Supervisor` started by the supervision tree is global! This means our test is relying on global data which can cause tests to conflict with each other, even more when running concurrently with `async: true`.
+
+Instead of relying on global data, we should rather start a `Todo.List.Supervisor` to be used only by tests during setup, as follows:
+
+```elixir
+setup do
+  {:ok, sup} = Todo.List.Supervisor.start_link
+  {:ok, manager} = Todo.Manager.start_link(sup)
+  on_exit(fn ->
+    Todo.Manager.stop(manager)
+    Process.exit(sup, :shutdown)
+  end)
+  {:ok, manager: manager}
+end
+```
+
+To make our tests pass again, we now need to change `Todo.Manager` to receive the `sup` pid as parameter and use it when calling `Todo.List.Supervisor`. The new implementation is shown below:
+
+```elixir
+defmodule Todo.Manager do
+  use GenServer
+
+  ## Cient API
+
+  @doc """
+  Starts the `Todo.Manager`.
+  """
+  def start_link(sup, opts \\ []) do
+    GenServer.start_link(__MODULE__, sup, opts)
+  end
+
+  @doc """
+  Looks up the pid for `todo_list_name` stored in `server`.
+
+  Returns `{:ok, pid}` in case a todo list exists,
+  `:error` otherwise.
+  """
+  def lookup(server, todo_list_name) do
+    GenServer.call(server, {:lookup, todo_list_name})
+  end
+
+  @doc """
+  Ensures there is a process associated to the given todo
+  `todo_list_name`.
+  """
+  def create(server, todo_list_name) do
+    GenServer.cast(server, {:create, todo_list_name})
+  end
+
+  @doc """
+  Stops the manager.
+  """
+  def stop(server) do
+    GenServer.call(server, :stop)
+  end
+
+  ## Server Callbacks
+
+  def init(sup) do
+    names = HashDict.new
+    refs  = HashDict.new
+    {:ok, %{names: names, refs: refs, sup: sup}}
+  end
+
+  def handle_call({:lookup, todo_list_name}, _from, state) do
+    {:reply, HashDict.fetch(state.names, todo_list_name), state}
+  end
+
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, :ok, state}
+  end
+
+  def handle_cast({:create, todo_list_name}, state) do
+    if HashDict.get(state.names, todo_list_name) do
+      {:noreply, state}
+    else
+      {:ok, pid} = Todo.List.Supervisor.start_todo_list(state.sup)
+      ref = Process.monitor(pid)
+      refs = HashDict.put(state.refs, ref, todo_list_name)
+      names = HashDict.put(state.names, todo_list_name, pid)
+      {:noreply, %{state | names: names, refs: refs}}
+    end
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
+    {name, refs} = HashDict.pop(state.refs, ref)
+    names = HashDict.delete(state.names, name)
+    {:noreply, %{state | names: names, refs: refs}}
+  end
+end
+```
+
+Notice instead of `init(:ok)`, we now receive the supervisor pid with `init(sup)`. We have also changed the state from a tuple to a map, so we can add new fields to the manager state in the future without a need to change all callbacks.
+
+Now we just need to change `Todo.Supervisor` to pass the proper list supervisor name to `Todo.Manager`. Our final supervisor definition is shown below:
+
+```elixir
+defmodule Todo.Supervisor do
+  use Supervisor
+
+  def start_link do
+    Supervisor.start_link(__MODULE__, :ok)
+  end
+
+  @manager_name Todo.Manager
+  @list_sup_name Todo.List.Supervisor
+
+  def init(:ok) do
+    children = [
+      worker(Todo.Manager, [@list_sup_name, [name: @manager_name]]),
+      supervisor(Todo.List.Supervisor, [[name: @list_sup_name]])
+    ]
+
+    supervise(children, strategy: :rest_for_one)
+  end
+end
+```
+
+The name we give to `Todo.Manager` is the same we use when initializing `Todo.List.Supervisor`, ensuring our application has all names properly hooked up.
+
+We have learned many important concepts in this chapter. We have learned about supervisors, applications but, most of all, we have learned useful design techniques. While it is common, and often required, to name the workers and supervisors in our supervisions tree, it is best if their implementation are not coupled to any process name. This guarantee sanity in our test suite and in our software maintenance.
+
+Finally keep in mind that if you want to create a new application that defines a supervisor and the application callback upfront, you can simply pass the `--sup` option to `mix new`, for example: `mix new --sup sample`.
+
+Give the command a try and compare the generated application with the one we have so far. What are the differences? Remember to reach to [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) if you have questions.
