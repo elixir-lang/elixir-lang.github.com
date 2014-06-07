@@ -117,7 +117,7 @@ defmodule Todo.ListTest do
 
   setup do
     {:ok, todo} = Todo.List.start_link
-    on_exit(fn -> Agent.stop(todo) end)
+    on_exit(fn -> Process.exit(todo, :shutdown) end)
     {:ok, todo: todo}
   end
 
@@ -133,9 +133,9 @@ defmodule Todo.ListTest do
 end
 ```
 
-We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself. During setup, we have spawned the the `Todo.List` process and also registered an `on_exit/1` callback that will be invoked once the test is done (more specifically, once the test process exits).
+We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself. During setup, we have spawned the the `Todo.List` process and also registered an `on_exit/1` callback that will send a `:shutdown` message to the todo list once the test is done (more specifically, once the test process exits).
 
-Notice that we need a mechanism to pass the `todo` pid from the callback to the test. We do so by using the test context. When we return `{:ok, todo: todo}` from the callback, ExUnit will merge the second element of the tuple (a dictionary) into the test context. The test context is a map which we can then match during the test definition:
+Note that we need a mechanism to pass the `todo` pid from the callback to the test. We do so by using the test context. When we return `{:ok, todo: todo}` from the callback, ExUnit will merge the second element of the tuple (a dictionary) into the test context. The test context is a map which we can then match during the test definition:
 
 ```elixir
 test "can store many items", %{todo: todo} do
