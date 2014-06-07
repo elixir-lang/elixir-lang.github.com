@@ -1,0 +1,194 @@
+---
+layout: getting_started
+title: 5 Event managers
+guide: 5
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+In this chapter, we will explore GenEvent, another behaviour provided by Elixir and OTP that allows us to spawn an event manager that is able to publish events to many handlers.
+
+There are two events we are going to publish: one for every time a todo list is created and another when a todo list is destroyed.
+
+## 5.1 GenEvent
+
+Let's start a new `iex -S mix` session and explore the GenEvent API a bit:
+
+```elixir
+iex> {:ok, manager} = GenEvent.start_link
+{:ok, #PID<0.83.0>}
+iex> GenEvent.sync_notify(manager, :hello)
+:ok
+iex> GenEvent.notify(manager, :world)
+:ok
+```
+
+We use `GenEvent.start_link/0` to start a new event manager. That is literally all that is required to spawn a manager. After the manager is created, we can call `GenEvent.notify/2` and `GenEvent.sync_notify/2` to send notifications.
+
+However, since there are no event handlers tied to the manager, not much happens on every notification.
+
+Let's create our first handler, still on IEx, that sends all events to a given process:
+
+```iex
+iex> defmodule Forwarder do
+...>   use GenEvent
+...>   def handle_event(event, parent) do
+...>     send parent, event
+...>     {:ok, parent}
+...>   end
+...> end
+iex> GenEvent.add_handler(manager, Forwarder, self())
+:ok
+iex> GenEvent.sync_notify(manager, {:hello, :world})
+:ok
+iex> flush
+{:hello, :world}
+:ok
+```
+
+After creating our handler code, we are able to add it to the manager by calling `GenEvent.add_handler/3` passing the manager pid, the event handler module (named `Forwarder`) and the event handler state, in this case, the current process pid.
+
+After adding the handler, we can see that by calling `sync_notify/2`, the `Forwarder` event handler successfully forwarded the event to our inbox.
+
+There are a couple things that are important to highlight at this point:
+
+1. The event handler runs in the same process as the event manager;
+2. `sync_notify/2` runs event handlers synchronously to the request;
+3. while `notify/2` runs event handlers asynchronously;
+
+Therefore, `sync_notify/2` and `notify/2` are similar to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended as it works as a backpressure mechanism.
+
+Be sure to check other funcionality provided by GenEvent in its [module documentation](/docs/stable/elixir/GenEvent.html). For now we have enough knowledge to add an event manager to our application. 
+
+## 5.2 A manager with events
+
+Since we want to notify every time a todo list is created or removed, the perfect place for invoking the event manager is in the `Todo.Manager` module. Specifically, we need to change `Todo.Manager` to receive the event manager pid/name on `start_link` and guarantee we send the notifications from the proper server callbacks.
+
+Let's first change our tests to showcase the behaviour we want the todo manager to exhibit. Open up `test/todo/manager_test.exs` and change the existing `setup` callback to the one below alongside the new test:
+
+```elixir
+defmodule Forwarder do
+  use GenEvent
+
+  def handle_event(event, parent) do
+    send parent, event
+    {:ok, parent}
+  end
+end
+
+setup do
+  {:ok, sup} = Todo.List.Supervisor.start_link
+  {:ok, event} = GenEvent.start
+  {:ok, manager} = Todo.Manager.start_link(sup, event)
+
+  GenEvent.add_handler(event, Forwarder, self(), link: true)
+
+  on_exit(fn ->
+    Todo.Manager.stop(manager)
+    Process.exit(event, :shutdown)
+    Process.exit(sup, :shutdown)
+  end)
+
+  {:ok, manager: manager}
+end
+
+test "sends events on create and crash", %{manager: manager} do
+  Todo.Manager.create(manager, "shopping")
+  {:ok, todo} = Todo.Manager.lookup(manager, "shopping")
+  assert_received {:create, "shopping", ^todo}
+
+  kill_with todo, &Agent.stop/1
+  assert_received {:exit, "shopping", ^todo}
+end
+```
+
+In order to test the functionality we want to add, we first define a `Forwarder` event handler similar to the one from IEx. On `setup`, we start the manager and add the handler to the event manager process.
+
+In the test, we create a new todo list process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^todo` to match on the todo list pid.
+
+Finally, there are two important differences in the `setup` callback compared to the example we tried on IEx:
+
+1. We have used `GenEvent.start` instead of `GenEvent.start_link`. That's because if we link the event manager to the test process, the event manager will exit when the test finishes causing the callback given to `on_exit/1` to fail (you can try changing it to `GenEvent.start_link` once the test pass and see what happens);
+
+2. When calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the Forwarder case, it makes no sense to continue forwarding messages if the recipient of those messages is no longer alive;
+
+Let's now change the todo manager to make our new test pass. Open up `lib/todo/manager.ex` and redefine the functions shown below:
+
+```elixir
+## Client API
+
+def start_link(sup, event, opts \\ []) do
+  GenServer.start_link(__MODULE__, {sup, event}, opts)
+end
+
+## Server Callbacks
+
+def init({sup, event}) do
+  Process.flag(:trap_exit, true)
+  names = HashDict.new
+  refs  = HashDict.new
+  {:ok, %{names: names, refs: refs, sup: sup, event: event}}
+end
+
+def handle_cast({:create, todo_list_name}, state) do
+  if HashDict.get(state.names, todo_list_name) do
+    {:noreply, state}
+  else
+    {:ok, pid} = Todo.List.Supervisor.start_todo_list(state.sup)
+    GenEvent.sync_notify(state.event, {:create, todo_list_name, pid})
+    ref = Process.monitor(pid)
+    refs = HashDict.put(state.refs, ref, todo_list_name)
+    names = HashDict.put(state.names, todo_list_name, pid)
+    {:noreply, %{state | names: names, refs: refs}}
+  end
+end
+
+def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
+  {name, refs} = HashDict.pop(state.refs, ref)
+  {pid, names} = HashDict.pop(state.names, name)
+  GenEvent.sync_notify(state.event, {:exit, name, pid})
+  {:noreply, %{state | names: names, refs: refs}}
+end
+```
+
+The changes are quite straightforward. We now pass the event as argument on the `GenServer` initialization, as well change both cast and info callbacks to call `GenEvent.sync_notify/2`.
+
+Run the test suite and all tests should be green again. We just need to once again update the supervisor at `lib/todo/supervisor.ex` to start the event manager with a name and pass it to the todo manager:
+
+```elixir
+@manager Todo.Manager
+@list_sup Todo.List.Supervisor
+@event_manager Todo.EventManager
+
+def init(:ok) do
+  children = [
+    worker(GenEvent, [[name: @event_manager]]),
+    worker(Todo.Manager, [@list_sup, @event_manager, [name: @manager]]),
+    supervisor(Todo.List.Supervisor, [[name: @list_sup]])
+  ]
+
+  supervise(children, strategy: :rest_for_one)
+end
+```
+
+## 5.3 Event streams
+
+One last functionality worth exploring from `GenEvent` is the ability to consume its events as a stream:
+
+```elixir
+iex> {:ok, manager} = GenEvent.start_link
+{:ok, #PID<0.83.0>}
+iex> spawn_link fn ->
+...>   for x <- GenEvent.stream(manager), do: IO.inspect(x)
+...> end
+:ok
+iex> GenEvent.notify(manager, {:hello, :world})
+{:hello, :world}
+:ok
+```
+
+In the example above, we have created a `GenEvent.stream(manager)` that returns a stream (an enumerable) of events that are consumed as they come. Since consuming those events is a blocking action, we spawn a new process that will consume the events and print them to the terminal, and that is exactly the behaviour we see. Every time we call `sync_notify/2` or `notify/2`, the event is print to the terminal followed by `:ok` (which is the result returned by notify functions).
+
+Often event streams provide enough functionality for consuming events so you don't need to register our own handlers. However, when custom functionality is required or for during testing, defining your own event handler callbacks is the best way to go.
