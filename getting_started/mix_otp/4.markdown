@@ -378,10 +378,6 @@ defmodule Todo.Manager do
     names = HashDict.delete(state.names, name)
     {:noreply, %{state | names: names, refs: refs}}
   end
-
-  def handle_info(_msg, state) do
-    {:noreply, state}
-  end
 end
 ```
 
