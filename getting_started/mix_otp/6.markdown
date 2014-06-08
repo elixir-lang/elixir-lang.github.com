@@ -1,0 +1,507 @@
+---
+layout: getting_started
+title: 6 ETS
+guide: 6
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+Every time we need to lookup a todo list, to add or remove an item, or even create a new todo list, we need to pass through the todo manager. In some applications, this means the todo list manager may become a bottleneck!
+
+In this chapter we will learn about ETS (Erlang Term Storage), and how to use it as a cache mechanism. Later we will expand its usage to persist data from the supervisor to its children, allowing data to persist even on crashes.
+
+> Warning! Never use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks before acting. This chapter is merely an example of what ETS can be used in such situations.
+
+## 6.1 ETS as a cache
+
+ETS allows us to store any Erlang/Elixir term in an in-memory table. Working with ETS tables is done via [erlang's `:ets` module](http://www.erlang.org/doc/man/ets.html):
+
+```iex
+iex> table = :ets.new(:todo_manager, [:set, :protected])
+8207
+iex> :ets.insert(table, {"foo", self})
+true
+iex> :ets.lookup(table, "foo")
+[{"foo", #PID<0.41.0>}]
+```
+
+When creating an ETS table, two arguments are required, the table name and a set of options. From the available options, we pass the table type and its access rules. We have chosen the `:set` type, where keys cannot be duplicated, and visibility of `:protected` where only one the owner process can write to the table but all processes can read it from it. Those are actually the default values, so we will skip them from now on.
+
+ETS tables can also be named, allowing us to access them by a given name:
+
+```iex
+iex> :ets.new(:todo_manager, [:named_table])
+:todo_manager
+iex> :ets.insert(:todo_manager, {"foo", self})
+true
+iex> :ets.lookup(:todo_manager, "foo")
+[{"foo", #PID<0.41.0>}]
+```
+
+Let's change our `Todo.Manager` to use ETS tables. For now, we will create an ETS table and access it using its name. Remember that, as with server names, ETS table names are global: any process that knows the name will be able to access that table. So we will use the same strategy we have used with server names and pass a name explicitly when the `Todo.Manager` is started.
+
+Open up `lib/todo/manager.ex` and let's change its implementation. We have added comments to the source code to highlight the changes we have done:
+
+```elixir
+defmodule Todo.Manager do
+  use GenServer
+
+  ## Client API
+
+  @doc """
+  Starts the `Todo.Manager`.
+  """
+  def start_link(table, sup, event, opts \\ []) do
+    # 1. We have added a new argument to start_link
+    GenServer.start_link(__MODULE__, {table, sup, event}, opts)
+  end
+
+  @doc """
+  Looks up the pid for `todo_list_name` in the given `table`.
+
+  Returns `{:ok, pid}` in case a todo list exists,
+  `:error` otherwise.
+  """
+  def lookup(table, todo_list_name) do
+    # 2. Lookup now expects a table and looks directly into ETS.
+    #    No request is sent to the server.
+    case :ets.lookup(table, todo_list_name) do
+      [{^todo_list_name, pid}] -> {:ok, pid}
+      [] -> :error
+    end
+  end
+
+  @doc """
+  Ensures there is a process associated to the given todo
+  `todo_list_name`.
+  """
+  def create(server, todo_list_name) do
+    GenServer.cast(server, {:create, todo_list_name})
+  end
+
+  @doc """
+  Stops the manager.
+  """
+  def stop(server) do
+    GenServer.call(server, :stop)
+  end
+
+  ## Server Callbacks
+
+  def init({table, sup, event}) do
+    # 3. We have replaced the names HashDict by the ETS table
+    ets  = :ets.new(table, [:set, :protected, :named_table, read_concurrency: true])
+    refs = HashDict.new
+    {:ok, %{names: ets, refs: refs, sup: sup, event: event}}
+  end
+
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, :ok, state}
+  end
+
+  def handle_cast({:create, todo_list_name}, state) do
+    # 4. Read and write to the ETS table instead of the HashDict
+    case lookup(state.names, todo_list_name) do
+      {:ok, _pid} ->
+        {:noreply, state}
+      :error ->
+        {:ok, pid} = Todo.List.Supervisor.start_todo_list(state.sup)
+        GenEvent.sync_notify(state.event, {:create, todo_list_name, pid})
+        ref = Process.monitor(pid)
+        refs = HashDict.put(state.refs, ref, todo_list_name)
+        :ets.insert(state.names, {todo_list_name, pid})
+        {:noreply, %{state | refs: refs}}
+    end
+  end
+
+  def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
+    # 5. Delete from the ETS table instead of the HashDict
+    {name, refs} = HashDict.pop(state.refs, ref)
+    :ets.delete(state.names, name)
+    GenEvent.sync_notify(state.event, {:exit, name, pid})
+    {:noreply, %{state | refs: refs}}
+  end
+
+  def handle_info(_msg, state) do
+    {:noreply, state}
+  end
+end
+```
+
+Notice that before, `Todo.Manager.lookup/2` sent requests to the server but now it reads directly from the ETS table, which is shared across all processes. That's the main idea behind the cache mechanism we are implementing.
+
+In order for the cache mechanism to work, the created ETS table needs to be protected, so all clients can read from it, while only the `Todo.Manager` process writes to it. We have also set `read_concurrency: true` when starting the table, optimizing the table for the common scenario of concurrent read operations.
+
+The changes we have performed above have definitely broken our tests. For starter, there is a new argument we need to pass to `Todo.Manager.start_link/4`, so let's start amending our tests in `test/todo/manager_test.exs` by rewriting the `setup` callback:
+
+```elixir
+setup do
+  {:ok, sup} = Todo.List.Supervisor.start_link
+  {:ok, event} = GenEvent.start
+  {:ok, manager} = Todo.Manager.start_link(:manager_test, sup, event)
+
+  GenEvent.add_handler(event, Forwarder, self(), link: true)
+
+  on_exit(fn ->
+    Process.exit(manager, :shutdown)
+    Process.exit(event, :shutdown)
+    Process.exit(sup, :shutdown)
+  end)
+
+  {:ok, manager: manager, ets: :manager_test}
+end
+```
+
+Notice we are passing the table name of `:manager_test` on `Todo.Manager` start as well as returning `ets: :manager_test` as part of the meta data.
+
+After changing the callback above, we will have failures in our test suite. Some of the format of:
+
+```
+1) test spawns todo lists (Todo.ManagerTest)
+   test/todo/manager_test.exs:29
+   ** (ArgumentError) argument error
+   stacktrace:
+     (stdlib) :ets.lookup(#PID<0.108.0>, "shopping")
+     (todo) lib/todo/manager.ex:20: Todo.Manager.lookup/2
+     test/todo/manager_test.exs:30
+```
+
+This is happening because we are passing a pid to `Todo.Manager.lookup/2` while now it expects the ETS table. We can fix this by passing the ETS table name instead as follows:
+
+```elixir
+test "spawns todo lists", %{manager: manager, ets: ets} do
+  assert Todo.Manager.lookup(ets, "shopping") == :error
+  Todo.Manager.create(manager, "shopping")
+
+  assert {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+  Todo.List.put(todo, "eggs")
+  assert Todo.List.get(todo) == ["eggs"]
+end
+```
+
+Now it is your turn to do similar changes to the remainig tests, ensuring you always pass `ets` as argument to `lookup`, instead of `manager`. Once you perform such changes, we will see tests continue failing. You may even note some tests pass sometimes, but fail in other runs. For example, the test above may be failing on this line:
+
+```elixir
+assert {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+```
+
+However, how can this line fail if we just created the todo list in the previous line?
+
+The reason those failures are happening is because we have ignored two important advices for didatic purposes. We are 1) prematurely optimizing (by adding this cache layer) and 2) using `cast/2` (while we could be using `call/2`).
+
+## 6.2 Race conditions?
+
+Developing in Elixir does not make your code free of race conditions but the simple abstractions where nothing is shared by default make it rather easier to spot when such happens.
+
+What is happening in our test is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we expecting to happen:
+
+1. We invoke `Todo.Manager.create(manager, "shopping")`
+2. The todo manager creates the todo list and updates the cache table
+3. We access the information from the table with `Todo.Manager.lookup(ets, "shopping")`
+4. The command above returns `{:ok, todo}`
+
+However, since `Todo.Manager.create/2` is a cast operation, the command will return before we actually write to the table! In other words, this is happening:
+
+1. We invoke `Todo.Manager.create(manager, "shopping")`
+2. We access the information from the table with `Todo.Manager.lookup(ets, "shopping")`
+3. The command above returns `:error`
+4. The todo manager creates the todo list and updates the table
+
+To fix the failure, we just need to make `Todo.Manager.create/2` sync by using `call/2` rather than `cast/2`. Let's change the function and its callback as follows:
+
+```elixir
+@doc """
+Sync operation that ensures there is a process associated
+to the given todo `todo_list_name`.
+"""
+def create(server, todo_list_name) do
+  GenServer.call(server, {:create, todo_list_name})
+end
+
+def handle_call({:create, todo_list_name}, _from, state) do
+  case lookup(state.names, todo_list_name) do
+    {:ok, pid} ->
+      {:reply, pid, state}
+    :error ->
+      {:ok, pid} = Todo.List.Supervisor.start_todo_list(state.sup)
+      GenEvent.sync_notify(state.event, {:create, todo_list_name, pid})
+      ref = Process.monitor(pid)
+      refs = HashDict.put(state.refs, ref, todo_list_name)
+      :ets.insert(state.names, {todo_list_name, pid})
+      {:reply, pid, %{state | refs: refs}}
+  end
+end
+```
+
+We simply changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created todo list name. We have also updated `Todo.Manager.create/2` docs to make it clear it is a sync operation.
+
+Run the tests once again and we should have two remaining failures which may again be intermittent:
+
+```
+1) test removes todo lists on crash (Todo.ManagerTest)
+   test/todo/manager_test.exs:45
+   Assertion with == failed
+   code: Todo.Manager.lookup(ets, "shopping") == :error
+   lhs:  {:ok, #PID<0.126.0>}
+   rhs:  :error
+   stacktrace:
+     test/todo/manager_test.exs:49
+
+2) test removes todo lists on exit (Todo.ManagerTest)
+   test/todo/manager_test.exs:38
+   Assertion with == failed
+   code: Todo.Manager.lookup(ets, "shopping") == :error
+   lhs:  {:ok, #PID<0.133.0>}
+   rhs:  :error
+   stacktrace:
+     test/todo/manager_test.exs:42
+```
+
+This time we are expecting the todo list to no longer exist on the table but it still does! The opposite problem to the one we have just solved is happening: while previously there was a delay in between issuing the command to create a todo list and updating the table, now there is a delay in between the process dying and its entry being removed from the table.
+
+Unfortunately, this time we cannot simply change `handle_info/2` to a synchronous operation. We can however fix our tests by using the event manager notifications. Let's take another look at our `handle_info/2` implementation:
+
+```elixir
+def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
+  # 5. Delete from the ETS table instead of the HashDict
+  {name, refs} = HashDict.pop(state.refs, ref)
+  :ets.delete(state.names, name)
+  GenEvent.sync_notify(state.event, {:exit, name, pid})
+  {:noreply, %{state | refs: refs}}
+end
+```
+
+Notice that we are deleting from the ETS table **before** we send the notification. This means that, if we receive the `{:exit, name, pid}` notification, the table will certainly be up to date. Let's update the two remaining failing tests as follows:
+
+```elixir
+test "removes todo lists on exit", %{manager: manager, ets: ets} do
+  Todo.Manager.create(manager, "shopping")
+  {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+  Agent.stop(todo)
+  assert_receive {:exit, "shopping", ^todo} #=> Wait for the notification
+  assert Todo.Manager.lookup(ets, "shopping") == :error
+end
+
+test "removes todo lists on crash", %{manager: manager, ets: ets} do
+  Todo.Manager.create(manager, "shopping")
+  {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+  Process.exit(todo, :shutdown)
+  assert_receive {:exit, "shopping", ^todo} #=> Wait for the notification
+  assert Todo.Manager.lookup(ets, "shopping") == :error
+end
+```
+
+We have simply amended the tests to guarantee we first receive the `{:exit, name, pid}` message before invoking `Todo.Manager.lookup/2`. In fact, since we can now rely on such events, there is no need to use the `kill_with/2` function which provided similar behaviour.
+
+For your convenience, here is the fully passing test case:
+
+```elixir
+defmodule Todo.ManagerTest do
+  use ExUnit.Case, async: true
+
+  defmodule Forwarder do
+    use GenEvent
+
+    def handle_event(event, parent) do
+      send parent, event
+      {:ok, parent}
+    end
+  end
+
+  setup do
+    {:ok, sup} = Todo.List.Supervisor.start_link
+    {:ok, event} = GenEvent.start
+    {:ok, manager} = Todo.Manager.start_link(:manager_test, sup, event)
+
+    GenEvent.add_handler(event, Forwarder, self(), link: true)
+
+    on_exit(fn ->
+      Process.exit(manager, :shutdown)
+      Process.exit(event, :shutdown)
+      Process.exit(sup, :shutdown)
+    end)
+
+    {:ok, manager: manager, ets: :manager_test}
+  end
+
+  test "spawns todo lists", %{manager: manager, ets: ets} do
+    assert Todo.Manager.lookup(ets, "shopping") == :error
+    Todo.Manager.create(manager, "shopping")
+
+    assert {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+    Todo.List.put(todo, "eggs")
+    assert Todo.List.get(todo) == ["eggs"]
+  end
+
+  test "removes todo lists on exit", %{manager: manager, ets: ets} do
+    Todo.Manager.create(manager, "shopping")
+    {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+    Agent.stop(todo)
+    assert_receive {:exit, "shopping", ^todo}
+    assert Todo.Manager.lookup(ets, "shopping") == :error
+  end
+
+  test "removes todo lists on crash", %{manager: manager, ets: ets} do
+    Todo.Manager.create(manager, "shopping")
+    {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+    Process.exit(todo, :shutdown)
+    assert_receive {:exit, "shopping", ^todo}
+    assert Todo.Manager.lookup(ets, "shopping") == :error
+  end
+
+  test "sends events on create and crash", %{manager: manager, ets: ets} do
+    Todo.Manager.create(manager, "shopping")
+    {:ok, todo} = Todo.Manager.lookup(ets, "shopping")
+    assert_receive {:create, "shopping", ^todo}
+
+    Agent.stop(todo)
+    assert_receive {:exit, "shopping", ^todo}
+  end
+end
+```
+
+Our final change is to update the supervisor `init/1` callback at `lib/todo/supervisor.ex` to pass the ETS table name as argument to the todo manager worker:
+
+```elixir
+def init(:ok) do
+  children = [
+    worker(GenEvent, [[name: @event_manager]]),
+    worker(Todo.Manager, [@manager, @list_sup, @event_manager, [name: @manager]]),
+    supervisor(Todo.List.Supervisor, [[name: @list_sup]])
+  ]
+
+  supervise(children, strategy: :rest_for_one)
+end
+```
+
+We are using `Todo.Manager` as both name of the table and name of the process, which makes it convenient to debug as they point to the module name that uses them. ETS names and process names are stored in different registries, so there is no chance of conflicts.
+
+## 6.3 ETS as storage
+
+So far we have created an ETS table on the `Todo.Manager` initialization but we haven't bothered to close to the table on process termination. That's because the ETS table is "linked" (as figure of speech) to the process that creates it. If that process dies, the table is automatically closed.
+
+This is extremely convenient as a default behaviour and we can use it even more to our advantage. Remember that when we choose the `:one_for_all` strategy for our `Todo.Supervisor`, it was due to the fact that it would be impossible to access the todo list processes if the todo manager dies, as all the names are lost on the manager death. So if the manager dies, we must kill the todo list supervisor along with all with all todo list processes.
+
+However, if we make the supervisor the one responsible for the table, the table won't be lost even if the todo manager crashes. We can keep the todo list supervisor alive as long as the ETS table persists, effectively allowing us to change the supervision strategy to `:one_for_one`.
+
+A couple differences will be required in order to make this change happen. First, we need to start the ETS table inside the supervisor. Second, we will need to change the access type from `:protected` to `:public` because the owner is the supervisor but the entity doing the writes is still the manager.
+
+Let's get started by first changing the `Todo.Supervisor`'s `init/1` callback:
+
+```elixir
+def init(:ok) do
+  ets = :ets.new(@manager,
+                 [:set, :public, :named_table, {:read_concurrency, true}])
+
+  children = [
+    worker(GenEvent, [[name: @event_manager]]),
+    worker(Todo.Manager, [ets, @list_sup, @event_manager, [name: @manager]]),
+    supervisor(Todo.List.Supervisor, [[name: @list_sup]])
+  ]
+
+  supervise(children, strategy: :one_for_one)
+end
+```
+
+Next we change the `Todo.Manager`'s `init/1` callback because no longer needs to create a table. It should rather just use the one given as argument:
+
+```elixir
+def init({table, sup, event}) do
+  refs = HashDict.new
+  {:ok, %{names: table, refs: refs, sup: sup, event: event}}
+end
+```
+
+Finally, we just need to change the `setup` callback in `test/todo/manager_test.exs` to explicitly create the ETS table:
+
+```elixir
+setup do
+  ets = :ets.new(:manager_test, [:set, :public])
+  {:ok, sup} = Todo.List.Supervisor.start_link
+  {:ok, event} = GenEvent.start
+  {:ok, manager} = Todo.Manager.start_link(ets, sup, event)
+
+  GenEvent.add_handler(event, Forwarder, self(), link: true)
+
+  on_exit(fn ->
+    Process.exit(manager, :shutdown)
+    Process.exit(event, :shutdown)
+    Process.exit(sup, :shutdown)
+  end)
+
+  {:ok, manager: manager, ets: ets}
+end
+```
+
+Notice that for testing we don't even need to create a named ETS table!
+
+There is just one last scenario to consider. Once we receive the ETS table, there may be existing todo lists on the table, after all that's the whole purpose of this change! However, the newly started todo manager is not monitoring those todo lists, because they were created as part of previous, now defunct, todo manager!
+
+So we need to change once again the `Todo.Manager`'s `init/1` callback to create those references. Let's write a test inside `test/todo/manager_test.exs` that shows this failure:
+
+```elixir
+setup do
+  ets = :ets.new(:manager_test, [:set, :public])
+  manager = start_manager(ets)
+  {:ok, manager: manager, ets: ets}
+end
+
+defp start_manager(ets) do
+  {:ok, sup} = Todo.List.Supervisor.start_link
+  {:ok, event} = GenEvent.start
+  {:ok, manager} = Todo.Manager.start_link(ets, sup, event)
+
+  GenEvent.add_handler(event, Forwarder, self(), link: true)
+
+  on_exit(fn ->
+    Process.exit(manager, :shutdown)
+    Process.exit(event, :shutdown)
+    Process.exit(sup, :shutdown)
+  end)
+
+  manager
+end
+
+test "monitors existing entries", %{manager: manager, ets: ets} do
+  # Create a new todo and kill the manager
+  todo = Todo.Manager.create(manager, "shopping")
+  Todo.Manager.stop(manager)
+
+  # Create a new manager with the existing table and access the todo
+  start_manager(ets)
+  assert Todo.Manager.lookup(ets, "shopping") == {:ok, todo}
+
+  # Once the todo dies, we should receive the notifications
+  Process.exit(todo, :shutdown)
+  assert_receive {:exit, "shopping", ^todo}
+  assert Todo.Manager.lookup(ets, "shopping") == :error
+end
+```
+
+Since we need to start another manager, we have extracted the `start_manager/1` functionality from `setup/1` to be used on both the callback and the new test. Run the new test and it will fail with:
+
+```
+1) test monitors existing entries (Todo.ManagerTest)
+   test/todo/manager_test.exs:35
+   No message matching {:exit, "shopping", ^todo}
+   stacktrace:
+     test/todo/manager_test.exs:42
+```
+
+That's what we expected. If the todo list is not being monitored, the manager is not notified when it dies and therefore not event is sent. We can fix this by changing the `Todo.Manager`'s `init/1` callback as follows:
+
+```elixir
+def init({table, sup, event}) do
+  refs = :ets.foldl(fn {name, pid}, acc ->
+    HashDict.put(acc, Process.monitor(pid), name)
+  end, HashDict.new, table)
+
+  {:ok, %{names: table, refs: refs, sup: sup, event: event}}
+end
+```
+
+We go through all entries in the table and monitor them accordingly. In case any of the entries are already dead, we will still receive the `:DOWN` message, allowing them to be purged.
+
+It is exciting that in this chapter we were able to make our application more robust by using a table that is owned by the supervisor and passed to its children. We have also explored some situation you may run into when relying on ETS as cache, as it requires us to think more closely on possible race conditions since the data is now shared via ETS tables.

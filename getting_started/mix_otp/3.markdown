@@ -132,7 +132,7 @@ defmodule Todo.ManagerTest do
 
   test "spawns todo lists", %{manager: manager} do
     assert Todo.Manager.lookup(manager, "shopping") == :error
-    assert Todo.Manager.create(manager, "shopping") == :ok
+    Todo.Manager.create(manager, "shopping")
 
     assert {:ok, todo} = Todo.Manager.lookup(manager, "shopping")
     Todo.List.put(todo, "eggs")
@@ -246,11 +246,31 @@ def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
   names = HashDict.delete(names, name)
   {:noreply, {names, refs}}
 end
+
+def handle_info(_msg, state) do
+  {:noreply, state}
+end
 ```
 
-Look that we were able to change considerably the server implementation without changing any of the client API. That's one of the benefits of explicitly segregating the server and the client and providing proper client APIs like `Todo.Manager.start_link/1`.
+Observe we were able to change considerably the server implementation without changing any of the client API. That's one of the benefits of explicitly segregating the server and the client and providing proper client APIs like `Todo.Manager.start_link/1`.
 
-## 3.4 Monitors or links?
+Finally, different from the other callbacks, we have define a "catch-all" clause for `handle_info/2` that invokes. To understand why, let's move on to the next section.
+
+## 3.4 call, cast or info?
+
+So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handle_info/2`. Deciding when to use each is straight-forward:
+
+1. `handle_call/3` must be used for synchronous requests, this should be the default choice as waiting for the server reply is a useful backpressure mechanism;
+
+2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. Remember that a `cast` request does not even guarantee the server you are requesting exists, so it must be used sparingly;
+
+3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are a perfect example of such;
+
+Since any message, including the ones sent via `send/2` go to `handle_info/2`, there is a chance unexpect messages will arrive to the server. Therefore, if we don't define the `catch-all` clause, those messages could lead our supervise to crash, because no clause would match.
+
+We don't need to worry about such for `handle_call/3` and `handle_cast/2` because such requests are only done via the `GenServer` API. So an unknown message is quite likely to be the developer mistake.
+
+## 3.5 Monitors or links?
 
 We have learned about links in the [Process chapter of the Getting Started](/getting_started/11.html). Now, with our manager complete, you may be wondering, when should we use monitors and when should we use links?
 
