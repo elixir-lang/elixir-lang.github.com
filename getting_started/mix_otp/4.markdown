@@ -44,7 +44,7 @@ Our supervisor has one single children, which is represented by the `Todo.Manage
 
 Finally, we call `supervise/2`, passing the children to supervise, and the strategy of `:one_for_one`.
 
-The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that, if a children dies, only that children is restarted. There are other strategies, like `:one_for_all`, which kills and restarts all children whenever one of them dies, and more. For now, we will use `:one_for_one` and revisit as soon as we add more children to our supervision tree.
+The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that, if a children dies, only that children is restarted. Since we have only one children for now, our choice here doesn't matter, but we will revisit the supervision strategy as soon as we add more children to our supervisor.
 
 If we start a console inside our project using `iex -S mix`, we can manually start the supervision tree:
 
@@ -177,9 +177,13 @@ Remember however that our `Todo.Manager` is both linking and monitoring todo lis
 ref = Process.monitor(pid)
 ```
 
-This means that, if a todo list process crash, it will crash the manager too. In practice, this won't be a problem now because the supervisor would restart the manager in case of such crashes. However, since we already know this is a bug, we may as well fix it!
+Remember that links are bi-directional which implies that a crash in the manager will crash all todo lists and a crash in any todo list will crash the manager too. To see if this behaviour is reasonable, let's consider both cases separately:
 
-Let's write add test to `test/todo/manager_test.exs` that shows this behaviour:
+1. If the todo manager crashes, we lose the data that associates a todo list name to its process. In this case, if the manager crashes, we want the todo lists to crash too, otherwise we won't be able to find them;
+
+2. On the other hand, if a todo list crash, there is no reason to bring the manager down. Of course, the supervisor will guarantee the manager will be back up and running, but we would unecessarily lose all todo lists we have created to so far;
+
+In other words, we don't want the bi-directional aspects of links. Let's add a test to `test/todo/manager_test.exs` that shows the behaviour described in `2` above:
 
 ```elixir
 test "removes todo lists on crash", %{manager: manager} do
@@ -190,7 +194,7 @@ test "removes todo lists on crash", %{manager: manager} do
 end
 ```
 
-The test is similar to the previous one except that we are being a little bit less polite. Instead of using `Agent.stop/1` we are directly sending an exit signal to shutdown the todo list. Since the todo list is linked to the manager which is linked to test, our test is going to fail due to the `:shutdown` exit reason:
+The test is similar to the previous one except that we are being a little bit less polite. Instead of using `Agent.stop/1` we are directly sending an exit signal to shutdown the todo list. Since the todo list is linked to the manager which is linked to the test, our test is going to fail due to the `:shutdown` exit reason:
 
 ```
 1) test removes todo lists on crash (Todo.ManagerTest)
@@ -198,9 +202,7 @@ The test is similar to the previous one except that we are being a little bit le
    ** (EXIT from #PID<0.124.0>) shutdown
 ```
 
-One simple solution would be to define a function named `Todo.List.start/0`, that uses `Agent.start/2`, and replace `Todo.List.start_link/0` in the manager. However, this is an issue because our agents would live in the ether of the Erlang VM. They wouldn't be linked to any process which means that, if we stop the application, all todo list processes would still exist and continue running. Instead, it makes much more sense to put them together and it happens we can use supervisors to do it too.
-
-There is one special kind supervisor strategy and it is really special because it behaves slightly different than all the other ones as it allows us to specify a worker template and start many children using this template.
+We are going to solve this issue by creating a supervisor that will supervise all todo lists. And there is one special kind supervisor strategy, called `:simple_one_for_one`, that allows us to specify a worker template and supervise many children based on this template.
 
 Let's define our `Todo.List.Supervisor` as below:
 
@@ -226,9 +228,11 @@ defmodule Todo.List.Supervisor do
 end
 ```
 
-Note there are two changes in this new supervisor compared to the first one. First, we define a `start_todo_list/1` function that will receive a supevisor pid and start the todo list. This is the function we are going to invoke instead of invoking `Todo.List.start_link` directly.
+Note there are two changes in this new supervisor compared to the first one. First, we define a `start_todo_list/1` function that will receive a supervisor and start a todo list. This is the function we are going to invoke instead of invoking `Todo.List.start_link` directly in the manager.
 
-Second, in the `init/1` callback, are marking the worker as `:temporary`. This means that, if the worker dies, it won't be restarted.  You may be wondering: why are we defining a supervisor if we are not going to restart the children? Remember the supervisor is mainly working as a mechanism to group all todo lists together. Also, the supervisor most not restart tasks automatically as it is the responsibility of the `Todo.Manager` to do so.
+Second, in the `init/1` callback, we are marking the worker as `:temporary`. This means that, if the todo list process dies, it won't be restarted! This may sound weird at first: why are we defining a supervisor if we are not going to restart its children?
+
+Remember we are using the supervisor mainly as a mechanism to group all todo lists together. If all todo lists are assocaited to a supervisor, it means that by killing the supervisor, we will guarantee all todo lists will be killed too. This is useful in case the manager crashes.
 
 Run `iex -S mix` so we can give our new supervisor a try:
 
@@ -243,7 +247,7 @@ iex> Todo.List.get(todo)
 ["eggs"]
 ```
 
-Excellent. In order to use this new supervisor in our application, we just need to add this new supervisor as a children of `Todo.Supervisor`! Since we start to have supervisors that supervisers supervisors, we start forming the so-called supervision trees.
+Excellent! In order to use this new supervisor in our application, we just need to add it as a children of `Todo.Supervisor`. Notice we are beginning to have supervisors that supervises supervisors, forming the so-called supervision trees.
 
 Open up `lib/todo/supervisor.ex` and change the `init/1` to the following:
 
@@ -253,27 +257,23 @@ Open up `lib/todo/supervisor.ex` and change the `init/1` to the following:
 
 def init(:ok) do
   children = [
-    worker(Todo.Manager, [[name: @manager_name]]),
-    supervisor(Todo.List.Supervisor, [[name: @list_sup_name]])
+    supervisor(Todo.List.Supervisor, [[name: @list_sup_name]]),
+    worker(Todo.Manager, [[name: @manager_name]])
   ]
 
-  supervise(children, strategy: :rest_for_one)
+  supervise(children, strategy: :one_for_all)
 end
 ```
 
-This time we have added a supervisor and given it `Todo.List.Supervisor` as name (again, the same name as the module). We have also changed the strategy from `:one_for_one` to `:rest_for_one`.
+This time we have added a supervisor and given it `Todo.List.Supervisor` as name (again, the same name as the module). We have also changed the strategy from `:one_for_one` to `:one_for_all`. A couple important points to make here:
 
-Remember that `:one_for_one` would restart only the process that died. With `:rest_for_one` however, when a children dies, all the following children in the list will be killed and restarted too. This means that, if the manager dies, the list supervisor will be killed, alongside all todo lists processes. However, if the list supervisor dies, the manager will remain intact.
+1. The order children are declared in the supervisor matters. Since `Todo.Manager` will depend on `Todo.List.Supervisor`, we must start the latter before the former. That's why `Todo.List.Supervisor` must come first;
 
-This works exactly the way we need for two reasons:
-
-1. If the manager dies, we lose all the names to all todo lists processes, so the todo list supervisor must indeed be killed as we won't have any mechanism to reach the tasks
-
-2. If the supervisor dies, all the associated todo list processes will be killed. However, since the manager is already monitoring those tasks, it will know exactly when they die and clean up its dictionary accordingly
+2. The `:one_for_all` strategy means that, if any of the children die, all other children will be killed, before they are all restarted. This makes perfect sense in our case: if the manager dies, all todo list information is gone, so we should remove all todo list processes by killing its supervisor. On the other hand, if the todo list supervisor dies, there are no todo lists alive, so we may as well restart the manager too;
 
 There are other strategies and many other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) out.
 
-In order to make our failing test now pass, we just need to change the `Todo.Manager` to spawn new todo list processes via the supervisor instead of doing so directly. Let's change this line in `handle_call/2` callback:
+In order to make our failing test finally pass, we just need to change the `Todo.Manager` to spawn new todo list processes via the supervisor instead of doing so directly. Let's change this line in `handle_call/2` callback:
 
 ```elixir
 {:ok, pid} = Todo.List.start_link()
@@ -285,11 +285,13 @@ by:
 {:ok, pid} = Todo.List.Supervisor.start_todo_list(Todo.List.Supervisor)
 ```
 
-Basically, we are invoking the function in `Todo.List.Supervisor` passing as argument the process represented by the name of `Todo.List.Supervisor`, which is the name we have given in the supervision tree.
+Basically, we are invoking the function in `Todo.List.Supervisor` passing as argument the process represented by the name of `Todo.List.Supervisor`, which is the name we have given in the supervisor.
 
-Run the tests and they should pass! Remember the tests pass because the `Todo.List.Supervisor` used by the manager is being started as part of the supervision tree, which is automatically started by our application. While this is convenient, it is not a good idea because the `Todo.List.Supervisor` started by the supervision tree is global! This means our test is relying on global data which can cause tests to conflict with each other, even more when running concurrently with `async: true`.
+Run the tests and they should pass! Remember the tests pass because the `Todo.List.Supervisor` used by the manager is being started as part of the supervision tree, which is automatically started by our application. While this is convenient, it is not a good idea because the `Todo.List.Supervisor` started by the supervisor is global, all parts of our application can access it as long as it knows its name!
 
-Instead of relying on global data, we should rather start a `Todo.List.Supervisor` to be used only by tests during setup, as follows:
+This means our test is relying on global data, which is usually a bad sign, as it couples tests and even cause failures when running concurrently with `async: true`.
+
+Instead of relying on global data, we should rather start an anonymous version of `Todo.List.Supervisor` to be used only by tests, as follows:
 
 ```elixir
 setup do
@@ -396,11 +398,11 @@ defmodule Todo.Supervisor do
 
   def init(:ok) do
     children = [
-      worker(Todo.Manager, [@list_sup_name, [name: @manager_name]]),
-      supervisor(Todo.List.Supervisor, [[name: @list_sup_name]])
+      supervisor(Todo.List.Supervisor, [[name: @list_sup_name]]),
+      worker(Todo.Manager, [@list_sup_name, [name: @manager_name]])
     ]
 
-    supervise(children, strategy: :rest_for_one)
+    supervise(children, strategy: :one_for_all)
   end
 end
 ```

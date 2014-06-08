@@ -164,14 +164,34 @@ Run the test suite and all tests should be green again. We just need to once aga
 
 def init(:ok) do
   children = [
+    supervisor(Todo.List.Supervisor, [[name: @list_sup]]),
     worker(GenEvent, [[name: @event_manager]]),
-    worker(Todo.Manager, [@list_sup, @event_manager, [name: @manager]]),
-    supervisor(Todo.List.Supervisor, [[name: @list_sup]])
+    worker(Todo.Manager, [@list_sup, @event_manager, [name: @manager]])
   ]
 
-  supervise(children, strategy: :rest_for_one)
+  supervise(children, strategy: :one_for_all)
 end
 ```
+
+Note that, since the todo manager depends on the event manager, we need to start it before the todo manager, as we did with the todo list supervisor.
+
+At this point, it is also worthy considering if the `:one_for_all` strategy is still the most appropriate one. To do so, we need to evaluate two scenarios: what happens when the event manager dies and what happens when the todo manager dies:
+
+1. If the event manager dies, the supervisor will kill the todo manager, which is unecessary. There is a chance the manager will die anyway once the event manager dies, because it would be unable to publish events, but it is no reason to kill the manager prematurely;
+
+2. On the other hand, if the todo manager dies, the event manager will be killed and restarted, and there is absolutely no reason for such to happen. It can be even considered harmful to lose all events handlers in the event manager due to a crash on the todo manager;
+
+So overall, it doesn't seem the `:one_for_all` strategy is a good fit. One possible solution to this problem is to create another supervisor, that will supervise the todo manager and todo list supervisor with `:one_for_all` strategy, and have the root supervisor supervise both the event manager and the new supervisor but with `:one_for_one` strategy. Something along those lines:
+
+```
+* root supervisor [one_for_one]
+  * event manager
+  * supervisor [one_for_all]
+    * todo list supervisor [simple_one_for_one]
+    * todo manager
+```
+
+You can give a shot at building this new supervision tree but we will stop here. This is because in the next chapter we will do changes to the todo manager that will allow us to change the supervision strategy back to `:one_for_one`, so we can wait for now.
 
 ## 5.3 Event streams
 
@@ -191,4 +211,4 @@ iex> GenEvent.notify(manager, {:hello, :world})
 
 In the example above, we have created a `GenEvent.stream(manager)` that returns a stream (an enumerable) of events that are consumed as they come. Since consuming those events is a blocking action, we spawn a new process that will consume the events and print them to the terminal, and that is exactly the behaviour we see. Every time we call `sync_notify/2` or `notify/2`, the event is print to the terminal followed by `:ok` (which is the result returned by notify functions).
 
-Often event streams provide enough functionality for consuming events so you don't need to register our own handlers. However, when custom functionality is required or for during testing, defining your own event handler callbacks is the best way to go.
+Often event streams provide enough functionality for consuming events so you don't need to register our own handlers. However, when custom functionality is required or during testing, defining your own event handler callbacks is the best way to go.
