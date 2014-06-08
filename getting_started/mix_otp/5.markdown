@@ -151,6 +151,10 @@ def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
   GenEvent.sync_notify(state.event, {:exit, name, pid})
   {:noreply, %{state | names: names, refs: refs}}
 end
+
+def handle_info(_msg, state) do
+  {:noreply, state}
+end
 ```
 
 The changes are quite straightforward. We now pass the event as argument on the `GenServer` initialization, as well change both cast and info callbacks to call `GenEvent.sync_notify/2`.
