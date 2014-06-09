@@ -1,6 +1,6 @@
 ---
 layout: getting_started
-title: 2 Agents
+title: 2 Agent
 guide: 2
 ---
 
@@ -62,12 +62,12 @@ defmodule KV.BucketTest do
     KV.Bucket.put(bucket, "milk", 3)
     assert KV.Bucket.get(bucket, "milk") == 3
 
-    Process.exit(bucket, :shutdown)
+    Agent.stop(bucket)
   end
 end
 ```
 
-Our first test is quite straight-forward. We start a new `KV.Bucket` and perform some `get/2` and `put/3` operations on it, finally using `Process.exit(bucket, :shutdown)` to shutdown the bucket.
+Our first test is quite straight-forward. We start a new `KV.Bucket` and perform some `get/2` and `put/3` operations on it, finally using `Agent.stop(bucket)` to stop the bucket process.
 
 Also note that we passed the `async: true` option to `ExUnit.Case`. This option makes this test case run in parallel with other test cases that set up the `:async` option. This is extremely useful to speed up our test suite by using our cores in our machine. Note though the `:async option must only be set if the test case does not rely or change any global value. For example, if the test requires writing to the filesystem, registering processes, accessing a database, you must not make it async to avoid race conditions in between tests.
 
@@ -114,7 +114,7 @@ defmodule KV.BucketTest do
 
   setup do
     {:ok, bucket} = KV.Bucket.start_link
-    on_exit(fn -> Process.exit(bucket, :shutdown) end)
+    on_exit(fn -> Agent.stop(bucket) end)
     {:ok, bucket: bucket}
   end
 
@@ -127,7 +127,7 @@ defmodule KV.BucketTest do
 end
 ```
 
-We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself. During setup, we have created a new bucket and also registered an `on_exit/1` callback that will send a `:shutdown` signal to the bucket once the test is done (more specifically, once the test process exits).
+We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself. During setup, we have created a new bucket and also registered an `on_exit/1` callback that stops the bucket process once the test is done (more specifically, once the test process exits).
 
 Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `{:ok, bucket: bucket}` from the callback, ExUnit will merge the second element of the tuple (a dictionary) into the test context. The test context is a map which we can then match during the test definition:
 

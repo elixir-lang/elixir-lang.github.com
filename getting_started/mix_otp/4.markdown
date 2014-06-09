@@ -177,13 +177,9 @@ Remember however that our `Todo.Manager` is both linking and monitoring todo lis
 ref = Process.monitor(pid)
 ```
 
-Remember that links are bi-directional which implies that a crash in the manager will crash all todo lists and a crash in any todo list will crash the manager too. To see if this behaviour is reasonable, let's consider both cases separately:
+Remember that links are bi-directional which implies that a crash in a bucket will crash the registry. Although we now have the supervisor which will guarantee the registry will be back up and running, a crash in the registry still means we lose all buckets.
 
-1. If the todo manager crashes, we lose the data that associates a todo list name to its process. In this case, if the manager crashes, we want the todo lists to crash too, otherwise we won't be able to find them;
-
-2. On the other hand, if a todo list crash, there is no reason to bring the manager down. Of course, the supervisor will guarantee the manager will be back up and running, but we would unecessarily lose all todo lists we have created to so far;
-
-In other words, we don't want the bi-directional aspects of links. Let's add a test to `test/todo/manager_test.exs` that shows the behaviour described in `2` above:
+Let's add a test to `test/todo/manager_test.exs` that shows the behaviour described in `2` above:
 
 ```elixir
 test "removes todo lists on crash", %{manager: manager} do
@@ -194,7 +190,7 @@ test "removes todo lists on crash", %{manager: manager} do
 end
 ```
 
-The test is similar to the previous one except that we are being a little bit less polite. Instead of using `Agent.stop/1` we are directly sending an exit signal to shutdown the todo list. Since the todo list is linked to the manager which is linked to the test, our test is going to fail due to the `:shutdown` exit reason:
+The test is similar to the previous one except that we are being a bit more harsh. Instead of using `Agent.stop/1` we are directly sending an exit signal to shutdown the todo list. Since the todo list is linked to the manager which is linked to the test, our test is going to fail due to the `:shutdown` exit reason:
 
 ```
 1) test removes todo lists on crash (Todo.ManagerTest)
