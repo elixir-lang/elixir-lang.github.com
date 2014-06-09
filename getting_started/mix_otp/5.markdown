@@ -124,7 +124,7 @@ Nothing really exciting happens but it shows how we can control our application.
 
 > When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it is just a matter of typing `mix run` and then passing all options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
-### 4.2.2 The application callback
+### 5.2.2 The application callback
 
 Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!
 
@@ -164,7 +164,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 
 Excellent!
 
-### 4.2.3 Projects or applications?
+### 5.2.3 Projects or applications?
 
 Mix makes a distinction in between projects and applications. If you open up your `mix.exs` file, we say we have a Mix project that defines the `:kv` application. As we will see in later chapters, there are projects that don't define any application.
 
@@ -172,7 +172,7 @@ When we say project, you should think about Mix. Mix is the tool that manages yo
 
 When we talk about applications, we talk about OTP. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications by the [docs for the Application module](/docs/stable/elixir/Application.html) as well as running `mix help compile.app` to learn more about the supported options in `def application`.
 
-## 4.3 Simple one for one supervisors
+## 5.3 Simple one for one supervisors
 
 We have now successfully defined our supervisor which is automatically started (and stopped) as part of our application lifecycle.
 
@@ -259,7 +259,7 @@ Let's change the registry to work with the buckets supervisor. We are going to f
 ```elixir
 setup do
   {:ok, sup} = KV.Bucket.Supervisor.start_link
-  {:ok, manager} = GenEvent.start
+  {:ok, manager} = GenEvent.start_link
   {:ok, registry} = KV.Registry.start_link(manager, sup)
 
   GenEvent.add_handler(manager, Forwarder, self(), link: true)
@@ -313,7 +313,7 @@ end
 
 Those changes should be enough to make our tests pass! To complete our task, we just need to update our supervisor to also take the buckets supervisor as child.
 
-## 4.4 Supervision trees
+## 5.4 Supervision trees
 
 In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervises supervisors, forming the so-called supervision trees.
 
@@ -341,7 +341,7 @@ Also remember the order children are declared is important. Since the registry d
 
 Since we have added more children to the supervisor, it is important to evaluate if the `:one_for_one` strategy is still correct. One flaw that shows up straight-away is the relationship in between registry and buckets supervisor. If the registry dies, the buckets supervisor must die too, because once the registry dies all information linking the bucket name to the bucket process is lost. If the buckets supervisor is kept alive, it would be impossible to reach those buckets.
 
-We could consider moving to another strategy, like `:one_for_all`. The `:one_for_all` strategy kills and restarts all children whenever one of the children die. This change is not ideal too because a crash in the registry should not crash the event manager. In fact, doing so would even be harmful, as crashing the event manager would clause all installed event handlers to be removed.
+We could consider moving to another strategy like `:one_for_all`. The `:one_for_all` strategy kills and restarts all children whenever one of the children die. This change is not ideal too because a crash in the registry should not crash the event manager. In fact, doing so would even be harmful, as crashing the event manager would cause all installed event handlers to be removed.
 
 One possible solution to this problem is to create another supervisor, that will supervise the registry and buckets supervisor with `:one_for_all` strategy, and have the root supervisor supervise both the event manager and the new supervisor with `:one_for_one` strategy. The proposed tree would have the following format:
 
@@ -350,6 +350,7 @@ One possible solution to this problem is to create another supervisor, that will
   * event manager
   * supervisor [one_for_all]
     * buckets supervisor [simple_one_for_one]
+      * buckets
     * registry
 ```
 

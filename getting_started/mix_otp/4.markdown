@@ -80,7 +80,7 @@ defmodule Forwarder do
 end
 
 setup do
-  {:ok, manager} = GenEvent.start
+  {:ok, manager} = GenEvent.start_link
   {:ok, registry} = KV.Registry.start_link(manager)
 
   GenEvent.add_handler(event, Forwarder, self(), link: true)
@@ -107,11 +107,7 @@ In order to test the functionality we want to add, we first define a `Forwarder`
 
 In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
 
-Finally, there are two important differences in the `setup` callback compared to the example we tried on IEx:
-
-1. We have used `GenEvent.start` instead of `GenEvent.start_link`. That's because if we link the event manager to the test process, the event manager will exit when the test finishes causing the callback given to `on_exit/1` to fail (you can try changing it to `GenEvent.start_link` once the test pass and see what happens);
-
-2. When calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, it makes no sense to continue forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive;
+Finally, notice when calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, it makes no sense to continue forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive;
 
 Let's now change the registry to make the tests pass. Open up `lib/kv/registry.ex` and paste the new registry implementation below (comments inlined):
 
