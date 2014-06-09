@@ -1,6 +1,6 @@
 ---
 layout: getting_started
-title: 5 Event managers
+title: 5 GenEvent
 guide: 5
 ---
 
@@ -12,7 +12,7 @@ In this chapter, we will explore GenEvent, another behaviour provided by Elixir 
 
 There are two events we are going to publish: one for every time a todo list is created and another when a todo list is destroyed.
 
-## 5.1 GenEvent
+## 5.1 Event managers
 
 Let's start a new `iex -S mix` session and explore the GenEvent API a bit:
 
@@ -62,7 +62,7 @@ Therefore, `sync_notify/2` and `notify/2` are similar to `call/2` and `cast/2` i
 
 Be sure to check other funcionality provided by GenEvent in its [module documentation](/docs/stable/elixir/GenEvent.html). For now we have enough knowledge to add an event manager to our application. 
 
-## 5.2 A manager with events
+## 5.2 Registry events
 
 Since we want to notify every time a todo list is created or removed, the perfect place for invoking the event manager is in the `Todo.Manager` module. Specifically, we need to change `Todo.Manager` to receive the event manager pid/name on `start_link` and guarantee we send the notifications from the proper server callbacks.
 
