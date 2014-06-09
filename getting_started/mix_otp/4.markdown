@@ -1,6 +1,7 @@
+
 ---
 layout: getting_started
-title: 4 Supervisors and Applications
+title: 4 GenEvent
 guide: 4
 ---
 
@@ -8,370 +9,177 @@ guide: 4
 
   <div class="toc"></div>
 
-So far we have implemented two process abstractions: the todo list processes and the todo list manager, which is responsible for naming and monitoring the todo list processes.
+In this chapter, we will explore GenEvent, another behaviour provided by Elixir and OTP that allows us to spawn an event manager that is able to publish events to many handlers.
 
-While we may think our implementation so far is quite good, no software is bug free, and problems are failures are definitely going to happen, even more in production when they become much harder to reproduce and debug!
+There are two events we are going to emit: one for every time a bucket is added to the registry and another when it is removed from it.
 
-When things are failing, our first reaction may be: "let's rescue those errors". But we have learned in the getting started guide that in Elixir we don't program defensively nor have the habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "fail fast" or "let it crash". If there is a bug that leads our todo list manager to crash, we have nothing to worry because we are going to setup a supervisor that will start a new, fresh copy, of the todo list manager.
+## 4.1 Event managers
 
-In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use it to build supervisor managers and the todo lists processes.
-
-## 4.1 Our first Supervisor
-
-Creating a supervisor is not much different of creating a GenServer. We are going to define a module named `Todo.Supervisor` inside the `lib/todo/supervisor.ex` file which will use the [Supervisor](/docs/stable/elixir/Supervisor.html) behaviour:
+Let's start a new `iex -S mix` session and explore the GenEvent API a bit:
 
 ```elixir
-defmodule Todo.Supervisor do
-  use Supervisor
-
-  def start_link do
-    Supervisor.start_link(__MODULE__, :ok)
-  end
-
-  @manager_name Todo.Manager
-
-  def init(:ok) do
-    children = [
-      worker(Todo.Manager, [[name: @manager_name]])
-    ]
-
-    supervise(children, strategy: :one_for_one)
-  end
-end
+iex> {:ok, manager} = GenEvent.start_link
+{:ok, #PID<0.83.0>}
+iex> GenEvent.sync_notify(manager, :hello)
+:ok
+iex> GenEvent.notify(manager, :world)
+:ok
 ```
 
-Our supervisor has one single children, which is represented by the `Todo.Manager` module. This children receives one argument, which is the keyword list `[name: Todo.Manager]`, guaranteeing we can access the manager with the name `Todo.Manager` throughout the application. It is very common to name the children process in a supervision tree and often the children has the name of the module that defines it (this association becomes very handy during debugging).
+`GenEvent.start_link/0` starts a new event manager. That is literally all that is required to start a manager. After the manager is created, we can call `GenEvent.notify/2` and `GenEvent.sync_notify/2` to send notifications.
 
-Finally, we call `supervise/2`, passing the children to supervise, and the strategy of `:one_for_one`.
+However, since there are no event handlers tied to the manager, not much happens on every notification.
 
-The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that, if a children dies, only that children is restarted. Since we have only one children for now, our choice here doesn't matter, but we will revisit the supervision strategy as soon as we add more children to our supervisor.
-
-If we start a console inside our project using `iex -S mix`, we can manually start the supervision tree:
+Let's create our first handler, still on IEx, that sends all events to a given process:
 
 ```iex
-iex> Todo.Supervisor.start_link
-{:ok, #PID<0.66.0>}
-iex> Todo.Manager.create(Todo.Manager, "shopping")
+iex> defmodule Forwarder do
+...>   use GenEvent
+...>   def handle_event(event, parent) do
+...>     send parent, event
+...>     {:ok, parent}
+...>   end
+...> end
+iex> GenEvent.add_handler(manager, Forwarder, self())
 :ok
-iex> Todo.Manager.lookup(Todo.Manager, "shopping")
-{:ok, #PID<0.70.0>}
-```
-
-When we start the supervision tree, the `Todo.Manager` worker, with name `Todo.Manager` was automatically started, which we then used to create new todo lists.
-
-In practice though, we rarely start the supervision tree manually. Instead, it is always started as part of the application callback.
-
-## 4.2 Understanding applications
-
-You may not have noticed but all this time we have been working with applications. Every time you change a file and run `mix compile`, you see a `Generated todo.app` file in the output.
-
-You can find the generated `.app` file at `_build/dev/lib/todo/ebin/todo.app`. Let's see its contents:
-
-```erlang
-{application,todo,
-             [{registered,[]},
-              {description,"todo"},
-              {applications,[kernel,stdlib,elixir]},
-              {vsn,"0.0.1"},
-              {modules,['Elixir.Todo','Elixir.Todo.List',
-                        'Elixir.Todo.Manager','Elixir.Todo.Supervisor']}]}.
-```
-
-This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, we can have a pretty good idea of what the file contains. It pretty much holds our application definition. It contains a list of applications our `todo` application depends on like Erlang's kernel and elixir itself, as well as the version, and all the modules defined by our application.
-
-It would be pretty boring to update this file manually every time we add a new module to our application, that's why mix generates and maintains one automatically for us.
-
-We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file.
-
-### 4.2.1 Starting applications
-
-When we define an `.app` file, which is the application definition, we are able to start and stop the application as a whole. We haven't worried about this so far due to two reasons:
-
-1. Mix automatically starts our current application for us;
-
-2. Even if Mix didn't start our application for us, our application does not do anything on start yet;
-
-In any case, let's show how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:
-
-```iex
-iex> Application.start(:todo)
-{:error, {:already_started, :todo}}
-```
-
-Oops, already started, I've told you so!
-
-However, we can pass an option to mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
-
-```elixir
-iex> Application.start(:todo)
+iex> GenEvent.sync_notify(manager, {:hello, :world})
 :ok
-iex> Application.stop(:todo)
-
-=INFO REPORT==== 6-Jun-2014::18:24:26 ===
-    application: todo
-    exited: stopped
-    type: temporary
+iex> flush
+{:hello, :world}
 :ok
 ```
 
-Nothing really exciting happens but it shows how we can control our application start/stop cycle.
+We createad our handlers and added it to the manager by calling `GenEvent.add_handler/3` passing the manager, the event handler module (named `Forwarder`) and the event handler state, in this case, the current process pid.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it is just a matter of typing `mix run` and then passing all options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+After adding the handler, we can see that by calling `sync_notify/2`, the `Forwarder` handler successfully forwards events to our inbox.
 
-### 4.2.2 The application callback
+There are a couple things that are important to highlight at this point:
 
-Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!
+1. The event handler runs in the same process as the event manager;
+2. `sync_notify/2` runs event handlers synchronously to the request;
+3. while `notify/2` runs event handlers asynchronously;
 
-We can specify an application callback which is a function that will be invoked when the application starts. And what this function must return as result is `{:ok, pid}` where `pid` is the process identifier of a supervisor process!
+Therefore, `sync_notify/2` and `notify/2` are similar to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended as it works as a backpressure mechanism.
 
-We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
+Be sure to check other funcionality provided by GenEvent in its [module documentation](/docs/stable/elixir/GenEvent.html). For now we have enough knowledge to add an event manager to our application.
 
-```elixir
-def application do
-  [applications: [],
-   mod: {Todo, []}]
-end
-```
+## 4.2 Registry events
 
-Basically the `:module` key specifies a module to be invoked as the application callback, followed by the arguments to be passed to the callback.
+In order to emit events, we need to change the registry to work with an event manager. While we could automatically start the event manager when the registry is started, for example in the `init/1` callback, it is preferrable to pass the event manager pid/name on `start_link`, decoupling the start of the event manager from the registry.
 
-Now that we have specified `Todo` as the module callback, we need to change the `Todo` module, defined in `lib/todo.ex` so it implements the [Application](/docs/stable/elixir/Application.html) behaviour:
+Let's first change our tests to showcase the behaviour we want the registry to exhibit. Open up `test/kv/registry_test.exs` and change the existing `setup` callback to the one below and add the new test:
 
 ```elixir
-defmodule Todo do
-  use Application
+defmodule Forwarder do
+  use GenEvent
 
-  def start(_type, _args) do
-    Todo.Supervisor.start_link
+  def handle_event(event, parent) do
+    send parent, event
+    {:ok, parent}
   end
 end
-```
 
-Let's start our project console once again with `iex -S mix` and we will see a process named `Todo.Manager` will already be running:
-
-```iex
-iex> Todo.Manager.create(Todo.Manager, "shopping")
-:ok
-iex> Todo.Manager.lookup(Todo.Manager, "shopping")
-{:ok, #PID<0.88.0>}
-```
-
-Excellent!
-
-### 4.2.3 Projects or applications?
-
-Elixir makes a distinction in between projects and applications. If you open up your `mix.exs` file, we say we have a mix project that defines the `:todo` application. As we will see in later chapters, there are projects that don't define any application and also projects that host an umbrella of applications.
-
-When we say project, you should think about Mix. Mix is the tool that manages your project. It knows how to compile your project, test your project and more. It also knows how to compile the application file relevant to your project.
-
-When we talk about applications, we talk about OTP. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications by the [docs for the Application module](/docs/stable/elixir/Application.html) as well as running `mix help compile.app` to learn more about the `def application` options.
-
-## 4.3 Simple one for one supervisors
-
-We have now successfully defined our supervisor which is automatically started (and stopped) as part of our application lifecycle.
-
-Remember however that our `Todo.Manager` is both linking and monitoring todo lists processes in the `handle_cast/2` callback:
-
-```elixir
-{:ok, pid} = Todo.List.start_link()
-ref = Process.monitor(pid)
-```
-
-Remember that links are bi-directional which implies that a crash in a bucket will crash the registry. Although we now have the supervisor which will guarantee the registry will be back up and running, a crash in the registry still means we lose all buckets.
-
-Let's add a test to `test/todo/manager_test.exs` that shows the behaviour described in `2` above:
-
-```elixir
-test "removes todo lists on crash", %{manager: manager} do
-  Todo.Manager.create(manager, "shopping")
-  {:ok, todo} = Todo.Manager.lookup(manager, "shopping")
-  kill_with todo, &Process.exit(&1, :shutdown)
-  assert Todo.Manager.lookup(manager, "shopping") == :error
-end
-```
-
-The test is similar to the previous one except that we are being a bit more harsh. Instead of using `Agent.stop/1` we are directly sending an exit signal to shutdown the todo list. Since the todo list is linked to the manager which is linked to the test, our test is going to fail due to the `:shutdown` exit reason:
-
-```
-1) test removes todo lists on crash (Todo.ManagerTest)
-   test/todo/manager_test.exs:26
-   ** (EXIT from #PID<0.124.0>) shutdown
-```
-
-We are going to solve this issue by creating a supervisor that will supervise all todo lists. And there is one special kind supervisor strategy, called `:simple_one_for_one`, that allows us to specify a worker template and supervise many children based on this template.
-
-Let's define our `Todo.List.Supervisor` as below:
-
-```elixir
-defmodule Todo.List.Supervisor do
-  use Supervisor
-
-  def start_link(opts \\ []) do
-    Supervisor.start_link(__MODULE__, :ok, opts)
-  end
-
-  def start_todo_list(supervisor) do
-    Supervisor.start_child(supervisor, [])
-  end
-
-  def init(:ok) do
-    children = [
-      worker(Todo.List, [], type: :temporary)
-    ]
-
-    supervise(children, strategy: :simple_one_for_one)
-  end
-end
-```
-
-Note there are two changes in this new supervisor compared to the first one. First, we define a `start_todo_list/1` function that will receive a supervisor and start a todo list. This is the function we are going to invoke instead of invoking `Todo.List.start_link` directly in the manager.
-
-Second, in the `init/1` callback, we are marking the worker as `:temporary`. This means that, if the todo list process dies, it won't be restarted! This may sound weird at first: why are we defining a supervisor if we are not going to restart its children?
-
-Remember we are using the supervisor mainly as a mechanism to group all todo lists together. If all todo lists are assocaited to a supervisor, it means that by killing the supervisor, we will guarantee all todo lists will be killed too. This is useful in case the manager crashes.
-
-Run `iex -S mix` so we can give our new supervisor a try:
-
-```iex
-iex> {:ok, sup} = Todo.List.Supervisor.start_link
-{:ok, #PID<0.70.0>}
-iex> {:ok, todo} = Todo.List.Supervisor.start_todo_list(sup)
-{:ok, #PID<0.72.0>}
-iex> Todo.List.put(todo, "eggs")
-:ok
-iex> Todo.List.get(todo)
-["eggs"]
-```
-
-Excellent! In order to use this new supervisor in our application, we just need to add it as a children of `Todo.Supervisor`. Notice we are beginning to have supervisors that supervises supervisors, forming the so-called supervision trees.
-
-Open up `lib/todo/supervisor.ex` and change the `init/1` to the following:
-
-```elixir
-@manager_name Todo.Manager
-@list_sup_name Todo.List.Supervisor
-
-def init(:ok) do
-  children = [
-    supervisor(Todo.List.Supervisor, [[name: @list_sup_name]]),
-    worker(Todo.Manager, [[name: @manager_name]])
-  ]
-
-  supervise(children, strategy: :one_for_all)
-end
-```
-
-This time we have added a supervisor and given it `Todo.List.Supervisor` as name (again, the same name as the module). We have also changed the strategy from `:one_for_one` to `:one_for_all`. A couple important points to make here:
-
-1. The order children are declared in the supervisor matters. Since `Todo.Manager` will depend on `Todo.List.Supervisor`, we must start the latter before the former. That's why `Todo.List.Supervisor` must come first;
-
-2. The `:one_for_all` strategy means that, if any of the children die, all other children will be killed, before they are all restarted. This makes perfect sense in our case: if the manager dies, all todo list information is gone, so we should remove all todo list processes by killing its supervisor. On the other hand, if the todo list supervisor dies, there are no todo lists alive, so we may as well restart the manager too;
-
-There are other strategies and many other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) out.
-
-In order to make our failing test finally pass, we just need to change the `Todo.Manager` to spawn new todo list processes via the supervisor instead of doing so directly. Let's change this line in `handle_call/2` callback:
-
-```elixir
-{:ok, pid} = Todo.List.start_link()
-```
-
-by:
-
-```elixir
-{:ok, pid} = Todo.List.Supervisor.start_todo_list(Todo.List.Supervisor)
-```
-
-Basically, we are invoking the function in `Todo.List.Supervisor` passing as argument the process represented by the name of `Todo.List.Supervisor`, which is the name we have given in the supervisor.
-
-Run the tests and they should pass! Remember the tests pass because the `Todo.List.Supervisor` used by the manager is being started as part of the supervision tree, which is automatically started by our application. While this is convenient, it is not a good idea because the `Todo.List.Supervisor` started by the supervisor is global, all parts of our application can access it as long as it knows its name!
-
-This means our test is relying on global data, which is usually a bad sign, as it couples tests and even cause failures when running concurrently with `async: true`.
-
-Instead of relying on global data, we should rather start an anonymous version of `Todo.List.Supervisor` to be used only by tests, as follows:
-
-```elixir
 setup do
-  {:ok, sup} = Todo.List.Supervisor.start_link
-  {:ok, manager} = Todo.Manager.start_link(sup)
+  {:ok, manager} = GenEvent.start
+  {:ok, registry} = KV.Registry.start_link(manager)
+
+  GenEvent.add_handler(event, Forwarder, self(), link: true)
+
   on_exit(fn ->
-    Todo.Manager.stop(manager)
-    Process.exit(sup, :shutdown)
+    Process.exit(registry, :shutdown)
+    Process.exit(manager, :shutdown)
   end)
-  {:ok, manager: manager}
+
+  {:ok, registry: registry}
+end
+
+test "sends events on create and crash", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  assert_receive {:create, "shopping", ^bucket}
+
+  Agent.stop(bucket)
+  assert_receive {:exit, "shopping", ^bucket}
 end
 ```
 
-To make our tests pass again, we now need to change `Todo.Manager` to receive the `sup` pid as parameter and use it when calling `Todo.List.Supervisor`. The new implementation is shown below:
+In order to test the functionality we want to add, we first define a `Forwarder` event handler similar to the one from IEx. On `setup`, we start the event manager, pass it as argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
+
+In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
+
+Finally, there are two important differences in the `setup` callback compared to the example we tried on IEx:
+
+1. We have used `GenEvent.start` instead of `GenEvent.start_link`. That's because if we link the event manager to the test process, the event manager will exit when the test finishes causing the callback given to `on_exit/1` to fail (you can try changing it to `GenEvent.start_link` once the test pass and see what happens);
+
+2. When calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, it makes no sense to continue forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive;
+
+Let's now change the registry to make the tests pass. Open up `lib/kv/registry.ex` and paste the new registry implementation below (comments inlined):
 
 ```elixir
-defmodule Todo.Manager do
+defmodule KV.Registry do
   use GenServer
 
-  ## Cient API
+  ## Client API
 
   @doc """
-  Starts the `Todo.Manager`.
+  Starts the registry.
   """
-  def start_link(sup, opts \\ []) do
-    GenServer.start_link(__MODULE__, sup, opts)
+  def start_link(event_manager, opts \\ []) do
+    # 1. start_link now expects the event manager as argument
+    GenServer.start_link(__MODULE__, event_manager, opts)
   end
 
   @doc """
-  Looks up the pid for `todo_list_name` stored in `server`.
+  Looks up the bucket pid for `name` stored in `server`.
 
-  Returns `{:ok, pid}` in case a todo list exists,
-  `:error` otherwise.
+  Returns `{:ok, pid}` in case a bucket exists, `:error` otherwise.
   """
-  def lookup(server, todo_list_name) do
-    GenServer.call(server, {:lookup, todo_list_name})
+  def lookup(server, name) do
+    GenServer.call(server, {:lookup, name})
   end
 
   @doc """
-  Ensures there is a process associated to the given todo
-  `todo_list_name`.
+  Ensures there is a bucket associated to the given `name` in `server`.
   """
-  def create(server, todo_list_name) do
-    GenServer.cast(server, {:create, todo_list_name})
+  def create(server, name) do
+    GenServer.cast(server, {:create, name})
   end
 
-  @doc """
-  Stops the manager.
-  """
-  def stop(server) do
-    GenServer.call(server, :stop)
-  end
+  ## Server callbacks
 
-  ## Server Callbacks
-
-  def init(sup) do
+  def init(events) do
+    # 2. The init callback now receives the event manager.
+    #    We have also changed the manager state from a tuple
+    #    to a map, allowing us to add new fields in the future
+    #    without a need to rewrite all callbacks.
     names = HashDict.new
     refs  = HashDict.new
-    {:ok, %{names: names, refs: refs, sup: sup}}
+    {:ok, %{names: names, refs: refs, events: events}}
   end
 
-  def handle_call({:lookup, todo_list_name}, _from, state) do
-    {:reply, HashDict.fetch(state.names, todo_list_name), state}
+  def handle_call({:lookup, name}, _from, state) do
+    {:reply, HashDict.fetch(state.names, name), state}
   end
 
-  def handle_call(:stop, _from, state) do
-    {:stop, :normal, :ok, state}
-  end
-
-  def handle_cast({:create, todo_list_name}, state) do
-    if HashDict.get(state.names, todo_list_name) do
+  def handle_cast({:create, name}, state) do
+    if HashDict.get(state.names, name) do
       {:noreply, state}
     else
-      {:ok, pid} = Todo.List.Supervisor.start_todo_list(state.sup)
+      {:ok, pid} = KV.Bucket.start_link()
       ref = Process.monitor(pid)
-      refs = HashDict.put(state.refs, ref, todo_list_name)
-      names = HashDict.put(state.names, todo_list_name, pid)
+      refs = HashDict.put(state.refs, ref, name)
+      names = HashDict.put(state.names, name, pid)
+      # 3. Push a notification to the event manager on create
+      GenEvent.sync_notify(state.events, {:create, name, pid})
       {:noreply, %{state | names: names, refs: refs}}
     end
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
+  def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
     {name, refs} = HashDict.pop(state.refs, ref)
     names = HashDict.delete(state.names, name)
+    # 4. Push a notification to the event manager on exit
+    GenEvent.sync_notify(state.events, {:exit, name, pid})
     {:noreply, %{state | names: names, refs: refs}}
   end
 
@@ -381,36 +189,28 @@ defmodule Todo.Manager do
 end
 ```
 
-Notice instead of `init(:ok)`, we now receive the supervisor pid with `init(sup)`. We have also changed the state from a tuple to a map, so we can add new fields to the manager state in the future without a need to change all callbacks.
+The changes are quite straightforward. We now pass the event manager as argument on the `GenServer` initialization, as well change both cast and info callbacks to call `GenEvent.sync_notify/2`. We have also taken the opportunity to change the server state to a map, making it easier to improve the registry in the future.
 
-Now we just need to change `Todo.Supervisor` to pass the proper list supervisor name to `Todo.Manager`. Our final supervisor definition is shown below:
+Run the test suite and all tests should be green again.
+
+## 4.3 Event streams
+
+One last functionality worth exploring from `GenEvent` is the ability to consume its events as a stream:
 
 ```elixir
-defmodule Todo.Supervisor do
-  use Supervisor
-
-  def start_link do
-    Supervisor.start_link(__MODULE__, :ok)
-  end
-
-  @manager_name Todo.Manager
-  @list_sup_name Todo.List.Supervisor
-
-  def init(:ok) do
-    children = [
-      supervisor(Todo.List.Supervisor, [[name: @list_sup_name]]),
-      worker(Todo.Manager, [@list_sup_name, [name: @manager_name]])
-    ]
-
-    supervise(children, strategy: :one_for_all)
-  end
-end
+iex> {:ok, manager} = GenEvent.start_link
+{:ok, #PID<0.83.0>}
+iex> spawn_link fn ->
+...>   for x <- GenEvent.stream(manager), do: IO.inspect(x)
+...> end
+:ok
+iex> GenEvent.notify(manager, {:hello, :world})
+{:hello, :world}
+:ok
 ```
 
-The name we give to `Todo.Manager` is the same we use when initializing `Todo.List.Supervisor`, ensuring our application has all names properly hooked up.
+In the example above, we have created a `GenEvent.stream(manager)` that returns a stream (an enumerable) of events that are consumed as they come. Since consuming those events is a blocking action, we spawn a new process that will consume the events and print them to the terminal, and that is exactly the behaviour we see. Every time we call `sync_notify/2` or `notify/2`, the event is print to the terminal followed by `:ok` (which is the result returned by notify functions).
 
-We have learned many important concepts in this chapter. We have learned about supervisors, applications but, most of all, we have learned useful design techniques. While it is common, and often required, to name the workers and supervisors in our supervisions tree, it is best if their implementation are not coupled to any process name. This guarantee sanity in our test suite and in our software maintenance.
+Often event streams provide enough functionality for consuming events so you don't need to register our own handlers. However, when custom functionality is required or during testing, defining your own event handler callbacks is the best way to go.
 
-Finally keep in mind that if you want to create a new application that defines a supervisor and the application callback upfront, you can simply pass the `--sup` option to `mix new`, for example: `mix new --sup sample`.
-
-Give the command a try and compare the generated application with the one we have so far. What are the differences? Remember to reach to [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) if you have questions.
+At this point, we have an event manager, a registry and potentially many buckets running at the same time. It is about time to worry what would happen if any of those processes crash.

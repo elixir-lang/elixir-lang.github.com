@@ -49,7 +49,7 @@ A GenServer is implemented in two parts: the client API and the server callbacks
 defmodule KV.Registry do
   use GenServer
 
-  ## Cient API
+  ## Client API
 
   @doc """
   Starts the registry.
@@ -267,4 +267,6 @@ If you watch closely our `handle_cast/2` implementation, you can see the registr
 ref = Process.monitor(pid)
 ```
 
-And that is a bad idea as we don't want the registry to crash when a bucket crashes! We will explore solutions to this problem in the next chapter, when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see, supervisors work with links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and OTP.
+And that is a bad idea as we don't want the registry to crash when a bucket crashes! We will explore solutions to this problem when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see, supervisors work with links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and OTP.
+
+Before jumping into supervisors, let's first explore event managers and event handlers with GenEvent.
