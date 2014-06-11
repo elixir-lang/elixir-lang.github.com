@@ -241,7 +241,11 @@ end
 
 We simply changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket.
 
-Run the tests once again and we should be down to one failure (that may be intermittent):
+Let's run the tests once again. This time though, we will pass the `--trace` option:
+
+    $ mix test --trace
+
+The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one failure (that may be intermittent):
 
 ```
 1) test removes buckets on exit (KV.RegistryTest)
@@ -254,7 +258,7 @@ Run the tests once again and we should be down to one failure (that may be inter
      test/kv/registry_test.exs:52
 ```
 
-This time we are expecting the bucket to no longer exist on the table but it still does! This the opposite problem to the one we have just solved: while previously there was a delay in between the command to create a bucket and updating the table, now there is a delay in between the bucket process dying and its entry being removed from the table.
+If you are the error, we are expecting the bucket to no longer exist on the table but it still does! This the opposite problem to the one we have just solved: while previously there was a delay in between the command to create a bucket and updating the table, now there is a delay in between the bucket process dying and its entry being removed from the table.
 
 Unfortunately this time we cannot simply change `handle_info/2` to a synchronous operation. We can however fix our tests by using the event manager notifications. Let's take another look at our `handle_info/2` implementation:
 
