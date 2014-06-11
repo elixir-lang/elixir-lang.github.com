@@ -1,0 +1,273 @@
+---
+layout: getting_started
+title: 8 Task and gen_tcp
+guide: 8
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://erlang.org/doc/man/gen_tcp.html) to serve requests. In future chapters we will expand our server so it can actually serve the  commands. This will also provide a great opportunity to explore Elixir's tasks.
+
+## 8.1 Echo server
+
+We will start our TCP server by first implementing an echo server, that sends as response the same text it received in the request. We will slowly improve our server until it is supervised and ready to handle multiple connections.
+
+A TCP server, in broad strokes, does the following steps:
+
+1. Listens to a port until the port is available and it gets hold of the socket
+2. It then waits for a client connection on that port and accepts it
+3. It reads the client request and writes a response back
+
+Let's implement those steps. Move to the `apps/kv_server` application and open up `lib/kv_server.ex` and add the following funtions:
+
+```elixir
+def accept(port) do
+  {:ok, socket} = :gen_tcp.listen(port, reuseaddr: true)
+  IO.puts "Serving requests on port #{port}"
+  loop_acceptor(socket)
+end
+
+defp loop_acceptor(socket) do
+  {:ok, client} = :gen_tcp.accept(socket)
+  serve(client)
+  loop_acceptor(socket)
+end
+
+defp serve(socket) do
+  socket
+  |> read_line()
+  |> write_line(socket)
+
+  serve(socket)
+end
+
+defp read_line(socket) do
+  :inet.setopts(socket, packet: :line, active: false)
+  {:ok, data} = :gen_tcp.recv(socket, 0)
+  data
+end
+
+defp write_line(line, socket) do
+  :gen_tcp.send(socket, line)
+end
+```
+
+We are going to start our server by calling `KVServer.accept(4040)` where 4040 is the port. The first step in `accept/1` is to listen until the port becomes available and calls `loop_acceptor/1` which accepts connection in a loop. Every time there is a new connection, `:gen_tcp.accept/1` returns a socket specific to that client and serves the request, then it enters in the loop again.
+
+`serve/1` is another loop that reads a line the socket and then those lines back to the socket. Note the `serve/1` function uses [the pipeline operator `|>`](/docs/stable/elixir/Kernel.html#|>/2) to express this flow of operation. The pipeline operator evaluates the left side and pass its result as first argument to the function on the right side. The example above:
+
+```elixir
+socket |> read_line() |> write_line(socket)
+```
+
+is equivalent to:
+
+```elixir
+write_line(read_line(socket), socket)
+```
+
+After writing to the socket, `serve/1` calls itself, so we can read another line from the client, write it back and so on.
+
+The `read_line/1` implementation receives data from the socket using `:gen_tcp.recv/2`. In order to use such function to read lines, we need to first configure the socket to receive packets per line and we also set `active: false`. There are basically two modes of receiving data from a socket: the active mode sends the socket data as messages to the current process, while the other mode, the one we've chosen, uses `:gen_tcp.recv/2` which blocks until the data becomes available.
+
+This is pretty much all we need to implement our echo server. Let's give it a try!
+
+Start an iex session inside the `kv_server` application with `iex -S mix` and inside IEx run:
+
+```elixir
+iex> KVServer.accept(4040)
+```
+
+Now the server is running, you will even notice the console is blocked. Let's use [a `telnet` client](http://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available to most operating systems and their command line instructions are quite similar:
+
+    $ telnet 127.0.0.1 4040
+    Trying 127.0.0.1...
+    Connected to localhost.
+    Escape character is '^]'.
+    hello
+    hello
+    is it me
+    is it me
+    you are looking for?
+    you are looking for?
+
+Type "hello", press enter, and you will get "hello" back. Excellent!
+
+My particular telnet client can be exited by typing `ctrl + ]` and then typing quit and pressing enter but it may change based on your client.
+
+Once you kill the telnet client, you will likely get an error back in the IEx session:
+
+    ** (MatchError) no match of right hand side value: {:error, :closed}
+        (kv_server) lib/kv_server.ex:41: KVServer.read_line/1
+        (kv_server) lib/kv_server.ex:33: KVServer.serve/1
+        (kv_server) lib/kv_server.ex:27: KVServer.loop_acceptor/1
+
+That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in upcoming versions.
+
+For now there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won't be able to serve more requests as it won't be restarted. That's why we must move our server inside a supervision tree.
+
+## 8.2 Tasks
+
+We have learned about agents, generic server, event managers and they were all meant to work with multiple messages or work around state. But what do we use when we only need to execute some task and that is it?
+
+[The Task module](/docs/stable/elixir/Task.html) provides the exact functionality for this use case. For example, there is a function named `start_link/3` that receives the module, function and arguments, allowing us to run a given function as part of a supervision tree.
+
+Let's give it a try. Open up `lib/kv_server.ex` and let's change the supervisor directly in the `start/2` function to the following:
+
+```elixir
+def start(_type, _args) do
+  import Supervisor.Spec
+
+  children = [
+    worker(Task, [KVServer, :accept, [4040]])
+  ]
+
+  opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+  Supervisor.start_link(children, opts)
+end
+```
+
+We are basically saying we want to run `KVServer.accept(4040)` as a worker. We are hardcoding the port for now but we will get back to it later.
+
+Now the server is part of the supervision tree and it should start by simply running the application. Type `mix run --no-halt` in the terminal and then once again use the `telnet` client to guarantee everything works:
+
+    $ telnet 127.0.0.1 4040
+    Trying 127.0.0.1...
+    Connected to localhost.
+    Escape character is '^]'.
+    say you
+    say you
+    say me
+    say me
+
+Yes, it works! If you kill the client, causing the whole server to crash, you will see another one will start right away. However, does it *scale*?
+
+Try to connect two telnet clients at the same time. When you do so, you will see the second client won't echo:
+
+    $ telnet 127.0.0.1 4040
+    Trying 127.0.0.1...
+    Connected to localhost.
+    Escape character is '^]'.
+    hello
+    hello?
+    HELLOOOOOO?
+
+It doesn't seem to work at all. That's because we are serving requests in the same process that are accepting connections. So when one client is connected, we cannot accept anyone else.
+
+## 8.3 Task supervisor
+
+In order to make our server handle multiple connections at the same time, we need to have one process working as an acceptor that spawns other processes to serve requests. One solution would be to change:
+
+```elixir
+defp loop_acceptor(socket) do
+  {:ok, client} = :gen_tcp.accept(socket)
+  serve(client)
+  loop_acceptor(socket)
+end
+```
+
+to use `Task.start_link/1` (similar to `Task.spawn_link/3` but it receives an anonymous function instead of module, function and arguments):
+
+```elixir
+defp loop_acceptor(socket) do
+  {:ok, client} = :gen_tcp.accept(socket)
+  Task.start_link(fn -> serve(client) end)
+  loop_acceptor(socket)
+end
+```
+
+But we have made this mistake in the past, do you remember?
+
+This is similar to the mistake we have made when we called `KV.Bucket.start_link/0` from the registry. That meant a failure in any bucket would bring the whole registry down.
+
+The code above would have the exact same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the whole acceptor, and consequently, all other connections down.
+
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same solution here, except that this pattern is so common with tasks, that tasks already come with a simple one for one supervisor that we can just use in our supervision tree!
+
+Let's change `start/2` once again to add a supervisor to our tree:
+
+```elixir
+def start(_type, _args) do
+  import Supervisor.Spec
+
+  children = [
+    supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
+    worker(Task, [KVServer, :accept, [4040]])
+  ]
+
+  opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+  Supervisor.start_link(children, opts)
+end
+```
+
+We simply start a `Task.Supervisor` process with name `KVServer.TaskSupervisor`. Remember that, since the acceptor task depends on this supervisor, the supervisor must be started first.
+
+Now we just need to change `loop_acceptor/2` to use `Task.Supervisor` to serve each request:
+
+```elixir
+defp loop_acceptor(socket) do
+  {:ok, client} = :gen_tcp.accept(socket)
+  Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
+  loop_acceptor(socket)
+end
+```
+
+Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down, excellent!
+
+Here is the full echo server implementation, in a single module:
+
+```elixir
+defmodule KVServer do
+  use Application
+
+  def start(_type, _args) do
+    import Supervisor.Spec
+
+    children = [
+      supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
+      worker(Task, [KVServer, :accept, [4040]])
+    ]
+
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+
+  def accept(port) do
+    {:ok, socket} = :gen_tcp.listen(port, reuseaddr: true)
+    IO.puts "Serving requests on port #{port}"
+    loop_acceptor(socket)
+  end
+
+  defp loop_acceptor(socket) do
+    {:ok, client} = :gen_tcp.accept(socket)
+    Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
+    loop_acceptor(socket)
+  end
+
+  defp serve(socket) do
+    socket
+    |> read_line()
+    |> write_line(socket)
+
+    serve(socket)
+  end
+
+  defp read_line(socket) do
+    :inet.setopts(socket, packet: :line, active: false)
+    {:ok, data} = :gen_tcp.recv(socket, 0)
+    data
+  end
+
+  defp write_line(line, socket) do
+    :gen_tcp.send(socket, line)
+  end
+end
+```
+
+Before we end this section, there are is one detail we have glanced over that we need to revisit. Is our supervisor strategy is still appropriate?
+
+We must always ask this question when we change the supervisor specification. In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too. This is a contrast to the registry, where we initially had to crash the supervisor every time the registry crashed, until we used ETS to persist state. However tasks have no state and nothing will go stale if one of those process die.
+
+In the next chapter we will start parsing the client requests and send the proper responses, so we can fully implement our server.
