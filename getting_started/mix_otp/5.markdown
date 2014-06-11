@@ -357,9 +357,3 @@ One possible solution to this problem is to create another supervisor, that will
 You can give a shot at building this new supervision tree but we will stop here. This is because in the next chapter we will do changes to the registry that will allow the registry data to be persisted, making the `:one_for_one` strategy a perfect fit.
 
 Remember there are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) out.
-
-Finally keep in mind that if you want to create a new application that defines a supervisor and the application callback upfront, you can simply pass the `--sup` option to `mix new`, for example:
-
-    $ mix new --sup sample
-
-Give the command above a try and compare the generated application with the one we have so far. What are the differences? Remember to reach to [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html) if you have questions.
