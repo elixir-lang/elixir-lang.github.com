@@ -184,7 +184,7 @@ This is similar to the mistake we have made when we called `KV.Bucket.start_link
 
 The code above would have the exact same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the whole acceptor, and consequently, all other connections down.
 
-We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same solution here, except that this pattern is so common with tasks, that tasks already come with a simple one for one supervisor that we can just use in our supervision tree!
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same solution here, except that this pattern is so common with tasks, that tasks already come with a simple one for one supervisor with temporary workers that we can just use in our supervision tree!
 
 Let's change `start/2` once again to add a supervisor to our tree:
 
@@ -222,6 +222,7 @@ Here is the full echo server implementation, in a single module:
 defmodule KVServer do
   use Application
 
+  @doc false
   def start(_type, _args) do
     import Supervisor.Spec
 
@@ -234,6 +235,9 @@ defmodule KVServer do
     Supervisor.start_link(children, opts)
   end
 
+  @doc """
+  Starts accepting connections on the given `port`.
+  """
   def accept(port) do
     {:ok, socket} = :gen_tcp.listen(port, reuseaddr: true)
     IO.puts "Serving requests on port #{port}"
@@ -266,8 +270,8 @@ defmodule KVServer do
 end
 ```
 
-Before we end this section, there are is one detail we have glanced over that we need to revisit. Is our supervisor strategy is still appropriate?
+Since we have changed the supervisor specification, we need to ask: is our supervision strategy is still correct?
 
-We must always ask this question when we change the supervisor specification. In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too. This is a contrast to the registry, where we initially had to crash the supervisor every time the registry crashed, until we used ETS to persist state. However tasks have no state and nothing will go stale if one of those process die.
+In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too. This is a contrast to the registry, where we initially had to crash the supervisor every time the registry crashed, until we used ETS to persist state. However tasks have no state and nothing will go stale if one of those process die.
 
 In the next chapter we will start parsing the client requests and send the proper responses, so we can fully implement our server.
