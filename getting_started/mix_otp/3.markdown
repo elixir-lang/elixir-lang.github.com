@@ -123,7 +123,6 @@ defmodule KV.RegistryTest do
 
   setup do
     {:ok, registry} = KV.Registry.start_link
-    on_exit(fn -> Process.exit(registry, :shutdown) end)
     {:ok, registry: registry}
   end
 

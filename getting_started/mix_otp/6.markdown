@@ -132,13 +132,6 @@ setup do
   {:ok, registry} = KV.Registry.start_link(:registry_table, manager, sup)
 
   GenEvent.add_handler(manager, Forwarder, self(), link: true)
-
-  on_exit(fn ->
-    Process.exit(registry, :shutdown)
-    Process.exit(manager, :shutdown)
-    Process.exit(sup, :shutdown)
-  end)
-
   {:ok, registry: registry, ets: :registry_table}
 end
 ```
@@ -309,13 +302,6 @@ defmodule KV.RegistryTest do
     {:ok, registry} = KV.Registry.start_link(:registry_table, manager, sup)
 
     GenEvent.add_handler(manager, Forwarder, self(), link: true)
-
-    on_exit(fn ->
-      Process.exit(registry, :shutdown)
-      Process.exit(manager, :shutdown)
-      Process.exit(sup, :shutdown)
-    end)
-
     {:ok, registry: registry, ets: :registry_table}
   end
 
@@ -430,13 +416,6 @@ defp start_registry(ets) do
   {:ok, registry} = KV.Registry.start_link(ets, manager, sup)
 
   GenEvent.add_handler(manager, Forwarder, self(), link: true)
-
-  on_exit(fn ->
-    Process.exit(registry, :shutdown)
-    Process.exit(manager, :shutdown)
-    Process.exit(sup, :shutdown)
-  end)
-
   registry
 end
 ```
