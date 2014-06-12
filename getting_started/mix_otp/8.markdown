@@ -44,7 +44,7 @@ defp serve(socket) do
 end
 
 defp read_line(socket) do
-  :inet.setopts(socket, packet: :line, active: false)
+  :inet.setopts(socket, [:binary, packet: :line, active: false])
   {:ok, data} = :gen_tcp.recv(socket, 0)
   data
 end
@@ -214,9 +214,24 @@ defp loop_acceptor(socket) do
 end
 ```
 
-Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down, excellent!
+Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. This is good news but something is missing. Quitting a client indeed does not bring the acceptor down, but the serve task still crashes. Why isn't anything being logged?
 
-Here is the full echo server implementation, in a single module:
+When using the Elixir and OTP behaviours, their logging functionality is disabled by default. We can enable it by starting [Erlang's `sasl` application](http://www.erlang.org/doc/man/sasl_app.html). We can start it in two ways. One is in a case by case basis by passing `--app sasl` when starting Elixir:
+
+    $ elixir --app sasl -S mix run --no-halt
+
+Now you can see a lot of information about the system is logged, including which application, supervisor and server are started. Now if you connect with a client and close it, you get an error report.
+
+In case you find the SASL output useful, you can always start it by default by specifying it in your applications list inside `mix.exs`:
+
+```elixir
+def application do
+  [applications: [:sasl, :kv],
+   mod: {KVServer, []}]
+end
+```
+
+We will fix the client connection errors in the next chapter. For now, here is the full echo server implementation, in a single module:
 
 ```elixir
 defmodule KVServer do
@@ -259,7 +274,7 @@ defmodule KVServer do
   end
 
   defp read_line(socket) do
-    :inet.setopts(socket, packet: :line, active: false)
+    :inet.setopts(socket, [:binary, packet: :line, active: false])
     {:ok, data} = :gen_tcp.recv(socket, 0)
     data
   end
@@ -274,4 +289,4 @@ Since we have changed the supervisor specification, we need to ask: is our super
 
 In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too. This is a contrast to the registry, where we initially had to crash the supervisor every time the registry crashed, until we used ETS to persist state. However tasks have no state and nothing will go stale if one of those process die.
 
-In the next chapter we will start parsing the client requests and send the proper responses, so we can fully implement our server.
+In the next chapter we will start parsing the client requests and sending responses, finishing our server.
