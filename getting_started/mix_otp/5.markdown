@@ -263,13 +263,6 @@ setup do
   {:ok, registry} = KV.Registry.start_link(manager, sup)
 
   GenEvent.add_handler(manager, Forwarder, self(), link: true)
-
-  on_exit(fn ->
-    Process.exit(registry, :shutdown)
-    Process.exit(manager, :shutdown)
-    Process.exit(sup, :shutdown)
-  end)
-
   {:ok, registry: registry}
 end
 ```
