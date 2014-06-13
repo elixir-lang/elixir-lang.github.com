@@ -99,9 +99,9 @@ end
 
 Our `mix.exs` defines two public functions: `project`, which returns project configuration like the project name and version, and `application`, which is used to generate an application file.
 
-There is also a private function named `deps`, that is invoked from the `project` function, that defines our project dependencies. There is no requiremet to define `deps` as a separate function although it helps with keeping the project configuration tidy.
+There is also a private function named `deps`, which is invoked from the `project` function, that defines our project dependencies. Defining `deps` as a separate function is not required, but it helps keep the project configuration tidy.
 
-Mix also generated a file at `lib/kv.ex` with a simple module definition:
+Mix also generates a file at `lib/kv.ex` with a simple module definition:
 
 ```elixir
 defmodule KV do
@@ -160,7 +160,7 @@ This file will be automatically required by Mix every time before we run our tes
 
     Randomized with seed 540224
 
-Notice that by running `mix test`, Mix has compiled the source files and generated the application file once again. This happens because Mix supports multiple environments which we will explore in the next section.
+Notice that by running `mix test`, Mix has compiled the source files and generated the application file once again. This happens because Mix supports multiple environments, which we will explore in the next section.
 
 Furthermore, you can see that ExUnit prints a dot for each successful test and automatically randomize tests too. Let's make the test fail on purpose and see what happens.
 
@@ -190,7 +190,7 @@ In the second line of the failure, right below the test name, there is the locat
 
     $ mix test test/kv_test.exs:4
 
-This shortcut will prove to be extremely useful as we build our project, allowing us to quickly iterate by running just a specific test.
+This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running just a specific test.
 
 Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.
 
@@ -219,7 +219,7 @@ Mix will default to the `dev` environment, except for the `test` task that will 
 
 ## 1.5 Exploring
 
-There is much more to Mix but we will explore it as we build our project. Keep in mind that you can at any moment invoke the help task to list all available tasks:
+There is much more to Mix, we will continue to explore it as we build our project. Keep in mind that you can always invoke the help task to list all available tasks:
 
     $ mix help
 
