@@ -250,12 +250,12 @@ This means our implementation is going in the correct direction, but it doesn't 
 The previous implementation used pipes which would made the information flow straight-forward to understand:
 
 ```elixir
-read_line(socket) |> parse |> run()
+read_line(socket) |> KVServer.Command.parse |> KVServer.Command.run()
 ```
 
 But now, since we may have failures along the way, we need to match along each step and abort in case there is a failure. Wouldn't it be great if instead we could say: "pipe those functions while the response is ok" or "pipe those functions while the response matches the `{:ok, _}` tuple"?
 
-Actually there is a project called [elixir-pipes](http://github.com/batate/elixir-pipes) that provides exactly this functionality! Let's give it a try. Open up your `apps/kv_server/mix.exs` file and change both `application/0` and `deps/0` functions to the following:
+Actually there is a project called [elixir-pipes](https://github.com/batate/elixir-pipes) that provides exactly this functionality! Let's give it a try. Open up your `apps/kv_server/mix.exs` file and change both `application/0` and `deps/0` functions to the following:
 
 ```elixir
 def application do
@@ -269,7 +269,7 @@ defp deps do
 end
 ```
 
-Run `mix deps.get` to get the dependency and rewrite `serve/1` function to use the `pipe_matching/3` functionality from the [elixir-pipes](http://github.com/batate/elixir-pipes) project:
+Run `mix deps.get` to get the dependency and rewrite `serve/1` function to use the `pipe_matching/3` functionality from the [elixir-pipes](https://github.com/batate/elixir-pipes) project:
 
 ```elixir
 defp serve(socket) do
@@ -288,5 +288,5 @@ end
 
 With `pipe_matching/3` we can ask Elixir to pipe the value `x` in each step that matches `{:ok, x}`. We do so by basically converting each expression given to `case/2` as a step in the pipeline. As soon as any of the steps return something that does not match `{:ok, x}`, the pipeline aborts.
 
-Excellent! Feel free to read the [elixir-pipes](http://github.com/batate/elixir-pipes) project documentation to learn about other options for expressing pipelines. Let's continue moving forward with our server implementation.
+Excellent! Feel free to read the [elixir-pipes](https://github.com/batate/elixir-pipes) project documentation to learn about other options for expressing pipelines. Let's continue moving forward with our server implementation.
 
