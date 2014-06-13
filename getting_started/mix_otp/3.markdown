@@ -169,7 +169,7 @@ Our registry is almost complete. The only remaining issue is that the registry m
 test "removes buckets on exit", %{registry: registry} do
   KV.Registry.create(registry, "shopping")
   {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-  kill_with bucket, &Agent.stop/1
+  Agent.stop(bucket)
   assert KV.Registry.lookup(registry, "shopping") == :error
 end
 ```
