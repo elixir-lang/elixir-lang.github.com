@@ -210,11 +210,11 @@ We can alreay try out our first umbrella application. We could run tests inside 
 
 And it works!
 
-The last step is to add our existing `kv` application to the project and list it as a dependency of `kv_server`.
+Since we want `kv_server` to eventually use the functionality we defined in `kv`, we need to add `kv` as a dependency to our application.
 
 ## 7.4 In umbrella dependencies
 
-Mix supports an easy mechanism to make one umbrella application depend on another. Open up `apps/kv_server/mix.exs` and change the `deps` function to the following:
+Mix supports an easy mechanism to make one umbrella application depend on another. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
 
 ```elixir
 defp deps do
@@ -222,7 +222,7 @@ defp deps do
 end
 ```
 
-The line above makes `:kv` available as a dependency inside `:kv_server` and that is it. However, we want to use all of the `:kv` functionality inside `:kv_server` too. For such, we also need to list the `:kv` application as a dependency for the `:kv_server` application inside `application` function too:
+The line above makes `:kv` available as a dependency inside `:kv_server`. We can invoke the modules defined in `:kv` but it does not start the `:kv` application. For such, we also need to list `:kv` as an application inside `application/0`:
 
 ```elixir
 def application do
@@ -233,7 +233,7 @@ end
 
 Now Mix will guarantee the `:kv` application is started before `:kv_server` is started.
 
-Finally, let's copy the `kv` application we have built so far to the `apps` directory. The final directory structure should reflect the structure we have mentioned earlier:
+Finally, copy the `kv` application we have built so far to the `apps` directory. The final directory structure should reflect the structure we have mentioned earlier:
 
     + kv_umbrella
       + apps
