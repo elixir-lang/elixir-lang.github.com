@@ -24,8 +24,15 @@ Let's implement those steps. Move to the `apps/kv_server` application and open u
 
 ```elixir
 def accept(port) do
-  {:ok, socket} = :gen_tcp.listen(port, reuseaddr: true)
-  IO.puts "Serving requests on port #{port}"
+  # The options below mean:
+  #
+  # 1. `:binary` - receives data as binaries (instead of lists)
+  # 2. `packet: :line` - receives data by line by line
+  # 3. `active: false` - block on `:gen_tcp.recv/2` until data is available
+  #
+  {:ok, socket} = :gen_tcp.listen(port,
+                    [:binary, packet: :line, active: false])
+  IO.puts "Accepting connections on port #{port}"
   loop_acceptor(socket)
 end
 
@@ -44,7 +51,6 @@ defp serve(socket) do
 end
 
 defp read_line(socket) do
-  :inet.setopts(socket, [:binary, packet: :line, active: false])
   {:ok, data} = :gen_tcp.recv(socket, 0)
   data
 end
@@ -54,7 +60,7 @@ defp write_line(line, socket) do
 end
 ```
 
-We are going to start our server by calling `KVServer.accept(4040)` where 4040 is the port. The first step in `accept/1` is to listen until the port becomes available and calls `loop_acceptor/1` which accepts connection in a loop. Every time there is a new connection, `:gen_tcp.accept/1` returns a socket specific to that client and serves the request, then it enters in the loop again.
+We are going to start our server by calling `KVServer.accept(4040)` where 4040 is the port. The first step in `accept/1` is to listen the port until the socket becomes available and then call `loop_acceptor/1` which is a loop accepting client connections. Once a connection is accepted, we call `serve/1`.
 
 `serve/1` is another loop that reads a line the socket and then those lines back to the socket. Note the `serve/1` function uses [the pipeline operator `|>`](/docs/stable/elixir/Kernel.html#|>/2) to express this flow of operation. The pipeline operator evaluates the left side and pass its result as first argument to the function on the right side. The example above:
 
@@ -68,9 +74,20 @@ is equivalent to:
 write_line(read_line(socket), socket)
 ```
 
-After writing to the socket, `serve/1` calls itself, so we can read another line from the client, write it back and so on.
+> When using the `|>` operator, it is important to add parentheses to the function calls due to how operator precedence work. In particular, this code:
+>
+>     1..10 |> Enum.filter &(&1 <= 5) |> Enum.map &(&1 * 2)
+>
+> Actually translates to:
+>
+>     1..10 |> Enum.filter(&(&1 <= 5) |> Enum.map(&(&1 * 2)))
+>
+> Which is not what we want, since the function given to `Enum.filter/2` is the one passed as first argument to `Enum.map/2`. The solution is to use explicit parentheses:
+>
+>     1..10 |> Enum.filter(&(&1 <= 5)) |> Enum.map(&(&1 * 2))
+>
 
-The `read_line/1` implementation receives data from the socket using `:gen_tcp.recv/2`. In order to use such function to read lines, we need to first configure the socket to receive packets per line and we also set `active: false`. There are basically two modes of receiving data from a socket: the active mode sends the socket data as messages to the current process, while the other mode, the one we've chosen, uses `:gen_tcp.recv/2` which blocks until the data becomes available.
+The `read_line/1` implementation receives data from the socket using `:gen_tcp.recv/2` and `write_line/2` writes to the socket using `:gen_tcp.send/2`.
 
 This is pretty much all we need to implement our echo server. Let's give it a try!
 
@@ -80,7 +97,7 @@ Start an iex session inside the `kv_server` application with `iex -S mix` and in
 iex> KVServer.accept(4040)
 ```
 
-Now the server is running, you will even notice the console is blocked. Let's use [a `telnet` client](http://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available to most operating systems and their command line instructions are quite similar:
+The server is now running, you will even notice the console is blocked. Let's use [a `telnet` client](http://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available to most operating systems and their command line instructions are quite similar:
 
     $ telnet 127.0.0.1 4040
     Trying 127.0.0.1...
@@ -95,7 +112,7 @@ Now the server is running, you will even notice the console is blocked. Let's us
 
 Type "hello", press enter, and you will get "hello" back. Excellent!
 
-My particular telnet client can be exited by typing `ctrl + ]` and then typing quit and pressing enter but it may change based on your client.
+My particular telnet client can be exited by typing `ctrl + ]` and then typing quit and pressing enter but your client may require different steps.
 
 Once you kill the telnet client, you will likely get an error back in the IEx session:
 
@@ -239,8 +256,9 @@ defmodule KVServer do
   Starts accepting connections on the given `port`.
   """
   def accept(port) do
-    {:ok, socket} = :gen_tcp.listen(port, reuseaddr: true)
-    IO.puts "Serving requests on port #{port}"
+    {:ok, socket} = :gen_tcp.listen(port,
+                      [:binary, packet: :line, active: false])
+    IO.puts "Accepting connections on port #{port}"
     loop_acceptor(socket)
   end
 
@@ -259,7 +277,6 @@ defmodule KVServer do
   end
 
   defp read_line(socket) do
-    :inet.setopts(socket, [:binary, packet: :line, active: false])
     {:ok, data} = :gen_tcp.recv(socket, 0)
     data
   end

@@ -1,6 +1,6 @@
 ---
 layout: getting_started
-title: 9 Doctests and configuration
+title: 9 Docs, tests and pipelines
 guide: 9
 ---
 
@@ -28,7 +28,7 @@ DELETE shopping eggs
 OK
 ```
 
-After the parsing is done, we will update our server to parse and run the commands directly againt the `:kv` application we have built in previous chapters.
+After the parsing is done, we will update our server to dispatch the parsed commands to the `:kv` application we have built in previous chapters.
 
 ## 9.1 Doctests
 
@@ -90,7 +90,7 @@ def parse(line) do
 end
 ```
 
-Our implementation simply splits the line on every whitespace and then matches the commands directly in the list. This means that our commands are actually white-space insensitive. Let's add some new doctests to test this behaviour and the new commands:
+Our implementation simply splits the line on every whitespace and then matches the command against a list. Using `String.split/2` means our commands are actually white-space insensitive. Let's add some new doctests to test this behaviour and the other commands:
 
 ```elixir
 @doc ~S"""
@@ -139,9 +139,9 @@ def parse(line) do
 end
 ```
 
-Notice how we were able to elegantly parse the commands without adding a bunch of `if/else` clauses that checks the list command and length!
+Notice how we were able to elegantly parse the commands without adding a bunch of `if/else` clauses that checks the command name and length!
 
-Finally, you may have noticed that each doctest was considered to be a different test in our test case. That is because the tests were separated by new lines. In other words, ExUnit considers this two different tests:
+Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers this two different tests:
 
 ```iex
 iex> KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
@@ -151,7 +151,7 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 {:error, :unknown_command}
 ```
 
-But the one below is compiled into a single test:
+But without new lines, like the one below, ExUnit compiles it into a single test:
 
 ```iex
 iex> KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
@@ -189,7 +189,6 @@ defp serve(socket) do
 end
 
 defp read_line(socket) do
-  :inet.setopts(socket, [:binary, packet: :line, active: false])
   {:ok, data} = :gen_tcp.recv(socket, 0)
   data
 end
@@ -221,7 +220,6 @@ defp serve(socket) do
 end
 
 defp read_line(socket) do
-  :inet.setopts(socket, [:binary, packet: :line, active: false])
   :gen_tcp.recv(socket, 0)
 end
 
@@ -234,7 +232,7 @@ defp format_msg({:error, :unknown_command}), do: "UNKNOWN COMMAND\r\n"
 defp format_msg({:error, _}), do: "ERROR\r\n"
 ```
 
-If we start our server, we can know send commands to it. For now we can get two different responses:
+If we start our server, we can know send commands to it. For now we can get two different responses, "OK" when the command is known and "UNKNWON COMMAND" otherwise:
 
     $ telnet 127.0.0.1 4040
     Trying 127.0.0.1...
@@ -245,7 +243,7 @@ If we start our server, we can know send commands to it. For now we can get two 
     HELLO
     UNKNOWN COMMAND
 
-This means our implementation is going in the correct direction, but it doesn't look very pretty, does it?
+This means our implementation is going in the correct direction, but it doesn't look very elegant, does it?
 
 The previous implementation used pipes which would made the information flow straight-forward to understand:
 
@@ -286,7 +284,172 @@ defp serve(socket) do
 end
 ```
 
-With `pipe_matching/3` we can ask Elixir to pipe the value `x` in each step that matches `{:ok, x}`. We do so by basically converting each expression given to `case/2` as a step in the pipeline. As soon as any of the steps return something that does not match `{:ok, x}`, the pipeline aborts.
+With `pipe_matching/3` we can ask Elixir to pipe the value `x` from each step if it matches `{:ok, x}`. We do so by basically converting each expression given to `case/2` as a step in the pipeline. As soon as any of the steps return something that does not match `{:ok, x}`, the pipeline aborts, and returns the non-matching value.
 
 Excellent! Feel free to read the [elixir-pipes](https://github.com/batate/elixir-pipes) project documentation to learn about other options for expressing pipelines. Let's continue moving forward with our server implementation.
 
+## 9.3 Running commands
+
+The last step is to implement `KVServer.Command.run/1` to run the parsed commands against the `:kv` application. Its implementation is shown below:
+
+```elixir
+@doc """
+Runs the given command.
+"""
+def run(command)
+
+def run({:create, bucket}) do
+  KV.Registry.create(KV.Registry, bucket)
+  {:ok, "OK\r\n"}
+end
+
+def run({:get, bucket, key}) do
+  lookup bucket, fn pid ->
+    value = KV.Bucket.get(pid, key)
+    {:ok, "#{value}\r\nOK\r\n"}
+  end
+end
+
+def run({:put, bucket, key, value}) do
+  lookup bucket, fn pid ->
+    KV.Bucket.put(pid, key, value)
+    {:ok, "OK\r\n"}
+  end
+end
+
+def run({:delete, bucket, key}) do
+  lookup bucket, fn pid ->
+    KV.Bucket.delete(pid, key)
+    {:ok, "OK\r\n"}
+  end
+end
+
+defp lookup(bucket, callback) do
+  case KV.Registry.lookup(KV.Registry, bucket) do
+    {:ok, pid} -> callback.(pid)
+    :error -> {:error, :not_found}
+  end
+end
+```
+
+The implementation is quite-straight forward: we just dispatch to the `KV.Registry` server registered during the `:kv` application startup.
+
+Note we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
+
+By the way, since we are now returning `{:error, :not_found}`, we should amend the `format_msg/1` function in `KV.Server` to nicely show not found messages too:
+
+```elixir
+defp format_msg({:ok, text}), do: text
+defp format_msg({:error, :unknown_command}), do: "UNKNOWN COMMAND\r\n"
+defp format_msg({:error, :not_found}), do: "NOT FOUND\r\n"
+defp format_msg({:error, _}), do: "ERROR\r\n"
+```
+
+And our server functionality is almost complete, we just need to add tests. This time we have left tests for last because there are some important considerations to be done.
+
+`KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide in between having unit tests, that are isolated and can run asynchronously, or write integration tests, that work on top of the global state, but exercises our application full stack as it is meant to be exercised in production.
+
+So far we have been chosing the unit test approach. For example, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. This means we would need to change `run`'s signature to `def run(command, pid)` and the implementation for the `:create` command would look like:
+
+```elixir
+def run({:create, bucket}, pid) do
+  KV.Registry.create(pid, bucket)
+  {:ok, "OK\r\n"}
+end
+```
+
+Then in `KVServer.Command`'s test case, we need to start an instance of the `KV.Registry`, similar to how we have done in `apps/kv/test/kv/registry_test.exs` and pass it as argument to `run/2`.
+
+This has been the approach we have done so far in our tests and it brings some benefits:
+
+1. Our implementation is not coupled to any particular server name
+2. We can keep our tests running asynchronously as there is no shared state
+
+However it comes with the downside that our APIs become increasingly larger in order to receive all external parameters.
+
+The alternative is to continue relying on the global server names and run tests against the global data, ensuring we clean up the data in between the tests. In this case, since the test would exercise the whole stack, from the TCP server, to the command parser and running, to the registry and finally reaching the bucket, it becomes an integration test.
+
+The downside of integration tests though is that they can be much slower than unit tests and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
+
+Since we have used unit tests so far, this time we will take the other road and write an integration test. The integration test will have a TCP client that sends commands to our server and we will assert we are getting the desired responses.
+
+Let's implement our integration test in `test/kv_server_test.exs` as shown below:
+
+```elixir
+defmodule KVServerTest do
+  use ExUnit.Case
+
+  setup do
+    :application.stop(:kv)
+    :ok = :application.start(:kv)
+  end
+
+  setup do
+    opts = [:binary, packet: :line, active: false]
+    {:ok, socket} = :gen_tcp.connect('localhost', 4040, opts)
+    {:ok, socket: socket}
+  end
+
+  test "server interaction", %{socket: socket} do
+    assert send_and_recv(socket, "UNKNOWN shopping\r\n") ==
+           "UNKNOWN COMMAND\r\n"
+
+    assert send_and_recv(socket, "GET shopping eggs\r\n") ==
+           "NOT FOUND\r\n"
+
+    assert send_and_recv(socket, "CREATE shopping\r\n") ==
+           "OK\r\n"
+
+    assert send_and_recv(socket, "PUT shopping eggs 3\r\n") ==
+           "OK\r\n"
+
+    # GET returns two lines
+    assert send_and_recv(socket, "GET shopping eggs\r\n") == "3\r\n"
+    assert send_and_recv(socket, "") == "OK\r\n"
+
+    assert send_and_recv(socket, "DELETE shopping eggs\r\n") ==
+           "OK\r\n"
+
+    # GET returns two lines
+    assert send_and_recv(socket, "GET shopping eggs\r\n") == "\r\n"
+    assert send_and_recv(socket, "") == "OK\r\n"
+  end
+
+  defp send_and_recv(socket, command) do
+    :ok = :gen_tcp.send(socket, command)
+    {:ok, data} = :gen_tcp.recv(socket, 0, 1000)
+    data
+  end
+end
+```
+
+Our integration test checks the whole server interaction, including unknown commands and not found errors. It is worthy reminding that, as in ETS tables and linked processes, there is no need to close the socket because once the test process exits, the socket is automatically closed.
+
+This time, since our test relies on global data, we have not given `async: true` to `use ExUnit.Case`. Furthermore, in order to guarantee our test is always in a clean slate, we stop and start the `:kv` application before each test. In fact, stopping the `:kv` application even prints a warning on the terminal:
+
+```
+=INFO REPORT==== 14-Jun-2014::13:40:21 ===
+    application: kv
+    exited: stopped
+    type: temporary
+```
+
+If desired, we can avoid such data being printed by turning the error_logger off and on in the test setup:
+
+```elixir
+setup do
+  :error_logger.tty(false)
+  :application.stop(:kv)
+  :ok = :application.start(:kv)
+  :error_logger.tty(true)
+  :ok
+end
+```
+
+With this simple integration test, we start to see why integration tests may be slow. Not only this particular test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
+
+At the end of the day, it is up to you and your team to figure the best testing strategy for your applications. You need to balance the code quality, confidence and time of your test suite. For example, we may start with testing the server only with integration tests, but if the server continuously grows on upcoming releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test.
+
+I personally err on the side of unit tests and have integration tests only as smoke tests to guarantee the basic skeleton of the system works.
+
+In the next chapter we will finally make our system distributed by adding a bucket routing mechanism and learn about application configurations.
