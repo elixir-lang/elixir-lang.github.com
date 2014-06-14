@@ -198,11 +198,11 @@ Finally, the stacktrace relates to the failure itself, giving information about 
 
 Mix has the concept of environments that allows a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
 
-* `dev` - the one in which mix tasks (like `compile`) run by default;
-* `test` - used by `mix test`;
-* `prod` - the one you will use to put your project in production. If you add dependencies to your project, they will run on `prod` environment regardless of your project environment;
+* `:dev` - the one in which mix tasks (like `compile`) run by default;
+* `:test` - used by `mix test`;
+* `:prod` - the one you will use to put your project in production. If you add dependencies to your project, they will run on `:prod` environment regardless of your project environment;
 
-By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done by accessing `Mix.env`:
+By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file that returns the current environment as an atom:
 
 ```elixir
 def project do
@@ -213,7 +213,7 @@ defp deps_path(:prod), do: "prod_deps"
 defp deps_path(_), do: "deps"
 ```
 
-Mix will default to the `dev` environment, except for the `test` task that will default to the `test` environment. The environment can be changed via the `MIX_ENV` environment variable:
+Mix will default to the `:dev` environment, except for the `test` task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
 
     $ MIX_ENV=prod mix compile
 
