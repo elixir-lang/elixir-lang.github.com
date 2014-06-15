@@ -259,13 +259,13 @@ We have previously learned about links in the [Process chapter](/getting_started
 
 Links are bi-directional. If you link two process and one of them crashes, the other side will crash too (unless it is trapping exits). A monitor is uni-directional though and only the monitoring process will receive notifications about the the monitored one. Simply put, use links when you want linked crashes, and monitors when you want to simply monitor.
 
-If you watch closely our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
+Returning to our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
 
 ```elixir
 {:ok, pid} = KV.Bucket.start_link()
 ref = Process.monitor(pid)
 ```
 
-And that is a bad idea as we don't want the registry to crash when a bucket crashes! We will explore solutions to this problem when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see, supervisors work with links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and OTP.
+This is a bad idea as we don't want the registry to crash when a bucket crashes! We will explore solutions to this problem when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see, supervisors work with links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and OTP.
 
 Before jumping into supervisors, let's first explore event managers and event handlers with GenEvent.
