@@ -8,9 +8,9 @@ guide: 5
 
   <div class="toc"></div>
 
-So far our application requires an event manager, a registry and may potentially use dozens, if not hundreds of buckets. While we may think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.
+So far our application requires an event manager and a registry. It may potentially use dozens, if not hundreds, of buckets. While we may think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.
 
-When things are failing, our first reaction may be: "let's rescue those errors". But we have learned in the Getting Started guide that in Elixir we don't program defensively nor have the habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "fail fast" or "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to setup a supervisor that will start a new, fresh copy, of the registry.
+When things are failing, our first reaction may be: "let's rescue those errors". But, as we have learned in the Getting Started guide, in Elixir we don't have the defensive programming habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "fail fast" or "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to setup a supervisor that will start a fresh copy of the registry.
 
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
 
@@ -46,11 +46,11 @@ For example, the `KV.Registry` worker receives two argument, the first is the na
 
 The order children are declared in the supervisor also matters. Since the registry depends on the event manager, we must start the latter before the former. That's why the `GenEvent` worker must come first in the children list.
 
-It is also important that dependencies of a given worker to always be listed before the worker. For example, since the registry depends on the event manager, we must list `KV.Registry` after `GenEvent` in the children list.
+It is also important for the dependencies of a given worker to always be listed before the worker. For example, since the registry depends on the event manager, we must list `KV.Registry` after `GenEvent` in the children list.
 
 Finally, we call `supervise/2`, passing the children to supervise and the strategy of `:one_for_one`.
 
-The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that, if a child dies, only that child is restarted. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However those dynamics may change once we add more children to supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
+The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies only one is restarted to replace it. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However those dynamics may change once we add more children to supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
 
 If we start a console inside our project using `iex -S mix`, we can manually start the supervisor:
 
@@ -69,7 +69,7 @@ In practice though, we rarely start the application supervisor manually. Instead
 
 ## 5.2 Understanding applications
 
-We have been working inside an application all time long. Every time we changed a file and ran `mix compile`, we could see `Generated kv.app` message in the compilation output.
+We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see `Generated kv.app` message in the compilation output.
 
 We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's see its contents:
 
@@ -97,7 +97,7 @@ When we define an `.app` file, which is the application definition, we are able 
 
 2. Even if Mix didn't start our application for us, our application does not do anything on start yet;
 
-In any case, let's show how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:
+In any case, let's see how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:
 
 ```iex
 iex> Application.start(:kv)
