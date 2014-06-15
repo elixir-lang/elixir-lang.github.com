@@ -50,7 +50,7 @@ It is also important for the dependencies of a given worker to always be listed 
 
 Finally, we call `supervise/2`, passing the children to supervise and the strategy of `:one_for_one`.
 
-The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that, if a child dies, only that child is restarted. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However those dynamics may change once we add more children to supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
+The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies only one is restarted to replace it. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However those dynamics may change once we add more children to supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
 
 If we start a console inside our project using `iex -S mix`, we can manually start the supervisor:
 
