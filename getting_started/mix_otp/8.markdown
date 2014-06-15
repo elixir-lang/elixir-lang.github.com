@@ -219,7 +219,7 @@ def start(_type, _args) do
 end
 ```
 
-We simply start a `Task.Supervisor` process with name `KVServer.TaskSupervisor`. Remember that, since the acceptor task depends on this supervisor, the supervisor must be started first.
+We simply start a [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember that, since the acceptor task depends on this supervisor, the supervisor must be started first.
 
 Now we just need to change `loop_acceptor/2` to use `Task.Supervisor` to serve each request:
 
