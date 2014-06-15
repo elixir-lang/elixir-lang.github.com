@@ -46,7 +46,7 @@ For example, the `KV.Registry` worker receives two argument, the first is the na
 
 The order children are declared in the supervisor also matters. Since the registry depends on the event manager, we must start the latter before the former. That's why the `GenEvent` worker must come first in the children list.
 
-It is also important that dependencies of a given worker to always be listed before the worker. For example, since the registry depends on the event manager, we must list `KV.Registry` after `GenEvent` in the children list.
+It is also important for the dependencies of a given worker to always be listed before the worker. For example, since the registry depends on the event manager, we must list `KV.Registry` after `GenEvent` in the children list.
 
 Finally, we call `supervise/2`, passing the children to supervise and the strategy of `:one_for_one`.
 
