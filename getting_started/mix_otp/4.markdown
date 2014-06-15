@@ -48,7 +48,7 @@ iex> flush
 :ok
 ```
 
-We createad our handlers and added it to the manager by calling `GenEvent.add_handler/3` passing the manager, the event handler module (named `Forwarder`) and the event handler state, in this case, the current process pid.
+We createad our handler and added it to the manager by calling `GenEvent.add_handler/3` passing the manager, the event handler module (named `Forwarder`) and the event handler state, in this case, the current process pid.
 
 After adding the handler, we can see that by calling `sync_notify/2`, the `Forwarder` handler successfully forwards events to our inbox.
 
