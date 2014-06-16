@@ -16,7 +16,7 @@ With v0.14.0 we have expanded on the work started on v0.13.0, replacing records 
 
 ## @derive
 
-Maps are Elixir's new associate data structure:
+Maps are Elixir's new associative data structure:
 
 ```elixir
 %{key: "value"}
