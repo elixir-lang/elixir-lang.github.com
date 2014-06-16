@@ -1,0 +1,267 @@
+---
+layout: getting_started
+title: 7 Dependencies and umbrella apps
+guide: 7
+---
+
+# {{ page.title }}
+
+  <div class="toc"></div>
+
+In this chapter, we will briefly discuss how to work and manage dependencies in Mix.
+
+Our `kv` application is quite complete so it is time to implement the server that we will be able to serve the requests we have defined in the first chapter:
+
+```
+CREATE shopping
+OK
+
+PUT shopping milk 1
+OK
+
+PUT shopping eggs 3
+OK
+
+GET shopping milk
+1
+OK
+
+DELETE shopping eggs
+OK
+```
+
+However, instead of adding more code to the `kv` application, we are going to build the client as another application that depends on the `kv` one. Since the whole runtime and Elixir ecosystem are geared towards applications, it makes sense to break our projects into smaller applications that runs together rather than building big, monolithic app.
+
+So before creating our new application, we must discuss how Mix handles dependencies. In practice, there are two kinds of dependencies we usually work with: internal and external dependencies and Mix supports mechanisms to work with both of them.
+
+## 7.1 External dependencies
+
+External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the [Plug](http://github.com/elixir-lang/plug) project as an external dependency.
+
+Installing external dependencies are quite easy. The most common way is to use the [Hex Package Manager](http://hex.pm) are list the dependency inside the deps function in your `mix.exs` file:
+
+```elixir
+def deps do
+  [{:plug, "~> 0.5.0"}]
+end
+```
+
+Typically stable releases are pushed to Hex. In case you want to depend on an external dependency still in development, Mix is able to manager git repositories too:
+
+```elixir
+def deps do
+  [{:plug, git: "git://github.com/elixir-lang/plug.git"}]
+end
+```
+
+You will notice that, as soon as you add a dependency to your project, Mix is going to generate a `mix.lock` file that guarantees *repeatable builds*. The lock file must be checked in your version control system so it guarantees that everyone that uses the project will use the exact same depednencies versions as you.
+
+Mix provide many tasks for working with dependencies and those can be seen in `mix help`:
+
+    $ mix help
+    mix deps              # List dependencies and their status
+    mix deps.clean        # Remove the given dependencies' files
+    mix deps.compile      # Compile dependencies
+    mix deps.get          # Get all out of date dependencies
+    mix deps.unlock       # Unlock the given dependencies
+    mix deps.update       # Update the given dependencies
+
+The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependecies are automatically compiled for you. You can read more about deps by typing `mix help deps`.
+
+## 7.2 Internal dependencies
+
+Internal dependencies are the ones that are specific to your project. They usually don't make sense outside the scope of your project/company/organization and most of the times you want to leave it private, be it due to technical, economic or business reasons.
+
+If you have an internal dependency, there are two mechanisms for working with them in Mix, via git repositories or via umbrella applications.
+
+For example, if you push the `kv` project to a git repository, you just need to list it in your deps code in order to use it:
+
+```elixir
+def deps do
+  [{:kv, git: "git://github.com/YOUR_ACCOUNT/kv.git"}]
+end
+```
+
+It doesn't matter if the git repository is public or private, Mix will be able to fetch it for you as long as you have the proper credentials.
+
+However, using git dependencies for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provides the whole concept of applications and as such we expect you to frequently break your code into applications that can be organized logically, even within a single project.
+
+However, if you push every application as a separate project to a git repository, your projects can become very hard to maintain because now you will have to spend a lot of time managing those git repositories rather than writing your code.
+
+For this reason, Mix supports the so-called umbrella applications, where you can create one project that hosts many applications and push all of them to a single git repository. That is exactly the style we are going to explore in the next sections.
+
+What we are going to do is to create a new mix project, which we are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
+
+    + kv_umbrella
+      + apps
+        + kv
+        + kv_server
+
+The interesting thing about this approach is that Mix has many conveniences for working with such projects, as the ability to compile and test all applications inside `apps` with a single command. However, even though they are all listed together inside `apps`, they are still decoupled from each other, so you can build, test and deploy those in isolation if you want to.
+
+So let's get started!
+
+## 7.3 Umbrella applications
+
+Let's start a new project using `mix new`. This new project will be named `kv_umbrella` and we need to pass the `--umbrella` option when creating it. Do not create this new project inside the existing `kv` project!
+
+    $ mix new kv_umbrella --umbrella
+    * creating .gitignore
+    * creating README.md
+    * creating mix.exs
+    * creating apps
+    * creating config
+    * creating config/config.exs
+
+From the printed information, we can see way less files are generated. The generated `mix.exs` file is different too, let's take a look (comments were removed):
+
+```elixir
+defmodule KvUmbrella.Mixfile do
+  use Mix.Project
+
+  def project do
+    [apps_path: "apps",
+     deps: deps]
+  end
+
+  defp deps do
+    []
+  end
+end
+```
+
+What makes this project different from the previous one is simply the `apps_path: "apps"` entry in the project definition. This means this project will rather work as an umbrella. Such projects do not have source files nor tests, although they can have dependencies which are only available for themselves.
+
+Let's move inside the apps directory and start building `kv_server`. This time, we are going to pass the `--sup` flag which will tell Mix to generate a supervision tree automatically for us, instead of building one manually as we did in previous chapters:
+
+    $ cd kv_umbrella/apps
+    $ mix new kv_server --module KVServer --sup
+
+The generated files are quite similar to the ones when we first generated for `kv` with some differences. Let's open up `mix.exs`:
+
+```elixir
+defmodule KVServer.Mixfile do
+  use Mix.Project
+
+  def project do
+    [app: :kv_server,
+     version: "0.0.1",
+     deps_path: "../../deps",
+     lockfile: "../../mix.lock",
+     elixir: "~> 0.14.1-dev",
+     deps: deps]
+  end
+
+  def application do
+    [applications: [],
+     mod: {KVServer, []}]
+  end
+
+  defp deps do
+    []
+  end
+end
+```
+
+First of all, since we generated this project inside `kv_umbrella/apps`, Mix automatically detected the umbrella structure and added two lines to the project definition:
+
+```elixir
+deps_path: "../../deps",
+lockfile: "../../mix.lock",
+```
+
+Those options mean all dependencies will be checked out to `kv_umbrella/deps` and they will share the same lock file. What those two lines are doing is basically saying that, if two applications in the umbrella share the same dependency, they won't be fetched twice, just once, and Mix will guarantee they are always running against the same version.
+
+The second change is in the `application` function inside `mix.exs`:
+
+```elixir
+def application do
+  [applications: [],
+   mod: {KVServer, []}]
+end
+```
+
+Because we passed the `--sup` flag, Mix automatically added `mod: {KVServer, []}` specifying that our the `KVServer` is an application callback that must start our application supervision tree.
+
+In fact, let's open up `lib/kv_server.ex`:
+
+```elixir
+defmodule KVServer do
+  use Application
+
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+
+    children = [
+      # worker(KVServer.Worker, [arg1, arg2, arg3])
+    ]
+
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+end
+```
+
+Notice that it defines the application callback and, instead of defining a supervisor named `KVServer.Supervisor` that uses the `Supervisor` module, it conveniently defined the supervisor inline! You can read more about such supervisors by reading [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html).
+
+We can alreay try out our first umbrella application. We could run tests inside the `apps/kv_server` directory, but that wouldn't be much fun, instead go to the root of the umbrella application and run `mix test` instead:
+
+    $ mix test
+
+And it works!
+
+Since we want `kv_server` to eventually use the functionality we defined in `kv`, we need to add `kv` as a dependency to our application.
+
+## 7.4 In umbrella dependencies
+
+Mix supports an easy mechanism to make one umbrella application depend on another. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
+
+```elixir
+defp deps do
+  [{:kv, in_umbrella: true}]
+end
+```
+
+The line above makes `:kv` available as a dependency inside `:kv_server`. We can invoke the modules defined in `:kv` but it does not start the `:kv` application. For such, we also need to list `:kv` as an application inside `application/0`:
+
+```elixir
+def application do
+  [applications: [:kv],
+   mod: {KVServer, []}]
+end
+```
+
+Now Mix will guarantee the `:kv` application is started before `:kv_server` is started.
+
+Finally, copy the `kv` application we have built so far to the `apps` directory. The final directory structure should reflect the structure we have mentioned earlier:
+
+    + kv_umbrella
+      + apps
+        + kv
+        + kv_server
+
+We now just need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project` function:
+
+```elixir
+deps_path: "../../deps",
+lockfile: "../../mix.lock",
+```
+
+Now you can run tests for both projects from the umbrella root with `mix test`. Sweet!
+
+Remember that umbrella applications are a convenience to help you organize and manage your applications. Applications inside the `apps` directory are still decoupled from each other. Each application has its independent configuration, and dependencies in between them must be explicitly listed. This allows them to be developed together, but compiled, tested and deployed independently if desired.
+
+## 7.5 Summing up
+
+In this chapter we have learned more about Mix dependencies and umbrella applications. We have decided to build an umbrella application because we consider `kv` and `kv_server` to be internal dependencies that matter only in the context of this project.
+
+In the future, you are going to write applications and you will notice they can be easily extracted into a concise unit that can be used by different projects. In such cases, using Git or Hex dependencies is the way to go.
+
+Here are a couple questions you can ask yourself when working with dependencies. Start with: does this application makes sense outside this project?
+
+* If no, use umbrella applications.
+* If yes, can this project be shared outside your company / organization?
+  * If no, use a private git repository.
+  * If yes, push your code to a git repository and do frequent releases using [Hex](http://hex.pm).
+
+With our umbrella application up and running, it is time to start writing our server.
