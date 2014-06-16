@@ -49,7 +49,7 @@ end
 #=> Got foo: bar
 ```
 
-But such call would fail for the User struct:
+But such a call would fail for the User struct:
 
 ```elixir
 Enum.each %User{}, fn {k, v} ->
