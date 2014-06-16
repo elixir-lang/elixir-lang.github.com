@@ -40,7 +40,7 @@ defmodule KV.Supervisor do
 end
 ```
 
-Our supervisor has two children, one is the event manager and the other is registry. It is common to give names to processes under a supervisor so we can access them by name rather than by pid (as the pid is now hold by the supervisor).
+Our supervisor has two children, one is the event manager and the other is registry. It is common to give names to processes under a supervisor so we can access them by name rather than by pid (as the pid is now held by the supervisor).
 
 For example, the `KV.Registry` worker receives two argument, the first is the name of the event manager and the second is the keyword list that sets it name to `[name: KV.Registry]`, guaranteeing we can access the registry by name `KV.Registry` throughout the application. It is very common to name the children in a supervisor after the module that defines it, as this association becomes very handy when debugging a live system.
 
