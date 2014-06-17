@@ -195,7 +195,7 @@ test "removes bucket on crash", %{registry: registry} do
   # Kill the bucket and wait for the notification
   Process.exit(bucket, :shutdown)
   assert_receive {:exit, "shopping", ^bucket}
-  assert KV.Registry.lookup(manager, "shopping") == :error
+  assert KV.Registry.lookup(registry, "shopping") == :error
 end
 ```
 
