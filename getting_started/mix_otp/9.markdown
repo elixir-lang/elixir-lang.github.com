@@ -232,7 +232,7 @@ defp format_msg({:error, :unknown_command}), do: "UNKNOWN COMMAND\r\n"
 defp format_msg({:error, _}), do: "ERROR\r\n"
 ```
 
-If we start our server, we can know send commands to it. For now we can get two different responses, "OK" when the command is known and "UNKNWON COMMAND" otherwise:
+If we start our server, we can now send commands to it. For now we can get two different responses, "OK" when the command is known and "UNKNOWN COMMAND" otherwise:
 
     $ telnet 127.0.0.1 4040
     Trying 127.0.0.1...
