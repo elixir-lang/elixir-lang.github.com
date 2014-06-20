@@ -467,6 +467,6 @@ def init({table, events, buckets}) do
 end
 ```
 
-We go through all entries in the table, monitor them and update the refs dictionary accordingly. In case any of the entries is already dead, we will still receive the `:DOWN` message, causing them to be purged later.
+We use `:ets.foldl/3` to go through all entries in the table, similar to `Enum.reduce/3`, invoking the given function for each element in the table with the given accumulator. In the function callback, we monitor each pid in the table and update the refs dictionary accordingly. In case any of the entries is already dead, we will still receive the `:DOWN` message, causing them to be purged later.
 
 In this chapter we were able to make our application more robust by using an ETS table that is owned by the supervisor and passed to the registry. We have also explored how to use ETS as a cache and discussed some of the race conditions you may run into as the data becomes shared in between the server and all clients.
