@@ -329,7 +329,7 @@ Overall, the built-in ability to configure applications and the fact we have bui
 
 * deploy only the `:kv` application when we want a node to work only as storage (no TCP access);
 
-Once you add more applications in the future, you can continue controlling your deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production.
+Once you add more applications in the future, you can continue controlling your deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production. You can also consider building multiple releases with a tool like [exrm](https://github.com/bitwalker/exrm), which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so you can deploy the application even if the runtime is not pre-installed in the target system.
 
 Finally, we have learned some new things in this chapter and they could be applied to the `:kv_server` application as well. We are going to leave the next steps as an exercise:
 
