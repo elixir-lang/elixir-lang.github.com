@@ -290,18 +290,18 @@ iex> tuple_size(tuple)
 2
 ```
 
-It is also possible to set an element at a particular index in a tuple with `set_elem/3`:
+It is also possible to set an element at a particular index in a tuple with `put_elem/3`:
 
 ```iex
 iex> tuple = {:ok, "hello"}
 {:ok, "hello"}
-iex> set_elem(tuple, 1, "world")
+iex> put_elem(tuple, 1, "world")
 {:ok, "world"}
 iex> tuple
 {:ok, "hello"}
 ```
 
-Notice that `set_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry if a particular code is mutating your data structure in place.
+Notice that `put_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry if a particular code is mutating your data structure in place.
 
 By being immutable, Elixir also helps eliminate common cases where concurrent code has race conditions because two different entities are trying to change a data structure at the same time.
 
