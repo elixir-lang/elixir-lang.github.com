@@ -245,7 +245,7 @@ If we start our server, we can now send commands to it. For now we can get two d
 
 This means our implementation is going in the correct direction, but it doesn't look very elegant, does it?
 
-The previous implementation used pipes which would made the information flow straight-forward to understand:
+The previous implementation used pipes which made the logic straight-forward to understand:
 
 ```elixir
 read_line(socket) |> KVServer.Command.parse |> KVServer.Command.run()
