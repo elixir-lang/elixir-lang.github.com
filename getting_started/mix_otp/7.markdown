@@ -88,7 +88,7 @@ However, using git dependencies for internal dependencies is somewhat discourage
 
 However, if you push every application as a separate project to a git repository, your projects can become very hard to maintain because now you will have to spend a lot of time managing those git repositories rather than writing your code.
 
-For this reason, Mix supports the so-called umbrella applications, where you can create one project that hosts many applications and push all of them to a single git repository. That is exactly the style we are going to explore in the next sections.
+For this reason, Mix supports 'umbrella applications', where you can create one project that hosts many applications and push all of them to a single git repository. That is exactly the style we are going to explore in the next sections.
 
 What we are going to do is to create a new mix project, which we are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
@@ -204,7 +204,7 @@ end
 
 Notice that it defines the application callback and, instead of defining a supervisor named `KVServer.Supervisor` that uses the `Supervisor` module, it conveniently defined the supervisor inline! You can read more about such supervisors by reading [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html).
 
-We can alreay try out our first umbrella application. We could run tests inside the `apps/kv_server` directory, but that wouldn't be much fun, instead go to the root of the umbrella application and run `mix test` instead:
+We can already try out our first umbrella application. We could run tests inside the `apps/kv_server` directory, but that wouldn't be much fun, instead go to the root of the umbrella application and run `mix test` instead:
 
     $ mix test
 

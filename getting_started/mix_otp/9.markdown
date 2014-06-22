@@ -245,13 +245,13 @@ If we start our server, we can now send commands to it. For now we can get two d
 
 This means our implementation is going in the correct direction, but it doesn't look very elegant, does it?
 
-The previous implementation used pipes which would made the information flow straight-forward to understand:
+The previous implementation used pipes which made the logic straight-forward to understand:
 
 ```elixir
 read_line(socket) |> KVServer.Command.parse |> KVServer.Command.run()
 ```
 
-But now, since we may have failures along the way, we need to match along each step and abort in case there is a failure. Wouldn't it be great if instead we could say: "pipe those functions while the response is ok" or "pipe those functions while the response matches the `{:ok, _}` tuple"?
+Since we may have failures along the way, we need our pipeline logic to match error outputs and abort if they occur. Wouldn't it be great if instead we could say: "pipe those functions while the response is ok" or "pipe those functions while the response matches the `{:ok, _}` tuple"?
 
 Actually there is a project called [elixir-pipes](https://github.com/batate/elixir-pipes) that provides exactly this functionality! Let's give it a try. Open up your `apps/kv_server/mix.exs` file and change both `application/0` and `deps/0` functions to the following:
 
