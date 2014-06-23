@@ -44,9 +44,7 @@ Our supervisor has two children, one is the event manager and the other is regis
 
 For example, the `KV.Registry` worker receives two argument, the first is the name of the event manager and the second is the keyword list that sets it name to `[name: KV.Registry]`, guaranteeing we can access the registry by name `KV.Registry` throughout the application. It is very common to name the children in a supervisor after the module that defines it, as this association becomes very handy when debugging a live system.
 
-The order children are declared in the supervisor also matters. Since the registry depends on the event manager, we must start the latter before the former. That's why the `GenEvent` worker must come first in the children list.
-
-It is also important for the dependencies of a given worker to always be listed before the worker. For example, since the registry depends on the event manager, we must list `KV.Registry` after `GenEvent` in the children list.
+The order children are declared in the supervisor also matters. Since the registry depends on the event manager, we must start the latter before the former. That's why the `GenEvent` worker must come before the `KV.Registry` worker in the children list.
 
 Finally, we call `supervise/2`, passing the children to supervise and the strategy of `:one_for_one`.
 
