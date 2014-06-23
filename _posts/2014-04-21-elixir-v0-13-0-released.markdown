@@ -165,7 +165,7 @@ Trying to create a struct with an unknown key raises an error during compilation
 
 ```iex
 iex> user = %User{address: []}
-** (CompileError) unknown key :unknown for struct User
+** (CompileError) unknown key :address for struct User
 ```
 
 Furthermore, every struct has a `__struct__` field which contains the struct name:
