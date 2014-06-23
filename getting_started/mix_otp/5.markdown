@@ -207,7 +207,7 @@ The test is similar to "removes bucket on exit" except that we are being a bit m
    ** (EXIT from #PID<0.94.0>) shutdown
 ```
 
-One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invkes `Agent.start/1`, and use it in the registry removing the link in between registry and buckets. However this would be a bad practice as buckets would not be linked to any process after such change. This means that, if someone stops the `kv` application, all buckets would remain alive as they are unreachable.
+One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it in the registry removing the link in between registry and buckets. However this would be a bad practice as buckets would not be linked to any process after such change. This means that, if someone stops the `kv` application, all buckets would remain alive as they are unreachable.
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template.
 
