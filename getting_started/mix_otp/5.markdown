@@ -44,9 +44,7 @@ Our supervisor has two children, one is the event manager and the other is regis
 
 For example, the `KV.Registry` worker receives two argument, the first is the name of the event manager and the second is the keyword list that sets it name to `[name: KV.Registry]`, guaranteeing we can access the registry by name `KV.Registry` throughout the application. It is very common to name the children in a supervisor after the module that defines it, as this association becomes very handy when debugging a live system.
 
-The order children are declared in the supervisor also matters. Since the registry depends on the event manager, we must start the latter before the former. That's why the `GenEvent` worker must come first in the children list.
-
-It is also important for the dependencies of a given worker to always be listed before the worker. For example, since the registry depends on the event manager, we must list `KV.Registry` after `GenEvent` in the children list.
+The order children are declared in the supervisor also matters. Since the registry depends on the event manager, we must start the latter before the former. That's why the `GenEvent` worker must come before the `KV.Registry` worker in the children list.
 
 Finally, we call `supervise/2`, passing the children to supervise and the strategy of `:one_for_one`.
 
@@ -207,7 +205,7 @@ The test is similar to "removes bucket on exit" except that we are being a bit m
    ** (EXIT from #PID<0.94.0>) shutdown
 ```
 
-One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invkes `Agent.start/1`, and use it in the registry removing the link in between registry and buckets. However this would be a bad practice as buckets would not be linked to any process after such change. This means that, if someone stops the `kv` application, all buckets would remain alive as they are unreachable.
+One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it in the registry removing the link in between registry and buckets. However this would be a bad practice as buckets would not be linked to any process after such change. This means that, if someone stops the `kv` application, all buckets would remain alive as they are unreachable.
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template.
 
