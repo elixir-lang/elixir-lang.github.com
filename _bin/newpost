@@ -27,6 +27,10 @@ File.open(post, 'w') do |f|
   f << header
 end
 
-editor = ENV['EDITOR'] || "mate"
-system(editor, post)
+if editor = ENV['EDITOR'] do
+  system(editor, post)
+else
+  puts "Post created at: #{post}"
+end
+
 exit(0)
