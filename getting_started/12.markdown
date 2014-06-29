@@ -125,7 +125,7 @@ iex> IO.write(pid, "hello")
 ** (ErlangError) erlang error: :terminated
 ```
 
-After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result, which we did not supply.
+After `IO.write/2`, we can see the request sent by the IO module printed, which then fails since the IO module expected some kind of result that we did not supply.
 
 The [`StringIO`](/docs/stable/elixir/StringIO.html) module provides an implementation of the IO device messages on top of a string:
 
@@ -138,7 +138,7 @@ iex> IO.read(pid, 2)
 
 By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes to read/write files in between nodes. Of all IO devices, there is one that is special to each process, called group leader.
 
-When you write to `:stdio`, you are actually sending a message to the group leader, which writes to `:stdio`:
+When you write to `:stdio`, you are actually sending a message to the group leader, which writes to STDIO file descriptor:
 
 ```iex
 iex> IO.puts :stdio, "hello"
@@ -149,7 +149,7 @@ hello
 :ok
 ```
 
-The group leader can be configured per process and is used in different situations, for example, when executing code in a remote terminal, it guarantees messages printed in the remote node are redirected and printed in the terminal that triggered the request.
+The group leader can be configured per process and is used in different situations. For example, when executing code in a remote terminal, it guarantees messages in a remote node are redirected and printed in the terminal that triggered the request.
 
 ## 12.5 `iodata` and `chardata`
 
