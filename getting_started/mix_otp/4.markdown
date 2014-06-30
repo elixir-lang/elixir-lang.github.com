@@ -48,25 +48,29 @@ iex> flush
 :ok
 ```
 
-We createad our handler and added it to the manager by calling `GenEvent.add_handler/3` passing the manager, the event handler module (named `Forwarder`) and the event handler state, in this case, the current process pid.
+We createad our handler and added it to the manager by calling `GenEvent.add_handler/3` passing:
+
+1. The manager we previously started and linked
+2. The event handler module (named `Forwarder`) we just defined
+3. The event handler state: in this case, the current process pid
 
 After adding the handler, we can see that by calling `sync_notify/2`, the `Forwarder` handler successfully forwards events to our inbox.
 
 There are a couple things that are important to highlight at this point:
 
-1. The event handler runs in the same process as the event manager;
-2. `sync_notify/2` runs event handlers synchronously to the request;
-3. while `notify/2` runs event handlers asynchronously;
+1. The event handler runs in the same process as the event manager
+2. `sync_notify/2` runs event handlers synchronously to the request
+3. `notify/2` runs event handlers asynchronously
 
-Therefore, `sync_notify/2` and `notify/2` are similar to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended as it works as a backpressure mechanism.
+Therefore, `sync_notify/2` and `notify/2` are similar to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended. It works as a backpressure mechanism in the calling process, to reduce the likelihood of messages being sent more quickly than they can be dispatched to handlers.
 
 Be sure to check other funcionality provided by GenEvent in its [module documentation](/docs/stable/elixir/GenEvent.html). For now we have enough knowledge to add an event manager to our application.
 
 ## 4.2 Registry events
 
-In order to emit events, we need to change the registry to work with an event manager. While we could automatically start the event manager when the registry is started, for example in the `init/1` callback, it is preferrable to pass the event manager pid/name on `start_link`, decoupling the start of the event manager from the registry.
+In order to emit events, we need to change the registry to work with an event manager. While we could automatically start the event manager when the registry is started, for example in the `init/1` callback, it is preferrable to pass the event manager pid/name to `start_link`, decoupling the start of the event manager from the registry.
 
-Let's first change our tests to showcase the behaviour we want the registry to exhibit. Open up `test/kv/registry_test.exs` and change the existing `setup` callback to the one below and add the new test:
+Let's first change our tests to showcase the behaviour we want the registry to exhibit. Open up `test/kv/registry_test.exs` and change the existing `setup` callback to the one below, then add the new test:
 
 ```elixir
 defmodule Forwarder do
@@ -96,11 +100,11 @@ test "sends events on create and crash", %{registry: registry} do
 end
 ```
 
-In order to test the functionality we want to add, we first define a `Forwarder` event handler similar to the one from IEx. On `setup`, we start the event manager, pass it as argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
+In order to test the functionality we want to add, we first define a `Forwarder` event handler similar to the one we typed in IEx previously. On `setup`, we start the event manager, pass it as an argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
 
 In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
 
-Finally, notice when calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, it makes no sense to continue forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive;
+Finally, notice when calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, it makes no sense to continue forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive.
 
 Let's now change the registry to make the tests pass. Open up `lib/kv/registry.ex` and paste the new registry implementation below (comments inlined):
 
@@ -128,7 +132,7 @@ defmodule KV.Registry do
   end
 
   @doc """
-  Ensures there is a bucket associated to the given `name` in `server`.
+  Ensures there is a bucket associated with the given `name` in `server`.
   """
   def create(server, name) do
     GenServer.cast(server, {:create, name})
@@ -140,7 +144,7 @@ defmodule KV.Registry do
     # 2. The init callback now receives the event manager.
     #    We have also changed the manager state from a tuple
     #    to a map, allowing us to add new fields in the future
-    #    without a need to rewrite all callbacks.
+    #    without needing to rewrite all callbacks.
     names = HashDict.new
     refs  = HashDict.new
     {:ok, %{names: names, refs: refs, events: events}}
@@ -178,9 +182,9 @@ defmodule KV.Registry do
 end
 ```
 
-The changes are quite straightforward. We now pass the event manager as argument on the `GenServer` initialization, as well change both cast and info callbacks to call `GenEvent.sync_notify/2`. We have also taken the opportunity to change the server state to a map, making it easier to improve the registry in the future.
+The changes are straightforward. We now pass the event manager we received as an argument to `start_link` on to `GenServer` initialization. We also change both cast and info callbacks to call `GenEvent.sync_notify/2`. Lastly, we have taken the opportunity to change the server state to a map, making it easier to improve the registry in the future.
 
-Run the test suite and all tests should be green again.
+Run the test suite, and all tests should be green again.
 
 ## 4.3 Event streams
 
@@ -198,8 +202,8 @@ iex> GenEvent.notify(manager, {:hello, :world})
 :ok
 ```
 
-In the example above, we have created a `GenEvent.stream(manager)` that returns a stream (an enumerable) of events that are consumed as they come. Since consuming those events is a blocking action, we spawn a new process that will consume the events and print them to the terminal, and that is exactly the behaviour we see. Every time we call `sync_notify/2` or `notify/2`, the event is print to the terminal followed by `:ok` (which is the result returned by notify functions).
+In the example above, we have created a `GenEvent.stream(manager)` that returns a stream (an enumerable) of events that are consumed as they come. Since consuming those events is a blocking action, we spawn a new process that will consume the events and print them to the terminal, and that is exactly the behaviour we see. Every time we call `sync_notify/2` or `notify/2`, the event is printed to the terminal followed by `:ok` (which is just IEx printing the result returned by notify functions).
 
-Often event streams provide enough functionality for consuming events so you don't need to register our own handlers. However, when custom functionality is required or during testing, defining your own event handler callbacks is the best way to go.
+Often event streams provide enough functionality for consuming events that we don't need to register our own handlers. However, when custom functionality is required, or during testing, defining our own event handler callbacks is the best way to go.
 
-At this point, we have an event manager, a registry and potentially many buckets running at the same time. It is about time to worry what would happen if any of those processes crash.
+At this point, we have an event manager, a registry and potentially many buckets running at the same time. It is about time to start worrying what would happen if any of those processes crash.
