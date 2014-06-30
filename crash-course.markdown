@@ -292,7 +292,7 @@ Elixir also supports multiline strings (also called heredocs):
 ```elixir
 is_binary """
 This is a binary
-spawning several
+spanning several
 lines.
 """
 #=> true
@@ -369,7 +369,7 @@ Regexes are also supported in heredocs, which is convenient when defining multil
 ```elixir
 is_regex ~r"""
 This is a regex
-spawning several
+spanning several
 lines.
 """
 ```
