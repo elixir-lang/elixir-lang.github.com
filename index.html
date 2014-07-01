@@ -210,7 +210,7 @@ Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 
 {% highlight elixir %}
 file  = File.stream!("README.md")
-lines = Enum.map(file, fn(line) -> String.replace(line, "\"", "'") end)
+lines = Enum.map(file, fn(line) -> String.replace(line, "%", "#") end)
 File.write("README.md", lines)
 {% endhighlight %}
     </div>
