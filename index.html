@@ -128,17 +128,17 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
       <p>Pattern matching allows developers to easily destructure data and access its contents:</p>
 
 {% highlight elixir %}
-{ User, name, age } = User.get("John Doe")
+{User, name, age} = User.get("John Doe")
 {% endhighlight %}
 
       <p>When mixed with guards, pattern matching allows us to elegantly match on the possible scenarios and express our intent accordingly:</p>
 
 {% highlight elixir %}
-def serve_drinks({ User, name, age }) when age < 21 do
+def serve_drinks({User, name, age}) when age < 21 do
   raise "No way #{name}!"
 end
 
-def serve_drinks({ User, name, age }) do
+def serve_drinks({User, name, age}) do
   # Code that serves drinks!
 end
 
@@ -210,7 +210,7 @@ Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
 
 {% highlight elixir %}
 file  = File.stream!("README.md")
-lines = Enum.map(file, fn(line) -> Regex.replace(~r/"/, line, "'") end)
+lines = Enum.map(file, fn(line) -> String.replace(line, "\"", "'") end)
 File.write("README.md", lines)
 {% endhighlight %}
     </div>
