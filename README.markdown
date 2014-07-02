@@ -32,10 +32,10 @@ Development is done in the `next` branch, while `master` contains the docs and g
 
 3. Test it locally
 
-   You need to install `jekyll` and `redcarpet`
+   You need to install `jekyll`, `jekyll-redirect-from` and `redcarpet`
 
    ```shell
-   $ gem install jekyll redcarpet
+   $ gem install jekyll jekyll-redirect-from redcarpet
    $ jekyll serve # check localhost:4000
    ```
 
@@ -50,5 +50,5 @@ Development is done in the `next` branch, while `master` contains the docs and g
 * The Social Icons are copyrighted to [Xeloader](http://xeloader.deviantart.com/art/Socialis-2-Freebie-213292616).
 
 * The written textual contents available in the guides and blog are licensed under Apache 2.0.
- 
+
 * The available docs are licensed under the same license as their projects.
