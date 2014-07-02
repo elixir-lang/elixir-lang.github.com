@@ -8,11 +8,11 @@ guide: 6
 
   <div class="toc"></div>
 
-Every time we need to lookup a bucket, we need to do so by sending a message to the registry. In some applications, this means the registry may become a bottleneck!
+Every time we need to look up a bucket, we need to send a message to the registry. In some applications, this means the registry may become a bottleneck!
 
 In this chapter we will learn about ETS (Erlang Term Storage), and how to use it as a cache mechanism. Later we will expand its usage to persist data from the supervisor to its children, allowing data to persist even on crashes.
 
-> Warning! Never use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks before acting. This chapter is merely an example of how ETS can be used in such situations.
+> Warning! Don't use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know *whether* you should cache, and *what* you should cache. This chapter is merely an example of how ETS can be used, once you've determined the need.
 
 ## 6.1 ETS as a cache
 
@@ -27,7 +27,7 @@ iex> :ets.lookup(table, "foo")
 [{"foo", #PID<0.41.0>}]
 ```
 
-When creating an ETS table, two arguments are required, the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, where keys cannot be duplicated, and visibility of `:protected`, where only the process who created the table can write to it but all processes can read it from it. Those are actually the default values, so we will skip them from now on.
+When creating an ETS table, two arguments are required: the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, which means that keys cannot be duplicated. We've also set the table's access to `:protected`, which means that only the process that created the table can write to it, but all processes can read it from it. Those are actually the default values, so we will skip them from now on.
 
 ETS tables can also be named, allowing us to access them by a given name:
 
@@ -40,15 +40,15 @@ iex> :ets.lookup(:buckets_registry, "foo")
 [{"foo", #PID<0.41.0>}]
 ```
 
-Let's change the `KV.Registry` to use ETS tables. We will use the same technique as we did for the event manager and buckets supervisor, and pass the ETS table name explicitly on `start_link`. Remember that, as with server names, ETS table names are global: any process that knows the name will be able to access that table.
+Let's change the `KV.Registry` to use ETS tables. We will use the same technique as we did for the event manager and buckets supervisor, and pass the ETS table name explicitly on `start_link`. Remember that, as with server names, any local process that knows an ETS table name will be able to access that table.
 
-Open up `lib/kv/registry.ex` and let's change its implementation. We have added comments to the source code to highlight the changes we have done:
+Open up `lib/kv/registry.ex`, and let's change its implementation. We've added comments to the source code to highlight the changes we've made:
 
 ```elixir
 defmodule KV.Registry do
   use GenServer
 
-  ## Cient API
+  ## Client API
 
   @doc """
   Starts the registry.
@@ -61,7 +61,7 @@ defmodule KV.Registry do
   @doc """
   Looks up the bucket pid for `name` stored in `table`.
 
-  Returns `{:ok, pid}` in case a bucket exists, `:error` otherwise.
+  Returns `{:ok, pid}` if a bucket exists, `:error` otherwise.
   """
   def lookup(table, name) do
     # 2. lookup now expects a table and looks directly into ETS.
@@ -73,7 +73,7 @@ defmodule KV.Registry do
   end
 
   @doc """
-  Ensures there is a bucket associated to the given `name` in `server`.
+  Ensures there is a bucket associated with the given `name` in `server`.
   """
   def create(server, name) do
     GenServer.cast(server, {:create, name})
@@ -119,11 +119,11 @@ defmodule KV.Registry do
 end
 ```
 
-Notice that before our changes,  `KV.Registry.lookup/2` sent requests to the server but now it reads directly from the ETS table, which is shared across all processes. That's the main idea behind the cache mechanism we are implementing.
+Notice that before our changes `KV.Registry.lookup/2` sent requests to the server, but now it reads directly from the ETS table, which is shared across all processes. That's the main idea behind the cache mechanism we are implementing.
 
-In order for the cache mechanism to work, the created ETS table needs to have access `:protected` (the default), so all clients can read from it, while only the `KV.Registry` process writes to it. We have also set `read_concurrency: true` when starting the table optimizing the table for the common scenario of concurrent read operations.
+In order for the cache mechanism to work, the created ETS table needs to have access `:protected` (the default), so all clients can read from it, while only the `KV.Registry` process writes to it. We have also set `read_concurrency: true` when starting the table, optimizing the table for the common scenario of concurrent read operations.
 
-The changes we have performed above have definitely broken our tests. For starter, there is a new argument we need to pass to `KV.Registry.start_link/3`. Let's start amending our tests in `test/kv/registry_test.exs` by rewriting the `setup` callback:
+The changes we have performed above have definitely broken our tests. For starters, there is a new argument we need to pass to `KV.Registry.start_link/3`. Let's start amending our tests in `test/kv/registry_test.exs` by rewriting the `setup` callback:
 
 ```elixir
 setup do
@@ -156,19 +156,19 @@ This is happening because we are passing the registry pid to `KV.Registry.lookup
 KV.Registry.lookup(registry, ...)
 ```
 
-by:
+to:
 
 ```elixir
 KV.Registry.lookup(ets, ...)
 ```
 
-Where `ets` will be retrieved the same way we retrieve the registry:
+Where `ets` will be retrieved in the same way we retrieve the registry:
 
 ```elixir
 test "spawns buckets", %{registry: registry, ets: ets} do
 ```
 
-Let's change our tests to pass `ets` on `lookup/2`. Once we finish such changes, we will see tests continue failing. You may even notice some tests pass sometimes, but fail in other runs. For example, the "spawns buckets" test:
+Let's change our tests to pass `ets` to `lookup/2`. Once we finish these changes, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the "spawns buckets" test:
 
 ```elixir
 test "spawns buckets", %{registry: registry, ets: ets} do
@@ -190,13 +190,16 @@ assert {:ok, bucket} = KV.Registry.lookup(ets, "shopping")
 
 However how can this line fail if we just created the bucket in the previous line?
 
-The reason those failures are happening is because we have ignored two important advices for didatic purposes. We are 1) prematurely optimizing (by adding this cache layer) and 2) using `cast/2` (while we could be using `call/2`).
+The reason those failures are happening is because, for didactic purposes, we have made two mistakes:
+
+1. We are prematurely optimizing (by adding this cache layer)
+2. We are using `cast/2` (while we should be using `call/2`)
 
 ## 6.2 Race conditions?
 
-Developing in Elixir does not make your code free of race conditions but the simple abstractions where nothing is shared by default makes it rather easier to spot the root cause when such happens.
+Developing in Elixir does not make your code free of race conditions. However, Elixir's simple abstractions where nothing is shared by default make it easier to spot a race condition's root cause.
 
-What is happening in our test is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we expecting to happen:
+What is happening in our test is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we were expecting to happen:
 
 1. We invoke `KV.Registry.create(registry, "shopping")`
 2. The registry creates the bucket and updates the cache table
@@ -210,7 +213,7 @@ However, since `KV.Registry.create/2` is a cast operation, the command will retu
 3. The command above returns `:error`
 4. The registry creates the bucket and updates the cache table
 
-To fix the failure we just need to make `KV.Registry.create/2` sync by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been done to thet table. Let's change the function and its callback as follows:
+To fix the failure we just need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:
 
 ```elixir
 def create(server, name) do
@@ -251,9 +254,9 @@ The `--trace` option is useful when your tests are deadlocking or there are race
      test/kv/registry_test.exs:52
 ```
 
-If you are the error, we are expecting the bucket to no longer exist on the table but it still does! This the opposite problem to the one we have just solved: while previously there was a delay in between the command to create a bucket and updating the table, now there is a delay in between the bucket process dying and its entry being removed from the table.
+According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
 
-Unfortunately this time we cannot simply change `handle_info/2` to a synchronous operation. We can however fix our tests by using the event manager notifications. Let's take another look at our `handle_info/2` implementation:
+Unfortunately this time we cannot simply change `handle_info/2` to a synchronous operation. We can, however, fix our tests by using event manager notifications. Let's take another look at our `handle_info/2` implementation:
 
 ```elixir
 def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
@@ -265,7 +268,7 @@ def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
 end
 ```
 
-Notice that we are deleting from the ETS table **before** we send the notification. This is by design! This means that, if we receive the `{:exit, name, pid}` notification, the table will certainly be up to date. Let's update the remaining failing test as follows:
+Notice that we are deleting from the ETS table **before** we send the notification. This is by design! This means that when we receive the `{:exit, name, pid}` notification, the table will already be up to date. Let's update the remaining failing test as follows:
 
 ```elixir
 test "removes buckets on exit", %{registry: registry, ets: ets} do
@@ -279,7 +282,7 @@ end
 
 We have simply amended the test to guarantee we first receive the `{:exit, name, pid}` message before invoking `KV.Registry.lookup/2`.
 
-It is important to observe we were able to keep our suite passing without a need to use `:timer.sleep/1` and other tricks. Most of the time, we can rely on events, monitoring and messages to assert the system is in an expected state before performing assertions.
+It is important to observe that we were able to keep our suite passing without a need to use `:timer.sleep/1` or other tricks. Most of the time, we can rely on events, monitoring and messages to assert the system is in an expected state before performing assertions.
 
 For your convenience, here is the fully passing test case:
 
@@ -344,7 +347,7 @@ defmodule KV.RegistryTest do
 end
 ```
 
-With tests passing, we just need to update the supervisor `init/1` callback at `lib/kv/supervisor.ex` to pass the ETS table name as argument to the registry worker:
+With tests passing, we just need to update the supervisor `init/1` callback at `lib/kv/supervisor.ex` to pass the ETS table name as an argument to the registry worker:
 
 ```elixir
 @manager_name KV.EventManager
@@ -364,15 +367,15 @@ def init(:ok) do
 end
 ```
 
-Note we are using `KV.Registry` as name for the ETS table as well, which makes it convenient to debug as it points to the module using it. ETS names and process names are stored in different registries, so there is no chance of conflicts.
+Note that we are using `KV.Registry` as name for the ETS table as well, which makes it convenient to debug, as it points to the module using it. ETS names and process names are stored in different registries, so there is no chance of conflicts.
 
 ## 6.3 ETS as persistent storage
 
-So far we have created an ETS table during the registry initialization but we haven't bothered to close to the table on the registry termination. That's because the ETS table is "linked" (as figure of speech) to the process that creates it. If that process dies, the table is automatically closed.
+So far we have created an ETS table during the registry initialization but we haven't bothered to close the table on registry termination. That's because the ETS table is "linked" (in a figure of speech) to the process that creates it. If that process dies, the table is automatically closed.
 
-This is extremely convenient as a default behaviour and we can use it even more to our advantage. Remember there is a dependency in between the registry and the buckets supervisor. If the registry dies, we want the buckets supervisor to die too, because once the registry dies all information linking the bucket name to the bucket process is lost. However, what if we could keep the registry data even if the registry process crashes? If we are able to do so, we remove the depednency in between the registry and the buckets supervisor, making the `:one_for_one` strategy the perfect strategy for our supevisor.
+This is extremely convenient as a default behaviour, and we can use it even more to our advantage. Remember that there is a dependency between the registry and the buckets supervisor. If the registry dies, we want the buckets supervisor to die too, because once the registry dies all information linking the bucket name to the bucket process is lost. However, what if we could keep the registry data even if the registry process crashes? If we are able to do so, we remove the dependency between the registry and the buckets supervisor, making the `:one_for_one` strategy the perfect strategy for our supevisor.
 
-A couple differences will be required in order to make this change happen. First we'll need to start the ETS table inside the supervisor. Second, we will need to change the access type from `:protected` to `:public` because the owner is the supervisor but the process doing the writes is still the manager.
+A couple of changes will be required in order to make this happen. First, we'll need to start the ETS table inside the supervisor. Second, we'll need to change the table's access type from `:protected` to `:public`, because the owner is the supervisor, but the process doing the writes is still the manager.
 
 Let's get started by first changing `KV.Supervisor`'s `init/1` callback:
 
@@ -392,7 +395,7 @@ def init(:ok) do
 end
 ```
 
-Next we change `KV.Registry`'s `init/1` callback as it no longer needs to create a table. It should rather just use the one given as argument:
+Next, we change `KV.Registry`'s `init/1` callback, as it no longer needs to create a table. It should instead just use the one given as an argument:
 
 ```elixir
 def init({table, sup, event}) do
@@ -420,9 +423,9 @@ defp start_registry(ets) do
 end
 ```
 
-After those changes, our test suite should continue green!
+After those changes, our test suite should continue to be green!
 
-There is just one last scenario to consider. Once we receive the ETS table, there may be existing bucket pids on the table, after all that's the whole purpose of this change! However the newly started registry is not monitoring those buckets as they were created as part of previous, now defunct, registry. As a result the table may go stale as we won't remove those buckets if they die.
+There is just one last scenario to consider: once we receive the ETS table, there may be existing bucket pids on the table. After all, that's the whole purpose of this change! However, the newly started registry is not monitoring those buckets, as they were created as part of previous, now defunct, registry. This means that the table may go stale, because we won't remove those buckets if they die.
 
 Let's add a test to `test/kv/registry_test.exs` that shows this bug:
 
@@ -467,6 +470,6 @@ def init({table, events, buckets}) do
 end
 ```
 
-We use `:ets.foldl/3` to go through all entries in the table, similar to `Enum.reduce/3`, invoking the given function for each element in the table with the given accumulator. In the function callback, we monitor each pid in the table and update the refs dictionary accordingly. In case any of the entries is already dead, we will still receive the `:DOWN` message, causing them to be purged later.
+We use `:ets.foldl/3` to go through all entries in the table, similar to `Enum.reduce/3`, invoking the given function for each element in the table with the given accumulator. In the function callback, we monitor each pid in the table and update the refs dictionary accordingly. If any of the entries is already dead, we will still receive the `:DOWN` message, causing them to be purged later.
 
-In this chapter we were able to make our application more robust by using an ETS table that is owned by the supervisor and passed to the registry. We have also explored how to use ETS as a cache and discussed some of the race conditions you may run into as the data becomes shared in between the server and all clients.
+In this chapter we were able to make our application more robust by using an ETS table that is owned by the supervisor and passed to the registry. We have also explored how to use ETS as a cache and discussed some of the race conditions we may run into as data becomes shared between the server and all clients.
