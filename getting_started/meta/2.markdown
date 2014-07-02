@@ -57,17 +57,21 @@ Unless.macro_unless true, IO.puts "this should never be printed"
 
 Our `macro_unless` macro received the following:
 
+{% raw %}
 ```elixir
 macro_unless(true, {{:., [], [IO, :puts], [], ["this should never be printed"]}})
 ```
+{% endraw %}
 
 And it then return a quoted expression as follows:
 
+{% raw %}
 ```elixir
 {:if, [], [
   {:!, [], [true]},
   {{:., [], [IO, :puts], [], ["this should never be printed"]}}]}
 ```
+{% endraw %}
 
 We can actually verify this is the case by using `Macro.expand_once/2`:
 
@@ -176,7 +180,7 @@ defmodule Sample do
       end
     end
   end
-  
+
   def run do
     initialize_to_char_count [:red, :green, :yellow]
     [red, green, yellow]
