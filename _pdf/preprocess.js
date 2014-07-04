@@ -48,7 +48,7 @@ lines.forEach(function(line) {
     }
     var r = reCodeStart.exec(l);
     if (r && inCodeMode === false) {
-      console.log('\\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{' + (r[1] ? r[1] : 'ex' ) + '}');
+      console.log('\\begin{minted}[mathescape, linenos, numbersep=5pt, frame=lines, framesep=2mm]{' + (r[1] ? r[1] : 'ex' ) + '}');
       inCodeMode = true;
       return;
     }
