@@ -42,12 +42,12 @@ defp loop_acceptor(socket) do
   loop_acceptor(socket)
 end
 
-defp serve(socket) do
-  socket
+defp serve(client) do
+  client
   |> read_line()
-  |> write_line(socket)
+  |> write_line(client)
 
-  serve(socket)
+  serve(client)
 end
 
 defp read_line(socket) do
