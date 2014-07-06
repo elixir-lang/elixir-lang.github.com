@@ -16,7 +16,7 @@ The routing layer will receive a routing table of the following format:
     [{?a..?m, :"foo@computer-name"},
      {?n..?z, :"bar@computer-name"}]
 
-The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the ASCII value of the letter "a") will be dispatched to node `foo@computer-name`.
+The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
 
 If the matching entry points to the node evaluating the request, then we've finished routing, and this node will perform the requested operation. If the matching entry points to a different node, we'll pass the request to this node, which will look at its own routing table (which may be different from the one in the first node) and act accordingly. If no entry matches, an error will be raised.
 
@@ -87,7 +87,7 @@ From our quick exploration, we could conclude that we should simply use `Node.sp
 
 There are three better alternatives to `Node.spawn_link/2` that we could use in our implementation:
 
-1. We could use Erlang's [:rpc](http://erlang.org/doc/man/rpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:rpc.call :"foo@computer-name", Hello, :world, []` and it will print "hello world"
+1. We could use Erlang's [:rpc](http://erlang.org/doc/man/rpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:rpc.call(:"foo@computer-name", Hello, :world, [])` and it will print "hello world"
 
 2. We could have a server running on the other node and send requests to that node via the [GenServer](/docs/stable/elixir/GenServer.html) API. For example, you can call a remote named server using `GenServer.call({name, node}, arg)` or simply passing the remote process PID as first argument
 
