@@ -174,7 +174,7 @@ defmodule Sample do
   defmacro initialize_to_char_count(variables) do
     Enum.map variables, fn(name) ->
       var = Macro.var(name, nil)
-      value = Atom.to_string(name)|> String.length
+      length = Atom.to_string(name)|> String.length
       quote do
         unquote(var) = unquote(length)
       end
