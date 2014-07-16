@@ -73,14 +73,14 @@ Developers can use the functions in the [`Map` module](/docs/stable/elixir/Map.h
 Maps also provide special syntax for creating, accessing and updating maps with atom keys:
 
 ```iex
-iex> user = %{name: "josé", age: 27}
-%{name: "josé", age: 27}
+iex> user = %{name: "john", age: 27}
+%{name: "john", age: 27}
 iex> user.name
-"josé"
-iex> user = %{user | name: "eric"}
-%{name: "eric", age: 27}
+"john"
+iex> user = %{user | name: "meg"}
+%{name: "meg", age: 27}
 iex> user.name
-"eric"
+"meg"
 ```
 
 Both access and update syntax above expect the given keys to exist. Trying to access or update a key that does not exist raises an error:
@@ -111,14 +111,14 @@ Internally, this record is represented as the following tuple:
 Records can also be created and pattern matched on:
 
 ```iex
-iex> user = User[name: "josé"]
-User[name: "josé", age: 0]
+iex> user = User[name: "john"]
+User[name: "john", age: 0]
 iex> user.name
-"josé"
+"john"
 iex> User[name: name] = user
-User[name: "josé", age: 0]
+User[name: "john", age: 0]
 iex> name
-"josé"
+"john"
 ```
 
 Pattern matching works because the record meta-data is stored in the User module which can be accessed when building patterns.
@@ -132,7 +132,7 @@ defrecord User, name: nil, age: 0 do
   end
 end
 
-User["josé valim"].first_name #=> "josé"
+User[name: "john doe"].first_name #=> "john"
 ```
 
 Not only that, records were often slow in protocol dispatches because every tuple can potentially be a record, sometimes leading to expensive checks at runtime.
@@ -157,8 +157,8 @@ end
 Now a `User` struct can be created without a need to explicitly list all necessary fields:
 
 ```iex
-iex> user = %User{name: "josé"}
-%User{name: "josé", age: 0}
+iex> user = %User{name: "john"}
+%User{name: "john", age: 0}
 ```
 
 Trying to create a struct with an unknown key raises an error during compilation:

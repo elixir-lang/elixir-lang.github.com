@@ -91,7 +91,7 @@ In the previous chapter, we have learned that although structs are maps, they do
 
 ```iex
 iex> defmodule User do
-...>   defstruct name: "jose", age: 27
+...>   defstruct name: "john", age: 27
 ...> end
 {:module, User,
  <<70, 79, 82, ...>>, {:__struct__, 0}}
@@ -103,7 +103,7 @@ And then check:
 iex> Blank.blank?(%{})
 true
 iex> Blank.blank?(%User{})
-** (Protocol.UndefinedError) protocol Blank not implemented for %User{age: 27, name: "jose"}
+** (Protocol.UndefinedError) protocol Blank not implemented for %User{age: 27, name: "john"}
 ```
 
 Instead of sharing protocol implementation with maps, structs require their own protocol implementation:
@@ -185,7 +185,7 @@ The `Inspect` protocol is the protocol used to transform any data structure into
 iex> {1, 2, 3}
 {1,2,3}
 iex> %User{}
-%User{name: "jose", age: 27}
+%User{name: "john", age: 27}
 ```
 
 Keep in mind that, by convention, whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. This means the inspect protocol is not reversible as information may be lost along the way:

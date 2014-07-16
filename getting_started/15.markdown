@@ -25,7 +25,7 @@ To define a struct, we just need to call `defstruct/1` inside a module:
 
 ```iex
 iex> defmodule User do
-...>   defstruct name: "jose", age: 27
+...>   defstruct name: "john", age: 27
 ...> end
 {:module, User,
  <<70, 79, 82, ...>>, {:__struct__, 0}}
@@ -35,9 +35,9 @@ We can now create "instances" of this struct by using the `%User{}` syntax:
 
 ```iex
 iex> %User{}
-%User{name: "jose", age: 27}
-iex> %User{name: "eric"}
-%User{name: "eric", age: 27}
+%User{name: "john", age: 27}
+iex> %User{name: "meg"}
+%User{name: "meg", age: 27}
 iex> is_map(%User{})
 true
 ```
@@ -52,25 +52,25 @@ iex> %User{oops: :field}
 When discussing maps, we demonstrated how we can access and update existing fields of a map. The same applies to structs:
 
 ```iex
-iex> jose = %User{}
-%User{name: "jose", age: 27}
-iex> jose.name
-"jose"
-iex> eric = %{jose | name: "eric"}
-%User{name: "eric", age: 27}
-iex> %{eric | oops: :field}
+iex> john = %User{}
+%User{name: "john", age: 27}
+iex> john.name
+"john"
+iex> meg = %{john | name: "meg"}
+%User{name: "meg", age: 27}
+iex> %{meg | oops: :field}
 ** (ArgumentError) argument error
 ```
 
-By using the update syntax, the VM is aware no new keys will be added to the map/struct, allowing the maps to share their structure in memory. In the example above, both `jose` and `eric` share the same key structure in memory.
+By using the update syntax, the VM is aware no new keys will be added to the map/struct, allowing the maps to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory.
 
 Structs can also be used in pattern matching and they guarantee the structs are of the same type:
 
 ```iex
-iex> %User{name: name} = jose
-%User{name: "jose", age: 27}
+iex> %User{name: name} = john
+%User{name: "john", age: 27}
 iex> name
-"jose"
+"john"
 iex> %User{} = %{}
 ** (MatchError) no match of right hand side value: %{}
 ```
@@ -78,7 +78,7 @@ iex> %User{} = %{}
 Matching works because structs store a field named `__struct__` inside the map:
 
 ```iex
-iex> jose.__struct__
+iex> john.__struct__
 User
 ```
 
@@ -86,16 +86,16 @@ Overall, a struct is just a bare map with default fields. Notice we say it is a 
 
 ```iex
 iex> user = %User{}
-%User{name: "jose", age: 27}
+%User{name: "john", age: 27}
 iex> user[:name]
-** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "jose"}
+** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "john"}
 ```
 
 A struct also is not a dictionary and therefore can't be used with the `Dict` module:
 
 ```iex
 iex> Dict.get(%User{}, :name)
-** (ArgumentError) unsupported dict: %User{name: "jose", age: 27}
+** (ArgumentError) unsupported dict: %User{name: "john", age: 27}
 ```
 
 We will cover how structs interacts with protocols in the next chapter.
