@@ -167,7 +167,7 @@ Notice that the third element in the quoted variable is the atom `Sample`, inste
 
 Elixir provides similar mechanisms for imports and aliases too. This guarantees macros will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/2`, although one must be careful when using those as they directly change the user environment.
 
-Sometimes variable names might be dynamically created. In these cases, `Macro.var/2` can be used to define new variables:
+Sometimes variable names might be dynamically created. In such cases, `Macro.var/2` can be used to define new variables:
 
 ```elixir
 defmodule Sample do
@@ -196,9 +196,7 @@ Take note of the second argument to `Macro.var/2`. This is the context used and 
 
 When using `Macro.expand_once/2` earlier in this chapter, we have used the special form `__ENV__`.
 
-`__ENV__` returns an instance of `Macro.Env` which contains useful information about the compilation environment. It contains useful information like the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on.
-
-Let's give it a try:
+`__ENV__` returns an instance of `Macro.Env` which contains useful information about the compilation environment. It contains useful information like the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:
 
 ```iex
 iex> __ENV__.module
@@ -242,5 +240,45 @@ Macros are a powerful construct and Elixir provides many mechanisms to ensure th
 * Macros' language is clear: many languages provide syntax shortcuts for `quote` and `unquote`. In Elixir, we preferred to have those explicitly spelled out, in order to clearly delimit the boundaries of a macro definition and its quoted expressions;
 
 Even if Elixir attempts its best to provide a safe environment, the major responsibility still falls on the developers. That's why the first rule of the macro club is **write macros responsibly**. Macros are harder to write than ordinary Elixir functions and it's considered to be bad style to use them when they're not necessary. Elixir already provides elegant mechanisms to write your every day code and macros should be saved as last resort.
+
+And, if you ever need to resort to macros, remember that macros are not your API. Keep your macro definitions short, including its quoted contents. For example, instead of writing a macro like this:
+
+```elixir
+defmodule MyModule do
+  defmacro my_macro(a, b, c) do
+    quote do
+      do_this(unquote(a))
+      ...
+      do_that(unquote(b))
+      ...
+      and_that(unquote(c))
+    end
+  end
+end
+```
+
+write:
+
+```elixir
+defmodule MyModule do
+  defmacro my_macro(a, b, c) do
+    quote do
+      # Keep what you need to do here to a minimum
+      # and move everything else to a function
+      do_this_that_and_that(unquote(a), unquote(b), unquote(c))
+    end
+  end
+
+  def do_this_that_and_that(a, b, c) do
+    do_this(unquote(a))
+    ...
+    do_that(unquote(b))
+    ...
+    and_that(unquote(c))
+  end
+end
+```
+
+This makes your code clearer, easier to test and maintain, as you can invoke `do_this_that_and_that/3` directly. It also helps you to design an actual API for developers that does not rely on macros.
 
 With those lessons, we finish our introduction to macros. The next chapter is a brief discussion on DSLs, showing how we can mix macros and module attributes to annotate and extend modules and functions.

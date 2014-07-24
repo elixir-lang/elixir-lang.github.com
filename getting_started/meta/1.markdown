@@ -139,9 +139,9 @@ iex> Macro.escape(map)
 {:%{}, [], [hello: :world]}
 ```
 
-Macros receive quoted expressions and must return quoted expressions. However, sometimes during the function of a macro, you may need to work with values and making a distinction in between values and quoted expressions will be required.
+Macros receive quoted expressions and must return quoted expressions. However, sometimes during the execution of a macro, you may need to work with values and making a distinction between values and quoted expressions will be required.
 
-In other words, it is important to make a distinction in between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values like integers, atoms and strings have a quoted expression equal to the value itself. Other values like maps needs to be explicitly converted. Finally, some values like functions and references cannot be converted to a quoted expression at all.
+In other words, it is important to make a distinction between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values like integers, atoms and strings have a quoted expression equal to the value itself. Other values like maps needs to be explicitly converted. Finally, other values like functions and references cannot be converted to a quoted expression at all.
 
 You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other quoted expressions related functions can be found in the [`Macro` module](/docs/stable/elixir/Macro.html).
 

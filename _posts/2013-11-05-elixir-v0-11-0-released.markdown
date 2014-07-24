@@ -40,7 +40,7 @@ Since the early days, Elixir took ahold of the compilation process in order to p
 
 In the past releases we have improved this process to only compile files that changed and their dependencies. For v0.11.0, we have improved this process to be faster and less conservative than the previous version.
 
-Mix has also improved support for umbrella projects, which are projects that contain multiple OTP applications, essential for building large projects. The current release allows sharing of dependencies in between projects and faster and dependency resolution times.
+Mix has also improved support for umbrella projects, which are projects that contain multiple OTP applications, essential for building large projects. The current release allows sharing of dependencies between projects and faster and dependency resolution times.
 
 ## Other changes
 
