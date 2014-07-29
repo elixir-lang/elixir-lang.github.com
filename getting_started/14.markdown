@@ -35,46 +35,37 @@ Elixir has a handful of reserved attributes. Here are just a few of them, the mo
 * `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour.
 * `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
 
-`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation:
+`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation.
 
-```iex
-iex> defmodule MyModule do
-...>  @moduledoc "It does **x**"
-...>
-...>  @doc """
-...>  Returns the version
-...>  """
-...>  def version, do: 1
-...> end
-{:module, MyModule, <<70, 79, 82, ...>>, {:version, 0}}
-iex> h MyModule
-* MyModule
-
-It does **x**
-
-iex> h MyModule.version
-* def version()
-
-Returns the version
-
-```
-
-Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text:
+Let's go back to the `Math` module defined in the previous chapters, add some documentation and save it to the `math.ex` file:
 
 ```elixir
 defmodule Math do
   @moduledoc """
-  This module provides mathematical functions
-  as sin, cos and constants like pi.
+  Provides math-related functions.
 
   ## Examples
 
-      Math.pi
-      #=> 3.1415...
+      iex> Math.sum(1, 2)
+      3
 
   """
+
+  @doc """
+  Calculates the sum of two numbers.
+  """
+  def sum(a, b), do: a + b
 end
 ```
+
+Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:
+
+    $ elixirc math.ex
+    $ iex
+    iex> h Math # Access the docs for the module Math
+    ...
+    iex> h Math.sum # Access the docs for the sum function
+    ...
 
 We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 
