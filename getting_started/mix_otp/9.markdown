@@ -430,20 +430,17 @@ Our integration test checks all server interaction, including unknown commands a
 This time, since our test relies on global data, we have not given `async: true` to `use ExUnit.Case`. Furthermore, in order to guarantee our test is always in a clean slate, we stop and start the `:kv` application before each test. In fact, stopping the `:kv` application even prints a warning on the terminal:
 
 ```
-=INFO REPORT==== 14-Jun-2014::13:40:21 ===
-    application: kv
-    exited: stopped
-    type: temporary
+18:12:10.698 [info] Application kv exited with reason :stopped
 ```
 
 If desired, we can avoid printing this warning by turning the error_logger off and on in the test setup:
 
 ```elixir
 setup do
-  :error_logger.tty(false)
-  :application.stop(:kv)
-  :ok = :application.start(:kv)
-  :error_logger.tty(true)
+  Logger.remove_backend(:console)
+  Application.stop(:kv)
+  :ok = Application.start(:kv)
+  Logger.add_backend(:console, flush: true)
   :ok
 end
 ```
