@@ -173,7 +173,7 @@ We can also provide our own sigils by simply implementing the proper function. F
 
 ```iex
 iex> defmodule MySigils do
-...>   def sigil_i(binary, []), do: binary_to_integer(binary)
+...>   def sigil_i(string, []), do: String.to_integer(string)
 ...> end
 iex> import MySigils
 iex> ~i(13)
