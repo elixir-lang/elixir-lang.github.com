@@ -16,12 +16,12 @@ If you are interested in the specific details for this release, [please check ou
 
 ## Logger
 
-Elixir now ships with a new application called logger. This application provides [the Logger module]((http://elixir-lang.org/docs/master/logger/Logger.html), which is the main API developers will use for logging:
+Elixir now ships with a new application called logger. This application provides [the Logger module](http://elixir-lang.org/docs/master/logger/Logger.html), which is the main API developers will use for logging:
 
 ```elixir
 require Logger
 Logger.debug "hello"
-``
+```
 
 By default, the code above will log the following message to your console:
 
@@ -138,7 +138,7 @@ In other words, aliases can be three different structures:
 
 You can find more information about aliases by reading the [Mix documentation](http://elixir-lang.org/docs/master/mix/) (there is a section about Aliases around the middle).
 
-We also would like to thank [Anthony Grimes](https://github.com/raynes) and [Phil Halgelberg](https://github.com/technomancy) for the support, contributions and [the work on Lein](https://github.com/technomancy/leiningen) which Mix borrows a lot from.
+We also would like to thank [Anthony Grimes](https://github.com/raynes) for the support and [Phil Halgelberg](https://github.com/technomancy) for [the work on Lein](https://github.com/technomancy/leiningen) which Mix borrows a lot from.
 
 ## Elixir Web Installer for Windows
 
