@@ -12,7 +12,7 @@ We are glad to announce v0.15.0 has been released. We have spent the last 2 mont
 
 There are also no more planned deprecations nor backward incompatible changes which means it is extremely likely that code that runs on v0.15.0 will run exactly the same on Elixir v1.0.0.
 
-If you are interested in the specific details for this release, [please check our CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.15.0/CHANGELOG.md). In this post, we will focus on two new features in this release, Logger and Mix aliases, and share some exciting news at the end!
+If you are interested in the specific details for this release, [please check our CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.15.0/CHANGELOG.md). In this post, we will focus on three new features in this release: Logger, Mix aliases, the fresh Elixir Web Installer for Windows, and share some exciting news at the end!
 
 ## Logger
 
@@ -139,6 +139,18 @@ In other words, aliases can be three different structures:
 You can find more information about aliases by reading the [Mix documentation](http://elixir-lang.org/docs/master/mix/) (there is a section about Aliases around the middle).
 
 We also would like to thank [Anthony Grimes](https://github.com/raynes) and [Phil Halgelberg](https://github.com/technomancy) for the support, contributions and [the work on Lein](https://github.com/technomancy/leiningen) which Mix borrows a lot from.
+
+## Elixir Web Installer for Windows
+
+At the beginning of this summer, [Chris Hyndman](http://github.com/chyndman) joined us as a Google Summer of Code student to help us improve the Elixir story on Windows. Chris has been essential in:
+
+  * Guaranteeing our test suite is green on Windows, fixing many bugs in the process;
+  * [Documenting how to compile Elixir from source on Windows](https://github.com/elixir-lang/elixir/wiki/Windows)
+  * Ensuring important projects like our [C markdown processor](https://github.com/devinus/markdown/pull/7) compiles on Windows
+
+Chris has also built an [Elixir Web Installer for Windows](https://github.com/elixir-lang/elixir-windows-setup). The web installer checks all available Elixir versions and allows you to pick which one to install. It will also fetch and install Erlang in your machine in case it has not been installed yet.
+
+If you want to give Elixir and the Web Installer a try, you can [download the current version here](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v0.90/elixir-websetup.exe). And, if [Chocolatey](https://chocolatey.org/) is your thing, remember you can also install Elixir on Windows by running `cinst elixir`.
 
 ## Welcome Alexei!
 
