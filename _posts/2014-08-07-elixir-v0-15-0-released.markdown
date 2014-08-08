@@ -74,13 +74,13 @@ As soon as we started working on Logger, we realized we could go further than si
   * Custom translators: so you can translate log messages coming from any Erlang application into Elixir syntax
   * Metadata: metadata allows developers to store information in the current process that will be available to all logged messages. For example, a web application can generate a `request_id`, store it as metadata, and all messages logged during that request will be properly identified with `request_id=...` in the log
 
-We have also relied a lot on the [research and work done by Andrew Thompson and the folks at Basho behind Lager](http://www.youtube.com/watch?v=8BNpOHFvg_Q) to ensure our logger is performant and robust. On this front, Logger...
+We have also relied a lot on the [research and work done by Andrew Thompson and the folks at Basho behind Lager](http://www.youtube.com/watch?v=8BNpOHFvg_Q) to ensure our logger is performant and robust. On this front, Logger
 
-  * Alternates between sync and async modes when logging messages to keep it performant when required but also apply back-pressure when under stress
-  * Formats and truncates messages on the client to avoid clogging the backends
-  * Provide a highwater mark around Erlang's error_logger to avoid it from overflowing
+  * alternates between sync and async modes when logging messages to keep it performant when required but also apply back-pressure when under stress
+  * formats and truncates messages on the client to avoid clogging the backends
+  * provide a highwater mark around Erlang's error_logger to avoid it from overflowing
 
-We are looking forward everyone's feedback on using Logger more and more in production.
+We are looking forward to everyone's feedback on using Logger more and more in production.
 
 ## Mix aliases
 
@@ -98,7 +98,7 @@ end
 
 The task above can now be invoked as `mix hello`.
 
-While defining a task is the optimum for way for projects and libraries to provide tasks, they are considerably verbose for defining tasks in your own projects.
+Defining custom Mix tasks is useful for projects and libraries that want to better integrate with the standard development workflow for Elixir. However, it is a bit verbose for creating one-off tasks or tasks to be used only locally in a given project.
 
 Furthermore, so far Mix did not allow developers to extend existing tasks. For example, imagine you want to perform some extra work when `mix clean` is invoked. Up to this release, it was not possible.
 
@@ -162,4 +162,4 @@ Alexei is also interested in how we can extend our tooling to the Erlang ecosyst
 
 We are very close to launch Elixir v1.0.0! All planned features are already in Elixir's codebase and at the moment there are only [four open issues in our tracker tagged with the v1.0 milestone](https://github.com/elixir-lang/elixir/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.0).
 
-Our estimated date for the first release candidate for Elixir v1.0.0 is August 30th. This means there is no better time to learn Elixir then now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](/getting_started/1.html) or by checking one of the many "Learning Resources" on the sidebar.
+Our estimated date for the first release candidate for Elixir v1.0.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](/getting_started/1.html) or by checking one of the many "Learning Resources" on the sidebar.
