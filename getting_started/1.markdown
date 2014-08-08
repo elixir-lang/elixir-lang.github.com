@@ -14,55 +14,60 @@ In this tutorial we are going to show you how to get started with Elixir. This c
 
 If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com). If you suspect it is a language bug, [please let us know in the language issue tracker](https://github.com/elixir-lang/elixir/issues).
 
+Our requirements are:
+
+  * Erlang - Version 17.0 onwards
+  * Elixir - Version 0.15.0 onwards
+
 Let's get started!
 
-## 1.1 Installing Erlang
+## 1.1 Installers
 
-The only prerequisite for Elixir is Erlang, version 17.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](http://docs.basho.com/riak/1.3.0/tutorials/installation/Installing-Erlang/).
+Elixir provides the installers for:
 
-For Windows developers, we recommend the precompiled packages. Those on a UNIX platform can probably get Erlang installed via one of the many package management tools.
+  * [Web installer for Windows](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v0.90/elixir-websetup.exe) - an installer that fetches the latest available Erlang and  Elixir versions
 
-> Note: Although many package management tools provide Erlang, Elixir requires Erlang 17 which has been released just recently. So have that in mind before picking your Erlang installation.
-
-After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:
-
-    Erlang/OTP 17 (erts-6) [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
-
-Notice that depending on how you installed Erlang, Erlang binaries won't be available in your PATH. Be sure to have Erlang binaries in your [PATH](http://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
-
-After Erlang is up and running, it is time to install Elixir. You can do that via Distributions, Precompiled package or Compiling from Source.
+Not running on the platforms above? You can still get Elixir from different distributions, using a Precompiled package or Compiling from Source.
 
 ## 1.2 Distributions
 
-This tutorial requires Elixir v0.15 or later and it may be available in some distributions:
+Elixir is available on the following distributions:
 
-* Homebrew for Mac OS X
-  * Update your homebrew to latest with `brew update`
-  * Install Elixir: `brew install elixir`
-* Fedora 17+ and Fedora Rawhide
-  * `sudo yum -y install elixir`
-* Arch Linux (on AUR)
-  * `yaourt -S elixir`
-* openSUSE (and SLES 11 SP3+)
-  * Add Erlang devel repo with `zypper ar -f obs://devel:languages:erlang/ erlang`
-  * Install Elixir: `zypper in elixir`
-* Gentoo
-  * `emerge --ask dev-lang/elixir`
-* Chocolatey for Windows
-  * `cinst elixir`
-* FreeBSD
-  * From ports: `cd /usr/ports/lang/elixir && make install clean`
-  * From pkg: `pkg install elixir`
+  * Homebrew for Mac OS X
+    * Update your homebrew to latest with `brew update`
+    * Install Elixir: `brew install elixir`
+  * Fedora 17+ and Fedora Rawhide
+    * `sudo yum -y install elixir`
+  * Arch Linux (on AUR)
+    * `yaourt -S elixir`
+  * openSUSE (and SLES 11 SP3+)
+    * Add Erlang devel repo with `zypper ar -f obs://devel:languages:erlang/ erlang`
+    * Install Elixir: `zypper in elixir`
+  * Gentoo
+    * `emerge --ask dev-lang/elixir`
+  * Chocolatey for Windows
+    * `cinst elixir`
+  * FreeBSD
+    * From ports: `cd /usr/ports/lang/elixir && make install clean`
+    * From pkg: `pkg install elixir`
 
-If you don't use any of the distributions above, don't worry, we also provide a precompiled package!
+Those distributions will likely install Erlang automatically for you too. In case they don't, check the [1.5 Installing Erlang](http://elixir-lang.org/getting_started/1.html#1.5-installing-erlang) section.
 
 ## 1.3 Precompiled package
 
-Elixir provides a [precompiled package for every release](https://github.com/elixir-lang/elixir/releases/). After downloading and unzip-ing the package, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you also add Elixir's `bin` path to your PATH environment variable to ease development.
+Elixir provides a precompiled package for every release. First [install Erlang](http://elixir-lang.org/getting_started/1.html#1.5-installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
+
+Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you add Elixir's `bin` path to your PATH environment variable to ease development.
 
 ## 1.4 Compiling from source (Unix and MinGW)
 
-You can download and compile Elixir in few steps. You can get the [latest stable release here](https://github.com/elixir-lang/elixir/releases/), unpack it and then run `make` inside the unpacked directory. After that, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you add Elixir's `bin` path to your PATH environment variable to ease development:
+You can download and compile Elixir in few steps. The first one is to [install Erlang](http://elixir-lang.org/getting_started/1.html#1.5-installing-erlang).
+
+Next you should download the [latest release](https://github.com/elixir-lang/elixir/releases/), unpack it and then run `make` inside the unpacked directory.
+
+> Note: if you are running on Windows, read this page on setting up your environment for compiling Elixir: https://github.com/elixir-lang/elixir/wiki/Windows
+
+After compiling, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you add Elixir's `bin` path to your PATH environment variable to ease development:
 
     $ export PATH="$PATH:/path/to/elixir/bin"
 
@@ -74,7 +79,19 @@ In case you are feeling a bit more adventurous, you can also compile from master
 
 If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
 
-## 1.5 Interactive mode
+## 1.5 Installing Erlang
+
+The only prerequisite for Elixir is Erlang, version 17.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](http://docs.basho.com/riak/1.3.0/tutorials/installation/Installing-Erlang/).
+
+For Windows developers, we recommend the precompiled packages. Those on a UNIX platform can probably get Erlang installed via one of the many package distribution tools.
+
+After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:
+
+    Erlang/OTP 17 (erts-6) [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
+
+Notice that depending on how you installed Erlang, Erlang binaries won't be available in your PATH. Be sure to have Erlang binaries in your [PATH](http://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
+
+## 1.6 Interactive mode
 
 When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
