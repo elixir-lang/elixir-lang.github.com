@@ -150,7 +150,7 @@ At the beginning of this summer, [Chris Hyndman](http://github.com/chyndman) joi
 
 Chris has also built an [Elixir Web Installer for Windows](https://github.com/elixir-lang/elixir-windows-setup). The web installer checks all available Elixir versions and allows you to pick which one to install. It will also fetch and install Erlang in your machine in case it has not been installed yet.
 
-If you want to give Elixir and the Web Installer a try, you can [download the current version here](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v0.90/elixir-websetup.exe). And, if [Chocolatey](https://chocolatey.org/) is your thing, remember you can also install Elixir on Windows by running `cinst elixir`.
+If you want to give Elixir and the Web Installer a try, you can [download the current version here](http://s3.hex.pm/elixir-websetup.exe). And, if [Chocolatey](https://chocolatey.org/) is your thing, remember you can also install Elixir on Windows by running `cinst elixir`.
 
 ## Welcome Alexei!
 
