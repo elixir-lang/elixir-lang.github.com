@@ -20,14 +20,14 @@ A TCP server, in broad strokes, performs the following steps:
 2. Waits for a client connection on that port and accepts it
 3. Reads the client request and writes a response back
 
-Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following funtions:
+Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
 
 ```elixir
 def accept(port) do
   # The options below mean:
   #
   # 1. `:binary` - receives data as binaries (instead of lists)
-  # 2. `packet: :line` - receives data by line by line
+  # 2. `packet: :line` - receives data line by line
   # 3. `active: false` - block on `:gen_tcp.recv/2` until data is available
   #
   {:ok, socket} = :gen_tcp.listen(port,
