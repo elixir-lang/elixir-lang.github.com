@@ -39,7 +39,7 @@ iex> 1 = unknown
 ** (RuntimeError) undefined function: unknown/0
 ````
 
-Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but there isn't such function.
+Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but such a function does not exist.
 
 ## 4.2 Pattern matching
 
@@ -54,7 +54,7 @@ iex> b
 "world"
 ```
 
-A pattern match will error in case the sides can't match. This is, for example, the case when the tuples have different sizes:
+A pattern match will error in the case that the sides can't match. This is, for example, the case when the tuples have different sizes:
 
 ```iex
 iex> {a, b, c} = {:hello, "world"}
