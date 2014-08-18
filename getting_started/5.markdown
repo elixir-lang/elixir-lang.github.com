@@ -151,7 +151,7 @@ iex> cond do
 
 This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
 
-If none of the conditions return true, an error is raised. For this reason, it may be necessary to add a last condition equal to `true`, which will always match:
+If none of the conditions return true, an error is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 
 ```iex
 iex> cond do
@@ -235,7 +235,7 @@ iex> if false, do: :this, else: :that
 :that
 ```
 
-It is important to keep one small detail in mind when using `do`/`end` blocks: they always bind to the farthest function call. For example, the following expression:
+One thing to keep in mind when using `do`/`end` blocks is they always bind to the outermost function call. For example, the following expression:
 
 ```iex
 iex> is_number if true do
