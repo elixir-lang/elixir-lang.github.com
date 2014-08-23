@@ -398,9 +398,9 @@ end
 Next, we change `KV.Registry`'s `init/1` callback, as it no longer needs to create a table. It should instead just use the one given as an argument:
 
 ```elixir
-def init({table, sup, event}) do
+def init({table, events, buckets}) do
   refs = HashDict.new
-  {:ok, %{names: table, refs: refs, sup: sup, event: event}}
+  {:ok, %{names: table, refs: refs, events: events, buckets: buckets}}
 end
 ```
 
