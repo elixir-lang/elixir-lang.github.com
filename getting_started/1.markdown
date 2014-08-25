@@ -1,6 +1,6 @@
 ---
 layout: getting_started
-title: 1 Interactive Elixir
+title: 1 Introduction
 guide: 1
 ---
 
@@ -107,3 +107,22 @@ iex> "hello" <> " world"
 ```
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
+
+## 1.7 Running scripts
+
+After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting Elixir code into a file and executing it with `elixir`:
+
+```text
+$ cat simple.exs
+IO.puts "Hello world
+from Elixir"
+
+$ elixir simple.exs
+Hello world
+from Elixir
+```
+
+Later on we will learn how to compile Elixir code (in [Chapter 8][chapter8]) and how to use the Mix build tool (in the [Mix & OTP guide][mix_guide]).
+
+  [chapter8]: http://elixir-lang.org/getting_started/8.html
+  [mix_guide]: http://elixir-lang.org/getting_started/mix_otp/1.html
