@@ -75,13 +75,13 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
 {application,kv,
              [{registered,[]},
               {description,"kv"},
-              {applications,[kernel,stdlib,elixir]},
+              {applications,[kernel,stdlib,elixir,logger]},
               {vsn,"0.0.1"},
               {modules,['Elixir.KV','Elixir.KV.Bucket',
                         'Elixir.KV.Registry','Elixir.KV.Supervisor']}]}.
 ```
 
-This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel` and `elixir` itself.
+This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel` and `elixir` itself, and `logger` which is specified in the application list in `mix.exs`.
 
 It would be pretty boring to update this file manually every time we add a new module to our application. That's why mix generates and maintains it automatically for us.
 
@@ -108,9 +108,16 @@ We can pass an option to mix to ask it to not start our application. Let's give 
 
 ```elixir
 iex> Application.start(:kv)
-:ok
+{:error, {:not_started, :logger}}
+```
+
+Now we get an error because an application that `:kv` depends on (`:logger` in this case) hasn't been started. Mix normally starts the whole hierarchy of applications defined in our project's `mix.exs` file and it does the same for all dependencies if they depend on other applications. But since we passed the `--no-start` flag, we need to either start each application manually in the correct order or call `Application.ensure_all_started` as follows:
+
+```elixir
+iex> Application.ensure_all_started(:kv)
+{:ok, [:logger, :kv]}
 iex> Application.stop(:kv)
-18:12:10.698 [info] Application kv exited with reason :stopped
+18:12:10.698 [info] Application kv exited :stopped
 :ok
 ```
 
