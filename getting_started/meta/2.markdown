@@ -63,7 +63,7 @@ macro_unless(true, {{:., [], [IO, :puts], [], ["this should never be printed"]}}
 ```
 {% endraw %}
 
-And it then return a quoted expression as follows:
+And it then returned a quoted expression as follows:
 
 {% raw %}
 ```elixir
@@ -73,7 +73,7 @@ And it then return a quoted expression as follows:
 ```
 {% endraw %}
 
-We can actually verify this is the case by using `Macro.expand_once/2`:
+We can actually verify that this is the case by using `Macro.expand_once/2`:
 
 ```iex
 iex> expr = quote do: Unless.macro_unless(true, IO.puts "this should never be printed")
@@ -85,7 +85,7 @@ end
 :ok
 ```
 
-`Macro.expand_once/2` receives a quoted expression and expands it according to the current environment. In this case, it expanded/invoked the `Unless.macro_unless/2` macro and returned its result. We then proceeded to convert the returned quoted expression to a string and print it (we will talk about `__ENV__` still in this chapter).
+`Macro.expand_once/2` receives a quoted expression and expands it according to the current environment. In this case, it expanded/invoked the `Unless.macro_unless/2` macro and returned its result. We then proceeded to convert the returned quoted expression to a string and print it (we will talk about `__ENV__` later in this chapter).
 
 That's what macros are all about. They are about receiving quoted expressions and transforming them into something else. In fact, `unless/2` in Elixir is implemented as a macro:
 
@@ -125,7 +125,7 @@ HygieneTest.go
 # => 13
 ```
 
-In the example above, even if the macro injects `a = 1`, it does not affect the variable `a` defined by the `go` function. In case the macro wants to explicitly affect the context, it can use `var!`:
+In the example above, even though the macro injects `a = 1`, it does not affect the variable `a` defined by the `go` function. If a macro wants to explicitly affect the context, it can use `var!`:
 
 ```elixir
 defmodule Hygiene do
@@ -147,7 +147,7 @@ HygieneTest.go
 # => 1
 ```
 
-Variables hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined at the line 3 of a module, would be represented as:
+Variable hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined on line 3 of a module would be represented as:
 
     {:x, [line: 3], nil}
 
@@ -165,7 +165,7 @@ Sample.quoted #=> {:x, [line: 3], Sample}
 
 Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers those two variables come from different contexts and handle them accordingly.
 
-Elixir provides similar mechanisms for imports and aliases too. This guarantees macros will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/2`, although one must be careful when using those as they directly change the user environment.
+Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/2`, although one must be careful when using those as they directly change the user environment.
 
 Sometimes variable names might be dynamically created. In such cases, `Macro.var/2` can be used to define new variables:
 
@@ -231,15 +231,15 @@ iex> defmodule Sample do
 
 Macros are a powerful construct and Elixir provides many mechanisms to ensure they are used responsibly:
 
-* Macros are hygienic: by default, variables defined inside the macro are not going to affect the user code. Furthermore, functions calls and aliases available in the macro context are not going to leak into the user context;
+* Macros are hygienic: by default, variables defined inside the macro are not going to affect the user code. Furthermore, function calls and aliases available in the macro context are not going to leak into the user context;
 
 * Macros are lexical: it is impossible to inject code or macros globally. Before using a macro, you need to explicitly `require` or `import` the module that defines the macro;
 
 * Macros are explicit: it is impossible to run a macro without explicitly invoking it. For example, some languages allow developers to completely rewrite functions behind the scenes, often via parse transforms or via some reflection mechanisms. In Elixir, a macro must be explicitly invoked in the caller;
 
-* Macros' language is clear: many languages provide syntax shortcuts for `quote` and `unquote`. In Elixir, we preferred to have those explicitly spelled out, in order to clearly delimit the boundaries of a macro definition and its quoted expressions;
+* Macros' language is clear: many languages provide syntax shortcuts for `quote` and `unquote`. In Elixir, we preferred to have them explicitly spelled out, in order to clearly delimit the boundaries of a macro definition and its quoted expressions;
 
-Even if Elixir attempts its best to provide a safe environment, the major responsibility still falls on the developers. That's why the first rule of the macro club is **write macros responsibly**. Macros are harder to write than ordinary Elixir functions and it's considered to be bad style to use them when they're not necessary. Elixir already provides elegant mechanisms to write your every day code and macros should be saved as last resort.
+Even if Elixir attempts its best to provide a safe environment, the major responsibility still falls on the developers. That's why the first rule of the macro club is **write macros responsibly**. Macros are harder to write than ordinary Elixir functions and it's considered to be bad style to use them when they're not necessary. Elixir already provides elegant mechanisms to write your every day code and macros should be saved as a last resort.
 
 And, if you ever need to resort to macros, remember that macros are not your API. Keep your macro definitions short, including its quoted contents. For example, instead of writing a macro like this:
 
