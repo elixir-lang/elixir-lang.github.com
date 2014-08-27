@@ -30,7 +30,7 @@ defmodule Unless do
 end
 ```
 
-The function receives the arguments and pass them to `if`. However, the macro will receive quoted expressions, as we have learned in the previous chapter, inject them into the quote, finally returning another quoted expression.
+The function receives the arguments and passes them to `if`. However, as we learned in the previous chapter, the macro will receive quoted expressions, inject them into the quote, and finally return another quoted expression.
 
 Let's start `iex` with the module above:
 
@@ -47,7 +47,7 @@ iex> Unless.fun_unless true, IO.puts "this should never be printed"
 nil
 ```
 
-Note that in our macro implementation, the sentence was not printed, although it was printed in our function implementation. That's because the arguments to a function call are evaluated before calling the function. However macros do not evaluate the arguments, instead they receive the arguments as quoted expressions which are then transformed into other quoted expressions. In this case, we have rewritten our `unless` macro to become an `if` behind the scenes.
+Note that in our macro implementation, the sentence was not printed, although it was printed in our function implementation. That's because the arguments to a function call are evaluated before calling the function. However, macros do not evaluate their arguments. Instead, they receive the arguments as quoted expressions which are then transformed into other quoted expressions. In this case, we have rewritten our `unless` macro to become an `if` behind the scenes.
 
 In other words, when invoked as:
 
@@ -97,7 +97,7 @@ defmacro unless(clause, options) do
 end
 ```
 
-Not only `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2` and many constructs used throughout this getting started guide are implemented in pure Elixir, often as a macros. This means that the constructs being used to build the language, can be used by developers to extend the language to the domains they are working on.
+Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many others used throughout this getting started guide are implemented in pure Elixir, often as a macros. This means that the constructs being used to build the language can be used by developers to extend the language to the domains they are working on.
 
 We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](/docs/stable/elixir/Kernel.SpecialForms.html).
 
@@ -163,7 +163,7 @@ end
 Sample.quoted #=> {:x, [line: 3], Sample}
 ```
 
-Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers those two variables come from different contexts and handle them accordingly.
+Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers these two variables as coming from different contexts and handles them accordingly.
 
 Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/2`, although one must be careful when using those as they directly change the user environment.
 
@@ -190,13 +190,13 @@ end
 > Sample.run #=> [3, 5, 6]
 ```
 
-Take note of the second argument to `Macro.var/2`. This is the context used and will determine hygiene as described in this section.
+Take note of the second argument to `Macro.var/2`. This is the context being used and will determine hygiene as described in this section.
 
 ## 2.3 The environment
 
-When using `Macro.expand_once/2` earlier in this chapter, we have used the special form `__ENV__`.
+When calling `Macro.expand_once/2` earlier in this chapter, we used the special form `__ENV__`.
 
-`__ENV__` returns an instance of `Macro.Env` which contains useful information about the compilation environment. It contains useful information like the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:
+`__ENV__` returns an instance of `Macro.Env` which contains useful information about the compilation environment, including the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:
 
 ```iex
 iex> __ENV__.module
@@ -279,6 +279,6 @@ defmodule MyModule do
 end
 ```
 
-This makes your code clearer, easier to test and maintain, as you can invoke `do_this_that_and_that/3` directly. It also helps you to design an actual API for developers that does not rely on macros.
+This makes your code clearer and easier to test and maintain, as you can invoke `do_this_that_and_that/3` directly. It also helps you design an actual API for developers that does not rely on macros.
 
 With those lessons, we finish our introduction to macros. The next chapter is a brief discussion on DSLs, showing how we can mix macros and module attributes to annotate and extend modules and functions.

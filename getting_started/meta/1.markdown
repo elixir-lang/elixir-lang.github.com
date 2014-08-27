@@ -48,7 +48,7 @@ iex> quote do: x
 { :x, [], Elixir }
 ```
 
-When quoting more complex expressions, we can see the code is represented in such tuples, often nested inside each other resembling a tree. Many languages would call those representations the Abstract Syntax Tree (AST). Elixir calls them quoted expressions:
+When quoting more complex expressions, we can see that the code is represented in such tuples, which are often nested inside each other in a structure resembling a tree. Many languages would call such representations an Abstract Syntax Tree (AST). Elixir calls them quoted expressions:
 
 ```iex
 iex> quote do: sum(1, 2 + 3, 4)
@@ -62,17 +62,17 @@ iex> Macro.to_string(quote do: sum(1, 2 + 3, 4))
 "sum(1, 2 + 3, 4)"
 ```
 
-In general, the tuples above follow the following format:
+In general, the tuples above are structured according to the following format:
 
 ```elixir
 { tuple | atom, list, list | atom }
 ```
 
 * The first element is an atom or another tuple in the same representation;
-* The second element is a keyword list containing information like metadata like numbers and contexts;
-* The third element is either a list of arguments for the function call or an atom. When an atom, it means the tuple represents a variable.
+* The second element is a keyword list containing metadata, like numbers and contexts;
+* The third element is either a list of arguments for the function call or an atom. When this element is an atom, it means the tuple represents a variable.
 
-Besides the tuple defined above, there are five Elixir literals that when quoted return themselves (and not a tuple). They are:
+Besides the tuple defined above, there are five Elixir literals that, when quoted, return themselves (and not a tuple). They are:
 
 ```elixir
 :sum         #=> Atoms
@@ -82,7 +82,7 @@ Besides the tuple defined above, there are five Elixir literals that when quoted
 {key, value} #=> Tuples with two elements
 ```
 
-Most of Elixir code has straight-forward translation to its underlying quoted expression. We recommend you to try out different code samples and see what gets out of it. For example, what `String.upcase("foo")` expands to? We have also learned that `if(true, do: this, else: that)` is the same as `if true do this else that end`. How does this affirmation hold with quoted expressions?
+Most Elixir code has a straight-forward translation to its underlying quoted expression. We recommend you try out different code samples and see what the results are. For example, what does `String.upcase("foo")` expand to? We have also learned that `if(true, do: this, else: that)` is the same as `if true do this else that end`. How does this affirmation hold with quoted expressions?
 
 ## 1.2 Unquoting
 
@@ -120,11 +120,11 @@ iex> Macro.to_string(quote do: [1, 2, unquote_splicing(inner), 6])
 "[1, 2, 3, 4, 5, 6]"
 ```
 
-Unquoting is very useful when working with macros. When writing macros, developers are able to receive code chunks and inject them inside other code chunks, being able to transform code or write code that generates code during compilation.
+Unquoting is very useful when working with macros. When writing macros, developers are able to receive code chunks and inject them inside other code chunks, which can be used to transform code or write code that generates code during compilation.
 
 ## 1.3 Escaping
 
-As we have seen at the beginning of this chapter only some values are valid quoted expressions in Elixir. For example, a map is not a valid quoted expression. Nor a tuple with four elements. However, those values *can* be expressed as a quoted expression:
+As we saw at the beginning of this chapter, only some values are valid quoted expressions in Elixir. For example, a map is not a valid quoted expression. Neither is a tuple with four elements. However, such values *can* be expressed as a quoted expression:
 
 ```iex
 iex> quote do: %{1 => 2}
@@ -141,8 +141,8 @@ iex> Macro.escape(map)
 
 Macros receive quoted expressions and must return quoted expressions. However, sometimes during the execution of a macro, you may need to work with values and making a distinction between values and quoted expressions will be required.
 
-In other words, it is important to make a distinction between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values like integers, atoms and strings have a quoted expression equal to the value itself. Other values like maps needs to be explicitly converted. Finally, other values like functions and references cannot be converted to a quoted expression at all.
+In other words, it is important to make a distinction between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values, such as integers, atoms and strings, have a quoted expression equal to the value itself. Other values, like maps, need to be explicitly converted. Finally, values like functions and references cannot be converted to a quoted expression at all.
 
-You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other quoted expressions related functions can be found in the [`Macro` module](/docs/stable/elixir/Macro.html).
+You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other functions related to quoted expressions can be found in the [`Macro` module](/docs/stable/elixir/Macro.html).
 
-With this introduction we have laid the ground to finally write our first macro, so let's move to the next chapter.
+In this introduction we have laid the groundwork to finally write our first macro, so let's move to the next chapter.
