@@ -114,7 +114,7 @@ defimpl Blank, for: User do
 end
 ```
 
-If desired you could come up with your own semantics for a user being blank. Not only that, you could use structs to build more robust data types, like queues, and implemented all relevant protocols, like `Enumerable` and possibly `Blank` for such data type.
+If desired, you could come up with your own semantics for a user being blank. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as `Enumerable` and possibly `Blank`, for this data type.
 
 In many cases though, developers may want to provide a default implementation for structs, as explicitly implementing the protocol for all structs can be tedious. That's when falling back to Any comes in handy.
 
