@@ -92,7 +92,7 @@ In order to finish our `TestCase` implementation, we need to be able to access a
 
 When discussing module attributes in earlier chapters, we mentioned how they can be used as temporary storage. That's exactly the property we will apply in this section.
 
-In the `__using__/1` implementation, we will initialize a module attribute named `@tests` to an empty list, then store each defined test in this attribute until we compile all tests in the list inside the `run` function.
+In the `__using__/1` implementation, we will initialize a module attribute named `@tests` to an empty list, then store the name of each defined test in this attribute so the tests can be invoked from the `run` function.
 
 Here is the updated code for the `TestCase` module:
 
