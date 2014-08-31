@@ -109,9 +109,9 @@ If a byte has 8 bits, what happens if we pass a size of 1 bit?
 
 ```iex
 iex> <<1 :: size(1)>>
-<<1 :: size(1)>>
+<<1::size(1)>>
 iex> <<2 :: size(1)>> # truncated
-<<0>>
+<<0::size(1)>>
 iex> is_binary(<< 1 :: size(1)>>)
 false
 iex> is_bitstring(<< 1 :: size(1)>>)
