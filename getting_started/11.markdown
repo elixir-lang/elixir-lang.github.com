@@ -105,20 +105,24 @@ The most common form of spawning in Elixir is actually via `spawn_link/1`. Befor
 
 ```iex
 iex> spawn fn -> raise "oops" end
+16:34:04.623 [error] Error in process <0.58.0> with exit value: {#{'__exception__'=>true,'__struct__'=>'Elixir.RuntimeError',message=><<4 bytes>>},[{erlang,apply,2,[]}]}
+
 #PID<0.58.0>
 ```
 
-Well... nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
+Well... aside from receiving an error message from the Logger application, nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
 
 ```iex
 iex> spawn_link fn -> raise "oops" end
 #PID<0.60.0>
+16:34:19.975 [error] Error in process <0.60.0> with exit value: {#{'__exception__'=>true,'__struct__'=>'Elixir.RuntimeError',message=><<4 bytes>>},[{erlang,apply,2,[]}]}
+
 ** (EXIT from #PID<0.41.0>) an exception was raised:
     ** (RuntimeError) oops
         :erlang.apply/2
 ```
 
-When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
+While we still a similar Logger error message, you can see a new message that we received in the shell. When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
 
 ```iex
 # spawn.exs
