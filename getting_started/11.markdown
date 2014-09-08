@@ -55,7 +55,7 @@ We can send messages to a process with `send/2` and receive them with `receive/1
 iex> send self(), {:hello, "world"}
 {:hello, "world"}
 iex> receive do
-...>   {:hello, msg}  -> msg
+...>   {:hello, msg} -> msg
 ...>   {:world, msg} -> "won't match"
 ...> end
 "world"
