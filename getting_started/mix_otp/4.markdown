@@ -86,7 +86,7 @@ setup do
   {:ok, manager} = GenEvent.start_link
   {:ok, registry} = KV.Registry.start_link(manager)
 
-  GenEvent.add_handler(manager, Forwarder, self(), link: true)
+  GenEvent.add_mon_handler(manager, Forwarder, self())
   {:ok, registry: registry}
 end
 
@@ -104,7 +104,7 @@ In order to test the functionality we want to add, we first define a `Forwarder`
 
 In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
 
-Finally, notice when calling `GenEvent.add_handler/4`, we passed `link: true` as an option. This links the event manager with the current process and, if the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, it makes no sense to continue forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive.
+Finally, notice we called `GenEvent.add_mon_handler/3` instead of `GenEvent.add_handler/3`. This function adds a handler, as we know, and also tells the event manager to monitor the current process. If the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, we should stop forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive.
 
 Let's now change the registry to make the tests pass. Open up `lib/kv/registry.ex` and paste the new registry implementation below (comments inlined):
 

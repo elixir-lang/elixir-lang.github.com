@@ -131,7 +131,7 @@ setup do
   {:ok, manager} = GenEvent.start_link
   {:ok, registry} = KV.Registry.start_link(:registry_table, manager, sup)
 
-  GenEvent.add_handler(manager, Forwarder, self(), link: true)
+  GenEvent.add_mon_handler(manager, Forwarder, self())
   {:ok, registry: registry, ets: :registry_table}
 end
 ```
@@ -304,7 +304,7 @@ defmodule KV.RegistryTest do
     {:ok, manager} = GenEvent.start_link
     {:ok, registry} = KV.Registry.start_link(:registry_table, manager, sup)
 
-    GenEvent.add_handler(manager, Forwarder, self(), link: true)
+    GenEvent.add_mon_handler(manager, Forwarder, self())
     {:ok, registry: registry, ets: :registry_table}
   end
 
@@ -418,7 +418,7 @@ defp start_registry(ets) do
   {:ok, manager} = GenEvent.start_link
   {:ok, registry} = KV.Registry.start_link(ets, manager, sup)
 
-  GenEvent.add_handler(manager, Forwarder, self(), link: true)
+  GenEvent.add_mon_handler(manager, Forwarder, self())
   registry
 end
 ```
