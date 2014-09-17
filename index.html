@@ -8,50 +8,102 @@ layout: default
     <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
 
     <div class="entry-summary">
-      <p>Elixir is a functional, meta-programming aware language built on top of the Erlang VM. It is a dynamic language that focuses on tooling to leverage Erlang's abilities to build concurrent, distributed and fault-tolerant applications with hot code upgrades.</p>
+      <p>Elixir is a dynamic, functional language designed for building scalable and maintainable applications.</p>
 
-      <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs.html">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>. Or you can just keep on reading for a few code samples!</p>
+      <p>The language leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain.</p>
+
+      <p>To learn more about Elixir, check our <a href="/getting_started/1.html">getting started guide</a>. Or keep reading to get an overview of the platform, language and tools.</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h3>Language highlights</h3>
+    <h3>Platform features</h3>
   </div>
 
   <div class="hentry post">
-    <h4>Everything is an expression</h4>
+    <h4>Scalability</h4>
     <div class="entry-summary">
+
+      <p>All Elixir code runs inside lightweight threads (called processes) that are isolated and exchange information via messages:</p>
+
 {% highlight elixir %}
-defmodule Hello do
-  IO.puts "Defining the function world"
+parent = self()
 
-  def world do
-    IO.puts "Hello World"
-  end
+# Spawns an Elixir process (not an operating system one!)
+spawn_link(fn ->
+  send parent, {:msg, "hello world"}
+end)
 
-  IO.puts "Function world defined"
+# Block until the message is received
+receive do
+  {:msg, contents} -> IO.puts contents
 end
-
-Hello.world
 {% endhighlight %}
 
-      <p>Running the program above will print:</p>
+      <p>Due do their lightweight nature, it is not uncommon to have hundreds of thousands of processes running <i>concurrently</i> in the same machine. Isolation allows processes to be garbage collected independently, reducing system-wide pauses, and using all machine resources as efficiently as possible (vertical scaling).</p>
 
-<pre>
-Defining the function world
-Function world defined
-Hello World
-</pre>
-
-      <p>This allows a module to be defined in terms of many expressions, programmable by the developer, being the basic foundation for meta-programming in Elixir.</p>
+      <p>Processes are also able to communicate with other processes running on different machines in the same network. This provides the foundation for distribution, allowing developers to coordinate work across multiple nodes (horizontal scaling).</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Meta-programming and DSLs</h4>
+    <h4>Fault-tolerance</h4>
 
     <div class="entry-summary">
-      <p>Using expressions and meta-programming, Elixir developers can easily create <a href="http://en.wikipedia.org/wiki/Domain-specific_language">Domain Specific Languages</a>:</p>
+      <p>The unavoidable truth about software running in production is that <i>things will go wrong</i>. Even more when we take network, file systems and other third-party resources into account.</p>
+
+      <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
+
+{% highlight elixir %}
+import Supervisor.Spec
+
+children = [
+  supervisor(TCP.Pool, []),
+  worker(TCP.Acceptor, [4040])
+]
+
+Supervisor.start_link(children, strategy: :one_for_one)
+{% endhighlight %}
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h3>Language features</h3>
+  </div>
+
+  <div class="hentry post">
+    <h4>Functional programming</h4>
+
+    <div class="entry-summary">
+      <p>Functional programming promotes a coding-style that help developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
+
+{% highlight elixir %}
+%User{name: name, age: age} = User.get("John Doe")
+name #=> "John Doe"
+{% endhighlight %}
+
+      <p>When mixed with guards, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>
+
+{% highlight elixir %}
+def serve_drinks(%User{age: age}) when age >= 21 do
+  # Code that serves drinks!
+end
+
+serve_drinks User.get("John Doe")
+#=> Fails if the user is under 21
+{% endhighlight %}
+
+      <p>Elixir relies heavily on those features to ensure your software is working under the expected constraints. And when it is not, don't worry, supervisors got your back!</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Extensibility and DSLs</h4>
+
+    <div class="entry-summary">
+      <p>Elixir has been designed to be extensible, letting developers naturally extend the language to particular domains, in order to increase their productivity.</p>
+
+      <p>As an example, let's write a simple test case using <a href="http://elixir-lang.org/docs/stable/ex_unit/">Elixir's test framework called ExUnit</a>:</p>
 
 {% highlight elixir %}
 defmodule MathTest do
@@ -63,49 +115,19 @@ defmodule MathTest do
 end
 {% endhighlight %}
 
-      <p>DSLs allow a developer to create abstractions for specific domains, often getting rid of boilerplate code.</p>
+      <p>The <code>async: true</code> option allows <code>test</code>s to run concurrently, using all resources in your machine, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Documentation as first-class citizen</h4>
-
-    <div class="entry-summary">
-      <p>Documentation is supported at the language level in the form of docstrings. Markdown is Elixir's defacto markup language of choice for use in docstrings:</p>
-
-{% highlight elixir %}
-defmodule MyModule do
-  @moduledoc """
-  Documentation for my module. With **formatting**.
-  """
-
-  @doc "Hello"
-  def world do
-    "World"
-  end
-end
-{% endhighlight %}
-
-      <p>Different tools can easily access the documentation. For instance, IEx (Elixir's interactive shell) can show the documentation for any module or function with the help of the function <code>h</code>:</p>
-
-{% highlight text %}
-iex> c "my_module.ex"
-iex> h MyModule
-# MyModule
-
-Documentation for my module. With **formatting**.
-
-{% endhighlight %}
-
-      <p>Our test framework can also extract code samples from docstrings and guarantee the documentation is updated and correct! Finally, there is also a documentation generator for Elixir called <a href="https://github.com/elixir-lang/ex_doc">ExDoc</a> that can produce a static site using docstrings extracted from the source code.</p>
-    </div>
+    <h3>Tooling features</h3>
   </div>
 
   <div class="hentry post">
-    <h4>Tooling included</h4>
+    <h4>A growing ecosystem</h4>
 
     <div class="entry-summary">
-      <p>Elixir ships with a great set of tools to ease development. Mix allows you to easily create your new project, manage tasks, dependencies and more:</p>
+      <p>Elixir ships with a great set of tools to ease development. <a href="http://elixir-lang.org/docs/stable/mix/">Mix is a build tool</a> that allows you to easily create projects, manage tasks, run tests and more:</p>
 
 {% highlight text %}
 $ mix new my_app
@@ -117,119 +139,39 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 1 tests, 0 failures
 {% endhighlight %}
 
-      <p>In the example above, we have created a new project, compiled it and ran its initial test suite powered by the ExUnit test framework.</p>
+      <p>Mix is also able to manage dependencies and integrates nicely with the <a href="http://hex.pm/">Hex package manager</a>, which provides dependency resolution and the ability to remotely fetch packages.</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Pattern matching</h4>
+    <h4>Interactive development</h4>
 
     <div class="entry-summary">
-      <p>Pattern matching allows developers to easily destructure data and access its contents:</p>
-
-{% highlight elixir %}
-{User, name, age} = User.get("John Doe")
-{% endhighlight %}
-
-      <p>When mixed with guards, pattern matching allows us to elegantly match on the possible scenarios and express our intent accordingly:</p>
-
-{% highlight elixir %}
-def serve_drinks({User, name, age}) when age < 21 do
-  raise "No way #{name}!"
-end
-
-def serve_drinks({User, name, age}) do
-  # Code that serves drinks!
-end
-
-serve_drinks User.get("John")
-#=> Raises "No way John!" if John is under 21
-{% endhighlight %}
-    </div>
-  </div>
-
-  <div class="hentry post">
-    <h4>Lightweight concurrency</h4>
-    <div class="entry-summary">
-      <p>All Elixir code runs inside tiny processes that are isolated and exchange information via messages:</p>
-
-{% highlight elixir %}
-parent = self()
-
-# Spawn a child process
-spawn_link(fn ->
-  send parent, {:msg, "hello world"}
-end)
-
-# Block until the message is received
-receive do
-  {:msg, contents} -> IO.puts contents
-end
-{% endhighlight %}
-
-      <p>Since processes are lightweight and isolated, it is not uncommon to have dozens of thousands of processes running simultaneously with Elixir. Processes provide the means for building distributed and fault-tolerant applications.</p>
-    </div>
-  </div>
-
-  <div class="hentry post">
-    <h4>Interactive (and remote) shells</h4>
-
-    <div class="entry-summary">
-      <p>Elixir also ships with an Interactive Shell, called IEx, which provides a great set of helpers for writing code, like easy access to documentation, code reloading, debugging and so on. It is also a great companion for production, as it allows, for example, connecting to remote nodes. Here is a quick example you can try locally. In one terminal, do:</p>
+      <p>Tools like <a href="http://elixir-lang.org/docs/stable/iex/">IEx (Elixir's interactive shell)</a> are able to leverage many aspects of the language and platform to provide auto-complete, debugging tools, code reloading, as well as nicely formatted documentation:</p>
 
 {% highlight text %}
-$ iex --name hello
-iex(hello@machine)1> defmodule Hello do
-...(hello@machine)1>   def world, do: IO.puts "Distributed hello world"
-...(hello@machine)1> end
-{% endhighlight %}
-
-      <p>See the name between parenthesis starting with hello? Copy that, open up another terminal and pass it to <code>--remsh</code> (short for remote shell):</p>
-
-{% highlight text %}
-$ iex --name world --remsh "hello@machine"
-iex(hello@machine)1> Hello.world
-"Distributed hello world"
-{% endhighlight %}
-
-      <p>Notice we were able to connect and invoke a function from a module defined in the other terminal! This will work in between machines in the same network as long as they have the same value in the <code>~/.erlang.cookie</code> file!</p>
-    </div>
-  </div>
-
-  <div class="hentry post">
-    <h4>Polymorphism via protocols</h4>
-
-    <div class="entry-summary">
-      <p>Protocols allow developers to provide type-specific functionality at chosen extension points. For example, the <code>Enum</code> module in Elixir is commonly used to enumerate collections:</p>
-
-{% highlight elixir %}
-Enum.map([1,2,3], fn(x) -> x * 2 end) #=> [2,4,6]
-{% endhighlight %}
-
-      <p>Since the <code>Enum</code> module is built on top of protocols, it is not limited to the data types that ship with Elixir. A developer can use their own collections with <code>Enum</code> as long as they implement the <code>Enumerable</code> protocol. For example, a developer can use all the convenience of the <code>Enum</code> module to easily manipulate a file, line by line:</p>
-
-{% highlight elixir %}
-file  = File.stream!("README.md")
-lines = Enum.map(file, fn(line) -> String.replace(line, "%", "#") end)
-File.write("README.md", lines)
+$ iex
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+iex> c "my_file.ex"        # Compiles a file
+iex> t Enum                # Prints types defined in the module Enum
+iex> h IEx.pry             # Prints the documentation for IEx pry functionality
 {% endhighlight %}
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Erlang all the way down</h4>
+    <h4>Erlang compatible</h4>
 
     <div class="entry-summary">
-      <p>After all, Elixir runs in the Erlang VM. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang's ecosystem, used by companies like <a href="https://www.heroku.com">Heroku</a>, <a href="http://www.whatsapp.com">Whatsapp</a>, <a href="https://klarna.com">Klarna</a>, <a href="http://basho.com">Basho</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
 
-{% highlight elixir %}
-:application.start(:crypto)
-:crypto.md5("Using crypto from Erlang OTP")
-#=> <<192,223,75,115,...>>
+{% highlight iex %}
+iex> :application.start(:crypto)
+iex> :crypto.md5("Using crypto from Erlang OTP")
+<<192,223,75,115,...>>
 {% endhighlight %}
 
-      <p>Since Elixir compiles to the same bytecode, it is fully <a href="http://learnyousomeerlang.com/what-is-otp" target="_blank">OTP</a> compliant and works seamlessly with all the battle-tested techniques for which Erlang/OTP is famous. Erlang type specifications, behaviours and module attributes are all supported. It is easy to <a href="/crash-course.html#interop">add Elixir to your existing Erlang programs too (including rebar support)</a>!
-      <p>To install Elixir or learn more about it, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs.html">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
+      <p>To learn more about Elixir, check our <a href="/getting_started/1.html">getting started guide</a>. We also have <a href="/docs.html">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
     </div>
   </div>
 </div>
