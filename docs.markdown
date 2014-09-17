@@ -6,7 +6,7 @@ layout: default
 
 ## Documentation
 
-Choose which version do you want documentation for.</p>
+Choose which version you want documentation for.
 
 #### v1.0
 

@@ -24,7 +24,7 @@ layout: default
     <h4>Scalability</h4>
     <div class="entry-summary">
 
-      <p>All Elixir code runs inside lightweight threads (called processes) that are isolated and exchange information via messages:</p>
+      <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>
 
 {% highlight elixir %}
 parent = self()
@@ -75,7 +75,7 @@ Supervisor.start_link(children, strategy: :one_for_one)
     <h4>Functional programming</h4>
 
     <div class="entry-summary">
-      <p>Functional programming promotes a coding-style that help developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
+      <p>Functional programming promotes a coding style that helps developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
 
 {% highlight elixir %}
 %User{name: name, age: age} = User.get("John Doe")
@@ -115,7 +115,7 @@ defmodule MathTest do
 end
 {% endhighlight %}
 
-      <p>The <code>async: true</code> option allows <code>test</code>s to run concurrently, using all resources in your machine, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>
+      <p>The <code>async: true</code> option allows <code>test</code>s to run in parallel, using as many CPU cores as possible, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>
     </div>
   </div>
 
