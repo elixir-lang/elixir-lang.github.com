@@ -47,9 +47,9 @@ Under some unlikely circumstances, we may introduce changes that break existing 
 
   * Compiler front-end: improvements may be done to the compiler, introducing new warnings for ambiguous modes and providing more detailed error messages. Those can lead to compilation errors (when running with `--warning-as-errors`) or tooling failures when expecting specific messages (although one should avoid such). We reserve the right to do such improvements.
 
-  * Imports: new functions may be added to the Kernel module, which is auto-imported, in a way it conflicts with a function defined in your modules. Although such functions can be removed, regardless of the version using `import Kernel, except: [...]`, we reserve the right to do such additions.
+  * Imports: new functions may be added to the Kernel module, which is auto-imported. They may collide with local functions defined in your modules. Collisions can be resolved in a backwards compatible fashion using `import Kernel, except: [...]` with a list of all functions you don't want imported from Kernel. We reserve the right to do such additions.
 
-These expectations also apply to future releases under the v1 branch,except for experimental features, which will be explicitly marked as such and not provide any compatibility guarantee until they are stabilized.
+These expectations also apply to future releases under the v1 branch, except for experimental features, which will be explicitly marked as such and not provide any compatibility guarantee until they are stabilized.
 
 ## Learn more
 
