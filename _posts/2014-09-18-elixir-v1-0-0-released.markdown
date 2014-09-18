@@ -37,7 +37,7 @@ We hope the [Hex package manager](http://hex.pm) will be the home of many of tho
 
 ## Expectations
 
-Similar to [Go version 1 announcement](https://golang.org/doc/go1compat), we believe it is fair to set some expections regarding Elixir v1.0.0. Although we expect that the vast majority of programs will remain compatible over time, it is impossible to guarantee that no future change will break any program.
+We would like to elaborate on the expectations regarding Elixir v1.0.0. Although we expect that the vast majority of programs will remain compatible over time, it is impossible to guarantee that no future change will break any program.
 
 Under some unlikely circumstances, we may introduce changes that break existing code:
 
