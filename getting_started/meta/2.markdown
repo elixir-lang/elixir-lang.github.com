@@ -270,11 +270,11 @@ defmodule MyModule do
   end
 
   def do_this_that_and_that(a, b, c) do
-    do_this(unquote(a))
+    do_this(a)
     ...
-    do_that(unquote(b))
+    do_that(b)
     ...
-    and_that(unquote(c))
+    and_that(c)
   end
 end
 ```
