@@ -49,6 +49,8 @@ Under some unlikely circumstances, we may introduce changes that break existing 
 
   * Imports: new functions may be added to the Kernel module, which is auto-imported. They may collide with local functions defined in your modules. Collisions can be resolved in a backwards compatible fashion using `import Kernel, except: [...]` with a list of all functions you don't want imported from Kernel. We reserve the right to do such additions.
 
+Elixir binaries are guaranteed to be backwards compatible within the same branch. Code compiled with v1.0.0 shall work with Elixir v1.0.1 runtime but code compiled with Elixir v1.0.0 should be recompiled to work with Elixir v1.1.0 onwards.
+
 These expectations also apply to future releases under the v1 branch, except for experimental features, which will be explicitly marked as such and not provide any compatibility guarantee until they are stabilized.
 
 ## Learn more
