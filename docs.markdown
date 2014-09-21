@@ -13,7 +13,7 @@ Choose which version you want documentation for.
 * [Elixir](/docs/stable/elixir) - standard library
 * [EEx](/docs/stable/eex) - templating library
 * [ExUnit](/docs/stable/ex_unit) - unit test library
-* [IEx](/docs/stable/ex_unit) - interactive shell
+* [IEx](/docs/stable/iex) - interactive shell
 * [Logger](/docs/stable/logger) - builtin Logger
 * [Mix](/docs/stable/mix) - build tool
 
@@ -22,6 +22,6 @@ Choose which version you want documentation for.
 * [Elixir](/docs/master/elixir) - standard library
 * [EEx](/docs/master/eex) - templating library
 * [ExUnit](/docs/master/ex_unit) - unit test library
-* [IEx](/docs/master/ex_unit) - interactive shell
+* [IEx](/docs/master/iex) - interactive shell
 * [Logger](/docs/master/logger) - builtin Logger
 * [Mix](/docs/master/mix) - build tool
