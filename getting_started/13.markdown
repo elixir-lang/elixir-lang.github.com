@@ -66,15 +66,15 @@ Elixir provides macros as a mechanism for meta-programming (writing code that ge
 Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the `require` directive:
 
 ```iex
-iex> Integer.odd?(3)
-** (CompileError) iex:1: you must require Integer before invoking the macro Integer.odd?/1
+iex> Integer.is_odd(3)
+** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
 iex> require Integer
 nil
-iex> Integer.odd?(3)
+iex> Integer.is_odd(3)
 true
 ```
 
-In Elixir, `Integer.odd?/1` is defined as a macro so it can be used as guards. This means that, in order to invoke `Integer.odd?/1`, we need to first require the `Integer` module.
+In Elixir, `Integer.is_odd/1` is defined as a macro so it can be used as guards. This means that, in order to invoke `Integer.is_odd/1`, we need to first require the `Integer` module.
 
 In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
