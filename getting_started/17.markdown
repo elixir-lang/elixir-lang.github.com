@@ -34,10 +34,12 @@ iex> raise ArgumentError, message: "invalid argument foo"
 ** (ArgumentError) invalid argument foo
 ```
 
-You can also define your own errors using the `defexception/2` macro. The most common case is to define an exception with a message field:
+You can also define your own errors by creating a module and use the `defexception/1` macro inside it. The most common case is to define an exception with a message field:
 
 ```iex
-iex> defexception MyError, message: "default message"
+iex> defmodule MyError do
+iex>  defexception message: "default message"
+iex> end
 iex> raise MyError
 ** (MyError) default message
 iex> raise MyError, message: "custom message"
