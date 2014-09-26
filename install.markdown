@@ -1,6 +1,6 @@
 ---
 title: "Installing Elixir"
-section: home
+section: install
 layout: default
 ---
 
