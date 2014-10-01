@@ -133,15 +133,15 @@ This time the process failed and brought the parent process down as they are lin
 
 Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don't share anything by default. And if processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.
 
-While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting process fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
+While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting processes fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
 
-Before moving to the next chapter, let's see one of the most common use case for creating processes in Elixir.
+Before moving to the next chapter, let's see one of the most common use cases for creating processes in Elixir.
 
 ## 11.4 State
 
 We haven't talked about state so far in this guide. If you are building an application that requires state, for example, to keep your application configuration, or you need to parse a file and keep it in memory, where would you store it?
 
-Processes are the most common answer to this question. We can write processes that loops infinitely, keeping a state, and sending and receiving messages. As an example, let's write a module that starts new processes that work as a key-value store in a file named `kv.exs`:
+Processes are the most common answer to this question. We can write processes that loop infinitely, maintain state, and send and receive messages. As an example, let's write a module that starts new processes that work as a key-value store in a file named `kv.exs`:
 
 ```elixir
 defmodule KV do
@@ -161,7 +161,7 @@ defmodule KV do
 end
 ```
 
-Note that the `start` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and perform the appropriate action for each message. In case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually makes `loop/1` be invoked with a new version of the map, with the given `key` and `value` stored.
+Note that the `start` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
 
 Let's give it a try by running `iex kv.exs`:
 
@@ -187,7 +187,7 @@ iex> flush
 
 Notice how the process is keeping a state and we can get and update this state by sending the process messages. In fact, any process that knows the `pid` above will be able to send it messages and manipulate the state.
 
-It is also possible to register the pid, giving it a name, and allowing everyone that knows the name to send it messages:
+It is also possible to register the `pid`, giving it a name, and allowing everyone that knows the name to send it messages:
 
 ```iex
 iex> Process.register(pid, :kv)
@@ -198,7 +198,7 @@ iex> flush
 :world
 ```
 
-Using process around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but using one of the many of the abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html) which are simple abstractions around state:
+Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many of the abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html) which are simple abstractions around state:
 
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)
