@@ -30,7 +30,7 @@ Elixir.Math.List.flatten #=> uses Math.List.flatten
 
 > Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit "Elixir." when referencing them.
 
-Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `as` option sets the alias automatically to the last part of the module name, for example:
+Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `:as` option sets the alias automatically to the last part of the module name, for example:
 
 ```elixir
 alias Math.List
@@ -89,7 +89,7 @@ iex> duplicate :ok, 3
 [:ok, :ok, :ok]
 ```
 
-In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `only:` is optional, its usage is recommended. `except` could also be given as an option.
+In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `:only` is optional, its usage is recommended. `:except` could also be given as an option.
 
 `import` also supports `:macros` and `:functions` to be given to `:only`. For example, to import all macros, one could write:
 
