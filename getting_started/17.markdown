@@ -54,7 +54,7 @@ iex> try do
 ...> rescue
 ...>   e in RuntimeError -> e
 ...> end
-RuntimeError[message: "oops"]
+%RuntimeError{message: "oops"}
 ```
 
 The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice Elixir developers rarely use the `try/rescue` construct though. For example, many languages would force you to rescue an error when a file cannot open successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information if the file was opened with success or not:
