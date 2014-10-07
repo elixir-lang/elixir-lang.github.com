@@ -105,14 +105,17 @@ The most common form of spawning in Elixir is actually via `spawn_link/1`. Befor
 
 ```iex
 iex> spawn fn -> raise "oops" end
+
+[error] Error in process <0.58.0> with exit value: ...
+
 #PID<0.58.0>
 ```
 
-Well... nothing happened. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
+It merely logged an error but the spawning process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
 
 ```iex
 iex> spawn_link fn -> raise "oops" end
-#PID<0.60.0>
+
 ** (EXIT from #PID<0.41.0>) an exception was raised:
     ** (RuntimeError) oops
         :erlang.apply/2
