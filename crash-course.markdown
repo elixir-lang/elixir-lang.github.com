@@ -248,7 +248,7 @@ The syntax for tuples is the same in both languages, but the APIs are different.
 1. The `subject` of the function is always the first argument.
 2. All data structures functions employ zero-based access.
 
-That said, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `setelem`:
+That said, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `put_elem`:
 
 **Erlang**
 
