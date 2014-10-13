@@ -35,9 +35,9 @@ We can now create "instances" of this struct by using the `%User{}` syntax:
 
 ```iex
 iex> %User{}
-%User{name: "john", age: 27}
+%User{age: 27, name: "john"}
 iex> %User{name: "meg"}
-%User{name: "meg", age: 27}
+%User{age: 27, name: "meg"}
 iex> is_map(%User{})
 true
 ```
@@ -53,11 +53,11 @@ When discussing maps, we demonstrated how we can access and update existing fiel
 
 ```iex
 iex> john = %User{}
-%User{name: "john", age: 27}
+%User{age: 27, name: "john"}
 iex> john.name
 "john"
 iex> meg = %{john | name: "meg"}
-%User{name: "meg", age: 27}
+%User{age: 27, name: "meg"}
 iex> %{meg | oops: :field}
 ** (ArgumentError) argument error
 ```
@@ -68,7 +68,7 @@ Structs can also be used in pattern matching and they guarantee the structs are 
 
 ```iex
 iex> %User{name: name} = john
-%User{name: "john", age: 27}
+%User{age: 27, name: "john"}
 iex> name
 "john"
 iex> %User{} = %{}
@@ -86,7 +86,7 @@ Overall, a struct is just a bare map with default fields. Notice we say it is a 
 
 ```iex
 iex> user = %User{}
-%User{name: "john", age: 27}
+%User{age: 27, name: "john"}
 iex> user[:name]
 ** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "john"}
 ```
@@ -96,6 +96,15 @@ A struct also is not a dictionary and therefore can't be used with the `Dict` mo
 ```iex
 iex> Dict.get(%User{}, :name)
 ** (ArgumentError) unsupported dict: %User{name: "john", age: 27}
+```
+
+Since structs are just maps, they will work with the `Map` module:
+
+```iex
+iex> Map.put(%User{}, :name, "kurt")
+%User{age: 27, name: "kurt"}
+iex> Map.merge(%User{age: 27}, %User{name: "takashi"})
+%User{age: 27, name: "takashi"}
 ```
 
 We will cover how structs interacts with protocols in the next chapter.
