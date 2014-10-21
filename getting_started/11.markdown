@@ -148,7 +148,7 @@ Processes are the most common answer to this question. We can write processes th
 
 ```elixir
 defmodule KV do
-  def start do
+  def start_link do
     {:ok, spawn_link(fn -> loop(%{}) end)}
   end
 
@@ -164,12 +164,12 @@ defmodule KV do
 end
 ```
 
-Note that the `start` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
+Note that the `start_link` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
 
 Let's give it a try by running `iex kv.exs`:
 
 ```iex
-iex> {:ok, pid} = KV.start
+iex> {:ok, pid} = KV.start_link
 #PID<0.62.0>
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
@@ -212,6 +212,6 @@ iex> Agent.get(pid, fn map -> Map.get(map, :hello) end)
 :world
 ```
 
-A `:name` option could also be given to `Agent.start/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), generic event managers and event handlers (called GenEvent), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the Mix and OTP guide which will build a complete Elixir application from start to finish.
+A `:name` option could also be given to `Agent.start_lik/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), generic event managers and event handlers (called GenEvent), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the Mix and OTP guide which will build a complete Elixir application from start to finish.
 
 For now, let's move on and explore the world of I/O in Elixir.
