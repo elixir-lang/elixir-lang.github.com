@@ -30,17 +30,16 @@ Development is done in the `next` branch, while `master` contains the docs and g
 
 2. Make your changes
 
-3. Test it locally
-
-   You need to have ``nodejs`` installed,
-   as well as ruby gems: `jekyll`, `jekyll-redirect-from` and `redcarpet`
+3. Test it locally, you need to install the gems `jekyll` and `redcarpet`:
 
    ```shell
-   $ gem install jekyll jekyll-redirect-from redcarpet
+   $ gem install jekyll redcarpet
    $ jekyll serve # check localhost:4000
    ```
 
-4. Send a pull-request for your changes.
+4. Send a pull-request for your changes
+
+`jekyll` requires a javascript processor to be available too. Many OS provide such functionality but others do not. If you have an error related to ExecJS, you can work around it by either running `gem install therubyracer` or by ensuring Node.JS is available in your path.
 
 ### License
 
