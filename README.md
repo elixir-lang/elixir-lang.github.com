@@ -32,7 +32,8 @@ Development is done in the `next` branch, while `master` contains the docs and g
 
 3. Test it locally
 
-   You need to install `jekyll`, `jekyll-redirect-from` and `redcarpet`
+   You need to have ``nodejs`` installed,
+   as well as ruby gems: `jekyll`, `jekyll-redirect-from` and `redcarpet`
 
    ```shell
    $ gem install jekyll jekyll-redirect-from redcarpet
