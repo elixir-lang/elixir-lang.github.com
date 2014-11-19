@@ -24,8 +24,6 @@ Choose your operating system and tool.
 
 #### Unix (and Unix-like)
 
-  * Fedora 17+ and Fedora Rawhide
-    * Run: `sudo yum -y install elixir`
   * Arch Linux (on AUR)
     * Run: `yaourt -S elixir`
   * openSUSE (and SLES 11 SP3+)
