@@ -85,7 +85,7 @@ defmodule KV.Registry do
   end
 
   def handle_cast({:create, name}, names) do
-    if Dict.get(names, name) do
+    if Dict.has_key?(names, name) do
       {:noreply, names}
     else
       {:ok, bucket} = KV.Bucket.start_link()
@@ -219,7 +219,7 @@ def handle_call(:stop, _from, state) do
 end
 
 def handle_cast({:create, name}, {names, refs}) do
-  if Dict.get(names, name) do
+  if Dict.has_key?(names, name) do
     {:noreply, {names, refs}}
   else
     {:ok, pid} = KV.Bucket.start_link()
