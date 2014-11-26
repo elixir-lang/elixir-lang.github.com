@@ -81,15 +81,15 @@ defmodule KV.Registry do
   end
 
   def handle_call({:lookup, name}, _from, names) do
-    {:reply, HashDict.fetch(names, name), names}
+    {:reply, Dict.fetch(names, name), names}
   end
 
   def handle_cast({:create, name}, names) do
-    if HashDict.get(names, name) do
+    if Dict.get(names, name) do
       {:noreply, names}
     else
       {:ok, bucket} = KV.Bucket.start_link()
-      {:noreply, HashDict.put(names, name, bucket)}
+      {:noreply, Dict.put(names, name, bucket)}
     end
   end
 end
@@ -219,20 +219,20 @@ def handle_call(:stop, _from, state) do
 end
 
 def handle_cast({:create, name}, {names, refs}) do
-  if HashDict.get(names, name) do
+  if Dict.get(names, name) do
     {:noreply, {names, refs}}
   else
     {:ok, pid} = KV.Bucket.start_link()
     ref = Process.monitor(pid)
-    refs = HashDict.put(refs, ref, name)
-    names = HashDict.put(names, name, pid)
+    refs = Dict.put(refs, ref, name)
+    names = Dict.put(names, name, pid)
     {:noreply, {names, refs}}
   end
 end
 
 def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-  {name, refs} = HashDict.pop(refs, ref)
-  names = HashDict.delete(names, name)
+  {name, refs} = Dict.pop(refs, ref)
+  names = Dict.delete(names, name)
   {:noreply, {names, refs}}
 end
 
