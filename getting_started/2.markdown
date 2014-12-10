@@ -319,7 +319,7 @@ By being immutable, Elixir also helps eliminate common cases where concurrent co
 
 What is the difference between lists and tuples?
 
-Lists are stored in memory as linked lists. This means each element in a list points to the next element, and then to the next element, until it reaches the end of a list. We call each of those pairs in a list a **cons cell**:
+Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. We call each pair of value and pointer a **cons cell**:
 
 ```iex
 iex> list = [1|[2|[3|[]]]]
