@@ -189,15 +189,6 @@ iex> String.upcase("hellö")
 "HELLÖ"
 ```
 
-Keep in mind `single-quoted` and `double-quoted` strings are not equivalent in Elixir as they are represented by different types:
-
-```iex
-iex> 'hellö' == "hellö"
-false
-```
-
-We will talk more about Unicode support and the difference between single and double-quoted strings in the "Binaries, strings and char lists" chapter.
-
 ## 2.5 Anonymous functions
 
 Functions are delimited by the keywords `fn` and `end`:
@@ -276,7 +267,25 @@ iex> hd []
 ** (ArgumentError) argument error
 ```
 
-Oops!
+Sometimes you will create a list and it will return a value in single-quotes. For example:
+
+```iex
+iex> [11, 12, 13]
+'\v\f\r'
+iex> [104, 101, 108, 108, 111]
+'hello'
+```
+
+When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code.
+
+Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:
+
+```iex
+iex> 'hello' == "hello"
+false
+```
+
+Single-quotes are char lists, double-quotes are strings. We will talk more about them in the "Binaries, strings and char lists" chapter.
 
 ## 2.7 Tuples
 
