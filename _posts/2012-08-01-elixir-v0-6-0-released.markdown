@@ -7,17 +7,17 @@ excerpt: We have finally released Elixir v0.6.0! This release includes a build t
 
 ---
 
-We have finally released [Elixir](http://elixir-lang.org/) v0.6.0! This release includes a build tool called Mix, support for Erlang typespecs, many improvements to IEx and improved IO, File and Macro support.
+We have finally released [Elixir](/) v0.6.0! This release includes a build tool called Mix, support for Erlang typespecs, many improvements to IEx and improved IO, File and Macro support.
 
 ## What's new
 
-When [we released version v0.5.0](http://elixir-lang.org/blog/2012/05/25/elixir-v0-5-0-released/), we have set three major goals for release v0.6.0:
+When [we released version v0.5.0](/blog/2012/05/25/elixir-v0-5-0-released/), we have set three major goals for release v0.6.0:
 
 1. Provide a build tool that makes it easy to create, compile and test Elixir projects;
 2. Support [Erlang typespecs](http://www.erlang.org/doc/reference_manual/typespec.html);
 3. Improve IO and File modules to be more robust and complete.
 
-We have not only achieved those goals for this release, as we have added much more! A couple weeks ago, we have covered some of these unscheduled improvements, as improved Macro handling and Range support, which you can read more about in the ["What's new in Elixir #5" post](http://elixir-lang.org/blog/2012/07/05/what-s-new-in-elixir-5/).
+We have not only achieved those goals for this release, as we have added much more! A couple weeks ago, we have covered some of these unscheduled improvements, as improved Macro handling and Range support, which you can read more about in the ["What's new in Elixir #5" post](/blog/2012/07/05/what-s-new-in-elixir-5/).
 
 Our interactive shell (IEx) also had many improvements, thanks to the Elixir developer community. We now have easy access to documentation, remote shells, autocomplete and much more. In order to show you a bit of what you can do in this release, we have prepared a short (~6 min) screencast:
 

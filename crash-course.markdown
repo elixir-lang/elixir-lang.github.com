@@ -857,7 +857,7 @@ This should be enough to invoke Elixir functions straight from your Erlang code.
 
 ### Manual integration
 
-If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](http://elixir-lang.org/getting_started/1.html) and add the `lib` directory in your checkout to `ERL_LIBS`.
+If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](/getting_started/1.html) and add the `lib` directory in your checkout to `ERL_LIBS`.
 
 <div id="further_reading"></div>
 
@@ -869,5 +869,5 @@ Elixir also provides a [Getting Started Guide][6] and has [documentation availab
 
 [4]: http://www.erlang.org/doc/programming_examples/users_guide.html
 [5]: http://schemecookbook.org/Erlang/TOC
-[6]: http://elixir-lang.org/getting_started/1.html
-[7]: http://elixir-lang.org/docs.html
+[6]: /getting_started/1.html
+[7]: /docs.html
