@@ -408,7 +408,7 @@ Finally, we just need to change the `setup` callback in `test/kv/registry_test.e
 
 ```elixir
 setup do
-  ets = :ets.new(:registry_table, [:set, :public])
+  ets = :ets.new(:registry_table, [:set, :public, :named_table])
   registry = start_registry(ets)
   {:ok, registry: registry, ets: ets}
 end
