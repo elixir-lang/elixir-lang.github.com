@@ -8,7 +8,8 @@ layout: blog
   <h2>Posts by category:</h2>
   <ul>
   {% for category in site.categories %}
-    <h5 id="#{{ category | first }}">&raquo; {{ category | first | capitalize }}</h5>
+    <li>
+      <h5 id="#{{ category | first }}">&raquo; {{ category | first | capitalize }}</h5>
       <ul>
       {% for posts in category %}
         {% for post in posts %}

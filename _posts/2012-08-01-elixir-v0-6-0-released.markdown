@@ -21,7 +21,8 @@ We have not only achieved those goals for this release, as we have added much mo
 
 Our interactive shell (IEx) also had many improvements, thanks to the Elixir developer community. We now have easy access to documentation, remote shells, autocomplete and much more. In order to show you a bit of what you can do in this release, we have prepared a short (~6 min) screencast:
 
-<iframe src="http://player.vimeo.com/video/46709928" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/46709928">Elixir v0.6 quick tour - Mix and IEx</a> from <a href="http://vimeo.com/user3182384">Plataformatec</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+<iframe src="http://player.vimeo.com/video/46709928" class="video" width="600" height="337" allowfullscreen></iframe>
+<a href="http://vimeo.com/46709928">Elixir v0.6 quick tour - Mix and IEx</a> from <a href="http://vimeo.com/user3182384">Plataformatec</a> on <a href="http://vimeo.com">Vimeo</a>.
 
 That's it. Of course the documentation was also improved in the process, including two brand new getting started chapters on [Mix](/getting_started/mix/1.html) and [ExUnit](/getting_started/ex_unit/1.html). For the next months, we will continue improving Elixir (you can see some ideas floating around in the [issues tracker](github.com/elixir-lang/elixir/issues)) but we will start to focus on other tools and libraries for the community.
 
