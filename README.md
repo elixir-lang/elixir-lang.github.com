@@ -2,10 +2,6 @@
 
 It is automatically transformed by [Jekyll](http://github.com/mojombo/jekyll) into a static site.
 
-### Development
-
-Development is done in the `next` branch, while `master` contains the docs and guides for the latest stable release.
-
 ### Contributing to the blog
 
   Create a new file inside `_posts/YYYY-MM-DD-post-title.markdown` following the template:
@@ -39,7 +35,7 @@ Development is done in the `next` branch, while `master` contains the docs and g
 
 4. Send a pull-request for your changes
 
-`jekyll` requires a javascript processor to be available too. Many OS provide such functionality but others do not. If you have an error related to ExecJS, you can work around it by either running `gem install therubyracer` or by ensuring Node.JS is available in your path.
+`jekyll` requires a javascript processor to be available too. Many OS provide such functionality but others do not. If you have an error related to ExecJS, you can work around it by either running `gem install therubyracer` or by ensuring node.js is available in your path.
 
 ### License
 
