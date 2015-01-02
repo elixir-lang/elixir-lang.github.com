@@ -4,22 +4,36 @@
     var defaults = {
       noBackToTopLinks: false,
       title: '<i>Jump to...</i>',
+      minimumHeaders: 3,
+      headers: 'h1, h2, h3, h4, h5, h6',
       listType: 'ol', // values: [ol|ul]
-      showSpeed: 'slow'
+      showEffect: 'show', // values: [show|slideDown|fadeIn|none]
+      showSpeed: 'slow' // set to 0 to deactivate effect
     },
     settings = $.extend(defaults, options);
 
-    // I modified the single line below to exlude h1 header
-    // --alco
-    var headers = $('h2, h3, h4, h5, h6').filter(function() {
+    var headers = $(settings.headers).filter(function() {
       // get all headers with an ID
+      var previousSiblingName = $(this).prev().attr( "name" );
+      if (!this.id && previousSiblingName) {
+        this.id = $(this).attr( "id", previousSiblingName.replace(/\./g, "-") );
+      }
       return this.id;
     }), output = $(this);
-    // Show the toc when there are at least 2 headers
-    // --alco
-    if (!headers.length || headers.length < 2 || !output.length) {
+    if (!headers.length || headers.length < settings.minimumHeaders || !output.length) {
       return;
     }
+
+    if (0 === settings.showSpeed) {
+      settings.showEffect = 'none';
+    }
+
+    var render = {
+      show: function() { output.hide().html(html).show(settings.showSpeed); },
+      slideDown: function() { output.hide().html(html).slideDown(settings.showSpeed); },
+      fadeIn: function() { output.hide().html(html).fadeIn(settings.showSpeed); },
+      none: function() { output.html(html); }
+    };
 
     var get_level = function(ele) { return parseInt(ele.nodeName.replace("H", ""), 10); }
     var highest_level = headers.map(function(_, ele) { return get_level(ele); }).get().sort()[0];
@@ -41,10 +55,18 @@
       }
       if (this_level === level) // same level as before; same indenting
         html += "<li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
-      else if (this_level < level) // higher level than before; end parent ol
-        html += "</li></"+settings.listType+"></li><li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
-      else if (this_level > level) // lower level than before; expand the previous to contain a ol
-        html += "<"+settings.listType+"><li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
+      else if (this_level <= level){ // higher level than before; end parent ol
+        for(i = this_level; i < level; i++) {
+          html += "</li></"+settings.listType+">"
+        }
+        html += "<li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
+      }
+      else if (this_level > level) { // lower level than before; expand the previous to contain a ol
+        for(i = this_level; i > level; i--) {
+          html += "<"+settings.listType+"><li>"
+        }
+        html += "<a href='#" + header.id + "'>" + header.innerHTML + "</a>";
+      }
       level = this_level; // update for the next one
     });
     html += "</"+settings.listType+">";
@@ -54,10 +76,7 @@
         window.location.hash = '';
       });
     }
-    if (0 !== settings.showSpeed) {
-      output.hide().html(html).show(settings.showSpeed);
-    } else {
-      output.html(html);
-    }
+
+    render[settings.showEffect]();
   };
 })(jQuery);
