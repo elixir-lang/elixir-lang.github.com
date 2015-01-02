@@ -274,6 +274,7 @@ img.alignleft, img.alignright {
 blockquote.alignleft, blockquote .alignright { width: 33%; }
 .byline abbr, .entry-meta abbr, .comment-meta abbr { border: none; }
 .clear { clear: both; }
+.no-border { border: 0 };
 
 /* Tables
 -------------------------------------------------------------- */
@@ -395,7 +396,7 @@ input[type="submit"]:hover { cursor: pointer }
 -------------------------------------------------------------- */
 a:hover img, #slider-nav li a:hover img { opacity: 0.85; }
 #site-title a:hover img { border: none; opacity: 1; }
-.hentry img, .entry-content img, .widget img, .hentry embed, .entry-content embed, .widget embed, .hentry object, .entry-content object, .widget object, .hentry video, .entry-content video, .widget video {
+.hentry img, .entry-content img, .widget img, .hentry embed, .entry-content embed, .widget embed, .hentry object, .entry-content object, .widget object, .hentry video, .entry-content video, .widget video, iframe.video {
   max-width: 100%;
 }
 .hentry img, .entry-content img, .widget img {
@@ -404,8 +405,7 @@ a:hover img, #slider-nav li a:hover img { opacity: 0.85; }
   border: 1px solid #e5e5e5;
 }
 .rss-button { margin-bottom: 25px; }
-img.no-border { border: 0 };
-
+iframe.video { border:0; }
 /* Layout
 -------------------------------------------------------------- */
 #main {
@@ -569,7 +569,6 @@ body.source           div.menu li.source          a {
   height: 150px;
   margin: 3px 25px 20px 0;
 }
-.no-border { border: 0 };
 
 /* Post titles
 -------------------------------------------------------------- */
@@ -704,6 +703,7 @@ li.image {
   list-style: none;
   margin-bottom: 10px;
 }
+#sponsors li.image img { border:0; }
 
 /* Widget titles
 -------------------------------------------------------------- */

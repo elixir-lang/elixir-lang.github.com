@@ -8,7 +8,7 @@ layout: default
 
 Choose which version you want documentation for.
 
-<span id="stable"></stable>
+<span id="stable"></span>
 #### v1.0
 
 * [Elixir](/docs/stable/elixir) - standard library

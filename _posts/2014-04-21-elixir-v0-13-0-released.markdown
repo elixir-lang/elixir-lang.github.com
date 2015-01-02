@@ -28,7 +28,7 @@ In a nutshell, here is what new:
 
 * Elixir v0.13 also provides structs, an alternative to Elixir records. Structs are more flexible than records, provide faster polymorphic operations, and still provide the same compile-time guarantees many came to love in records;
 
-* The [Getting Started guide](http://elixir-lang.org/getting_started/1.html) was rewritten from scratch. The previous guide was comprised of 7 chapters and was about to become 2 years old. The new guide features 20 chapters, it explores the new maps and structs (which are part of this release), and it goes deeper into topics like IO and File handling. It also includes an extra guide, still in development, about [Meta-Programming in Elixir](http://elixir-lang.org/getting_started/meta/1.html);
+* The [Getting Started guide](/getting_started/1.html) was rewritten from scratch. The previous guide was comprised of 7 chapters and was about to become 2 years old. The new guide features 20 chapters, it explores the new maps and structs (which are part of this release), and it goes deeper into topics like IO and File handling. It also includes an extra guide, still in development, about [Meta-Programming in Elixir](/getting_started/meta/1.html);
 
 * Elixir v0.13 provides a new comprehension syntax that not only works with lists, but with any [`Enumerable`](/docs/stable/elixir/Enumerable.html). The output of a comprehension is also extensible via the [`Collectable`](/docs/stable/elixir/Collectable.html) protocol;
 

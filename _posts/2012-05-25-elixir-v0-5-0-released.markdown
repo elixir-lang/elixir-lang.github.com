@@ -7,9 +7,9 @@ excerpt: We have finally released Elixir v0.5.0! This marks the first release si
 
 ---
 
-We have finally released [Elixir](http://elixir-lang.org/) v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
+We have finally released [Elixir](/) v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
 
-If you don't care about any of these, you can go straight to our [Getting Started guide](http://elixir-lang.org/getting_started/1.html). If you do, keep on reading!
+If you don't care about any of these, you can go straight to our [Getting Started guide](/getting_started/1.html). If you do, keep on reading!
 
 ## Looking back
 
@@ -27,7 +27,7 @@ Around February of that year, feeling confident enough about the direction the l
 
 One of the goals we have set was to have a good website and documentation before the next official release. With the help of the Plataformatec team, we created a logo for Elixir and put this website live.
 
-At the same time, [we were working on pygments support](https://bitbucket.org/birkenfeld/pygments-main/pull-request/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, Github was able to syntax highlight Elixir code and [our API documentation was online](http://elixir-lang.org).
+At the same time, [we were working on pygments support](https://bitbucket.org/birkenfeld/pygments-main/pull-request/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, Github was able to syntax highlight Elixir code and [our API documentation was online](/).
 
 At the same time, people started to gather around #elixir-lang channel on irc.freenode.net and [play with Elixir](http://github.com/elixir-lang/mix), [start their](https://github.com/guedes/exdate) [own projects](https://github.com/yrashk/validatex) and [tutorials](https://github.com/alco/elixir/wiki/Erlang-Syntax:-A-Crash-Course).
 
@@ -45,4 +45,4 @@ In parallel, we will improve our [documentation generation tool](https://github.
 
 Finally, we will continue improving the Standard Library. Although Elixir's goal is to rely on Erlang the most as possible, we also want to provide a small Standard Library which makes better use of Elixir semantics. For the next weeks, we will focus on improving the IO and File manipulation modules. New data types may also appear, for example, ranges come to my mind.
 
-Check out our [home page](http://elixir-lang.org/) and the [getting started guide](http://elixir-lang.org/getting_started/1.html) for more information. Welcome aboard and grab a cup of Elixir, because you are certainly going to enjoy the ride!
+Check out our [home page](/) and the [getting started guide](/getting_started/1.html) for more information. Welcome aboard and grab a cup of Elixir, because you are certainly going to enjoy the ride!
