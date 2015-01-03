@@ -279,7 +279,7 @@ Now let's change the appropriate functions in `KV.Registry` to take the new supe
 Starts the registry.
 """
 def start_link(event_manager, buckets, opts \\ []) do
-  # 1. Pass the buckets supevisor as argument
+  # 1. Pass the buckets supervisor as argument
   GenServer.start_link(__MODULE__, {event_manager, buckets}, opts)
 end
 
@@ -288,7 +288,7 @@ end
 def init({events, buckets}) do
   names = HashDict.new
   refs  = HashDict.new
-  # 2. Store the buckets supevisor in the state
+  # 2. Store the buckets supervisor in the state
   {:ok, %{names: names, refs: refs, events: events, buckets: buckets}}
 end
 
