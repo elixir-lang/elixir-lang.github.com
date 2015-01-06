@@ -31,6 +31,8 @@ Choose your operating system and tool.
     * Run: `zypper in elixir`
   * Gentoo
     * Run: `emerge --ask dev-lang/elixir`
+  * Fedora 17 and newer
+    * Run: `yum install elixir`
   * FreeBSD
     * From ports: `cd /usr/ports/lang/elixir && make install clean`
     * From pkg: `pkg install elixir`
