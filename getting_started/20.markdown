@@ -1,44 +1,141 @@
 ---
 layout: getting_started
-title: 20 Where to go next
+title: 20 Typespecs and behaviours
 guide: 20
-last: true
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-Eager to learn more? Keep on reading!
+## 20.1 Types and specs
 
-## 20.1 Build your first Elixir project
+Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
-In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by simply running:
+1. declaring custom data types;
+2. declaring typed function signatures (specifications).
 
-    mix new path/to/new/project
+### 20.1.1 Function specifications
 
-We have written a guide that covers how to build an Elixir application, with its own supervision tree, configuration, tests and more. The application works as a distributed key-value store where we organize key-value pairs into buckets and distribute those buckets across multiple nodes:
+By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns a `float`. As you can see [in its documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
-* [Mix and OTP](/getting_started/mix_otp/1.html)
+```
+round(number) :: integer
+```
 
-## 20.2 Community and other resources
+`::` means that the function on the left side *returns* a value whose type is what's on the right side. Function specs are written with the `@spec` directive, placed right before the function definition. The `round/1` function could be written as:
 
-On the sidebar, you can find the link to some Elixir books and screencasts. There are plenty of Elixir resources out there, like conference talks, open source projects, and other learning materials produced by the community.
+```elixir
+@spec round(number) :: integer
+def round(number), do: # implementation...
+```
 
-Remember that in case of any difficulties, you can always visit the **#elixir-lang** channel on **irc.freenode.net** or send a message to the [mailing list](http://groups.google.com/group/elixir-lang-talk). You can be sure that there will be someone willing to help. And to keep posted on the latest news and announcements, follow the [blog](/blog/) and follow language developments on the [elixir-core mailing list](http://groups.google.com/group/elixir-lang-core).
+Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the types provided by Elixir [in the typespecs docs](http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html).
 
-Don't forget [you can also check the source code of Elixir itself](https://github.com/elixir-lang/elixir), which is mostly written in Elixir (mainly the `lib` directory), or [explore Elixir's documentation](/docs.html).
+### 20.1.2 Defining custom types
 
-## 20.3 A Byte of Erlang
+While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules modules through the `@type` directive.
 
-As the main page of this site puts it:
+Say we have a `RudeCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.
 
-> Elixir is a programming language built on top of the Erlang VM.
+```elixir
+defmodule LousyCalculator do
+  @spec add(number, number) :: {number, String.t}
+  def add(x, y), do: {x + y, "You need a calculator to do that?!"}
 
-Sooner or later, an Elixir developer will want to interface with existing Erlang libraries. Here's a list of online resources that cover Erlang's fundamentals and its more advanced features:
+  @spec multiply(number, number) :: {number, String.t}
+  def multiply(x, y), do: {x * y, "Jeez, come on!"}
+end
+```
 
-* This [Erlang Syntax: A Crash Course](/crash-course.html) provides a concise intro to Erlang's syntax. Each code snippet is accompanied by equivalent code in Elixir. This is an opportunity for you to not only get some exposure to Erlang's syntax but also review some of the things you have learned in this guide.
+As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [typespecs docs](http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html).
 
-* Erlang's official website has a short [tutorial](http://www.erlang.org/course/concurrent_programming.html) with pictures that briefly describe Erlang's primitives for concurrent programming.
+Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directory in order to declare our own custom type.
 
-* [Learn You Some Erlang for Great Good!](http://learnyousomeerlang.com/) is an excellent introduction to Erlang, its design principles, standard library, best practices and much more. If you are serious about Elixir, you'll want to get a solid understanding of Erlang principles. Once you have read through the crash course mentioned above, you'll be able to safely skip the first couple of chapters in the book that mostly deal with the syntax. When you reach [The Hitchhiker's Guide to Concurrency](http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency) chapter, that's where the real fun starts.
+```elixir
+defmodule LousyCalculator do
+  @typedoc """
+  Just a number followed by a string.
+  """
+  @type number_with_offense :: {number, String.t}
+
+  @spec add(number, number) :: number_with_offense
+  def add(x, y), do: {x + y, "You need a calculator to do that?!"}
+
+  @spec multiply(number, number) :: number_with_offense
+  def multiply(x, y), do: {x * y, "Jeez, come on!"}
+end
+```
+
+The `@typedoc` directive, similarly to the `@doc` and `@moduledoc` directives, is used to document custom types.
+
+Custom types defined through `@type` are exported and available outside the module they're defined in:
+
+```elixir
+defmodule PoliteCalculator do
+  @spec add(number, number) :: number
+  def add(x, y), do: make_polite(LousyCalculator.add(x, y))
+
+  @spec make_polite(LousyCalculator.number_with_offense) :: number
+  defp make_polite({num, _offense}), do: num
+end
+```
+
+If you want to keep a custom type private, you can use the `@typep` directive instead of `@type`.
+
+### 20.1.3 Static code analysis
+
+Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dyalizer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `PoliteCalculator` example, we wrote a spec for the `make_polite/1` function even if it was defined as a private function.
+
+
+## 20.2 Behaviours
+
+Many modules share the same public API. Take a look at [Plug](https://github.com/elixir-lang/plug), which, as it description states, is a **specification** for composable modules in web applications. Each *plug* is a module which **has to** implement at least two public functions: `init/1` and `call/2`.
+
+Behaviors provide a way to:
+
+* define a set of functions that have to be implemented by a module;
+* ensure that a module implements all the functions in that set.
+
+If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.
+
+### 20.2.1 Defining behaviours
+
+Say we have want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and a `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
+
+We can create a `Parser` behaviour:
+
+```elixir
+defmodule Parser do
+  use Behaviour
+
+  defcallback parse(String.t) :: any
+  defcallback extensions() :: [String.t]
+end
+```
+
+Modules adopting the `Parser` behaviour will have to implement all the functions defined with `defcallback`. As you can see, `defcallback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above.
+
+### 20.2.2 Adopting behaviours
+
+Adopting a behaviour is straightforward:
+
+```elixir
+defmodule JSONParser do
+  @behaviour Parser
+
+  def parse(str), do: # ... parse JSON
+  def extensions, do: ["json"]
+end
+```
+
+```elixir
+defmodule YAMLParser do
+  @behaviour Parser
+
+  def parse(str), do: # ... parse YAML
+  def extensions, do: ["yml"]
+end
+```
+
+If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
