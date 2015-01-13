@@ -20,13 +20,15 @@
     })();
   </script>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
         $('.toc').toc({
           title: '',
           listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
           showSpeed: 0,
         });
     });
