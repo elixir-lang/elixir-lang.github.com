@@ -1,6 +1,6 @@
 ---
 layout: getting_started
-title: 17 try, catch and rescue
+title: 17 Comprehensions
 guide: 17
 ---
 
@@ -8,172 +8,96 @@ guide: 17
 
 {% include toc.html %}
 
-Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.
+In Elixir, it is common to loop over an Enumerable, often filtering out some results and mapping values into another list. Comprehensions are syntactic sugar for such constructs: they group those common tasks into the `for` special form.
 
-## 17.1 Errors
-
-A sample error can be retrieved by trying to add a number into an atom:
+For example, we can map a list of integers into their squared values:
 
 ```iex
-iex> :foo + 1
-** (ArithmeticError) bad argument in arithmetic expression
-     :erlang.+(:foo, 1)
+iex> for n <- [1, 2, 3, 4], do: n * n
+[1, 4, 9, 16]
 ```
 
-A runtime error can be raised any time by using the `raise/1` macro:
+A comprehension is made of three parts: generators, filters and collectables.
+
+## 17.1 Generators and filters
+
+In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:
 
 ```iex
-iex> raise "oops"
-** (RuntimeError) oops
+iex> for n <- 1..4, do: n * n
+[1, 4, 9, 16]
 ```
 
-Other errors can be raised with `raise/2` passing the error name and a list of keyword arguments:
+Generator expressions also support pattern matching on their left-hand side; all non-matching patterns are *ignored*. Imagine that, instead of a range, we have a keyword list where the key is the atom `:good` or `:bad` and we only want to compute the square of the `:good` values:
 
 ```iex
-iex> raise ArgumentError, message: "invalid argument foo"
-** (ArgumentError) invalid argument foo
+iex> values = [good: 1, good: 2, bad: 3, good: 4]
+iex> for {:good, n} <- values, do: n * n
+[1, 4, 16]
 ```
 
-You can also define your own errors by creating a module and use the `defexception/1` macro inside it. The most common case is to define an exception with a message field:
+Alternatively to pattern matching, filters can be used to filter some particular elements out. For example, we can get filter out all the multiples of 3 and get the square of the remaining values only:
 
 ```iex
-iex> defmodule MyError do
-iex>  defexception message: "default message"
-iex> end
-iex> raise MyError
-** (MyError) default message
-iex> raise MyError, message: "custom message"
-** (MyError) custom message
+iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end
+iex> for n <- 0..5, multiple_of_3?.(n), do: n * n
+[0, 9]
 ```
 
-Exceptions can be rescued by using the `try/rescue` construct:
+Comprehensions filter out all elements for which the filter expression returns `false` or `nil`; all other values are kept.
+
+Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and deletes all files in those directories:
+
+```elixir
+for dir  <- dirs,
+    file <- File.ls!(dir),
+    path = Path.join(dir, file),
+    File.regular?(path) do
+  File.rm!(path)
+end
+```
+
+Keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.
+
+## 17.2 Bitstring generators
+
+Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:
 
 ```iex
-iex> try do
-...>   raise "oops"
-...> rescue
-...>   e in RuntimeError -> e
+iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>
+iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
+[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
+```
+
+A bitstring generator can be mixed with the "regular" enumerable generators and provides filters as well.
+
+## 17.3 Results other than lists
+
+In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the `:into` option to the comprehension.
+
+For example, a bitstring generator can be used with the `:into` option in order to easily remove all spaces in a string:
+
+```iex
+iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
+"helloworld"
+```
+
+Sets, maps and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the `Collectable` protocol.
+
+A common use case of `:into` can be transforming values in a map, without touching the keys:
+
+```iex
+iex> for {key, val} <- %{"a" => 1, "b" => 2}, into: %{}, do: {key, val * val}
+%{"a" => 1, "b" => 4}
+```
+
+Let's make another example using streams. Since the `IO` module provides streams (that are both `Enumerable`s and `Collectable`s), an echo terminal that echoes back the upcased version of whatever is typed can be implemented using comprehensions:
+
+```iex
+iex> stream = IO.stream(:stdio, :line)
+iex> for line <- stream, into: stream do
+...>   String.upcase(line) <> "\n"
 ...> end
-%RuntimeError{message: "oops"}
 ```
 
-The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice Elixir developers rarely use the `try/rescue` construct though. For example, many languages would force you to rescue an error when a file cannot open successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information if the file was opened with success or not:
-
-```iex
-iex> File.read "hello"
-{:error, :enoent}
-iex> File.write "hello", "world"
-:ok
-iex> File.read "hello"
-{:ok, "world"}
-````
-
-There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can simply use pattern matching with `case`:
-
-```iex
-iex> case File.read "hello" do
-...>   {:ok, body} -> IO.puts "got ok"
-...>   {:error, body} -> IO.puts "got error"
-...> end
-```
-
-At the end of the day, it is up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead we leave it up to the developer to choose the best way to proceed.
-
-For the cases where you do expect a file to exist (and the lack of a file is truly an error) you can simply use `File.read!/1`:
-
-```iex
-iex> File.read! "unknown"
-** (File.Error) could not read file unknown: no such file or directory
-    (elixir) lib/file.ex:305: File.read!/1
-```
-
-In other words, we avoid using `try/rescue` because **we don't use errors for control flow**. In Elixir, we take errors literally: they are reserved to unexpected and/or exceptional situations. In case you actually need flow control constructs, throws must be used. That's what we are going to see next.
-
-## 17.2 Throws
-
-In Elixir, one can throw a value to be caught later. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
-
-Those situations are quite uncommon in practice unless when interfacing with a library that does not provide the proper APIs. For example, let's imagine the `Enum` module did not provide any API for finding a value and we need to find the first number that is a multiple of 13:
-
-```iex
-iex> try do
-...>   Enum.each -50..50, fn(x) ->
-...>     if rem(x, 13) == 0, do: throw(x)
-...>   end
-...>   "Got nothing"
-...> catch
-...>   x -> "Got #{x}"
-...> end
-"Got -39"
-```
-
-However, in practice one can simply use `Enum.find/2`:
-
-```iex
-iex> Enum.find -50..50, &(rem(&1, 13) == 0)
--39
-```
-
-## 17.3 Exits
-
-Every Elixir code runs inside processes that communicates with each other. When a process dies, it sends an `exit` signal. A process can also die by explicitly sending an exit signal:
-
-```iex
-iex> spawn_link fn -> exit(1) end
-#PID<0.56.0>
-** (EXIT from #PID<0.56.0>) 1
-```
-
-In the example above, the linked process died by sending an `exit` signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
-
-`exit` can also be "caught" using `try/catch`:
-
-```iex
-iex> try do
-...>   exit "I am exiting"
-...> catch
-...>   :exit, _ -> "not really"
-...> end
-"not really"
-```
-
-Using `try/catch` is already uncommon and using it to catch exits is even more rare.
-
-`exit` signals are an important part of the fault tolerant system provided by the Erlang VM. Processes usually run under supervision trees which are themselves processes that just wait for `exit` signals of the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
-
-It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing a certain error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
-
-## 17.4 After
-
-Sometimes it is necessary to use `try/after` to guarantee a resource is cleaned up after some particular action. For example, we can open a file and guarantee it is closed with `try/after` block:
-
-```iex
-iex> {:ok, file} = File.open "sample", [:utf8, :write]
-iex> try do
-...>   IO.write file, "olá"
-...>   raise "oops, something went wrong"
-...> after
-...>   File.close(file)
-...> end
-** (RuntimeError) oops, something went wrong
-```
-
-## 17.5 Variables scope
-
-It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
-
-```iex
-iex> try do
-...>   from_try = true
-...> after
-...>   from_after = true
-...> end
-iex> from_try
-** (RuntimeError) undefined function: from_try/0
-iex> from_after
-** (RuntimeError) undefined function: from_after/0
-```
-
-This finishes our introduction to `try`, `catch` and `rescue`. You will find they are used less frequently in Elixir than in other languages although they may be handy in some situations where a library or some particular code is not playing "by the rules".
-
-It is time to talk about some Elixir constructs like comprehensions and sigils.
+Now type any string into the terminal and you will see that the same value will be printed in upper-case. Unfortunately, this example also got your IEx shell stuck in the comprehension, so you will need to hit `Ctrl+C` twice to get out of it. :)
