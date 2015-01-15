@@ -12,7 +12,7 @@ Elixir has three error mechanisms: errors, throws and exits. In this chapter we 
 
 ## 19.1 Errors
 
-A sample error can be retrieved by trying to add a number into an atom:
+Errors (or *exceptions*) are used when exceptional things happen in the code. A sample error can be retrieved by trying to add a number into an atom:
 
 ```iex
 iex> :foo + 1
@@ -20,7 +20,7 @@ iex> :foo + 1
      :erlang.+(:foo, 1)
 ```
 
-A runtime error can be raised any time by using the `raise/1` macro:
+A runtime error can be raised any time by using `raise/1`:
 
 ```iex
 iex> raise "oops"
@@ -34,11 +34,11 @@ iex> raise ArgumentError, message: "invalid argument foo"
 ** (ArgumentError) invalid argument foo
 ```
 
-You can also define your own errors by creating a module and use the `defexception/1` macro inside it. The most common case is to define an exception with a message field:
+You can also define your own errors by creating a module and using the `defexception` construct inside it; this way, you'll create an error with the same name as the module it's defined in. The most common case is to define a custom exception with a message field:
 
 ```iex
 iex> defmodule MyError do
-iex>  defexception message: "default message"
+iex>   defexception message: "default message"
 iex> end
 iex> raise MyError
 ** (MyError) default message
@@ -46,7 +46,7 @@ iex> raise MyError, message: "custom message"
 ** (MyError) custom message
 ```
 
-Exceptions can be rescued by using the `try/rescue` construct:
+Errors can be **rescued** using the `try/rescue` construct:
 
 ```iex
 iex> try do
@@ -57,7 +57,7 @@ iex> try do
 %RuntimeError{message: "oops"}
 ```
 
-The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice Elixir developers rarely use the `try/rescue` construct though. For example, many languages would force you to rescue an error when a file cannot open successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information if the file was opened with success or not:
+The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice, however, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing informations about whether the file was successfully opened:
 
 ```iex
 iex> File.read "hello"
@@ -66,20 +66,20 @@ iex> File.write "hello", "world"
 :ok
 iex> File.read "hello"
 {:ok, "world"}
-````
+```
 
-There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can simply use pattern matching with `case`:
+There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can simply use pattern matching with the `case` construct:
 
 ```iex
 iex> case File.read "hello" do
-...>   {:ok, body} -> IO.puts "got ok"
-...>   {:error, body} -> IO.puts "got error"
+...>   {:ok, body}      -> IO.puts "Success: #{body}"
+...>   {:error, reason} -> IO.puts "Error: #{reason}"
 ...> end
 ```
 
-At the end of the day, it is up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead we leave it up to the developer to choose the best way to proceed.
+At the end of the day, it's up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead, it leaves it up to the developer to choose the best way to proceed.
 
-For the cases where you do expect a file to exist (and the lack of a file is truly an error) you can simply use `File.read!/1`:
+For the cases where you do expect a file to exist (and the lack of that file is truly an *error*) you can simply use `File.read!/1`:
 
 ```iex
 iex> File.read! "unknown"
@@ -87,13 +87,15 @@ iex> File.read! "unknown"
     (elixir) lib/file.ex:305: File.read!/1
 ```
 
-In other words, we avoid using `try/rescue` because **we don't use errors for control flow**. In Elixir, we take errors literally: they are reserved to unexpected and/or exceptional situations. In case you actually need flow control constructs, throws must be used. That's what we are going to see next.
+Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](/docs/stable/elixir/File.html) is a good example of this convention.
+
+In Elixir, we avoid using `try/rescue` because **we don't use errors for control flow**. We take errors literally: they are reserved to unexpected and/or exceptional situations. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
 
 ## 19.2 Throws
 
-In Elixir, one can throw a value to be caught later. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
+In Elixir, a value can be thrown and later be caught. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
 
-Those situations are quite uncommon in practice unless when interfacing with a library that does not provide the proper APIs. For example, let's imagine the `Enum` module did not provide any API for finding a value and we need to find the first number that is a multiple of 13:
+Those situations are quite uncommon in practice except when interfacing with libraries that does not provide a proper API. For example, let's imagine the `Enum` module did not provide any API for finding a value and that we needed to find the first multiple of 13 in a list of numbers:
 
 ```iex
 iex> try do
@@ -107,7 +109,7 @@ iex> try do
 "Got -39"
 ```
 
-However, in practice one can simply use `Enum.find/2`:
+Since `Enum` *does* provide a proper API, in practice `Enum.find/2` is the way to go:
 
 ```iex
 iex> Enum.find -50..50, &(rem(&1, 13) == 0)
@@ -116,7 +118,7 @@ iex> Enum.find -50..50, &(rem(&1, 13) == 0)
 
 ## 19.3 Exits
 
-Every Elixir code runs inside processes that communicates with each other. When a process dies, it sends an `exit` signal. A process can also die by explicitly sending an exit signal:
+All Elixir code runs inside processes that communicate with each other. When a process dies of "natural causes" (e.g., unhandled exceptions), it sends an `exit` signal. A process can also die by explicitly sending an exit signal:
 
 ```iex
 iex> spawn_link fn -> exit(1) end
@@ -139,13 +141,13 @@ iex> try do
 
 Using `try/catch` is already uncommon and using it to catch exits is even more rare.
 
-`exit` signals are an important part of the fault tolerant system provided by the Erlang VM. Processes usually run under supervision trees which are themselves processes that just wait for `exit` signals of the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
+`exit` signals are an important part of the fault tolerant system provided by the Erlang VM. Processes usually run under supervision trees which are themselves processes that just wait for `exit` signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
 
-It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing a certain error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
+It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing an error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
 
 ## 19.4 After
 
-Sometimes it is necessary to use `try/after` to guarantee a resource is cleaned up after some particular action. For example, we can open a file and guarantee it is closed with `try/after` block:
+Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and guarantee it will be closed (even if something goes wrong) with a `try/after` block:
 
 ```iex
 iex> {:ok, file} = File.open "sample", [:utf8, :write]
@@ -175,5 +177,3 @@ iex> from_after
 ```
 
 This finishes our introduction to `try`, `catch` and `rescue`. You will find they are used less frequently in Elixir than in other languages although they may be handy in some situations where a library or some particular code is not playing "by the rules".
-
-It is time to talk about some Elixir constructs like comprehensions and sigils.
