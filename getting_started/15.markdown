@@ -8,7 +8,7 @@ guide: 15
 
 {% include toc.html %}
 
-In earlier chapters, we learned about maps:
+In [chapter 7](/getting_started/7.html) we learned about maps:
 
 ```iex
 iex> map = %{a: 1, b: 2}
@@ -19,92 +19,104 @@ iex> %{map | a: 3}
 %{a: 3, b: 2}
 ```
 
-Structs are extensions on top of maps that bring default values, compile-time guarantees and polymorphism into Elixir.
+Structs are extensions built on top of maps that provide compile-time checks and default values.
 
-To define a struct, we just need to call `defstruct/1` inside a module:
+## 15.1 Defining structs
+
+To define a struct, the `defstruct` construct is used:
 
 ```iex
 iex> defmodule User do
-...>   defstruct name: "john", age: 27
+...>   defstruct name: "John", age: 27
 ...> end
-{:module, User,
- <<70, 79, 82, ...>>, {:__struct__, 0}}
 ```
 
-We can now create "instances" of this struct by using the `%User{}` syntax:
+The keyword list used with `defstruct` defines what fields the struct will have along with their default values.
+
+Structs take the name of the module they're defined in. In the example above, we defined a struct named `User`.
+
+We can now create `User` structs by using a syntax similar to the one used to create maps:
 
 ```iex
 iex> %User{}
-%User{age: 27, name: "john"}
-iex> %User{name: "meg"}
-%User{age: 27, name: "meg"}
-iex> is_map(%User{})
-true
+%User{age: 27, name: "John"}
+iex> %User{name: "Meg"}
+%User{age: 27, name: "Meg"}
 ```
 
-Structs give compile-time guarantees that the provided fields exist in the struct:
+Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:
 
 ```iex
 iex> %User{oops: :field}
 ** (CompileError) iex:3: unknown key :oops for struct User
 ```
 
-When discussing maps, we demonstrated how we can access and update existing fields of a map. The same applies to structs:
+## 15.2 Accessing and updating structs
+
+When we discussed maps, we showed how we can access and update the fields of a map. The same techniques (and the same syntax) apply to structs as well:
 
 ```iex
 iex> john = %User{}
-%User{age: 27, name: "john"}
+%User{age: 27, name: "John"}
 iex> john.name
-"john"
-iex> meg = %{john | name: "meg"}
+"John"
+iex> meg = %{john | name: "Meg"}
 %User{age: 27, name: "meg"}
 iex> %{meg | oops: :field}
 ** (ArgumentError) argument error
 ```
 
-By using the update syntax, the VM is aware no new keys will be added to the map/struct, allowing the maps to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory.
+When using the update syntax (`|`), the VM is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory.
 
-Structs can also be used in pattern matching and they guarantee the structs are of the same type:
+Structs can also be used in pattern matching, both for matching on the value of specific keys as well as for ensuring that the matching value is a struct of the same type as the matched value.
 
 ```iex
 iex> %User{name: name} = john
-%User{age: 27, name: "john"}
+%User{age: 27, name: "John"}
 iex> name
-"john"
+"John"
 iex> %User{} = %{}
 ** (MatchError) no match of right hand side value: %{}
 ```
 
-Matching works because structs store a field named `__struct__` inside the map:
+## 15.3 Structs are just bare maps underneath
+
+In the example above, pattern matching works because underneath structs are just bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
 
 ```iex
+iex> is_map(john)
+true
 iex> john.__struct__
 User
 ```
 
-Overall, a struct is just a bare map with default fields. Notice we say it is a bare map because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
+Notice that we referred to structs as **bare** maps because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
 
 ```iex
-iex> user = %User{}
-%User{age: 27, name: "john"}
-iex> user[:name]
-** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "john"}
+iex> john = %User{}
+%User{age: 27, name: "John"}
+iex> john[:name]
+** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "John"}
+iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
+** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
 
-A struct also is not a dictionary and therefore can't be used with the `Dict` module:
+A struct also is not a dictionary and therefore can't be used with the functions from the `Dict` module:
 
 ```iex
 iex> Dict.get(%User{}, :name)
-** (ArgumentError) unsupported dict: %User{name: "john", age: 27}
+** (UndefinedFunctionError) undefined function: User.fetch/2
 ```
 
-Since structs are just maps, they will work with the `Map` module:
+However, since structs are just maps, they work with the functions from the `Map` module:
 
 ```iex
-iex> Map.put(%User{}, :name, "kurt")
-%User{age: 27, name: "kurt"}
-iex> Map.merge(%User{age: 27}, %User{name: "takashi"})
-%User{age: 27, name: "takashi"}
+iex> kurt = Map.put(%User{}, :name, "Kurt")
+%User{age: 27, name: "Kurt"}
+iex> Map.merge(kurt, %User{name: "Takashi"})
+%User{age: 27, name: "Takashi"}
+iex> Map.keys(john)
+[:__struct__, :age, :name]
 ```
 
-We will cover how structs interacts with protocols in the next chapter.
+We will cover how structs interact with protocols in the next chapter.
