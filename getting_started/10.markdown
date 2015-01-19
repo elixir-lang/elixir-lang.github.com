@@ -112,7 +112,15 @@ iex> Enum.take(stream, 3)
 Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in case of failures. For example, we can use it to stream a file:
 
 ```iex
-iex> stream = File.stream!("path/to/file")
+iex> stream = Stream.resource(
+       fn() -> File.open!("path/to/file") end,
+       fn(file) ->
+         case IO.read(file, :line) do
+           data when is_binary(data) -> {[data], file}
+           _ -> {:halt, file}
+         end
+       end,
+       fn(file) -> File.close(file) end)
 #Function<18.16982430/2 in Stream.resource/3>
 iex> Enum.take(stream, 10)
 ```
