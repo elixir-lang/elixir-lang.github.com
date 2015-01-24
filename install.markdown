@@ -4,17 +4,19 @@ section: install
 layout: default
 ---
 
-## Installing Elixir
+# {{ page.title }}
+
+  <div class="toc"></div>
 
 The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling from source.
 
 Note Elixir requires Erlang 17.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the "Installing Erlang" section below.
 
-### 1 Distributions
+## 1 Distributions
 
 Choose your operating system and tool.
 
-#### Mac OS X
+### Mac OS X
 
   * Homebrew
     * Update your homebrew to latest: `brew update`
@@ -22,7 +24,7 @@ Choose your operating system and tool.
   * Macports
     * Run: `sudo port install elixir`
 
-#### Unix (and Unix-like)
+### Unix (and Unix-like)
 
   * Arch Linux (on AUR)
     * Run: `yaourt -S elixir`
@@ -41,7 +43,7 @@ Choose your operating system and tool.
     * Run: `sudo apt-get update`
     * Run: `sudo apt-get install elixir`
 
-#### Windows
+### Windows
 
   * Web installer
     * [Download the installer](http://s3.hex.pm/elixir-websetup.exe)
@@ -51,7 +53,7 @@ Choose your operating system and tool.
 
 Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#4-installing-erlang) section below.
 
-### 2 Precompiled package
+## 2 Precompiled package
 
 Elixir provides a precompiled package for every release. First [install Erlang](/install.html#4-installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
 
@@ -59,7 +61,7 @@ Once the release is unpacked, you are ready to run the `elixir` and `iex` comman
 
     $ export PATH="$PATH:/path/to/elixir/bin"
 
-### 3 Compiling from source (Unix and MinGW)
+## 3 Compiling from source (Unix and MinGW)
 
 You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#4-installing-erlang).
 
@@ -77,7 +79,7 @@ In case you are feeling a bit more adventurous, you can also compile from master
 
 If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
 
-### 4 Installing Erlang
+## 4 Installing Erlang
 
 The only prerequisite for Elixir is Erlang, version 17.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](http://docs.basho.com/riak/1.3.0/tutorials/installation/Installing-Erlang/).
 
