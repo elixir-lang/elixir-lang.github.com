@@ -17,7 +17,7 @@ Elixir is a dynamically typed language, so all types in Elixir are inferred by t
 
 ### 20.1.1 Function specifications
 
-By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns a `float`. As you can see [in its documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
+By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
 ```
 round(number) :: integer
@@ -36,7 +36,7 @@ Elixir supports compound types as well. For example, a list of integers has type
 
 While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules modules through the `@type` directive.
 
-Say we have a `RudeCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.
+Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.
 
 ```elixir
 defmodule LousyCalculator do
