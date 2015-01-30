@@ -59,9 +59,13 @@ Elixir provides a precompiled package for every release. First [install Erlang](
 
 Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you add Elixir's `bin` path to your PATH environment variable to ease development.
 
+On Unix systems, one can do:
+
 ```bash
 $ export PATH="$PATH:/path/to/elixir/bin"
 ```
+
+On Windows, there are [instructions for different versions here](http://www.computerhope.com/issues/ch000549.htm).
 
 ## Compiling from source (Unix and MinGW)
 
