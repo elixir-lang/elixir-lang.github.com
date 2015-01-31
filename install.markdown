@@ -6,7 +6,7 @@ layout: default
 
 # {{ page.title }}
 
-  <div class="toc"></div>
+<div class="toc"></div>
 
 The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling from source.
 
