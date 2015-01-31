@@ -42,7 +42,7 @@ defmodule Math do
 end
 ```
 
-This file can be compiled using `elixirc`:
+This file can be compiled using `elixirc`, the Elixir compiler:
 
     $ elixirc math.ex
 
@@ -52,12 +52,6 @@ This will generate a file named `Elixir.Math.beam` containing the bytecode for t
 iex> Math.sum(1, 2)
 3
 ```
-
-Elixir projects are usually organized into three directories:
-
-* ebin - contains the compiled bytecode
-* lib - contains elixir code (usually `.ex` files)
-* test - contains tests (usually `.exs` files)
 
 When working on actual projects, the build tool called `mix` will be responsible for compiling and setting up the proper paths for you. For learning purposes, Elixir also supports a scripted mode which is more flexible and does not generate any compiled artifacts.
 
@@ -79,7 +73,7 @@ And execute it as:
 
     $ elixir math.exs
 
-The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
+The file will be compiled in memory and executed, printing `3` as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
 
 ## 8.3 Named functions
 
@@ -157,7 +151,7 @@ iex> fun.(1)
 2
 ```
 
-The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html).
+The `&1` represents the first argument passed into the function. `&(&1 + 1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html).
 
 ## 8.5 Default arguments
 
@@ -249,6 +243,23 @@ iex> Concat.join "Hello", "world"
 iex> Concat.join "Hello", "world", "_"
 ***Second join
 "Hello_world"
+```
+
+Finally, note that default arguments don't have to be the last arguments in a function signature.
+
+```elixir
+defmodule DefArgs do
+  def myfun(a, b \\ "bar", c) do
+    "#{a}, #{b} and #{c}"
+  end
+end
+```
+
+```iex
+iex> DefArgs.myfun("foo", "baz")
+"foo, bar and baz"
+iex> DefArgs.myfun(1, 2, 3)
+"1, 2 and 3"
 ```
 
 This finishes our short introduction to modules. In the next chapters, we will learn how to use named functions for recursion, explore Elixir lexical directives that can be used for importing functions from other modules and discuss module attributes.
