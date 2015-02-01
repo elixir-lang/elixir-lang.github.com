@@ -10,7 +10,7 @@ guide: 14
 
 Module attributes in Elixir serve three purposes:
 
-1. They serve to annotate the module, often with information to be used by the user or the VM.
+1. They serve to annotate the module, often with information to be used by the user or the <abbr title="Virtual Machine">VM</abbr>.
 2. They work as constants.
 3. They work as a temporary module storage to be used during compilation.
 
@@ -26,13 +26,13 @@ defmodule MyServer do
 end
 ```
 
-In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang VM to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
+In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang <abbr title="Virtual Machine">VM</abbr> to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
 
 Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones:
 
 * `@moduledoc` - provides documentation for the current module.
 * `@doc` - provides documentation for the function or macro that follows the attribute.
-* `@behaviour` - (notice the British spelling) used for specifying an OTP or user-defined behaviour.
+* `@behaviour` - (notice the British spelling) used for specifying an <abbr title="Open Telecom Platform">OTP</abbr> or user-defined behaviour.
 * `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
 
 `@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation.

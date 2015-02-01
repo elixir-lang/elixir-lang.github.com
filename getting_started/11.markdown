@@ -168,7 +168,7 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
 
 Besides providing better error logging, there are a couple other differences: `start/1` and `start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision tree. Furthermore, tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
-We will explore those functionalities in the Mix and OTP guide, for now it is enough to remember to use Tasks to get better logging.
+We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better logging.
 
 ## 11.5 State
 
@@ -242,6 +242,6 @@ iex> Agent.get(pid, fn map -> Map.get(map, :hello) end)
 :world
 ```
 
-A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), generic event managers and event handlers (called GenEvent), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the Mix and OTP guide which will build a complete Elixir application from start to finish.
+A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), generic event managers and event handlers (called GenEvent), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
 
 For now, let's move on and explore the world of I/O in Elixir.
