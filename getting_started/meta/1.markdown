@@ -12,7 +12,7 @@ An Elixir program can be represented by its own data structures. In this chapter
 
 ## 1.1 Quoting
 
-The building block of an Elixir program is a tuple with three elements. For example, the function call `sum(1,2,3)` is represented internally as:
+The building block of an Elixir program is a tuple with three elements. For example, the function call `sum(1, 2, 3)` is represented internally as:
 
 ```elixir
 {:sum, [], [1, 2, 3]}
@@ -45,7 +45,7 @@ Variables are also represented using such triplets, except the last element is a
 
 ```iex
 iex> quote do: x
-{ :x, [], Elixir }
+{:x, [], Elixir}
 ```
 
 When quoting more complex expressions, we can see that the code is represented in such tuples, which are often nested inside each other in a structure resembling a tree. Many languages would call such representations an Abstract Syntax Tree (AST). Elixir calls them quoted expressions:
@@ -65,7 +65,7 @@ iex> Macro.to_string(quote do: sum(1, 2 + 3, 4))
 In general, the tuples above are structured according to the following format:
 
 ```elixir
-{ tuple | atom, list, list | atom }
+{tuple | atom, list, list | atom}
 ```
 
 * The first element is an atom or another tuple in the same representation;
@@ -88,7 +88,15 @@ Most Elixir code has a straight-forward translation to its underlying quoted exp
 
 Quote is about retrieving the inner representation of some particular chunk of code. However, sometimes it may be necessary to inject some other particular chunk of code inside the representation we want to retrieve.
 
-For example, imagine you have a variable `number` which contains the number you want to inject inside a quoted expression. The number can be injected into the quoted representation by using `unquote`:
+For example, imagine you have a variable `number` which contains the number you want to inject inside a quoted expression.
+
+```iex
+iex> number = 13
+iex> Macro.to_string(quote do: 11 + number)
+"11 + number"
+```
+
+That's not what we wanted, since the value of the `number` variable has not been injected and `number` has been quoted in the expression. In order to inject the *value* of the `number` variable, `unquote` has to be used inside the quoted representation:
 
 ```iex
 iex> number = 13
