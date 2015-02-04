@@ -59,7 +59,7 @@ Our `macro_unless` macro received the following:
 
 {% raw %}
 ```elixir
-macro_unless(true, {{:., [], [IO, :puts], [], ["this should never be printed"]}})
+macro_unless(true, {{:., [], [{:aliases, [], [:IO]}, :puts]}, [], ["this should never be printed"]})
 ```
 {% endraw %}
 
