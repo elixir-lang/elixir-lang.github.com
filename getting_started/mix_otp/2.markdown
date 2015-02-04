@@ -14,19 +14,19 @@ If you have skipped the Getting Started guide or if you have read it long ago, b
 
 ## 2.1 The trouble with state
 
-Elixir is an immutable language where nothing is shared by default. If we want to create buckets, store and access them from multiple places, we have two main options in Elixir:
+Elixir is an immutable language where nothing is shared by default. If we want to create buckets, and store and access them from multiple places, we have two main options in Elixir:
 
 * Processes
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
 
-We have talked about processes, while ETS is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own process, instead we use the abstractions available in Elixir and OTP:
+We have talked about processes, while <abbr title="Erlang Term Storage">ETS</abbr> is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own process, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
 
-* [Agent](/docs/stable/elixir/Agent.html) - Simple wrappers around state
-* [GenServer](/docs/stable/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more
-* [GenEvent](/docs/stable/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers
-* [Task](/docs/stable/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and easily retrieving its result at a later time
+* [Agent](/docs/stable/elixir/Agent.html) - Simple wrappers around state.
+* [GenServer](/docs/stable/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
+* [GenEvent](/docs/stable/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
+* [Task](/docs/stable/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and easily retrieving its result at a later time.
 
-We will explore all of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the VM, like `send`, `receive`, `spawn` and `link`.
+We will explore all of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
 
 ## 2.2 Agents
 
@@ -98,7 +98,10 @@ defmodule KV.Bucket do
 end
 ```
 
-With the `KV.Bucket` module defined, our test should pass! Note that we are using a HashDict to store our state instead of a `Map`, because in the current version of Elixir maps are less efficient when holding a large number of keys.
+Note that we are using a HashDict to store our state instead of a `Map`, because in the current version of Elixir maps are less efficient when holding a large number of keys.
+
+Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test` .
+
 
 ## 2.3 ExUnit callbacks
 
@@ -171,9 +174,9 @@ This distinction is important. If there are expensive actions to be done, you mu
 
 ```elixir
 def delete(bucket, key) do
-  :timer.sleep(1000) # sleeps the client
+  :timer.sleep(1000) # puts client to sleep
   Agent.get_and_update(bucket, fn dict ->
-    :timer.sleep(1000) # sleeps the server
+    :timer.sleep(1000) # puts server to sleep
     HashDict.pop(dict, key)
   end)
 end

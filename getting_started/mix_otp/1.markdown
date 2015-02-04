@@ -32,13 +32,13 @@ OK
 
 In order to build our key-value application, we are going to use three main tools:
 
-* OTP is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications. In this chapter we will explore how many aspects from OTP integrate with Elixir, including supervision trees, event managers and more;
+* ***OTP*** _(Open Telecom Platform)_ is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications. In this chapter we will explore how many aspects from OTP integrate with Elixir, including supervision trees, event managers and more;
 
-* Mix is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;
+* ***Mix*** is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;
 
-* ExUnit is a test-unit based framework that ships with Elixir;
+* ***ExUnit*** is a test-unit based framework that ships with Elixir;
 
-In this chapter, we will create our first project using Mix and explore different features in OTP, Mix and ExUnit as we go.
+In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
 > Note: this guide requires Elixir v0.15.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting_started/1.html).
 >
@@ -79,7 +79,7 @@ Let's take a brief look at those generated files.
 
 ## 1.2 Project compilation
 
-A file named `mix.exs` was generated inside our new project and its main responsibility is to configure our project. Let's take a look at it (comments removed):
+A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let's take a look at it (comments removed):
 
 ```elixir
 defmodule KV.Mixfile do
@@ -114,14 +114,15 @@ end
 
 This structure is enough to compile our project:
 
+    $ cd kv
     $ mix compile
 
-Will generate:
+Will output:
 
     Compiled lib/kv.ex
     Generated kv.app
 
-Notice the `lib/kv.ex` file was compiled and `kv.app` file was generated. This `.app` file is generated with the information from the `application/0` function in the `mix.exs` file. We will further explore `mix.exs` configuration features in future chapters.
+Notice the `lib/kv.ex` file was compiled and `kv.app` file was generated. All this took place in a directory structure of its own, inside the `_build` folder. This `.app` file is generated with the information from the `application/0` function in the `mix.exs` file. We will further explore `mix.exs` configuration features in future chapters.
 
 Once the project is compiled, you can start an `iex` session inside the project by running:
 
@@ -174,7 +175,7 @@ Change the assertion in `test/kv_test.exs` to the following:
 assert 1 + 1 == 3
 ```
 
-Now run `mix test` again (notice this time there was no compilation):
+Now run `mix test` again (notice this time there will be no compilation):
 
     1) test the truth (KVTest)
        test/kv_test.exs:4
@@ -190,7 +191,7 @@ Now run `mix test` again (notice this time there was no compilation):
 
 For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left-hand side (lhs) and right-hand side (rhs) of the `==` operator.
 
-In the second line of the failure, right below the test name, there is the location the test was defined. If you copy the test location in the second line, containing the file and line, and paste it in-front of `mix test`, Mix will load and run just that particular test:
+In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in this full second line (including the file and line number) and append it to `mix test`, Mix will load and run just that particular test:
 
     $ mix test test/kv_test.exs:4
 
@@ -208,7 +209,7 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 > Note: If you add dependencies to your project, they will not inherit your project's environment, but instead run with their `:prod` environment settings!
 
-By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom:
+By default, these environments behave the same and all the configurations we have seen so far will affect all three environments. Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom:
 
 ```elixir
 def project do

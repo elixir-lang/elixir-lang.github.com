@@ -10,7 +10,7 @@ guide: 12
 
 This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html) and [`Path`](/docs/stable/elixir/Path.html).
 
-We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the VM.
+We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the <abbr title="Virtual Machine">VM</abbr>.
 
 ## 12.1 The `IO` module
 
@@ -97,7 +97,7 @@ iex> Path.expand("~/hello")
 
 Using functions from the `Path` module as opposed to just manipulating binaries is preferred since the `Path` module takes care of different operating systems transparently. For example, `Path.join/2` joins a path with slashes (`/`) on Unix-like systems and with backslashes (`\\`) on Windows.
 
-With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the VM and other curiosities.
+With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.
 
 ## 12.4 Processes and group leaders
 
@@ -131,7 +131,7 @@ iex> IO.read(pid, 2)
 "he"
 ```
 
-By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**.
+By modelling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**.
 
 When you write to `:stdio`, you are actually sending a message to the group leader, which writes to the standard-input file descriptor:
 
@@ -167,4 +167,4 @@ On the other hand, `:stdio` and files opened with `:utf8` encoding work with the
 
 Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
 
-This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html), [`Path`](/docs/stable/elixir/Path.html) and [`StringIO`](/docs/stable/elixir/StringIO.html) - as well as how the VM uses processes for the underlying IO mechanisms and how to use `chardata` and `iodata` for IO operations.
+This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html), [`Path`](/docs/stable/elixir/Path.html) and [`StringIO`](/docs/stable/elixir/StringIO.html) - as well as how the <abbr title="Virtual Machine">VM</abbr> uses processes for the underlying IO mechanisms and how to use `chardata` and `iodata` for IO operations.
