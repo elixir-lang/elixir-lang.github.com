@@ -7,55 +7,17 @@ section: getting_started
 <div id="sidebar-primary" class="sidebar">
   {% include search.html %}
 
-  <div class="widget">
-    <h3 class="widget-title">Getting Started</h3>
-    <ol>
-      <li><a class="spec" href="/getting_started/1.html">Introduction</a></li>
-      <li><a class="spec" href="/getting_started/2.html">Basic types</a></li>
-      <li><a class="spec" href="/getting_started/3.html">Basic operators</a></li>
-      <li><a class="spec" href="/getting_started/4.html">Pattern matching</a></li>
-      <li><a class="spec" href="/getting_started/5.html">case, cond and if</a></li>
-      <li><a class="spec" href="/getting_started/6.html">Binaries, strings and char lists</a></li>
-      <li><a class="spec" href="/getting_started/7.html">Keywords, maps and dicts</a></li>
-      <li><a class="spec" href="/getting_started/8.html">Modules</a></li>
-      <li><a class="spec" href="/getting_started/9.html">Recursion</a></li>
-      <li><a class="spec" href="/getting_started/10.html">Enumerables and streams</a></li>
-      <li><a class="spec" href="/getting_started/11.html">Processes</a></li>
-      <li><a class="spec" href="/getting_started/12.html">IO and the file system</a></li>
-      <li><a class="spec" href="/getting_started/13.html">alias, require and import</a></li>
-      <li><a class="spec" href="/getting_started/14.html">Module attributes</a></li>
-      <li><a class="spec" href="/getting_started/15.html">Structs</a></li>
-      <li><a class="spec" href="/getting_started/16.html">Protocols</a></li>
-      <li><a class="spec" href="/getting_started/17.html">Comprehensions</a></li>
-      <li><a class="spec" href="/getting_started/18.html">Sigils</a></li>
-      <li><a class="spec" href="/getting_started/19.html">try, catch and rescue</a></li>
-      <li><a class="spec" href="/getting_started/20.html">Typespecs and behaviours</a></li>
-      <li><a class="spec" href="/getting_started/21.html">Where to go next</a></li>
-    </ol>
-  </div>
-  <div class="widget">
-    <h3 class="widget-title">Mix and OTP</h3>
-    <ol>
-      <li><a class="spec" href="/getting_started/mix_otp/1.html">Introduction to Mix</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/2.html">Agent</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/3.html">GenServer</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/4.html">GenEvent</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/5.html">Supervisor and Application</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/6.html">ETS</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/7.html">Dependencies and umbrella apps</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/8.html">Task and gen_tcp</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/9.html">Docs, tests and pipelines</a></li>
-      <li><a class="spec" href="/getting_started/mix_otp/10.html">Distributed tasks and configuration</a></li>
-    </ol>
-  </div>
-  <div class="widget">
-    <h3 class="widget-title">Meta-programming in Elixir</h3>
-    <ol>
-      <li><a class="spec" href="/getting_started/meta/1.html">Quote and unquote</a></li>
-      <li><a class="spec" href="/getting_started/meta/2.html">Macros</a></li>
-      <li><a class="spec" href="/getting_started/meta/3.html">Domain Specific Languages</a></li>
-    </ol>
-  </div>
+  {% assign guides = site.data.getting_started  %}
+  {% for guide in site.data.getting_started %}
+    <div class="widget">
+     <h3 class="widget-title">{{guide.title}}</h3>
+      <ol>
+        {% for node in guide.pages %}
+          <li><a class="spec" href="{{guide.dir}}{{node.slug}}.html" title="{{node.title | escape}}">{{node.title}}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  {% endfor %}
 
   {% include learning-resources.html %}
   {% include code-editor-support.html %}
@@ -67,17 +29,33 @@ section: getting_started
     {{ content }}
   </article><!-- .hfeed -->
 
-  {% if page.guide %}
-  <div class="pagination loop-pagination">
-    {% if page.guide > 1 %}
-      <a href="{{page.guide | minus:1}}.html" class="previous page-numbers spec">&larr; Previous</a>
+  {% assign url_parts = page.url | split: '/' %}
+  {% assign url_parts_size = url_parts | size %}
+  {% assign file_name = url_parts | last %}
+  {% assign guide_base_url = page.url | replace: file_name %}
+  {% assign page_slug = file_name | replace: '.html' %}
+
+  {% assign guides = site.data.getting_started  %}
+  {% for guide in site.data.getting_started %}
+    {% if guide.dir == guide_base_url %}
+      {% for node in guide.pages %}
+        {% if node.slug == page_slug %}
+          <div class="pagination loop-pagination">
+            {% unless forloop.first %}
+              <a href="{{guide.dir}}{{prev.slug}}.html" class="previous page-numbers spec" title="{{prev.title | escape}}">&larr; Previous</a>
+            {% endunless %}
+              <a class="page-numbers spec" href="#container">Top</a>
+            {% unless forloop.last %}
+              {% assign next = guide.pages[forloop.index] %}
+              <a href="{{guide.dir}}{{next.slug}}.html" class="previous page-numbers spec" title="{{next.title | escape}}">Next &rarr;</a>
+            {% endunless %}
+          </div>
+        {% endif %}
+        {% assign prev = node %}
+      {% endfor %}
     {% endif %}
-      <a class="page-numbers spec" href="#container">Top</a>
-    {% unless page.last %}
-      <a href="{{page.guide | plus:1}}.html" class="next page-numbers spec">Next &rarr;</a>
-    {% endunless %}
-  </div>
-  {% endif %}
+  {% endfor %}
+
 </div><!-- #content -->
 
 {% include bottom.html %}
