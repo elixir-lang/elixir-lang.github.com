@@ -175,14 +175,17 @@ Our registry is almost complete. The only remaining issue is that the registry m
 test "removes buckets on exit", %{registry: registry} do
   KV.Registry.create(registry, "shopping")
   {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  Process.monitor(bucket)
   Agent.stop(bucket)
-  assert KV.Registry.lookup(registry, "shopping") == :error
+  receive do
+    msg -> assert KV.Registry.lookup(registry, "shopping") == :error
+  end
 end
 ```
 
 The test above will fail on the last assertion as the bucket name remains in the registry even after we stop the bucket process.
 
-In order to fix this bug, we need the registry to monitor every bucket it spawns. Once we set up a monitor, the registry will receive a notification every time a bucket exits, allowing us to clean the dictionary up.
+In order to fix this bug, we need the registry to monitor every bucket it spawns. Once we set up a monitor, the registry will receive a notification every time a bucket exits, allowing us to clean the dictionary up. Additionally, we add a monitor in the test to ensure we only run the assertion after the bucket has been stopped. Otherwise, we create a race condition where the final assertion might run before message has been sent and the bucket has been removed.
 
 Let's first play with monitors by starting a new console with `iex -S mix`:
 
