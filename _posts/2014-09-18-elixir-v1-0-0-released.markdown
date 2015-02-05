@@ -24,12 +24,12 @@ Elixir will follow [semantic versioning](http://semver.org), which means code wr
 
 Elixir is composed of 6 applications, all under the same versioning constraints:
 
-  * [Elixir](/docs/stable/elixir) - the Elixir compiler, runtime and the standard library
-  * [EEx](/docs/stable/eex) - Elixir's templating library, useful for generating any kind of document dynamically
-  * [ExUnit](/docs/stable/ex_unit) - Elixir's unit test library, with support for concurrent testing, custom formatters, filters and much more
-  * [IEx](/docs/stable/iex) - Elixir's interactive shell with code reloading, auto-complete, and easy access to documentation, typespecs and more
-  * [Logger](/docs/stable/logger) - the latest addition to the group, Logger provides reliable logging and configurable backends (with syslog, file and many other backends provided by the community)
-  * [Mix](/docs/stable/mix) - Elixir's build tool that generates, compiles and tests projects as well as manages your dependencies
+  * [Elixir](/docs/stable/elixir/) - the Elixir compiler, runtime and the standard library
+  * [EEx](/docs/stable/eex/) - Elixir's templating library, useful for generating any kind of document dynamically
+  * [ExUnit](/docs/stable/ex_unit/) - Elixir's unit test library, with support for concurrent testing, custom formatters, filters and much more
+  * [IEx](/docs/stable/iex/) - Elixir's interactive shell with code reloading, auto-complete, and easy access to documentation, typespecs and more
+  * [Logger](/docs/stable/logger/) - the latest addition to the group, Logger provides reliable logging and configurable backends (with syslog, file and many other backends provided by the community)
+  * [Mix](/docs/stable/mix/) - Elixir's build tool that generates, compiles and tests projects as well as manages your dependencies
 
 With v1.0.0, we are providing a stable platform for the community to leverage and extend, and we are extremely excited with the projects and possibilities that are ahead of us!
 
@@ -55,7 +55,7 @@ These expectations also apply to future releases under the v1 branch, except for
 
 ## Learn more
 
-You can get started with Elixir via our [Getting Started guide](/getting_started/1.html). There are quite some Elixir books out there too, now getting sent to the presses, quite a few can be found in the sidebar, which also includes screencasts and other resources.
+You can get started with Elixir via our [Getting Started guide](/getting-started/introduction.html). There are quite some Elixir books out there too, now getting sent to the presses, quite a few can be found in the sidebar, which also includes screencasts and other resources.
 
 You can also learn more about Elixir by checking out [the videos from ElixirConf 2014](http://www.confreaks.com/events/elixirconf2014), the first (and so far the best) Elixir conference ever! You can learn more about [the language history](http://www.confreaks.com/videos/4134-elixirconf2014-keynote-elixir), [how Elixir can change the way you code](http://www.confreaks.com/videos/4119-elixirconf2014-opening-keynote-think-different) or [even hear stories of how Elixir is being used in production](http://www.confreaks.com/videos/4131-elixirconf2014-otp-in-production-the-nitty-gritty-details-of-game-servers).
 

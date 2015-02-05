@@ -50,4 +50,4 @@ under some circunstances when using records.
 
 Lastly, but not least importantly, I'd like to mention that we're very excited about how the community around Elixir is building up. Thank you all for being around and supporting us!
 
-[Learn more about Elixir](/getting_started/1.html)!
+[Learn more about Elixir](/getting-started/introduction.html)!
