@@ -226,7 +226,7 @@ Mix will default to the `:dev` environment, except for the `test` task that will
 
 ## 1.5 Exploring
 
-There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](/docs/stable/mix).
+There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](/docs/stable/mix/).
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 
