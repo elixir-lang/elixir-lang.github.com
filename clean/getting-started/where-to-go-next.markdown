@@ -19,7 +19,7 @@ In order to get your first project started, Elixir ships with a build tool calle
 
 We have written a guide that covers how to build an Elixir application, with its own supervision tree, configuration, tests and more. The application works as a distributed key-value store where we organize key-value pairs into buckets and distribute those buckets across multiple nodes:
 
-* [Mix and OTP](/getting_started/mix_otp/1.html)
+* [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html)
 
 ## 21.2 Community and other resources
 

@@ -8,7 +8,7 @@ guide: 15
 
 {% include toc.html %}
 
-In [chapter 7](/getting_started/7.html) we learned about maps:
+In [chapter 7](/getting-started/maps-and-dicts.html) we learned about maps:
 
 ```iex
 iex> map = %{a: 1, b: 2}

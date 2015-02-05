@@ -10,7 +10,7 @@ guide: 2
 
 In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows reading and modification by different processes.
 
-If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting_started/11.html). We will use it as starting point.
+If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting-started/processes.html). We will use it as starting point.
 
 ## 2.1 The trouble with state
 

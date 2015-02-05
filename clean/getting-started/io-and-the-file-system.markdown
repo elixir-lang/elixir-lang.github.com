@@ -108,7 +108,7 @@ iex> {:ok, file} = File.open "hello", [:write]
 {:ok, #PID<0.47.0>}
 ```
 
-That happens because the `IO` module actually works with processes (see [chapter 11](/getting_started/11.html)). When you write `IO.write(pid, binary)`, the `IO` module will send a message to the process identified by `pid` with the desired operation. Let's see what happens if we use our own process:
+That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). When you write `IO.write(pid, binary)`, the `IO` module will send a message to the process identified by `pid` with the desired operation. Let's see what happens if we use our own process:
 
 ```iex
 iex> pid = spawn fn ->
@@ -148,7 +148,7 @@ The group leader can be configured per process and is used in different situatio
 
 ## 12.5 `iodata` and `chardata`
 
-In all of the examples above, we used binaries when writing to files. In the chapter ["Binaries, strings and char lists"](/getting_started/6.html), we mentioned how strings are simply bytes while char lists are lists with code points.
+In all of the examples above, we used binaries when writing to files. In the chapter ["Binaries, strings and char lists"](/getting-started/binaries-strings-and-char-lists.html), we mentioned how strings are simply bytes while char lists are lists with code points.
 
 The functions in `IO` and `File` also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:
 
