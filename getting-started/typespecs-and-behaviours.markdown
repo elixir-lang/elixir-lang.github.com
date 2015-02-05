@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 20 Typespecs and behaviours
 guide: 20
 ---

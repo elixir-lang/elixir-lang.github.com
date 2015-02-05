@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 10 Distributed tasks and configuration
 guide: 10
 last: true

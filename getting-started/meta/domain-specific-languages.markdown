@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 3 Domain Specific Languages
 guide: 3
 last: true

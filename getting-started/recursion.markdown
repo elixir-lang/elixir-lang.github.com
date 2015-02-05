@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 9 Recursion
 guide: 9
 ---

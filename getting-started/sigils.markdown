@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 18 Sigils
 guide: 18
 ---

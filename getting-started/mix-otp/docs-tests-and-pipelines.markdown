@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 9 Docs, tests and pipelines
 guide: 9
 ---

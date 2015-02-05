@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 5 case, cond and if
 guide: 5
 ---

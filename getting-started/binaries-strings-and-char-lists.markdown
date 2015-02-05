@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 6 Binaries, strings and char lists
 guide: 6
 ---

@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 13 alias, require and import
 guide: 13
 ---

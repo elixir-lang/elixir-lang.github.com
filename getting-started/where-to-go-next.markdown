@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 21 Where to go next
 guide: 21
 last: true

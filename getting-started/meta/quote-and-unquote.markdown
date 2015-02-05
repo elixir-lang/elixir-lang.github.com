@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 1 Quote and unquote
 guide: 1
 ---

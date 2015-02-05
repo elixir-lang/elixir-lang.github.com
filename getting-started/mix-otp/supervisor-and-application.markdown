@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 5 Supervisor and Application
 guide: 5
 ---

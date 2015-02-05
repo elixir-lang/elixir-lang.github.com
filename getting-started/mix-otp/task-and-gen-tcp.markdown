@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 8 Task and gen_tcp
 guide: 8
 ---

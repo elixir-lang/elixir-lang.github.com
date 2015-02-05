@@ -1,6 +1,6 @@
 ---
-layout: getting_started
-title: Introduction
+layout: getting-started
+title: 1 Introduction
 guide: 1
 ---
 

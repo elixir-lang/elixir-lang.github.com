@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 1 Introduction to Mix
 guide: 1
 ---

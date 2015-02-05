@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 10 Enumerables and Streams
 guide: 10
 ---

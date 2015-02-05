@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 7 Keywords, maps and dicts
 guide: 7
 ---

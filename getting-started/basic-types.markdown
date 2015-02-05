@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 2 Basic types
 guide: 2
 ---

@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 16 Protocols
 guide: 16
 ---

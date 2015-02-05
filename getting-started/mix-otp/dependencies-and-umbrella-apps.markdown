@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 7 Dependencies and umbrella projects
 guide: 7
 ---

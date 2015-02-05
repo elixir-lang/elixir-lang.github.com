@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 8 Modules
 guide: 8
 ---

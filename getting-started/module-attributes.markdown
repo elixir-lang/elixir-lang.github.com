@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 14 Module attributes
 guide: 14
 ---

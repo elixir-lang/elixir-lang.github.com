@@ -1,5 +1,5 @@
 ---
-layout: getting_started
+layout: getting-started
 title: 19 try, catch and rescue
 guide: 19
 ---
