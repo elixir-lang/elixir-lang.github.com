@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 13 alias, require and import
-guide: 13
-redirect_from: "/getting_started/13.html"
+title: alias, require and import
+redirect_from: /getting_started/13.html
 ---
 
 # {{ page.title }}
@@ -11,7 +10,7 @@ redirect_from: "/getting_started/13.html"
 
 In order to facilitate software reuse, Elixir provides three directives. As we are going to see below, they are called directives because they have **lexical scope**.
 
-## 13.1 alias
+## `alias`
 
 `alias` allows you to set up aliases for any given module name. Imagine our `Math` module uses a special list implementation for doing math specific operations:
 
@@ -60,7 +59,7 @@ end
 
 In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
 
-## 13.2 require
+## `require`
 
 Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
 
@@ -79,7 +78,7 @@ In Elixir, `Integer.is_odd/1` is defined as a macro so that it can be used as a 
 
 In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
-## 13.3 import
+## `import`
 
 We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can simply import it:
 
@@ -119,7 +118,7 @@ In the example above, the imported `List.duplicate/2` is only visible within tha
 
 Note that `import`ing a module automatically `require`s it.
 
-## 13.4 Aliases
+## Aliases
 
 At this point you may be wondering: what exactly an Elixir alias is and how is it represented?
 
@@ -154,7 +153,7 @@ iex> mod.flatten([1, [2], 3])
 
 We are simply calling the function `flatten` on the atom `:lists`.
 
-## 13.5 Nesting
+## Nesting
 
 Now that we have talked about aliases, we can talk about nesting and how it works in Elixir. Consider the following example:
 

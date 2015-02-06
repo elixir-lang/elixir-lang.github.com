@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 6 ETS
-guide: 6
-redirect_from: "/getting_started/mix_otp/6.html"
+title: ETS
+redirect_from: /getting_started/mix_otp/6.html
 ---
 
 # {{ page.title }}
@@ -15,7 +14,7 @@ In this chapter we will learn about ETS (Erlang Term Storage), and how to use it
 
 > Warning! Don't use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know *whether* you should cache, and *what* you should cache. This chapter is merely an example of how ETS can be used, once you've determined the need.
 
-## 6.1 ETS as a cache
+## ETS as a cache
 
 ETS allows us to store any Erlang/Elixir term in an in-memory table. Working with ETS tables is done via [erlang's `:ets` module](http://www.erlang.org/doc/man/ets.html):
 
@@ -196,7 +195,7 @@ The reason those failures are happening is because, for didactic purposes, we ha
 1. We are prematurely optimizing (by adding this cache layer)
 2. We are using `cast/2` (while we should be using `call/2`)
 
-## 6.2 Race conditions?
+## Race conditions?
 
 Developing in Elixir does not make your code free of race conditions. However, Elixir's simple abstractions where nothing is shared by default make it easier to spot a race condition's root cause.
 
@@ -370,7 +369,7 @@ end
 
 Note that we are using `KV.Registry` as name for the ETS table as well, which makes it convenient to debug, as it points to the module using it. ETS names and process names are stored in different registries, so there is no chance of conflicts.
 
-## 6.3 ETS as persistent storage
+## ETS as persistent storage
 
 So far we have created an ETS table during the registry initialization but we haven't bothered to close the table on registry termination. That's because the ETS table is "linked" (in a figure of speech) to the process that creates it. If that process dies, the table is automatically closed.
 

@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 3 GenServer
-guide: 3
-redirect_from: "/getting_started/mix_otp/3.html"
+title: GenServer
+redirect_from: /getting_started/mix_otp/3.html
 ---
 
 # {{ page.title }}
@@ -42,7 +41,7 @@ The registry needs to guarantee the dictionary is always up to date. For example
 
 We will use a [GenServer](/docs/stable/elixir/GenServer.html) to create a registry process that can monitor the bucket process. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
-## 3.1 Our first GenServer
+## Our first GenServer
 
 A GenServer is implemented in two parts: the client API and the server callbacks, all in a single module. Create a new file at `lib/kv/registry.ex` with the following contents:
 
@@ -120,7 +119,7 @@ There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks
 
 For now, let's write some tests to guarantee our GenServer works as expected.
 
-## 3.2 Testing a GenServer
+## Testing a GenServer
 
 Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
 
@@ -168,7 +167,7 @@ end
 
 In the example above, the new `handle_call/3` clause is returning the atom `:stop`, along side the reason the server is being stopped (`:normal`), the reply `:ok` and the server state.
 
-## 3.3 The need for monitoring
+## The need for monitoring
 
 Our registry is almost complete. The only remaining issue is that the registry may become stale if a bucket stops or crashes. Let's add a test to `KV.RegistryTest` that exposes this bug:
 
@@ -246,7 +245,7 @@ Observe that we were able to considerably change the server implementation witho
 
 Finally, different from the other callbacks, we have defined a "catch-all" clause for `handle_info/2` that discards any unknown message. To understand why, let's move on to the next section.
 
-## 3.4 call, cast or info?
+## `call`, `cast` or `info`?
 
 So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handle_info/2`. Deciding when to use each is straightforward:
 
@@ -260,7 +259,7 @@ Since any message, including the ones sent via `send/2`, go to `handle_info/2`, 
 
 We don't need to worry about this for `handle_call/3` and `handle_cast/2` because these requests are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
 
-## 3.5 Monitors or links?
+## Monitors or links?
 
 We have previously learned about links in the [Process chapter](/getting-started/processes.html). Now, with the registry complete, you may be wondering: when should we use monitors and when should we use links?
 

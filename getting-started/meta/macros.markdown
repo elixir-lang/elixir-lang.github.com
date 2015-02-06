@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 2 Macros
-guide: 2
-redirect_from: "/getting_started/meta/2.html"
+title: Macros
+redirect_from: /getting_started/meta/2.html
 ---
 
 # {{ page.title }}
@@ -13,7 +12,7 @@ Macros can be defined in Elixir using `defmacro/2`.
 
 > For this chapter, we will be using files instead of running code samples in IEx. That's because the code samples will span multiple lines of code and typing them all in IEx can be counter-productive. You should be able to run the code samples by saving them into a `macros.exs` file and running it with `elixir macros.exs` or `iex macros.exs`.
 
-## 2.1 Our first macro
+## Our first macro
 
 In order to better understand how macros work, let's create a new module where we are going to implement `unless`, which does the opposite of `if`, as a macro and as a function:
 
@@ -102,7 +101,7 @@ Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many 
 
 We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](/docs/stable/elixir/Kernel.SpecialForms.html).
 
-## 2.2 Macros hygiene
+## Macros hygiene
 
 Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
@@ -193,7 +192,7 @@ end
 
 Take note of the second argument to `Macro.var/2`. This is the context being used and will determine hygiene as described in the next section.
 
-## 2.3 The environment
+## The environment
 
 When calling `Macro.expand_once/2` earlier in this chapter, we used the special form `__ENV__`.
 
@@ -214,7 +213,7 @@ iex> __ENV__.requires
 
 Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](/docs/stable/elixir/Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](/docs/stable/elixir/Macro.Env.html).
 
-## 2.4 Private macros
+## Private macros
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time.
 
@@ -228,7 +227,7 @@ iex> defmodule Sample do
 ** (CompileError) iex:2: function two/0 undefined
 ```
 
-## 2.5 Write macros responsibly
+## Write macros responsibly
 
 Macros are a powerful construct and Elixir provides many mechanisms to ensure they are used responsibly.
 

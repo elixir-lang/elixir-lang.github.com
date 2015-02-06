@@ -1,9 +1,7 @@
 ---
 layout: getting-started
-title: 21 Where to go next
-guide: 21
-last: true
-redirect_from: "/getting_started/21.html"
+title: Where to go next
+redirect_from: /getting_started/21.html
 ---
 
 # {{ page.title }}
@@ -12,7 +10,7 @@ redirect_from: "/getting_started/21.html"
 
 Eager to learn more? Keep reading!
 
-## 21.1 Build your first Elixir project
+## Build your first Elixir project
 
 In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by simply running:
 
@@ -22,7 +20,7 @@ We have written a guide that covers how to build an Elixir application, with its
 
 * [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html)
 
-## 21.2 Community and other resources
+## Community and other resources
 
 On the sidebar, you can find links to Elixir books and screencasts. There are plenty of Elixir resources out there, like conference talks, open source projects, and other learning material produced by the community.
 
@@ -30,7 +28,7 @@ Remember that in case of any difficulties, you can always visit the **#elixir-la
 
 Don't forget that you can also check the [source code of Elixir itself](https://github.com/elixir-lang/elixir), which is mostly written in Elixir (mainly the `lib` directory), or [explore Elixir's documentation](/docs.html).
 
-## 21.3 A Byte of Erlang
+## A byte of Erlang
 
 As the main page of this site puts it:
 

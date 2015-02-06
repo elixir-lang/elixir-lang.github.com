@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 9 Docs, tests and pipelines
-guide: 9
-redirect_from: "/getting_started/mix_otp/9.html"
+title: Docs, tests and pipelines
+redirect_from: /getting_started/mix_otp/9.html
 ---
 
 # {{ page.title }}
@@ -31,7 +30,7 @@ OK
 
 After the parsing is done, we will update our server to dispatch the parsed commands to the `:kv` application we built previously.
 
-## 9.1 Doctests
+## Doctests
 
 On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via `mix help` or by typing `h Enum` or another module in an IEx console.
 
@@ -163,7 +162,7 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 
 You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/ExUnit.DocTest.html).
 
-## 9.2 Pipelines
+## Pipelines
 
 With our command parser in hand, we can finally start implementing the logic that runs the commands. Let's add a stub definition for this function for now:
 
@@ -291,7 +290,7 @@ With `pipe_matching/3` we can ask Elixir to pipe the value `x` from each step if
 
 Excellent! Feel free to read the [elixir-pipes](https://github.com/batate/elixir-pipes) project documentation to learn about other options for expressing pipelines. Let's continue moving forward with our server implementation.
 
-## 9.3 Running commands
+## Running commands
 
 The last step is to implement `KVServer.Command.run/1`, to run the parsed commands against the `:kv` application. Its implementation is shown below:
 

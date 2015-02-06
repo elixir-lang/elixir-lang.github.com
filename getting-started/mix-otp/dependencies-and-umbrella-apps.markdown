@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 7 Dependencies and umbrella projects
-guide: 7
-redirect_from: "/getting_started/mix_otp/7.html"
+title: Dependencies and umbrella projects
+redirect_from: /getting_started/mix_otp/7.html
 ---
 
 # {{ page.title }}
@@ -35,7 +34,7 @@ However, instead of adding more code to the `kv` application, we are going to bu
 
 Before creating our new application, we must discuss how Mix handles dependencies. In practice, there are two kinds of dependencies we usually work with: internal and external dependencies. Mix supports mechanisms to work with both of them.
 
-## 7.1 External dependencies
+## External dependencies
 
 External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the [Plug](http://github.com/elixir-lang/plug) project as an external dependency.
 
@@ -71,7 +70,7 @@ Mix provides many tasks for working with dependencies, which can be seen in `mix
 
 The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependecies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](/docs/stable/mix/Mix.Tasks.Deps.html).
 
-## 7.2 Internal dependencies
+## Internal dependencies
 
 Internal dependencies are the ones that are specific to your project. They usually don't make sense outside the scope of your project/company/organization. Most of the time, you want to keep them private, whether due to technical, economic or business reasons.
 
@@ -104,7 +103,7 @@ The interesting thing about this approach is that Mix has many conveniences for 
 
 So let's get started!
 
-## 7.3 Umbrella projects
+## Umbrella projects
 
 Let's start a new project using `mix new`. This new project will be named `kv_umbrella` and we need to pass the `--umbrella` option when creating it. Do not create this new project inside the existing `kv` project!
 
@@ -215,7 +214,7 @@ And it works!
 
 Since we want `kv_server` to eventually use the functionality we defined in `kv`, we need to add `kv` as a dependency to our application.
 
-## 7.4 In umbrella dependencies
+## In umbrella dependencies
 
 Mix supports an easy mechanism to make one umbrella child depend on another. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
 
@@ -254,7 +253,7 @@ Now you can run tests for both projects from the umbrella root with `mix test`. 
 
 Remember that umbrella projects are a convenience to help you organize and manage your applications. Applications inside the `apps` directory are still decoupled from each other. Each application has its independent configuration, and dependencies in between them must be explicitly listed. This allows them to be developed together, but compiled, tested and deployed independently if desired.
 
-## 7.5 Summing up
+## Summing up
 
 In this chapter we have learned more about Mix dependencies and umbrella projects. We have decided to build an umbrella project because we consider `kv` and `kv_server` to be internal dependencies that matter only in the context of this project.
 

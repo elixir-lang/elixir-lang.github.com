@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 14 Module attributes
-guide: 14
-redirect_from: "/getting_started/14.html"
+title: Module attributes
+redirect_from: /getting_started/14.html
 ---
 
 # {{ page.title }}
@@ -17,7 +16,7 @@ Module attributes in Elixir serve three purposes:
 
 Let's check each case, one by one.
 
-## 14.1 As annotations
+## As annotations
 
 Elixir brings the concept of module attributes from Erlang. For example:
 
@@ -80,7 +79,7 @@ You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) fo
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
-## 14.2 As constants
+## As constants
 
 Elixir developers will often use module attributes to be used as constants:
 
@@ -118,7 +117,7 @@ MyServer.second_data #=> 13
 
 Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during module compilation.
 
-## 14.3 As temporary storage
+## As temporary storage
 
 One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
 

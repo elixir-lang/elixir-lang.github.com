@@ -1,9 +1,7 @@
 ---
 layout: getting-started
-title: 10 Distributed tasks and configuration
-guide: 10
-last: true
-redirect_from: "/getting_started/mix_otp/10.html"
+title: Distributed tasks and configuration
+redirect_from: /getting_started/mix_otp/10.html
 ---
 
 # {{ page.title }}
@@ -25,7 +23,7 @@ You may wonder why we don't simply tell the node we find in our routing table to
 
 > Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines in the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Second, you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info). Third, if you want to learn more about distribution in general, we recommend [this great Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon).
 
-## 10.1 Our first distributed code
+## Our first distributed code
 
 Elixir ships with facilities to connect nodes and exchange information between them. In fact, we use the same concepts of processes, message passing and receiving messages when working in a distributed environment because Elixir processes are *location transparent*. This means that when sending a message, it doesn't matter if the recipient process is on the same node or on another node, the <abbr title="Virtual Machine">VM</abbr> will be able to deliver the message in both cases.
 
@@ -100,7 +98,7 @@ The options above have different properties. Both `:rpc` and using a GenServer w
 
 For our routing layer, we are going to use tasks, but feel free to explore the other alternatives too.
 
-## 10.2 async/await
+## async/await
 
 So far we have explored tasks that are started and run in isolation, with no regard for their return value. However, sometimes it is useful to run a task to compute a value and read its result later on. For this, tasks also provide the `async/await` pattern:
 
@@ -112,7 +110,7 @@ res + Task.await(task)
 
 `async/await` provides a very simple mechanism to compute values concurrently. Not only that, `async/await` can also be used with the same [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) we have used in previous chapters. We just need to call `Task.Supervisor.async/2` instead of `Task.Supervisor.start_child/2` and use `Task.await/2` to read the result later on.
 
-## 10.3 Distributed tasks
+## Distributed tasks
 
 Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `lib/kv/supervisor.ex` from the `:kv` application. Let's add a task supervisor to the tree:
 
@@ -138,7 +136,7 @@ iex> Task.await(task)
 
 Our first distributed task is straightforward: it simply gets the name of the node the task is running on. With this knowledge in hand, let's finally write the routing code.
 
-## 10.4 Routing layer
+## Routing layer
 
 Create a file at `lib/kv/router.ex` with the following contents:
 
@@ -219,7 +217,7 @@ And now run tests with:
 
 Our test should successfuly pass. Excellent!
 
-## 10.5 Test filters and tags
+## Test filters and tags
 
 Although our tests pass, our testing structure is getting more complex. In particular, running tests with only `mix test` causes failures in our suite, since our test requires a connection to another node.
 
@@ -261,7 +259,7 @@ The `mix test` command also allows us to dynamically include and exclude tags. F
 
 You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html).
 
-## 10.6 Application environment and configuration
+## Application environment and configuration
 
 So far we have hardcoded the routing table into the `KV.Router` module. However, we would like to make the table dynamic. This allows us not only to configure development/test/production, but also to allow different nodes to run with different entries in the routing table. There is a feature of  <abbr title="Open Telecom Platform">OTP</abbr> that does exactly that: the application environment.
 
@@ -342,7 +340,7 @@ Finally, we have learned some new things in this chapter, and they could be appl
 
 * change and configure the `:kv_server` application to use the routing functionality instead of dispatching directly to the local `KV.Registry`. For `:kv_server` tests, you can make the routing table simply point to the current node itself
 
-## 10.7 Summing up
+## Summing up
 
 In this chapter we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.
 

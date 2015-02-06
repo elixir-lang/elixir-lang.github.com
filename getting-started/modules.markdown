@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 8 Modules
-guide: 8
-redirect_from: "/getting_started/8.html"
+title: Modules
+redirect_from: /getting_started/8.html
 ---
 
 # {{ page.title }}
@@ -31,7 +30,7 @@ iex> Math.sum(1, 2)
 
 In the following sections, our examples are going to get a bit more complex, and it can be tricky to type them all in the shell. It's about time for us to learn how to compile Elixir code and also how to run Elixir scripts.
 
-## 8.1 Compilation
+## Compilation
 
 Most of the time it is convenient to write modules into files so they can be compiled and reused. Let's assume we have a file named `math.ex` with the following contents:
 
@@ -62,7 +61,7 @@ Elixir projects are usually organized into three directories:
 
 When working on actual projects, the build tool called `mix` will be responsible for compiling and setting up the proper paths for you. For learning purposes, Elixir also supports a scripted mode which is more flexible and does not generate any compiled artifacts.
 
-## 8.2 Scripted mode
+## Scripted mode
 
 In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting, without the need for compilation. For instance, we can create a file called `math.exs`:
 
@@ -82,7 +81,7 @@ And execute it as:
 
 The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
 
-## 8.3 Named functions
+## Named functions
 
 Inside a module, we can define functions with `def/2` and private functions with `defp/2`. A function defined with `def/2` can be invoked from other modules while a private function can only be invoked locally.
 
@@ -123,7 +122,7 @@ Math.zero?([1,2,3])
 
 Giving an argument that does not match any of the clauses raises an error.
 
-## 8.4 Function capturing
+## Function capturing
 
 Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Let's start `iex` and run the `math.exs` file defined above:
 
@@ -171,7 +170,7 @@ iex> fun.([1, [[2], 3]], [4, 5])
 
 `&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html#&/1).
 
-## 8.5 Default arguments
+## Default arguments
 
 Named functions in Elixir also support default arguments:
 

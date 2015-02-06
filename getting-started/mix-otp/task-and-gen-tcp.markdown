@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 8 Task and gen_tcp
-guide: 8
-redirect_from: "/getting_started/mix_otp/8.html"
+title: Task and gen_tcp
+redirect_from: /getting_started/mix_otp/8.html
 ---
 
 # {{ page.title }}
@@ -11,7 +10,7 @@ redirect_from: "/getting_started/mix_otp/8.html"
 
 In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://erlang.org/doc/man/gen_tcp.html) to serve requests. In future chapters we will expand our server so it can actually serve the commands. This will also provide a great opportunity to explore Elixir's `Task` module.
 
-## 8.1 Echo server
+## Echo server
 
 We will start our TCP server by first implementing an echo server. It will simply send a response with the text it received in the request. We will slowly improve our server until it is supervised and ready to handle multiple connections.
 
@@ -126,7 +125,7 @@ That's because we were expecting data from `:gen_tcp.recv/2` but the client clos
 
 For now there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won't be able to serve more requests, because it won't be restarted. That's why we must move our server inside a supervision tree.
 
-## 8.2 Tasks
+## Tasks
 
 We have learned about agents, generic servers, and event managers. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
@@ -174,7 +173,7 @@ Try to connect two telnet clients at the same time. When you do so, you will not
 
 It doesn't seem to work at all. That's because we are serving requests in the same process that are accepting connections. When one client is connected, we can't accept another client.
 
-## 8.3 Task supervisor
+## Task supervisor
 
 In order to make our server handle simultaneous connections, we need to have one process working as an acceptor that spawns other processes to serve requests. One solution would be to change:
 

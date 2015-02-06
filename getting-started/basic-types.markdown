@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 2 Basic types
-guide: 2
-redirect_from: "/getting_started/2.html"
+title: Basic types
+redirect_from: /getting_started/2.html
 ---
 
 # {{ page.title }}
@@ -22,7 +21,7 @@ iex> [1, 2, 3]  # list
 iex> {1, 2, 3}  # tuple
 ```
 
-## 2.1 Basic arithmetic
+## Basic arithmetic
 
 Open up `iex`  and type the following expressions:
 
@@ -79,7 +78,7 @@ iex> trunc 3.58
 3
 ```
 
-## 2.2 Booleans
+## Booleans
 
 Elixir supports `true` and `false` as booleans:
 
@@ -105,7 +104,7 @@ You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respect
 
 > Note: At any moment you can type `h` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`).
 
-## 2.3 Atoms
+## Atoms
 
 Atoms are constants where their name is their own value. Some other languages call these symbols:
 
@@ -127,7 +126,7 @@ iex> is_boolean(:false)
 true
 ```
 
-## 2.4 Strings
+## Strings
 
 Strings in Elixir are inserted between double quotes, and they are encoded in UTF-8:
 
@@ -194,7 +193,7 @@ iex> String.upcase("hellö")
 "HELLÖ"
 ```
 
-## 2.5 Anonymous functions
+## Anonymous functions
 
 Functions are delimited by the keywords `fn` and `end`:
 
@@ -235,7 +234,7 @@ iex> x
 42
 ```
 
-## 2.6 (Linked) Lists
+## (Linked) Lists
 
 Elixir uses square brackets to specify a list of values. Values can be of any type:
 
@@ -292,7 +291,7 @@ false
 
 Single-quotes are char lists, double-quotes are strings. We will talk more about them in the "Binaries, strings and char lists" chapter.
 
-## 2.7 Tuples
+## Tuples
 
 Elixir uses curly brackets to define tuples. Like lists, tuples can hold any value:
 
@@ -329,7 +328,7 @@ Notice that `put_elem/3` returned a new tuple. The original tuple stored in the 
 
 By being immutable, Elixir also helps eliminate common cases where concurrent code has race conditions because two different entities are trying to change a data structure at the same time.
 
-## 2.8 Lists or tuples?
+## Lists or tuples?
 
 What is the difference between lists and tuples?
 

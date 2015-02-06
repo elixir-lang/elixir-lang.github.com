@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 1 Quote and unquote
-guide: 1
-redirect_from: "/getting_started/meta/1.html"
+title: Quote and unquote
+redirect_from: /getting_started/meta/1.html
 ---
 
 # {{ page.title }}
@@ -11,7 +10,7 @@ redirect_from: "/getting_started/meta/1.html"
 
 An Elixir program can be represented by its own data structures. In this chapter, we will learn what those structures look like and how to compose them. The concepts learned in this chapter are the building blocks for macros, which we are going to take a deeper look at in the next chapter.
 
-## 1.1 Quoting
+## Quoting
 
 The building block of an Elixir program is a tuple with three elements. For example, the function call `sum(1, 2, 3)` is represented internally as:
 
@@ -85,7 +84,7 @@ Besides the tuple defined above, there are five Elixir literals that, when quote
 
 Most Elixir code has a straight-forward translation to its underlying quoted expression. We recommend you try out different code samples and see what the results are. For example, what does `String.upcase("foo")` expand to? We have also learned that `if(true, do: :this, else: :that)` is the same as `if true do :this else :that end`. How does this affirmation hold with quoted expressions?
 
-## 1.2 Unquoting
+## Unquoting
 
 Quote is about retrieving the inner representation of some particular chunk of code. However, sometimes it may be necessary to inject some other particular chunk of code inside the representation we want to retrieve.
 
@@ -131,7 +130,7 @@ iex> Macro.to_string(quote do: [1, 2, unquote_splicing(inner), 6])
 
 Unquoting is very useful when working with macros. When writing macros, developers are able to receive code chunks and inject them inside other code chunks, which can be used to transform code or write code that generates code during compilation.
 
-## 1.3 Escaping
+## Escaping
 
 As we saw at the beginning of this chapter, only some values are valid quoted expressions in Elixir. For example, a map is not a valid quoted expression. Neither is a tuple with four elements. However, such values *can* be expressed as a quoted expression:
 

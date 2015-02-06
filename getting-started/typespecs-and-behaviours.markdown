@@ -1,22 +1,21 @@
 ---
 layout: getting-started
-title: 20 Typespecs and behaviours
-guide: 20
-redirect_from: "/getting_started/20.html"
+title: Typespecs and behaviours
+redirect_from: /getting_started/20.html
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-## 20.1 Types and specs
+## Types and specs
 
 Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
 1. declaring custom data types;
 2. declaring typed function signatures (specifications).
 
-### 20.1.1 Function specifications
+### Function specifications
 
 By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
@@ -33,7 +32,7 @@ def round(number), do: # implementation...
 
 Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the types provided by Elixir [in the typespecs docs](http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html).
 
-### 20.1.2 Defining custom types
+### Defining custom types
 
 While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules modules through the `@type` directive.
 
@@ -84,12 +83,12 @@ end
 
 If you want to keep a custom type private, you can use the `@typep` directive instead of `@type`.
 
-### 20.1.3 Static code analysis
+### Static code analysis
 
 Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `PoliteCalculator` example, we wrote a spec for the `make_polite/1` function even if it was defined as a private function.
 
 
-## 20.2 Behaviours
+## Behaviours
 
 Many modules share the same public API. Take a look at [Plug](https://github.com/elixir-lang/plug), which, as it description states, is a **specification** for composable modules in web applications. Each *plug* is a module which **has to** implement at least two public functions: `init/1` and `call/2`.
 
@@ -100,7 +99,7 @@ Behaviors provide a way to:
 
 If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.
 
-### 20.2.1 Defining behaviours
+### Defining behaviours
 
 Say we have want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and a `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
 
@@ -117,7 +116,7 @@ end
 
 Modules adopting the `Parser` behaviour will have to implement all the functions defined with `defcallback`. As you can see, `defcallback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above.
 
-### 20.2.2 Adopting behaviours
+### Adopting behaviours
 
 Adopting a behaviour is straightforward:
 

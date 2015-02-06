@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 12 IO and the file system
-guide: 12
-redirect_from: "/getting_started/12.html"
+title: IO and the file system
+redirect_from: /getting_started/12.html
 ---
 
 # {{ page.title }}
@@ -13,7 +12,7 @@ This chapter is a quick introduction to input/output mechanisms and file-system-
 
 We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the <abbr title="Virtual Machine">VM</abbr>.
 
-## 12.1 The `IO` module
+## The `IO` module
 
 The `IO` module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straightforward:
 
@@ -34,7 +33,7 @@ hello world
 :ok
 ```
 
-## 12.2 The `File` module
+## The `File` module
 
 The [`File`](/docs/stable/elixir/File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
@@ -85,7 +84,7 @@ as, in case of an error, `File.read/1` will return `{:error, reason}` and the pa
 
 If you don't want to handle a possible error (i.e., you want it to bubble up), prefer using `File.read!/1`.
 
-## 12.3 The Path module
+## The `Path` module
 
 The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](/docs/stable/elixir/Path.html) module provides facilities for working with such paths:
 
@@ -100,7 +99,7 @@ Using functions from the `Path` module as opposed to just manipulating binaries 
 
 With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.
 
-## 12.4 Processes and group leaders
+## Processes and group leaders
 
 You may have noticed that `File.open/2` returns a tuple like `{:ok, pid}`:
 
@@ -147,7 +146,7 @@ hello
 
 The group leader can be configured per process and is used in different situations. For example, when executing code in a remote terminal, it guarantees messages in a remote node are redirected and printed in the terminal that triggered the request.
 
-## 12.5 `iodata` and `chardata`
+## `iodata` and `chardata`
 
 In all of the examples above, we used binaries when writing to files. In the chapter ["Binaries, strings and char lists"](/getting-started/binaries-strings-and-char-lists.html), we mentioned how strings are simply bytes while char lists are lists with code points.
 

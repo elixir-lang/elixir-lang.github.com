@@ -1,17 +1,16 @@
 ---
 layout: getting-started
-title: 4 Pattern matching
-guide: 4
-redirect_from: "/getting_started/4.html"
+title: Pattern matching
+redirect_from: /getting_started/4.html
 ---
 
-# {{ page.title }}
+# {{ page.title }}<span hidden>.</span>
 
 {% include toc.html %}
 
 In this chapter, we will show how the `=` operator in Elixir is actually a match operator and how to use it to pattern match inside data structures. Finally, we will learn about the pin operator `^` used to access previously bound values.
 
-## 4.1 The match operator
+## The match operator
 
 We have used the `=` operator a couple times to assign variables in Elixir:
 
@@ -42,7 +41,7 @@ iex> 1 = unknown
 
 Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but such a function does not exist.
 
-## 4.2 Pattern matching
+## Pattern matching
 
 The match operator is not only used to match against simple values, but it is also useful for destructuring more complex data types. For example, we can pattern match on tuples:
 
@@ -119,7 +118,7 @@ iex> [0|list]
 
 Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
 
-## 4.3 The pin operator
+## The pin operator
 
 Variables in Elixir can be rebound:
 

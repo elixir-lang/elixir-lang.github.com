@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 6 Binaries, strings and char lists
-guide: 6
-redirect_from: "/getting_started/6.html"
+title: Binaries, strings and char lists
+redirect_from: /getting_started/6.html
 ---
 
 # {{ page.title }}
@@ -20,7 +19,7 @@ true
 
 In this chapter, we will understand what binaries are, how they associate with strings, and what a single-quoted value, `'like this'`, means in Elixir.
 
-## 6.1 UTF-8 and Unicode
+## UTF-8 and Unicode
 
 A string is a UTF-8 encoded binary. In order to understand exactly what we mean by that, we need to understand the difference between bytes and code points.
 
@@ -59,7 +58,7 @@ You will see that Elixir has excellent support for working with strings. It also
 
 However, strings are just part of the story. If a string is a binary, and we have used the `is_binary/1` function, Elixir must have an underlying type empowering strings. And it does. Let's talk about binaries!
 
-## 6.2 Binaries (and bitstrings)
+## Binaries (and bitstrings)
 
 In Elixir, you can define a binary using `<<>>`:
 
@@ -154,7 +153,7 @@ iex> rest
 
 This finishes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary, and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides to work with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
 
-## 6.3 Char lists
+## Char lists
 
 A char list is nothing more than a list of characters:
 

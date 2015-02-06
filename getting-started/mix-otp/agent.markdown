@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 2 Agent
-guide: 2
-redirect_from: "/getting_started/mix_otp/2.html"
+title: Agent
+redirect_from: /getting_started/mix_otp/2.html
 ---
 
 # {{ page.title }}
@@ -13,7 +12,7 @@ In this chapter, we will create a module named `KV.Bucket`. This module will be 
 
 If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting-started/processes.html). We will use it as starting point.
 
-## 2.1 The trouble with state
+## The trouble with state
 
 Elixir is an immutable language where nothing is shared by default. If we want to create buckets, and store and access them from multiple places, we have two main options in Elixir:
 
@@ -29,7 +28,7 @@ We have talked about processes, while <abbr title="Erlang Term Storage">ETS</abb
 
 We will explore all of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
 
-## 2.2 Agents
+## Agents
 
 [Agents](/docs/stable/elixir/Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
 
@@ -104,7 +103,7 @@ Note that we are using a HashDict to store our state instead of a `Map`, because
 Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test` .
 
 
-## 2.3 ExUnit callbacks
+## ExUnit callbacks
 
 Before moving on and adding more features to `KV.Bucket`, let's talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket to be started during setup and stopped after the test. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.
 
@@ -140,7 +139,7 @@ end
 
 You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](/docs/stable/ex_unit/ExUnit.Callbacks.html).
 
-## 2.4 Other Agent actions
+## Other agent actions
 
 Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one function call via `Agent.get_and_update/2`. Let's implement a `KV.Bucket.delete/2` function that deletes a key from the bucket, returning its current value:
 
@@ -155,9 +154,9 @@ def delete(bucket, key) do
 end
 ```
 
-Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for Agents to learn more about them.
+Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for agents to learn more about them.
 
-## 2.5 Client/Server in Agents
+## Client/Server in agents
 
 Before we move on to the next chapter, let's discuss the client/server dichotomy in agents. Let's expand the `delete/2` function we have just implemented:
 

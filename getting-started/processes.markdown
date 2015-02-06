@@ -1,8 +1,7 @@
 ---
 layout: getting-started
-title: 11 Processes
-guide: 11
-redirect_from: "/getting_started/11.html"
+title: Processes
+redirect_from: /getting_started/11.html
 ---
 
 # {{ page.title }}
@@ -15,7 +14,7 @@ Elixir's processes should not be confused with operating system processes. Proce
 
 In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between different processes.
 
-## 11.1 spawn
+## `spawn`
 
 The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
 
@@ -48,7 +47,7 @@ true
 
 Processes get much more interesting when we are able to send and receive messages.
 
-## 11.2 send and receive
+## `send` and `receive`
 
 We can send messages to a process with `send/2` and receive them with `receive/1`:
 
@@ -100,7 +99,7 @@ iex> flush()
 :ok
 ```
 
-## 11.3 Links
+## Links
 
 The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fails:
 
@@ -141,7 +140,7 @@ While other languages would require us to catch/handle exceptions, in Elixir we 
 
 Before moving to the next chapter, let's see one of the most common use cases for creating processes in Elixir.
 
-## 11.4 Tasks
+## Tasks
 
 When making our processes crash in the previous section, you may have noticed the error messages were rather poor:
 
@@ -171,7 +170,7 @@ Besides providing better error logging, there are a couple other differences: `s
 
 We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better logging.
 
-## 11.5 State
+## State
 
 We haven't talked about state so far in this guide. If you are building an application that requires state, for example, to keep your application configuration, or you need to parse a file and keep it in memory, where would you store it?
 

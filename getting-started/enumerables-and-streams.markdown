@@ -1,15 +1,14 @@
 ---
 layout: getting-started
-title: 10 Enumerables and Streams
-guide: 10
-redirect_from: "/getting_started/10.html"
+title: Enumerables and Streams
+redirect_from: /getting_started/10.html
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-## 10.1 Enumerables
+## Enumerables
 
 Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/elixir/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
 
@@ -35,7 +34,7 @@ Since the Enum module was designed to work across different data types, its API 
 
 We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/elixir/Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
 
-## 10.2 Eager vs Lazy
+## Eager vs Lazy
 
 All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
 
@@ -55,7 +54,7 @@ iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
 
 The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with `100_000` items. Then we keep all odd elements from the list, generating a new list, now with `50_000` items, and then we sum all entries.
 
-### 10.2.1 The pipe operator
+### The pipe operator
 
 The `|>` symbol used in the snippet above is the **pipe operator**: it simply takes the output from the expression on its left side and passes it as the input to the function call on its right side. It's similar to the Unix `|` operator.  Its purpose is to highlight the flow of data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the `|>` operator:
 
@@ -66,7 +65,7 @@ iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))
 
 Find more about the pipe operator [by reading its documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.html#|>/2).
 
-## 10.3 Streams
+## Streams
 
 As an alternative to `Enum`, Elixir provides [the `Stream` module](/docs/stable/elixir/Stream.html) which supports lazy operations:
 
