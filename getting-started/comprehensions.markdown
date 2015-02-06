@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 17 Comprehensions
-guide: 17
+title: Comprehensions
 redirect_from: "/getting_started/17.html"
 ---
 
@@ -20,7 +19,7 @@ iex> for n <- [1, 2, 3, 4], do: n * n
 
 A comprehension is made of three parts: generators, filters and collectables.
 
-## 17.1 Generators and filters
+## Generators and filters
 
 In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:
 
@@ -60,7 +59,7 @@ end
 
 Keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.
 
-## 17.2 Bitstring generators
+## Bitstring generators
 
 Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:
 
@@ -72,7 +71,7 @@ iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 
 A bitstring generator can be mixed with the "regular" enumerable generators and provides filters as well.
 
-## 17.3 Results other than lists
+## Results other than lists
 
 In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the `:into` option to the comprehension.
 

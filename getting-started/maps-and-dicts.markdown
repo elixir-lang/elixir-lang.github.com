@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 7 Keywords, maps and dicts
-guide: 7
+title: Keywords, maps and dicts
 redirect_from: "/getting_started/7.html"
 ---
 
@@ -13,7 +12,7 @@ So far we haven't discussed any associative data structures, i.e. data structure
 
 In Elixir, we have two main associative data structures: keyword lists and maps. It's time to learn more about them!
 
-## 7.1 Keyword lists
+## Keyword lists
 
 In many functional programming languages, it is common to use a list of 2-item tuples as the representation of an associative data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:
 
@@ -92,7 +91,7 @@ iex> [b: b, a: a] = [a: 1, b: 2]
 ** (MatchError) no match of right hand side value: [a: 1, b: 2]
 ```
 
-## 7.2 Maps
+## Maps
 
 Whenever you need a key-value store, maps are the "go to" data structure in Elixir. A map is created using the `%{}` syntax:
 
@@ -173,7 +172,7 @@ Elixir developers typically prefer to use the `map.field` syntax and pattern mat
 
 > Note: Maps were recently introduced into the Erlang <abbr title="Virtual Machine">VM</abbr> with [EEP 43](http://www.erlang.org/eeps/eep-0043.html "Erlang Enhancement Proposal #43: Maps"). Erlang 17 provides a partial implementation of the <abbr title="Erlang Enhancement Proposal">EEP</abbr>, where only "small maps" are supported. This means maps have good performance characteristics only when storing at maximum a couple of dozens keys. To fill in this gap, Elixir also provides [the `HashDict` module](/docs/stable/elixir/HashDict.html) which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands keys with good performance.
 
-## 7.3 Dicts
+## Dicts
 
 In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps modules implement this interface.
 

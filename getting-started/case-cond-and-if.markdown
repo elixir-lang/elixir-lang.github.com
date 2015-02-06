@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 5 case, cond and if
-guide: 5
+title: case, cond and if
 redirect_from: "/getting_started/5.html"
 ---
 
@@ -11,7 +10,7 @@ redirect_from: "/getting_started/5.html"
 
 In this chapter, we will learn about the `case`, `cond` and `if` control-flow structures.
 
-## 5.1 case
+## case
 
 `case` allows us to compare a value against many patterns until we find a matching one:
 
@@ -50,7 +49,7 @@ iex> case {1, 2, 3} do
 
 The first clause above will only match when `x` is positive.
 
-## 5.2 Expressions in guard clauses.
+## Expressions in guard clauses.
 
 The Erlang Virtual Machine (VM) only allows a limited set of expressions in guards:
 
@@ -134,7 +133,7 @@ iex> f.(-1, 3)
 
 The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised.
 
-## 5.3 cond
+## cond
 
 `case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:
 
@@ -175,7 +174,7 @@ iex> cond do
 "1 is considered as true"
 ```
 
-## 5.4 if and unless
+## if and unless
 
 Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for just one condition:
 
@@ -205,7 +204,7 @@ iex> if nil do
 
 > Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/elixir/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
-## 5.5 `do`/`end` blocks
+## `do`/`end` blocks
 
 At this point, we have learned four control structures: `case`, `cond`, `if` and `unless`, and they were all wrapped in `do`/`end` blocks. It happens we could also write `if` as follows:
 

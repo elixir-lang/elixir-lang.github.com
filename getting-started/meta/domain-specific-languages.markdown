@@ -1,8 +1,6 @@
 ---
 layout: getting-started
-title: 3 Domain Specific Languages
-guide: 3
-last: true
+title: Domain Specific Languages
 redirect_from: "/getting_started/meta/3.html"
 ---
 
@@ -32,7 +30,7 @@ MyTest.run
 
 In the example above, by using `TestCase`, we can write tests using the `test` macro, which defines a function named `run` to automatically run all tests for us. Our prototype will simply rely on the match operator (`=`) as a mechanism to do assertions.
 
-## 3.1 The `test` macro
+## The `test` macro
 
 Let's start by creating a module that simply defines and imports the `test` macro when used:
 
@@ -87,7 +85,7 @@ iex> MyTest."test hello"()
 ** (MatchError) no match of right hand side value: "world"
 ```
 
-## 3.2 Storing information with attributes
+## Storing information with attributes
 
 In order to finish our `TestCase` implementation, we need to be able to access all defined test cases. One way of doing this is by retrieving the tests at runtime via `__MODULE__.__info__(:functions)`, which returns a list of all functions in a given module. However, considering that we may want to store more information about each test besides the test name, a more flexible approach is required.
 

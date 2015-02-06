@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 19 try, catch and rescue
-guide: 19
+title: try, catch and rescue
 redirect_from: "/getting_started/19.html"
 ---
 
@@ -11,7 +10,7 @@ redirect_from: "/getting_started/19.html"
 
 Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.
 
-## 19.1 Errors
+## Errors
 
 Errors (or *exceptions*) are used when exceptional things happen in the code. A sample error can be retrieved by trying to add a number into an atom:
 
@@ -92,7 +91,7 @@ Many functions in the standard library follow the pattern of having a counterpar
 
 In Elixir, we avoid using `try/rescue` because **we don't use errors for control flow**. We take errors literally: they are reserved to unexpected and/or exceptional situations. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
 
-## 19.2 Throws
+## Throws
 
 In Elixir, a value can be thrown and later be caught. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
 
@@ -117,7 +116,7 @@ iex> Enum.find -50..50, &(rem(&1, 13) == 0)
 -39
 ```
 
-## 19.3 Exits
+## Exits
 
 All Elixir code runs inside processes that communicate with each other. When a process dies of "natural causes" (e.g., unhandled exceptions), it sends an `exit` signal. A process can also die by explicitly sending an exit signal:
 
@@ -146,7 +145,7 @@ Using `try/catch` is already uncommon and using it to catch exits is even more r
 
 It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing an error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
 
-## 19.4 After
+## After
 
 Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and guarantee it will be closed (even if something goes wrong) with a `try/after` block:
 
@@ -161,7 +160,7 @@ iex> try do
 ** (RuntimeError) oops, something went wrong
 ```
 
-## 19.5 Variables scope
+## Variables scope
 
 It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
 

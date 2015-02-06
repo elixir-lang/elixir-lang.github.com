@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 16 Protocols
-guide: 16
+title: Protocols
 redirect_from: "/getting_started/16.html"
 ---
 
@@ -84,7 +83,7 @@ iex> Blank.blank?("hello")
 ** (Protocol.UndefinedError) protocol Blank not implemented for "hello"
 ```
 
-## 16.1 Protocols and structs
+## Protocols and structs
 
 The power of Elixir's extensibility comes when protocols and structs are used together.
 
@@ -119,7 +118,7 @@ If desired, you could come up with your own semantics for a user being blank. No
 
 In many cases though, developers may want to provide a default implementation for structs, as explicitly implementing the protocol for all structs can be tedious. That's when falling back to Any comes in handy.
 
-## 16.2 Falling back to Any
+## Falling back to Any
 
 It may be convenient to provide a default implementation for all types. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
 
@@ -140,7 +139,7 @@ end
 
 Now all data types (including structs) that we have not implemented the `Blank` protocol for will be considered non-blank.
 
-## 16.3 Built-in protocols
+## Built-in protocols
 
 Elixir ships with some built-in protocols. In previous chapters, we have discussed the `Enum` module which provides many functions that work with any data structure that implements the `Enumerable` protocol:
 

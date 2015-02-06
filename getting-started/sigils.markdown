@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 18 Sigils
-guide: 18
+title: Sigils
 redirect_from: "/getting_started/18.html"
 ---
 
@@ -15,7 +14,7 @@ One of Elixir's goals is extensibility: developers should be able to extend the 
 
 In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (`~`) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.
 
-## 18.1 Regular expressions
+## Regular expressions
 
 The most common sigil in Elixir is `~r`, which is used to create [regular expressions](https://en.wikipedia.org/wiki/Regular_Expressions):
 
@@ -55,11 +54,11 @@ So far, all examples have used `/` to delimit a regular expression. However sigi
 
 The reason behind supporting different delimiters is that different delimiters can be more suited for different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for other sigils, as we will see in the next section.
 
-## 18.2 Strings, char lists and words sigils
+## Strings, char lists and words sigils
 
 Besides regular expressions, Elixir ships with three other sigils.
 
-### 18.2.1 Strings
+### Strings
 
 The `~s` sigil is used to generate strings, like double quotes are. The `~s` sigil is useful, for example, when a string contains both double and single quotes:
 
@@ -68,7 +67,7 @@ iex> ~s(this is a string with "double" quotes, not 'single' ones)
 "this is a string with \"double\" quotes, not 'single' ones"
 ```
 
-### 18.2.2 Char lists
+### Char lists
 
 The `~c` sigil is used to generate char lists:
 
@@ -77,7 +76,7 @@ iex> ~c(this is a char list containing 'single quotes')
 'this is a char list containing \'single quotes\''
 ```
 
-### 18.2.3 Word lists
+### Word lists
 
 The `~w` sigil is used to generate lists of words (*words* are just regular strings). Inside the `~w` sigil, words are separated by whitespace.
 
@@ -93,7 +92,7 @@ iex> ~w(foo bar bat)a
 [:foo, :bar, :bat]
 ```
 
-## 18.3 Interpolation and escaping in sigils
+## Interpolation and escaping in sigils
 
 Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
 
@@ -162,7 +161,7 @@ Converts double-quotes to single-quotes.
 def convert(...)
 ```
 
-## 18.4 Custom sigils
+## Custom sigils
 
 As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling the `sigil_r` function with a binary and a char list as argument:
 

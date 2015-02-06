@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 15 Structs
-guide: 15
+title: Structs
 redirect_from: "/getting_started/15.html"
 ---
 
@@ -22,7 +21,7 @@ iex> %{map | a: 3}
 
 Structs are extensions built on top of maps that provide compile-time checks and default values.
 
-## 15.1 Defining structs
+## Defining structs
 
 To define a struct, the `defstruct` construct is used:
 
@@ -52,7 +51,7 @@ iex> %User{oops: :field}
 ** (CompileError) iex:3: unknown key :oops for struct User
 ```
 
-## 15.2 Accessing and updating structs
+## Accessing and updating structs
 
 When we discussed maps, we showed how we can access and update the fields of a map. The same techniques (and the same syntax) apply to structs as well:
 
@@ -80,7 +79,7 @@ iex> %User{} = %{}
 ** (MatchError) no match of right hand side value: %{}
 ```
 
-## 15.3 Structs are just bare maps underneath
+## Structs are just bare maps underneath
 
 In the example above, pattern matching works because underneath structs are just bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
 

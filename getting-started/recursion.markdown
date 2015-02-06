@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 9 Recursion
-guide: 9
+title: Recursion
 redirect_from: "/getting_started/9.html"
 ---
 
@@ -9,7 +8,7 @@ redirect_from: "/getting_started/9.html"
 
 {% include toc.html %}
 
-## 9.1 Loops through recursion
+## Loops through recursion
 
 Due to immutability, loops in Elixir (and in any functional programming language) are written differently from imperative languages. For example, in an imperative language (like C in the following example), one would write:
 
@@ -52,7 +51,7 @@ Because `n` is now set to `1`, the guard in our first definition of `print_multi
 
 We defined `print_multiple_times/2` so that no matter what number is passed as the second argument it either triggers our first definition (known as a "base case") or it triggers our second definition which will ensure that we get exactly one step closer to our base case.
 
-## 9.2 "Reduce" and "map" algorithms
+## "Reduce" and "map" algorithms
 
 Let's now see how we can use the power of recursion to sum a list of numbers:
 

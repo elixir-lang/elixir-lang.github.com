@@ -1,7 +1,6 @@
 ---
 layout: getting-started
-title: 1 Introduction
-guide: 1
+title: Introduction
 redirect_from: "/getting_started/1.html"
 ---
 
@@ -22,11 +21,11 @@ Let's get started!
 
 > If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com). If you suspect it is a language bug, [please let us know in the language issue tracker](https://github.com/elixir-lang/elixir/issues).
 
-## 1.1 Installation
+## Installation
 
 If you still haven't installed Elixir, run to our [installation page](/install.html). Once you are done, you can run `elixir -v` to get the current Elixir version.
 
-## 1.2 Interactive mode
+## Interactive mode
 
 When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
@@ -43,7 +42,7 @@ iex> "hello" <> " world"
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
-## 1.3 Running scripts
+## Running scripts
 
 After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting Elixir code into a file and executing it with `elixir`:
 
