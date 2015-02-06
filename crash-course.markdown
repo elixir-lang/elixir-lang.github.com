@@ -37,7 +37,7 @@ hello() ->
 
 Add your functions to it, save it to disk, run `erl` from the same directory and execute the `compile` command:
 
-```erlang
+```erl
 Eshell V5.9  (abort with ^G)
 1> c(module_name).
 ok
@@ -130,7 +130,7 @@ Elixir allows you to assign to a variable more than once. If you want to match a
 
 **Erlang**
 
-```erlang
+```erl
 Eshell V5.9  (abort with ^G)
 1> X = 10.
 10
@@ -152,7 +152,7 @@ ok
 
 **Elixir**
 
-```elixir
+```iex
 iex> a = 1
 1
 iex> a = 2
