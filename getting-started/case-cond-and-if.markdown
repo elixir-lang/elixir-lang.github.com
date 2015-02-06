@@ -49,7 +49,7 @@ iex> case {1, 2, 3} do
 
 The first clause above will only match when `x` is positive.
 
-## Expressions in guard clauses.
+## Expressions in guard clauses
 
 The Erlang Virtual Machine (VM) only allows a limited set of expressions in guards:
 
