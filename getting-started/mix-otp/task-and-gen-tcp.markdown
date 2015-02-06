@@ -99,16 +99,18 @@ iex> KVServer.accept(4040)
 
 The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](http://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
 
-    $ telnet 127.0.0.1 4040
-    Trying 127.0.0.1...
-    Connected to localhost.
-    Escape character is '^]'.
-    hello
-    hello
-    is it me
-    is it me
-    you are looking for?
-    you are looking for?
+```bash
+$ telnet 127.0.0.1 4040
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+hello
+hello
+is it me
+is it me
+you are looking for?
+you are looking for?
+```
 
 Type "hello", press enter, and you will get "hello" back. Excellent!
 
@@ -150,26 +152,30 @@ With this change, we are saying that we want to run `KVServer.accept(4040)` as a
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
 
-    $ telnet 127.0.0.1 4040
-    Trying 127.0.0.1...
-    Connected to localhost.
-    Escape character is '^]'.
-    say you
-    say you
-    say me
-    say me
+```bash
+$ telnet 127.0.0.1 4040
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+say you
+say you
+say me
+say me
+```
 
 Yes, it works! If you kill the client, causing the whole server to crash, you will see another one starts right away. However, does it *scale*?
 
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
-    $ telnet 127.0.0.1 4040
-    Trying 127.0.0.1...
-    Connected to localhost.
-    Escape character is '^]'.
-    hello
-    hello?
-    HELLOOOOOO?
+```bash
+$ telnet 127.0.0.1 4040
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+hello
+hello?
+HELLOOOOOO?
+```
 
 It doesn't seem to work at all. That's because we are serving requests in the same process that are accepting connections. When one client is connected, we can't accept another client.
 

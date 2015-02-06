@@ -239,7 +239,9 @@ We simply changed the callback from `handle_cast/2` to `handle_call/3` and chang
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 
-    $ mix test --trace
+```bash
+$ mix test --trace
+```
 
 The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one failure (that may be intermittent):
 

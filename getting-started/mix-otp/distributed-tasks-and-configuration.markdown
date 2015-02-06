@@ -29,7 +29,9 @@ Elixir ships with facilities to connect nodes and exchange information between t
 
 In order to run distributed code, we need to start the <abbr title="Virtual Machine">VM</abbr> with a name. The name can be short (when in the same network) or long (requires the full computer address). Let's start a new IEx session:
 
-    $ iex --sname foo
+```bash
+$ iex --sname foo
+```
 
 You can see now the prompt is slightly different and shows the node name followed by the computer name:
 
@@ -48,7 +50,9 @@ iex> defmodule Hello do
 
 If you have another computer on the same network with both Erlang and Elixir installed, you can start another shell on it. If you don't, you can simply start another IEx session in another terminal. In either case, give it the short name of `bar`:
 
-    $ iex --sname bar
+```bash
+$ iex --sname bar
+```
 
 Note that inside this new IEx session, we cannot access `Hello.world/0`:
 
@@ -120,8 +124,10 @@ supervisor(Task.Supervisor, [[name: KV.RouterTasks]]),
 
 Now, let's start two named nodes again, but inside the `:kv` application:
 
-    $ iex --sname foo -S mix
-    $ iex --sname bar -S mix
+```bash
+$ iex --sname foo -S mix
+$ iex --sname bar -S mix
+```
 
 From inside `bar@computer-name`, we can now spawn a task directly on the other node via the supervisor:
 
@@ -209,11 +215,15 @@ The second test just checks that the code raises for unknown entries.
 
 In order to run the first test, we need to have two nodes running. Let's restart the node named `bar`, which is going to be used by tests:
 
-    $ iex --sname bar -S mix
+```bash
+$ iex --sname bar -S mix
+```
 
 And now run tests with:
 
-    $ elixir --sname foo -S mix test
+```bash
+$ elixir --sname foo -S mix test
+```
 
 Our test should successfuly pass. Excellent!
 
@@ -243,19 +253,23 @@ ExUnit.start(exclude: exclude)
 
 Now run tests with `mix test`:
 
-    $ mix test
-    Excluding tags: [distributed: true]
+```bash
+$ mix test
+Excluding tags: [distributed: true]
 
-    .......
+.......
 
-    Finished in 0.1 seconds (0.1s on load, 0.01s on tests)
-    7 tests, 0 failures
+Finished in 0.1 seconds (0.1s on load, 0.01s on tests)
+7 tests, 0 failures
+```
 
 This time all tests passed and ExUnit warned us that distributed tests were being excluded. If you run tests with `$ elixir --sname foo -S mix test`, one extra test should run and successfully pass as long as the `bar@computer-name` node is available.
 
 The `mix test` command also allows us to dynamically include and exclude tags. For example, we can run `$ mix test --include distributed` to run distributed tests regardless of the value set in `test/test_helper.exs`. We could also pass `--exclude` to exclude a particular tag from the command line. Finally, `--only` can be used to run only tests with a particular tag:
 
-    $ elixir --sname foo -S mix test --only distributed
+```bash
+$ elixir --sname foo -S mix test --only distributed
+```
 
 You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html).
 
@@ -292,8 +306,10 @@ We use `Application.get_env/2` to read the entry for `:routing_table` in `:kv`'s
 
 Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
 
-    $ iex --sname bar -S mix
-    $ elixir --sname foo -S mix test --only distributed
+```bash
+$ iex --sname bar -S mix
+$ elixir --sname foo -S mix test --only distributed
+```
 
 The interesting thing about the application environment is that it can be configured not only for the current application, but for all applications. Such configuration is done by the `config/config.exs` file. For example, we can configure IEx default prompt to another value. Just open `apps/kv/config/config.exs` and add the following to the end:
 

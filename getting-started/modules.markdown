@@ -44,7 +44,9 @@ end
 
 This file can be compiled using `elixirc`:
 
-    $ elixirc math.ex
+```bash
+$ elixirc math.ex
+```
 
 This will generate a file named `Elixir.Math.beam` containing the bytecode for the defined module. If we start `iex` again, our module definition will be available (provided that `iex` is started in the same directory the bytecode file is in):
 
@@ -77,7 +79,9 @@ IO.puts Math.sum(1, 2)
 
 And execute it as:
 
-    $ elixir math.exs
+```bash
+$ elixir math.exs
+```
 
 The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
 
@@ -126,7 +130,9 @@ Giving an argument that does not match any of the clauses raises an error.
 
 Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Let's start `iex` and run the `math.exs` file defined above:
 
-    $ iex math.exs
+```bash
+$ iex math.exs
+```
 
 ```iex
 iex> Math.zero?(0)
@@ -248,7 +254,9 @@ If we save the code above in a file named "concat.ex" and compile it, Elixir wil
 
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 
-    $ iex concat.exs
+```bash
+$ iex concat.exs
+```
 
 ```iex
 iex> Concat.join "Hello", "world"

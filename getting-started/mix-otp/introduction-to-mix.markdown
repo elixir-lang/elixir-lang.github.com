@@ -50,7 +50,9 @@ When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` execu
 
 Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as argument (`kv`, in this case), and tell mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
 
-    $ mix new kv --module KV
+```bash
+$ mix new kv --module KV
+```
 
 Mix will create a directory named `kv` with a few files in it:
 
@@ -69,11 +71,15 @@ Let's take a brief look at those generated files.
 
 > Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have elixir's executable in your PATH. If not, you can run it by passing the script as argument to elixir:
 >
->     $ bin/elixir bin/mix new kv --module KV
+> ```bash
+> $ bin/elixir bin/mix new kv --module KV
+> ```
 >
 > Note that you can also execute any script in your PATH from Elixir via the -S option:
 >
->     $ bin/elixir -S mix new kv --module KV
+> ```bash
+> $ bin/elixir -S mix new kv --module KV
+> ```
 >
 > When using -S, elixir finds the script wherever it is in your PATH and executes it.
 
@@ -114,8 +120,10 @@ end
 
 This structure is enough to compile our project:
 
-    $ cd kv
-    $ mix compile
+```bash
+$ cd kv
+$ mix compile
+```
 
 Will output:
 
@@ -126,7 +134,9 @@ Notice the `lib/kv.ex` file was compiled and `kv.app` file was generated. All th
 
 Once the project is compiled, you can start an `iex` session inside the project by running:
 
-    $ iex -S mix
+```bash
+$ iex -S mix
+```
 
 ## Running tests
 
@@ -193,7 +203,9 @@ For each failure, ExUnit prints a detailed report, containing the test name with
 
 In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in this full second line (including the file and line number) and append it to `mix test`, Mix will load and run just that particular test:
 
-    $ mix test test/kv_test.exs:4
+```bash
+$ mix test test/kv_test.exs:4
+```
 
 This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running just a specific test.
 
@@ -222,7 +234,9 @@ defp deps_path(_), do: "deps"
 
 Mix will default to the `:dev` environment, except for the `test` task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
 
-    $ MIX_ENV=prod mix compile
+```bash
+$ MIX_ENV=prod mix compile
+```
 
 ## Exploring
 
@@ -230,7 +244,9 @@ There is much more to Mix, and we will continue to explore it as we build our pr
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 
-    $ mix help
+```bash
+$ mix help
+```
 
 You can get further information about a particular task by invoking `mix help TASK`.
 
