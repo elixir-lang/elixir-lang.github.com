@@ -2,6 +2,7 @@
 layout: getting-started
 title: 6 Binaries, strings and char lists
 guide: 6
+redirect_from: "/getting_started/6.html"
 ---
 
 # {{ page.title }}

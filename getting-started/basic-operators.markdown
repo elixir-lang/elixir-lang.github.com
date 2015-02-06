@@ -2,6 +2,7 @@
 layout: getting-started
 title: 3 Basic operators
 guide: 3
+redirect_from: "/getting_started/3.html"
 ---
 
 # {{ page.title }}

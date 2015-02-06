@@ -2,6 +2,7 @@
 layout: getting-started
 title: 18 Sigils
 guide: 18
+redirect_from: "/getting_started/18.html"
 ---
 
 # {{ page.title }}

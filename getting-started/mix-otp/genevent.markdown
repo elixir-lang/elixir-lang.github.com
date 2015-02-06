@@ -2,6 +2,7 @@
 layout: getting-started
 title: 4 GenEvent
 guide: 4
+redirect_from: "/getting_started/mix_otp/4.html"
 ---
 
 # {{ page.title }}

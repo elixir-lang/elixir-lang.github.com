@@ -2,6 +2,7 @@
 layout: getting-started
 title: 13 alias, require and import
 guide: 13
+redirect_from: "/getting_started/13.html"
 ---
 
 # {{ page.title }}

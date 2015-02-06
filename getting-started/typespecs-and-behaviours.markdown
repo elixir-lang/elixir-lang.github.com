@@ -2,6 +2,7 @@
 layout: getting-started
 title: 20 Typespecs and behaviours
 guide: 20
+redirect_from: "/getting_started/20.html"
 ---
 
 # {{ page.title }}

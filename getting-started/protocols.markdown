@@ -2,6 +2,7 @@
 layout: getting-started
 title: 16 Protocols
 guide: 16
+redirect_from: "/getting_started/16.html"
 ---
 
 # {{ page.title }}

@@ -2,6 +2,7 @@
 layout: getting-started
 title: 15 Structs
 guide: 15
+redirect_from: "/getting_started/15.html"
 ---
 
 # {{ page.title }}

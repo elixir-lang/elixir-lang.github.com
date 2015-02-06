@@ -2,6 +2,7 @@
 layout: getting-started
 title: 9 Recursion
 guide: 9
+redirect_from: "/getting_started/9.html"
 ---
 
 # {{ page.title }}

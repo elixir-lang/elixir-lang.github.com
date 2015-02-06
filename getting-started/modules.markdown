@@ -2,6 +2,7 @@
 layout: getting-started
 title: 8 Modules
 guide: 8
+redirect_from: "/getting_started/8.html"
 ---
 
 # {{ page.title }}

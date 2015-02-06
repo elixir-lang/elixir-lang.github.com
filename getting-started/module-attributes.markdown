@@ -2,6 +2,7 @@
 layout: getting-started
 title: 14 Module attributes
 guide: 14
+redirect_from: "/getting_started/14.html"
 ---
 
 # {{ page.title }}

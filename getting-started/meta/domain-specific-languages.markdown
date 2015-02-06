@@ -3,6 +3,7 @@ layout: getting-started
 title: 3 Domain Specific Languages
 guide: 3
 last: true
+redirect_from: "/getting_started/meta/3.html"
 ---
 
 # {{ page.title }}

@@ -2,6 +2,7 @@
 layout: getting-started
 title: 2 Agent
 guide: 2
+redirect_from: "/getting_started/mix_otp/2.html"
 ---
 
 # {{ page.title }}

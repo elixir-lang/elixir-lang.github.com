@@ -2,6 +2,7 @@
 layout: getting-started
 title: 1 Introduction to Mix
 guide: 1
+redirect_from: "/getting_started/mix_otp/1.html"
 ---
 
 # {{ page.title }}

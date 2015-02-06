@@ -3,6 +3,7 @@ layout: getting-started
 title: 21 Where to go next
 guide: 21
 last: true
+redirect_from: "/getting_started/21.html"
 ---
 
 # {{ page.title }}

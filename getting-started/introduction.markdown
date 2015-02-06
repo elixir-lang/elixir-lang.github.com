@@ -2,6 +2,7 @@
 layout: getting-started
 title: 1 Introduction
 guide: 1
+redirect_from: "/getting_started/1.html"
 ---
 
 # {{ page.title }}

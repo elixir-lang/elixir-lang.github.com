@@ -2,6 +2,7 @@
 layout: getting-started
 title: 3 GenServer
 guide: 3
+redirect_from: "/getting_started/mix_otp/3.html"
 ---
 
 # {{ page.title }}
