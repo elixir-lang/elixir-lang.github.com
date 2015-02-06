@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Keywords, maps and dicts
-redirect_from: "/getting_started/7.html"
+redirect_from: /getting_started/7.html
 ---
 
 # {{ page.title }}

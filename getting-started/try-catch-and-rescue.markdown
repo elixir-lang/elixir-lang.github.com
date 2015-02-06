@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: try, catch and rescue
-redirect_from: "/getting_started/19.html"
+redirect_from: /getting_started/19.html
 ---
 
 # {{ page.title }}

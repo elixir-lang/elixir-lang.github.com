@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Enumerables and Streams
-redirect_from: "/getting_started/10.html"
+redirect_from: /getting_started/10.html
 ---
 
 # {{ page.title }}

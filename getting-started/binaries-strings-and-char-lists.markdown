@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Binaries, strings and char lists
-redirect_from: "/getting_started/6.html"
+redirect_from: /getting_started/6.html
 ---
 
 # {{ page.title }}

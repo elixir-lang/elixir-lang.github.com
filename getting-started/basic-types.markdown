@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Basic types
-redirect_from: "/getting_started/2.html"
+redirect_from: /getting_started/2.html
 ---
 
 # {{ page.title }}

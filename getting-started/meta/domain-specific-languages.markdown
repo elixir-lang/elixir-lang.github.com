@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Domain Specific Languages
-redirect_from: "/getting_started/meta/3.html"
+redirect_from: /getting_started/meta/3.html
 ---
 
 # {{ page.title }}

@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Docs, tests and pipelines
-redirect_from: "/getting_started/mix_otp/9.html"
+redirect_from: /getting_started/mix_otp/9.html
 ---
 
 # {{ page.title }}

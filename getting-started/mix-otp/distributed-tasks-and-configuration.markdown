@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Distributed tasks and configuration
-redirect_from: "/getting_started/mix_otp/10.html"
+redirect_from: /getting_started/mix_otp/10.html
 ---
 
 # {{ page.title }}

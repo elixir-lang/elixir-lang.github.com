@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: GenEvent
-redirect_from: "/getting_started/mix_otp/4.html"
+redirect_from: /getting_started/mix_otp/4.html
 ---
 
 # {{ page.title }}

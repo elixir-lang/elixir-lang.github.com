@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Sigils
-redirect_from: "/getting_started/18.html"
+redirect_from: /getting_started/18.html
 ---
 
 # {{ page.title }}

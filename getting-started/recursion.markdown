@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Recursion
-redirect_from: "/getting_started/9.html"
+redirect_from: /getting_started/9.html
 ---
 
 # {{ page.title }}

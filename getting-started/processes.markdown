@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Processes
-redirect_from: "/getting_started/11.html"
+redirect_from: /getting_started/11.html
 ---
 
 # {{ page.title }}

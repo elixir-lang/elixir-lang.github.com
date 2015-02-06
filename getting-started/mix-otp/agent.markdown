@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Agent
-redirect_from: "/getting_started/mix_otp/2.html"
+redirect_from: /getting_started/mix_otp/2.html
 ---
 
 # {{ page.title }}

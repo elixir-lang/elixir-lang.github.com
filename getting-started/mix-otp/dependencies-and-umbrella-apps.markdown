@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Dependencies and umbrella projects
-redirect_from: "/getting_started/mix_otp/7.html"
+redirect_from: /getting_started/mix_otp/7.html
 ---
 
 # {{ page.title }}

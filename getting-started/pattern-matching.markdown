@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Pattern matching
-redirect_from: "/getting_started/4.html"
+redirect_from: /getting_started/4.html
 ---
 
 # {{ page.title }}

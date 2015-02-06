@@ -1,7 +1,7 @@
 ---
 layout: getting-started
 title: Where to go next
-redirect_from: "/getting_started/21.html"
+redirect_from: /getting_started/21.html
 ---
 
 # {{ page.title }}
