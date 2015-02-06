@@ -34,7 +34,9 @@ The function receives the arguments and passes them to `if`. However, as we lear
 
 Let's start `iex` with the module above:
 
-    $ iex macros.exs
+```bash
+$ iex macros.exs
+```
 
 And play with those definitions:
 

@@ -241,7 +241,7 @@ The last big change we want to discuss in this release are the improvements done
 
 In previous releases, Mix was used to download and compile dependencies per environment. That meant the usual workflow was less than ideal: every time a dependency was updated, developers had to explicitly fetch and compile the dependencies for each environment. The workflow would be something like:
 
-```
+```bash
 $ mix deps.get
 $ mix compile
 $ MIX_ENV=test mix deps.get

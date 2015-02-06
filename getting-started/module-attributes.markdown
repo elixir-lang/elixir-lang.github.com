@@ -60,12 +60,17 @@ end
 
 Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:
 
-    $ elixirc math.ex
-    $ iex
-    iex> h Math # Access the docs for the module Math
-    ...
-    iex> h Math.sum # Access the docs for the sum function
-    ...
+```bash
+$ elixirc math.ex
+$ iex
+```
+
+```iex
+iex> h Math # Access the docs for the module Math
+...
+iex> h Math.sum # Access the docs for the sum function
+...
+```
 
 We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 

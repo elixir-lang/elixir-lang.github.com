@@ -161,6 +161,15 @@ ol ol ol { list-style: lower-roman }
 ol ol ol ol { list-style: upper-alpha }
 ol ol ol ol ol { list-style: lower-alpha }
 ul ul, ol ol, ul ol, ol ul { margin-bottom:0 }
+
+.toc ol { counter-reset: item; }
+.toc ol li { display: block }
+.toc ol li:before {
+  content: counters(item, ".") " ";
+  counter-increment: item;
+}
+
+
 dl { margin: 0 0 1.692307em 5px }
 dt {
   font-weight: bold;
@@ -303,6 +312,24 @@ td {
   padding: 0.8125em 2%;
   color: #888;
   border-bottom: 1px solid #e7e7e7;
+}
+
+#content table {
+  margin-left: 1.692307em;
+  width: auto;
+  width: 85%;
+}
+#content table caption { color: #555; }
+#content table th {
+  font-weight: bold;
+  padding: 10px 4%;
+  border-bottom: 3px solid #E6DFD5;
+  background-color:#FFFAF3;
+}
+#content td {
+  padding: 0.8125em 4%;
+  border-bottom: 1px solid #E6DFD5;
+  background-color:#FFFAF3;
 }
 
 /* Lists

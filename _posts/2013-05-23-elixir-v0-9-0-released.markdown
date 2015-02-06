@@ -36,7 +36,9 @@ As a project grows, it is recommended to break it apart into smaller, isolated a
 
 Elixir v0.9.0 now supports umbrella projects which can work with many applications at the same time. You can create a new umbrella project with:
 
-    $ mix new my_project --umbrella
+```bash
+$ mix new my_project --umbrella
+```
 
 The generated project will have the following structure:
 

@@ -8,20 +8,10 @@ layout: default
 
 This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, support interoperability, read the docs, sample code, etc.
 
-This page is divided into sections:
+<div class="toc"></div>
 
-1. [Running Code](#running_code)
-2. [Notable Differences](#notable_differences)
-3. [Data Types](#data_types)
-4. [Modules](#modules)
-5. [Function Syntax](#function_syntax)
-6. [Control Flow](#control_flow)
-7. [Adding Elixir to existing Erlang programs](#interop)
-8. [Further reading](#further_reading)
 
-<div id="running_code"></div>
-
-## 1 Running Code
+## Running code
 
 ### Erlang
 
@@ -82,26 +72,25 @@ defmodule MyModule do
 end
 ```
 
-<div id="notable_differences"></div>
 
-## 2 Notable Differences
+## Notable differences
 
 This section goes over some of the syntactic differences between the two languages.
 
-### Operator Names
+### Operator names
 
 Some operators are spelled differently.
 
-    | Erlang         | Elixir         | Meaning                                 |
-    -----------------------------------------------------------------------------
-    | and            | NOT AVAILABLE  | Logical 'and', evaluates both arguments |
-    | andalso        | and            | Logical 'and', short-circuits           |
-    | or             | NOT AVAILABLE  | Logical 'or', evaluates both arguments  |
-    | orelse         | or             | Logical 'or', short-circuits            |
-    | =:=            | ===            | A match operator                        |
-    | =/=            | !==            | A negative match                        |
-    | /=             | !=             | Not equals                              |
-    | =<             | <=             | Less than or equals                     |
+| Erlang         | Elixir         | Meaning                                 |
+|----------------|----------------|-----------------------------------------|
+| and            | NOT AVAILABLE  | Logical 'and', evaluates both arguments |
+| andalso        | and            | Logical 'and', short-circuits           |
+| or             | NOT AVAILABLE  | Logical 'or', evaluates both arguments  |
+| orelse         | or             | Logical 'or', short-circuits            |
+| =:=            | ===            | A match operator                        |
+| =/=            | !==            | A negative match                        |
+| /=             | !=             | Not equals                              |
+| =<             | <=             | Less than or equals                     |
 
 
 ### Delimiters
@@ -122,7 +111,7 @@ x = 2; y = 3
 x + y
 ```
 
-### Variable Names
+### Variable names
 
 Variables in Erlang can only be assigned once. The Erlang shell provides a special command `f` that allows you to erase the binding of a variable or all variables at once.
 
@@ -161,14 +150,14 @@ iex> ^a = 3
 ** (MatchError) no match of right hand side value: 3
 ```
 
-### Calling Functions
+### Calling functions
 
 Elixir allows you to omit parentheses in function calls, Erlang does not.
 
-    | Erlang            | Elixir         |
-    --------------------------------------
-    | some_function().  | some_function  |
-    | sum(A, B)         | sum a, b       |
+| Erlang            | Elixir         |
+|-------------------|----------------|
+| some_function().  | some_function  |
+| sum(A, B)         | sum a, b       |
 
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
@@ -190,9 +179,8 @@ Kernel.self
 
 All of the Erlang built-ins reside in the `:erlang` module.
 
-<div id="data_types"></div>
 
-## 3 Data Types
+## Data types
 
 Erlang and Elixir have the same data types for the most part, but there are a number of differences.
 
@@ -264,7 +252,7 @@ elem({ :a, :b, :c }, 0)        #=> :a
 put_elem({ :a, :b, :c }, 0, :d) #=> { :d, :b, :c }
 ```
 
-### Lists and Binaries
+### Lists and binaries
 
 Elixir has a shortcut syntax for binaries:
 
@@ -374,9 +362,8 @@ lines.
 """
 ```
 
-<div id="modules"></div>
 
-## 4 Modules
+## Modules
 
 Each Erlang module lives in its own file which has the following structure:
 
@@ -452,15 +439,14 @@ HelloModule.Utils.priv
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
 ```
 
-<div id="function_syntax"></div>
 
-## 5 Function Syntax
+## Function syntax
 
 [This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, I'm briefly covering the main points and provide sample code both in Erlang and Elixir.
 
 [3]: http://learnyousomeerlang.com/syntax-in-functions
 
-### Pattern Matching
+### Pattern matching
 
 Pattern matching in Elixir is based on Erlang's implementation and in general is very similar:
 
@@ -574,7 +560,7 @@ mul_by 4, 3 #=> 12
 mul_by 4    #=> 8
 ```
 
-### Anonymous Functions
+### Anonymous functions
 
 Anonymous functions are defined in the following way:
 
@@ -637,7 +623,7 @@ f.({:a, :b})
 #=> "All your {:a,:b} are belong to us"
 ```
 
-### First-Class Functions
+### First-class functions
 
 Anonymous functions are first-class values, so they can be passed as arguments to other functions and also can serve as a return value. There is a special syntax to allow named functions be treated in the same manner.
 
@@ -692,9 +678,8 @@ Enum.map [1,2,3], &Math.square/1
 #=> [1, 4, 9]
 ```
 
-<div id="control_flow"></div>
 
-## 6 Control Flow
+## Control flow
 
 The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow as in imperative languages.
 
@@ -791,7 +776,7 @@ else
 end
 ```
 
-### Sending and Receiving Messages
+### Sending and receiving messages
 
 The syntax for sending and receiving differs only slightly between Erlang and Elixir.
 
@@ -825,9 +810,8 @@ after
 end
 ```
 
-<div id="interop"></div>
 
-## 7 Adding Elixir to existing Erlang programs
+## Adding Elixir to existing Erlang programs
 
 Elixir compiles into BEAM byte code (via Erlang Abstract Format). This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the `Elixir.` prefix followed by the regular Elixir name. For example, here is how to use the utf-8 aware `String` downcase from Elixir in Erlang:
 
@@ -859,9 +843,8 @@ This should be enough to invoke Elixir functions straight from your Erlang code.
 
 If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](/getting-started/introduction.html) and add the `lib` directory in your checkout to `ERL_LIBS`.
 
-<div id="further_reading"></div>
 
-## 8 Further Reading
+## Further reading
 
 Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples.
 

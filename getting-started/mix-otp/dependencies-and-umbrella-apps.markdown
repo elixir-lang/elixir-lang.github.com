@@ -60,13 +60,15 @@ You will notice that when you add a dependency to your project, Mix generates a 
 
 Mix provides many tasks for working with dependencies, which can be seen in `mix help`:
 
-    $ mix help
-    mix deps              # List dependencies and their status
-    mix deps.clean        # Remove the given dependencies' files
-    mix deps.compile      # Compile dependencies
-    mix deps.get          # Get all out of date dependencies
-    mix deps.unlock       # Unlock the given dependencies
-    mix deps.update       # Update the given dependencies
+```bash
+$ mix help
+mix deps              # List dependencies and their status
+mix deps.clean        # Remove the given dependencies' files
+mix deps.compile      # Compile dependencies
+mix deps.get          # Get all out of date dependencies
+mix deps.unlock       # Unlock the given dependencies
+mix deps.update       # Update the given dependencies
+```
 
 The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependecies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](/docs/stable/mix/Mix.Tasks.Deps.html).
 
@@ -107,13 +109,15 @@ So let's get started!
 
 Let's start a new project using `mix new`. This new project will be named `kv_umbrella` and we need to pass the `--umbrella` option when creating it. Do not create this new project inside the existing `kv` project!
 
-    $ mix new kv_umbrella --umbrella
-    * creating .gitignore
-    * creating README.md
-    * creating mix.exs
-    * creating apps
-    * creating config
-    * creating config/config.exs
+```bash
+$ mix new kv_umbrella --umbrella
+* creating .gitignore
+* creating README.md
+* creating mix.exs
+* creating apps
+* creating config
+* creating config/config.exs
+```
 
 From the printed information, we can see far fewer files are generated. The generated `mix.exs` file is different too. Let's take a look (comments have been removed):
 
@@ -136,8 +140,10 @@ What makes this project different from the previous one is simply the `apps_path
 
 Let's move inside the apps directory and start building `kv_server`. This time, we are going to pass the `--sup` flag, which will tell Mix to generate a supervision tree automatically for us, instead of building one manually as we did in previous chapters:
 
-    $ cd kv_umbrella/apps
-    $ mix new kv_server --module KVServer --sup
+```bash
+$ cd kv_umbrella/apps
+$ mix new kv_server --module KVServer --sup
+```
 
 The generated files are similar to the ones we first generated for `kv`, with a few differences. Let's open up `mix.exs`:
 
@@ -208,7 +214,9 @@ Notice that it defines the application callback function, `start/2`, and instead
 
 We can already try out our first umbrella child. We could run tests inside the `apps/kv_server` directory, but that wouldn't be much fun. Instead, go to the root of the umbrella project and run `mix test`:
 
-    $ mix test
+```bash
+$ mix test
+```
 
 And it works!
 

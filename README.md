@@ -4,7 +4,7 @@ It is automatically transformed by [Jekyll](http://github.com/mojombo/jekyll) in
 
 ### Contributing to the blog
 
-  Create a new file inside `_posts/YYYY-MM-DD-post-title.markdown` following the template:
+Create a new file inside `_posts/YYYY-MM-DD-post-title.markdown` following the template:
 
     ---
     layout: post
@@ -16,24 +16,28 @@ It is automatically transformed by [Jekyll](http://github.com/mojombo/jekyll) in
 
     Body text goes here...
 
-  Or use `_bin/newpost` to bootstrap a new post file:
+Or use `_bin/newpost` to bootstrap a new post file:
 
-    export EDITOR=vim; _bin/newpost 'Post title'
+```bash
+export EDITOR=vim; _bin/newpost 'Post title'
+```
 
 ### Contributing improvements or bug fixes
 
-1. Fork elixir-lang.github.com
+1. [Fork elixir-lang.github.com](https://github.com/elixir-lang/elixir-lang.github.com/fork).
 
-2. Make your changes
+2. Make your changes.
 
 3. Test it locally, you need to install the gems `jekyll` and `redcarpet`:
 
-   ```shell
-   $ gem install jekyll redcarpet
-   $ jekyll serve # check localhost:4000
-   ```
+```bash
+$ gem install jekyll redcarpet
+$ jekyll serve # check localhost:4000
+```
 
-4. Send a pull-request for your changes
+4. Push to your forked repository.
+
+5. Submit a pull-request for your changes.
 
 `jekyll` requires a javascript processor to be available too. Many OS provide such functionality but others do not. If you have an error related to ExecJS, you can work around it by either running `gem install therubyracer` or by ensuring node.js is available in your path.
 
