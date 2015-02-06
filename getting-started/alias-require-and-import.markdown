@@ -10,7 +10,7 @@ redirect_from: /getting_started/13.html
 
 In order to facilitate software reuse, Elixir provides three directives. As we are going to see below, they are called directives because they have **lexical scope**.
 
-## alias
+## `alias`
 
 `alias` allows you to set up aliases for any given module name. Imagine our `Math` module uses a special list implementation for doing math specific operations:
 
@@ -59,7 +59,7 @@ end
 
 In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
 
-## require
+## `require`
 
 Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
 
@@ -78,7 +78,7 @@ In Elixir, `Integer.is_odd/1` is defined as a macro so that it can be used as a 
 
 In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
-## import
+## `import`
 
 We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can simply import it:
 

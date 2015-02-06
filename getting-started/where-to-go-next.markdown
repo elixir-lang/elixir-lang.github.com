@@ -28,7 +28,7 @@ Remember that in case of any difficulties, you can always visit the **#elixir-la
 
 Don't forget that you can also check the [source code of Elixir itself](https://github.com/elixir-lang/elixir), which is mostly written in Elixir (mainly the `lib` directory), or [explore Elixir's documentation](/docs.html).
 
-## A Byte of Erlang
+## A byte of Erlang
 
 As the main page of this site puts it:
 

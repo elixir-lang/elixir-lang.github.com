@@ -14,7 +14,7 @@ When things fail, your first reaction may be: "let's rescue those errors". But, 
 
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
 
-## Our first Supervisor
+## Our first supervisor
 
 Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the [Supervisor](/docs/stable/elixir/Supervisor.html) behaviour, inside the `lib/kv/supervisor.ex` file:
 

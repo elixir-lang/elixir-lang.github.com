@@ -139,7 +139,7 @@ end
 
 You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](/docs/stable/ex_unit/ExUnit.Callbacks.html).
 
-## Other Agent actions
+## Other agent actions
 
 Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one function call via `Agent.get_and_update/2`. Let's implement a `KV.Bucket.delete/2` function that deletes a key from the bucket, returning its current value:
 
@@ -154,9 +154,9 @@ def delete(bucket, key) do
 end
 ```
 
-Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for Agents to learn more about them.
+Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for agents to learn more about them.
 
-## Client/Server in Agents
+## Client/Server in agents
 
 Before we move on to the next chapter, let's discuss the client/server dichotomy in agents. Let's expand the `delete/2` function we have just implemented:
 

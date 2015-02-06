@@ -84,7 +84,7 @@ as, in case of an error, `File.read/1` will return `{:error, reason}` and the pa
 
 If you don't want to handle a possible error (i.e., you want it to bubble up), prefer using `File.read!/1`.
 
-## The Path module
+## The `Path` module
 
 The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](/docs/stable/elixir/Path.html) module provides facilities for working with such paths:
 

@@ -10,7 +10,7 @@ redirect_from: /getting_started/5.html
 
 In this chapter, we will learn about the `case`, `cond` and `if` control-flow structures.
 
-## case
+## `case`
 
 `case` allows us to compare a value against many patterns until we find a matching one:
 
@@ -133,7 +133,7 @@ iex> f.(-1, 3)
 
 The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised.
 
-## cond
+## `cond`
 
 `case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:
 
@@ -174,7 +174,7 @@ iex> cond do
 "1 is considered as true"
 ```
 
-## if and unless
+## `if` and `unless`
 
 Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for just one condition:
 
@@ -204,16 +204,16 @@ iex> if nil do
 
 > Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/elixir/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
-## `do`/`end` blocks
+## `do/end` blocks
 
-At this point, we have learned four control structures: `case`, `cond`, `if` and `unless`, and they were all wrapped in `do`/`end` blocks. It happens we could also write `if` as follows:
+At this point, we have learned four control structures: `case`, `cond`, `if` and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:
 
 ```iex
 iex> if true, do: 1 + 2
 3
 ```
 
-In Elixir, `do`/`end` blocks are a convenience for passing a group of expressions to `do:`. These are equivalent:
+In Elixir, `do/end` blocks are a convenience for passing a group of expressions to `do:`. These are equivalent:
 
 ```iex
 iex> if true do
@@ -235,7 +235,7 @@ iex> if false, do: :this, else: :that
 :that
 ```
 
-One thing to keep in mind when using `do`/`end` blocks is they are always bound to the outermost function call. For example, the following expression:
+One thing to keep in mind when using `do/end` blocks is they are always bound to the outermost function call. For example, the following expression:
 
 ```iex
 iex> is_number if true do

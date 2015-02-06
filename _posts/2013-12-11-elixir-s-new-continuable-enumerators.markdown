@@ -89,7 +89,7 @@ the basis of a zip function. Without interleaving you cannot implement
 
 The underlying problem, in both cases, is that the producer is fully in control.
 The producer simply pushes out as many elements to the consumer as it wants and
-then says "I'm done". There's no way aside from `throw`/`raise` for a consumer
+then says "I'm done". There's no way aside from `throw/raise` for a consumer
 to tell a producer "stop producing". There is definitely no way to tell a
 producer "stop for now but be prepared to continue where you left off later".
 

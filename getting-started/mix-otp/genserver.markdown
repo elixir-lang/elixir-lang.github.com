@@ -245,7 +245,7 @@ Observe that we were able to considerably change the server implementation witho
 
 Finally, different from the other callbacks, we have defined a "catch-all" clause for `handle_info/2` that discards any unknown message. To understand why, let's move on to the next section.
 
-## call, cast or info?
+## `call`, `cast` or `info`?
 
 So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handle_info/2`. Deciding when to use each is straightforward:
 

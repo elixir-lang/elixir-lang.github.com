@@ -14,7 +14,7 @@ Elixir's processes should not be confused with operating system processes. Proce
 
 In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between different processes.
 
-## spawn
+## `spawn`
 
 The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
 
@@ -47,7 +47,7 @@ true
 
 Processes get much more interesting when we are able to send and receive messages.
 
-## send and receive
+## `send` and `receive`
 
 We can send messages to a process with `send/2` and receive them with `receive/1`:
 
