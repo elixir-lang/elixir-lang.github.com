@@ -2,6 +2,7 @@
 layout: getting-started
 title: 7 Keywords, maps and dicts
 guide: 7
+redirect_from: "/getting_started/7.html"
 ---
 
 # {{ page.title }}

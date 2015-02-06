@@ -2,6 +2,7 @@
 layout: getting-started
 title: 7 Dependencies and umbrella projects
 guide: 7
+redirect_from: "/getting_started/mix_otp/7.html"
 ---
 
 # {{ page.title }}

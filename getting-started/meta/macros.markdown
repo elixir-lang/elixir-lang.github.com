@@ -2,6 +2,7 @@
 layout: getting-started
 title: 2 Macros
 guide: 2
+redirect_from: "/getting_started/meta/2.html"
 ---
 
 # {{ page.title }}

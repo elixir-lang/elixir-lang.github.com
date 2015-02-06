@@ -2,6 +2,7 @@
 layout: getting-started
 title: 12 IO and the file system
 guide: 12
+redirect_from: "/getting_started/12.html"
 ---
 
 # {{ page.title }}

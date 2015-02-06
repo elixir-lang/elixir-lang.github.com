@@ -2,6 +2,7 @@
 layout: getting-started
 title: 6 ETS
 guide: 6
+redirect_from: "/getting_started/mix_otp/6.html"
 ---
 
 # {{ page.title }}

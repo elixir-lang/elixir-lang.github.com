@@ -2,6 +2,7 @@
 layout: getting-started
 title: 4 Pattern matching
 guide: 4
+redirect_from: "/getting_started/4.html"
 ---
 
 # {{ page.title }}

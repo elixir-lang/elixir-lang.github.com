@@ -3,6 +3,7 @@ layout: getting-started
 title: 10 Distributed tasks and configuration
 guide: 10
 last: true
+redirect_from: "/getting_started/mix_otp/10.html"
 ---
 
 # {{ page.title }}

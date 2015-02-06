@@ -2,6 +2,7 @@
 layout: getting-started
 title: 5 Supervisor and Application
 guide: 5
+redirect_from: "/getting_started/mix_otp/5.html"
 ---
 
 # {{ page.title }}

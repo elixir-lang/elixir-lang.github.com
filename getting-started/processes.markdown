@@ -2,6 +2,7 @@
 layout: getting-started
 title: 11 Processes
 guide: 11
+redirect_from: "/getting_started/11.html"
 ---
 
 # {{ page.title }}

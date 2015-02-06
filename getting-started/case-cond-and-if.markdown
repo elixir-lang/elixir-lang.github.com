@@ -2,6 +2,7 @@
 layout: getting-started
 title: 5 case, cond and if
 guide: 5
+redirect_from: "/getting_started/5.html"
 ---
 
 # {{ page.title }}
