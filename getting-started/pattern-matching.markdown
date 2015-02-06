@@ -4,7 +4,7 @@ title: Pattern matching
 redirect_from: /getting_started/4.html
 ---
 
-# {{ page.title }}
+# {{ page.title }}<span hidden>.</span>
 
 {% include toc.html %}
 
