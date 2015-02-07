@@ -166,7 +166,7 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
         (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
 ```
 
-Besides providing better error logging, there are a couple other differences: `start/1` and `start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision tree. Furthermore, tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
+Besides providing better error logging, there are a couple other differences: `start/1` and `start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
 We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better logging.
 
