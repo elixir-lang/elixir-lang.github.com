@@ -24,14 +24,22 @@
   <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-        $('.toc').toc({
-          title: '',
-          listType: 'ol',
-          minimumHeaders: 2,
-          headers: 'h2, h3, h4, h5, h6',
-          showSpeed: 0,
-        });
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        showSpeed: 0,
+        linkHere: true,
+        linkHereDuration: 600,
+        backToTop: true,
+        backToTopSelector: '.toc',
+        backToTopDuration: 100,
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
     });
+
   </script>
 </body>
 </html>

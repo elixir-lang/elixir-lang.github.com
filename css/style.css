@@ -162,14 +162,6 @@ ol ol ol ol { list-style: upper-alpha }
 ol ol ol ol ol { list-style: lower-alpha }
 ul ul, ol ol, ul ol, ol ul { margin-bottom:0 }
 
-.toc ol { counter-reset: item; }
-.toc ol li { display: block }
-.toc ol li:before {
-  content: counters(item, ".") " ";
-  counter-increment: item;
-}
-
-
 dl { margin: 0 0 1.692307em 5px }
 dt {
   font-weight: bold;
@@ -849,3 +841,96 @@ li.image {
     clear: left;
   }
 }
+
+
+/*  Aditional 
+----------------------------------------------------- */
+/* table of contents */
+/*  Jekyll Table of Contents 
+----------------------------------------------------- */
+.jekyll-toc ol { counter-reset: item; }
+.jekyll-toc ol li { display: block }
+.jekyll-toc ol li:before {
+  content: counters(item, ".") " ";
+  counter-increment: item;
+}
+.jekyll-toc ol li {
+  list-style-position: inside;
+  text-indent: -1em;
+  padding-left: 1em;
+  line-height: 1.3em;
+  padding-bottom: 0.8em;
+}
+
+/* heading  */
+.jekyll-toc-header {
+  position: relative;
+  display: block;
+  margin-left: -20px;
+  padding-left: 20px;
+
+  margin-right: 0;
+  padding-right: 20px;
+  cursor: default;
+}
+
+/* anchor  */
+.jekyll-toc-header a.jekyll-toc-anchor {
+  display: block;
+  position:absolute;
+  text-decoration: none;
+}
+.jekyll-toc-header a.jekyll-toc-anchor,
+.jekyll-toc-header a.jekyll-toc-anchor:hover {
+  color: #000
+}
+.jekyll-toc-header:hover a.jekyll-toc-anchor {
+  cursor: pointer;
+}
+.jekyll-toc-header a.jekyll-toc-link-here {
+  left: 0;
+  top: 0;
+}
+.jekyll-toc-header a.jekyll-toc-back-to-top {
+  right: 0;
+  top: 0;
+}
+
+/* span  */
+.jekyll-toc-header span.jekyll-toc-icon {
+  display:none;
+  vertical-align: middle;
+  color: #000;
+}
+.jekyll-toc-header:hover span.jekyll-toc-icon {
+  display:inline-block;
+  width: auto;
+}
+.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon {
+  margin-left: 10px;
+  width:1em;
+  text-align: right;
+  /* vertical-align: top; */
+}
+
+/* extending jekyll-toc */
+.icon, .icon span {
+  font: normal normal normal 16px/1 icons !important;
+  display: inline-block !important;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* dev */
+/*
+.jekyll-toc-header {border:1px solid red; background-color:yellow;}
+.jekyll-toc-header a.jekyll-toc-anchor {border:1px solid blue;}
+.jekyll-toc-header a.jekyll-toc-anchor a.jekyll-toc-icon{border:1px solid red;}
+}
+*/
