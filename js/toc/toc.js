@@ -2,15 +2,32 @@
 (function($){
   $.fn.toc = function(options) {
     var defaults = {
-      noBackToTopLinks: false,
-      title: '<i>Jump to...</i>',
+      title: '',
       minimumHeaders: 3,
       headers: 'h1, h2, h3, h4, h5, h6',
       listType: 'ol', // values: [ol|ul]
       showEffect: 'show', // values: [show|slideDown|fadeIn|none]
-      showSpeed: 'slow' // set to 0 to deactivate effect
+      showSpeed: 'slow', // set to 0 to deactivate effect
+      
+      linkHeader: true,
+      linkHere: false,
+      linkHereText: '',
+      linkHereDuration: 0,
+      backToTop: false,
+      backToTopSelector: '',
+      backToTopText: '',
+      backToTopDisplay: 'always', // values: [always|highest] 
+      backToTopDuration: 0,
     },
     settings = $.extend(defaults, options);
+
+    backwardCompatible = function() {
+      // support old option: noBackToTopLinks
+      if (typeof options.backToTop === "undefined" && typeof options.noBackToTopLinks !== "undefined") {
+        settings.backToTop == !options.noBackToTopLinks;
+      }
+    }
+    backwardCompatible();
 
     var headers = $(settings.headers).filter(function() {
       // get all headers with an ID
@@ -20,14 +37,15 @@
       }
       return this.id;
     }), output = $(this);
+    
     if (!headers.length || headers.length < settings.minimumHeaders || !output.length) {
       return;
     }
-
-    if (0 === settings.showSpeed) {
+    
+    if (0 === settings.showSpeed || window.location.hash == '') {
       settings.showEffect = 'none';
     }
-
+    
     var render = {
       show: function() { output.hide().html(html).show(settings.showSpeed); },
       slideDown: function() { output.hide().html(html).slideDown(settings.showSpeed); },
@@ -37,22 +55,37 @@
 
     var get_level = function(ele) { return parseInt(ele.nodeName.replace("H", ""), 10); }
     var highest_level = headers.map(function(_, ele) { return get_level(ele); }).get().sort()[0];
-    var return_to_top = '<i class="icon-arrow-up back-to-top"> </i>';
 
     var level = get_level(headers[0]),
       this_level,
-      html = settings.title + " <"+settings.listType+">";
-    headers.on('click', function() {
-      if (!settings.noBackToTopLinks) {
-        window.location.hash = this.id;
-      }
-    })
-    .addClass('clickable-header')
-    .each(function(_, header) {
+      header_id,
+      html = settings.title + ' <'+settings.listType+' class="jekyll-toc">';
+
+    var back_to_top = '<a class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';
+    var link_here = '<a class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">'+settings.linkHereText+'</span></a>';
+
+    function animate_link_here(header_id) {
+      $('html,body').animate({scrollTop:$(document.getElementById(header_id)).offset().top}, settings.linkHereDuration);
+      window.location.hash = ( header_id === "undefined" ) ? '' : header_id;
+    }
+    
+    if (settings.backToTop) {
+      $(document).on('click', '.jekyll-toc-back-to-top', function() {
+        if ( settings.backToTopSelector == '' )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+          $('html, body').animate({scrollTop: $('html, body').offset().top}, settings.backToTopDuration);
+          window.location.hash = '';
+        } else {
+          var top_element = $(settings.backToTopSelector).first();
+          $('html, body').animate({scrollTop: top_element.offset().top}, settings.backToTopDuration);
+          var top_element_id = $(top_element).attr('id');
+          window.location.hash = ( typeof top_element_id === "undefined" ) ? '' : top_element_id;
+        }
+      });
+    }
+
+    $(headers).each(function(_, header) {
       this_level = get_level(header);
-      if (!settings.noBackToTopLinks && this_level === highest_level) {
-        $(header).addClass('top-level-header').after(return_to_top);
-      }
+      header_id = $(header).attr('id');
       if (this_level === level) // same level as before; same indenting
         html += "<li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
       else if (this_level <= level){ // higher level than before; end parent ol
@@ -68,14 +101,34 @@
         html += "<a href='#" + header.id + "'>" + header.innerHTML + "</a>";
       }
       level = this_level; // update for the next one
+
+      // add links at the end (so we don't pulute header.innerHTML)
+      $(header).addClass('jekyll-toc-top-level-header').wrapInner('<span class="jekyll-toc-wrapper"></span>').append(link_here);
+      if (settings.backToTop) {
+        switch(settings.backToTopDisplay){
+          case 'highest':
+            if ( this_level === highest_level ) {
+              $(header).append(back_to_top);      
+            }
+            break;
+          case 'always':
+          default:
+            $(header).append(back_to_top);      
+        }
+      }
+
+      if (settings.linkHeader) {
+        $(header).addClass('jekyll-toc-header');
+        $(header).children('span.jekyll-toc-wrapper').on( 'click', function( ) {
+          animate_link_here($(header).attr('id'));
+        });
+        $(header).children('a.jekyll-toc-link-here').on( 'click', function( ) {
+          animate_link_here($(header).attr('id'));
+        });
+      }
     });
+
     html += "</"+settings.listType+">";
-    if (!settings.noBackToTopLinks) {
-      $(document).on('click', '.back-to-top', function() {
-        $(window).scrollTop(0);
-        window.location.hash = '';
-      });
-    }
 
     render[settings.showEffect]();
   };
