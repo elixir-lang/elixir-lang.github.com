@@ -8,8 +8,7 @@ layout: default
 
 Choose which version you want documentation for.
 
-<span id="stable"></span>
-#### v1.0
+#### Stable
 
 * [Elixir](/docs/stable/elixir/) - standard library
 * [EEx](/docs/stable/eex/) - templating library
@@ -26,3 +25,12 @@ Choose which version you want documentation for.
 * [IEx](/docs/master/iex/) - interactive shell
 * [Logger](/docs/master/logger/) - builtin Logger
 * [Mix](/docs/master/mix/) - build tool
+
+#### v1.0
+
+* [Elixir](/docs/v1.0/elixir/) - standard library
+* [EEx](/docs/v1.0/eex/) - templating library
+* [ExUnit](/docs/v1.0/ex_unit/) - unit test library
+* [IEx](/docs/v1.0/iex/) - interactive shell
+* [Logger](/docs/v1.0/logger/) - builtin Logger
+* [Mix](/docs/v1.0/mix/) - build tool
