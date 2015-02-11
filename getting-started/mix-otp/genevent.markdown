@@ -62,7 +62,7 @@ There are a couple things that are important to highlight at this point:
 2. `sync_notify/2` runs event handlers synchronously to the request
 3. `notify/2` runs event handlers asynchronously
 
-Therefore, `sync_notify/2` and `notify/2` are similar to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended. It works as a backpressure mechanism in the calling process, to reduce the likelihood of messages being sent more quickly than they can be dispatched to handlers.
+Therefore, `sync_notify/2` and `notify/2` are analogous to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended. It works as a backpressure mechanism in the calling process, to reduce the likelihood of messages being sent more quickly than they can be dispatched to handlers.
 
 Be sure to check other functionality provided by GenEvent in its [module documentation](/docs/stable/elixir/GenEvent.html). For now we have enough knowledge to add an event manager to our application.
 
@@ -100,7 +100,7 @@ test "sends events on create and crash", %{registry: registry} do
 end
 ```
 
-In order to test the functionality we want to add, we first define a `Forwarder` event handler similar to the one we typed in IEx previously. On `setup`, we start the event manager, pass it as an argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
+In order to test the functionality we want to add, we first define a `Forwarder` (the same one we typed in IEx previously). On `setup`, we start the event manager, pass it as an argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
 
 In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
 
