@@ -8,7 +8,7 @@ redirect_from: /getting_started/mix_otp/3.html
 
 {% include toc.html %}
 
-In the previous chapter we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
+In the [previous chapter](/getting-started/mix-otp/agent.html) we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
 
 ```elixir
 CREATE shopping
@@ -149,20 +149,20 @@ Our test should pass right out of the box!
 To shutdown the registry, we are simply sending a `:shutdown` signal to its process when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, it is best to define a `stop/1` function that sends a `call` message causing the server to stop:
 
 ```elixir
-## Client API
+  ## Client API
 
-@doc """
-Stops the registry.
-"""
-def stop(server) do
-  GenServer.call(server, :stop)
-end
+  @doc """
+  Stops the registry.
+  """
+  def stop(server) do
+    GenServer.call(server, :stop)
+  end
 
-## Server Callbacks
+  ## Server Callbacks
 
-def handle_call(:stop, _from, state) do
-  {:stop, :normal, :ok, state}
-end
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, :ok, state}
+  end
 ```
 
 In the example above, the new `handle_call/3` clause is returning the atom `:stop`, along side the reason the server is being stopped (`:normal`), the reply `:ok` and the server state.
@@ -172,12 +172,12 @@ In the example above, the new `handle_call/3` clause is returning the atom `:sto
 Our registry is almost complete. The only remaining issue is that the registry may become stale if a bucket stops or crashes. Let's add a test to `KV.RegistryTest` that exposes this bug:
 
 ```elixir
-test "removes buckets on exit", %{registry: registry} do
-  KV.Registry.create(registry, "shopping")
-  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-  Agent.stop(bucket)
-  assert KV.Registry.lookup(registry, "shopping") == :error
-end
+  test "removes buckets on exit", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+    Agent.stop(bucket)
+    assert KV.Registry.lookup(registry, "shopping") == :error
+  end
 ```
 
 The test above will fail on the last assertion as the bucket name remains in the registry even after we stop the bucket process.
@@ -202,43 +202,43 @@ Note `Process.monitor(pid)` returns a unique reference that allows us to match u
 Let's reimplement the server callbacks to fix the bug and make the test pass. First, we will modify the GenServer state to two dictionaries: one that contains `name -> pid` and another that holds `ref -> name`. Then we need to monitor the buckets on `handle_cast/2` as well as implement a `handle_info/2` callback to handle the monitoring messages. The full server callbacks implementation is shown below:
 
 ```elixir
-## Server callbacks
+  ## Server callbacks
 
-def init(:ok) do
-  names = HashDict.new
-  refs  = HashDict.new
-  {:ok, {names, refs}}
-end
+  def init(:ok) do
+    names = HashDict.new
+    refs  = HashDict.new
+    {:ok, {names, refs}}
+  end
 
-def handle_call({:lookup, name}, _from, {names, _} = state) do
-  {:reply, HashDict.fetch(names, name), state}
-end
+  def handle_call({:lookup, name}, _from, {names, _} = state) do
+    {:reply, HashDict.fetch(names, name), state}
+  end
 
-def handle_call(:stop, _from, state) do
-  {:stop, :normal, :ok, state}
-end
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, :ok, state}
+  end
 
-def handle_cast({:create, name}, {names, refs}) do
-  if HashDict.has_key?(names, name) do
-    {:noreply, {names, refs}}
-  else
-    {:ok, pid} = KV.Bucket.start_link()
-    ref = Process.monitor(pid)
-    refs = HashDict.put(refs, ref, name)
-    names = HashDict.put(names, name, pid)
+  def handle_cast({:create, name}, {names, refs}) do
+    if HashDict.has_key?(names, name) do
+      {:noreply, {names, refs}}
+    else
+      {:ok, pid} = KV.Bucket.start_link()
+      ref = Process.monitor(pid)
+      refs = HashDict.put(refs, ref, name)
+      names = HashDict.put(names, name, pid)
+      {:noreply, {names, refs}}
+    end
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
+    {name, refs} = HashDict.pop(refs, ref)
+    names = HashDict.delete(names, name)
     {:noreply, {names, refs}}
   end
-end
 
-def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-  {name, refs} = HashDict.pop(refs, ref)
-  names = HashDict.delete(names, name)
-  {:noreply, {names, refs}}
-end
-
-def handle_info(_msg, state) do
-  {:noreply, state}
-end
+  def handle_info(_msg, state) do
+    {:noreply, state}
+  end
 ```
 
 Observe that we were able to considerably change the server implementation without changing any of the client API. That's one of the benefits of explicitly segregating the server and the client.
