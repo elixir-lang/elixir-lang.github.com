@@ -73,31 +73,31 @@ In order to emit events, we need to change the registry to work with an event ma
 Let's first change our tests to showcase the behaviour we want the registry to exhibit. Open up `test/kv/registry_test.exs` and change the existing `setup` callback to the one below, then add the new test:
 
 ```elixir
-defmodule Forwarder do
-  use GenEvent
+  defmodule Forwarder do
+    use GenEvent
 
-  def handle_event(event, parent) do
-    send parent, event
-    {:ok, parent}
+    def handle_event(event, parent) do
+      send parent, event
+      {:ok, parent}
+    end
   end
-end
 
-setup do
-  {:ok, manager} = GenEvent.start_link
-  {:ok, registry} = KV.Registry.start_link(manager)
+  setup do
+    {:ok, manager} = GenEvent.start_link
+    {:ok, registry} = KV.Registry.start_link(manager)
 
-  GenEvent.add_mon_handler(manager, Forwarder, self())
-  {:ok, registry: registry}
-end
+    GenEvent.add_mon_handler(manager, Forwarder, self())
+    {:ok, registry: registry}
+  end
 
-test "sends events on create and crash", %{registry: registry} do
-  KV.Registry.create(registry, "shopping")
-  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-  assert_receive {:create, "shopping", ^bucket}
+  test "sends events on create and crash", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+    assert_receive {:create, "shopping", ^bucket}
 
-  Agent.stop(bucket)
-  assert_receive {:exit, "shopping", ^bucket}
-end
+    Agent.stop(bucket)
+    assert_receive {:exit, "shopping", ^bucket}
+  end
 ```
 
 In order to test the functionality we want to add, we first define a `Forwarder` (the same one we typed in IEx previously). On `setup`, we start the event manager, pass it as an argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
