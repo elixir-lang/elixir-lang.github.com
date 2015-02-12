@@ -123,7 +123,7 @@ iex> Application.stop(:kv)
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it's just a matter of typing `mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
 ### The application callback
 
