@@ -191,15 +191,15 @@ Links are bi-directional, which implies that a crash in a bucket will crash the 
 In other words, we want the registry to keep on running even if a bucket crashes. Let's write a test:
 
 ```elixir
-test "removes bucket on crash", %{registry: registry} do
-  KV.Registry.create(registry, "shopping")
-  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  test "removes bucket on crash", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-  # Kill the bucket and wait for the notification
-  Process.exit(bucket, :shutdown)
-  assert_receive {:exit, "shopping", ^bucket}
-  assert KV.Registry.lookup(registry, "shopping") == :error
-end
+    # Kill the bucket and wait for the notification
+    Process.exit(bucket, :shutdown)
+    assert_receive {:exit, "shopping", ^bucket}
+    assert KV.Registry.lookup(registry, "shopping") == :error
+  end
 ```
 
 The test is similar to "removes bucket on exit" except that we are being a bit more harsh. Instead of using `Agent.stop/1`, we are sending an exit signal to shutdown the bucket. Since the bucket is linked to the registry, which is then linked to the test process, killing the bucket causes the registry to crash which then causes the test process to crash too:
@@ -260,51 +260,55 @@ iex> KV.Bucket.get(bucket, "eggs")
 Let's change the registry to work with the buckets supervisor. We are going to follow the same strategy we did with the events manager, where we will explicitly pass the buckets supervisor pid to `KV.Registry.start_link/3`. Let's start by changing the setup callback in `test/kv/registry_test.exs` to do so:
 
 ```elixir
-setup do
-  {:ok, sup} = KV.Bucket.Supervisor.start_link
-  {:ok, manager} = GenEvent.start_link
-  {:ok, registry} = KV.Registry.start_link(manager, sup)
+  setup do
+    {:ok, sup} = KV.Bucket.Supervisor.start_link
+    {:ok, manager} = GenEvent.start_link
+    {:ok, registry} = KV.Registry.start_link(manager, sup)
 
-  GenEvent.add_mon_handler(manager, Forwarder, self())
-  {:ok, registry: registry}
-end
+    GenEvent.add_mon_handler(manager, Forwarder, self())
+    {:ok, registry: registry}
+  end
 ```
 
 Now let's change the appropriate functions in `KV.Registry` to take the new supervisor into account:
 
 ```elixir
-## Client API
+  ## Client API
 
-@doc """
-Starts the registry.
-"""
-def start_link(event_manager, buckets, opts \\ []) do
-  # 1. Pass the buckets supervisor as argument
-  GenServer.start_link(__MODULE__, {event_manager, buckets}, opts)
-end
-
-## Server callbacks
-
-def init({events, buckets}) do
-  names = HashDict.new
-  refs  = HashDict.new
-  # 2. Store the buckets supervisor in the state
-  {:ok, %{names: names, refs: refs, events: events, buckets: buckets}}
-end
-
-def handle_cast({:create, name}, state) do
-  if HashDict.get(state.names, name) do
-    {:noreply, state}
-  else
-    # 3. Use the buckets supervisor instead of starting buckets directly
-    {:ok, pid} = KV.Bucket.Supervisor.start_bucket(state.buckets)
-    ref = Process.monitor(pid)
-    refs = HashDict.put(state.refs, ref, name)
-    names = HashDict.put(state.names, name, pid)
-    GenEvent.sync_notify(state.events, {:create, name, pid})
-    {:noreply, %{state | names: names, refs: refs}}
+  @doc """
+  Starts the registry.
+  """
+  def start_link(event_manager, buckets, opts \\ []) do
+    # 1. Pass the buckets supervisor as argument
+    GenServer.start_link(__MODULE__, {event_manager, buckets}, opts)
   end
-end
+```
+
+and
+
+```elixir
+  ## Server callbacks
+
+  def init({events, buckets}) do
+    names = HashDict.new
+    refs  = HashDict.new
+    # 2. Store the buckets supervisor in the state
+    {:ok, %{names: names, refs: refs, events: events, buckets: buckets}}
+  end
+
+  def handle_cast({:create, name}, state) do
+    if HashDict.get(state.names, name) do
+      {:noreply, state}
+    else
+      # 3. Use the buckets supervisor instead of starting buckets directly
+      {:ok, pid} = KV.Bucket.Supervisor.start_bucket(state.buckets)
+      ref = Process.monitor(pid)
+      refs = HashDict.put(state.refs, ref, name)
+      names = HashDict.put(state.names, name, pid)
+      GenEvent.sync_notify(state.events, {:create, name, pid})
+      {:noreply, %{state | names: names, refs: refs}}
+    end
+  end
 ```
 
 Those changes should be enough to make our tests pass! To complete our task, we just need to update our supervisor to also take the buckets supervisor as child.
@@ -316,19 +320,19 @@ In order to use the buckets supervisor in our application, we need to add it as 
 Open up `lib/kv/supervisor.ex`, add an additional module attribute for the buckets supervisor name, and change `init/1` to match the following:
 
 ```elixir
-@manager_name KV.EventManager
-@registry_name KV.Registry
-@bucket_sup_name KV.Bucket.Supervisor
+  @manager_name KV.EventManager
+  @registry_name KV.Registry
+  @bucket_sup_name KV.Bucket.Supervisor
 
-def init(:ok) do
-  children = [
-    worker(GenEvent, [[name: @manager_name]]),
-    supervisor(KV.Bucket.Supervisor, [[name: @bucket_sup_name]]),
-    worker(KV.Registry, [@manager_name, @bucket_sup_name, [name: @registry_name]])
-  ]
+  def init(:ok) do
+    children = [
+      worker(GenEvent, [[name: @manager_name]]),
+      supervisor(KV.Bucket.Supervisor, [[name: @bucket_sup_name]]),
+      worker(KV.Registry, [@manager_name, @bucket_sup_name, [name: @registry_name]])
+    ]
 
-  supervise(children, strategy: :one_for_one)
-end
+    supervise(children, strategy: :one_for_one)
+  end
 ```
 
 This time we have added a supervisor as child and given it the name of `KV.Bucket.Supervisor` (again, the same name as the module). We have also updated the `KV.Registry` worker to receive the bucket supervisor name as argument.
