@@ -24,22 +24,36 @@ export EDITOR=vim; _bin/newpost 'Post title'
 
 ### Contributing improvements or bug fixes
 
-1. [Fork elixir-lang.github.com](https://github.com/elixir-lang/elixir-lang.github.com/fork).
+First of all, [fork this
+repository](https://github.com/elixir-lang/elixir-lang.github.com/fork).
 
-2. Make your changes.
-
-3. Test it locally, you need to install the gems `jekyll` and `redcarpet`:
+To setup a development enviroment locally, you need to have Ruby installed; you
+can follow [this guide](https://www.ruby-lang.org/en/documentation/installation/) to install it.
+Once you have Ruby installed, `cd` into the forked project and run
 
 ```bash
-$ gem install jekyll redcarpet
-$ jekyll serve # check localhost:4000
+$ bundle install
 ```
 
-4. Push to your forked repository.
+in order to download and install all the necessary dependencies and
 
-5. Submit a pull-request for your changes.
+```bash
+$ bundle exec jekyll serve
+```
 
-`jekyll` requires a javascript processor to be available too. Many OS provide such functionality but others do not. If you have an error related to ExecJS, you can work around it by either running `gem install therubyracer` or by ensuring node.js is available in your path.
+to run a development server (with live-reloading on) on port 4000.
+
+Now you're ready to make your changes! Be sure to test the changes locally using
+the development server. Once you're done with your changes, push those changes
+to your fork and then submit a **pull request**.
+
+#### JavaScript processor
+
+Jekyll (the static-site generator you installed before) requires a JavaScript
+processor to be available. Many operating systems provide such functionality but
+some don't. If you encounter errors related to "ExecJS", you can work around
+them by either installing the `therubyracer` gem (`$ gem install therubyracer`)
+or by ensuring [Node.js](http://nodejs.org) is in your `$PATH`.
 
 ### License
 
