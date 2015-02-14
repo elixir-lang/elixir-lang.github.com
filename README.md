@@ -1,30 +1,10 @@
-### Contents for Elixir website hosted at elixir-lang.org
+This projects holds the contents for Elixir website hosted at elixir-lang.org.
 
 It is automatically transformed by [Jekyll](http://github.com/mojombo/jekyll) into a static site.
 
-### Contributing to the blog
+## Contributing
 
-Create a new file inside `_posts/YYYY-MM-DD-post-title.markdown` following the template:
-
-    ---
-    layout: post
-    title:
-    author:
-    category:
-    excerpt:
-    ---
-
-    Body text goes here...
-
-Or use `_bin/newpost` to bootstrap a new post file:
-
-```bash
-export EDITOR=vim; _bin/newpost 'Post title'
-```
-
-### Contributing improvements or bug fixes
-
-##### 1. Fork and clone this repository
+#### 1. Fork and clone this repository
 
 [Fork this
 repository](https://github.com/elixir-lang/elixir-lang.github.com/fork) and
@@ -32,7 +12,7 @@ clone your fork. If you don't know what forking means or don't know how to do
 it, nice instructions are available
 [here](https://help.github.com/articles/fork-a-repo/).
 
-##### 2. Install Ruby
+#### 2. Install Ruby
 
 This website is compiled into a static website using
 [Jekyll](http://jekyllrb.com), a static-site generator written in Ruby. To
@@ -41,7 +21,7 @@ guide](https://www.ruby-lang.org/en/documentation/installation/). To check that
 Ruby is installed correctly, run `ruby --version` in your shell; it should be
 `1.9.3` or later.
 
-##### 3. Install Bundler to manage dependencies
+#### 3. Install Bundler to manage dependencies
 
 [Bundler](http://bundler.io) handles Ruby dependencies. To install it, simply
 run:
@@ -58,7 +38,7 @@ $ bundle install
 
 to download and install the necessary dependencies.
 
-##### 4. Run Jekyll
+#### 4. Run Jekyll
 
 In order to run a development server (with live-reloading on) just run:
 
@@ -69,7 +49,7 @@ $ bundle exec jekyll serve
 The generated site will be available at http://localhost:4000. You can stop the
 server with <kbd>Ctrl</kbd>-<kbd>C</kbd>.
 
-##### 5. Make your changes and push them
+#### 5. Make your changes and push them
 
 Now you're ready to make your changes! Be sure to test the changes locally using
 the development server. Once you're done with your changes, push those changes
@@ -79,7 +59,7 @@ wrap-up on how to open a good pull request have a look at the [Elixir
 contributing
 guide](https://github.com/elixir-lang/elixir/blob/master/CONTRIBUTING.md#pull-requests).
 
-### License
+## License
 
 * "Elixir" and the Elixir logo are copyrighted to [Plataformatec](http://plataformatec.com.br/). You may not reuse anything therein without permission.
 
