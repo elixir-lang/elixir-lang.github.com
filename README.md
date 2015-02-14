@@ -24,22 +24,60 @@ export EDITOR=vim; _bin/newpost 'Post title'
 
 ### Contributing improvements or bug fixes
 
-1. [Fork elixir-lang.github.com](https://github.com/elixir-lang/elixir-lang.github.com/fork).
+##### 1. Fork and clone this repository
 
-2. Make your changes.
+[Fork this
+repository](https://github.com/elixir-lang/elixir-lang.github.com/fork) and
+clone your fork. If you don't know what forking means or don't know how to do
+it, nice instructions are available
+[here](https://help.github.com/articles/fork-a-repo/).
 
-3. Test it locally, you need to install the gems `jekyll` and `redcarpet`:
+##### 2. Install Ruby
+
+This website is compiled into a static website using
+[Jekyll](http://jekyllrb.com), a static-site generator written in Ruby. To
+install Ruby you can follow [this
+guide](https://www.ruby-lang.org/en/documentation/installation/). To check that
+Ruby is installed correctly, run `ruby --version` in your shell; it should be
+`1.9.3` or later.
+
+##### 3. Install Bundler to manage dependencies
+
+[Bundler](http://bundler.io) handles Ruby dependencies. To install it, simply
+run:
 
 ```bash
-$ gem install jekyll redcarpet
-$ jekyll serve # check localhost:4000
+$ gem install bundler
 ```
 
-4. Push to your forked repository.
+Once you have installed it, `cd` into the local clone of your fork and run:
 
-5. Submit a pull-request for your changes.
+```bash
+$ bundle install
+```
 
-`jekyll` requires a javascript processor to be available too. Many OS provide such functionality but others do not. If you have an error related to ExecJS, you can work around it by either running `gem install therubyracer` or by ensuring node.js is available in your path.
+to download and install the necessary dependencies.
+
+##### 4. Run Jekyll
+
+In order to run a development server (with live-reloading on) just run:
+
+```bash
+$ bundle exec jekyll serve
+```
+
+The generated site will be available at http://localhost:4000. You can stop the
+server with <kbd>Ctrl</kbd>-<kbd>C</kbd>.
+
+##### 5. Make your changes and push them
+
+Now you're ready to make your changes! Be sure to test the changes locally using
+the development server. Once you're done with your changes, push those changes
+to your fork and then [submit a **pull
+request**](https://help.github.com/articles/using-pull-requests/). For a nice
+wrap-up on how to open a good pull request have a look at the [Elixir
+contributing
+guide](https://github.com/elixir-lang/elixir/blob/master/CONTRIBUTING.md#pull-requests).
 
 ### License
 
