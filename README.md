@@ -24,36 +24,59 @@ export EDITOR=vim; _bin/newpost 'Post title'
 
 ### Contributing improvements or bug fixes
 
-First of all, [fork this
-repository](https://github.com/elixir-lang/elixir-lang.github.com/fork).
+##### 1. Fork and clone this repository
 
-To setup a development enviroment locally, you need to have Ruby installed; you
-can follow [this guide](https://www.ruby-lang.org/en/documentation/installation/) to install it.
-Once you have Ruby installed, `cd` into the forked project and run
+[Fork this
+repository](https://github.com/elixir-lang/elixir-lang.github.com/fork) and
+clone your fork. If you don't know what forking means or don't know how to do
+it, nice instructions are available
+[here](https://help.github.com/articles/fork-a-repo/).
+
+##### 2. Install Ruby
+
+This website is compiled into a static website using
+[Jekyll](http://jekyllrb.com), a static-site generator written in Ruby. To
+install Ruby you can follow [this
+guide](https://www.ruby-lang.org/en/documentation/installation/). To check that
+Ruby is installed correctly, run `ruby --version` in your shell; it should be
+`1.9.3` or later.
+
+##### 3. Install Bundler to manage dependencies
+
+[Bundler](http://bundler.io) handles Ruby dependencies. To install it, simply
+run:
+
+```bash
+$ gem install bundler
+```
+
+Once you have installed it, `cd` into the local clone of your fork and run:
 
 ```bash
 $ bundle install
 ```
 
-in order to download and install all the necessary dependencies and
+to download and install the necessary dependencies.
+
+##### 4. Run Jekyll
+
+In order to run a development server (with live-reloading on) just run:
 
 ```bash
 $ bundle exec jekyll serve
 ```
 
-to run a development server (with live-reloading on) on port 4000.
+The generated site will be available at http://localhost:4000.
+
+##### 5. Make your changes and push them
 
 Now you're ready to make your changes! Be sure to test the changes locally using
 the development server. Once you're done with your changes, push those changes
-to your fork and then submit a **pull request**.
-
-#### JavaScript processor
-
-Jekyll (the static-site generator you installed before) requires a JavaScript
-processor to be available. Many operating systems provide such functionality but
-some don't. If you encounter errors related to "ExecJS", you can work around
-them by either installing the `therubyracer` gem (`$ gem install therubyracer`)
-or by ensuring [Node.js](http://nodejs.org) is in your `$PATH`.
+to your fork and then [submit a **pull
+request**](https://help.github.com/articles/using-pull-requests/). For a nice
+wrap-up on how to open a good pull request have a look at the [Elixir
+contributing
+guide](https://github.com/elixir-lang/elixir/blob/master/CONTRIBUTING.md#pull-requests).
 
 ### License
 
