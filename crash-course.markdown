@@ -8,8 +8,7 @@ layout: default
 
 This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, support interoperability, read the docs, sample code, etc.
 
-<div class="toc"></div>
-
+{% include toc.html %}
 
 ## Running code
 
