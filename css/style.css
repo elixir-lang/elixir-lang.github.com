@@ -848,13 +848,24 @@ li.image {
 /* table of contents */
 /*  Jekyll Table of Contents 
 ----------------------------------------------------- */
-.jekyll-toc ol { counter-reset: item; }
-.jekyll-toc ol li { display: block }
-.jekyll-toc ol li:before {
+ol.jekyll-toc,
+ol.jekyll-toc ol {
+  counter-reset: item;
+}
+
+ol.jekyll-toc {
+  margin: 0.3125em 0 0 3.125em;
+}
+ol.jekyll-toc ol {
+  margin: 0.625em 0 0 0;
+  margin-bottom: -0.8em;
+}
+ol.jekyll-toc li { display: block }
+ol.jekyll-toc li:before {
   content: counters(item, ".") " ";
   counter-increment: item;
 }
-.jekyll-toc ol li {
+ol.jekyll-toc li {
   list-style-position: inside;
   text-indent: -1em;
   padding-left: 1em;
@@ -910,13 +921,11 @@ li.image {
   margin-left: 10px;
   width:1em;
   text-align: right;
-  /* vertical-align: top; */
 }
 
 /* extending jekyll-toc */
-.icon {
+.jekyll-toc-header .icon {
   font: normal normal normal 16px/1 icons !important;
-  /* display: inline-block; */
   text-decoration: none;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -926,11 +935,3 @@ li.image {
   -ms-user-select: none;
   user-select: none;
 }
-
-/* dev */
-/*
-.jekyll-toc-header {border:1px solid red; background-color:yellow;}
-.jekyll-toc-header a.jekyll-toc-anchor {border:1px solid blue;}
-.jekyll-toc-header a.jekyll-toc-anchor a.jekyll-toc-icon{border:1px solid red;}
-}
-*/
