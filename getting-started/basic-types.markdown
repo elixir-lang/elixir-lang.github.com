@@ -135,7 +135,7 @@ iex> "hellö"
 "hellö"
 ```
 
-> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001`.
+> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering iex.
 
 Elixir also supports string interpolation:
 
