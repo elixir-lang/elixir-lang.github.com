@@ -6,28 +6,18 @@
       minimumHeaders: 3,
       headers: 'h1, h2, h3, h4, h5, h6',
       listType: 'ol', // values: [ol|ul]
-      showEffect: 'show', // values: [show|slideDown|fadeIn|none]
-      showSpeed: 'slow', // set to 0 to deactivate effect
       
       linkHeader: true,
       linkHere: false,
       linkHereText: '',
-      linkHereDuration: 0,
+      linkHereTitle: 'Link here',
       backToTop: false,
-      backToTopSelector: '',
+      backToTopId: '',
       backToTopText: '',
+      backToTopTitle: 'Back to top',
       backToTopDisplay: 'always', // values: [always|highest] 
-      backToTopDuration: 0,
     },
     settings = $.extend(defaults, options);
-
-    backwardCompatible = function() {
-      // support old option: noBackToTopLinks
-      if (typeof options.backToTop === "undefined" && typeof options.noBackToTopLinks !== "undefined") {
-        settings.backToTop == !options.noBackToTopLinks;
-      }
-    }
-    backwardCompatible();
 
     var headers = $(settings.headers).filter(function() {
       // get all headers with an ID
@@ -42,77 +32,32 @@
       return;
     }
     
-    if (0 === settings.showSpeed || window.location.hash == '') {
-      settings.showEffect = 'none';
-    }
-    
-    var render = {
-      show: function() { output.hide().html(html).show(settings.showSpeed); },
-      slideDown: function() { output.hide().html(html).slideDown(settings.showSpeed); },
-      fadeIn: function() { output.hide().html(html).fadeIn(settings.showSpeed); },
-      none: function() { output.html(html); }
-    };
-
     var get_level = function(ele) { return parseInt(ele.nodeName.replace("H", ""), 10); }
     var highest_level = headers.map(function(_, ele) { return get_level(ele); }).get().sort()[0];
 
     var level = get_level(headers[0]),
       this_level,
-      header_id,
       html = settings.title + ' <'+settings.listType+' class="jekyll-toc">';
 
-    var back_to_top = '<a class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';
-    var link_here = '<a class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">'+settings.linkHereText+'</span></a>';
+    var back_to_top = function(id) {
+      return '<a href="#' +id+ '" title="'+settings.backToTopTitle+'" class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';
+    }
 
-    function force_update_hash(hash) { 
-      window.location.hash = '';
+    var link_here = function(id) {
+      return '<a href="#' +id+ '" title="'+settings.linkHereTitle+'" class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">'+settings.linkHereText+'</span></a>';
+    }
+
+    function force_update_hash(hash) {
+      if ( window.location.hash == hash ) {
+        window.location.hash = '';
+      }
       window.location.hash = hash;
-    }
-
-    function update_hash(hash) {
-      if(history.pushState) {
-        history.pushState(null, null, '#'+hash);
-      } else {
-        force_update_hash(hash)
-      }
-    }
-
-    function animate_link_here(header_id) {
-      var hash = (typeof header_id === "undefined") ? '' : header_id;
-      if ( settings.linkHereDuration > 0 ) {
-        update_hash(hash);
-        $('html,body').animate({scrollTop:$(document.getElementById(header_id)).offset().top}, settings.linkHereDuration);
-      } else {
-        force_update_hash(hash);
-      }
-    }
-
-    if (settings.backToTop) {
-      $(document).on('click', '.jekyll-toc-back-to-top', function() {
-        if ( settings.backToTopSelector == '' ) {
-          if ( settings.backToTopDuration > 0 ) {
-            update_hash('');
-            $('html, body').animate({scrollTop: $('html, body').offset().top}, settings.backToTopDuration);
-          } else {
-            force_update_hash('');
-          }
-        } else {
-          var top_element = ( $(settings.backToTopSelector).length ) ? $(settings.backToTopSelector).first() : $('html, body');
-          var top_element_id = $(top_element).attr('id');
-          var hash = (typeof top_element_id === "undefined") ? '' : top_element_id
-          if ( settings.backToTopDuration > 0 || hash == '' ) {
-            update_hash(hash);
-            $('html, body').animate({scrollTop: top_element.offset().top}, settings.backToTopDuration);
-          } else {
-            force_update_hash(hash);
-          }
-        }
-      });
+      
     }
 
     $(headers).each(function(_, header) {
       this_level = get_level(header);
-      header_id = $(header).attr('id');
+      var header_id = $(header).attr('id');
       if (this_level === level) // same level as before; same indenting
         html += "<li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
       else if (this_level <= level){ // higher level than before; end parent ol
@@ -130,33 +75,30 @@
       level = this_level; // update for the next one
 
       // add links at the end (so we don't pulute header.innerHTML)
-      $(header).addClass('jekyll-toc-top-level-header').wrapInner('<span class="jekyll-toc-wrapper"></span>').append(link_here);
+      $(header).addClass('jekyll-toc-top-level-header').wrapInner('<span class="jekyll-toc-wrapper"></span>').append( link_here(header_id) );
       if (settings.backToTop) {
         switch(settings.backToTopDisplay){
           case 'highest':
             if ( this_level === highest_level ) {
-              $(header).append(back_to_top);      
+              $(header).append( back_to_top(settings.backToTopId) );      
             }
             break;
           case 'always':
           default:
-            $(header).append(back_to_top);      
+            $(header).append( back_to_top(settings.backToTopId) );      
         }
       }
 
       if (settings.linkHeader) {
         $(header).addClass('jekyll-toc-header');
         $(header).children('span.jekyll-toc-wrapper').on( 'click', function( ) {
-          animate_link_here($(header).attr('id'));
-        });
-        $(header).children('a.jekyll-toc-link-here').on( 'click', function( ) {
-          animate_link_here($(header).attr('id'));
+          force_update_hash(header_id);
         });
       }
     });
 
     html += "</"+settings.listType+">";
 
-    render[settings.showEffect]();
+    output.html(html)
   };
 })(jQuery);
