@@ -38,6 +38,8 @@ iex> String.length string
 5
 ```
 
+> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering iex.
+
 UTF-8 requires one byte to represent the code points `h`, `e` and `o`, but two bytes to represent `ł`. In Elixir, you can get a code point's value by using `?`:
 
 ```iex
