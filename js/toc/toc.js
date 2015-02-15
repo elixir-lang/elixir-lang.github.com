@@ -64,21 +64,40 @@
     var back_to_top = '<a class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';
     var link_here = '<a class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">'+settings.linkHereText+'</span></a>';
 
-    function animate_link_here(header_id) {
-      $('html,body').animate({scrollTop:$(document.getElementById(header_id)).offset().top}, settings.linkHereDuration);
-      window.location.hash = ( header_id === "undefined" ) ? '' : header_id;
+    function update_hash(hash) { 
+      if(history.pushState) {
+        history.pushState(null, null, '#'+hash);
+      } else {
+        location.hash = '#'+hash;
+      }
     }
-    
+
+    function animate_link_here(header_id) {
+      update_hash( (typeof header_id === "undefined") ? '' : header_id );
+      $('html,body').animate({scrollTop:$(document.getElementById(header_id)).offset().top}, settings.linkHereDuration);
+    }
+
     if (settings.backToTop) {
       $(document).on('click', '.jekyll-toc-back-to-top', function() {
-        if ( settings.backToTopSelector == '' )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
-          $('html, body').animate({scrollTop: $('html, body').offset().top}, settings.backToTopDuration);
-          window.location.hash = '';
+        if ( settings.backToTopSelector == '' ) {
+          if ( settings.backToTopDuration > 0 ) {
+            update_hash('');
+            $('html, body').animate({scrollTop: $('html, body').offset().top}, settings.backToTopDuration);
+          } else {
+            // force update
+            window.location.hash = '';
+          }
         } else {
-          var top_element = $(settings.backToTopSelector).first();
-          $('html, body').animate({scrollTop: top_element.offset().top}, settings.backToTopDuration);
+          var top_element = ( $(settings.backToTopSelector).length ) ? $(settings.backToTopSelector).first() : $('html, body');
           var top_element_id = $(top_element).attr('id');
-          window.location.hash = ( typeof top_element_id === "undefined" ) ? '' : top_element_id;
+          update_hash ( (typeof top_element_id === "undefined") ? '' : top_element_id );
+          if ( settings.backToTopDuration > 0 || window.location.hash == '' ) {
+            $('html, body').animate({scrollTop: top_element.offset().top}, settings.backToTopDuration);
+          } else {
+            // force update
+            console.log("force update");
+            window.location.hash == window.location.hash
+          }
         }
       });
     }
