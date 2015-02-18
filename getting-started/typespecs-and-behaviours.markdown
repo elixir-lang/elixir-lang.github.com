@@ -50,7 +50,7 @@ end
 
 As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [typespecs docs](/docs/stable/elixir/Kernel.Typespec.html).
 
-Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directory in order to declare our own custom type.
+Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type.
 
 ```elixir
 defmodule LousyCalculator do
