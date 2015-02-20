@@ -6,11 +6,11 @@ layout: default
 
 # {{ page.title }}
 
+{% include toc.html %}
+
 The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling from source.
 
 Note Elixir requires Erlang 17.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the "Installing Erlang" section below.
-
-{% include toc.html %}
 
 ## Distributions
 
