@@ -150,7 +150,7 @@ Note "Mix and OTP" is our most advanced guide so far and it expects you to have 
 
 ## What's next?
 
-With v0.14.0 we have reached many of the milestones [we have set in the previous release](/blog/2014/04/21/elixir-v0-13-0-released/#toc_8). This brings us closer to Elixir v1.0.0 and only a handful of tasks are pending:
+With v0.14.0 we have reached many of the milestones [we have set in the previous release](/blog/2014/04/21/elixir-v0-13-0-released/#toc_8). This brings us closer to Elixir v1.0 and only a handful of tasks are pending:
 
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces. Work has already started on this front as Elixir already prints errors coming from the application startup nicely;
 
@@ -158,7 +158,7 @@ With v0.14.0 we have reached many of the milestones [we have set in the previous
 
 * Support mix aliases, allowing developers to easily define Mix shortcuts for their favorite tasks;
 
-* Solve all remaining [open issues](https://github.com/elixir-lang/elixir/issues?state=open). We have always kept the issues tracker tidy and there is little work left to solve the existing issues. Note we have also listed all [upcoming backwards incompatible changes](https://github.com/elixir-lang/elixir/issues?labels=Note%3ABackwards+incompatible&page=1&state=open). Many of those changes will actually be deprecated first and developers should be able to follow along without breaking changes in minor releases, but they are breaking changes in the sense they work in v0.14.0 but will work differently by the time v1.0.0 is released;
+* Solve all remaining [open issues](https://github.com/elixir-lang/elixir/issues?state=open). We have always kept the issues tracker tidy and there is little work left to solve the existing issues. Note we have also listed all [upcoming backwards incompatible changes](https://github.com/elixir-lang/elixir/issues?labels=Note%3ABackwards+incompatible&page=1&state=open). Many of those changes will actually be deprecated first and developers should be able to follow along without breaking changes in minor releases, but they are breaking changes in the sense they work in v0.14.0 but will work differently by the time v1.0 is released;
 
 That's all for now! Elixir developers can see [a summary of all changes in v0.14.0 in the release notes](https://github.com/elixir-lang/elixir/releases/tag/v0.14.0). In case you are new around here, you can get started with Elixir by reading [our Getting Started guide](/getting-started/introduction.html).
 

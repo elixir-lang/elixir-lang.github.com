@@ -3,14 +3,14 @@ layout: post
 title: Elixir v0.15.0 released
 author: José Valim
 category: Releases
-excerpt: "Elixir v0.15.0 introduces Elixir's Logger, Mix aliases and is the last stop before Elixir v1.0.0. We are also glad to welcome Alexei into our team!"
+excerpt: "Elixir v0.15.0 introduces Elixir's Logger, Mix aliases and is the last stop before Elixir v1.0. We are also glad to welcome Alexei into our team!"
 ---
 
 Hello everyone!
 
-We are glad to announce v0.15.0 has been released. We have spent the last 2 months tidying up the existing APIs, ensuring consistency, improving performance and more. As a result, v0.15.0 is the last minor branch before Elixir v1.0.0!
+We are glad to announce v0.15.0 has been released. We have spent the last 2 months tidying up the existing APIs, ensuring consistency, improving performance and more. As a result, v0.15.0 is the last minor branch before Elixir v1.0!
 
-There are also no more planned deprecations nor backward incompatible changes which means it is extremely likely that code that runs on v0.15.0 will run exactly the same on Elixir v1.0.0.
+There are also no more planned deprecations nor backward incompatible changes which means it is extremely likely that code that runs on v0.15.0 will run exactly the same on Elixir v1.0.
 
 If you are interested in the specific details for this release, [please check our CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.15.0/CHANGELOG.md). In this post, we will focus on three new features in this release: Logger, Mix aliases, the fresh Elixir Web Installer for Windows, and share some exciting news at the end!
 
@@ -160,6 +160,6 @@ Alexei is also interested in how we can extend our tooling to the Erlang ecosyst
 
 ## What's next?
 
-We are very close to launch Elixir v1.0.0! All planned features are already in Elixir's codebase and at the moment there are only [four open issues in our tracker tagged with the v1.0 milestone](https://github.com/elixir-lang/elixir/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.0).
+We are very close to launch Elixir v1.0! All planned features are already in Elixir's codebase and at the moment there are only [four open issues in our tracker tagged with the v1.0 milestone](https://github.com/elixir-lang/elixir/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.0).
 
-Our estimated date for the first release candidate for Elixir v1.0.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](/getting-started/introduction.html) or by checking one of the many "Learning Resources" on the sidebar.
+Our estimated date for the first release candidate for Elixir v1.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](/getting-started/introduction.html) or by checking one of the many "Learning Resources" on the sidebar.
