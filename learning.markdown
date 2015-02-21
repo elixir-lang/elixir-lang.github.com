@@ -50,6 +50,6 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done - by Chris Mccord"><img src="https://imagery.pragprog.com/products/430/cmelixir_xlargecover.jpg?1415371472" alt="ElixirSips cover" width="190" height="228" /></a>
 
-<p>Description coming...</p>
+<p>Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you’ll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You’ll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.</p>
 
 <div class="clear"></div>
