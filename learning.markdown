@@ -40,7 +40,9 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <a class="cover" href="http://elixirsips.com" title="Elixir Sips: Learn Elixir with Two Short Videos Each Week – with Josh Adams"><img src="http://elixirsips.com/images/ElixirLangAd2_190x160.png" alt="ElixirSips cover" width="190" height="160" /></a>
 
-Description coming...
+Elixir Sips is a screencast series that provides 2 short videos - typically from 2 to 7 minutes, but occasionally much longer - each week.  The videos consist of various topics, ranging from exploring a module in the standard library to trying out a new project to building a web-based Tetris game from scratch.
+
+The intended audience ranges from someone entirely new to the Elixir language, to experienced developers that want to get a broad range of topics to think about from time to time.
 
 <div class="clear"></div>
 
