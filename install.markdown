@@ -26,8 +26,8 @@ Choose your operating system and tool.
 
 ### Unix (and Unix-like)
 
-  * Arch Linux (on AUR)
-    * Run: `yaourt -S elixir`
+  * Arch Linux (Community repo)
+    * Run: `pacman -S elixir`
   * openSUSE (and SLES 11 SP3+)
     * Add Erlang devel repo: `zypper ar -f obs://devel:languages:erlang/ erlang`
     * Run: `zypper in elixir`
