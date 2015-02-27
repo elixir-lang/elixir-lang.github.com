@@ -65,7 +65,7 @@ iex> Macro.to_string(quote do: sum(1, 2 + 3, 4))
 In general, the tuples above are structured according to the following format:
 
 ```elixir
-{tuple | atom, list, list | atom}
+{atom | tuple, list, list | atom}
 ```
 
 * The first element is an atom or another tuple in the same representation;
