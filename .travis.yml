@@ -1,0 +1,16 @@
+sudo: false
+language: ruby
+rvm:
+  - 2.1
+python:
+  - 2.7
+install:
+  - pip install --user html5validator
+  - export PATH=$PATH:$HOME/.local/bin
+  - bundle install
+script:
+  - bundle exec jekyll build
+  - ./script/cibuild
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
