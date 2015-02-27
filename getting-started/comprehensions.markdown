@@ -6,8 +6,6 @@ redirect_from: /getting_started/17.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In Elixir, it is common to loop over an Enumerable, often filtering out some results and mapping values into another list. Comprehensions are syntactic sugar for such constructs: they group those common tasks into the `for` special form.
 
 For example, we can map a list of integers into their squared values:
@@ -18,6 +16,8 @@ iex> for n <- [1, 2, 3, 4], do: n * n
 ```
 
 A comprehension is made of three parts: generators, filters and collectables.
+
+{% include toc.html %}
 
 ## Generators and filters
 

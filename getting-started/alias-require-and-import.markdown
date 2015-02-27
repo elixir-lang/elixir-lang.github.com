@@ -6,9 +6,9 @@ redirect_from: /getting_started/13.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In order to facilitate software reuse, Elixir provides three directives. As we are going to see below, they are called directives because they have **lexical scope**.
+
+{% include toc.html %}
 
 ## `alias`
 

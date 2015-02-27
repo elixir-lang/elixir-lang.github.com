@@ -6,13 +6,13 @@ redirect_from: /getting_started/mix_otp/5.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 So far our application requires an event manager and a registry. It may potentially use dozens, if not hundreds, of buckets. While we may think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.
 
 When things fail, your first reaction may be: "let's rescue those errors". But, as we have learned in the Getting Started guide, in Elixir we don't have the defensive programming habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "fail fast" or "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to setup a supervisor that will start a fresh copy of the registry.
 
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
+
+{% include toc.html %}
 
 ## Our first supervisor
 

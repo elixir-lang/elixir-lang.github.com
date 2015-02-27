@@ -6,8 +6,6 @@ redirect_from: /getting_started/8.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In Elixir we group several functions into modules. We've already used many different modules in the previous chapters like [the `String` module](/docs/stable/elixir/String.html):
 
 ```iex
@@ -29,6 +27,8 @@ iex> Math.sum(1, 2)
 ```
 
 In the following sections, our examples are going to get a bit more complex, and it can be tricky to type them all in the shell. It's about time for us to learn how to compile Elixir code and also how to run Elixir scripts.
+
+{% include toc.html %}
 
 ## Compilation
 

@@ -6,9 +6,9 @@ redirect_from: /getting_started/21.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 Eager to learn more? Keep reading!
+
+{% include toc.html %}
 
 ## Build your first Elixir project
 

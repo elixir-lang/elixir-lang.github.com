@@ -6,8 +6,6 @@ redirect_from: /getting_started/2.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter we will learn more about Elixir basic types: integers, floats, booleans, atoms, strings, lists and tuples. Some basic types are:
 
 ```iex
@@ -20,6 +18,8 @@ iex> "elixir"   # string
 iex> [1, 2, 3]  # list
 iex> {1, 2, 3}  # tuple
 ```
+
+{% include toc.html %}
 
 ## Basic arithmetic
 

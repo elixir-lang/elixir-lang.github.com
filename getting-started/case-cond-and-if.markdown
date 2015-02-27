@@ -6,9 +6,9 @@ redirect_from: /getting_started/5.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter, we will learn about the `case`, `cond` and `if` control-flow structures.
+
+{% include toc.html %}
 
 ## `case`
 

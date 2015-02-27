@@ -6,11 +6,11 @@ redirect_from: /getting_started/7.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, maps, etc.
 
 In Elixir, we have two main associative data structures: keyword lists and maps. It's time to learn more about them!
+
+{% include toc.html %}
 
 ## Keyword lists
 

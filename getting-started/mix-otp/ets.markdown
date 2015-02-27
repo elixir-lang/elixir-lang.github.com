@@ -6,13 +6,13 @@ redirect_from: /getting_started/mix_otp/6.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 Every time we need to look up a bucket, we need to send a message to the registry. In some applications, this means the registry may become a bottleneck!
 
 In this chapter we will learn about ETS (Erlang Term Storage), and how to use it as a cache mechanism. Later we will expand its usage to persist data from the supervisor to its children, allowing data to persist even on crashes.
 
 > Warning! Don't use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know *whether* you should cache, and *what* you should cache. This chapter is merely an example of how ETS can be used, once you've determined the need.
+
+{% include toc.html %}
 
 ## ETS as a cache
 

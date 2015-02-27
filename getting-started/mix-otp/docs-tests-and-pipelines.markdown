@@ -6,8 +6,6 @@ redirect_from: /getting_started/mix_otp/9.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter, we will implement the code that parses the commands we described in the first chapter:
 
 ```
@@ -29,6 +27,8 @@ OK
 ```
 
 After the parsing is done, we will update our server to dispatch the parsed commands to the `:kv` application we built previously.
+
+{% include toc.html %}
 
 ## Doctests
 
