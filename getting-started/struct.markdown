@@ -6,8 +6,6 @@ redirect_from: /getting_started/15.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In [chapter 7](/getting-started/maps-and-dicts.html) we learned about maps:
 
 ```iex
@@ -20,6 +18,8 @@ iex> %{map | a: 3}
 ```
 
 Structs are extensions built on top of maps that provide compile-time checks and default values.
+
+{% include toc.html %}
 
 ## Defining structs
 

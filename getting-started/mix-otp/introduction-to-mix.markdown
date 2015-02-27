@@ -6,8 +6,6 @@ redirect_from: /getting_started/mix_otp/1.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this guide, we will learn how to build a complete Elixir application, with its own supervision tree, configuration, tests and more.
 
 The application works as a distributed key-value store. We are going to organize key-value pairs into buckets and distribute those buckets across multiple nodes. We will also build a simple client that allows us to connect to any of those nodes and send requests such as:
@@ -43,6 +41,8 @@ In this chapter, we will create our first project using Mix and explore differen
 > Note: this guide requires Elixir v0.15.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
 >
 > If you have any questions or improvements to the guide, please let us know in [our mailing list](https://groups.google.com/d/forum/elixir-lang-talk) or [issues tracker](http://github.com/elixir-lang/elixir-lang.github.com/issues) respectively. Your input is really important to help us guarantee the guides are accessible and up to date!
+
+{% include toc.html %}
 
 ## Our first project
 

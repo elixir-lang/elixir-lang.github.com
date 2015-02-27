@@ -6,9 +6,9 @@ redirect_from: /getting_started/mix_otp/8.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://erlang.org/doc/man/gen_tcp.html) to serve requests. In future chapters we will expand our server so it can actually serve the commands. This will also provide a great opportunity to explore Elixir's `Task` module.
+
+{% include toc.html %}
 
 ## Echo server
 

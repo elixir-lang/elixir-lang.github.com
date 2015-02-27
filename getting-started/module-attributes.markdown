@@ -6,8 +6,6 @@ redirect_from: /getting_started/14.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 Module attributes in Elixir serve three purposes:
 
 1. They serve to annotate the module, often with information to be used by the user or the <abbr title="Virtual Machine">VM</abbr>.
@@ -15,6 +13,8 @@ Module attributes in Elixir serve three purposes:
 3. They work as a temporary module storage to be used during compilation.
 
 Let's check each case, one by one.
+
+{% include toc.html %}
 
 ## As annotations
 

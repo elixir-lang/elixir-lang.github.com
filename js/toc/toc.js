@@ -37,7 +37,7 @@
 
     var level = get_level(headers[0]),
       this_level,
-      html = settings.title + ' <'+settings.listType+' class="jekyll-toc">';
+      html = '<div class="jekyll-toc-title">' + settings.title + '</div><'+settings.listType+' class="jekyll-toc">';
 
     var back_to_top = function(id) {
       return '<a href="#' +id+ '" title="'+settings.backToTopTitle+'" class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';

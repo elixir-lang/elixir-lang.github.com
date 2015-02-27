@@ -6,11 +6,11 @@ redirect_from: /getting_started/mix_otp/2.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows reading and modification by different processes.
 
 If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting-started/processes.html). We will use it as starting point.
+
+{% include toc.html %}
 
 ## The trouble with state
 

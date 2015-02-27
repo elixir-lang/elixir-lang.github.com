@@ -6,11 +6,11 @@ redirect_from: /getting_started/mix_otp/4.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter, we will explore GenEvent, another behaviour provided by Elixir and  <abbr title="Open Telecom Platform">OTP</abbr> that allows us to spawn an event manager that is able to publish events to many handlers.
 
 There are two events we are going to emit: one for every time a bucket is added to the registry and another when it is removed from it.
+
+{% include toc.html %}
 
 ## Event managers
 

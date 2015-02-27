@@ -6,8 +6,6 @@ redirect_from: /getting_started/1.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 Welcome!
 
 In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
@@ -20,6 +18,8 @@ Our requirements are:
 Let's get started!
 
 > If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com). If you suspect it is a language bug, [please let us know in the language issue tracker](https://github.com/elixir-lang/elixir/issues).
+
+{% include toc.html %}
 
 ## Installation
 

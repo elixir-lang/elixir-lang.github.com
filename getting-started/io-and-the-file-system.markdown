@@ -6,11 +6,11 @@ redirect_from: /getting_started/12.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html) and [`Path`](/docs/stable/elixir/Path.html).
 
 We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the <abbr title="Virtual Machine">VM</abbr>.
+
+{% include toc.html %}
 
 ## The `IO` module
 

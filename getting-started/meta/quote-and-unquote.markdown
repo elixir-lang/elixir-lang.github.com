@@ -6,9 +6,9 @@ redirect_from: /getting_started/meta/1.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 An Elixir program can be represented by its own data structures. In this chapter, we will learn what those structures look like and how to compose them. The concepts learned in this chapter are the building blocks for macros, which we are going to take a deeper look at in the next chapter.
+
+{% include toc.html %}
 
 ## Quoting
 

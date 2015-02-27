@@ -6,8 +6,6 @@ redirect_from: /getting_started/mix_otp/3.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In the [previous chapter](/getting-started/mix-otp/agent.html) we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
 
 ```elixir
@@ -40,6 +38,8 @@ Instead of abusing the name registry facility, we will instead create our own *r
 The registry needs to guarantee the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
 We will use a [GenServer](/docs/stable/elixir/GenServer.html) to create a registry process that can monitor the bucket process. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
+
+{% include toc.html %}
 
 ## Our first GenServer
 

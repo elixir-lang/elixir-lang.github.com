@@ -6,11 +6,11 @@ redirect_from: /getting_started/meta/2.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 Macros can be defined in Elixir using `defmacro/2`.
 
 > For this chapter, we will be using files instead of running code samples in IEx. That's because the code samples will span multiple lines of code and typing them all in IEx can be counter-productive. You should be able to run the code samples by saving them into a `macros.exs` file and running it with `elixir macros.exs` or `iex macros.exs`.
+
+{% include toc.html %}
 
 ## Our first macro
 

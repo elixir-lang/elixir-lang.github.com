@@ -6,8 +6,6 @@ redirect_from: /getting_started/meta/3.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 [Domain Specific Languages](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. There are many language features that, when used in combination, can aid developers to write Domain Specific Languages. In this chapter we will focus on how macros and module attributes can be used together to create domain specific modules that are focused on solving one particular problem. As an example, we will write a very simple module to define and run tests.
 
 The goal is to build a module named `TestCase` that allows us to write the following:
@@ -29,6 +27,8 @@ MyTest.run
 ```
 
 In the example above, by using `TestCase`, we can write tests using the `test` macro, which defines a function named `run` to automatically run all tests for us. Our prototype will simply rely on the match operator (`=`) as a mechanism to do assertions.
+
+{% include toc.html %}
 
 ## The `test` macro
 

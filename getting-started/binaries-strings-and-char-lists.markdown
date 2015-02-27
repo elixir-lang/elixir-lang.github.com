@@ -6,8 +6,6 @@ redirect_from: /getting_started/6.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In "Basic types", we learned about strings and used the `is_binary/1` function for checks:
 
 ```iex
@@ -18,6 +16,8 @@ true
 ```
 
 In this chapter, we will understand what binaries are, how they associate with strings, and what a single-quoted value, `'like this'`, means in Elixir.
+
+{% include toc.html %}
 
 ## UTF-8 and Unicode
 

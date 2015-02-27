@@ -6,8 +6,6 @@ redirect_from: /getting_started/16.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
 
 In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
@@ -28,6 +26,8 @@ The protocol expects a function called `blank?` that receives one argument to be
 defimpl Blank, for: Integer do
   def blank?(_), do: false
 end
+
+{% include toc.html %}
 
 # Just empty list is blank
 defimpl Blank, for: List do

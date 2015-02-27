@@ -6,8 +6,6 @@ redirect_from: /getting_started/mix_otp/7.html
 
 # {{ page.title }}
 
-{% include toc.html %}
-
 In this chapter, we will briefly discuss how to manage dependencies in Mix.
 
 Our `kv` application is complete, so it's time to implement the server that will handle the requests we defined in the first chapter:
@@ -33,6 +31,8 @@ OK
 However, instead of adding more code to the `kv` application, we are going to build the TCP server as another application that is a client of the `kv` application. Since the whole runtime and Elixir ecosystem are geared towards applications, it makes sense to break our projects into smaller applications that work together rather than building a big, monolithic app.
 
 Before creating our new application, we must discuss how Mix handles dependencies. In practice, there are two kinds of dependencies we usually work with: internal and external dependencies. Mix supports mechanisms to work with both of them.
+
+{% include toc.html %}
 
 ## External dependencies
 
