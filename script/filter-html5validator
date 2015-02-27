@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd "$DIR"
+source "$DIR/filter-lib.sh"
+
+filter_errors() {
+  grep -v "Bad value “X-UA-Compatible” for attribute “http-equiv” on element “meta”" #|
+  #grep " error: "
+}
+
+filter_html5validator() {
+  filter_it "$DIR/../_site/" "html5validator --blacklist docs"
+}
+
+filter_html5validator
