@@ -814,10 +814,20 @@ body.learning h4.resource {
 }
 
 /*  Jekyll Table of Contents */
-ol.jekyll-toc {
-  margin: 0.3125em 0 0 3.125em;
+ol.jekyll-toc,
+ol.jekyll-toc ol {
+  counter-reset: item;
 }
-ol.jekyll-toc li { display: block }
+ol.jekyll-toc {
+  margin: 0.3125em 0 0 2.3076923076923075em;
+}
+ol.jekyll-toc ol {
+  margin: 0.625em 0 0 0;
+  margin-bottom: -0.8em;
+}
+ol.jekyll-toc li {
+  display: block;
+}
 ol.jekyll-toc li:before {
   content: counters(item, ".") " ";
   counter-increment: item;
@@ -828,6 +838,10 @@ ol.jekyll-toc li {
   padding-left: 1em;
   line-height: 1.3em;
   padding-bottom: 0.8em;
+}
+ol.jekyll-toc li a {
+  position:relative;
+  left: 0.3076923076923077em;
 }
 
 /* heading  */
