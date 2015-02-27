@@ -16,7 +16,9 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 <h4 class="resource">Programming Elixir</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir/programming-elixir" title="Programming Elixir: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun – by Dave Thomas"><img src="http://imagery.pragprog.com/products/361/elixir_xlargecover.jpg?1368724397" alt="Programming Elixir cover" width="190" height="228" /></a>
+<a class="cover" href="https://pragprog.com/book/elixir/programming-elixir" title="Programming Elixir
+: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun :
+– by Dave Thomas"><img src="http://imagery.pragprog.com/products/361/elixir_xlargecover.jpg?1368724397" alt="Programming Elixir cover" width="190" height="228" /></a>
 
 You want to explore functional programming, but are put off by the academic feel (tell me about monads just one more time). You know you need concurrent applications, but also know these are almost impossible to get right. Meet Elixir, a functional, concurrent language built on the rock-solid Erlang VM.
 
@@ -26,7 +28,8 @@ Elixir’s pragmatic syntax and built-in support for metaprogramming will make y
 
 <h4 class="resource">Elixir in Action</h4>
 
-<a class="cover" href="http://manning.com/juric/" title="Elixir in Action – by Saša Jurić"><img src="http://manning.com/juric/juric_cover150.jpg" alt="Elixir in Action cover" width="190" height="238" /></a>
+<a class="cover" href="http://manning.com/juric/" title="Elixir in Action
+– by Saša Jurić"><img src="http://manning.com/juric/juric_cover150.jpg" alt="Elixir in Action cover" width="190" height="238" /></a>
 
 Elixir in Action is a tutorial book that aims to bring developers new to Elixir and Erlang to the point where they can develop complex systems on their own. No knowledge about Elixir, Erlang, or functional programming is required, but it is assumed that a reader has a few years of production experience using mainstream OO languages, for example C#, Java, Python, or Ruby.
 
@@ -38,7 +41,9 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <h4 class="resource">Elixir Sips</h4>
 
-<a class="cover" href="http://elixirsips.com" title="Elixir Sips: Learn Elixir with Two Short Videos Each Week – with Josh Adams"><img src="http://elixirsips.com/images/ElixirLangAd2_190x160.png" alt="ElixirSips cover" width="190" height="160" /></a>
+<a class="cover" href="http://elixirsips.com" title="Elixir Sips
+: Learn Elixir with Two Short Videos Each Week :
+– with Josh Adams"><img src="http://elixirsips.com/images/ElixirLangAd2_190x160.png" alt="ElixirSips cover" width="190" height="160" /></a>
 
 Elixir Sips is a screencast series that provides 2 short videos - typically from 2 to 7 minutes, but occasionally much longer - each week.  The videos consist of various topics, ranging from exploring a module in the standard library to trying out a new project to building a web-based Tetris game from scratch.
 
@@ -50,7 +55,9 @@ The intended audience ranges from someone entirely new to the Elixir language, t
 
 <h4 class="resource">Metaprogramming Elixir</h4>
 
-<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done - by Chris Mccord"><img src="https://imagery.pragprog.com/products/430/cmelixir_xlargecover.jpg?1415371472" alt="ElixirSips cover" width="190" height="228" /></a>
+<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir
+: Write Less Code, Get More Done and Have Fun :
+– by Chris Mccord"><img src="http://imagery.pragprog.com/products/430/cmelixir_xlargecover.jpg?1415371472" alt="Metaprogramming Elixir cover" width="190" height="228" /></a>
 
 Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you’ll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You’ll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
 
