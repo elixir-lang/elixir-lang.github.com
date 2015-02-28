@@ -51,11 +51,11 @@ Choose your operating system and tool.
   * Chocolatey
     * `cinst elixir`
 
-Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#4-installing-erlang) section below.
+Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
 
 ## Precompiled package
 
-Elixir provides a precompiled package for every release. First [install Erlang](/install.html#4-installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
+Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
 
 Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory. It is recommended that you add Elixir's bin path to your PATH environment variable to ease development. You need to [find your shell profile file](http://unix.stackexchange.com/a/117470/101951), and add to the end of it: 
 
@@ -69,7 +69,7 @@ On Windows, there are [instructions for different versions here](http://www.comp
 
 ## Compiling from source (Unix and MinGW)
 
-You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#4-installing-erlang).
+You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#installing-erlang).
 
 Next you should download the [latest release](https://github.com/elixir-lang/elixir/releases/), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows)).
 
