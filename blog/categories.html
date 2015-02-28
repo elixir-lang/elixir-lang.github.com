@@ -9,7 +9,7 @@ layout: blog
   <ul>
   {% for category in site.categories %}
     <li>
-      <h5 id="#{{ category | first }}">&raquo; {{ category | first | capitalize }}</h5>
+      <h5 id="{{ category | first }}">&raquo; {{ category | first | capitalize }}</h5>
       <ul>
       {% for posts in category %}
         {% for post in posts %}

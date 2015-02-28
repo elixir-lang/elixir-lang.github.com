@@ -150,7 +150,7 @@ Note "Mix and OTP" is our most advanced guide so far and it expects you to have 
 
 ## What's next?
 
-With v0.14.0 we have reached many of the milestones [we have set in the previous release](/blog/2014/04/21/elixir-v0-13-0-released/#toc_8). This brings us closer to Elixir v1.0 and only a handful of tasks are pending:
+With v0.14.0 we have reached many of the milestones [we have set in the previous release](/blog/2014/04/21/elixir-v0-13-0-released/#the-next-steps). This brings us closer to Elixir v1.0 and only a handful of tasks are pending:
 
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces. Work has already started on this front as Elixir already prints errors coming from the application startup nicely;
 
