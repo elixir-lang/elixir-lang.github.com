@@ -37,6 +37,17 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <div class="clear"></div>
 
+<h4 class="resource">Introducing Elixir</h4>
+
+<a class="cover" href="http://shop.oreilly.com/product/0636920030584.do" title="Introducing Elixir: Getting Started in Functional Programming
+-– by Simon St. Laurent, J. David Eisenberg"><img src="http://akamaicovers.oreilly.com/images/0636920030584/cat.gif" alt="Introducing Elixir cover" width="190" height="249" /></a>
+
+Elixir is an excellent language if you want to learn about functional programming, and with this hands-on introduction, you’ll discover just how powerful and fun Elixir can be. This language combines the robust functional programming of Erlang with a syntax similar to Ruby, and includes powerful features for metaprogramming.
+
+This book shows you how to write simple Elixir programs by teaching one skill at a time. Once you pick up pattern matching, process-oriented programming, and other concepts, you’ll understand why Elixir makes it easier to build concurrent and resilient programs that scale up and down with ease.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">Elixir Sips</h4>
