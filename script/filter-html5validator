@@ -4,13 +4,18 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd "$DIR"
 source "$DIR/filter-lib.sh"
 
-filter_errors() {
-  grep -v "Bad value “X-UA-Compatible” for attribute “http-equiv” on element “meta”" #|
-  #grep " error: "
+# Filters `stderr` right after being received.
+filter_stderr() {
+  grep -v "Bad value “X-UA-Compatible” for attribute “http-equiv” on element “meta”"
 }
 
 filter_html5validator() {
-  filter_it "$DIR/../_site/" "html5validator --blacklist docs"
+  local dir="$DIR/../_site/"
+  local cmd="html5validator --blacklist docs"
+  local ok_msg="OK: html5validator - Documents successfully validated."
+  local error_msg="ERROR: html5validator - Documents did not validate."
+  
+  filter_it "$dir" "$cmd" "$ok_msg" "$error_msg" 
 }
 
 filter_html5validator

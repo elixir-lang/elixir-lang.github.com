@@ -4,38 +4,48 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd "$DIR"
 source "$DIR/filter-lib.sh"
 
-filter_errors() {
+# Filters `stderr` right after being received.
+filter_stderr() {
+  # Local errors, when /docs/ exists
   grep -v "linking to /docs/stable/elixir/Kernel.html#%7C%3E/2, but %7C%3E/2 does not exist" |
+  
+  # Remote errors, when /docs/ doesn't exist
   grep -vP "internally linking to \/docs\/.*, which does not exist" |
   grep -vP "trying to find hash of \/docs\/.*, but .* does not exist" |
 
-  filter_more_errors |
+  filter_stderr_extra |
 
   # delete every file hat has no errors (ie, any file that is not followed by a line starting with "  *  ")
   perl -0777 -pe 's/\- .*\n(?!\s+\*\s+)//g'
 }
 
-filter_more_errors() {
-  perl -CSAD -ne '
+filter_stderr_extra() {
+  perl -CSAD -pe '
     BEGIN {
       my $current_file = "";
     }
     if ( /^- / ) {
       $current_file = $_;
-    } elsif ( $current_file =~ /getting_started/ ) {
+    } elsif ( $current_file =~ /getting_started/ ) { # ignore favicon on redirect pages
       s/\s+\*\s+no favicon specified\n//;
     }
-    print
   ' $1
 }
 
-filter_success() {
-  perl -CSAD -pe "s/\|\s+Error:\s+HTML-Proofer found \d+ failures?\!//g" |
-  perl -0777 -CSAD -pe "s/\n{3,}/\n\n/g"
+# Filter `stdout` either on status OK or ERROR
+filter_stdout() {
+  # The number of failers is wrong because we filter-out a lof of failures.
+  # So discard this message completely.
+  perl -CSAD -pe "s/\|\s+Error:\s+HTML-Proofer found \d+ failures?\!//g"
 }
 
 filter_htmlproof() {
-  filter_it "$DIR/../" "bundle exec htmlproof ./_site --file-ignore /docs/ --only-4xx --check-favicon --check-html --check-external-hash"
+  local dir="$DIR/../"
+  local cmd="bundle exec htmlproof ./_site --file-ignore /docs/ --only-4xx --check-favicon --check-html --check-external-hash"
+  local ok_msg="OK: htmlproof - Documents successfully validated."
+  local error_msg="ERROR: htmlproof - Documents did not validate."
+
+  filter_it "$dir" "$cmd" "$ok_msg" "$error_msg" 
 }
 
 filter_htmlproof
