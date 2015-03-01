@@ -11,7 +11,7 @@ filter_errors() {
 
   filter_more_errors |
 
-  #delete every file hat has no error (that is, anything file that is not follow by a line starting with "  *  ")
+  # delete every file hat has no errors (ie, any file that is not followed by a line starting with "  *  ")
   perl -0777 -pe 's/\- .*\n(?!\s+\*\s+)//g'
 }
 
