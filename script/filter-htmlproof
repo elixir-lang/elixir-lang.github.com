@@ -47,7 +47,7 @@ prefilter_stderr_extra() {
 
 prefilter_stdout(){
   grep -vP "Running \[.*\] checks on" |
-  grep -vP "Checking \d+ external links..." |
+  grep -vP "Checking \d+ external links\.\.\." |
   grep -vP "Ran on \d+ files!" |
   grep -vP "htmlproof [0-9.]+"
 }
@@ -61,9 +61,12 @@ capture_std() {
   local error_files=$(perl -ne 'print if /^-\s+/' < "$STDERR" | wc -l)
 
   if [ ! -z "$total_files" ]; then
-    MSG_OK="OK: ${CMD_NAME} - ${total_files} documents successfully validated."
-    [ ! -z "$total_external_links" ] &&
-      MSG_OK="${MSG_OK} ${total_external_links} external links successfully checked."
+    MSG_OK="OK: ${CMD_NAME} - ${total_files} documents have been validated."
+    # Do not show number of links for now, due to /docs/ not being part of this project,
+    # Just to not to give the false impression that all these links are being checked.
+    # Waiting for a bugfix in htmlproof to be able to rewrite links to the live site.
+    #[ ! -z "$total_external_links" ] &&
+    #  MSG_OK="${MSG_OK} ${total_external_links} external links have been checked."
   fi
 
   if [ ! -z "${total_errors}" ]; then

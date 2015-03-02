@@ -88,9 +88,9 @@ filter_it() {
   # Default Messages
   if [ -z "$MSG_OK" ]; then
     if [ -z "$CMD_NAME" ]; then
-      MSG_OK="OK: Documents successfully validated."
+      MSG_OK="OK: Documents have been validated."
     else 
-      MSG_OK="OK: ${CMD_NAME} - Documents successfully validated."
+      MSG_OK="OK: ${CMD_NAME} - Documents have been validated."
     fi
   fi
 

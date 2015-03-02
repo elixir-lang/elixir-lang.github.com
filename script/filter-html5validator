@@ -27,7 +27,7 @@ capture_std() {
   local error_files=$(perl -ne 'print "$1\n" if /^\"(.*)\":\d+\.\d+-\d+\.\d+\:/' < "$STDERR" | sort -u | wc -l)
 
   if [ ! -z "$total_files" ]; then
-    MSG_OK="OK: ${CMD_NAME} - ${total_files} documents successfully validated."
+    MSG_OK="OK: ${CMD_NAME} - ${total_files} documents have been validated."
   fi
 
   if [ ! -z "${total_errors}" ]; then
