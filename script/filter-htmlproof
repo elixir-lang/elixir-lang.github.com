@@ -12,10 +12,12 @@ filter_htmlproof() {
   filter_it "$dir" "$cmd"
 }
 
+# FILTERS
 prefilter_stdout() {
-  # The number of failures is wrong because we filter-out a lof them.
-  # So discard this message completely.
-  perl -CSAD -pe "s/\|\s+Error:\s+HTML-Proofer found \d+ failures?\!//g"
+  grep -vP "Running \[.*\] checks on" |
+  grep -vP "Checking \d+ external links\.\.\." |
+  grep -vP "Ran on \d+ files!" |
+  grep -vP "htmlproof [0-9.]+ |"
 }
 
 prefilter_stderr() {
@@ -43,13 +45,6 @@ prefilter_stderr_extra() {
       s/\s+\*\s+no favicon specified\n//;
     }
   ' $1
-}
-
-prefilter_stdout(){
-  grep -vP "Running \[.*\] checks on" |
-  grep -vP "Checking \d+ external links\.\.\." |
-  grep -vP "Ran on \d+ files!" |
-  grep -vP "htmlproof [0-9.]+"
 }
 
 # Improve OK/ERRROR messages
