@@ -40,11 +40,17 @@
       html = settings.title + ' <'+settings.listType+' class="jekyll-toc">';
 
     var back_to_top = function(id) {
-      return '<a href="#' +id+ '" title="'+settings.backToTopTitle+'" class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';
+      return '<a href="#' +fixedEncodeURIComponent(id)+ '" title="'+settings.backToTopTitle+'" class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">'+settings.backToTopText+'</span></a>';
     }
 
     var link_here = function(id) {
-      return '<a href="#' +id+ '" title="'+settings.linkHereTitle+'" class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">'+settings.linkHereText+'</span></a>';
+      return '<a href="#' +fixedEncodeURIComponent(id)+ '" title="'+settings.linkHereTitle+'" class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">'+settings.linkHereText+'</span></a>';
+    }
+
+    function fixedEncodeURIComponent (str) {
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return '%' + c.charCodeAt(0).toString(16);
+      });
     }
 
     function force_update_hash(hash) {
@@ -59,18 +65,18 @@
       this_level = get_level(header);
       var header_id = $(header).attr('id');
       if (this_level === level) // same level as before; same indenting
-        html += "<li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
       else if (this_level <= level){ // higher level than before; end parent ol
         for(i = this_level; i < level; i++) {
           html += "</li></"+settings.listType+">"
         }
-        html += "<li><a href='#" + header.id + "'>" + header.innerHTML + "</a>";
+        html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
       }
       else if (this_level > level) { // lower level than before; expand the previous to contain a ol
         for(i = this_level; i > level; i--) {
           html += "<"+settings.listType+"><li>"
         }
-        html += "<a href='#" + header.id + "'>" + header.innerHTML + "</a>";
+        html += "<a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
       }
       level = this_level; // update for the next one
 
@@ -92,7 +98,7 @@
       if (settings.linkHeader) {
         $(header).addClass('jekyll-toc-header');
         $(header).children('span.jekyll-toc-wrapper').on( 'click', function( ) {
-          force_update_hash(header_id);
+          force_update_hash(fixedEncodeURIComponent(header_id));
         });
       }
     });
