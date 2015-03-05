@@ -146,7 +146,7 @@ Converts double-quotes to single-quotes.
 def convert(...)
 ```
 
-By using using `~S`, this problem can be avoided altogether:
+By using `~S`, this problem can be avoided altogether:
 
 ```elixir
 @doc ~S"""
