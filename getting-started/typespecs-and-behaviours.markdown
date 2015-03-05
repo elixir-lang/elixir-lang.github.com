@@ -34,7 +34,7 @@ Elixir supports compound types as well. For example, a list of integers has type
 
 ### Defining custom types
 
-While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules modules through the `@type` directive.
+While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive.
 
 Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.
 
@@ -101,7 +101,7 @@ If you have to, you can think of behaviours like interfaces in object oriented l
 
 ### Defining behaviours
 
-Say we have want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and a `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
+Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and a `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
 
 We can create a `Parser` behaviour:
 
