@@ -226,6 +226,7 @@ is_atom('').                %=> true
 is_atom :ok                 #=> true
 is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
+is_atom :""                 #=> true
 ```
 
 ### Tuples
@@ -240,15 +241,15 @@ That said, Elixir does not import the default `element` and `setelement` functio
 **Erlang**
 
 ```erlang
-element(1, { a, b, c })       %=> a
-setelement(1, { a, b, c }, d) %=> { d, b, c }
+element(1, {a, b, c})       %=> a
+setelement(1, {a, b, c}, d) %=> {d, b, c}
 ```
 
 **Elixir**
 
 ```elixir
-elem({ :a, :b, :c }, 0)        #=> :a
-put_elem({ :a, :b, :c }, 0, :d) #=> { :d, :b, :c }
+elem({:a, :b, :c}, 0)         #=> :a
+put_elem({:a, :b, :c}, 0, :d) #=> {:d, :b, :c}
 ```
 
 ### Lists and binaries
@@ -272,9 +273,9 @@ is_binary <<"Hello">>    #=> true
 <<"Hello">> === "Hello"  #=> true
 ```
 
-In Elixir, the word **string** means a utf-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be utf-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module, that's not utf-8 aware and works mostly with char lists.
+In Elixir, the word **string** means a UTF-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be UTF-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module, that's not UTF-8 aware and works mostly with char lists.
 
-Elixir also supports multiline strings (also called heredocs):
+Elixir also supports multiline strings (also called *heredocs*):
 
 ```elixir
 is_binary """
@@ -292,7 +293,7 @@ Elixir offers a literal syntax for creating a list of two-item tuples where the 
 **Erlang**
 
 ```erlang
-[{another_key,20},{key,10}]
+[{another_key, 20}, {key, 10}]
 ```
 
 **Elixir**
@@ -620,7 +621,7 @@ f.([])
 #=> "Empty"
 
 f.({:a, :b})
-#=> "All your {:a,:b} are belong to us"
+#=> "All your {:a, :b} are belong to us"
 ```
 
 ### First-class functions
@@ -648,7 +649,7 @@ defmodule Math do
   end
 end
 
-Enum.map [1,2,3], &Math.square/1
+Enum.map [1, 2, 3], &Math.square/1
 #=> [1, 4, 9]
 ```
 
@@ -673,7 +674,7 @@ defmodule Math do
   end
 end
 
-Enum.map [1,2,3], &Math.square/1
+Enum.map [1, 2, 3], &Math.square/1
 
 #=> [1, 4, 9]
 ```
@@ -690,9 +691,9 @@ The ``case`` construct provides control flow based purely on pattern matching.
 **Erlang**
 
 ```erlang
-case { X, Y } of
-  { a, b } -> ok;
-  { b, c } -> good;
+case {X, Y} of
+  {a, b} -> ok;
+  {b, c} -> good;
   Else -> Else
 end
 ```
@@ -700,9 +701,9 @@ end
 **Elixir**
 
 ```elixir
-case { x, y } do
-  { :a, :b } -> :ok
-  { :b, :c } -> :good
+case {x, y} do
+  {:a, :b} -> :ok
+  {:b, :c} -> :good
   other -> other
 end
 ```
@@ -785,10 +786,10 @@ The syntax for sending and receiving differs only slightly between Erlang and El
 ```erlang
 Pid = self().
 
-Pid ! { hello }.
+Pid ! {hello}.
 
 receive
-  { hello } -> ok;
+  {hello} -> ok;
   Other -> Other
 after
   10 -> timeout
@@ -800,10 +801,10 @@ end.
 ```elixir
 pid = Kernel.self
 
-send pid, { :hello }
+send pid, {:hello}
 
 receive do
-  { :hello } -> :ok
+  {:hello} -> :ok
   other -> other
 after
   10 -> :timeout
