@@ -226,6 +226,7 @@ is_atom('').                %=> true
 is_atom :ok                 #=> true
 is_atom :'ok'               #=> true
 is_atom :"Multiple words"   #=> true
+is_atom :""                 #=> true
 ```
 
 ### Tuples
