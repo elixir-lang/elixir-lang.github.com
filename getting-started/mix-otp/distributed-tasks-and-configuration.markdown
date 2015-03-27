@@ -96,7 +96,7 @@ There are three better alternatives to `Node.spawn_link/2` that we could use in 
 
 2. We could have a server running on the other node and send requests to that node via the [GenServer](/docs/stable/elixir/GenServer.html) API. For example, you can call a remote named server using `GenServer.call({name, node}, arg)` or simply passing the remote process PID as first argument
 
-3. We could use tasks, which we have learned about in the previous chapter, as they can be spawned on both local and remote nodes
+3. We could use [tasks](/docs/stable/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
 
 The options above have different properties. Both `:rpc` and using a GenServer would serialize your requests on a single server, while tasks are effectively running asynchronously on the remote node, with the only serialization point being the spawning done by the supervisor.
 
