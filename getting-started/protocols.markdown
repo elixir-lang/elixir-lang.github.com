@@ -87,7 +87,7 @@ iex> Blank.blank?("hello")
 
 The power of Elixir's extensibility comes when protocols and structs are used together.
 
-In the previous chapter, we have learned that although structs are maps, they do not share protocol implementations with maps. Let's define a `User` struct as in the previous chapter:
+In the [previous chapter](/getting-started/structs.html), we have learned that although structs are maps, they do not share protocol implementations with maps. Let's define a `User` struct as in that chapter:
 
 ```iex
 iex> defmodule User do

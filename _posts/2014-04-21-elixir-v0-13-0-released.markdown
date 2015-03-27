@@ -179,7 +179,7 @@ The `__struct__` field is also used for polymorphic dispatch in protocols, addre
 
 It is interesting to note that structs solve both drawbacks we have earlier mentioned regarding records. Structs are purely data and polymorphic dispatch is now faster and more robust as it happens only for explicitly tagged structs.
 
-For more information on structs, check out the [Structs chapter in the getting started guide](/getting-started/struct.html) (you may also want to read the new Protocols chapter after it).
+For more information on structs, check out the [Structs chapter in the getting started guide](/getting-started/structs.html) (you may also want to read the new [Protocols chapter](/getting-started/protocols.html) after it).
 
 ## Maps, structs and the future
 
