@@ -17,6 +17,7 @@ This is a quick introduction to the Elixir syntax for Erlang developers and vice
 The fastest way to run some code is to launch the Erlang shell -- `erl`. Many code snippets on this page can be pasted directly into the shell. However, when you want to define a named function, Erlang expects it to be inside of a module, and modules have to be compiled. Here's a skeleton for a module:
 
 ```erlang
+% module_name.erl
 -module(module_name).  % you may use some other name
 -compile(export_all).
 
