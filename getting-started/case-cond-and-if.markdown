@@ -59,7 +59,6 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
 * `<>` and `++` as long as the left side is a literal
 * the `in` operator
 * all the following type check functions:
-
     * `is_atom/1`
     * `is_binary/1`
     * `is_bitstring/1`
@@ -75,9 +74,7 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `is_port/1`
     * `is_reference/1`
     * `is_tuple/1`
-
 * plus these functions:
-
     * `abs(number)`
     * `bit_size(bitstring)`
     * `byte_size(bitstring)`
