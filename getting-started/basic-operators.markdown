@@ -8,7 +8,7 @@ redirect_from: /getting_started/3.html
 
 {% include toc.html %}
 
-In the previous chapter, we saw Elixir provides `+`, `-`, `*`, `/` as arithmetic operators, plus the functions `div/2` and `rem/2` for integer division and remainder.
+In the [previous chapter](/getting-started/basic-types.html), we saw Elixir provides `+`, `-`, `*`, `/` as arithmetic operators, plus the functions `div/2` and `rem/2` for integer division and remainder.
 
 Elixir also provides `++` and `--` to manipulate lists:
 

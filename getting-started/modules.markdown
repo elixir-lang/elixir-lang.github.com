@@ -8,7 +8,7 @@ redirect_from: /getting_started/8.html
 
 {% include toc.html %}
 
-In Elixir we group several functions into modules. We've already used many different modules in the previous chapters like [the `String` module](/docs/stable/elixir/String.html):
+In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](/docs/stable/elixir/String.html):
 
 ```iex
 iex> String.length "hello"
