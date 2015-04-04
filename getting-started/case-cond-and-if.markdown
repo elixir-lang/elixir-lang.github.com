@@ -69,6 +69,7 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `is_integer/1`
     * `is_list/1`
     * `is_map/1`
+    * `is_nil/1`
     * `is_number/1`
     * `is_pid/1`
     * `is_port/1`
@@ -91,6 +92,8 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `tl(list)`
     * `trunc(number)`
     * `tuple_size(tuple)`
+
+Additionally, modules may define their own guard functions, starting usually with "is_".
 
 Keep in mind errors in guards do not leak but simply make the guard fail:
 
