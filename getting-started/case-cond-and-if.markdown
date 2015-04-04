@@ -93,7 +93,7 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `trunc(number)`
     * `tuple_size(tuple)`
 
-Additionally, modules may define their own guard functions, starting usually with "is_".
+Additionally, users may define their own guard functions, usually starting with "is_".
 
 Keep in mind errors in guards do not leak but simply make the guard fail:
 
