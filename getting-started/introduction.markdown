@@ -19,7 +19,7 @@ Our requirements are:
 
 Let's get started!
 
-> If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com). If you suspect it is a language bug, [please let us know in the language issue tracker](https://github.com/elixir-lang/elixir/issues).
+> If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com).
 
 ## Installation
 
@@ -41,6 +41,8 @@ iex> "hello" <> " world"
 ```
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
+
+> Note: if you are on Windows, you can also try `iex --werl` which may provide a better experience depending on which console you are using.
 
 ## Running scripts
 

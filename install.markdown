@@ -57,7 +57,7 @@ Those distributions will likely install Erlang automatically for you too. In cas
 
 Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
 
-Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we would like to recommended you to [add Elixir's bin path to your PATH environment variable](#setting-path-environmental-variable) to ease development.
+Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we would like to recommended you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
 ## Compiling from source (Unix and MinGW)
 
@@ -65,7 +65,7 @@ You can download and compile Elixir in few steps. The first one is to [install E
 
 Next you should download the [latest release](https://github.com/elixir-lang/elixir/releases/), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows)).
 
-After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environmental-variable) to ease development.
+After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
 In case you are feeling a bit more adventurous, you can also compile from master:
 
@@ -90,7 +90,7 @@ After Erlang is installed, you should be able to open up the command line (or co
 Notice that depending on how you installed Erlang, Erlang binaries won't be available in your PATH. Be sure to have Erlang binaries in your [PATH](http://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
 
 
-## Setting PATH environmental variable
+## Setting PATH environment variable
 
 It is highly recommended to add Elixir's bin path to your PATH environment variable to ease development.
 
