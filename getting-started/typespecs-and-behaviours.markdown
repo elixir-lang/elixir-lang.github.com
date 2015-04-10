@@ -90,9 +90,9 @@ Typespecs are not only useful to developers and as additional documentation. The
 
 ## Behaviours
 
-Many modules share the same public API. Take a look at [Plug](https://github.com/elixir-lang/plug), which, as it description states, is a **specification** for composable modules in web applications. Each *plug* is a module which **has to** implement at least two public functions: `init/1` and `call/2`.
+Many modules share the same public API. Take a look at [Plug](https://github.com/elixir-lang/plug), which, as its description states, is a **specification** for composable modules in web applications. Each *plug* is a module which **has to** implement at least two public functions: `init/1` and `call/2`.
 
-Behaviors provide a way to:
+Behaviours provide a way to:
 
 * define a set of functions that have to be implemented by a module;
 * ensure that a module implements all the functions in that set.
@@ -101,7 +101,7 @@ If you have to, you can think of behaviours like interfaces in object oriented l
 
 ### Defining behaviours
 
-Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and a `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
+Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and an `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
 
 We can create a `Parser` behaviour:
 
