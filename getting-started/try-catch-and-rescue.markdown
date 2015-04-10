@@ -95,7 +95,7 @@ In Elixir, we avoid using `try/rescue` because **we don't use errors for control
 
 In Elixir, a value can be thrown and later be caught. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
 
-Those situations are quite uncommon in practice except when interfacing with libraries that does not provide a proper API. For example, let's imagine the `Enum` module did not provide any API for finding a value and that we needed to find the first multiple of 13 in a list of numbers:
+Those situations are quite uncommon in practice except when interfacing with libraries that do not provide a proper API. For example, let's imagine the `Enum` module did not provide any API for finding a value and that we needed to find the first multiple of 13 in a list of numbers:
 
 ```iex
 iex> try do
