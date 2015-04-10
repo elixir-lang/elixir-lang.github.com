@@ -166,7 +166,7 @@ The implementation for `wait_for_messages` is now broken into 4 clauses:
 
 * `{ :waiting, _child, _module }` - A message received every time a child process is waiting on a module to be compiled. In this scenario, all we do is spawn a new process to compile another file, ensuring compilation is never blocked;
 
-* `{ :EXIT, _child, { reason, where } }` - The same behavior as before, it simply raises an error if any of the child processes fail;
+* `{ :EXIT, _child, { reason, where } }` - The same behaviour as before, it simply raises an error if any of the child processes fail;
 
 * `after: 10_000` - This clause is going to be invoked whenever the main process does not receive a message for 10 seconds. This means a file depends on a module that does not exist (and therefore waits forever) or there is a cyclic dependency;
 

@@ -43,7 +43,7 @@ Under some unlikely circumstances, we may introduce changes that break existing 
 
   * Security: a security issue in the implementation may arise whose resolution requires backwards incompatible changes. We reserve the right to address such security issues.
 
-  * Bugs: if an application has undesired behaviour, a program that depends on the buggy behavior may break if the bug is fixed. We reserve the right to fix such bugs.
+  * Bugs: if an application has undesired behaviour, a program that depends on the buggy behaviour may break if the bug is fixed. We reserve the right to fix such bugs.
 
   * Compiler front-end: improvements may be done to the compiler, introducing new warnings for ambiguous modes and providing more detailed error messages. Those can lead to compilation errors (when running with `--warning-as-errors`) or tooling failures when asserting on specific error messages (although one should avoid such). We reserve the right to do such improvements.
 
