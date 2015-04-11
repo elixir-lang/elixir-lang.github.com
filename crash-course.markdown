@@ -226,6 +226,7 @@ is_atom('').                %=> true
 ```elixir
 is_atom :ok                 #=> true
 is_atom :'ok'               #=> true
+is_atom Ok                  #=> true
 is_atom :"Multiple words"   #=> true
 is_atom :""                 #=> true
 ```
@@ -242,8 +243,8 @@ That said, Elixir does not import the default `element` and `setelement` functio
 **Erlang**
 
 ```erlang
-element(1, {a, b, c})       %=> a
-setelement(1, {a, b, c}, d) %=> {d, b, c}
+element(1, {a, b, c}).       %=> a
+setelement(1, {a, b, c}, d). %=> {d, b, c}
 ```
 
 **Elixir**
@@ -294,14 +295,17 @@ Elixir offers a literal syntax for creating a list of two-item tuples where the 
 **Erlang**
 
 ```erlang
-[{another_key, 20}, {key, 10}]
+Proplist = [{another_key, 20}, {key, 10}].
+proplists:get_value(another_key, Proplist).
+%=> 20
 ```
 
 **Elixir**
 
 ```elixir
 kw = [another_key: 20, key: 10]
-kw[:another_key] #=> 20
+kw[:another_key]
+#=> 20
 ```
 
 ### Maps
@@ -311,10 +315,11 @@ Erlang R17 introduced maps, a key-value store, with no ordering. Keys and values
 **Erlang**
 
 ```erlang
-Map = #{key => 0}
-Updated = Map#{key := 1}
-#{key := Value} = Updated
-Value =:= 1
+Map = #{key => 0}.
+Updated = Map#{key := 1}.
+#{key := Value} = Updated.
+Value =:= 1.
+%=> true
 ```
 
 **Elixir**
@@ -324,6 +329,7 @@ map = %{:key => 0}
 map = %{map | :key => 1}
 %{:key => value} = map
 value === 1
+#=> true
 ```
 
 If the keys are all atoms, Elixir allows developers to use `key: 0` for defining the map as well as using `.key` for accessing fields:
@@ -456,7 +462,7 @@ Pattern matching in Elixir is based on Erlang's implementation and in general is
 
 ```erlang
 loop_through([H|T]) ->
-  io:format '~p~n', [H],
+  io:format('~p~n', [H]),
   loop_through(T);
 
 loop_through([]) ->
@@ -625,6 +631,7 @@ f.({:a, :b})
 #=> "All your {:a, :b} are belong to us"
 ```
 
+
 ### First-class functions
 
 Anonymous functions are first-class values, so they can be passed as arguments to other functions and also can serve as a return value. There is a special syntax to allow named functions be treated in the same manner.
@@ -654,6 +661,7 @@ Enum.map [1, 2, 3], &Math.square/1
 #=> [1, 4, 9]
 ```
 
+
 ### Partials in Elixir
 
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
@@ -676,7 +684,6 @@ defmodule Math do
 end
 
 Enum.map [1, 2, 3], &Math.square/1
-
 #=> [1, 4, 9]
 ```
 
