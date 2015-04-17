@@ -37,7 +37,7 @@ iex> "HELLO" =~ ~r/hello/i
 true
 ```
 
-Check out the [`Regex` module](/docs/stable/elixir/Regex.html) for more information on other modifiers and the supported operations with regular expressions.
+Check out the [`Regex` module](/docs/stable/elixir/#!Regex.html) for more information on other modifiers and the supported operations with regular expressions.
 
 So far, all examples have used `/` to delimit a regular expression. However sigils support 8 different delimiters:
 

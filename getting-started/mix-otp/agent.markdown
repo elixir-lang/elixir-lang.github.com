@@ -21,16 +21,16 @@ Elixir is an immutable language where nothing is shared by default. If we want t
 
 We have talked about processes, while <abbr title="Erlang Term Storage">ETS</abbr> is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own process, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
 
-* [Agent](/docs/stable/elixir/Agent.html) - Simple wrappers around state.
-* [GenServer](/docs/stable/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
-* [GenEvent](/docs/stable/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
-* [Task](/docs/stable/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and easily retrieving its result at a later time.
+* [Agent](/docs/stable/elixir/#!Agent.html) - Simple wrappers around state.
+* [GenServer](/docs/stable/elixir/#!GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
+* [GenEvent](/docs/stable/elixir/#!GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
+* [Task](/docs/stable/elixir/#!Task.html) - Asynchronous units of computation that allow spawning a process and easily retrieving its result at a later time.
 
 We will explore all of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
 
 ## Agents
 
-[Agents](/docs/stable/elixir/Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
+[Agents](/docs/stable/elixir/#!Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
 
 ```bash
 $ iex -S mix
@@ -139,7 +139,7 @@ test "stores values by key", %{bucket: bucket} do
 end
 ```
 
-You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](/docs/stable/ex_unit/ExUnit.Callbacks.html).
+You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](/docs/stable/ex_unit/#!ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](/docs/stable/ex_unit/#!ExUnit.Callbacks.html).
 
 ## Other agent actions
 

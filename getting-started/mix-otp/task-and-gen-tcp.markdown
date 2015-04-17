@@ -62,7 +62,7 @@ end
 
 We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is just a loop accepting client connections. For each accepted connection, we call `serve/1`.
 
-`serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipeline operator `|>`](/docs/stable/elixir/Kernel.html#|>/2) to express this flow of operations. The pipeline operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
+`serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipeline operator `|>`](/docs/stable/elixir/#!Kernel.html#|>/2) to express this flow of operations. The pipeline operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
 
 ```elixir
 socket |> read_line() |> write_line(socket)
@@ -131,7 +131,7 @@ For now there is a more important bug we need to fix: what happens if our TCP ac
 
 We have learned about agents, generic servers, and event managers. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](/docs/stable/elixir/Task.html) provides this functionality exactly. For example, it has `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
+[The Task module](/docs/stable/elixir/#!Task.html) provides this functionality exactly. For example, it has `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
 
 Let's give it a try. Open up `lib/kv_server.ex`, and let's change the supervisor in the `start/2` function to the following:
 
@@ -225,7 +225,7 @@ def start(_type, _args) do
 end
 ```
 
-We simply start a [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
+We simply start a [`Task.Supervisor`](/docs/stable/elixir/#!Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
 
 Now we just need to change `loop_acceptor/2` to use `Task.Supervisor` to serve each request:
 

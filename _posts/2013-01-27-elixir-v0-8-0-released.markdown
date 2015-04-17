@@ -30,7 +30,7 @@ String.capitalize("ﬁN") #=> "Fin"
 
 The example above contains a string with only two codepoints, [the codepoint ﬁ](http://www.fileformat.info/info/unicode/char/FB01/index.htm) and [the codepoint n](http://www.fileformat.info/info/unicode/char/006E/index.htm). Look how Elixir properly capitalizes the string, returning a new string made of three codepoints (all ascii letters).
 
-Learn more about [Unicode support with the String module](/docs/stable/elixir/String.html).
+Learn more about [Unicode support with the String module](/docs/stable/elixir/#!String.html).
 
 ## AST metadata
 
@@ -70,11 +70,11 @@ When some code call the `unless` macro above, in previous Elixir versions, it wo
 
 Elixir v0.8 ensures that the `unless` macro above will expand to the same `if` macro available when quoted, guaranteeing different libraries can integrate easily without imposing hidden requirements.
 
-You can read more about [macros in the getting started guide](/getting-started/case-cond-and-if.html) or [go deep into the quote macro docs](/docs/stable/elixir/Kernel.SpecialForms.html#quote/2).
+You can read more about [macros in the getting started guide](/getting-started/case-cond-and-if.html) or [go deep into the quote macro docs](/docs/stable/elixir/#!Kernel.SpecialForms.html#quote/2).
 
 ## A new way to manipulate pathnames
 
-Elixir v0.8 contains a bit of house cleaning too. We have created [the Path module](/docs/stable/elixir/Path.html) to accommodate functions used to manipulate filesystem paths and have also added functions like [`System.tmp_dir` and `System.user_home`](/docs/stable/elixir/System.html) which are meant to work accross different operating systems and are very handy when scripting.
+Elixir v0.8 contains a bit of house cleaning too. We have created [the Path module](/docs/stable/elixir/#!Path.html) to accommodate functions used to manipulate filesystem paths and have also added functions like [`System.tmp_dir` and `System.user_home`](/docs/stable/elixir/#!System.html) which are meant to work accross different operating systems and are very handy when scripting.
 
 ## The new HashDict
 

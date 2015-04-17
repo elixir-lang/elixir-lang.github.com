@@ -151,6 +151,6 @@ Macros receive quoted expressions and must return quoted expressions. However, s
 
 In other words, it is important to make a distinction between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values, such as integers, atoms and strings, have a quoted expression equal to the value itself. Other values, like maps, need to be explicitly converted. Finally, values like functions and references cannot be converted to a quoted expression at all.
 
-You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other functions related to quoted expressions can be found in the [`Macro` module](/docs/stable/elixir/Macro.html).
+You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/elixir/#!Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other functions related to quoted expressions can be found in the [`Macro` module](/docs/stable/elixir/#!Macro.html).
 
 In this introduction we have laid the groundwork to finally write our first macro, so let's move to the next chapter.
