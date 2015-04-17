@@ -186,7 +186,7 @@ iex> String.length("hellö")
 5
 ```
 
-The [String module](/docs/stable/elixir/String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:
+The [String module](/docs/stable/elixir/#!String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:
 
 ```iex
 iex> String.upcase("hellö")

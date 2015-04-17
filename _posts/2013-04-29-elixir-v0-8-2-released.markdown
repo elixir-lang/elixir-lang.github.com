@@ -44,6 +44,6 @@ defmodule MathTest do
 end
 ```
 
-You can learn more about [doctests on our documentation page](/docs/stable/ex_unit/ExUnit.DocTest.html) and get more information about our latest release [on the CHANGELOG](https://github.com/elixir-lang/elixir/blob/ed27611f48ba150404c95fe15f1d6058a4287330/CHANGELOG.md).
+You can learn more about [doctests on our documentation page](/docs/stable/ex_unit/#!ExUnit.DocTest.html) and get more information about our latest release [on the CHANGELOG](https://github.com/elixir-lang/elixir/blob/ed27611f48ba150404c95fe15f1d6058a4287330/CHANGELOG.md).
 
 If you are new to Elixir, [it's easy to get started with](/getting-started/introduction.html)!

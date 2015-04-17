@@ -76,7 +76,7 @@ iex> if(false, [do: :this, else: :that])
 
 In general, when the keyword list is the last argument of a function, the square brackets are optional.
 
-In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/Keyword.html). Remember though keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
+In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/#!Keyword.html). Remember though keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
 Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists require the number of items and their order to match:
 
@@ -140,7 +140,7 @@ iex> %{:c => c} = %{:a => 1, 2 => :b}
 
 As shown above, a map matches as long as the given keys exist in the given map. Therefore, an empty map matches all maps.
 
-[The `Map` module](/docs/stable/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:
+[The `Map` module](/docs/stable/elixir/#!Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:
 
 ```iex
 iex> Map.get(%{:a => 1, 2 => :b}, :a)
@@ -170,13 +170,13 @@ Both access and update syntaxes above require the given keys to exist. For examp
 
 Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post](http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
-> Note: Maps were recently introduced into the Erlang <abbr title="Virtual Machine">VM</abbr> with [EEP 43](http://www.erlang.org/eeps/eep-0043.html "Erlang Enhancement Proposal #43: Maps"). Erlang 17 provides a partial implementation of the <abbr title="Erlang Enhancement Proposal">EEP</abbr>, where only "small maps" are supported. This means maps have good performance characteristics only when storing at maximum a couple of dozens keys. To fill in this gap, Elixir also provides [the `HashDict` module](/docs/stable/elixir/HashDict.html) which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands keys with good performance.
+> Note: Maps were recently introduced into the Erlang <abbr title="Virtual Machine">VM</abbr> with [EEP 43](http://www.erlang.org/eeps/eep-0043.html "Erlang Enhancement Proposal #43: Maps"). Erlang 17 provides a partial implementation of the <abbr title="Erlang Enhancement Proposal">EEP</abbr>, where only "small maps" are supported. This means maps have good performance characteristics only when storing at maximum a couple of dozens keys. To fill in this gap, Elixir also provides [the `HashDict` module](/docs/stable/elixir/#!HashDict.html) which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands keys with good performance.
 
 ## Dicts
 
 In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps modules implement this interface.
 
-This interface is defined in the [the `Dict` module](/docs/stable/elixir/Dict.html) module which also provides an API that delegates to the underlying implementations:
+This interface is defined in the [the `Dict` module](/docs/stable/elixir/#!Dict.html) module which also provides an API that delegates to the underlying implementations:
 
 ```iex
 iex> keyword = []

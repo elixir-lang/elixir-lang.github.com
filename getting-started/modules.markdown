@@ -8,7 +8,7 @@ redirect_from: /getting_started/8.html
 
 {% include toc.html %}
 
-In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](/docs/stable/elixir/String.html):
+In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](/docs/stable/elixir/#!String.html):
 
 ```iex
 iex> String.length "hello"
@@ -174,7 +174,7 @@ iex> fun.([1, [[2], 3]], [4, 5])
 [1, 2, 3, 4, 5]
 ```
 
-`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html#&/1).
+`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/#!Kernel.SpecialForms.html#&/1).
 
 ## Default arguments
 
