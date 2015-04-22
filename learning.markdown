@@ -53,9 +53,7 @@ This book shows you how to write simple Elixir programs by teaching one skill at
 <a class="cover" href="http://www.manning.com/tanweihao/" title="The Little Elixir and OTP Guidebook
 -– by Benjamin Tan Wei Hao"><img src="http://www.manning.com/tanweihao/tanweihao_cover150.jpg" alt="The Little Elixir and OTP Guidebook cover" width="190" height="238" /></a>
 
-Elixir is a functional programming language built on the Erlang virtual machine. It combines the productivity and expressivity of Ruby with the concurrency and fault-tolerance of Erlang. Elixir makes full use of Erlang's powerful OTP library, which many developers consider the source of Erlang's greatness, so you can have mature, professional-quality functionality out of the gate. Elixir's support for functional programming makes it a great choice for highly distributed event-driven applications like IoT systems.
-
-The Little Elixir & OTP Guidebook gets you started programming applications with Elixir and OTP. You begin with a quick overview of effectively. Then, you'll dive straight into OTP and learn how it helps you build scalable, fault-tolerant and distributed applications through several fun examples. Come rediscover the joy of programming with Elixir and remember how it feels like to be a beginner again.
+The Little Elixir & OTP Guidebook gets you started programming applications with Elixir and OTP. You begin with a quick overview of the Elixir language syntax, along with just enough functional programming to use it effectively. Then, you'll dive straight into OTP and learn how it helps you build scalable, fault-tolerant and distributed applications through several fun examples. Come rediscover the joy of programming with Elixir and remember how it feels like to be a beginner again.
 
 ## Screencasts
 
