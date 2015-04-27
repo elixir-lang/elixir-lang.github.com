@@ -25,7 +25,7 @@ OK
 Since agents are processes, each bucket has a process identifier (pid) but it doesn't have a name. We have learned about the name registry [in the Process chapter](/getting-started/processes.html) and you could be inclined to solve this problem by using such registry. For example, we could create a bucket as:
 
 ```iex
-iex> Agent.start_link(fn -> [] end, name: :shopping)
+iex> Agent.start_link(fn -> HashDict.new end, name: :shopping)
 {:ok, #PID<0.43.0>}
 iex> KV.Bucket.put(:shopping, "milk", 1)
 :ok
