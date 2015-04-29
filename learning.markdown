@@ -55,6 +55,8 @@ This book shows you how to write simple Elixir programs by teaching one skill at
 
 The Little Elixir & OTP Guidebook gets you started programming applications with Elixir and OTP. You begin with a quick overview of the Elixir language syntax, along with just enough functional programming to use it effectively. Then, you'll dive straight into OTP and learn how it helps you build scalable, fault-tolerant and distributed applications through several fun examples. Come rediscover the joy of programming with Elixir and remember how it feels like to be a beginner again.
 
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">Elixir Sips</h4>
@@ -70,6 +72,15 @@ The intended audience ranges from someone entirely new to the Elixir language, t
 <div class="clear"></div>
 
 ## In-depth Resources
+
+<h4 class="resource">Études for Elixir</h4>
+
+<a class="cover" href="http://chimera.labs.oreilly.com/books/1234000001642" title="Études for Elixir
+-– by J. David Eisenberg"><img src="/images/contents/etudes.jpg" alt="Études for Elixir" width="190" height="238" /></a>
+
+Études for Elixir is an open source book of programming exercises. Each one has been designed to provide practice material for a particular Elixir programming concept. The topics are keyed to the chapters in "Introducing Elixir," but they are general enough to be used with any Elixir book. Études for Elixir can be read free online.
+
+<div class="clear"></div>
 
 <h4 class="resource">Metaprogramming Elixir</h4>
 
