@@ -232,10 +232,13 @@ Now we just need to change `loop_acceptor/2` to use `Task.Supervisor` to serve e
 ```elixir
 defp loop_acceptor(socket) do
   {:ok, client} = :gen_tcp.accept(socket)
-  Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
+  {:ok, pid} = Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
+  :gen_tcp.controlling_process(client, pid)
   loop_acceptor(socket)
 end
 ```
+
+You might notice that we added a line, `:gen_tcp.controlling_process(client, pid)`. This makes the child process the "controlling process" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets are tied to the process that `accept`ed them by default.
 
 Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!
 
@@ -270,7 +273,8 @@ defmodule KVServer do
 
   defp loop_acceptor(socket) do
     {:ok, client} = :gen_tcp.accept(socket)
-    Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
+    {:ok, pid} = Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
+    :gen_tcp.controlling_process(client, pid)
     loop_acceptor(socket)
   end
 
