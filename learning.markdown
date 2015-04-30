@@ -57,6 +57,14 @@ The Little Elixir & OTP Guidebook gets you started programming applications with
 
 <div class="clear"></div>
 
+<h4 class="resource">Elixir Cookbook</h4>
+
+<a class="cover" href="https://www.packtpub.com/application-development/elixir-cookbook" title="Elixir Cookbook -– by Paulo A Pereira"><img src="https://www.packtpub.com/sites/default/files/3964_Elixir%20Cookbook_Cover_1.jpg" alt="Elixir Cookbook cover" width="190" height="238" /></a>
+
+This book is a set of recipes grouped by topic that acts as a reference to get ideas from or to quickly search for a solution to a problem. You will begin by launching an IEx session and using it to test some ideas. Next, you will perform various operations like loading and compiling modules, inspecting your system, generating a supervised app, and so on. Furthermore, you will be introduced to immutability, working with data structures, performing pattern matching, and using stream modules to generate infinite data sequences. You will learn about everything from joining strings to determining the word frequency in text. With respect to modules and functions, you will also discover how to load code from other modules and use guards and pattern matching in functions.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">Elixir Sips</h4>
