@@ -102,7 +102,7 @@ Let's first change our tests to showcase the behaviour we want the registry to e
 
 In order to test the functionality we want to add, we first define a `Forwarder` (the same one we typed in IEx previously). On `setup`, we start the event manager, pass it as an argument to the registry and add our `Forwarder` handler to the manager so events can be sent to the test process.
 
-In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 500ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
+In the test, we create and stop a bucket process and use `assert_receive` to assert we will receive both `:create` and `:exit` messages. `assert_receive` has a default timeout of 100ms which should be more than enough for our tests. Also note that `assert_receive` expects a pattern, rather than a value, that's why we have used `^bucket` to match on the bucket pid.
 
 Finally, notice we called `GenEvent.add_mon_handler/3` instead of `GenEvent.add_handler/3`. This function adds a handler, as we know, and also tells the event manager to monitor the current process. If the current process dies, the event handler is automatically removed. This makes sense because, in the `Forwarder` case, we should stop forwarding messages if the recipient of those messages (`self()`/the test process) is no longer alive.
 
