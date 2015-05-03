@@ -102,23 +102,36 @@ iex> Application.start(:kv)
 {:error, {:already_started, :kv}}
 ```
 
-Oops, it's already started.
+Oops, it's already started. Mix normally starts the whole hierarchy of applications defined in our project's `mix.exs` file and it does the same for all dependencies if they depend on other applications.
 
 We can pass an option to mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
+
+```elixir
+iex> Application.start(:kv)
+:ok
+```
+
+We can stop our `:kv` application as well as the `:logger` application, which is stared by default with Elixir:
+
+```elixir
+iex> Application.stop(:kv)
+:ok
+iex> Application.stop(:logger)
+:ok
+```
+
+And let's try to start our application again:
 
 ```elixir
 iex> Application.start(:kv)
 {:error, {:not_started, :logger}}
 ```
 
-Now we get an error because an application that `:kv` depends on (`:logger` in this case) hasn't been started. Mix normally starts the whole hierarchy of applications defined in our project's `mix.exs` file and it does the same for all dependencies if they depend on other applications. But since we passed the `--no-start` flag, we need to either start each application manually in the correct order or call `Application.ensure_all_started` as follows:
+Now we get an error because an application that `:kv` depends on (`:logger` in this case) isn't started. We need to either start each application manually in the correct order or call `Application.ensure_all_started` as follows:
 
 ```elixir
 iex> Application.ensure_all_started(:kv)
 {:ok, [:logger, :kv]}
-iex> Application.stop(:kv)
-18:12:10.698 [info] Application kv exited :stopped
-:ok
 ```
 
 Nothing really exciting happens but it shows how we can control our application.
