@@ -111,7 +111,7 @@ iex> Application.start(:kv)
 :ok
 ```
 
-We can stop our `:kv` application as well as the `:logger` application, which is stared by default with Elixir:
+We can stop our `:kv` application as well as the `:logger` application, which is started by default with Elixir:
 
 ```elixir
 iex> Application.stop(:kv)
