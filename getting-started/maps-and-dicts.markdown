@@ -166,7 +166,7 @@ iex> %{map | :c => 3}
 ** (ArgumentError) argument error
 ```
 
-Both access and update syntaxes above require the given keys to exist. For example, accessing and updating the `:c` key failed there is no `:c` in the map.
+Both access and update syntaxes above require the given keys to exist. For example, accessing and updating the `:c` key failed because there is no `:c` in the map.
 
 Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post](http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
