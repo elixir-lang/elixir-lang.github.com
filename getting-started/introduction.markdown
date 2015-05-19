@@ -29,7 +29,9 @@ If you still haven't installed Elixir, run to our [installation page](/install.h
 
 When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
-For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions:
+For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions.
+
+Open up `iex`  and type the following expressions:
 
 ```iex
 Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
