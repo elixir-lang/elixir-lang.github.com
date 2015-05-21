@@ -70,7 +70,7 @@ mix deps.unlock       # Unlock the given dependencies
 mix deps.update       # Update the given dependencies
 ```
 
-The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependecies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](/docs/stable/mix/#!Mix.Tasks.Deps.html).
+The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependencies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](/docs/stable/mix/#!Mix.Tasks.Deps.html).
 
 ## Internal dependencies
 

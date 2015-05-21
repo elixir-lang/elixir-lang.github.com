@@ -194,7 +194,7 @@ Let's write a test to verify our router works. Create a file named `test/kv/rout
 defmodule KV.RouterTest do
   use ExUnit.Case, async: true
 
-  test "route requests accross nodes" do
+  test "route requests across nodes" do
     assert KV.Router.route("hello", Kernel, :node, []) ==
            :"foo@computer-name"
     assert KV.Router.route("world", Kernel, :node, []) ==
@@ -237,7 +237,7 @@ All we need to do to tag a test is simply call `@tag` before the test name. Back
 
 ```elixir
 @tag :distributed
-test "route requests accross nodes" do
+test "route requests across nodes" do
 ```
 
 Writing `@tag :distributed` is equivalent to writing `@tag distributed: true`.
