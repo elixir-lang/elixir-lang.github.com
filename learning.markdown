@@ -65,6 +65,15 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <div class="clear"></div>
 
+<h4 class="resource">Erlang and OTP in Action</h4>
+
+<a class="cover" href="http://manning.com/logan/" title="Erlang and OTP in Action">
+<img src="http://manning.com/logan/logan_cover150.jpg" alt="Erlang and OTP in Action cover" width="190" height="238" /></a>
+
+Erlang and OTP in Action teaches you the concepts of concurrent programming and the use of Erlang's message-passing model. It walks you through progressively more interesting examples, building systems in Erlang and integrating them with C/C++, Java, and .NET applications, including SOA and web architectures. This book is written for readers new to Erlang and interested in creating practical applications.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">Elixir Sips</h4>
