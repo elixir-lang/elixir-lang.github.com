@@ -225,7 +225,7 @@ And now run tests with:
 $ elixir --sname foo -S mix test
 ```
 
-Our test should successfuly pass. Excellent!
+Our test should successfully pass. Excellent!
 
 ## Test filters and tags
 
