@@ -289,7 +289,7 @@ iex> 'hello' == "hello"
 false
 ```
 
-Single-quotes are char lists, double-quotes are strings. We will talk more about them in the "Binaries, strings and char lists" chapter.
+Single-quotes are char lists, double-quotes are strings. We will talk more about them in the ["Binaries, strings and char lists"](/getting-started/binaries-strings-and-char-lists.html) chapter.
 
 ## Tuples
 
