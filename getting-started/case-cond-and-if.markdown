@@ -23,6 +23,7 @@ iex> case {1, 2, 3} do
 ...>   _ ->
 ...>     "This clause would match any value"
 ...> end
+"This clause will match and bind x to 2 in this clause"
 ```
 
 If you want to pattern match against an existing variable, you need to use the `^` operator:
@@ -34,6 +35,7 @@ iex> case 10 do
 ...>   ^x -> "Won't match"
 ...>   _  -> "Will match"
 ...> end
+"Will match"
 ```
 
 Clauses also allow extra conditions to be specified via guards:
@@ -45,6 +47,7 @@ iex> case {1, 2, 3} do
 ...>   _ ->
 ...>     "Won't match"
 ...> end
+"Will match"
 ```
 
 The first clause above will only match when `x` is positive.
@@ -162,6 +165,7 @@ iex> cond do
 ...>   true ->
 ...>     "This is always true (equivalent to else)"
 ...> end
+"This is always true (equivalent to else)"
 ```
 
 Finally, note `cond` considers any value besides `nil` and `false` to be true:
@@ -241,6 +245,7 @@ One thing to keep in mind when using `do/end` blocks is they are always bound to
 iex> is_number if true do
 ...>  1 + 2
 ...> end
+** (RuntimeError) undefined function: if/1
 ```
 
 Would be parsed as:
@@ -249,6 +254,7 @@ Would be parsed as:
 iex> is_number(if true) do
 ...>  1 + 2
 ...> end
+** (RuntimeError) undefined function: if/1
 ```
 
 Which leads to an undefined function error as Elixir attempts to invoke `is_number/2`. Adding explicit parentheses is enough to resolve the ambiguity:
