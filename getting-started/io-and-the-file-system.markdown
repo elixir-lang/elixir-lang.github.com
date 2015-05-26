@@ -133,7 +133,7 @@ iex> IO.read(pid, 2)
 
 By modelling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**.
 
-When you write to `:stdio`, you are actually sending a message to the group leader, which writes to the standard-input file descriptor:
+When you write to `:stdio`, you are actually sending a message to the group leader, which writes to the standard-output file descriptor:
 
 ```iex
 iex> IO.puts :stdio, "hello"
