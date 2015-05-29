@@ -31,7 +31,7 @@ def accept(port) do
   # 3. `active: false` - block on `:gen_tcp.recv/2` until data is available
   #
   {:ok, socket} = :gen_tcp.listen(port,
-                    [:binary, packet: :line, active: false])
+                    [:binary, packet: :line, active: false, reuseaddr: true])
   IO.puts "Accepting connections on port #{port}"
   loop_acceptor(socket)
 end
@@ -233,12 +233,12 @@ Now we just need to change `loop_acceptor/2` to use `Task.Supervisor` to serve e
 defp loop_acceptor(socket) do
   {:ok, client} = :gen_tcp.accept(socket)
   {:ok, pid} = Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
-  :gen_tcp.controlling_process(client, pid)
+  :ok = :gen_tcp.controlling_process(client, pid)
   loop_acceptor(socket)
 end
 ```
 
-You might notice that we added a line, `:gen_tcp.controlling_process(client, pid)`. This makes the child process the "controlling process" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets are tied to the process that `accept`ed them by default.
+You might notice that we added a line, `:ok = :gen_tcp.controlling_process(client, pid)`. This makes the child process the "controlling process" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets are tied to the process that `accept`ed them by default.
 
 Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!
 
@@ -266,7 +266,7 @@ defmodule KVServer do
   """
   def accept(port) do
     {:ok, socket} = :gen_tcp.listen(port,
-                      [:binary, packet: :line, active: false])
+                      [:binary, packet: :line, active: false, reuseaddr: true])
     IO.puts "Accepting connections on port #{port}"
     loop_acceptor(socket)
   end
@@ -274,7 +274,7 @@ defmodule KVServer do
   defp loop_acceptor(socket) do
     {:ok, client} = :gen_tcp.accept(socket)
     {:ok, pid} = Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)
-    :gen_tcp.controlling_process(client, pid)
+    :ok = :gen_tcp.controlling_process(client, pid)
     loop_acceptor(socket)
   end
 
