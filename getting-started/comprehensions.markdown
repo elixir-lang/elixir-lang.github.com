@@ -36,7 +36,7 @@ iex> for {:good, n} <- values, do: n * n
 [1, 4, 16]
 ```
 
-Alternatively to pattern matching, filters can be used to filter some particular elements out. For example, we can get filter out all the multiples of 3 and get the square of the remaining values only:
+Alternatively to pattern matching, filters can be used to filter some particular elements out. For example, we can filter out all the multiples of 3 and get the square of the remaining values only:
 
 ```iex
 iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end
