@@ -51,7 +51,7 @@ Keyword lists are important because they have three special characteristics:
   * Keys are ordered, as specified by the developer.
   * Keys can be given more than once.
 
-For example, [the Ecto library](https://github.com/elixir-lang/ecto) makes use of both features to provide an elegant DSL for writing database queries:
+For example, [the Ecto library](https://github.com/elixir-lang/ecto) makes use of these features to provide an elegant DSL for writing database queries:
 
 ```elixir
 query = from w in Weather,
