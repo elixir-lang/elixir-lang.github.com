@@ -28,7 +28,8 @@ def accept(port) do
   #
   # 1. `:binary` - receives data as binaries (instead of lists)
   # 2. `packet: :line` - receives data line by line
-  # 3. `active: false` - block on `:gen_tcp.recv/2` until data is available
+  # 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available
+  # 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes
   #
   {:ok, socket} = :gen_tcp.listen(port,
                     [:binary, packet: :line, active: false, reuseaddr: true])
