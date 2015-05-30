@@ -66,7 +66,7 @@ defmodule Math do
   end
 end
 
-Math.sum_list([1, 2, 3], 0) #=> 6
+IO.puts Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
 We invoke `sum_list` with the list `[1, 2, 3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1, 2, 3]` matches against `[head|tail]` which bounds `head` to `1` and `tail` to `[2, 3]`; `accumulator` is set to `0`.
@@ -96,8 +96,14 @@ defmodule Math do
     []
   end
 end
+```
 
-Math.double_each([1, 2, 3]) #=> [2, 4, 6]
+```bash
+iex math.exs
+```
+
+```iex
+iex> Math.double_each([1, 2, 3]) #=> [2, 4, 6]
 ```
 
 Here we have used recursion to traverse a list doubling each element and returning a new list. The process of taking a list and _mapping_ over it is known as a _map algorithm_.
