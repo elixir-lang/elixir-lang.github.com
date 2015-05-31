@@ -377,7 +377,7 @@ So far we have created an ETS table during the registry initialization but we ha
 
 This is extremely convenient as a default behaviour, and we can use it even more to our advantage. Remember that there is a dependency between the registry and the buckets supervisor. If the registry dies, we want the buckets supervisor to die too, because once the registry dies all information linking the bucket name to the bucket process is lost. However, what if we could keep the registry data even if the registry process crashes? If we are able to do so, we remove the dependency between the registry and the buckets supervisor, making the `:one_for_one` strategy the perfect strategy for our supervisor.
 
-A couple of changes will be required in order to make this happen. First, we'll need to start the ETS table inside the supervisor. Second, we'll need to change the table's access type from `:protected` to `:public`, because the owner is the supervisor, but the process doing the writes is still the manager.
+A couple of changes will be required in order to make this happen. First, we'll need to start the ETS table inside the supervisor. Second, we'll need to change the table's access type from `:protected` to `:public`, because the owner is the supervisor, but the process doing the writes is still the registry.
 
 Let's get started by first changing `KV.Supervisor`'s `init/1` callback:
 
