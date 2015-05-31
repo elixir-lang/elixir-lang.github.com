@@ -69,7 +69,7 @@ end
 Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
-We invoke `sum_list` with the list `[1, 2, 3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1, 2, 3]` matches against `[head|tail]` which bounds `head` to `1` and `tail` to `[2, 3]`; `accumulator` is set to `0`.
+We invoke `sum_list` with the list `[1, 2, 3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1, 2, 3]` matches against `[head|tail]` which binds `head` to `1` and `tail` to `[2, 3]`; `accumulator` is set to `0`.
 
 Then, we add the head of the list to the accumulator `head + accumulator` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[head|tail]` until the list is empty, as seen below:
 
