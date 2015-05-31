@@ -62,7 +62,7 @@ iex> john = %User{}
 iex> john.name
 "John"
 iex> meg = %{john | name: "Meg"}
-%User{age: 27, name: "meg"}
+%User{age: 27, name: "Meg"}
 iex> %{meg | oops: :field}
 ** (ArgumentError) argument error
 ```
