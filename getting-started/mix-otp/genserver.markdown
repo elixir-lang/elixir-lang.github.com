@@ -39,7 +39,7 @@ Instead of abusing the name registry facility, we will instead create our own *r
 
 The registry needs to guarantee the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
-We will use a [GenServer](/docs/stable/elixir/#!GenServer.html) to create a registry process that can monitor the bucket process. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
+We will use a [GenServer](/docs/stable/elixir/#!GenServer.html) to create a registry process that can monitor the bucket processes. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
 ## Our first GenServer
 
@@ -109,7 +109,7 @@ The next two functions, `lookup/2` and `create/2` are responsible for sending th
 
 On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.
 
-The first is the `init/1` callback, that receives the argument given `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new `HashDict`. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
+The first is the `init/1` callback, that receives the argument given to `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new `HashDict`. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
 
 For `call` requests, we must implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`, where `reply` is what will be sent to the client and the `new_state` is the new server state.
 
@@ -255,7 +255,7 @@ So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handl
 
 3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are a perfect example of this.
 
-Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the `catch-all` clause, those messages could lead our supervisor to crash, because no clause would match.
+Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could lead our supervisor to crash, because no clause would match.
 
 We don't need to worry about this for `handle_call/3` and `handle_cast/2` because these requests are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
 

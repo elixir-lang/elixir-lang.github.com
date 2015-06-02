@@ -48,7 +48,7 @@ The order children are declared in the supervisor also matters. Since the regist
 
 Finally, we call `supervise/2`, passing the list of children and the strategy of `:one_for_one`.
 
-The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies only one is restarted to replace it. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However, those dynamics may change once we add more children to supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
+The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies only one is restarted to replace it. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However, those dynamics may change once we add more children to the supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
 
 If we start a console inside our project using `iex -S mix`, we can manually start the supervisor:
 
@@ -67,7 +67,7 @@ In practice though, we rarely start the application supervisor manually. Instead
 
 ## Understanding applications
 
-We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see `Generated kv.app` message in the compilation output.
+We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.
 
 We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's have a look at its contents:
 
@@ -81,15 +81,15 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
                         'Elixir.KV.Registry','Elixir.KV.Supervisor']}]}.
 ```
 
-This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel` and `elixir` itself, and `logger` which is specified in the application list in `mix.exs`.
+This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the application list in `mix.exs`.
 
-It would be pretty boring to update this file manually every time we add a new module to our application. That's why mix generates and maintains it automatically for us.
+It would be pretty boring to update this file manually every time we add a new module to our application. That's why Mix generates and maintains it automatically for us.
 
 We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file. We will get to that in upcoming chapters.
 
 ### Starting applications
 
-When we define an `.app` file, which is the application definition, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
+When we define a `.app` file, which is the application definition, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
 
 1. Mix automatically starts our current application for us
 
@@ -104,7 +104,7 @@ iex> Application.start(:kv)
 
 Oops, it's already started. Mix normally starts the whole hierarchy of applications defined in our project's `mix.exs` file and it does the same for all dependencies if they depend on other applications.
 
-We can pass an option to mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
+We can pass an option to Mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
 
 ```elixir
 iex> Application.start(:kv)
@@ -136,7 +136,7 @@ iex> Application.ensure_all_started(:kv)
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting iex, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
 ### The application callback
 

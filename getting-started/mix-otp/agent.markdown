@@ -100,7 +100,7 @@ defmodule KV.Bucket do
 end
 ```
 
-Note that we are using a HashDict to store our state instead of a `Map`, because in the current version of Elixir maps are less efficient when holding a large number of keys.
+Note that we are using a HashDict to store our state instead of a `Map`, because in the current version of Elixir maps are less efficient when holding a large number of keys. The capture operator, `&`, is introduced in [the Getting Started guide](/getting-started/modules.html#function-capturing).
 
 Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test` .
 
@@ -156,7 +156,7 @@ def delete(bucket, key) do
 end
 ```
 
-Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for agents to learn more about them.
+Now it is your turn to write a test for the functionality above! Also, be sure to explore [the documentation for `Agents`](/docs/stable/elixir/#!Agent.html) to learn more about them.
 
 ## Client/Server in agents
 

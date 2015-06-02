@@ -128,7 +128,7 @@ $ mix compile
 Will output:
 
     Compiled lib/kv.ex
-    Generated kv.app
+    Generated kv app
 
 Notice the `lib/kv.ex` file was compiled and `kv.app` file was generated. All this took place in a directory structure of its own, inside the `_build` folder. This `.app` file is generated with the information from the `application/0` function in the `mix.exs` file. We will further explore `mix.exs` configuration features in future chapters.
 
@@ -161,13 +161,13 @@ It is important to note a couple things:
 Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework:
 
 ```elixir
-ExUnit.start
+ExUnit.start()
 ```
 
 This file will be automatically required by Mix every time before we run our tests. We can run tests with `mix test`:
 
     Compiled lib/kv.ex
-    Generated kv.app
+    Generated kv app
     .
 
     Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
