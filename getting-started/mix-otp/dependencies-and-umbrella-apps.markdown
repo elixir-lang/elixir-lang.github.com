@@ -46,7 +46,7 @@ def deps do
 end
 ```
 
-This dependency refers to the latest version of plug in the 0.5.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](/docs/stable/elixir/#!Version.html).
+This dependency refers to the latest version of Plug in the 0.5.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](/docs/stable/elixir/#!Version.html).
 
 Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies, too:
 
@@ -76,7 +76,7 @@ The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, de
 
 Internal dependencies are the ones that are specific to your project. They usually don't make sense outside the scope of your project/company/organization. Most of the time, you want to keep them private, whether due to technical, economic or business reasons.
 
-If you have an internal dependency, Mix supports two methods of working with them: git repositories or umbrella projects.
+If you have an internal dependency, Mix supports two methods to work with them: git repositories or umbrella projects.
 
 For example, if you push the `kv` project to a git repository, you just need to list it in your deps code in order to use it:
 
@@ -94,7 +94,7 @@ However, if you push every application as a separate project to a git repository
 
 For this reason, Mix supports "umbrella projects." Umbrella projects allow you to create one project that hosts many applications and push all of them to a single git repository. That is exactly the style we are going to explore in the next sections.
 
-What we are going to do is create a new mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
+What we are going to do is create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
     + kv_umbrella
       + apps
@@ -156,7 +156,7 @@ defmodule KVServer.Mixfile do
      version: "0.0.1",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 0.14.1-dev",
+     elixir: "~> 1.0",
      deps: deps]
   end
 
