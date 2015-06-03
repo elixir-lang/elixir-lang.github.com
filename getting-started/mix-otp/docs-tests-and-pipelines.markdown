@@ -432,7 +432,7 @@ Our integration test checks all server interaction, including unknown commands a
 This time, since our test relies on global data, we have not given `async: true` to `use ExUnit.Case`. Furthermore, in order to guarantee our test is always in a clean state, we stop and start the `:kv` application before each test. In fact, stopping the `:kv` application even prints a warning on the terminal:
 
 ```
-18:12:10.698 [info] Application kv exited with reason :stopped
+18:12:10.698 [info] Application kv exited: :stopped
 ```
 
 If desired, we can avoid printing this warning by turning the error_logger off and on in the test setup:
