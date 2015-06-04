@@ -8,7 +8,7 @@ redirect_from: /getting_started/mix_otp/10.html
 
 {% include toc.html %}
 
-In this last chapter, we will go back to the `:kv` application and add a routing layer that allows us to distribute requests between nodes based on the bucket name.
+In this last chapter, we will go back to the `:kv` application and add a routing layer that will allow us to distribute requests between nodes based on the bucket name.
 
 The routing layer will receive a routing table of the following format:
 
@@ -70,7 +70,7 @@ iex> Node.spawn_link :"foo@computer-name", fn -> Hello.world end
 hello world
 ```
 
-Elixir spawned a process on another node and returned its pid. The code then executed on the other node where the `Hello.world/0` function exists and invoked that function. Note that the result of "hello world" was printed on the current node `bar` and not on `foo`. In other words, the message to be printed was sent back from `foo` to `bar`. This happens because the process spawned on the other node (`foo`) still has the group leader of the current node (`bar`). We have briefly talked about group leaders in the [IO chapter](/getting-started/io-and-the-file-system.html).
+Elixir spawned a process on another node and returned its pid. The code then executed on the other node where the `Hello.world/0` function exists and invoked that function. Note that the result of "hello world" was printed on the current node `bar` and not on `foo`. In other words, the message to be printed was sent back from `foo` to `bar`. This happens because the process spawned on the other node (`foo`) still has the group leader of the current node (`bar`). We have briefly talked about group leaders in the [IO chapter](/getting-started/io-and-the-file-system.html#processes-and-group-leaders).
 
 We can send and receive message from the pid returned by `Node.spawn_link/2` as usual. Let's try a quick ping-pong example:
 
@@ -277,7 +277,7 @@ You can read more about filters, tags and the default tags in [`ExUnit.Case` mod
 
 So far we have hardcoded the routing table into the `KV.Router` module. However, we would like to make the table dynamic. This allows us not only to configure development/test/production, but also to allow different nodes to run with different entries in the routing table. There is a feature of  <abbr title="Open Telecom Platform">OTP</abbr> that does exactly that: the application environment.
 
-Each application has an environment that stores the application specific configuration by key. For example, we could store the routing table in the `:kv` application environment, giving it a default value and allowing other applications to change the table as needed.
+Each application has an environment that stores the application's specific configuration by key. For example, we could store the routing table in the `:kv` application environment, giving it a default value and allowing other applications to change the table as needed.
 
 Open up `apps/kv/mix.exs` and change the `application/0` function to return the following:
 
@@ -360,6 +360,6 @@ Finally, we have learned some new things in this chapter, and they could be appl
 
 In this chapter we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.
 
-Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, event managers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, getting familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.
+Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, event managers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/riak/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](http://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
