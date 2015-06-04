@@ -94,7 +94,7 @@ This is pretty much all we need to implement our echo server. Let's give it a tr
 
 Start an iex session inside the `kv_server` application with `iex -S mix`. Inside IEx, run:
 
-```elixir
+```iex
 iex> KVServer.accept(4040)
 ```
 
@@ -208,7 +208,7 @@ This is similar to the mistake we made when we called `KV.Bucket.start_link/0` f
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
-We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that tasks already come with a solution: a simple one for one supervisor with temporary workers that we can just use in our supervision tree!
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already come with a solution: a simple one for one supervisor with temporary workers that we can just use in our supervision tree!
 
 Let's change `start/2` once again, to add a supervisor to our tree:
 
@@ -228,7 +228,7 @@ end
 
 We simply start a [`Task.Supervisor`](/docs/stable/elixir/#!Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
 
-Now we just need to change `loop_acceptor/2` to use `Task.Supervisor` to serve each request:
+Now we just need to change `loop_acceptor/1` to use `Task.Supervisor` to serve each request:
 
 ```elixir
 defp loop_acceptor(socket) do

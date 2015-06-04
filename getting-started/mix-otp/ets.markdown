@@ -199,7 +199,7 @@ The reason those failures are happening is because, for didactic purposes, we ha
 
 Developing in Elixir does not make your code free of race conditions. However, Elixir's simple abstractions where nothing is shared by default make it easier to spot a race condition's root cause.
 
-What is happening in our test is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we were expecting to happen:
+What is happening in our tests is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we were expecting to happen:
 
 1. We invoke `KV.Registry.create(registry, "shopping")`
 2. The registry creates the bucket and updates the cache table
@@ -427,7 +427,7 @@ end
 
 After those changes, our test suite should continue to be green!
 
-There is just one last scenario to consider: once we receive the ETS table, there may be existing bucket pids on the table. After all, that's the whole purpose of this change! However, the newly started registry is not monitoring those buckets, as they were created as part of previous, now defunct, registry. This means that the table may go stale, because we won't remove those buckets if they die.
+There is just one last scenario to consider: once we receive the ETS table, there may be existing bucket pids on the table. After all, that's the whole purpose of this change! However, the newly started registry is not monitoring those buckets, as they were created as part of the previous, now defunct, registry. This means that the table may go stale, because we won't remove those buckets if they die.
 
 Let's add a test to `test/kv/registry_test.exs` that shows this bug:
 
