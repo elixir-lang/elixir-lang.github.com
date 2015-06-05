@@ -16,7 +16,7 @@ There are two events we are going to emit: one for every time a bucket is added 
 
 Let's start a new `iex -S mix` session and explore the GenEvent API a bit:
 
-```elixir
+```iex
 iex> {:ok, manager} = GenEvent.start_link
 {:ok, #PID<0.83.0>}
 iex> GenEvent.sync_notify(manager, :hello)
@@ -190,7 +190,7 @@ Run the test suite, and all tests should be green again.
 
 One last functionality worth exploring from `GenEvent` is the ability to consume its events as a stream:
 
-```elixir
+```iex
 iex> {:ok, manager} = GenEvent.start_link
 {:ok, #PID<0.83.0>}
 iex> spawn_link fn ->

@@ -23,7 +23,7 @@ iex> {1, 2, 3}  # tuple
 
 ## Basic arithmetic
 
-Open up `iex`  and type the following expressions:
+Open up `iex` and type the following expressions:
 
 ```iex
 iex> 1 + 2
@@ -135,7 +135,7 @@ iex> "hellö"
 "hellö"
 ```
 
-> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering iex.
+> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering IEx.
 
 Elixir also supports string interpolation:
 

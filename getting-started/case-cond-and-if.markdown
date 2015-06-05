@@ -122,7 +122,7 @@ iex> case :ok do
 
 Note anonymous functions can also have multiple clauses and guards:
 
-```elixir
+```iex
 iex> f = fn
 ...>   x, y when x > 0 -> x + y
 ...>   x, y -> x * y

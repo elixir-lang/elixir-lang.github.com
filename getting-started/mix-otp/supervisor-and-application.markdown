@@ -106,14 +106,14 @@ Oops, it's already started. Mix normally starts the whole hierarchy of applicati
 
 We can pass an option to Mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
 
-```elixir
+```iex
 iex> Application.start(:kv)
 :ok
 ```
 
 We can stop our `:kv` application as well as the `:logger` application, which is started by default with Elixir:
 
-```elixir
+```iex
 iex> Application.stop(:kv)
 :ok
 iex> Application.stop(:logger)
@@ -122,21 +122,21 @@ iex> Application.stop(:logger)
 
 And let's try to start our application again:
 
-```elixir
+```iex
 iex> Application.start(:kv)
 {:error, {:not_started, :logger}}
 ```
 
 Now we get an error because an application that `:kv` depends on (`:logger` in this case) isn't started. We need to either start each application manually in the correct order or call `Application.ensure_all_started` as follows:
 
-```elixir
+```iex
 iex> Application.ensure_all_started(:kv)
 {:ok, [:logger, :kv]}
 ```
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting iex, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
 ### The application callback
 

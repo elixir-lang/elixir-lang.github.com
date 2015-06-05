@@ -96,7 +96,7 @@ iex> ~w(foo bar bat)a
 
 Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
 
-```elixir
+```iex
 iex> ~s(String with escape codes \x26 #{"inter" <> "polation"})
 "String with escape codes & interpolation"
 iex> ~S(String without escape codes and without #{interpolation})

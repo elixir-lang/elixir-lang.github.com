@@ -48,7 +48,7 @@ In this chapter, we will create our first project using Mix and explore differen
 
 When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` executables, you also get an executable Elixir script named `mix`.
 
-Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as argument (`kv`, in this case), and tell mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
+Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
 
 ```bash
 $ mix new kv --module KV
@@ -69,7 +69,7 @@ Mix will create a directory named `kv` with a few files in it:
 
 Let's take a brief look at those generated files.
 
-> Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have elixir's executable in your PATH. If not, you can run it by passing the script as argument to elixir:
+> Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have Elixir's executable in your PATH. If not, you can run it by passing the script as argument to `elixir`:
 >
 > ```bash
 > $ bin/elixir bin/mix new kv --module KV
@@ -81,7 +81,7 @@ Let's take a brief look at those generated files.
 > $ bin/elixir -S mix new kv --module KV
 > ```
 >
-> When using -S, elixir finds the script wherever it is in your PATH and executes it.
+> When using -S, `elixir` finds the script wherever it is in your PATH and executes it.
 
 ## Project compilation
 
@@ -215,7 +215,7 @@ Finally, the stacktrace relates to the failure itself, giving information about 
 
 Mix supports the concept of "environments". They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
 
-* `:dev` - the one in which mix tasks (like `compile`) run by default
+* `:dev` - the one in which Mix tasks (like `compile`) run by default
 * `:test` - used by `mix test`
 * `:prod` - the one you will use to put your project in production
 

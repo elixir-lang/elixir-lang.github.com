@@ -227,7 +227,7 @@ Elixir also supports private macros via `defmacrop`. As private functions, these
 
 It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
 
-```elixir
+```iex
 iex> defmodule Sample do
 ...>  def four, do: two + two
 ...>  defmacrop two, do: 2
