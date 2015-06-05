@@ -92,7 +92,7 @@ The `read_line/1` implementation receives data from the socket using `:gen_tcp.r
 
 This is pretty much all we need to implement our echo server. Let's give it a try!
 
-Start an iex session inside the `kv_server` application with `iex -S mix`. Inside IEx, run:
+Start an IEx session inside the `kv_server` application with `iex -S mix`. Inside IEx, run:
 
 ```iex
 iex> KVServer.accept(4040)
