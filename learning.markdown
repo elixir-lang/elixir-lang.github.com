@@ -99,3 +99,11 @@ The intended audience ranges from someone entirely new to the Elixir language, t
 Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you’ll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You’ll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
 
 <div class="clear"></div>
+
+<h4 class="resource">Erlang in Anger</h4>
+
+<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/contents/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
+
+This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
+
+<div class="clear"></div>
