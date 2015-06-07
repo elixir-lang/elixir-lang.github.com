@@ -124,27 +124,128 @@ iex> bit_size(<< 1 :: size(1)>>)
 
 The value is no longer a binary, but a bitstring -- just a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8!
 
-We can also pattern match on binaries / bitstrings:
+## Binary/Bitstring Matching
 
-```iex
-iex> <<0, 1, x>> = <<0, 1, 2>>
-<<0, 1, 2>>
-iex> x
-2
-iex> <<0, 1, x>> = <<0, 1, 2, 3>>
-** (MatchError) no match of right hand side value: <<0, 1, 2, 3>>
+### Introduction
+
+Binary matching is a powerful feature in Elixir that is useful for extracting information from binaries as well as pattern matching. This article serves as a short overview of the available options when pattern matching and demonstrates a few common usecases.
+
+### Uses
+
+Binary matching can be used by itself to extract information from binaries:
+
+```elixir
+iex> <<"Hello, ", place::binary>> = "Hello, World"
+"Hello, World"
+iex> place
+"World"
 ```
 
-Note each entry in the binary is expected to match exactly 8 bits. However, we can match on the rest of the binary modifier:
+Or as a part of function definitions to pattern match:
 
-```iex
-iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
-<<0, 1, 2, 3>>
-iex> x
-<<2, 3>>
+```elixir
+defmodule ImageTyper
+  @png_signature <<137::size(8), 80::size(8), 78::size(8), 71::size(8),
+                13::size(8), 10::size(8), 26::size(8), 10::size(8)>>
+  @jpg_signature <<255::size(8), 216::size(8)>>
+
+  def type(<<@png_signature, rest::binary>>), do: :png
+  def type(<<@jpg_signature, rest::binary>>), do: :jpg
+  def type(_), do :unknown
+end
 ```
 
-The pattern above only works if the binary is at the end of `<<>>`. Similar results can be achieved with the string concatenation operator `<>`:
+### Types
+There are 9 types used in binary matching:
+
+`integer`
+`float`
+`bits` (alias for bitstring)
+`bitstring`
+`binary`
+`bytes` (alias for binary)
+`utf8`
+`utf16`
+`utf32`
+
+When no type is specified, the default is `integer`.
+
+#### Unit and Size
+
+The length of the match is equal to the `unit` (a number of bits) times the `size` (the number of repeated segnments of length `unit`).
+
+Type      | Default Unit
+--------- | ------------
+`integer` | 1 bit
+`float`   | 1 bit
+`binary`  | 8 bits
+
+Sizes for types are a bit more nuanced. The default size for integers is 8.
+
+For floats, it is 64. For floats, `size * unit` must result in 32 or 64, corresponding to binary32 and binary64, respectively.
+
+For binaries, the default is the size of the binary. Only the last binary in a binary match can use the default size. All others must have their size specified explicitly, even if the match is unambiguous.
+
+For example:
+
+```elixir
+iex> <<name::binary, " the ", species::binary>>= <<"Frank the Walrus">>
+** (CompileError): a binary field without size is only allowed at the end of a binary pattern
+iex> <<name::binary-size(5), " the ", species::binary>>= <<"Frank the Walrus">>
+"Frank the Walrus"
+iex> {name, species}
+{"Frank", "Walrus"}
+```
+
+For floats, size * unit must result in 32 or 64, corresponding to binary32 and
+binary64, respectively.
+
+### Modifiers
+Some types have associated modifiers to clear up ambiguity in byte representation. The following
+
+Modifier             | Relevant Type(s)
+-------------------- | ----------------
+`signed`             | `integer`
+`unsigned` (default) | `integer`
+`little`             | `integer`, `utf16`, `utf32`
+`big` (default)      | `integer`, `utf16`, `utf32`
+`native`             | `integer`, `utf16`, `utf32`
+
+#### Sign
+
+Integers can be `signed` or `unsigned`, defaulting to `unsigned`.
+
+```elixir
+iex> <<int::integer>> =  <<-100>>
+<<156>>
+iex> int
+156
+iex> <<int::integer-signed>> =  <<-100>>
+<<156>>
+iex> int
+-100
+```
+
+#### Endianness
+
+Elixir has three options for endianness: `big`, `little`, and `native`. The default is `big`. `native` is determined by the VM at startup.
+
+```
+iex> <<number::little-integer-size(16)>> = <<0, 1>>
+<<0, 1>>
+iex> number
+256
+iex> <<number::big-integer-size(16)>> = <<0, 1>>
+<<0, 1>>
+iex> number
+1
+iex> <<number::native-integer-size(16)>> = <<0, 1>>
+<<0, 1>>
+iex> number
+256
+```
+
+Similar results can be achieved with the string concatenation operator `<>`:
 
 ```iex
 iex> "he" <> rest = "hello"
