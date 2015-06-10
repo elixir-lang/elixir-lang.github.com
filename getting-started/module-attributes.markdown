@@ -74,7 +74,7 @@ iex> h Math.sum # Access the docs for the sum function
 
 We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 
-You can take a look at the docs for [Module](/docs/stable/elixir/#!Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/elixir/#!Kernel.Typespec.html), via:
+You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/elixir/Kernel.Typespec.html), via:
 
 * `@spec` - provides a specification for a function.
 * `@callback` - provides a specification for the behaviour callback.
@@ -95,7 +95,7 @@ defmodule MyServer do
 end
 ```
 
-> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](/docs/stable/elixir/#!Module.html#register_attribute/3).
+> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](/docs/stable/elixir/Module.html#register_attribute/3).
 
 Trying to access an attribute that was not defined will print a warning:
 

@@ -8,7 +8,7 @@ redirect_from: /getting_started/12.html
 
 {% include toc.html %}
 
-This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](/docs/stable/elixir/#!IO.html), [`File`](/docs/stable/elixir/#!File.html) and [`Path`](/docs/stable/elixir/#!Path.html).
+This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html) and [`Path`](/docs/stable/elixir/Path.html).
 
 We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the <abbr title="Virtual Machine">VM</abbr>.
 
@@ -35,7 +35,7 @@ hello world
 
 ## The `File` module
 
-The [`File`](/docs/stable/elixir/#!File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
+The [`File`](/docs/stable/elixir/File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
 ```iex
 iex> {:ok, file} = File.open "hello", [:write]
@@ -86,7 +86,7 @@ If you don't want to handle a possible error (i.e., you want it to bubble up), p
 
 ## The `Path` module
 
-The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](/docs/stable/elixir/#!Path.html) module provides facilities for working with such paths:
+The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](/docs/stable/elixir/Path.html) module provides facilities for working with such paths:
 
 ```iex
 iex> Path.join("foo", "bar")
@@ -122,7 +122,7 @@ iex> IO.write(pid, "hello")
 
 After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result that we did not supply.
 
-The [`StringIO`](/docs/stable/elixir/#!StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
+The [`StringIO`](/docs/stable/elixir/StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
 
 ```iex
 iex> {:ok, pid} = StringIO.open("hello")
@@ -167,4 +167,4 @@ On the other hand, `:stdio` and files opened with `:utf8` encoding work with the
 
 Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.
 
-This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - [`IO`](/docs/stable/elixir/#!IO.html), [`File`](/docs/stable/elixir/#!File.html), [`Path`](/docs/stable/elixir/#!Path.html) and [`StringIO`](/docs/stable/elixir/#!StringIO.html) - as well as how the <abbr title="Virtual Machine">VM</abbr> uses processes for the underlying IO mechanisms and how to use `chardata` and `iodata` for IO operations.
+This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html), [`Path`](/docs/stable/elixir/Path.html) and [`StringIO`](/docs/stable/elixir/StringIO.html) - as well as how the <abbr title="Virtual Machine">VM</abbr> uses processes for the underlying IO mechanisms and how to use `chardata` and `iodata` for IO operations.

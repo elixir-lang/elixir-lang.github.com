@@ -156,7 +156,7 @@ It is important to note a couple things:
 
 1. the test file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
-2. we define a test module named `KVTest`, use [`ExUnit.Case`](/docs/stable/ex_unit/#!ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
+2. we define a test module named `KVTest`, use [`ExUnit.Case`](/docs/stable/ex_unit/ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
 
 Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework:
 
@@ -221,7 +221,7 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 > Note: If you add dependencies to your project, they will not inherit your project's environment, but instead run with their `:prod` environment settings!
 
-By default, these environments behave the same and all the configurations we have seen so far will affect all three environments. Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/#!Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom:
+By default, these environments behave the same and all the configurations we have seen so far will affect all three environments. Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom:
 
 ```elixir
 def project do

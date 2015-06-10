@@ -160,7 +160,7 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 {:error, :unknown_command}
 ```
 
-You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/#!ExUnit.DocTest.html).
+You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/ExUnit.DocTest.html).
 
 ## Pipelines
 

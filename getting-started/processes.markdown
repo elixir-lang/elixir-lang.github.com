@@ -132,7 +132,7 @@ receive do
 end
 ```
 
-This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend you to take a look at [the `Process` module](/docs/stable/elixir/#!Process.html) for other functionality provided by processes.
+This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend you to take a look at [the `Process` module](/docs/stable/elixir/Process.html) for other functionality provided by processes.
 
 Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don't share anything by default. And if processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.
 
@@ -231,7 +231,7 @@ iex> flush
 :world
 ```
 
-Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many of the abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/#!Agent.html) which are simple abstractions around state:
+Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many of the abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html) which are simple abstractions around state:
 
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)

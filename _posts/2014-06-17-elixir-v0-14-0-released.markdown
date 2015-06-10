@@ -40,7 +40,7 @@ Structs allow us to provide default values for a map fields. Structs also valida
 #=> ** (CompileError) iex:2: unknown key :unknown for struct User
 ```
 
-We say structs are *raw* because they do not implement any of the protocols that are implemented for maps  by default. For instance, we can call `Enum.each/2` for a map, which uses the [`Enumerable`](/docs/stable/elixir/#!Enumerable.html) protocol:
+We say structs are *raw* because they do not implement any of the protocols that are implemented for maps  by default. For instance, we can call `Enum.each/2` for a map, which uses the [`Enumerable`](/docs/stable/elixir/Enumerable.html) protocol:
 
 ```elixir
 Enum.each %{foo: :bar}, fn {k, v} ->
@@ -134,15 +134,15 @@ update_in dungeon.rooms[room_id].users[user_id].device_codes, &Set.delete(&1, co
 put_in dungeon, [:rooms, room_id, :users, user_id, :username], "new username"
 ```
 
-You can read more information about nested access in [the Access protocol documentation](/docs/stable/elixir/#!Access.html) and in the docs for [`get_in/2`](/docs/stable/elixir/#!Kernel.html#get_in/2) and friends.
+You can read more information about nested access in [the Access protocol documentation](/docs/stable/elixir/Access.html) and in the docs for [`get_in/2`](/docs/stable/elixir/Kernel.html#get_in/2) and friends.
 
 ## Mix and OTP
 
 OTP is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications.
 
-In v0.14.0, Elixir closely integrates with OTP by providing modules for building [servers](/docs/stable/elixir/#!GenServer.html), [event managers and event handlers](/docs/stable/elixir/#!GenEvent.html), [supervisors](/docs/stable/elixir/#!Supervisor.html) and [applications](/docs/stable/elixir/#!Application.html).
+In v0.14.0, Elixir closely integrates with OTP by providing modules for building [servers](/docs/stable/elixir/GenServer.html), [event managers and event handlers](/docs/stable/elixir/GenEvent.html), [supervisors](/docs/stable/elixir/Supervisor.html) and [applications](/docs/stable/elixir/Application.html).
 
-We have also introduced the concepts of [agents](/docs/stable/elixir/#!Agent.html) and the idea of [tasks](/docs/stable/elixir/#!Task.html), which can be supervised and distributed. Application configuration has been made first class in Mix, allowing developers to configure their dependencies, sometimes even using different configurations per environment (dev, test or prod by default).
+We have also introduced the concepts of [agents](/docs/stable/elixir/Agent.html) and the idea of [tasks](/docs/stable/elixir/Task.html), which can be supervised and distributed. Application configuration has been made first class in Mix, allowing developers to configure their dependencies, sometimes even using different configurations per environment (dev, test or prod by default).
 
 This functionality is at the core of building applications in Erlang and Elixir. For this reason we have published a new guide called [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html) where we build a distributed key-value store to help explore all concepts mentioned above. The guide is quite fresh, so please do submit pull requests for typos and mistakes. Feedback is also welcome!
 
@@ -154,7 +154,7 @@ With v0.14.0 we have reached many of the milestones [we have set in the previous
 
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces. Work has already started on this front as Elixir already prints errors coming from the application startup nicely;
 
-* Continue the work of cleaning up the [Kernel module](/docs/stable/elixir/#!Kernel.html). In v0.14.0, we added alternatives for conversion functions, like `integer_to_binary/1` to `Integer.to_string/1`, now they must be properly deprecated and removed;
+* Continue the work of cleaning up the [Kernel module](/docs/stable/elixir/Kernel.html). In v0.14.0, we added alternatives for conversion functions, like `integer_to_binary/1` to `Integer.to_string/1`, now they must be properly deprecated and removed;
 
 * Support mix aliases, allowing developers to easily define Mix shortcuts for their favorite tasks;
 

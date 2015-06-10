@@ -64,7 +64,7 @@ There are a couple things that are important to highlight at this point:
 
 Therefore, `sync_notify/2` and `notify/2` are analogous to `call/2` and `cast/2` in GenServer and using `sync_notify/2` is generally recommended. It works as a backpressure mechanism in the calling process, to reduce the likelihood of messages being sent more quickly than they can be dispatched to handlers.
 
-Be sure to check other functionality provided by GenEvent in its [module documentation](/docs/stable/elixir/#!GenEvent.html). For now we have enough knowledge to add an event manager to our application.
+Be sure to check other functionality provided by GenEvent in its [module documentation](/docs/stable/elixir/GenEvent.html). For now we have enough knowledge to add an event manager to our application.
 
 ## Registry events
 
