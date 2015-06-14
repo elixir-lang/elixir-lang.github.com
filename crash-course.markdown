@@ -493,9 +493,9 @@ In both Erlang and Elixir, a function is not identified only by its name, but by
 **Erlang**
 
 ```erlang
-sum() -> 0;
-sum(A) -> A;
-sum(A, B) -> A + B;
+sum() -> 0.
+sum(A) -> A.
+sum(A, B) -> A + B.
 sum(A, B, C) -> A + B + C.
 ```
 
