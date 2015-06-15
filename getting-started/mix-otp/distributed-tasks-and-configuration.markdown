@@ -233,7 +233,7 @@ Although our tests pass, our testing structure is getting more complex. In parti
 
 Luckily, ExUnit ships with a facility to tag tests, allowing us to run specific callbacks or even filter tests altogether based on those tags.
 
-All we need to do to tag a test is simply call `@tag` before the test name. Back to `test/kv/routest_test.exs`, let's add a `:distributed` tag:
+All we need to do to tag a test is simply call `@tag` before the test name. Back to `test/kv/router_test.exs`, let's add a `:distributed` tag:
 
 ```elixir
 @tag :distributed
