@@ -46,14 +46,14 @@ iex> for n <- 0..5, multiple_of_3?.(n), do: n * n
 
 Comprehensions filter out all elements for which the filter expression returns `false` or `nil`; all other values are kept.
 
-Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and deletes all files in those directories:
+Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and gets the size of each file in those directories:
 
 ```elixir
 for dir  <- dirs,
     file <- File.ls!(dir),
     path = Path.join(dir, file),
     File.regular?(path) do
-  File.rm!(path)
+  File.stat!(path).size
 end
 ```
 
