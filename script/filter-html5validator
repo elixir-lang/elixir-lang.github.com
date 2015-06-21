@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd "$DIR"
+source "$DIR/filter-lib.sh"
+
+CMD_NAME="html5validator"
+
+filter_html5validator() {
+  local dir="$DIR/../_site/"
+  local cmd="html5validator --blacklist docs"
+  filter_it "$dir" "$cmd"
+}
+
+# FILTERS
+prefilter_stdout(){
+  grep -vP "Found files to validate: \d+"
+}
+
+prefilter_stderr() {
+  grep -v "Bad value “X-UA-Compatible” for attribute “http-equiv” on element “meta”"
+}
+
+# Improve OK/ERRROR messages
+capture_std() {
+  local total_files=$(perl -ne 'print "$1" if /Found files to validate: (\d+)/' < "$STDOUT_RAW")
+  local total_errors=$(perl -ne 'print if /: error: /' < "$STDERR" | wc -l)
+  local error_files=$(perl -ne 'print "$1\n" if /^\"(.*)\":\d+\.\d+-\d+\.\d+\:/' < "$STDERR" | sort -u | wc -l)
+
+  if [ ! -z "$total_files" ]; then
+    MSG_OK="OK: ${CMD_NAME} - ${total_files} documents have been validated."
+  fi
+
+  if [ ! -z "${total_errors}" ]; then
+    MSG_ERROR="ERROR: ${CMD_NAME} - ${total_errors} errors found in ${error_files} documents."
+    # Show number of documents and links if available
+    [ ! -z "$total_files" ] &&
+      MSG_ERROR="${MSG_ERROR} Total Documents: ${total_files}."
+  fi
+}
+
+# Filter it!
+filter_html5validator

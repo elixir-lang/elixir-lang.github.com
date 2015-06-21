@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd "$DIR"
+
+echo "------------------------------------------------------------------------"
+echo "* Task #1: html5validator"
+./filter-html5validator
+echo
+echo "------------------------------------------------------------------------"
+echo "* Task #2: htmlproof"
+./filter-htmlproof
+echo
+echo "------------------------------------------------------------------------"
