@@ -46,7 +46,7 @@ In order to run a development server (with live-reloading on) just run:
 $ bundle exec jekyll serve
 ```
 
-The generated site will be available at http://localhost:4000. You can stop the
+The generated site will be available at [http://localhost:4000](http://localhost:4000). You can stop the
 server with <kbd>Ctrl</kbd>-<kbd>C</kbd>.
 
 #### 5. Make your changes and push them
