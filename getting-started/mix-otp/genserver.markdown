@@ -33,7 +33,7 @@ iex> KV.Bucket.get(:shopping, "milk")
 1
 ```
 
-However, this a terrible idea! Local names in Elixir must be atoms, which means we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory! In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
+However, this is a terrible idea! Local names in Elixir must be atoms, which means we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory! In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
 
 Instead of abusing the name registry facility, we will instead create our own *registry process* that holds a dictionary that associates the bucket name to the bucket process.
 
