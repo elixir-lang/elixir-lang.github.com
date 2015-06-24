@@ -82,11 +82,11 @@ For example, if you push the `kv` project to a git repository, you just need to 
 
 ```elixir
 def deps do
-  [{:kv, git: "git://github.com/YOUR_ACCOUNT/kv.git"}]
+  [{:kv, git: "https://github.com/YOUR_ACCOUNT/kv.git"}]
 end
 ```
 
-It doesn't matter if the git repository is public or private, Mix will be able to fetch it for you as long as you have the proper credentials.
+If the repository is private though, you may need to specify the private URL `git@github.com:YOUR_ACCOUNT/kv.git`. In any case, Mix will be able to fetch it for you as long as you have the proper credentials.
 
 However, using git dependencies for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provide the concept of applications. As such, we expect you to frequently break your code into applications that can be organized logically, even within a single project.
 
