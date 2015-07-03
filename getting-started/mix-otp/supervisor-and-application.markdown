@@ -227,7 +227,7 @@ One possible solution to this issue would be to provide a `KV.Bucket.start/0`, t
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template.
 
-Let's define our `KV.Bucket.Supervisor` as follows:
+Let's define our `KV.Bucket.Supervisor` in `lib/kv/bucket/supervisor.ex` as follows:
 
 ```elixir
 defmodule KV.Bucket.Supervisor do
