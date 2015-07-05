@@ -111,6 +111,17 @@ Compared to keyword lists, we can already see two differences:
   * Maps allow any value as a key.
   * Maps' keys do not follow any ordering.
 
+Note that variables cannot be used as map keys:
+
+```iex
+iex> %{:x => 1}
+%{x: 1}
+iex> n = :x
+:x
+iex> %{n => 1}
+** (CompileError) iex:3: illegal use of variable n in map key
+```
+
 If you pass duplicate keys when creating a map, the last one wins:
 
 ```iex
