@@ -8,9 +8,51 @@ redirect_from: /getting_started/meta/3.html
 
 {% include toc.html %}
 
-[Domain Specific Languages](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. There are many language features that, when used in combination, can aid developers to write Domain Specific Languages. In this chapter we will focus on how macros and module attributes can be used together to create domain specific modules that are focused on solving one particular problem. As an example, we will write a very simple module to define and run tests.
+## Foreword
 
-The goal is to build a module named `TestCase` that allows us to write the following:
+[Domain Specific Languages (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. You don't need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain Specific Language.
+
+For example, imagine we want to implement a Validator module which provides a data validation domain specific language. We could implement it using data structures, functions or macros. Let's see how those different DSLs would look like:
+
+```elixir
+# 1. data structures
+import Validator
+validate user, name: [length: 1..100],
+               email: [matches: ~r/@/]
+
+# 2. functions
+import Validator
+user
+|> validate_length(:name, 1..100)
+|> validate_matches(:matches, ~r/@/)
+
+# 3. macros + modules
+defmodule MyValidator do
+  use Validator
+  validate_length :name, 1..1000
+  validate_matches :email, ~r/@/
+end
+
+MyValidator.validate(user)
+```
+
+Of all the approaches above, the first is definitely the more flexible. If our domain rules can be encoded with data structures, they are by far the easiest to compose and implement, as Elixir's standard library is filled with functions for manipulating different data types.
+
+The second approach uses function calls which suits better more complex APIs and reads nicely in Elixir thanks to the pipe operator.
+
+The third approach, uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.
+
+To drive the point home, imagine you want to do validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However it is impossible to do so with the macros approach unless its DSL is augmented.
+
+In other words:
+
+    data > functions > macros
+
+That said, there are still cases where using macros and modules to build domain specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.
+
+## Building our own test acse
+
+The goal in this chapter is to build a module named `TestCase` that allows us to write the following:
 
 ```elixir
 defmodule MyTest do
