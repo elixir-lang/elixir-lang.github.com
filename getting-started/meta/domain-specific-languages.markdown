@@ -24,7 +24,7 @@ validate user, name: [length: 1..100],
 import Validator
 user
 |> validate_length(:name, 1..100)
-|> validate_matches(:matches, ~r/@/)
+|> validate_matches(:email, ~r/@/)
 
 # 3. macros + modules
 defmodule MyValidator do
@@ -36,9 +36,9 @@ end
 MyValidator.validate(user)
 ```
 
-Of all the approaches above, the first is definitely the more flexible. If our domain rules can be encoded with data structures, they are by far the easiest to compose and implement, as Elixir's standard library is filled with functions for manipulating different data types.
+Of all the approaches above, the first is definitely the most flexible. If our domain rules can be encoded with data structures, they are by far the easiest to compose and implement, as Elixir's standard library is filled with functions for manipulating different data types.
 
-The second approach uses function calls which better suits more complex APIs and reads nicely in Elixir thanks to the pipe operator.
+The second approach uses function calls which better suits more complex APIs (for example, if you need to pass many options) and reads nicely in Elixir thanks to the pipe operator.
 
 The third approach, uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.
 
