@@ -29,7 +29,7 @@ user
 # 3. macros + modules
 defmodule MyValidator do
   use Validator
-  validate_length :name, 1..1000
+  validate_length :name, 1..100
   validate_matches :email, ~r/@/
 end
 
@@ -50,7 +50,7 @@ In other words:
 
 That said, there are still cases where using macros and modules to build domain specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.
 
-## Building our own test acse
+## Building our own test case
 
 The goal in this chapter is to build a module named `TestCase` that allows us to write the following:
 
