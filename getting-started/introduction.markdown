@@ -44,7 +44,7 @@ iex> "hello" <> " world"
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
-> Note: if you are on Windows, you can also try `iex --werl` which may provide a better experience depending on which console you are using.
+> Note: if you are on Windows, you can also try `iex.bat --werl` which may provide a better experience depending on which console you are using.
 
 ## Running scripts
 
