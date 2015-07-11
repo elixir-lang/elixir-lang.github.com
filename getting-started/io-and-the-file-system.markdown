@@ -95,7 +95,7 @@ iex> Path.expand("~/hello")
 "/Users/jose/hello"
 ```
 
-Using functions from the `Path` module as opposed to just manipulating binaries is preferred since the `Path` module takes care of different operating systems transparently. For example, `Path.join/2` joins a path with slashes (`/`) on Unix-like systems and with backslashes (`\\`) on Windows.
+Using functions from the `Path` module as opposed to just manipulating binaries is preferred since the `Path` module takes care of different operating systems transparently. For example, `Path.join/2` joins a path with slashes (`/`) on Unix-like systems and with backslashes (`\`) on Windows.
 
 With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.
 
