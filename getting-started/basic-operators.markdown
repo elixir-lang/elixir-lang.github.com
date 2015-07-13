@@ -113,4 +113,6 @@ The reason we can compare different data types is pragmatism. Sorting algorithms
 
 You don't actually need to memorize this ordering, but it is important just to know an order exists.
 
+Finally, like all other programming languages, Elixir has an [order of operations](/getting-started/operator-precedence.html) that describes which operators take precedence.  
+
 Well, that is it for the introduction. In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
