@@ -74,7 +74,7 @@ In order to customize this process, we are going to take a look at Erlang's erro
 
 ## Custom error handler
 
-By default, Elixir (and Erlang) code is autoloaded. This means that, if we invoke `List.delete` and the module `List` was not loaded yet, the Erlang VM is going to look into the `ebin` directory (the directory where we put compiled files) and try to load it. This process is controlled by the [`error_handler` module in Erlang](http://erlang.org/doc/man/error_handler.html) via two callback functions: `undefined_function` and `undefined_lambda`.
+By default, Elixir (and Erlang) code is autoloaded. This means that, if we invoke `List.delete` and the module `List` was not loaded yet, the Erlang VM is going to look into the `ebin` directory (the directory where we put compiled files) and try to load it. This process is controlled by the [`error_handler` module in Erlang](http://www.erlang.org/doc/man/error_handler.html) via two callback functions: `undefined_function` and `undefined_lambda`.
 
 As discussed in the previous section, we want to extend the error handler to actually stop the currently running process whenever a module is not found and resume the process only after we ensure the module is compiled. To do that, we can simply define our own error handler and ask Erlang to use it. Our custom error handler is defined as follows:
 

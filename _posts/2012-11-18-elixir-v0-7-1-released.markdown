@@ -13,7 +13,7 @@ This is a minor release that contains a couple enhancements regarding UTF-8, [di
 
 During this time traveling around, we have spoken at many conferences, as [Strange Loop](http://thestrangeloop.com/), [Øredev](http://oredev.org/), [QCon SP](http://qconsp.com/) and [Rupy](http://rupy.eu/) as well as at different companies. Developers from different backgrounds have shown interest in Elixir, [written about it](http://spin.atomicobject.com/2012/10/31/elixir-erlang-and-the-dining-philosophers/), joined us at #elixir-lang on freenode and contributed to the language. As of today, Elixir is powered by 51 different contributors!
 
-In case you missed any of those conferences, [the talk I presented at Øredev is available and you can watch it now](http://vimeo.com/53221562). The slides are also available below.
+In case you missed any of those conferences, [the talk I presented at Øredev is available and you can watch it now](https://vimeo.com/53221562). The slides are also available below.
 
 If you want to hear more about Elixir at a conference or an event, please let us know. Thank you and don't forget to [give Elixir a try](/getting-started/introduction.html)!
 

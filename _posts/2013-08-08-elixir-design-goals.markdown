@@ -6,7 +6,7 @@ category: Internals
 excerpt: Highlight of Elixir design goals.
 ---
 
-During the last year, we have spoken at many conferences spreading the word about Elixir. We [usually started with introducing the Erlang VM](http://vimeo.com/53221562), then went on to talk about Elixir goals, saving some time at the end to do a live demo, showing some goodies like exchanging information between remote nodes and even hot code swapping.
+During the last year, we have spoken at many conferences spreading the word about Elixir. We [usually started with introducing the Erlang VM](https://vimeo.com/53221562), then went on to talk about Elixir goals, saving some time at the end to do a live demo, showing some goodies like exchanging information between remote nodes and even hot code swapping.
 
 This post is a summary of those talks, focusing on the language goals: compatibility, productivity and extensibility.
 

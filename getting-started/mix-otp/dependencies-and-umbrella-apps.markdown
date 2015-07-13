@@ -36,9 +36,9 @@ Before creating our new application, we must discuss how Mix handles dependencie
 
 ## External dependencies
 
-External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the [Plug](http://github.com/elixir-lang/plug) project as an external dependency.
+External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the [Plug](https://github.com/elixir-lang/plug) project as an external dependency.
 
-Installing external dependencies is simple. Most commonly, we use the [Hex Package Manager](http://hex.pm), by listing the dependency inside the deps function in our `mix.exs` file:
+Installing external dependencies is simple. Most commonly, we use the [Hex Package Manager](https://hex.pm), by listing the dependency inside the deps function in our `mix.exs` file:
 
 ```elixir
 def deps do
@@ -272,6 +272,6 @@ Here are a couple questions you can ask yourself when working with dependencies.
 * If no, use an umbrella project with umbrella children.
 * If yes, can this project be shared outside your company / organization?
   * If no, use a private git repository.
-  * If yes, push your code to a git repository and do frequent releases using [Hex](http://hex.pm).
+  * If yes, push your code to a git repository and do frequent releases using [Hex](https://hex.pm).
 
 With our umbrella project up and running, it is time to start writing our server.

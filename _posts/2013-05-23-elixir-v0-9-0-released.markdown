@@ -6,7 +6,7 @@ category: Releases
 excerpt: Elixir v0.9.0 is released with support for reducers, umbrella projects, faster compilation times and dropped support for R15 and earlier OTP versions.
 ---
 
-While [Programming Elixir](http://pragprog.com/book/elixir/programming-elixir) was being announced, we have been working on Elixir v0.9.0 which is finally out. This release contains new features, important performance optimizations and bug fixes.
+While [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir) was being announced, we have been working on Elixir v0.9.0 which is finally out. This release contains new features, important performance optimizations and bug fixes.
 
 Elixir v0.9.0 also removes support for Erlang R15 and earlier versions. In case you still need to run Elixir software on R15, we have also released Elixir v0.8.3, which contains many of the enhancements in v0.9.0. Check the [CHANGELOG for more details for both releases](https://github.com/elixir-lang/elixir/blob/v0.9.0/CHANGELOG.md).
 
@@ -130,4 +130,4 @@ We have also many other smaller improvements:
 
 A huge thank you to our community for sending bug reports, providing bug fixes and contributing all those amazing features. And when are **you** joining us? :)
 
-Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or [check this 30 minute video from PragProg](http://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](http://pragprog.com/book/elixir/programming-elixir).
+Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or [check this 30 minute video from PragProg](https://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir).

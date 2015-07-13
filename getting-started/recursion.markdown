@@ -108,7 +108,7 @@ iex> Math.double_each([1, 2, 3]) #=> [2, 4, 6]
 
 Here we have used recursion to traverse a list doubling each element and returning a new list. The process of taking a list and _mapping_ over it is known as a _map algorithm_.
 
-Recursion and [tail call](http://en.wikipedia.org/wiki/Tail_call) optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists.
+Recursion and [tail call](https://en.wikipedia.org/wiki/Tail_call) optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists.
 
 The [`Enum` module](/docs/stable/elixir/#!Enum.html), which we're going to see in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:
 
