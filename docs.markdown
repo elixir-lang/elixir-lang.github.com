@@ -26,6 +26,7 @@ Choose which version you want documentation for.
 * [Logger](/docs/master/logger/) - builtin Logger
 * [Mix](/docs/master/mix/) - build tool
 
+<span id="v1.0"></span>
 #### v1.0
 
 * [Elixir](/docs/v1.0/elixir/) - standard library
