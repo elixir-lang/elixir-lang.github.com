@@ -8,7 +8,7 @@ redirect_from: /getting_started/mix_otp/8.html
 
 {% include toc.html %}
 
-In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://erlang.org/doc/man/gen_tcp.html) to serve requests. In future chapters we will expand our server so it can actually serve the commands. This will also provide a great opportunity to explore Elixir's `Task` module.
+In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://www.erlang.org/doc/man/gen_tcp.html) to serve requests. In future chapters we will expand our server so it can actually serve the commands. This will also provide a great opportunity to explore Elixir's `Task` module.
 
 ## Echo server
 
@@ -98,7 +98,7 @@ Start an IEx session inside the `kv_server` application with `iex -S mix`. Insid
 iex> KVServer.accept(4040)
 ```
 
-The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](http://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
+The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](https://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
 
 ```bash
 $ telnet 127.0.0.1 4040

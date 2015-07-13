@@ -19,8 +19,8 @@ When [we released version v0.5.0](/blog/2012/05/25/elixir-v0-5-0-released/), we 
 
 Our interactive shell (IEx) also had many improvements, thanks to the Elixir developer community. We now have easy access to documentation, remote shells, autocomplete and much more. In order to show you a bit of what you can do in this release, we have prepared a short (~6 min) screencast:
 
-<iframe src="http://player.vimeo.com/video/46709928" class="video" width="600" height="337" allowfullscreen></iframe>
-<a href="http://vimeo.com/46709928">Elixir v0.6 quick tour - Mix and IEx</a> from <a href="http://vimeo.com/user3182384">Plataformatec</a> on <a href="http://vimeo.com">Vimeo</a>.
+<iframe src="https://player.vimeo.com/video/46709928" class="video" width="600" height="337" allowfullscreen></iframe>
+<a href="https://vimeo.com/46709928">Elixir v0.6 quick tour - Mix and IEx</a> from <a href="https://vimeo.com/user3182384">Plataformatec</a> on <a href="https://vimeo.com">Vimeo</a>.
 
 That's it. For the next months, we will continue improving Elixir (you can see some ideas floating around in the [issues tracker](https://github.com/elixir-lang/elixir/issues)) but we will start to focus on other tools and libraries for the community.
 

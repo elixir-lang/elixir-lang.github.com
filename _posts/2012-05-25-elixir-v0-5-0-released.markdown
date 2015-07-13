@@ -37,9 +37,9 @@ With v0.5.0 finally out, we are committing to a stable syntax and a basic standa
 
 ## Looking forward
 
-There are still many, many things to do! In the next months, we will continue working on growing our community, talks and other documentation material. A huge thanks to [Alexei Sholik](http://twitter.com/true_droid) who is moving this area forward.
+There are still many, many things to do! In the next months, we will continue working on growing our community, talks and other documentation material. A huge thanks to [Alexei Sholik](https://twitter.com/true_droid) who is moving this area forward.
 
-We will also work on better integration and documentation on building Erlang systems. Erlang ships with the [Open Telecom Platform](http://en.wikipedia.org/wiki/Open_Telecom_Platform) which provides many tools to build distributed applications. In v0.5.0, all these tools are already available but we want to make the build process even simpler.
+We will also work on better integration and documentation on building Erlang systems. Erlang ships with the [Open Telecom Platform](https://en.wikipedia.org/wiki/Open_Telecom_Platform) which provides many tools to build distributed applications. In v0.5.0, all these tools are already available but we want to make the build process even simpler.
 
 In parallel, we will improve our [documentation generation tool](https://github.com/elixir-lang/ex_doc) and [build tool](https://github.com/elixir-lang/elixir/tree/master/lib/mix) which will likely be merged into core when they are solid enough.
 

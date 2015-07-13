@@ -33,7 +33,7 @@ Elixir is composed of 6 applications, all under the same versioning constraints:
 
 With v1.0, we are providing a stable platform for the community to leverage and extend, and we are extremely excited with the projects and possibilities that are ahead of us!
 
-We hope the [Hex package manager](http://hex.pm) will be the home of many of those projects and remember the whole Erlang ecosystem is also available to Elixir developers.
+We hope the [Hex package manager](https://hex.pm) will be the home of many of those projects and remember the whole Erlang ecosystem is also available to Elixir developers.
 
 ## Expectations
 

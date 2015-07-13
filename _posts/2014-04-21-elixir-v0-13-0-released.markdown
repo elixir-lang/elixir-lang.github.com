@@ -8,7 +8,7 @@ excerpt: "Elixir v0.13.0 comes with substantial improvements to the language: ma
 
 Hello folks!
 
-Elixir v0.13.0 has been released. It contains changes that will effectively shape how developers will write Elixir code from now on, making it an important milestone towards v1.0! On this post we are going to cover some of those changes, the road to Elixir v1.0, as well as the announcement of [hex.pm](http://hex.pm).
+Elixir v0.13.0 has been released. It contains changes that will effectively shape how developers will write Elixir code from now on, making it an important milestone towards v1.0! On this post we are going to cover some of those changes, the road to Elixir v1.0, as well as the announcement of [hex.pm](https://hex.pm).
 
 Before we go into the changes, let's briefly talk about ElixirConf!
 
@@ -261,7 +261,7 @@ Dependencies now are also automatically compiled before you run a command. For e
 
 ## hex.pm
 
-This release also marks the announcement of [hex.pm](http://hex.pm/), a package manager for the Erlang VM. Hex allows you to package and publish your projects while fetching them and performing dependency resolution in your applications.
+This release also marks the announcement of [hex.pm](https://hex.pm/), a package manager for the Erlang VM. Hex allows you to package and publish your projects while fetching them and performing dependency resolution in your applications.
 
 Currently Hex only integrates with Mix and contributions to extend it to other tools and other languages in the Erlang VM are welcome!
 
@@ -269,14 +269,14 @@ Currently Hex only integrates with Mix and contributions to extend it to other t
 
 As seen in this announcement, this release dictates many of the developments that will happen in Elixir and its community in the following weeks. All projects are recommended to start moving from records to structs, paving the way for the deprecation of records before 1.0.
 
-The next months will also focus on integrating Elixir more tightly to OTP. During the keynote at Erlang Factory, [Catalyse Change](http://www.youtube.com/watch?v=Djv4C9H9yz4), Dave Thomas and I argued that there are many useful patterns, re-implemented everyday by developers, that could make development more productive within the Erlang VM if exposed accordingly.
+The next months will also focus on integrating Elixir more tightly to OTP. During the keynote at Erlang Factory, [Catalyse Change](https://www.youtube.com/watch?v=Djv4C9H9yz4), Dave Thomas and I argued that there are many useful patterns, re-implemented everyday by developers, that could make development more productive within the Erlang VM if exposed accordingly.
 
 That said, in the next months we plan to:
 
 * Integrate applications configuration (provided by OTP) right into Mix;
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces;
 * Properly expose the functionality provided by Applications, Supervisors, GenServers and GenEvents and study how they can integrate with Elixir. For example, how to consume events from GenEvent as a [stream of data](/docs/stable/elixir/#!Stream.html)?
-* Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://erlang.org/doc/man/rpc.html);
+* Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://www.erlang.org/doc/man/rpc.html);
 * Rewrite the Mix and ExUnit guides to focus on applications and OTP as a whole, rebranding it to "Building Apps with Mix and OTP";
 
-You can learn more about Elixir in our [Getting Started guide](/getting-started/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](http://elixirconf.com/) as well as pushing your packages to [hex.pm](http://hex.pm/).
+You can learn more about Elixir in our [Getting Started guide](/getting-started/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](http://elixirconf.com/) as well as pushing your packages to [hex.pm](https://hex.pm/).

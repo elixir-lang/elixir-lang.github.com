@@ -29,7 +29,7 @@ By default, the code above will log the following message to your console:
 10:27:39.083 [debug] hello
 ```
 
-Logger provides multiple backends to where messages are logged. For now Elixir ships only with a console backend but there are developers already working on file (with support to external log rotation) and [syslog](http://en.wikipedia.org/wiki/Syslog) backends.
+Logger provides multiple backends to where messages are logged. For now Elixir ships only with a console backend but there are developers already working on file (with support to external log rotation) and [syslog](https://en.wikipedia.org/wiki/Syslog) backends.
 
 When we started Logger, the main objective was to translate Erlang messages into Elixir, so terms are formatted in Elixir syntax. Before this release, the following code
 
@@ -74,7 +74,7 @@ As soon as we started working on Logger, we realized we could go further than si
   * Custom translators: so you can translate log messages coming from any Erlang application into Elixir syntax
   * Metadata: metadata allows developers to store information in the current process that will be available to all logged messages. For example, a web application can generate a `request_id`, store it as metadata, and all messages logged during that request will be properly identified with `request_id=...` in the log
 
-We have also relied a lot on the [research and work done by Andrew Thompson and the folks at Basho behind Lager](http://www.youtube.com/watch?v=8BNpOHFvg_Q) to ensure our logger is performant and robust. On this front, Logger
+We have also relied a lot on the [research and work done by Andrew Thompson and the folks at Basho behind Lager](https://www.youtube.com/watch?v=8BNpOHFvg_Q) to ensure our logger is performant and robust. On this front, Logger
 
   * alternates between sync and async modes when logging messages to keep it performant when required but also apply back-pressure when under stress
   * formats and truncates messages on the client to avoid clogging the backends
@@ -142,7 +142,7 @@ We also would like to thank [Anthony Grimes](https://github.com/raynes) for the 
 
 ## Elixir Web Installer for Windows
 
-At the beginning of this summer, [Chris Hyndman](http://github.com/chyndman) joined us as a Google Summer of Code student to help us improve the Elixir story on Windows. Chris has been essential in:
+At the beginning of this summer, [Chris Hyndman](https://github.com/chyndman) joined us as a Google Summer of Code student to help us improve the Elixir story on Windows. Chris has been essential in:
 
   * Guaranteeing our test suite is green on Windows, fixing many bugs in the process;
   * [Documenting how to compile Elixir from source on Windows](https://github.com/elixir-lang/elixir/wiki/Windows)

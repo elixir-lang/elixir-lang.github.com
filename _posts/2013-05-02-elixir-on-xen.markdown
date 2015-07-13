@@ -18,7 +18,7 @@ You can learn more about Xen and the LING VM on the [Erlang on Xen website](http
 
 ## Getting started
 
-In order to run Elixir on the LING VM, you need to produce a Xen image of your Elixir project. This can be done with the help of the [lingex project](http://github.com/maximk/lingex), created by the LING VM team.
+In order to run Elixir on the LING VM, you need to produce a Xen image of your Elixir project. This can be done with the help of the [lingex project](https://github.com/maximk/lingex), created by the LING VM team.
 
 Producing an Elixir image using the free Erlang on Xen Build Service requires just a few steps:
 
