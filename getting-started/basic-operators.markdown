@@ -113,4 +113,33 @@ The reason we can compare different data types is pragmatism. Sorting algorithms
 
 You don't actually need to memorize this ordering, but it is important just to know an order exists.
 
-Well, that is it for the introduction. In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
+## Operator table
+
+Although we have learned only a handful of operators so far, we present below the complete operator table for Elixir, with precedence and associativity for reference:
+
+Precedence | Operator | Associativity
+:--------: | -------- | -------------
+ 1  | `@` | Unary
+ 2  | `.` (Both Dot and Dot Call) | Left to right
+ 3  | `+` `-` `!` `^` `not` `~~~` | Unary
+ 4  | `^` `(^^^)` | Left to right
+ 5  | `*` `/` | Left to right
+ 6  | `+` `-` | Left to right
+ 7  | `++` `--` `..` `<>` | Right to left
+ 8  | `in` | Left to right
+ 9  | <code>&#124;></code> `<<<` `>>>` `~>>` `<<~` `~>` `<~` `<~>` <code>&lt;&#124;&gt;</code> | Left to right
+ 10 | `<` `>` `<=` `>=` | Left to right
+ 11 | `==` `!=` `=~` `===` `!==` | Left to right
+ 12 | `&&` `&&&` `and` | Left to right
+ 13 | <code>&#124;&#124;</code> <code>&#124;&#124;&#124;</code> `or` | Left to right
+ 14 | `=` | Right to left
+ 15 | `=>` | Right to left
+ 16 | <code>&#124;</code> | Right to left
+ 17 | `::` | Right to left
+ 18 | `when` | Right to left
+ 19 | `<-`, `\\` | Left to right
+ 20 | `&` | Unary
+
+The operator table is ordered with the highest precedence operator at the top.
+
+We will learn the majority of those operators as we go through the getting started guide. In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
