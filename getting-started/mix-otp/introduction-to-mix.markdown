@@ -238,6 +238,12 @@ Mix will default to the `:dev` environment, except for the `test` task that will
 $ MIX_ENV=prod mix compile
 ```
 
+Or on Windows:
+
+```batch
+> set /a "MIX_ENV=prod" && mix compile
+```
+
 ## Exploring
 
 There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](/docs/stable/mix/).
