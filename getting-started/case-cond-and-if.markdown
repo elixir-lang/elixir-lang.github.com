@@ -257,7 +257,7 @@ iex> is_number(if true) do
 ** (RuntimeError) undefined function: if/1
 ```
 
-Which leads to an undefined function error as Elixir attempts to invoke `is_number/2`. Adding explicit parentheses is enough to resolve the ambiguity:
+Which leads to an undefined function error as Elixir attempts to invoke `if/1`. Adding explicit parentheses is enough to resolve the ambiguity:
 
 ```iex
 iex> is_number(if true do
