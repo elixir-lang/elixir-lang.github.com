@@ -557,6 +557,8 @@ sum "a", "b"
 #=> "ab"
 ```
 
+### Default values
+
 In addition, Elixir allows for default values for arguments, whereas Erlang does not.
 
 ```elixir
