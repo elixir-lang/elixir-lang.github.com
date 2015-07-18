@@ -46,7 +46,7 @@ Choose your operating system and tool.
 ### Windows
 
   * Web installer
-    * [Download the installer](http://s3.hex.pm/elixir-websetup.exe)
+    * [Download the installer](https://s3.amazonaws.com/s3.hex.pm/elixir-websetup.exe)
     * Click next, next, ..., finish
   * Chocolatey
     * `cinst elixir`
