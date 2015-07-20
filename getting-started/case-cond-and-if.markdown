@@ -54,13 +54,15 @@ The first clause above will only match when `x` is positive.
 
 ## Expressions in guard clauses
 
-The Erlang Virtual Machine (VM) only allows a limited set of expressions in guards:
+Elixir imports and allows the following expressions in guards by default:
 
-* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`)
-* boolean operators (`and`, `or`) and negation operators (`not`, `!`)
-* arithmetic operators (`+`, `-`, `*`, `/`)
-* `<>` and `++` as long as the left side is a literal
-* the `in` operator
+* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `>=`, `<`, `<=`)
+* boolean operators (`and`, `or`, `not`)
+* arithmetic operations (`+`, `-`, `*`, `/`)
+* arithmetic unary operators (`+`, `-`)
+* the binary concatenation operator `<>`
+* the `in` operator as long as the right side is range or a list
+* all operators in the`Bitwise` module (`bnot`, `~~~`, `band`, `&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>`)
 * all the following type check functions:
     * `is_atom/1`
     * `is_binary/1`
@@ -80,6 +82,7 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `is_tuple/1`
 * plus these functions:
     * `abs(number)`
+    * `binary_part(binary, start, length)`
     * `bit_size(bitstring)`
     * `byte_size(bitstring)`
     * `div(integer, integer)`
@@ -97,6 +100,9 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `tuple_size(tuple)`
 
 Additionally, users may define their own guard functions, usually starting with "is_".
+
+Note that while boolean operators such as `and`, `or`, `not` are allowed in guards,
+the more general and short-circuiting operators `&&`, `||` and `!` are not.
 
 Keep in mind errors in guards do not leak but simply make the guard fail:
 
