@@ -62,7 +62,6 @@ Elixir imports and allows the following expressions in guards by default:
 * arithmetic unary operators (`+`, `-`)
 * the binary concatenation operator `<>`
 * the `in` operator as long as the right side is range or a list
-* all operators in the`Bitwise` module (`bnot`, `~~~`, `band`, `&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>`)
 * all the following type check functions:
     * `is_atom/1`
     * `is_binary/1`
@@ -99,7 +98,9 @@ Elixir imports and allows the following expressions in guards by default:
     * `trunc(number)`
     * `tuple_size(tuple)`
 
-Additionally, users may define their own guard functions, usually starting with "is_".
+Additionally, users may define their own guards. For example, the `Bitwise`
+module defines guards as functions and operators: `bnot`, `~~~`, `band`,
+`&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>`.
 
 Note that while boolean operators such as `and`, `or`, `not` are allowed in guards,
 the more general and short-circuiting operators `&&`, `||` and `!` are not.
