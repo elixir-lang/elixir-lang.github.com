@@ -265,7 +265,7 @@ def handle_info({:DOWN, ref, :process, pid, _reason}, state) do
   # 5. Delete from the ETS table instead of the HashDict
   {name, refs} = HashDict.pop(state.refs, ref)
   :ets.delete(state.names, name)
-  GenEvent.sync_notify(state.event, {:exit, name, pid})
+  GenEvent.sync_notify(state.events, {:exit, name, pid})
   {:noreply, %{state | refs: refs}}
 end
 ```
