@@ -198,7 +198,7 @@ Elixir developers typically prefer to use the `map.field` syntax and pattern mat
 
 In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps modules implement this interface.
 
-This interface is defined in the [the `Dict` module](/docs/stable/elixir/#!Dict.html) module which also provides an API that delegates to the underlying implementations:
+This interface is defined in [the `Dict` module](/docs/stable/elixir/#!Dict.html) module which also provides an API that delegates to the underlying implementations:
 
 ```iex
 iex> keyword = []
