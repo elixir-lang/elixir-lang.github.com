@@ -152,7 +152,7 @@ In the example above, we have used the `plug/1` macro to connect functions that 
 
 In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
 
-Another example comes from the ExUnit framework which uses module attributes as annotation and storage:
+Another example comes from [the ExUnit framework](/docs/stable/ex_unit/) which uses module attributes as annotation and storage:
 
 ```elixir
 defmodule MyTest do
