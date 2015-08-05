@@ -19,7 +19,7 @@ Our requirements are:
 
 Let's get started!
 
-> If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com).
+> If you find any errors in the tutorial or on the website, please [report a bug](https://github.com/elixir-lang/elixir-lang.github.com/issues/new) or [send a pull request](https://github.com/elixir-lang/elixir-lang.github.com/pulls) to our [issue tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues).
 
 ## Installation
 
