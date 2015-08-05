@@ -61,7 +61,7 @@ Elixir imports and allows the following expressions in guards by default:
 * arithmetic operations (`+`, `-`, `*`, `/`)
 * arithmetic unary operators (`+`, `-`)
 * the binary concatenation operator `<>`
-* the `in` operator as long as the right side is range or a list
+* the `in` operator as long as the right side is a range or a list
 * all the following type check functions:
     * `is_atom/1`
     * `is_binary/1`
