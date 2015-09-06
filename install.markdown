@@ -57,7 +57,7 @@ Those distributions will likely install Erlang automatically for you too. In cas
 
 Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
 
-Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we would like to recommended you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
+Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we would like to recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
 ## Compiling from source (Unix and MinGW)
 
