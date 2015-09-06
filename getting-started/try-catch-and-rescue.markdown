@@ -166,14 +166,27 @@ It is important to bear in mind that variables defined inside `try/catch/rescue/
 
 ```iex
 iex> try do
-...>   from_try = true
-...> after
-...>   from_after = true
+...>   raise "fail"
+...>   what_happened = :did_not_raise
+...> rescue
+...>   _ -> what_happened = :rescued
 ...> end
-iex> from_try
-** (RuntimeError) undefined function: from_try/0
-iex> from_after
-** (RuntimeError) undefined function: from_after/0
+iex> what_happened
+** (RuntimeError) undefined function: what_happened/0
+```
+
+Instead, you can store the value of the `try` expression:
+
+```iex
+iex> what_happened =
+...>   try do
+...>     raise "fail"
+...>     :did_not_raise
+...>   rescue
+...>     _ -> :rescued
+...>   end
+iex> what_happened
+:rescued
 ```
 
 This finishes our introduction to `try`, `catch` and `rescue`. You will find they are used less frequently in Elixir than in other languages although they may be handy in some situations where a library or some particular code is not playing "by the rules".
