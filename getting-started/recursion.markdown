@@ -12,7 +12,7 @@ redirect_from: /getting_started/9.html
 
 Due to immutability, loops in Elixir (and in any functional programming language) are written differently from imperative languages. For example, in an imperative language (like C in the following example), one would write:
 
-```c
+```javascript
 for(i = 0; i < array.length; i++) {
   array[i] = array[i] * 2
 }
