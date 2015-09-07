@@ -13,9 +13,11 @@ redirect_from: /getting_started/9.html
 Due to immutability, loops in Elixir (and in any functional programming language) are written differently from imperative languages. For example, in an imperative language (like C in the following example), one would write:
 
 ```c
-for(i = 0; i < array.length; i++) {
-  array[i] = array[i] * 2
+int i, array[3] = {1, 2, 3};
+for(i = 0; i < sizeof(array)/sizeof(array[0]); i++){
+    array[i] = array[i]*2;
 }
+// 2,4,6
 ```
 
 In the example above, we are mutating both the array and the variable `i`. Mutating is not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached that stops the recursive action from continuing. No data is mutated in this process. Consider the example below that prints a string an arbitrary number of times:
@@ -84,7 +86,7 @@ When the list is empty, it will match the final clause which returns the final r
 
 The process of taking a list and _reducing_ it down to one value is known as a _reduce algorithm_ and is central to functional programming.
 
-What if we instead want to double all of the values in our list?
+What if we instead want to double all of the values in our list as in the C example above?
 
 ```elixir
 defmodule Math do
