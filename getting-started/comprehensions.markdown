@@ -57,34 +57,32 @@ for dir  <- dirs,
 end
 ```
 
-Keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.
-
-### Multiple generators
-
-Comprehensions can also have multiple generators (they work similar to nested comprehensions in other languages) which can be combined. For example, the Cartesian product of two lists can be written as follows:
+Multiple generators can also be used to calculate the cartesian product of two lists:
 
 ```iex
 iex> for i <- [:a, :b, :c], j <- [1, 2], do:  {i, j}
 [a: 1, a: 2, b: 1, b: 2, c: 1, c: 2]
 ```
 
-A more advanced example of multiple generators and filters is Pythagorean triplets. A Pythagorean triplet is set of numbers such that `a*a + b*b = c*c`, so lets save it in file `Triplet.exs` :-
+A more advanced example of multiple generators and filters is Pythagorean triplets. A Pythagorean triplet is set of numbers such that `a*a + b*b = c*c`, let's write a comprehension in a file named `triplet.exs`:
 
 ```elixir
 defmodule Triplet do
-
   def pythagorean(n) when n > 0 do
-    for a <- 1..n, b <- 1..n, c <- 1..n, a+b+c <= n, a*a + b*b == c*c, do: {a,b,c}
+    for a <- 1..n,
+        b <- 1..n,
+        c <- 1..n,
+        a + b + c <= n,
+        a*a + b*b == c*c,
+        do: {a, b, c}
   end
-
-  def pythagorean(_n), do: []
-
 end
 ```
-Now on terminal:-
+
+Now on terminal:
 
 ```bash
-iex Triplet.exs
+iex triplet.exs
 ```
 
 ```iex
@@ -97,24 +95,22 @@ iex> Triplet.pythagorean(48)
  {9, 12, 15}, {12, 5, 13}, {12, 9, 15}, {12, 16, 20}, {15, 8, 17}, {16, 12, 20}]
 ```
 
-Above code is quite expensive when range of search is a big number, we can optimize that by referencing parent variable in child iterator, for example:-
+The code above is quite expensive when the range of search is a big number. We can optimize that by referencing the variables from previous generators in the following ones, for example:
 
 ```elixir
 defmodule Triplet do
-
   def pythagorean(n) when n > 0 do
     for a <- 1..n-2, 
         b <- a+1..n-1, 
         c <- b+1..n, 
-        a+b+c <= n, 
+        a + b + c <= n, 
         a*a + b*b == c*c, 
-        do: {a,b,c}
+        do: {a, b, c}
   end
-
-  def pythagorean(_n), do: []
-
 end
 ```
+
+Finally, keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.
 
 ## Bitstring generators
 
