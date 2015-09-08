@@ -97,7 +97,7 @@ iex> Triplet.pythagorean(48)
  {9, 12, 15}, {12, 5, 13}, {12, 9, 15}, {12, 16, 20}, {15, 8, 17}, {16, 12, 20}]
 ```
 
-Above code is quite expensive when range of search is a big number, we can optimize that by referencing parent variable in child like, for example:-
+Above code is quite expensive when range of search is a big number, we can optimize that by referencing parent variable in child iterator, for example:-
 
 ```elixir
 defmodule Triplet do
