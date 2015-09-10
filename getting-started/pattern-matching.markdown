@@ -129,17 +129,26 @@ iex> x = 2
 2
 ```
 
-The pin operator `^` can be used when there is no interest in rebinding a variable but rather in matching against its value prior to the match:
+The pin operator `^` should be used when you want to pattern match against an existing variable's value rather than rebinding the variable:
 
 ```iex
 iex> x = 1
 1
 iex> ^x = 2
 ** (MatchError) no match of right hand side value: 2
-iex> {x, ^x} = {2, 1}
+iex> {y, ^x} = {2, 1}
 {2, 1}
-iex> x
+iex> y
 2
+iex> {y, ^x} = {2, 2}
+** (MatchError) no match of right hand side value: {2, 2}
+```
+
+Because we have assigned the value of 1 to the variable x, this last example could also have been written as:
+
+```
+iex> {y, 1} = {2, 2}
+** (MatchError) no match of right hand side value: {2, 2}
 ```
 
 Notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
