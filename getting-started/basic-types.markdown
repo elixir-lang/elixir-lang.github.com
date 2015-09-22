@@ -342,13 +342,9 @@ iex> list = [1|[2|[3|[]]]]
 This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size. Updating a list is fast as long as we are prepending elements:
 
 ```iex
-iex> [0] ++ list
+iex> [0 | list]
 [0, 1, 2, 3]
-iex> list ++ [4]
-[1, 2, 3, 4]
 ```
-
-The first operation is fast because we are simply adding a new cons that points to the remaining of `list`. The second one is slow because we need to rebuild the whole list and add a new element to the end.
 
 Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory.
 
@@ -372,8 +368,8 @@ iex> elem(tuple, 1)
 "hello"
 ```
 
-When "counting" the number of elements in a data structure, Elixir also abides by a simple rule: the function should be named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation requires explicit counting.
+When "counting" the number of elements in a data structure, Elixir also abides by a simple rule: the function is named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation is linear (i.e. calculating the length gets slower as the input grows).
 
-For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of characters in a string). That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
+For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of graphemes in a string). That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be traversed.
 
 Elixir also provides `Port`, `Reference` and `PID` as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operators that go with our basic types.
