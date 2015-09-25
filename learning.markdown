@@ -79,6 +79,18 @@ The intended audience ranges from someone entirely new to the Elixir language, t
 
 <div class="clear"></div>
 
+<h4 class="resource">LearnElixir.tv</h4>
+
+<a class="cover" href="http://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
+  <img src="/images/learning/learn-elixir-tv.png" alt="LearnElixir.tv cover" width="190" />
+</a>
+
+LearnElixir.tv is a screencast series which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length, and are posted weekly.
+
+It's intended to help beginners get familiar with all of Elixir's features by building their knowledge incrementally. Experienced Elixir developers might also learn a trick or two.
+
+<div class="clear"></div>
+
 ## In-depth Resources
 
 <h4 class="resource">Études for Elixir</h4>
