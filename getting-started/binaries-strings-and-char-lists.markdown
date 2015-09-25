@@ -49,7 +49,7 @@ iex> ?ł
 322
 ```
 
-You can also use the functions in [the `String` module](/docs/stable/elixir/#!String.html) to split a string in its code points:
+You can also use the functions in [the `String` module](/docs/stable/elixir/String.html) to split a string in its code points:
 
 ```iex
 iex> String.codepoints("hełło")

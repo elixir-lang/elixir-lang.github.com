@@ -10,7 +10,7 @@ redirect_from: /getting_started/10.html
 
 ## Enumerables
 
-Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/elixir/#!Enum.html) to work with them. We have already learned two enumerables: lists and maps.
+Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/elixir/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
 
 ```iex
 iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
@@ -30,9 +30,9 @@ iex> Enum.reduce(1..3, 0, &+/2)
 6
 ```
 
-Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](/docs/stable/elixir/#!List.html), as it would make little sense to insert a value into, for example, a range.
+Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](/docs/stable/elixir/List.html), as it would make little sense to insert a value into, for example, a range.
 
-We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/elixir/#!Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
+We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/elixir/Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
 
 ## Eager vs Lazy
 
@@ -63,11 +63,11 @@ iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))
 7500000000
 ```
 
-Find more about the pipe operator [by reading its documentation](/docs/stable/elixir/#!Kernel.html#|>/2).
+Find more about the pipe operator [by reading its documentation](/docs/stable/elixir/Kernel.html#|>/2).
 
 ## Streams
 
-As an alternative to `Enum`, Elixir provides [the `Stream` module](/docs/stable/elixir/#!Stream.html) which supports lazy operations:
+As an alternative to `Enum`, Elixir provides [the `Stream` module](/docs/stable/elixir/Stream.html) which supports lazy operations:
 
 ```iex
 iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum
@@ -119,6 +119,6 @@ iex> Enum.take(stream, 10)
 
 The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources.
 
-The amount of functions and functionality in [`Enum`](/docs/stable/elixir/#!Enum.html) and [`Stream`](/docs/stable/elixir/#!Stream.html) modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.
+The amount of functions and functionality in [`Enum`](/docs/stable/elixir/Enum.html) and [`Stream`](/docs/stable/elixir/Stream.html) modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.
 
 Next we'll look at a feature central to Elixir, Processes, which allows us to write concurrent, parallel and distributed programs in an easy and understandable way.

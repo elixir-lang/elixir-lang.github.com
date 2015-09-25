@@ -16,7 +16,7 @@ If you are interested in the specific details for this release, [please check ou
 
 ## Logger
 
-Elixir now ships with a new application called logger. This application provides [the Logger module](/docs/stable/logger/#!Logger.html), which is the main API developers will use for logging:
+Elixir now ships with a new application called logger. This application provides [the Logger module](/docs/stable/logger/Logger.html), which is the main API developers will use for logging:
 
 ```elixir
 require Logger
@@ -70,7 +70,7 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
 As soon as we started working on Logger, we realized we could go further than simply translating Erlang messages and provide a fully featured logger library. At this moment, Logger also supports:
 
   * 4 log levels: debug, info, warn and error
-  * Custom formatting: you can specify a format string that tells exactly how messages should be logged. The default string is: "$time $metadata[$level] $message\n" but [many attributes are supported](/docs/stable/logger/#!Logger.Formatter.html)
+  * Custom formatting: you can specify a format string that tells exactly how messages should be logged. The default string is: "$time $metadata[$level] $message\n" but [many attributes are supported](/docs/stable/logger/Logger.Formatter.html)
   * Custom translators: so you can translate log messages coming from any Erlang application into Elixir syntax
   * Metadata: metadata allows developers to store information in the current process that will be available to all logged messages. For example, a web application can generate a `request_id`, store it as metadata, and all messages logged during that request will be properly identified with `request_id=...` in the log
 
