@@ -91,6 +91,18 @@ It's intended to help beginners get familiar with all of Elixir's features by bu
 
 <div class="clear"></div>
 
+<h4 class="resource">Phoenix Screencasts</h4>
+
+<a class="cover" href="http://www.phoenixscreencasts.com" title="Learn serious web development with Elixir and Phoenix">
+  <img src="/images/learning/phoenix-screencasts.png" alt="Phoenix Screencasts cover" width="190" />
+</a>
+
+Phoenix Screencasts are weekly tutorial screencasts for learning serious web development with Elixir and Phoenix. The screencasts aim to cover tools, libraries and techniques that can immediately be applied to your own project.
+
+It also covers developing Phoenix apps from setup to deployment and are great for developers who already got their feet wet with Elixir.
+
+<div class="clear"></div>
+
 ## In-depth Resources
 
 <h4 class="resource">Études for Elixir</h4>
