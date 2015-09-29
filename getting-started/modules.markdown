@@ -100,8 +100,8 @@ defmodule Math do
   end
 end
 
-Math.sum(1, 2)    #=> 3
-Math.do_sum(1, 2) #=> ** (UndefinedFunctionError)
+IO.puts Math.sum(1, 2)    #=> 3
+IO.puts Math.do_sum(1, 2) #=> ** (UndefinedFunctionError)
 ```
 
 Function declarations also support guards and multiple clauses. If a function has several clauses, Elixir will try each clause until it finds one that matches. Here is an implementation of a function that checks if the given number is zero or not:
@@ -117,18 +117,25 @@ defmodule Math do
   end
 end
 
-Math.zero?(0)  #=> true
-Math.zero?(1)  #=> false
-
-Math.zero?([1,2,3])
-#=> ** (FunctionClauseError)
+IO.puts Math.zero?(0)       #=> true
+IO.puts Math.zero?(1)       #=> false
+IO.puts Math.zero?([1,2,3]) #=> ** (FunctionClauseError)
 ```
 
 Giving an argument that does not match any of the clauses raises an error.
 
 ## Function capturing
 
-Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Let's start `iex` and run the `math.exs` file defined above:
+Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Let's edit `math.exs` to look like this:
+
+```elixir
+defmodule Math do
+  def zero?(0), do: true
+  def zero?(x) when is_number(x), do: false
+end
+```
+
+And start `iex`, running the `math.exs` file defined above:
 
 ```bash
 $ iex math.exs
