@@ -20,7 +20,7 @@ Mix ships with a [`mix profile.fprof`](/docs/v1.1/mix/Mix.Tasks.Profile.Fprof.ht
 
 Mix also provides faster re-compilation times. Every time you compile your Elixir code, Mix generates a graph of the dependencies between source files. For example, if `a.ex` depends on `b.ex`, every time `b.ex` changes, `a.ex` must be recompiled. Elixir v1.1 improves this tracking by separating compile-time dependencies from runtime ones, recompiling a file only if a compile-time dependency changed. In projects that have a main dispatch entity, like a web-app router, we have seen `mix compile` go from recompiling the whole project to one or two files per run.
 
-We have also seen great progress on areas that go beyond the source code. In particular, we have added a [CODE_OF_CONDUCT.md](https://github.com/elixir-lang/elixir/blob/v1.1/CODE_OF_CONDUCT.md) to guarantee our community continues to grow into a safe and welcoming place for everyone.
+We have also seen great progress on areas that go beyond the source code. In particular, we have added a [CODE\_OF\_CONDUCT.md](https://github.com/elixir-lang/elixir/blob/v1.1/CODE_OF_CONDUCT.md) to guarantee our community continues to grow into a safe and welcoming place for everyone.
 
 We have also released a new ExDoc version. It provides a [beautiful, clean and readable way to navigate the Elixir documentation](http://elixir-lang.org/docs/v1.1/elixir) and it is available to any Elixir project. The latest version includes initial support for User Guides and we have more features and improvements coming on the way.
 
