@@ -73,7 +73,7 @@ Also note that we passed the `async: true` option to `ExUnit.Case`. This option 
 
 Regardless of being async or not, our new test should obviously fail, as none of the functionality is implemented.
 
-In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking the implementation below.
+In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
 
 ```elixir
 defmodule KV.Bucket do
