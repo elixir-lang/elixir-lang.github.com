@@ -45,10 +45,10 @@ iex> 1 and true
 `or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
 
 ```iex
-iex> false and error("This error will never be raised")
+iex> false and raise("This error will never be raised")
 false
 
-iex> true or error("This error will never be raised")
+iex> true or raise("This error will never be raised")
 true
 ```
 
