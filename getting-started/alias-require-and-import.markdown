@@ -118,6 +118,40 @@ In the example above, the imported `List.duplicate/2` is only visible within tha
 
 Note that `import`ing a module automatically `require`s it.
 
+## `use`
+
+`use` allows you to use a module in the current context. It `require`s the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context.
+
+```elixir
+defmodule Example do
+  use Feature, option: :value
+end
+```
+
+is compiled into
+
+```elixir
+defmodule Example do
+  require Feature
+  Feature.__using__(option: :value)
+end
+```
+
+For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
+
+```elixir
+defmodule AssertionTest do
+  use ExUnit.Case, async: true
+
+  test "always pass" do
+    assert true
+  end
+end
+```
+
+By calling use, a hook called `__using__` will be invoked in `ExUnit.Case` which will then do the proper setup.
+
+
 ## Aliases
 
 At this point you may be wondering: what exactly an Elixir alias is and how is it represented?
