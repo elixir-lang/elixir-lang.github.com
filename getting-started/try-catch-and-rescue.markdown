@@ -57,7 +57,20 @@ iex> try do
 %RuntimeError{message: "oops"}
 ```
 
-The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice, however, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing informations about whether the file was successfully opened:
+The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session.
+
+If you don't have any use for the error, you don't have to provide it:
+
+```iex
+iex> try do
+...>   raise "oops"
+...> rescue
+...>   RuntimeError -> "Error!"
+...> end
+"Error!"
+```
+
+In practice, however, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing informations about whether the file was successfully opened:
 
 ```iex
 iex> File.read "hello"
