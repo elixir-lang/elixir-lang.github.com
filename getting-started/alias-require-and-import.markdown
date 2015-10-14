@@ -191,4 +191,38 @@ end
 
 As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.
 
+## `use`
+
+Although not a directive, `use` is a macro tightly related to `require` that allows you to use a module in the current context. It `require`s the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context.
+
+```elixir
+defmodule Example do
+  use Feature, option: :value
+end
+```
+
+is compiled into
+
+```elixir
+defmodule Example do
+  require Feature
+  Feature.__using__(option: :value)
+end
+```
+
+For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
+
+```elixir
+defmodule AssertionTest do
+  use ExUnit.Case, async: true
+
+  test "always pass" do
+    assert true
+  end
+end
+```
+
+By calling use, a hook called `__using__` will be invoked in `ExUnit.Case` which will then do the proper setup.
+
+
 With this we are almost finishing our tour about Elixir modules. The last topic to cover is module attributes.
