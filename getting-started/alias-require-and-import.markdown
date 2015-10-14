@@ -118,7 +118,6 @@ In the example above, the imported `List.duplicate/2` is only visible within tha
 
 Note that `import`ing a module automatically `require`s it.
 
-
 ## Aliases
 
 At this point you may be wondering: what exactly an Elixir alias is and how is it represented?
