@@ -226,4 +226,3 @@ By calling use, a hook called `__using__` will be invoked in `ExUnit.Case` which
 
 
 With this we are almost finishing our tour about Elixir modules. The last topic to cover is module attributes.
-
