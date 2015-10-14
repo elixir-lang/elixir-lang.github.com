@@ -107,14 +107,12 @@ We can create a `Parser` behaviour:
 
 ```elixir
 defmodule Parser do
-  use Behaviour
-
-  defcallback parse(String.t) :: any
-  defcallback extensions() :: [String.t]
+  @callback parse(String.t) :: any
+  @callback extensions() :: [String.t]
 end
 ```
 
-Modules adopting the `Parser` behaviour will have to implement all the functions defined with `defcallback`. As you can see, `defcallback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above.
+Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` directive. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above.
 
 ### Adopting behaviours
 
