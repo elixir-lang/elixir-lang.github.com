@@ -132,7 +132,7 @@ For now there is a more important bug we need to fix: what happens if our TCP ac
 
 We have learned about agents, generic servers, and event managers. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](/docs/stable/elixir/Task.html) provides this functionality exactly. For example, it has `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
+[The Task module](/docs/stable/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
 
 Let's give it a try. Open up `lib/kv_server.ex`, and let's change the supervisor in the `start/2` function to the following:
 
