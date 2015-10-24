@@ -64,7 +64,7 @@ iex> for i <- [:a, :b, :c], j <- [1, 2], do:  {i, j}
 [a: 1, a: 2, b: 1, b: 2, c: 1, c: 2]
 ```
 
-A more advanced example of multiple generators and filters is Pythagorean triples. A Pythagorean triple is set of numbers such that `a*a + b*b = c*c`, let's write a comprehension in a file named `triple.exs`:
+A more advanced example of multiple generators and filters is Pythagorean triples. A Pythagorean triple is a set of positive integers such that `a*a + b*b = c*c`, let's write a comprehension in a file named `triple.exs`:
 
 ```elixir
 defmodule Triple do
@@ -95,7 +95,7 @@ iex> Triple.pythagorean(48)
  {9, 12, 15}, {12, 5, 13}, {12, 9, 15}, {12, 16, 20}, {15, 8, 17}, {16, 12, 20}]
 ```
 
-The code above is quite expensive when the range of search is a big number. We can optimize that by referencing the variables from previous generators in the following ones, for example:
+The code above is quite expensive when the range of search is a large number. Additionally, since the tuple `{b, a, c}` represents the same Pythagorean triple as `{a, b, c}`, our function yields duplicate triples. We can optimize the comprehension and eliminate the duplicate results by referencing the variables from previous generators in the following ones, for example:
 
 ```elixir
 defmodule Triple do
