@@ -64,10 +64,10 @@ iex> for i <- [:a, :b, :c], j <- [1, 2], do:  {i, j}
 [a: 1, a: 2, b: 1, b: 2, c: 1, c: 2]
 ```
 
-A more advanced example of multiple generators and filters is Pythagorean triplets. A Pythagorean triplet is set of numbers such that `a*a + b*b = c*c`, let's write a comprehension in a file named `triplet.exs`:
+A more advanced example of multiple generators and filters is Pythagorean triples. A Pythagorean triple is set of numbers such that `a*a + b*b = c*c`, let's write a comprehension in a file named `triple.exs`:
 
 ```elixir
-defmodule Triplet do
+defmodule Triple do
   def pythagorean(n) when n > 0 do
     for a <- 1..n,
         b <- 1..n,
@@ -82,15 +82,15 @@ end
 Now on terminal:
 
 ```bash
-iex triplet.exs
+iex triple.exs
 ```
 
 ```iex
-iex> Triplet.pythagorean(5)
+iex> Triple.pythagorean(5)
 []
-iex> Triplet.pythagorean(12)
+iex> Triple.pythagorean(12)
 [{3, 4, 5}, {4, 3, 5}]
-iex> Triplet.pythagorean(48)
+iex> Triple.pythagorean(48)
 [{3, 4, 5}, {4, 3, 5}, {5, 12, 13}, {6, 8, 10}, {8, 6, 10}, {8, 15, 17},
  {9, 12, 15}, {12, 5, 13}, {12, 9, 15}, {12, 16, 20}, {15, 8, 17}, {16, 12, 20}]
 ```
@@ -98,13 +98,13 @@ iex> Triplet.pythagorean(48)
 The code above is quite expensive when the range of search is a big number. We can optimize that by referencing the variables from previous generators in the following ones, for example:
 
 ```elixir
-defmodule Triplet do
+defmodule Triple do
   def pythagorean(n) when n > 0 do
-    for a <- 1..n-2, 
-        b <- a+1..n-1, 
-        c <- b+1..n, 
-        a + b + c <= n, 
-        a*a + b*b == c*c, 
+    for a <- 1..n-2,
+        b <- a+1..n-1,
+        c <- b+1..n,
+        a + b + c <= n,
+        a*a + b*b == c*c,
         do: {a, b, c}
   end
 end
