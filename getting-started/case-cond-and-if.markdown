@@ -79,6 +79,8 @@ Elixir imports and allows the following expressions in guards by default:
     * `is_port/1`
     * `is_reference/1`
     * `is_tuple/1`
+    * `Integer.is_even/1`
+    * `Integer.is_odd/1`
 * plus these functions:
     * `abs(number)`
     * `binary_part(binary, start, length)`
