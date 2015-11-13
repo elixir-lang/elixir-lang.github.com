@@ -219,7 +219,7 @@ hello
 :ok
 ```
 
-If a function with default values has multiple clauses, it is recommended to create a function head (without an actual body), just for declaring defaults:
+If a function with default values has multiple clauses, it is required to create a function head (without an actual body) for declaring defaults:
 
 ```elixir
 defmodule Concat do
