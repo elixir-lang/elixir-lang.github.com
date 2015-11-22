@@ -213,10 +213,10 @@ The first test simply invokes `Kernel.node/0`, which returns the name of the cur
 
 The second test just checks that the code raises for unknown entries.
 
-In order to run the first test, we need to have two nodes running. Let's restart the node named `bar`, which is going to be used by tests:
+In order to run the first test, we need to have two nodes running. Let's restart the node named `bar`, which is going to be used by tests. This time we'll need to run the node in the `test` environment, to ensure the compiled code being run is exactly the same as that used in the tests themselves:
 
 ```bash
-$ iex --sname bar -S mix
+$ MIX_ENV=test iex --sname bar -S mix
 ```
 
 And now run tests with:
