@@ -225,7 +225,7 @@ The test is similar to "removes bucket on exit" except that we are being a bit m
 
 One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it from the registry, removing the link between registry and buckets. However, this would be a bad idea, because buckets would not be linked to any process after this change. This means that if someone stops the `kv` application, all buckets would remain alive as they are unreachable.
 
-We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template.
+We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization, and a new worker is started each time `start_child/2` is called.
 
 Let's define our `KV.Bucket.Supervisor` in `lib/kv/bucket/supervisor.ex` as follows:
 
