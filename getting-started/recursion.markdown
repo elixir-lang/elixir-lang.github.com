@@ -46,10 +46,10 @@ The first clause has a guard which says "use this definition if and only if `n` 
 
 The second definition matches the pattern and has no guard so it will be executed. It first prints our `msg` and then calls itself passing `n - 1` (`2`) as the second argument.
 
-Our `msg` is printed and `print_multiple_times/2` is called again this time with the second argument set to `1`.
+Our `msg` is printed and `print_multiple_times/2` is called again, this time with the second argument set to `1`.
 Because `n` is now set to `1`, the guard in our first definition of `print_multiple_times/2` evaluates to true, and we execute this particular definition. The `msg` is printed, and there is nothing left to execute.
 
-We defined `print_multiple_times/2` so that no matter what number is passed as the second argument it either triggers our first definition (known as a _base case_) or it triggers our second definition which will ensure that we get exactly one step closer to our base case.
+We defined `print_multiple_times/2` so that, no matter what number is passed as the second argument, it either triggers our first definition (known as a _base case_) or it triggers our second definition, which will ensure that we get exactly one step closer to our base case.
 
 ## Reduce and map algorithms
 
@@ -106,7 +106,7 @@ iex math.exs
 iex> Math.double_each([1, 2, 3]) #=> [2, 4, 6]
 ```
 
-Here we have used recursion to traverse a list doubling each element and returning a new list. The process of taking a list and _mapping_ over it is known as a _map algorithm_.
+Here we have used recursion to traverse a list, doubling each element and returning a new list. The process of taking a list and _mapping_ over it is known as a _map algorithm_.
 
 Recursion and [tail call](https://en.wikipedia.org/wiki/Tail_call) optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists.
 

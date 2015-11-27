@@ -166,7 +166,7 @@ end
 
 The example above will define two modules: `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same lexical scope.
 
-If later the `Bar` module is moved outside the `Foo` module definition, it will need to be referenced by its full name (`Foo.Bar`) or an alias will need to be set using the `alias` directive discussed above. The `Bar` module definition will change too. This code is equivalent to the example above:
+If, later, the `Bar` module is moved outside the `Foo` module definition, it will need to be referenced by its full name (`Foo.Bar`) or an alias will need to be set using the `alias` directive discussed above. The `Bar` module definition will change too. This code is equivalent to the example above:
 
 ```elixir
 defmodule Foo.Bar do

@@ -22,13 +22,13 @@ We have written a guide that covers how to build an Elixir application, with its
 
 ## Meta-programming
 
-Elixir is an extensible and very customizable programming language thanks to its meta-programming support. Most meta-programming in Elixir is done through macros, which are very useful in several situations, especially for writing DSLs. We have written a short guide that explains the basic mechanisms behind macros and shows how to write macros and use them to create DSLs:
+Elixir is an extensible and very customizable programming language thanks to its meta-programming support. Most meta-programming in Elixir is done through macros, which are very useful in several situations, especially for writing DSLs. We have written a short guide that explains the basic mechanisms behind macros, shows how to write macros, and how to use macros to create DSLs:
 
 * [Meta-programming in Elixir](/getting-started/meta/quote-and-unquote.html)
 
 ## Community and other resources
 
-We have a [Learning](/learning.html) section that explores books, screencasts and other resources for learning Elixir and explore the ecosystem. There are also plenty of Elixir resources out there, like conference talks, open source projects, and other learning material produced by the community.
+We have a [Learning](/learning.html) section that suggests books, screencasts and other resources for learning Elixir and exploring the ecosystem. There are also plenty of Elixir resources out there, like conference talks, open source projects, and other learning material produced by the community.
 
 Remember that in case of any difficulties, you can always visit the **#elixir-lang** channel on **irc.freenode.net** or send a message to the [mailing list](https://groups.google.com/group/elixir-lang-talk). You can be sure that there will be someone willing to help. To keep posted on the latest news and announcements, follow the [blog](/blog/) and follow the language development on the [elixir-core mailing list](https://groups.google.com/group/elixir-lang-core).
 

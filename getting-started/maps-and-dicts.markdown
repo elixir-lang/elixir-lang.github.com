@@ -60,7 +60,7 @@ query = from w in Weather,
      select: w
 ```
 
-Those features are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned the following syntax is supported:
+These features are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned the following syntax is supported:
 
 ```iex
 iex> if false, do: :this, else: :that
@@ -76,7 +76,7 @@ iex> if(false, [do: :this, else: :that])
 
 In general, when the keyword list is the last argument of a function, the square brackets are optional.
 
-In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/Keyword.html). Remember though keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
+In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
 Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists require the number of items and their order to match:
 
@@ -215,6 +215,6 @@ The `Dict` module allows any developer to implement their own variation of `Dict
 
 That said, you may be wondering, which of `Keyword`, `Map` or `Dict` modules should you use in your code? The answer is: it depends.
 
-If your code is expecting one specific data structure as argument, use the respective module as it leads to more assertive code. For example, if you expect a keyword as an argument, explicitly use the `Keyword` module instead of `Dict`. However, if your API is meant to work with any dictionary, use the `Dict` module (and make sure to write tests that pass different dict implementations as arguments).
+If your code is expecting one specific data structure as an argument, use the respective module as it leads to more assertive code. For example, if you expect a keyword as an argument, explicitly use the `Keyword` module instead of `Dict`. However, if your API is meant to work with any dictionary, use the `Dict` module (and make sure to write tests that pass different dictionary implementations as arguments).
 
-This concludes our introduction to associative data structures in Elixir. You will find out that given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.
+This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.

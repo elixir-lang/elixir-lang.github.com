@@ -74,8 +74,8 @@ When going through this getting started guide, it is common to have questions, a
   * [elixir-talk mailing list](https://groups.google.com/group/elixir-lang-talk)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 
-When doing so, remember those two tips:
+When doing so, remember these two tips:
 
   * Instead of asking "how to do X in Elixir", ask "how to solve Y in Elixir". In other words, don't ask how to implement a particular solution, instead describe the problem at hand. Stating the problem gives more context and less bias for a correct answer.
 
-  * In case things are not working as expected, please include as much information in your report, for example: your Elixir version, the code snippet and the error message along side the error stacktrace. Use sites like [Gist](https://gist.github.com/) to paste this information.
+  * In case things are not working as expected, please include as much information as you can in your report, for example: your Elixir version, the code snippet and the error message alongside the error stacktrace. Use sites like [Gist](https://gist.github.com/) to paste this information.
