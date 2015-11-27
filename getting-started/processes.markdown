@@ -166,7 +166,7 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
         (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
 ```
 
-Besides providing better error logging, there are a couple other differences: `start/1` and `start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
+Besides providing better error logging, there are a couple of other differences: `start/1` and `start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, Tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
 We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better logging.
 
@@ -194,7 +194,7 @@ defmodule KV do
 end
 ```
 
-Note that the `start_link` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
+Note that the `start_link` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In the case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
 
 Let's give it a try by running `iex kv.exs`:
 
@@ -231,7 +231,7 @@ iex> flush
 :world
 ```
 
-Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many of the abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html) which are simple abstractions around state:
+Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
 
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)

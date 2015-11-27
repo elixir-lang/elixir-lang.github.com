@@ -10,7 +10,7 @@ redirect_from: /getting_started/18.html
 
 We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms, for example, are mostly created via the `:atom` representation.
 
-One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Our best bet is to rather make the language extensible, so developers, companies and communities can extend the language to their relevant domains.
+One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Rather, our best bet is to make the language extensible, so developers, companies and communities can extend the language to their relevant domains.
 
 In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (`~`) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.
 
@@ -85,7 +85,7 @@ iex> ~w(foo bar bat)
 ["foo", "bar", "bat"]
 ```
 
-The `~w` sigil also accepts the `c`, `s` and `a` modifiers (for char lists, strings and atoms, respectively) which specify the data type of the elements of the resulting list:
+The `~w` sigil also accepts the `c`, `s` and `a` modifiers (for char lists, strings and atoms, respectively), which specify the data type of the elements of the resulting list:
 
 ```iex
 iex> ~w(foo bar bat)a
@@ -191,4 +191,4 @@ iex> ~i(42)n
 -42
 ```
 
-Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled into an efficient representation during compilation of the source code, therefore skipping this step at runtime. If you're interested in the subject, we recommend you to learn more about macros and check out how sigils are implemented in the `Kernel` module (where the `sigil_*` functions are defined).
+Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled into an efficient representation during compilation of the source code, therefore skipping this step at runtime. If you're interested in the subject, we recommend you learn more about macros and check out how sigils are implemented in the `Kernel` module (where the `sigil_*` functions are defined).
