@@ -13,7 +13,7 @@ In "Basic types", we learned about strings and used the `is_binary/1` function f
 ```iex
 iex> string = "hello"
 "hello"
-iex> is_binary string
+iex> is_binary(string)
 true
 ```
 
@@ -32,13 +32,13 @@ Since we have code points like `ł` assigned to the number `322`, we actually ne
 ```iex
 iex> string = "hełło"
 "hełło"
-iex> byte_size string
+iex> byte_size(string)
 7
-iex> String.length string
+iex> String.length(string)
 5
 ```
 
-> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex`.
+> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
 UTF-8 requires one byte to represent the code points `h`, `e` and `o`, but two bytes to represent `ł`. In Elixir, you can get a code point's value by using `?`:
 
@@ -67,7 +67,7 @@ In Elixir, you can define a binary using `<<>>`:
 ```iex
 iex> <<0, 1, 2, 3>>
 <<0, 1, 2, 3>>
-iex> byte_size <<0, 1, 2, 3>>
+iex> byte_size(<<0, 1, 2, 3>>)
 4
 ```
 

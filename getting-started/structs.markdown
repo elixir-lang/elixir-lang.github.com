@@ -9,7 +9,7 @@ redirect_from: /getting-started/struct.html
 
 {% include toc.html %}
 
-In [chapter 7](/getting-started/maps-and-dicts.html) we learned about maps:
+In [chapter 7](/getting-started/keywords-and-maps.html) we learned about maps:
 
 ```iex
 iex> map = %{a: 1, b: 2}
@@ -80,7 +80,7 @@ iex> %User{} = %{}
 ** (MatchError) no match of right hand side value: %{}
 ```
 
-## Structs are just bare maps underneath
+## Structs are bare maps underneath
 
 In the example above, pattern matching works because underneath structs are just bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
 
@@ -102,13 +102,6 @@ iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 ** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
 
-A struct also is not a dictionary and therefore can't be used with the functions from the `Dict` module:
-
-```iex
-iex> Dict.get(%User{}, :name)
-** (UndefinedFunctionError) undefined function: User.fetch/2
-```
-
 However, since structs are just maps, they work with the functions from the `Map` module:
 
 ```iex
@@ -120,4 +113,4 @@ iex> Map.keys(john)
 [:__struct__, :age, :name]
 ```
 
-We will cover how structs interact with protocols in the next chapter.
+Structs alongside protocols provide one of the most important features for Elixir developers: data polymorphism. That's what we will explore in the next chapter.

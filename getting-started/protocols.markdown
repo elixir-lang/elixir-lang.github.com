@@ -116,11 +116,34 @@ end
 
 If desired, you could come up with your own semantics for a user being blank. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as `Enumerable` and possibly `Blank`, for this data type.
 
-In many cases though, developers may want to provide a default implementation for structs, as explicitly implementing the protocol for all structs can be tedious. That's when falling back to `Any` comes in handy.
+## Implementing `Any`
 
-## Falling back to `Any`
+Manually implementing protocols for all structs can quickly become repetitive and tedious.  In such cases, Elixir provides two options: we can explicitly derive the protocol implementation for our types or automatically implement the protocol for all types. In both cases, we need to implement the protocol for `Any`.
 
-It may be convenient to provide a default implementation for all types. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
+### Deriving
+
+Elixir allows us to derive a protocol implementation based on the `Any` implementation. Let's first implement `Any` as follows:
+
+```elixir
+defimpl Blank, for: Any do
+  def blank?(_), do: false
+end
+```
+
+Now, when defining the struct, we can explicitly derive the implementation for the `Blank` protocol. Let's create another struct, this one called `DeriveUser`:
+
+```elixir
+defmodule DeriveUser do
+  @derive Blank
+  defstruct name: "john", age: 27
+end
+```
+
+When deriving, Elixir will implement the `Blank` protocol for `DeriveUser` based on the implementation provided for `Any`. Note this behaviour is opt-in: structs will only work with the protocol as long as they explicitly implement or derive it.
+
+### Fallback to `Any`
+
+Another alternative to `@derive` is to explicitly tell the protocol the fallback to `Any` when an implementation cannot be found. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
 
 ```elixir
 defprotocol Blank do
@@ -129,7 +152,7 @@ defprotocol Blank do
 end
 ```
 
-Which can now be implemented as:
+Assuming we have implemented `Any` as in the previous section:
 
 ```elixir
 defimpl Blank, for: Any do
@@ -137,7 +160,7 @@ defimpl Blank, for: Any do
 end
 ```
 
-Now all data types (including structs) that we have not implemented the `Blank` protocol for will be considered non-blank.
+Now all data types (including structs) that we have not implemented the `Blank` protocol will be considered non-blank. In contrast to `@derive`, falling back to `Any` is opt-out: all data types get a pre-defined behaviour unless they provide their own implementation of the protocol. Which technique is best depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
 
 ## Built-in protocols
 
@@ -196,3 +219,22 @@ iex> inspect &(&1+2)
 ```
 
 There are other protocols in Elixir but this covers the most common ones.
+
+## Protocol consolidation
+
+When working with Elixir projects, using the Mix build tool, you may see output as follows:
+
+```
+Consolidated String.Chars
+Consolidated Collectable
+Consolidated List.Chars
+Consolidated IEx.Info
+Consolidated Enumerable
+Consolidated Inspect
+```
+
+Those are all protocols that ship with Elixir and they are being consolidated. Because a protocol can dispatch to any data type, the protocol must check on every call if an implementation for the given type exists. This may be expensive.
+
+However, after our project is compiled using a tool like Mix, we know all modules that have been defined, including protocols and their implementations. This way, the protocol can be consolidated into a very simple and fast dispatch module.
+
+From Elixir v1.2, protocol consolidation happens automatically for all projects. We will build our own project in the ***Mix and OTP guide***.

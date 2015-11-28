@@ -124,7 +124,7 @@ iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 
 A bitstring generator can be mixed with "regular" enumerable generators, and supports filters as well.
 
-## Results other than lists
+## The `:into` option
 
 In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the `:into` option to the comprehension.
 

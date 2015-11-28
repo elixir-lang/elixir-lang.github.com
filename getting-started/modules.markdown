@@ -11,7 +11,7 @@ redirect_from: /getting_started/8.html
 In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](/docs/stable/elixir/String.html):
 
 ```iex
-iex> String.length "hello"
+iex> String.length("hello")
 5
 ```
 
@@ -28,7 +28,7 @@ iex> Math.sum(1, 2)
 3
 ```
 
-In the following sections, our examples are going to get a bit more complex, and it can be tricky to type them all in the shell. It's about time for us to learn how to compile Elixir code and also how to run Elixir scripts.
+In the following sections, our examples are going to get longer in size, and it can be tricky to type them all in the shell. It's about time for us to learn how to compile Elixir code and also how to run Elixir scripts.
 
 ## Compilation
 
@@ -146,7 +146,7 @@ iex> Math.zero?(0)
 true
 iex> fun = &Math.zero?/1
 &Math.zero?/1
-iex> is_function fun
+iex> is_function(fun)
 true
 iex> fun.(0)
 true

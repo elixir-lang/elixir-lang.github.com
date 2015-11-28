@@ -54,7 +54,7 @@ iex> b
 "world"
 ```
 
-A pattern match will error in the case that the sides can't match. This is, for example, the case when the tuples have different sizes:
+A pattern match will error in the case the sides can't match. This is, for example, the case when the tuples have different sizes:
 
 ```iex
 iex> {a, b, c} = {:hello, "world"}
@@ -151,7 +151,7 @@ iex> {y, 1} = {2, 2}
 ** (MatchError) no match of right hand side value: {2, 2}
 ```
 
-Notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
+If a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
 
 ```iex
 iex> {x, x} = {1, 1}
@@ -163,7 +163,7 @@ iex> {x, x} = {1, 2}
 In some cases, you don't care about a particular value in a pattern. It is a common practice to bind those values to the underscore, `_`. For example, if only the head of the list matters to us, we can assign the tail to underscore:
 
 ```iex
-iex> [h | _] = [1, 2, 3]
+iex> [h|_] = [1, 2, 3]
 [1, 2, 3]
 iex> h
 1

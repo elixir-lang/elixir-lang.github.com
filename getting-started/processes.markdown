@@ -138,20 +138,11 @@ Process and links play an important role when building fault-tolerant systems. I
 
 While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting processes fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
 
-Before moving to the next chapter, let's see one of the most common use cases for creating processes in Elixir.
+`spawn/1` and `spawn_link/1` are the basic primitives for creating processes in Elixir. Although we have used them exclusively so far, most of the times we are going to use abstractions that build on top of them. Let's see the most common one, called tasks.
 
 ## Tasks
 
-When making our processes crash in the previous section, you may have noticed the error messages were rather poor:
-
-```iex
-iex> spawn fn -> raise "oops" end
-#PID<0.58.0>
-
-[error] Error in process <0.58.0> with exit value: ...
-```
-
-With `spawn/1` and `spawn_link/1` functions, the error messages are generated directly by the Virtual Machine and therefore compact and lacking in details. In practice, developers would rather use the functions in the Task module, more explicitly, `Task.start/1` and `Task.start_link/1`:
+Tasks build on top of the spawn functions to provide better error reports and introspection:
 
 ```iex
 iex(1)> Task.start fn -> raise "oops" end
@@ -166,9 +157,9 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
         (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
 ```
 
-Besides providing better error logging, there are a couple of other differences: `start/1` and `start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, Tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
+Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, Tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
-We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better logging.
+We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better error reports.
 
 ## State
 
@@ -194,7 +185,7 @@ defmodule KV do
 end
 ```
 
-Note that the `start_link` function basically spawns a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In the case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
+Note that the `start_link` function stars a new process that runs the `loop/1` function, starting with an empty map. The `loop/1` function then waits for messages and performs the appropriate action for each message. In the case of a `:get` message, it sends a message back to the caller and calls `loop/1` again, to wait for a new message. While the `:put` message actually invokes `loop/1` with a new version of the map, with the given `key` and `value` stored.
 
 Let's give it a try by running `iex kv.exs`:
 
