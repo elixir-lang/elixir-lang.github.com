@@ -185,7 +185,7 @@ iex> map.c
 iex> %{map | :a => 2}
 %{:a => 2, 2 => :b}
 iex> %{map | :c => 3}
-** (ArgumentError) argument error
+** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
 
 Both access and update syntaxes above require the given keys to exist. For example, accessing and updating the `:c` key failed because there is no `:c` in the map.
