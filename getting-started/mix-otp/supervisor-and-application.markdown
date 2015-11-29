@@ -355,7 +355,34 @@ If the registry worker crashes, both registry and bucket supervisor is restarted
 
 There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](/docs/stable/elixir/Supervisor.html) and [`Supervisor.Spec`](/docs/stable/elixir/Supervisor.Spec.html) modules.
 
-## Shared state
+There are two topics left before we move on to the next chapter.
+
+## Observer
+
+Now that we have defined our supervision tree, it is a great opportunity to introduce the Observer tool that ships with Erlang. Start your application with `iex -S mix` and key this in:
+
+```iex
+iex> :observer.start
+```
+
+A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.
+
+In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
+
+![Accessing the kv application in Observer](/images/contents/kv-observer.png)
+
+Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:
+
+```iex
+iex> KV.Registry.create KV.Registry, "shopping"
+:ok
+```
+
+We will leave it up to your to further explore what Observer provides. Note you can double click any process in the supervision tree to retrieve more information about it, as well as right-click a process to send "a kill signal", a perfect way to emulate failures and see if your supervisor reacts as expected.
+
+At the end of the day, tools like Observer is one of the main reasons you want to always start processes inside supervision trees, even if they are temporary, to ensure they are always reachable and introspectable.
+
+## Shared state in tests
 
 So far we have been starting one registry per test to ensure they are isolated:
 
@@ -368,10 +395,10 @@ So far we have been starting one registry per test to ensure they are isolated:
 
 Since we have now changed our registry to use `KV.Bucket.Supervisor`, which is registered globally, our tests are now relying on this shared, global supervisor even though each test has its own registry. The question is: should we?
 
-It depends. It is ok to rely on shared global state as long as we depend only on a non-shared partition of this state. For example, every time we register a process under a given name, we are registering a process against a shared name registery. However, as long as we guarantee the names are specific to each test, by using a construct like `context.test`, we won't have concurrency or data dependency issues between the tests.
+It depends. It is ok to rely on shared global state as long as we depend only on a non-shared partition of this state. For example, every time we register a process under a given name, we are registering a process against a shared name registry. However, as long as we guarantee the names are specific to each test, by using a construct like `context.test`, we won't have concurrency or data dependency issues between tests.
 
-The same happens with our bucket supervisor. Although multiple registries may start buckets on the shared global supervisor, those buckets and registeries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.Bucket.Supervisor)` which would count all buckets from all registries, potentially giving different results when tests are run concurrently.
+Similar reasoning should be applied to our bucket supervisor. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.Bucket.Supervisor)` which would count all buckets from all registries, potentially giving different results when tests run concurrently.
 
-For all of those reasons, we are fine with relying on the shared global supervisor. In case it ever becomes a problem, you can start a supervisor per test and pass it as argument to the registry under test.
+Since we have relied only on a non-shared partition of the bucket supervisor so far, we don't need to worry about concurrency issues in our test suite. In case it ever becomes a problem, we can start a supervisor per test and pass it as argument to the registry `start_link` function.
 
-Now that our application is properly supervised and test, let's see how we can speed things up.
+Now that our application is properly supervised and tested, let's see how we can speed things up.

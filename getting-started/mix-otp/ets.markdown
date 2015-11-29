@@ -8,9 +8,9 @@ redirect_from: /getting_started/mix_otp/6.html
 
 {% include toc.html %}
 
-Every time we need to look up a bucket, we need to send a message to the registry. In some applications, this means the registry may become a bottleneck!
+Every time we need to look up a bucket, we need to send a message to the registry. In case our registry is being accessed concurrently by multiple processes, the registry may become a bottleneck!
 
-In this chapter we will learn about ETS (Erlang Term Storage), and how to use it as a cache mechanism. Later we will expand its usage to persist data from the supervisor to its children, allowing data to persist even on crashes.
+In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.
 
 > Warning! Don't use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know *whether* you should cache, and *what* you should cache. This chapter is merely an example of how ETS can be used, once you've determined the need.
 
@@ -371,107 +371,4 @@ end
 
 Note that we are using `KV.Registry` as name for the ETS table as well, which makes it convenient to debug, as it points to the module using it. ETS names and process names are stored in different registries, so there is no chance of conflicts.
 
-## ETS as persistent storage
-
-So far we have created an ETS table during the registry initialization but we haven't bothered to close the table on registry termination. That's because the ETS table is "linked" (in a figure of speech) to the process that creates it. If that process dies, the table is automatically closed.
-
-This is extremely convenient as a default behaviour, and we can use it even more to our advantage. Remember that there is a dependency between the registry and the buckets supervisor. If the registry dies, we want the buckets supervisor to die too, because once the registry dies all information linking the bucket name to the bucket process is lost. However, what if we could keep the registry data even if the registry process crashes? If we are able to do so, we remove the dependency between the registry and the buckets supervisor, making the `:one_for_one` strategy the perfect strategy for our supervisor.
-
-A couple of changes will be required in order to make this happen. First, we'll need to start the ETS table inside the supervisor. Second, we'll need to change the table's access type from `:protected` to `:public`, because the owner is the supervisor, but the process doing the writes is still the registry.
-
-Let's get started by first changing `KV.Supervisor`'s `init/1` callback:
-
-```elixir
-def init(:ok) do
-  ets = :ets.new(@ets_registry_name,
-                 [:set, :public, :named_table, {:read_concurrency, true}])
-
-  children = [
-    worker(GenEvent, [[name: @manager_name]]),
-    supervisor(KV.Bucket.Supervisor, [[name: @bucket_sup_name]]),
-    worker(KV.Registry, [ets, @manager_name,
-                         @bucket_sup_name, [name: @registry_name]])
-  ]
-
-  supervise(children, strategy: :one_for_one)
-end
-```
-
-Next, we change `KV.Registry`'s `init/1` callback, as it no longer needs to create a table. It should instead just use the one given as an argument:
-
-```elixir
-def init({table, events, buckets}) do
-  refs = HashDict.new
-  {:ok, %{names: table, refs: refs, events: events, buckets: buckets}}
-end
-```
-
-Finally, we just need to change the `setup` callback in `test/kv/registry_test.exs` to explicitly create the ETS table. We will use this opportunity to also split the `setup` functionality into a private function that will be handy soon:
-
-```elixir
-setup do
-  ets = :ets.new(:registry_table, [:set, :public])
-  registry = start_registry(ets)
-  {:ok, registry: registry, ets: ets}
-end
-
-defp start_registry(ets) do
-  {:ok, sup} = KV.Bucket.Supervisor.start_link
-  {:ok, manager} = GenEvent.start_link
-  {:ok, registry} = KV.Registry.start_link(ets, manager, sup)
-
-  GenEvent.add_mon_handler(manager, Forwarder, self())
-  registry
-end
-```
-
-After those changes, our test suite should continue to be green!
-
-There is just one last scenario to consider: once we receive the ETS table, there may be existing bucket pids on the table. After all, that's the whole purpose of this change! However, the newly started registry is not monitoring those buckets, as they were created as part of the previous, now defunct, registry. This means that the table may go stale, because we won't remove those buckets if they die.
-
-Let's add a test to `test/kv/registry_test.exs` that shows this bug:
-
-```elixir
-test "monitors existing entries", %{registry: registry, ets: ets} do
-  bucket = KV.Registry.create(registry, "shopping")
-
-  # Kill the registry. We unlink first, otherwise it will kill the test
-  Process.unlink(registry)
-  Process.exit(registry, :shutdown)
-
-  # Start a new registry with the existing table and access the bucket
-  start_registry(ets)
-  assert KV.Registry.lookup(ets, "shopping") == {:ok, bucket}
-
-  # Once the bucket dies, we should receive notifications
-  Process.exit(bucket, :shutdown)
-  assert_receive {:exit, "shopping", ^bucket}
-  assert KV.Registry.lookup(ets, "shopping") == :error
-end
-```
-
-Run the new test and it will fail with:
-
-```
-1) test monitors existing entries (KV.RegistryTest)
-   test/kv/registry_test.exs:72
-   No message matching {:exit, "shopping", ^bucket}
-   stacktrace:
-     test/kv/registry_test.exs:85
-```
-
-That's what we expected. If the bucket is not being monitored, the registry is not notified when it dies and therefore no event is sent. We can fix this by changing `KV.Registry`'s `init/1` callback one last time to setup monitors for all existing entries in the table:
-
-```elixir
-def init({table, events, buckets}) do
-  refs = :ets.foldl(fn {name, pid}, acc ->
-    HashDict.put(acc, Process.monitor(pid), name)
-  end, HashDict.new, table)
-
-  {:ok, %{names: table, refs: refs, events: events, buckets: buckets}}
-end
-```
-
-We use `:ets.foldl/3` to go through all entries in the table, similar to `Enum.reduce/3`, invoking the given function for each element in the table with the given accumulator. In the function callback, we monitor each pid in the table and update the refs dictionary accordingly. If any of the entries is already dead, we will still receive the `:DOWN` message, causing them to be purged later.
-
-In this chapter we were able to make our application more robust by using an ETS table that is owned by the supervisor and passed to the registry. We have also explored how to use ETS as a cache and discussed some of the race conditions we may run into as data becomes shared between the server and all clients.
+This concludes our optimization chapter. Next let's discuss external and internal dependencies and how Mix helps us manage large codebases.
