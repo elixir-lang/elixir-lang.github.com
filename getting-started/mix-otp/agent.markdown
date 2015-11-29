@@ -8,25 +8,25 @@ redirect_from: /getting_started/mix_otp/2.html
 
 {% include toc.html %}
 
-In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows reading and modification by different processes.
+In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way it can be read and modified by other processes.
 
 If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting-started/processes.html). We will use it as starting point.
 
 ## The trouble with state
 
-Elixir is an immutable language where nothing is shared by default. If we want to create buckets, and store and access them from multiple places, we have two main options in Elixir:
+Elixir is an immutable language where nothing is shared by default. If we want to provide state, where we create buckets putting and reading values from multiple places, we have two main options in Elixir:
 
 * Processes
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
 
-We have talked about processes, while <abbr title="Erlang Term Storage">ETS</abbr> is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own process, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
+We have already talked about processes, while <abbr title="Erlang Term Storage">ETS</abbr> is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
 
 * [Agent](/docs/stable/elixir/Agent.html) - Simple wrappers around state.
 * [GenServer](/docs/stable/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
 * [GenEvent](/docs/stable/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
-* [Task](/docs/stable/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and easily retrieving its result at a later time.
+* [Task](/docs/stable/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.
 
-We will explore all of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
+We will explore most of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
 
 ## Agents
 
@@ -51,8 +51,6 @@ iex> Agent.stop(agent)
 
 We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](/docs/stable/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](/docs/stable/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that `Agent.get/3` itself will return. Once we are done with the agent, we can call `Agent.stop/1` to terminate the agent process.
 
-Note that Agents only store the state and not the logic.
-
 Let's implement our `KV.Bucket` using agents. But before starting the implementation, let's first write some tests. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
@@ -69,7 +67,7 @@ defmodule KV.BucketTest do
 end
 ```
 
-Our first test is straightforward. We start a new `KV.Bucket` and perform some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes.
+Our first test starts a new `KV.Bucket` and perform some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes. This will always work unless the process is named.
 
 Also note that we passed the `async: true` option to `ExUnit.Case`. This option makes this test case run in parallel with other test cases that set up the `:async` option. This is extremely useful to speed up our test suite by using multiple cores in our machine. Note though the `:async` option must only be set if the test case does not rely or change any global value. For example, if the test requires writing to the filesystem, registering processes, accessing a database, you must not make it async to avoid race conditions in between tests.
 
@@ -83,29 +81,28 @@ defmodule KV.Bucket do
   Starts a new bucket.
   """
   def start_link do
-    Agent.start_link(fn -> HashDict.new end)
+    Agent.start_link(fn -> %{} end)
   end
 
   @doc """
   Gets a value from the `bucket` by `key`.
   """
   def get(bucket, key) do
-    Agent.get(bucket, &HashDict.get(&1, key))
+    Agent.get(bucket, &Map.get(&1, key))
   end
 
   @doc """
   Puts the `value` for the given `key` in the `bucket`.
   """
   def put(bucket, key, value) do
-    Agent.update(bucket, &HashDict.put(&1, key, value))
+    Agent.update(bucket, &Map.put(&1, key, value))
   end
 end
 ```
 
-Note that we are using a HashDict to store our state instead of a `Map`, because in the current version of Elixir maps are less efficient when holding a large number of keys. The capture operator, `&`, is introduced in [the Getting Started guide](/getting-started/modules.html#function-capturing).
+We are using a map to store our keys and values. The capture operator, `&`, is introduced in [the Getting Started guide](/getting-started/modules.html#function-capturing).
 
-Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test` .
-
+Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test`.
 
 ## ExUnit callbacks
 
@@ -154,11 +151,11 @@ Deletes `key` from `bucket`.
 Returns the current value of `key`, if `key` exists.
 """
 def delete(bucket, key) do
-  Agent.get_and_update(bucket, &HashDict.pop(&1, key))
+  Agent.get_and_update(bucket, &Map.pop(&1, key))
 end
 ```
 
-Now it is your turn to write a test for the functionality above! Also, be sure to explore [the documentation for `Agents`](/docs/stable/elixir/Agent.html) to learn more about them.
+Now it is your turn to write a test for the functionality above! Also, be sure to explore [the documentation for the `Agent` module](/docs/stable/elixir/Agent.html) to learn more about them.
 
 ## Client/Server in agents
 
@@ -167,7 +164,7 @@ Before we move on to the next chapter, let's discuss the client/server dichotomy
 ```elixir
 def delete(bucket, key) do
   Agent.get_and_update(bucket, fn dict->
-    HashDict.pop(dict, key)
+    Map.pop(dict, key)
   end)
 end
 ```
@@ -181,7 +178,7 @@ def delete(bucket, key) do
   :timer.sleep(1000) # puts client to sleep
   Agent.get_and_update(bucket, fn dict ->
     :timer.sleep(1000) # puts server to sleep
-    HashDict.pop(dict, key)
+    Map.pop(dict, key)
   end)
 end
 ```
