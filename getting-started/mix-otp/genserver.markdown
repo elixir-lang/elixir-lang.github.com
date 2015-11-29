@@ -56,8 +56,8 @@ defmodule KV.Registry do
   @doc """
   Starts the registry.
   """
-  def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, :ok, opts)
+  def start_link() do
+    GenServer.start_link(__MODULE__, :ok, [])
   end
 
   @doc """
@@ -97,13 +97,13 @@ defmodule KV.Registry do
 end
 ```
 
-The first function is `start_link/1`, which starts a new GenServer passing three arguments:
+The first function is `start_link/0`, which starts a new GenServer passing three arguments:
 
 1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
 
 2. The initialization arguments, in this case the atom `:ok`
 
-3. A list of options which can, for example, hold the name of the server
+3. A list of options which can, for example, hold the name of the server. For now, we pass an empty list
 
 There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
@@ -262,6 +262,4 @@ Returning to our `handle_cast/2` implementation, you can see the registry is bot
 ref = Process.monitor(pid)
 ```
 
-This is a bad idea, as we don't want the registry to crash when a bucket crashes! We will explore solutions to this problem when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly. Instead, we delegate this responsibility to supervisors. As we'll see, supervisors work with links, and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
-
-Before jumping into supervisors, let's first explore event managers and event handlers with GenEvent.
+This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
