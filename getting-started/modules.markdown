@@ -124,9 +124,7 @@ IO.puts Math.zero?([1,2,3]) #=> ** (FunctionClauseError)
 
 Giving an argument that does not match any of the clauses raises an error.
 
-## Function capturing
-
-Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Let's edit `math.exs` to look like this:
+Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is just a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#do-end-blocks). For example, we can edit `math.exs` to look like this:
 
 ```elixir
 defmodule Math do
@@ -135,7 +133,11 @@ defmodule Math do
 end
 ```
 
-And start `iex`, running the `math.exs` file defined above:
+And it will provide the same behaviour. You may use `do:` for one-liners but always `do`/`end` for functions spawning multiple lines.
+
+## Function capturing
+
+Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Start `iex`, running the `math.exs` file defined above:
 
 ```bash
 $ iex math.exs
@@ -172,7 +174,7 @@ iex> fun.(1)
 
 The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
 
-In the same fashion if you want to call a function from a module, you can do `&Module.function()`:
+If you want to call a function from a module, you can do `&Module.function()`:
 
 ```iex
 iex> fun = &List.flatten(&1, &2)
@@ -181,7 +183,7 @@ iex> fun.([1, [[2], 3]], [4, 5])
 [1, 2, 3, 4, 5]
 ```
 
-`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html#&/1).
+`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end` which in this case is equivalent to `&List.flatten/2`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html#&/1).
 
 ## Default arguments
 
