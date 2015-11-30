@@ -1,7 +1,8 @@
 ---
 layout: getting-started
-title: Docs, tests and pipelines
+title: Docs, tests and with
 redirect_from: /getting_started/mix_otp/9.html
+redirect_from: /getting_started/mix_otp/docs-tests-and-pipelines.html
 ---
 
 # {{ page.title }}
@@ -162,9 +163,9 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 
 You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/ExUnit.DocTest.html).
 
-## Pipelines
+## with
 
-With our command parser in hand, we can finally start implementing the logic that runs the commands. Let's add a stub definition for this function for now:
+As we are now able to parse commands, we can finally start implementing the logic that runs the commands. Let's add a stub definition for this function for now:
 
 ```elixir
 defmodule KVServer.Command do
@@ -198,7 +199,7 @@ defp write_line(line, socket) do
 end
 ```
 
-with the following:
+by the following:
 
 ```elixir
 defp serve(socket) do
@@ -223,13 +224,25 @@ defp read_line(socket) do
   :gen_tcp.recv(socket, 0)
 end
 
-defp write_line(socket, msg) do
-  :gen_tcp.send(socket, format_msg(msg))
+defp write_line(socket, {:ok, text}) do
+  :gen_tcp.send(socket, text)
 end
 
-defp format_msg({:ok, text}), do: text
-defp format_msg({:error, :unknown_command}), do: "UNKNOWN COMMAND\r\n"
-defp format_msg({:error, _}), do: "ERROR\r\n"
+defp write_line(socket, {:error, :unknown_command}) do
+  # Known error. Write to the client.
+  :gen_tcp.send(socket, "UNKNOWN COMMAND\r\n")
+end
+
+defp write_line(_socket, {:error, :closed}) do
+  # The connection was closed, exit politely.
+  exit(:shutdown)
+end
+
+defp write_line(socket, {:error, error}) do
+  # Unknown error. Write to the client and exit.
+  :gen_tcp.send(socket, "ERROR\r\n")
+  exit(error)
+end
 ```
 
 If we start our server, we can now send commands to it. For now we will get two different responses: "OK" when the command is known and "UNKNOWN COMMAND" otherwise:
@@ -247,50 +260,27 @@ UNKNOWN COMMAND
 
 This means our implementation is going in the correct direction, but it doesn't look very elegant, does it?
 
-The previous implementation used pipes which made the logic straight-forward to understand:
+The previous implementation used pipelines which made the logic straight-forward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many `case` calls.
 
-```elixir
-read_line(socket) |> KVServer.Command.parse |> KVServer.Command.run()
-```
-
-Since we may have failures along the way, we need our pipeline logic to match error outputs and abort if they occur. Wouldn't it be great if instead we could say: "pipe these functions while the response is `:ok`" or "pipe these functions while the response matches the `{:ok, _}` tuple"?
-
-Thankfully, there is a project called [elixir-pipes](https://github.com/batate/elixir-pipes) that provides exactly this functionality! Let's give it a try.
-
-Open up your `apps/kv_server/mix.exs` file and change both `application/0` and `deps/0` functions to the following:
-
-```elixir
-def application do
-  [applications: [:logger, :pipe, :kv],
-   mod: {KVServer, []}]
-end
-
-defp deps do
-  [{:kv, in_umbrella: true},
-   {:pipe, github: "batate/elixir-pipes"}]
-end
-```
-
-Run `mix deps.get` to get the dependency, and rewrite the `serve/1` function to use the `pipe_matching/3` functionality now available to us:
+Thankfully, Elixir v1.2 introduced a construct called `with` which allows to simplify code like above. Let's rewrite the `serve/1` function to use it:
 
 ```elixir
 defp serve(socket) do
-  import Pipe
-
   msg =
-    pipe_matching x, {:ok, x},
-      read_line(socket)
-      |> KVServer.Command.parse()
-      |> KVServer.Command.run()
+    with {:ok, data} <- read_line(socket),
+         {:ok, command} <- KVServer.Command.parse(data),
+         do: KVServer.Command.run(command)
 
   write_line(socket, msg)
   serve(socket)
 end
 ```
 
-With `pipe_matching/3` we can ask Elixir to pipe the value `x` from each step if it matches `{:ok, x}`. We do so by basically converting each expression given to `case/2` as a step in the pipeline. As soon as any of the steps return something that does not match `{:ok, x}`, the pipeline aborts, and returns the non-matching value.
+Much better! Syntax-wise, `with` is quite similar to `for` comprehensions. `with` will retrieve the value returned by the right-side of `<-` and match it against the pattern on the left side. If the value matches the pattern, `with` moves on to the next expression. In case there is no match, the non-matching value is returned.
 
-Excellent! Feel free to read the [elixir-pipes](https://github.com/batate/elixir-pipes) project documentation to learn about other options for expressing pipelines. Let's continue moving forward with our server implementation.
+In other words, we converted each expression given to `case/2` as a step in `with`. As soon as any of the steps return something that does not match `{:ok, x}`, `with` aborts, and returns the non-matching value.
+
+You can read more about [`with` in our documentation](/docs/stable/elixir/Kernel.SpecialForms.html#with/1).
 
 ## Running commands
 
@@ -336,17 +326,16 @@ defp lookup(bucket, callback) do
 end
 ```
 
-The implementation is straightforward: we just dispatch to the `KV.Registry` server that we registered during the `:kv` application startup.
+The implementation is straightforward: we just dispatch to the `KV.Registry` server that we registered during the `:kv` application startup. Since our `:kv_server` depends on the `:kv` application, it is completely fine to depend on the servers/services it provides.
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
-By the way, since we are now returning `{:error, :not_found}`, we should amend the `format_msg/1` function in `KV.Server` to nicely show not found messages too:
+By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KV.Server` to print such error as well:
 
 ```elixir
-defp format_msg({:ok, text}), do: text
-defp format_msg({:error, :unknown_command}), do: "UNKNOWN COMMAND\r\n"
-defp format_msg({:error, :not_found}), do: "NOT FOUND\r\n"
-defp format_msg({:error, _}), do: "ERROR\r\n"
+defp write_line(socket, {:error, :not_found}) do
+  :gen_tcp.send(socket, "NOT FOUND\r\n")
+end
 ```
 
 And our server functionality is almost complete! We just need to add tests. This time, we have left tests for last because there are some important considerations to be made.
@@ -371,9 +360,7 @@ This has been the approach we have taken so far in our tests, and it has some be
 
 However, it comes with the downside that our APIs become increasingly large in order to accommodate all external parameters.
 
-The alternative is to continue relying on the global server names and run tests against the global data, ensuring we clean up the data in between the tests. In this case, since the test would exercise the whole stack, from the TCP server, to the command parsing and running, to the registry and finally reaching the bucket, it becomes an integration test.
-
-The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
+The alternative is to write integration tests that will rely on the global server names to exercise the whole stack, from the TCP server to the bucket. The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
 
 Since we have used unit tests so far, this time we will take the other road and write an integration test. The integration test will have a TCP client that sends commands to our server and we will assert that we are getting the desired responses.
 
@@ -384,8 +371,8 @@ defmodule KVServerTest do
   use ExUnit.Case
 
   setup do
-    :application.stop(:kv)
-    :ok = :application.start(:kv)
+    Application.stop(:kv)
+    :ok = Application.start(:kv)
   end
 
   setup do
@@ -435,22 +422,30 @@ This time, since our test relies on global data, we have not given `async: true`
 18:12:10.698 [info] Application kv exited: :stopped
 ```
 
-If desired, we can avoid printing this warning by turning the error_logger off and on in the test setup:
+To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test case, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report.
+
+Before setup, add the following call:
 
 ```elixir
-setup do
-  Logger.remove_backend(:console)
-  Application.stop(:kv)
-  :ok = Application.start(:kv)
-  Logger.add_backend(:console, flush: true)
-  :ok
-end
+@moduletag :capture_log
 ```
 
-With this simple integration test, we start to see why integration tests may be slow. Not only can this particular test not be run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
+In case the test crashes, you will see a report as follows:
+
+```
+  1) test server interaction (KVServerTest)
+     test/kv_server_test.exs:17
+     ** (RuntimeError) oops
+     stacktrace:
+       test/kv_server_test.exs:29
+
+     The following output was logged:
+
+     13:44:10.035 [info]  Application kv exited: :stopped
+```
+
+With this simple integration test, we start to see why integration tests may be slow. Not only can this particular test not run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
 
 At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test.
-
-I personally err on the side of unit tests, and have integration tests only as smoke tests to guarantee the basic skeleton of the system works.
 
 In the next chapter we will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration.
