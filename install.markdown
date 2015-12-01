@@ -81,7 +81,7 @@ If the tests pass, you are ready to go. Otherwise, feel free to open an issue [i
 
 ## Installing Erlang
 
-The only prerequisite for Elixir is Erlang, version 17.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/downloads/download-erlang-otp). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.basho.com/riak/latest/ops/building/installing/erlang/).
+The only prerequisite for Elixir is Erlang, version 17.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/resources/download.html). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.basho.com/riak/latest/ops/building/installing/erlang/).
 
 For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools.
 
