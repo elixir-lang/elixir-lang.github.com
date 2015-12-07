@@ -619,8 +619,7 @@ F({a, b}).
 **Elixir**
 
 ```elixir
-f = fn
-      {:a, :b} = tuple ->
+f = fn({:a, :b} = tuple) ->
         IO.puts "All your #{inspect tuple} are belong to us"
       [] ->
         "Empty"
