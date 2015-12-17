@@ -52,7 +52,7 @@ The argument we are passing to `start_link` is the name of the process. It's com
 
 Finally, we call `supervise/2`, passing the list of children and the strategy of `:one_for_one`.
 
-The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies only one is restarted to replace it. This strategy makes sense for now. If the event manager crashes, there is no reason to restart the registry and vice-versa. However, those dynamics may change once we add more children to the supervisor. The `Supervisor` behaviour supports many different strategies and we will discuss three of them in this chapter.
+The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies, it will be the only one restarted. Since we have only one child now, that's all we need. The `Supervisor` behaviour supports many different strategies and we will discuss them in this chapter.
 
 Since `KV.Registry.start_link/1` is now expecting an argument, we need to change our implementation to receive such argument. Open up `lib/kv/registry.ex` and replace the `start_link/-` definition by:
 

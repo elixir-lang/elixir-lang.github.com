@@ -140,7 +140,7 @@ You can read more information about nested access in [the Access protocol docume
 
 OTP is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications.
 
-In v0.14.0, Elixir closely integrates with OTP by providing modules for building [servers](/docs/stable/elixir/GenServer.html), event managers and event handlers, [supervisors](/docs/stable/elixir/Supervisor.html) and [applications](/docs/stable/elixir/Application.html).
+In v0.14.0, Elixir closely integrates with OTP by providing modules for building [servers](/docs/stable/elixir/GenServer.html), [supervisors](/docs/stable/elixir/Supervisor.html) and [applications](/docs/stable/elixir/Application.html).
 
 We have also introduced the concepts of [agents](/docs/stable/elixir/Agent.html) and the idea of [tasks](/docs/stable/elixir/Task.html), which can be supervised and distributed. Application configuration has been made first class in Mix, allowing developers to configure their dependencies, sometimes even using different configurations per environment (dev, test or prod by default).
 
