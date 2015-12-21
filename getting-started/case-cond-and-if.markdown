@@ -224,7 +224,14 @@ iex> if true, do: 1 + 2
 3
 ```
 
-In Elixir, `do/end` blocks are a convenience for passing a group of expressions to `do:`. These are equivalent:
+Notice how the second example has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by comma. We say this syntax is using **keyword lists**. We can pass `else` using keywords too:
+
+```iex
+iex> if false, do: :this, else: :that
+:that
+```
+
+`do/end` blocks are a syntatic convenience built on top of the keywords one. That's why `do/end` blocks do not require a comma between the previous argument the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
 
 ```iex
 iex> if true do
@@ -237,13 +244,6 @@ iex> if true, do: (
 ...>   a + 10
 ...> )
 13
-```
-
-We say the second syntax is using **keyword lists**. We can pass `else` using this syntax:
-
-```iex
-iex> if false, do: :this, else: :that
-:that
 ```
 
 One thing to keep in mind when using `do/end` blocks is they are always bound to the outermost function call. For example, the following expression:
