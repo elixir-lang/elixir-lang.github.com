@@ -323,7 +323,7 @@ This means we can configure our `:routing_table` directly in the `config/config.
 
 ```elixir
 # Replace computer-name with your local machine nodes.
-config :kv, :routing_table,
+config :kv, routing_table:
        [{?a..?m, :"foo@computer-name"},
         {?n..?z, :"bar@computer-name"}]
 ```
