@@ -30,13 +30,13 @@ round(number) :: integer
 def round(number), do: # implementation...
 ```
 
-Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the types provided by Elixir [in the typespecs docs](/docs/stable/elixir/Kernel.Typespec.html).
+Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](/docs/stable/elixir/typespecs.html).
 
 ### Defining custom types
 
 While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive.
 
-Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.
+Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
 
 ```elixir
 defmodule LousyCalculator do
@@ -48,7 +48,7 @@ defmodule LousyCalculator do
 end
 ```
 
-As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [typespecs docs](/docs/stable/elixir/Kernel.Typespec.html).
+As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](/docs/stable/elixir/typespecs.html#Notes).
 
 Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type.
 
@@ -57,13 +57,13 @@ defmodule LousyCalculator do
   @typedoc """
   Just a number followed by a string.
   """
-  @type number_with_offense :: {number, String.t}
+  @type number_with_remark :: {number, String.t}
 
-  @spec add(number, number) :: number_with_offense
-  def add(x, y), do: {x + y, "You need a calculator to do that?!"}
+  @spec add(number, number) :: number_with_remark
+  def add(x, y), do: {x + y, "You need a calculator to do that?"}
 
-  @spec multiply(number, number) :: number_with_offense
-  def multiply(x, y), do: {x * y, "Jeez, come on!"}
+  @spec multiply(number, number) :: number_with_remark
+  def multiply(x, y), do: {x * y, "It is like addition on steroids."}
 end
 ```
 
@@ -72,12 +72,12 @@ The `@typedoc` directive, similarly to the `@doc` and `@moduledoc` directives, i
 Custom types defined through `@type` are exported and available outside the module they're defined in:
 
 ```elixir
-defmodule PoliteCalculator do
+defmodule QuietCalculator do
   @spec add(number, number) :: number
-  def add(x, y), do: make_polite(LousyCalculator.add(x, y))
+  def add(x, y), do: make_quiet(LousyCalculator.add(x, y))
 
-  @spec make_polite(LousyCalculator.number_with_offense) :: number
-  defp make_polite({num, _offense}), do: num
+  @spec make_quiet(LousyCalculator.number_with_remark) :: number
+  defp make_quiet({num, _remark}), do: num
 end
 ```
 
@@ -85,7 +85,7 @@ If you want to keep a custom type private, you can use the `@typep` directive in
 
 ### Static code analysis
 
-Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `PoliteCalculator` example, we wrote a spec for the `make_polite/1` function even if it was defined as a private function.
+Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `QuietCalculator` example, we wrote a spec for the `make_quiet/1` function even if it was defined as a private function.
 
 ## Behaviours
 

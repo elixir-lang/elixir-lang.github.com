@@ -74,13 +74,7 @@ iex> h Math.sum # Access the docs for the sum function
 
 We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 
-You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/elixir/Kernel.Typespec.html), via:
-
-* `@spec` - provides a specification for a function.
-* `@callback` - provides a specification for the behaviour callback.
-* `@type` - defines a type to be used in `@spec`.
-* `@typep` - defines a private type to be used in `@spec`.
-* `@opaque` - defines an opaque type to be used in `@spec`.
+You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/elixir/typespecs.html).
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
