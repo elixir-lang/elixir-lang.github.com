@@ -64,7 +64,7 @@ iex> john.name
 iex> meg = %{john | name: "Meg"}
 %User{age: 27, name: "Meg"}
 iex> %{meg | oops: :field}
-** (ArgumentError) argument error
+** (KeyError) key :oops not found in: %User{age: 27, name: "Meg"}
 ```
 
 When using the update syntax (`|`), the <abbr title="Virtual Machine">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory.
@@ -97,7 +97,7 @@ Notice that we referred to structs as **bare** maps because none of the protocol
 iex> john = %User{}
 %User{age: 27, name: "John"}
 iex> john[:name]
-** (Protocol.UndefinedError) protocol Access not implemented for %User{age: 27, name: "John"}
+** (UndefinedFunctionError) undefined function: User.fetch/2
 iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 ** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
@@ -106,7 +106,7 @@ A struct also is not a dictionary and therefore can't be used with the functions
 
 ```iex
 iex> Dict.get(%User{}, :name)
-** (UndefinedFunctionError) undefined function: User.fetch/2
+** (UndefinedFunctionError) undefined function: User.get/3
 ```
 
 However, since structs are just maps, they work with the functions from the `Map` module:
