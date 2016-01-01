@@ -26,6 +26,16 @@ Choose which version you want documentation for.
 * [Logger](/docs/master/logger/) - builtin Logger
 * [Mix](/docs/master/mix/) - build tool
 
+<span id="v1.2"></span>
+#### v1.2
+
+* [Elixir](/docs/v1.2/elixir/) - standard library
+* [EEx](/docs/v1.2/eex/) - templating library
+* [ExUnit](/docs/v1.2/ex_unit/) - unit test library
+* [IEx](/docs/v1.2/iex/) - interactive shell
+* [Logger](/docs/v1.2/logger/) - builtin Logger
+* [Mix](/docs/v1.2/mix/) - build tool
+
 <span id="v1.1"></span>
 #### v1.1
 
