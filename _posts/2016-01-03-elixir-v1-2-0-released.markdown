@@ -97,8 +97,10 @@ One of such efforts resulted in "Umbrella Projects", which allows developers to 
 
 Up to this release, umbrella applications shared mostly dependencies, which meant each application still had their own build directory and their own compilation cycle. Elixir v1.2 allows developers to also share both build and configuration files. This change allows teams to drastically reduce compilation times in umbrella projects by adding the following configuration to each umbrella app's `mix.exs` file:
 
-    build_path: "../../_build",
-    config_path: "../../config/config.exs",
+```elixir
+build_path: "../../_build",
+config_path: "../../config/config.exs",
+```
 
 Umbrella applications generated with Elixir v1.2 will by default include this configuration. The downside of this approach is that applications are a bit less isolated, since configuration is now shared across all projects, although developers can revert back to the previous behaviour by simply removing the flags above.
 
