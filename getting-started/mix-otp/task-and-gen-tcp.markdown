@@ -8,7 +8,7 @@ redirect_from: /getting_started/mix_otp/8.html
 
 {% include toc.html %}
 
-In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://www.erlang.org/doc/man/gen_tcp.html) to serve requests. In future chapters we will expand our server so it can actually serve the commands. This will also provide a great opportunity to explore Elixir's `Task` module.
+In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://www.erlang.org/doc/man/gen_tcp.html) to serve requests. This provides a great opportunity to explore Elixir's `Task` module. In future chapters we will expand our server so it can actually serve the commands.
 
 ## Echo server
 
@@ -23,6 +23,8 @@ A TCP server, in broad strokes, performs the following steps:
 Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
 
 ```elixir
+require Logger
+
 def accept(port) do
   # The options below mean:
   #
@@ -33,7 +35,7 @@ def accept(port) do
   #
   {:ok, socket} = :gen_tcp.listen(port,
                     [:binary, packet: :line, active: false, reuseaddr: true])
-  IO.puts "Accepting connections on port #{port}"
+  Logger.info "Accepting connections on port #{port}"
   loop_acceptor(socket)
 end
 
@@ -75,19 +77,6 @@ is equivalent to:
 write_line(read_line(socket), socket)
 ```
 
-> When using the `|>` operator, it is important to add parentheses to the function calls due to how operator precedence works. In particular, this code:
->
->     1..10 |> Enum.filter &(&1 <= 5) |> Enum.map &(&1 * 2)
->
-> Actually translates to:
->
->     1..10 |> Enum.filter(&(&1 <= 5) |> Enum.map(&(&1 * 2)))
->
-> Which is not what we want, since the function given to `Enum.filter/2` is the one passed as first argument to `Enum.map/2`. The solution is to use explicit parentheses:
->
->     1..10 |> Enum.filter(&(&1 <= 5)) |> Enum.map(&(&1 * 2))
->
-
 The `read_line/1` implementation receives data from the socket using `:gen_tcp.recv/2` and `write_line/2` writes to the socket using `:gen_tcp.send/2`.
 
 This is pretty much all we need to implement our echo server. Let's give it a try!
@@ -126,11 +115,11 @@ Once you exit the telnet client, you will likely see an error in the IEx session
 
 That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in future revisions of our server.
 
-For now there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won't be able to serve more requests, because it won't be restarted. That's why we must move our server inside a supervision tree.
+For now there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won't be able to serve more requests, because it won't be restarted. That's why we must move our server to a supervision tree.
 
 ## Tasks
 
-We have learned about agents, generic servers, and event managers. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
+We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
 [The Task module](/docs/stable/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
 
@@ -202,9 +191,9 @@ defp loop_acceptor(socket) do
 end
 ```
 
-But we've already made this mistake once. Do you remember?
+We are starting a linked Task directly from the acceptor process. But we've already made this mistake once. Do you remember?
 
-This is similar to the mistake we made when we called `KV.Bucket.start_link/0` from the registry. That meant a failure in any bucket would bring the whole registry down.
+This is similar to the mistake we made when we called `KV.Bucket.start_link/0` straight from the registry. That meant a failure in any bucket would bring the whole registry down.
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
@@ -248,6 +237,7 @@ Here is the full echo server implementation, in a single module:
 ```elixir
 defmodule KVServer do
   use Application
+  require Logger
 
   @doc false
   def start(_type, _args) do
@@ -268,7 +258,7 @@ defmodule KVServer do
   def accept(port) do
     {:ok, socket} = :gen_tcp.listen(port,
                       [:binary, packet: :line, active: false, reuseaddr: true])
-    IO.puts "Accepting connections on port #{port}"
+    Logger.info "Accepting connections on port #{port}"
     loop_acceptor(socket)
   end
 
@@ -300,6 +290,6 @@ end
 
 Since we have changed the supervisor specification, we need to ask: is our supervision strategy still correct?
 
-In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too. This is a contrast to the registry, where we initially had to crash the supervisor every time the registry crashed, until we used <abbr title="Erlang Term Storage">ETS</abbr> to persist state. However, tasks have no state and nothing will go stale if one of these processes dies.
+In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too.
 
 In the next chapter we will start parsing the client requests and sending responses, finishing our server.

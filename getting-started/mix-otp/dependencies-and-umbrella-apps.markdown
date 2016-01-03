@@ -8,7 +8,7 @@ redirect_from: /getting_started/mix_otp/7.html
 
 {% include toc.html %}
 
-In this chapter, we will briefly discuss how to manage dependencies in Mix.
+In this chapter, we will discuss how to manage dependencies in Mix.
 
 Our `kv` application is complete, so it's time to implement the server that will handle the requests we defined in the first chapter:
 
@@ -42,13 +42,13 @@ Installing external dependencies is simple. Most commonly, we use the [Hex Packa
 
 ```elixir
 def deps do
-  [{:plug, "~> 0.5.0"}]
+  [{:plug, "~> 1.0"}]
 end
 ```
 
 This dependency refers to the latest version of Plug in the 0.5.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](/docs/stable/elixir/Version.html).
 
-Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies, too:
+Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies too:
 
 ```elixir
 def deps do
@@ -88,13 +88,13 @@ end
 
 If the repository is private though, you may need to specify the private URL `git@github.com:YOUR_ACCOUNT/kv.git`. In any case, Mix will be able to fetch it for you as long as you have the proper credentials.
 
-However, using git dependencies for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provide the concept of applications. As such, we expect you to frequently break your code into applications that can be organized logically, even within a single project.
+Using git dependencies for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provide the concept of applications. As such, we expect you to frequently break your code into applications that can be organized logically, even within a single project.
 
-However, if you push every application as a separate project to a git repository, your projects can become very hard to maintain, because now you will have to spend a lot of time managing those git repositories rather than writing your code.
+However, if you push every application as a separate project to a git repository, your projects may become very hard to maintain as you will spend a lot of time managing those git repositories rather than writing your code.
 
-For this reason, Mix supports "umbrella projects." Umbrella projects allow you to create one project that hosts many applications and push all of them to a single git repository. That is exactly the style we are going to explore in the next sections.
+For this reason, Mix supports "umbrella projects." Umbrella projects allow you to create one project that hosts many applications while keeping all of them in a single source code repository. That is exactly the style we are going to explore in the next sections.
 
-What we are going to do is create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
+Let's create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
     + kv_umbrella
       + apps
@@ -127,6 +127,8 @@ defmodule KvUmbrella.Mixfile do
 
   def project do
     [apps_path: "apps",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
      deps: deps]
   end
 
@@ -136,7 +138,7 @@ defmodule KvUmbrella.Mixfile do
 end
 ```
 
-What makes this project different from the previous one is simply the `apps_path: "apps"` entry in the project definition. This means this project will act as an umbrella. Such projects do not have source files nor tests, although they can have dependencies which are only available for themselves. We'll create new application projects inside the apps directory. We call these applications "umbrella children".
+What makes this project different from the previous one is simply the `apps_path: "apps"` entry in the project definition. This means this project will act as an umbrella. Such projects do not have source files nor tests, although they can have their own dependencies (not shared with children). We'll create new applications inside the apps directory.
 
 Let's move inside the apps directory and start building `kv_server`. This time, we are going to pass the `--sup` flag, which will tell Mix to generate a supervision tree automatically for us, instead of building one manually as we did in previous chapters:
 
@@ -154,9 +156,13 @@ defmodule KVServer.Mixfile do
   def project do
     [app: :kv_server,
      version: "0.0.1",
+     build_path: "../../_build",
+     config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 1.0",
+     elixir: "~> 1.2-dev",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
      deps: deps]
   end
 
@@ -169,16 +175,19 @@ defmodule KVServer.Mixfile do
     []
   end
 end
+
 ```
 
-First of all, since we generated this project inside `kv_umbrella/apps`, Mix automatically detected the umbrella structure and added two lines to the project definition:
+First of all, since we generated this project inside `kv_umbrella/apps`, Mix automatically detected the umbrella structure and added four lines to the project definition:
 
 ```elixir
+build_path: "../../_build",
+config_path: "../../config/config.exs",
 deps_path: "../../deps",
 lockfile: "../../mix.lock",
 ```
 
-Those options mean all dependencies will be checked out to `kv_umbrella/deps`, and they will share the same lock file. Those two lines are saying that if two applications in the umbrella share the same dependency, they won't be fetched twice. They'll be fetched once, and Mix will ensure that both apps are always running against the same version of their shared dependency.
+Those options mean all dependencies will be checked out to `kv_umbrella/deps`, and they will share the same build, config and lock files. This ensures dependencies will be fetched and compiled once for the whole umbrella structure, instead of once per umbrella application.
 
 The second change is in the `application` function inside `mix.exs`:
 
@@ -253,19 +262,21 @@ Finally, copy the `kv` application we have built so far to the `apps` directory 
 We now just need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project` function:
 
 ```elixir
+build_path: "../../_build",
+config_path: "../../config/config.exs",
 deps_path: "../../deps",
 lockfile: "../../mix.lock",
 ```
 
 Now you can run tests for both projects from the umbrella root with `mix test`. Sweet!
 
-Remember that umbrella projects are a convenience to help you organize and manage your applications. Applications inside the `apps` directory are still decoupled from each other. Each application has its independent configuration, and dependencies in between them must be explicitly listed. This allows them to be developed together, but compiled, tested and deployed independently if desired.
+Remember that umbrella projects are a convenience to help you organize and manage your applications. Applications inside the `apps` directory are still decoupled from each other. Dependencies between them must be explicitly listed. This allows them to be developed together, but compiled, tested and deployed independently if desired.
 
 ## Summing up
 
 In this chapter we have learned more about Mix dependencies and umbrella projects. We have decided to build an umbrella project because we consider `kv` and `kv_server` to be internal dependencies that matter only in the context of this project.
 
-In the future, you are going to write applications and you will notice they can be easily extracted into a concise unit that can be used by different projects. In such cases, using Git or Hex dependencies is the way to go.
+In the future, you are going to write applications and you will notice they can be extracted into a concise unit that can be used by different projects. In such cases, using Git or Hex dependencies is the way to go.
 
 Here are a couple questions you can ask yourself when working with dependencies. Start with: does this application makes sense outside this project?
 

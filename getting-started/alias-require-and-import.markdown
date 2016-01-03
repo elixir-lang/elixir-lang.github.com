@@ -133,9 +133,9 @@ iex> :"Elixir.String" == String
 true
 ```
 
-By using the `alias/2` directive, we are simply changing what an alias translates to.
+By using the `alias/2` directive, we are simply changing the atom the alias expands to.
 
-Aliases work as described because in the Erlang <abbr title="Virtual Machine">VM</abbr> (and consequently Elixir) modules are represented by atoms. For example, that's the mechanism we use to call Erlang modules:
+Aliases expand to atoms because in the Erlang <abbr title="Virtual Machine">VM</abbr> (and consequently Elixir) modules are always represented by atoms. For example, that's the mechanism we use to call Erlang modules:
 
 ```iex
 iex> :lists.flatten([1, [2], 3])
@@ -164,20 +164,7 @@ defmodule Foo do
 end
 ```
 
-The example above will define two modules: `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same lexical scope.
-
-If, later, the `Bar` module is moved outside the `Foo` module definition, it will need to be referenced by its full name (`Foo.Bar`) or an alias will need to be set using the `alias` directive discussed above. The `Bar` module definition will change too. This code is equivalent to the example above:
-
-```elixir
-defmodule Foo.Bar do
-end
-
-defmodule Foo do
-  alias Foo.Bar, as: Bar
-end
-```
-
-The code above is exactly the same as:
+The example above will define two modules: `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same lexical scope. The code above is exactly the same as:
 
 ```elixir
 defmodule Elixir.Foo do
@@ -187,13 +174,37 @@ defmodule Elixir.Foo do
 end
 ```
 
-**Note**: in Elixir, you don't have to define the `Foo` module before being able to define the `Foo.Bar` module, as the language translates all module names to atoms anyway. You can define arbitrarily-nested modules without defining any module in the chain (e.g., `Foo.Bar.Baz` without defining `Foo` or `Foo.Bar` first).
+If, later, the `Bar` module is moved outside the `Foo` module definition, it must be referenced by its full name (`Foo.Bar`) or an alias must be set using the `alias` directive discussed above.
+
+**Note**: in Elixir, you don't have to define the `Foo` module before being able to define the `Foo.Bar` module, as the language translates all module names to atoms. You can define arbitrarily-nested modules without defining any module in the chain (e.g., `Foo.Bar.Baz` without defining `Foo` or `Foo.Bar` first).
 
 As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.
 
+### Multi `alias`/`import`/`require`
+
+From Elixir v1.2, it is possible to alias, import or require multiple modules at once. This is particularly useful once we start nesting modules, which is very common when building Elixir applications. For example, imagine you have an application where all modules are nested under `MyApp`, you can alias the modules `MyApp.Foo`, `MyApp.Bar` and `MyApp.Baz` at once as follows:
+
+```elixir
+alias MyApp.{Foo, Bar, Baz}
+```
+
 ## `use`
 
-Although not a directive, `use` is a macro tightly related to `require` that allows you to use a module in the current context. It `require`s the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context.
+Although not a directive, `use` is a macro tightly related to `require` that allows you to use a module in the current context. The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
+
+For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
+
+```elixir
+defmodule AssertionTest do
+  use ExUnit.Case, async: true
+
+  test "always pass" do
+    assert true
+  end
+end
+```
+
+Behind the scenes, `use` requires the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context. Generally speaking, the following module:
 
 ```elixir
 defmodule Example do
@@ -209,20 +220,5 @@ defmodule Example do
   Feature.__using__(option: :value)
 end
 ```
-
-For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
-
-```elixir
-defmodule AssertionTest do
-  use ExUnit.Case, async: true
-
-  test "always pass" do
-    assert true
-  end
-end
-```
-
-By calling use, a hook called `__using__` will be invoked in `ExUnit.Case` which will then do the proper setup.
-
 
 With this we are almost finishing our tour about Elixir modules. The last topic to cover is module attributes.

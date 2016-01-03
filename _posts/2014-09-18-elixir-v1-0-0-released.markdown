@@ -6,8 +6,6 @@ category: Releases
 excerpt: Elixir v1.0 is finally out!
 ---
 
-Hello everyone!
-
 We are glad to announce Elixir v1.0 is finally out. It has been 8005 commits [by 189 contributors](https://github.com/elixir-lang/elixir/graphs/contributors?from=2011-01-12&to=2014-09-10&type=c), including the initial commit on [January 9th, 2011](https://github.com/elixir-lang/elixir/commit/337c3f2d569a42ebd5fcab6fef18c5e012f9be5b)!
 
 ## What's Elixir?

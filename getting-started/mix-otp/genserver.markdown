@@ -25,7 +25,7 @@ OK
 Since agents are processes, each bucket has a process identifier (pid) but it doesn't have a name. We have learned about the name registry [in the Process chapter](/getting-started/processes.html) and you could be inclined to solve this problem by using such registry. For example, we could create a bucket as:
 
 ```iex
-iex> Agent.start_link(fn -> HashDict.new end, name: :shopping)
+iex> Agent.start_link(fn -> Map.new end, name: :shopping)
 {:ok, #PID<0.43.0>}
 iex> KV.Bucket.put(:shopping, "milk", 1)
 :ok
@@ -33,9 +33,11 @@ iex> KV.Bucket.get(:shopping, "milk")
 1
 ```
 
-However, this is a terrible idea! Local names in Elixir must be atoms, which means we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory! In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
+However, this is a terrible idea! Process names in Elixir must be atoms, which means we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory!
 
-Instead of abusing the name registry facility, we will create our own *registry process* that holds a dictionary that associates the bucket name to the bucket process.
+In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
+
+Instead of abusing the name registry facility, we will create our own *registry process* that holds a map that associates the bucket name to the bucket process.
 
 The registry needs to guarantee the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
@@ -54,8 +56,8 @@ defmodule KV.Registry do
   @doc """
   Starts the registry.
   """
-  def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, :ok, opts)
+  def start_link() do
+    GenServer.start_link(__MODULE__, :ok, [])
   end
 
   @doc """
@@ -77,31 +79,31 @@ defmodule KV.Registry do
   ## Server Callbacks
 
   def init(:ok) do
-    {:ok, HashDict.new}
+    {:ok, %{}}
   end
 
   def handle_call({:lookup, name}, _from, names) do
-    {:reply, HashDict.fetch(names, name), names}
+    {:reply, Map.fetch(names, name), names}
   end
 
   def handle_cast({:create, name}, names) do
-    if HashDict.has_key?(names, name) do
+    if Map.has_key?(names, name) do
       {:noreply, names}
     else
       {:ok, bucket} = KV.Bucket.start_link()
-      {:noreply, HashDict.put(names, name, bucket)}
+      {:noreply, Map.put(names, name, bucket)}
     end
   end
 end
 ```
 
-The first function is `start_link/1`, which starts a new GenServer passing three arguments:
+The first function is `start_link/0`, which starts a new GenServer passing three arguments:
 
 1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
 
 2. The initialization arguments, in this case the atom `:ok`
 
-3. A list of options which can, for example, hold the name of the server
+3. A list of options which can, for example, hold the name of the server. For now, we pass an empty list
 
 There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
@@ -109,11 +111,11 @@ The next two functions, `lookup/2` and `create/2` are responsible for sending th
 
 On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.
 
-The first is the `init/1` callback, that receives the argument given to `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new `HashDict`. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
+The first is the `init/1` callback, that receives the argument given to `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new map. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
 
-For `call` requests, we must implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`, where `reply` is what will be sent to the client and the `new_state` is the new server state.
+For `call/2` requests, we must implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`, where `reply` is what will be sent to the client and the `new_state` is the new server state.
 
-For `cast` requests, we must implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). The `handle_cast/2` callback returns a tuple in the format `{:noreply, new_state}`.
+For `cast/2` requests, we must implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). The `handle_cast/2` callback returns a tuple in the format `{:noreply, new_state}`.
 
 There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `terminate/2` and `code_change/3` that we could implement. You are welcome to explore the [full GenServer documentation](/docs/stable/elixir/GenServer.html) to learn more about those.
 
@@ -146,7 +148,7 @@ end
 
 Our test should pass right out of the box!
 
-We don't need to explictly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, it is best to define a `stop/1` function that sends a `call` message causing the server to stop:
+We don't need to explictly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
   ## Client API
@@ -155,17 +157,9 @@ We don't need to explictly shut down the registry because it will receive a `:sh
   Stops the registry.
   """
   def stop(server) do
-    GenServer.call(server, :stop)
-  end
-
-  ## Server Callbacks
-
-  def handle_call(:stop, _from, state) do
-    {:stop, :normal, :ok, state}
+    GenServer.stop(server)
   end
 ```
-
-In the example above, the new `handle_call/3` clause is returning the atom `:stop`, along side the reason the server is being stopped (`:normal`), the reply `:ok` and the server state.
 
 ## The need for monitoring
 
@@ -205,34 +199,30 @@ Let's reimplement the server callbacks to fix the bug and make the test pass. Fi
   ## Server callbacks
 
   def init(:ok) do
-    names = HashDict.new
-    refs  = HashDict.new
+    names = %{}
+    refs  = %{}
     {:ok, {names, refs}}
   end
 
   def handle_call({:lookup, name}, _from, {names, _} = state) do
-    {:reply, HashDict.fetch(names, name), state}
-  end
-
-  def handle_call(:stop, _from, state) do
-    {:stop, :normal, :ok, state}
+    {:reply, Map.fetch(names, name), state}
   end
 
   def handle_cast({:create, name}, {names, refs}) do
-    if HashDict.has_key?(names, name) do
+    if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
       {:ok, pid} = KV.Bucket.start_link()
       ref = Process.monitor(pid)
-      refs = HashDict.put(refs, ref, name)
-      names = HashDict.put(names, name, pid)
+      refs = Map.put(refs, ref, name)
+      names = Map.put(names, name, pid)
       {:noreply, {names, refs}}
     end
   end
 
   def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-    {name, refs} = HashDict.pop(refs, ref)
-    names = HashDict.delete(names, name)
+    {name, refs} = Map.pop(refs, ref)
+    names = Map.delete(names, name)
     {:noreply, {names, refs}}
   end
 
@@ -255,7 +245,7 @@ So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handl
 
 3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are a perfect example of this.
 
-Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could lead our supervisor to crash, because no clause would match.
+Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could lead our registry to crash, because no clause would match.
 
 We don't need to worry about this for `handle_call/3` and `handle_cast/2` because these requests are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
 
@@ -272,6 +262,4 @@ Returning to our `handle_cast/2` implementation, you can see the registry is bot
 ref = Process.monitor(pid)
 ```
 
-This is a bad idea, as we don't want the registry to crash when a bucket crashes! We will explore solutions to this problem when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly. Instead, we delegate this responsibility to supervisors. As we'll see, supervisors work with links, and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
-
-Before jumping into supervisors, let's first explore event managers and event handlers with GenEvent.
+This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.

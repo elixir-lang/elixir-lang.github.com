@@ -6,8 +6,6 @@ category: Releases
 excerpt: Elixir v1.1 brings enhancements, bug fixes, performance improvements and more into Elixir.
 ---
 
-Hello everyone,
-
 Elixir v1.1 has been released and it brings enhancements, bug fixes, performance improvements and more into Elixir.
 
 Elixir v1.1 supports both Erlang 17 and Erlang 18. This is, however, the last release supporting Erlang 17, so upgrading to Erlang 18 is advised. Elixir v1.2 will introduce features that are Erlang 18 only.

@@ -1,14 +1,15 @@
 ---
 layout: getting-started
-title: Keywords, maps and dicts
+title: Keywords and maps
 redirect_from: /getting_started/7.html
+redirect_from: /getting_started/maps-and-dicts.html
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, maps, etc.
+So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, etc.
 
 In Elixir, we have two main associative data structures: keyword lists and maps. It's time to learn more about them!
 
@@ -25,9 +26,7 @@ iex> list[:a]
 1
 ```
 
-As you can see above, Elixir supports a special syntax for defining such lists, and underneath they just map to a list of tuples. Since they are simply lists, all operations available to lists, including their performance characteristics, also apply to keyword lists.
-
-For example, we can use `++` to add new values to a keyword list:
+As you can see above, Elixir supports a special syntax for defining such lists, and underneath they just map to a list of tuples. Since they are simply lists, all operations available to lists. For example, we can use `++` to add new values to a keyword list:
 
 ```iex
 iex> list ++ [c: 3]
@@ -111,43 +110,7 @@ Compared to keyword lists, we can already see two differences:
   * Maps allow any value as a key.
   * Maps' keys do not follow any ordering.
 
-Note that variables cannot be used as keys to _add_ items to a map:
-
-```iex
-iex> %{:x => 1}
-%{x: 1}
-iex> n = :x
-:x
-iex> %{n => 1}
-** (CompileError) iex:3: illegal use of variable n in map key
-```
-
-However, variables _can_ be used as keys to _access_ items in a map:
-
-```iex
-iex> map = %{:a => 1, 2 => :b}
-%{2 => :b, :a => 1}
-iex> x = :a
-:a
-iex> map[x]
-1
-```
-
-If you pass duplicate keys when creating a map, the last one wins:
-
-```iex
-iex> %{1 => 1, 1 => 2}
-%{1 => 2}
-```
-
-When all the keys in a map are atoms, you can use the keyword syntax for convenience:
-
-```iex
-iex> map = %{a: 1, b: 2}
-%{a: 1, b: 2}
-```
-
-In contrast to keyword lists, maps are very useful with pattern matching:
+In contrast to keyword lists, maps are very useful with pattern matching. When a map is used in a pattern, it will always match on a subset of the given value:
 
 ```iex
 iex> %{} = %{:a => 1, 2 => :b}
@@ -160,7 +123,19 @@ iex> %{:c => c} = %{:a => 1, 2 => :b}
 ** (MatchError) no match of right hand side value: %{2 => :b, :a => 1}
 ```
 
-As shown above, a map matches as long as the given keys exist in the given map. Therefore, an empty map matches all maps.
+As shown above, a map matches as long as the keys in the pattern exist in the given map. Therefore, an empty map matches all maps.
+
+Variables can be used when accessing, matching and adding map keys:
+
+```iex
+iex> n = 1
+1
+iex> map = %{n => :one}
+%{1 => :one}
+iex> map[n]
+:one
+iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}
+```
 
 [The `Map` module](/docs/stable/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:
 
@@ -169,9 +144,15 @@ iex> Map.get(%{:a => 1, 2 => :b}, :a)
 1
 iex> Map.to_list(%{:a => 1, 2 => :b})
 [{2, :b}, {:a, 1}]
+
+When all the keys in a map are atoms, you can use the keyword syntax for convenience:
+
+```iex
+iex> map = %{a: 1, b: 2}
+%{a: 1, b: 2}
 ```
 
-One interesting property about maps is that they provide a particular syntax for updating and accessing atom keys:
+Another interesting property about maps is that they provide their own syntax for updating and accessing atom keys:
 
 ```iex
 iex> map = %{:a => 1, 2 => :b}
@@ -185,36 +166,51 @@ iex> map.c
 iex> %{map | :a => 2}
 %{:a => 2, 2 => :b}
 iex> %{map | :c => 3}
-** (ArgumentError) argument error
+** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
 
 Both access and update syntaxes above require the given keys to exist. For example, accessing and updating the `:c` key failed because there is no `:c` in the map.
 
 Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post](http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
-> Note: Maps were recently introduced into the Erlang <abbr title="Virtual Machine">VM</abbr> with [EEP 43](http://www.erlang.org/eeps/eep-0043.html "Erlang Enhancement Proposal #43: Maps"). Erlang 17 provides a partial implementation of the <abbr title="Erlang Enhancement Proposal">EEP</abbr>, where only "small maps" are supported. This means maps have good performance characteristics only when storing at maximum a couple of dozen keys. To fill in this gap, Elixir also provides [the `HashDict` module](/docs/stable/elixir/HashDict.html), which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands of keys with good performance.
+> Note: Maps were recently introduced into the Erlang <abbr title="Virtual Machine">VM</abbr> and only from Elixir v1.2 they are capable of holding millions of keys efficiently. Therefore, if you are working with previous Elixir versions (v1.0 or v1.1) and you need to support at least hundreds of keys, you may consider using [the `HashDict` module](/docs/stable/elixir/HashDict.html).
 
-## Dicts
+## Nested data structures
 
-In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps modules implement this interface.
+Often we will have maps inside maps, or even keywords lists inside maps, and so forth. Elixir provides conveniences for manipulating nested data structures via the `put_in/2`, `update_in/2` and other macros giving the same conveniences you would find in imperative languages while keeping the immutable properties of the language.
 
-This interface is defined in [the `Dict` module](/docs/stable/elixir/Dict.html) module which also provides an API that delegates to the underlying implementations:
+Imagine you have the following structure:
 
 ```iex
-iex> keyword = []
-[]
-iex> map = %{}
-%{}
-iex> Dict.put(keyword, :a, 1)
-[a: 1]
-iex> Dict.put(map, :a, 1)
-%{a: 1}
+iex> users = [
+  john: %{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]},
+  mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}
+]
 ```
 
-The `Dict` module allows any developer to implement their own variation of `Dict`, with specific characteristics, and hook into existing Elixir code. The `Dict` module also provides functions that are meant to work across dictionaries. For example, `Dict.equal?/2` can compare two dictionaries of any kind.
+We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:
 
-That said, you may be wondering, which of `Keyword`, `Map` or `Dict` modules should you use in your code? The answer is: it depends.
+```iex
+iex> users[:john].age
+29
+```
 
-If your code is expecting one specific data structure as an argument, use the respective module as it leads to more assertive code. For example, if you expect a keyword as an argument, explicitly use the `Keyword` module instead of `Dict`. However, if your API is meant to work with any dictionary, use the `Dict` module (and make sure to write tests that pass different dictionary implementations as arguments).
+It happens we can also use this same syntax for updating the value:
+
+```iex
+iex> users = put_in users[:john].age, 31
+[john: %{name: "John", age: 31, languages: ["Erlang", "Ruby", "Elixir"]},
+ mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}]
+```
+
+The `update_in/2` macro is similar but allow us to pass a function that controls how the value changes. For example, let's remove "Clojure" from Mary's list of languages:
+
+```iex
+iex> users = update_in users[:mary].languages, &List.delete(&1, "Clojure")
+[john: %{name: "John", age: 31, languages: ["Erlang", "Ruby", "Elixir"]},
+ mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#"]}]
+```
+
+There is more to learn about `put_in/2` and `update_in/2`, including the `get_and_update_in/2` that allows us to extract a value and update the data structure at once. There are also `put_in/3`, `update_in/3` and `get_and_update_in/3` which allow dynamic access into the data structure. [Check their respective documentation in the `Kernel` module for more information](/docs/stable/elixir/Kernel.html).
 
 This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.

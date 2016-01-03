@@ -38,7 +38,7 @@ You can see now the prompt is slightly different and shows the node name followe
     Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
     iex(foo@jv)1>
 
-My computer is named `jv`, so I see `foo@jv` in the example above, but you will get a different result. We will use `jv@computer-name` in the following examples and you should update them accordingly when trying out the code.
+My computer is named `jv`, so I see `foo@jv` in the example above, but you will get a different result. We will use `foo@computer-name` in the following examples and you should update them accordingly when trying out the code.
 
 Let's define a module named `Hello` in this shell:
 
@@ -116,7 +116,7 @@ res + Task.await(task)
 
 ## Distributed tasks
 
-Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `lib/kv/supervisor.ex` from the `:kv` application. Let's add a task supervisor to the tree:
+Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `lib/kv/supervisor.ex` from the `:kv` application. Let's add a task supervisor as the last child of the tree:
 
 ```elixir
 supervisor(Task.Supervisor, [[name: KV.RouterTasks]]),
@@ -140,7 +140,18 @@ iex> Task.await(task)
 {:ok, :"foo@computer-name"}
 ```
 
-Our first distributed task is straightforward: it simply gets the name of the node the task is running on. With this knowledge in hand, let's finally write the routing code.
+Our first distributed task simply retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function and arguments explicitly:
+
+```iex
+iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, [Kernel, :node, []]
+%Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
+iex> Task.await(task)
+{:ok, :"foo@computer-name"}
+```
+
+The difference is that anonymous functions requires the target node to have exactly the same code version as the caller. Using module, function and arguments is more robust because you only need to find a function with matching arity in the given module.
+
+With this knowledge in hand, let's finally write the routing code.
 
 ## Routing layer
 
@@ -166,10 +177,9 @@ defmodule KV.Router do
     if elem(entry, 1) == node() do
       apply(mod, fun, args)
     else
-      sup = {KV.RouterTasks, elem(entry, 1)}
-      Task.Supervisor.async(sup, fn ->
-        KV.Router.route(bucket, mod, fun, args)
-      end) |> Task.await()
+      {KV.RouterTasks, elem(entry, 1)}
+      |> Task.Supervisor.async(KV.Router, :route, [bucket, mod, fun, args])
+      |> Task.await()
     end
   end
 
@@ -213,10 +223,10 @@ The first test simply invokes `Kernel.node/0`, which returns the name of the cur
 
 The second test just checks that the code raises for unknown entries.
 
-In order to run the first test, we need to have two nodes running. Let's restart the node named `bar`, which is going to be used by tests. This time we'll need to run the node in the `test` environment, to ensure the compiled code being run is exactly the same as that used in the tests themselves:
+In order to run the first test, we need to have two nodes running. Move into `apps/kv` and let's restart the node named `bar` which is going to be used by tests.
 
 ```bash
-$ MIX_ENV=test iex --sname bar -S mix
+$ iex --sname bar -S mix
 ```
 
 And now run tests with:
@@ -231,9 +241,9 @@ Our test should successfully pass. Excellent!
 
 Although our tests pass, our testing structure is getting more complex. In particular, running tests with only `mix test` causes failures in our suite, since our test requires a connection to another node.
 
-Luckily, ExUnit ships with a facility to tag tests, allowing us to run specific callbacks or even filter tests altogether based on those tags.
+Luckily, ExUnit ships with a facility to tag tests, allowing us to run specific callbacks or even filter tests altogether based on those tags. We have already used the `:capture_log` tag in the previous chapter, which has its semantics specified by ExUnit itself.
 
-All we need to do to tag a test is simply call `@tag` before the test name. Back to `test/kv/router_test.exs`, let's add a `:distributed` tag:
+This time let's add a `:distributed` tag to `test/kv/router_test.exs`:
 
 ```elixir
 @tag :distributed
@@ -298,11 +308,11 @@ In order to use the application environment in our code, we just need to replace
 The routing table.
 """
 def table do
-  Application.get_env(:kv, :routing_table)
+  Application.fetch_env!(:kv, :routing_table)
 end
 ```
 
-We use `Application.get_env/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](/docs/stable/elixir/Application.html).
+We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](/docs/stable/elixir/Application.html).
 
 Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
 
@@ -319,7 +329,7 @@ config :iex, default_prompt: ">>>"
 
 Start IEx with `iex -S mix` and you can see that the IEx prompt has changed.
 
-This means we can configure our `:routing_table` directly in the `config/config.exs` file as well:
+This means we can also configure our `:routing_table` directly in the `apps/kv/config/config.exs` file:
 
 ```elixir
 # Replace computer-name with your local machine nodes.
@@ -330,12 +340,10 @@ config :kv, :routing_table,
 
 Restart the nodes and run distributed tests again. Now they should all pass.
 
-Each application has its own `config/config.exs` file and they are not shared in any way. Configuration can also be set per environment. Read the contents of the config file for the `:kv` application for more information on how to do so.
-
-Since config files are not shared, if you run tests from the umbrella root, they will fail because the configuration we just added to `:kv` is not available there. However, if you open up `config/config.exs` in the umbrella, it has instructions on how to import config files from children applications. You just need to invoke:
+Since Elixir v1.2, all umbrella applications share their configurations, thanks to this line in `config/config.exs` in the umbrella root that loads the configuration of all children:
 
 ```elixir
-import_config "../apps/kv/config/config.exs"
+import_config "../apps/*/config/config.exs"
 ```
 
 The `mix run` command also accepts a `--config` flag, which allows configuration files to be given on demand. This could be used to start different nodes, each with its own specific configuration (for example, different routing tables).
@@ -348,7 +356,9 @@ Overall, the built-in ability to configure applications and the fact that we hav
 
 * deploy only the `:kv` application when we want a node to work only as storage (no TCP access)
 
-As we add more applications in the future, we can continue controlling our deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production. We can also consider building multiple releases with a tool like [exrm](https://github.com/bitwalker/exrm), which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so we can deploy the application even if the runtime is not pre-installed on the target system.
+As we add more applications in the future, we can continue controlling our deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production.
+
+You can also consider building multiple releases with a tool like [exrm](https://github.com/bitwalker/exrm), which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so we can deploy the application even if the runtime is not pre-installed on the target system.
 
 Finally, we have learned some new things in this chapter, and they could be applied to the `:kv_server` application as well. We are going to leave the next steps as an exercise:
 
@@ -360,6 +370,8 @@ Finally, we have learned some new things in this chapter, and they could be appl
 
 In this chapter we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.
 
-Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, event managers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.
+Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/riak/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
+
+There are many more lessons to learn and we hope you had fun so far!

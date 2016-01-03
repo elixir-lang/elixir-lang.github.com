@@ -14,8 +14,8 @@ In this tutorial we are going to teach you the Elixir foundation, the language s
 
 Our requirements are:
 
-  * Elixir - Version 1.0.0 onwards
-  * Erlang - Version 17.0 onwards
+  * Elixir - Version 1.2.0 onwards
+  * Erlang - Version 18.0 onwards
 
 Let's get started!
 
@@ -52,16 +52,14 @@ After getting familiar with the basics of the language you may want to try writi
 
 ```elixir
 IO.puts "Hello world from Elixir"
-
 ```
 
- Save it as `simple.exs` and execute it with `elixir`:
+Save it as `simple.exs` and execute it with `elixir`:
 
 ```bash
 $ elixir simple.exs
 Hello world from Elixir
 ```
-
 
 Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-started/modules.html)) and how to use the Mix build tool (in the [Mix & OTP guide](/getting-started/mix-otp/introduction-to-mix.html)). For now, let's move on to [Chapter 2](/getting-started/basic-types.html).
 

@@ -26,8 +26,7 @@ Choose which version you want documentation for.
 * [Logger](/docs/master/logger/) - builtin Logger
 * [Mix](/docs/master/mix/) - build tool
 
-<span id="v1.2"></span>
-#### v1.2
+<h4 id="v1.2">v1.2 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.2.0/Docs.zip">download</a>)</small></h4>
 
 * [Elixir](/docs/v1.2/elixir/) - standard library
 * [EEx](/docs/v1.2/eex/) - templating library
@@ -36,8 +35,7 @@ Choose which version you want documentation for.
 * [Logger](/docs/v1.2/logger/) - builtin Logger
 * [Mix](/docs/v1.2/mix/) - build tool
 
-<span id="v1.1"></span>
-#### v1.1
+<h4 id="v1.1">v1.1 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.1.1/Docs.zip">download</a>)</small></h4>
 
 * [Elixir](/docs/v1.1/elixir/) - standard library
 * [EEx](/docs/v1.1/eex/) - templating library
@@ -46,8 +44,7 @@ Choose which version you want documentation for.
 * [Logger](/docs/v1.1/logger/) - builtin Logger
 * [Mix](/docs/v1.1/mix/) - build tool
 
-<span id="v1.0"></span>
-#### v1.0
+<h4 id="v1.0">v1.0</h4>
 
 * [Elixir](/docs/v1.0/elixir/) - standard library
 * [EEx](/docs/v1.0/eex/) - templating library

@@ -72,9 +72,9 @@ Floats in Elixir are 64 bit double precision.
 You can invoke the `round` function to get the closest integer to a given float, or the `trunc` function to get the integer part of a float.
 
 ```iex
-iex> round 3.58
+iex> round(3.58)
 4
-iex> trunc 3.58
+iex> trunc(3.58)
 3
 ```
 
@@ -223,7 +223,7 @@ iex> add_two.(2)
 4
 ```
 
-Keep in mind that a variable assigned inside a function does not affect its surrounding environment:
+A variable assigned inside a function does not affect its surrounding environment:
 
 ```iex
 iex> x = 42
@@ -280,7 +280,21 @@ iex> [104, 101, 108, 108, 111]
 'hello'
 ```
 
-When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code.
+When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the `i/1` to retrieve information about it:
+
+```iex
+iex> i 'hello'
+Term
+  'hello'
+Data type
+  List
+Description
+  ...
+Raw representation
+  [104, 101, 108, 108, 111]
+Reference modules
+  List
+```
 
 Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:
 
@@ -313,7 +327,7 @@ iex> tuple_size(tuple)
 2
 ```
 
-It is also possible to set an element at a particular index in a tuple with `put_elem/3`:
+It is also possible to put an element at a particular index in a tuple with `put_elem/3`:
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -325,8 +339,6 @@ iex> tuple
 ```
 
 Notice that `put_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry if a particular code is mutating your data structure in place.
-
-By being immutable, Elixir also helps eliminate common cases where concurrent code has race conditions because two different entities are trying to change a data structure at the same time.
 
 ## Lists or tuples?
 

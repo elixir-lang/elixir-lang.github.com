@@ -40,7 +40,7 @@ In order to build our key-value application, we are going to use three main tool
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
-> Note: this guide requires Elixir v1.0.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
+> Note: this guide requires Elixir v1.2.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
 >
 > If you have any questions or improvements to the guide, please let us know in [our mailing list](https://groups.google.com/d/forum/elixir-lang-talk) or [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues) respectively. Your input is really important to help us guarantee the guides are accessible and up to date!
 
@@ -94,7 +94,9 @@ defmodule KV.Mixfile do
   def project do
     [app: :kv,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.2",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
      deps: deps]
   end
 
@@ -130,8 +132,14 @@ Will output:
 
     Compiled lib/kv.ex
     Generated kv app
+    Consolidated List.Chars
+    Consolidated Collectable
+    Consolidated String.Chars
+    Consolidated Enumerable
+    Consolidated IEx.Info
+    Consolidated Inspect
 
-Notice the `lib/kv.ex` file was compiled and `kv.app` file was generated. All this took place in a directory structure of its own, inside the `_build` folder. This `.app` file is generated with the information from the `application/0` function in the `mix.exs` file. We will further explore `mix.exs` configuration features in future chapters.
+The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated and [all protocols were consolidated as described in the Getting Started guide](/getting-started/protocols.html#protocol-consolidation). All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
 
 Once the project is compiled, you can start an `iex` session inside the project by running:
 
@@ -169,6 +177,7 @@ This file will be automatically required by Mix every time before we run our tes
 
     Compiled lib/kv.ex
     Generated kv app
+    [...]
     .
 
     Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
@@ -218,20 +227,24 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 * `:dev` - the one in which Mix tasks (like `compile`) run by default
 * `:test` - used by `mix test`
-* `:prod` - the one you will use to put your project in production
+* `:prod` - the one you will use to run your project in production
 
-> Note: If you add dependencies to your project, they will not inherit your project's environment, but instead run with their `:prod` environment settings!
+The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
 
-By default, these environments behave the same and all the configurations we have seen so far will affect all three environments. Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom:
+Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in both `:build_embedded` and `:start_permanent` options:
 
 ```elixir
 def project do
-  [deps_path: deps_path(Mix.env)]
+  [...,
+   build_embedded: Mix.env == :prod,
+   start_permanent: Mix.env == :prod,
+   ...]
 end
-
-defp deps_path(:prod), do: "prod_deps"
-defp deps_path(_), do: "deps"
 ```
+
+When you compile your source code, Elixir compiles artifacts to the `_build` directory. However, in many occasions to avoid unecessary copying, Elixir will create filesystem links from `_build` to actual source files. When true, `:build_embedded` disables this behaviour as it aims to provide everything you need to run your application inside `_build`.
+
+Similarly, when true, the `:start_permanent` option starts your application in permanent mode, which means the Erlang VM will crash if your application's supervision tree shuts down. Notice we don't want this behaviour in dev and test because it is useful to keep the VM instance running in those environments for troubleshooting purposes.
 
 Mix will default to the `:dev` environment, except for the `test` task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
 
