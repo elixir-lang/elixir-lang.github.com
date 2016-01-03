@@ -154,6 +154,7 @@ Mix also generated the appropriate structure for running our project tests. Mix 
 ```elixir
 defmodule KVTest do
   use ExUnit.Case
+  doctest KV
 
   test "the truth" do
     assert 1 + 1 == 2
@@ -198,13 +199,13 @@ assert 1 + 1 == 3
 Now run `mix test` again (notice this time there will be no compilation):
 
     1) test the truth (KVTest)
-       test/kv_test.exs:4
+       test/kv_test.exs:5
        Assertion with == failed
        code: 1 + 1 == 3
        lhs:  2
        rhs:  3
        stacktrace:
-         test/kv_test.exs:5
+         test/kv_test.exs:6
 
     Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
     1 tests, 1 failures
@@ -214,7 +215,7 @@ For each failure, ExUnit prints a detailed report, containing the test name with
 In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in this full second line (including the file and line number) and append it to `mix test`, Mix will load and run just that particular test:
 
 ```bash
-$ mix test test/kv_test.exs:4
+$ mix test test/kv_test.exs:5
 ```
 
 This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running just a specific test.
