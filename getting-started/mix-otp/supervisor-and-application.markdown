@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Supervisor and Application
-redirect_from: /getting_started/mix_otp/5.html
 ---
 
 # {{ page.title }}

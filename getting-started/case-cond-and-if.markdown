@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: case, cond and if
-redirect_from: /getting_started/5.html
 ---
 
 # {{ page.title }}

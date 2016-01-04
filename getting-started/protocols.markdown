@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Protocols
-redirect_from: /getting_started/16.html
 ---
 
 # {{ page.title }}

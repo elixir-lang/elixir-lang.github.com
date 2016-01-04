@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: alias, require and import
-redirect_from: /getting_started/13.html
 ---
 
 # {{ page.title }}

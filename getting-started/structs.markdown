@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Structs
-redirect_from: /getting_started/15.html
 redirect_from: /getting-started/struct.html
 ---
 

@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Docs, tests and with
-redirect_from: /getting_started/mix_otp/9.html
 redirect_from: /getting_started/mix_otp/docs-tests-and-pipelines.html
 ---
 

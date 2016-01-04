@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Quote and unquote
-redirect_from: /getting_started/meta/1.html
 ---
 
 # {{ page.title }}

@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Typespecs and behaviours
-redirect_from: /getting_started/20.html
 ---
 
 # {{ page.title }}

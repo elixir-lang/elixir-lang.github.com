@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: IO and the file system
-redirect_from: /getting_started/12.html
 ---
 
 # {{ page.title }}

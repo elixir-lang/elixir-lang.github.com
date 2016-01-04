@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Macros
-redirect_from: /getting_started/meta/2.html
 ---
 
 # {{ page.title }}

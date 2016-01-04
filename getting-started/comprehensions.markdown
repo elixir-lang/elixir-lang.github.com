@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Comprehensions
-redirect_from: /getting_started/17.html
 ---
 
 # {{ page.title }}

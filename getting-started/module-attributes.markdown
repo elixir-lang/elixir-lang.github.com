@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Module attributes
-redirect_from: /getting_started/14.html
 ---
 
 # {{ page.title }}

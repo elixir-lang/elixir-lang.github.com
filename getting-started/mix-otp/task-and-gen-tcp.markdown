@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Task and gen_tcp
-redirect_from: /getting_started/mix_otp/8.html
 ---
 
 # {{ page.title }}
