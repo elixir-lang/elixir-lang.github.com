@@ -54,7 +54,7 @@ Finally, we call `supervise/2`, passing the list of children and the strategy of
 
 The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies, it will be the only one restarted. Since we have only one child now, that's all we need. The `Supervisor` behaviour supports many different strategies and we will discuss them in this chapter.
 
-Since `KV.Registry.start_link/1` is now expecting an argument, we need to change our implementation to receive such argument. Open up `lib/kv/registry.ex` and replace the `start_link/-` definition by:
+Since `KV.Registry.start_link/1` is now expecting an argument, we need to change our implementation to receive such argument. Open up `lib/kv/registry.ex` and replace the `start_link/0` definition by:
 
 ```elixir
   @doc """
