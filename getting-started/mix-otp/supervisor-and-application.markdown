@@ -282,7 +282,7 @@ end
 
 There are three changes in this supervisor compared to the first one.
 
-Instead of receiving the registered process name as argument, we have simply decided to name it `KV.Bucket.Supervisor` as we won't spawn different versions of this process. We have also defined a `start_bucket/0` function that will start a bucket a child of our supervisor named `KV.Bucket.Supervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link` directly in the registry.
+Instead of receiving the registered process name as argument, we have simply decided to name it `KV.Bucket.Supervisor` as we won't spawn different versions of this process. We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.Bucket.Supervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link` directly in the registry.
 
 Finally, in the `init/1` callback, we are marking the worker as `:temporary`. This means that if the bucket dies, it won't be restarted! That's because we only want to use the supervisor as a mechanism to group the buckets. The creation of buckets should always pass through the registry.
 
