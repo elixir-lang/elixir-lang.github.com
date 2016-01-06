@@ -233,9 +233,11 @@ In other words, we want the registry to keep on running even if a bucket crashes
     KV.Registry.create(registry, "shopping")
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Kill the bucket and wait for the notification
+    # Stop the bucket with non-normal reason
     Process.exit(bucket, :shutdown)
-    assert_receive {:exit, "shopping", ^bucket}
+
+    # Do a sync to ensure the registry processed the down message
+    _ = KV.Registry.create(registry, "bogus")
     assert KV.Registry.lookup(registry, "shopping") == :error
   end
 ```
