@@ -191,7 +191,7 @@ We have a keyword list of users where each value is a map containing the name, a
 
 ```iex
 iex> users[:john].age
-29
+27
 ```
 
 It happens we can also use this same syntax for updating the value:
