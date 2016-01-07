@@ -236,8 +236,10 @@ In other words, we want the registry to keep on running even if a bucket crashes
     # Stop the bucket with non-normal reason
     Process.exit(bucket, :shutdown)
 
-    # Do a sync to ensure the registry processed the down message
-    _ = KV.Registry.create(registry, "bogus")
+    # The :DOWN message is handled asynchronously, so we don't  know if it has been handled yet, so give it a chance to run...
+    # We will fix this race condition in the next chapter
+    :timer.sleep(100)
+
     assert KV.Registry.lookup(registry, "shopping") == :error
   end
 ```
