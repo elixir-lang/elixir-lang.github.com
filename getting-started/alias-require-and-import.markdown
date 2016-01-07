@@ -179,7 +179,7 @@ If, later, the `Bar` module is moved outside the `Foo` module definition, it mus
 
 As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.
 
-### Multi `alias`/`import`/`require`
+## Multi `alias`/`import`/`require`
 
 From Elixir v1.2, it is possible to alias, import or require multiple modules at once. This is particularly useful once we start nesting modules, which is very common when building Elixir applications. For example, imagine you have an application where all modules are nested under `MyApp`, you can alias the modules `MyApp.Foo`, `MyApp.Bar` and `MyApp.Baz` at once as follows:
 
