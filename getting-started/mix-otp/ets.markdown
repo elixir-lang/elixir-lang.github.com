@@ -228,7 +228,7 @@ Unfortunately this time we cannot simply change `handle_info/2`, the operation r
 
 An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means it the `:DOWN` message has been processed. Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
 
- 
+
 ```elixir
   test "removes buckets on exit", %{registry: registry} do
     KV.Registry.create(registry, "shopping")
@@ -244,10 +244,14 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
     KV.Registry.create(registry, "shopping")
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Stop the bucket with non-normal reason
-    Agent.stop(bucket, :shutdown)
+    # Kill the bucket and wait for the notification
+    Process.exit(bucket, :shutdown)
 
-    # Do a call to ensure the registry processed the down message
+    # Wait until the bucket is dead
+    ref = Process.monitor(bucket)
+    assert_receive {:DOWN, ^ref, _, _, _}
+
+    # Do a call to ensure the registry processed the DOWN message
     _ = KV.Registry.create(registry, "bogus")
     assert KV.Registry.lookup(registry, "shopping") == :error
   end

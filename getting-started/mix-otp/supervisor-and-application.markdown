@@ -236,13 +236,17 @@ In other words, we want the registry to keep on running even if a bucket crashes
     # Stop the bucket with non-normal reason
     Process.exit(bucket, :shutdown)
 
-    # Do a sync to ensure the registry processed the down message
-    _ = KV.Registry.create(registry, "bogus")
+    # Wait until the bucket is dead
+    ref = Process.monitor(bucket)
+    assert_receive {:DOWN, ^ref, _, _, _}
+
     assert KV.Registry.lookup(registry, "shopping") == :error
   end
 ```
 
-The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. Since the bucket is linked to the registry, which is then linked to the test process, killing the bucket causes the registry to crash which then causes the test process to crash too:
+The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. Opposite to `Agent.stop/1`, `Process.exit/2` is an asynchronous operation, therefore we cannot simply query `KV.Registry.lookup/2` right after sending the exit signal because there will be no guarantee the bucket will be dead by then. To solve this, we also monitor the bucket during test and only query the registry once we are sure it is DOWN, avoiding race conditions.
+
+Since the bucket is linked to the registry, which is then linked to the test process, killing the bucket causes the registry to crash which then causes the test process to crash too:
 
 ```
 1) test removes bucket on crash (KV.RegistryTest)
