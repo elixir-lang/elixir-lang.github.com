@@ -143,6 +143,7 @@ iex> Map.get(%{:a => 1, 2 => :b}, :a)
 1
 iex> Map.to_list(%{:a => 1, 2 => :b})
 [{2, :b}, {:a, 1}]
+```
 
 When all the keys in a map are atoms, you can use the keyword syntax for convenience:
 
