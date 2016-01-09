@@ -45,7 +45,7 @@ def deps do
 end
 ```
 
-This dependency refers to the latest version of Plug in the 0.5.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](/docs/stable/elixir/Version.html).
+This dependency refers to the latest version of Plug in the 1.0.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](/docs/stable/elixir/Version.html).
 
 Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies too:
 
