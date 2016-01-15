@@ -361,7 +361,7 @@ However, it comes with the downside that our APIs become increasingly large in o
 
 The alternative is to write integration tests that will rely on the global server names to exercise the whole stack, from the TCP server to the bucket. The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
 
-Since we have used unit tests so far, this time we will take the other road and write an integration test. The integration test will have a TCP client that sends commands to our server and we will assert that we are getting the desired responses.
+Since we have only used unit tests so far, this time we will take the other road and write an integration test. The integration test will have a TCP client that sends commands to our server and we will assert that we are getting the desired responses.
 
 Let's implement our integration test in `test/kv_server_test.exs` as shown below:
 
