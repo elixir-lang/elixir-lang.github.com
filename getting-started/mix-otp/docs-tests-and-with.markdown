@@ -341,7 +341,7 @@ And our server functionality is almost complete! We just need to add tests. This
 
 `KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production.
 
-So far we have only been using unit tests. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. This means we would need to change `run`'s signature to `def run(command, pid)` and the implementation for the `:create` command would look like:
+So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. This means we would need to change `run`'s signature to `def run(command, pid)` and the implementation for the `:create` command would look like:
 
 ```elixir
 def run({:create, bucket}, pid) do
@@ -361,9 +361,9 @@ However, it comes with the downside that our APIs become increasingly large in o
 
 The alternative is to write integration tests that will rely on the global server names to exercise the whole stack, from the TCP server to the bucket. The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
 
-Since we have only used unit tests so far, this time we will take the other road and write an integration test. The integration test will have a TCP client that sends commands to our server and we will assert that we are getting the desired responses.
+This time we will write an integration test. The integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.
 
-Let's implement our integration test in `test/kv_server_test.exs` as shown below:
+Let's implement the integration test in `test/kv_server_test.exs` as shown below:
 
 ```elixir
 defmodule KVServerTest do
