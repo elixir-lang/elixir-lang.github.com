@@ -25,7 +25,7 @@ use Foo
 
 We are going to explore them in detail now. Keep in mind the first three are called directives because they have **lexical scope**, while `use` is a common extension point.
 
-## `alias`
+## alias
 
 `alias` allows you to set up aliases for any given module name. Imagine our `Math` module uses a special list implementation for doing math specific operations:
 
@@ -74,7 +74,7 @@ end
 
 In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
 
-## `require`
+## require
 
 Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
 
@@ -93,7 +93,7 @@ In Elixir, `Integer.is_odd/1` is defined as a macro so that it can be used as a 
 
 In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
-## `import`
+## import
 
 We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can simply import it:
 
@@ -133,7 +133,7 @@ In the example above, the imported `List.duplicate/2` is only visible within tha
 
 Note that `import`ing a module automatically `require`s it.
 
-## `use`
+## use
 
 Although not a directive, `use` is a macro tightly related to `require` that allows you to use a module in the current context. The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
 
@@ -230,7 +230,7 @@ If, later, the `Bar` module is moved outside the `Foo` module definition, it mus
 
 As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.
 
-## Multi `alias`/`import`/`require`
+## Multi alias/import/require/use
 
 From Elixir v1.2, it is possible to alias, import or require multiple modules at once. This is particularly useful once we start nesting modules, which is very common when building Elixir applications. For example, imagine you have an application where all modules are nested under `MyApp`, you can alias the modules `MyApp.Foo`, `MyApp.Bar` and `MyApp.Baz` at once as follows:
 
