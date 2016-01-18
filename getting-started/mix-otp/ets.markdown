@@ -26,7 +26,7 @@ iex> :ets.lookup(table, "foo")
 [{"foo", #PID<0.41.0>}]
 ```
 
-When creating an ETS table, two arguments are required: the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, which means that keys cannot be duplicated. We've also set the table's access to `:protected`, meaning only the process that created the table can write to it, but all processes can read it from it. Those are actually the default values, so we will skip them from now on.
+When creating an ETS table, two arguments are required: the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, which means that keys cannot be duplicated. We've also set the table's access to `:protected`, meaning only the process that created the table can write to it, but all processes can read from it. Those are actually the default values, so we will skip them from now on.
 
 ETS tables can also be named, allowing us to access them by a given name:
 
