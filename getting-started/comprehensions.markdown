@@ -35,7 +35,7 @@ iex> for {:good, n} <- values, do: n * n
 [1, 4, 16]
 ```
 
-Alternatively to pattern matching, filters can be used to filter some particular elements out. For example, we can filter out all the multiples of 3 and get the square of the remaining values only:
+Alternatively to pattern matching, filters can be used to select some particular elements. For example, we can select the multiples of 3 and discard all others:
 
 ```iex
 iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end
@@ -43,7 +43,7 @@ iex> for n <- 0..5, multiple_of_3?.(n), do: n * n
 [0, 9]
 ```
 
-Comprehensions filter out all elements for which the filter expression returns `false` or `nil`; all other values are kept.
+Comprehensions discard all elements for which the filter expression returns `false` or `nil`; all other values are selected.
 
 Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and gets the size of each file in those directories:
 
