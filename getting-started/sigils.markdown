@@ -98,8 +98,8 @@ Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping
 ```iex
 iex> ~s(String with escape codes \x26 #{"inter" <> "polation"})
 "String with escape codes & interpolation"
-iex> ~S(String without escape codes and without #{interpolation})
-"String without escape codes and without \#{interpolation}"
+iex> ~S(String without escape codes \x26 without #{interpolation})
+"String without escape codes \\x26 without \#{interpolation}"
 ```
 
 The following escape codes can be used in strings and char lists:
