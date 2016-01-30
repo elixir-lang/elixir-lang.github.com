@@ -142,7 +142,7 @@ iex> Task.await(task)
 Our first distributed task simply retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function and arguments explicitly:
 
 ```iex
-iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, [Kernel, :node, []]
+iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
 %Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
 iex> Task.await(task)
 {:ok, :"foo@computer-name"}
