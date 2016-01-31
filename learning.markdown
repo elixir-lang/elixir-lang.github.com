@@ -14,9 +14,9 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 ## Learn Elixir
 
-<h4 class="resource">Programming Elixir</h4>
+<h4 class="resource">Programming Elixir 1.2</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir/programming-elixir" title="Programming Elixir
+<a class="cover" href="https://pragprog.com/book/elixir12/programming-elixir-1-2" title="Programming Elixir 1.2
 : Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun :
 – by Dave Thomas"><img src="/images/learning/programming-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
 
