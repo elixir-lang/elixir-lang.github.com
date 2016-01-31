@@ -8,13 +8,13 @@ layout: default
 
 {% include toc.html %}
 
-The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling from source.
+The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling it.
 
 Note Elixir requires Erlang 18.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the "Installing Erlang" section below.
 
 ## Distributions
 
-Choose your operating system and tool.
+The preferred option for installing Elixir. Choose your operating system and tool.
 
 ### Mac OS X
 
@@ -60,7 +60,18 @@ Those distributions will likely install Erlang automatically for you too. In cas
 
 Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
 
-Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we would like to recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
+Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
+
+## Compiling with version managers
+
+There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you can't install Erlang or Elixir as mentioned above or if your package manager is simply outdated. Here are some of those tools:
+
+  * [asdf](https://github.com/HashNuke/asdf) - install and manage different Elixir and Erlang versions
+  * [exenv](https://github.com/mururu/exenv) - install and manage different Elixir versions
+  * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
+  * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
+
+If you would prefer to compile from source manually, don't worry, we got your back too!
 
 ## Compiling from source (Unix and MinGW)
 
@@ -91,7 +102,6 @@ After Erlang is installed, you should be able to open up the command line (or co
     Erlang/OTP 18 (erts-7) [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
 
 Notice that depending on how you installed Erlang, Erlang binaries won't be available in your PATH. Be sure to have Erlang binaries in your [PATH](https://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
-
 
 ## Setting PATH environment variable
 
