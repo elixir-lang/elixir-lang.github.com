@@ -131,7 +131,15 @@ receive do
 end
 ```
 
-This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend you to take a look at [the `Process` module](/docs/stable/elixir/Process.html) for other functionality provided by processes.
+```
+$ elixir spawn.exs
+
+** (EXIT from #PID<0.47.0>) an exception was raised:
+    ** (RuntimeError) oops
+        spawn.exs:1: anonymous fn/0 in :elixir_compiler_0.__FILE__/1
+```
+
+This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend that you take a look at [the `Process` module](/docs/stable/elixir/Process.html) for other functionality provided by processes.
 
 Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don't share anything by default. And if processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.
 
