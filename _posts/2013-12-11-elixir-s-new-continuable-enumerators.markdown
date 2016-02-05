@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /blog/:year/:month/:day/:title/
 title: Elixir's new continuable enumerators
 author: Peter Minten
 category: Internals

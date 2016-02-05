@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /blog/:year/:month/:day/:title/
 title: Elixir v0.7.2 released
 author: Yurii Rashkovskii
 category: Releases

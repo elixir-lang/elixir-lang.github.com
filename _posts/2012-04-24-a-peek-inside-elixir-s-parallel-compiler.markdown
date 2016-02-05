@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /blog/:year/:month/:day/:title/
 title: A peek inside Elixir's Parallel Compiler
 author: José Valim
 category: Internals

@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /blog/:year/:month/:day/:title/
 title: Elixir Design Goals
 author: José Valim
 category: Internals

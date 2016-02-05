@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /blog/:year/:month/:day/:title/
 title: Elixir v0.13.0 released, hex.pm and ElixirConf announced
 author: José Valim
 category: Releases

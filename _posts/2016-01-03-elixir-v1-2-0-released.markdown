@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /blog/:year/:month/:day/:title/
 title: Elixir v1.2 released
 author: José Valim
 category: Releases
