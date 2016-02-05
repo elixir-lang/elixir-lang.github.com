@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: Google Summer of Code 2013
 author: José Valim
 category: Announcements

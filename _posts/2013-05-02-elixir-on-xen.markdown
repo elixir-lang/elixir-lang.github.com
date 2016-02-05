@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: Elixir on Xen
 author: José Valim
 category: Announcements

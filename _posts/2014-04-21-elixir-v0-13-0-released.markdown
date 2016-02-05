@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: Elixir v0.13.0 released, hex.pm and ElixirConf announced
 author: José Valim
 category: Releases
@@ -37,7 +36,7 @@ In a nutshell, here is what new:
 
 * There are many other changes, like the addition of [StringIO](/docs/stable/elixir/StringIO.html), support for [tags and filters in ExUnit](/docs/stable/ex_unit/ExUnit.Case.html) and more. Please check the [CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.13.0/CHANGELOG.md) for the complete list.
 
-Even with all those improvements, Elixir v0.13.0 is backwards compatible with Elixir v0.12.5 and upgrading should be a clean process. 
+Even with all those improvements, Elixir v0.13.0 is backwards compatible with Elixir v0.12.5 and upgrading should be a clean process.
 
 ## Maps
 
@@ -238,7 +237,7 @@ This makes comprehensions useful not only for working with in-memory collections
 
 ## Mix workflows
 
-The last big change we want to discuss in this release are the improvements done to Mix, Elixir's build tool. Mix is an essential tool to Elixir developers and helps developers to compile their projects, manage their dependencies, run tests and so on. 
+The last big change we want to discuss in this release are the improvements done to Mix, Elixir's build tool. Mix is an essential tool to Elixir developers and helps developers to compile their projects, manage their dependencies, run tests and so on.
 
 In previous releases, Mix was used to download and compile dependencies per environment. That meant the usual workflow was less than ideal: every time a dependency was updated, developers had to explicitly fetch and compile the dependencies for each environment. The workflow would be something like:
 
