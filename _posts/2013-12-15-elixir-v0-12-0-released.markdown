@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: Elixir v0.12.0 released
 author: José Valim
 category: Releases
@@ -11,7 +10,7 @@ Elixir v0.12.0 has been released with improved enumerables, build patterns and w
 
 ## Enumerables
 
-In previous versions, the Enumerable protocol was based on reduce/fold, and while it is very efficient for operations like `map`, `reduce` and `filter`, it was sub-optimal for operations that need to halt, like `take` and `take_while`, and it made it impossible for operations like `zip` to be implemented. 
+In previous versions, the Enumerable protocol was based on reduce/fold, and while it is very efficient for operations like `map`, `reduce` and `filter`, it was sub-optimal for operations that need to halt, like `take` and `take_while`, and it made it impossible for operations like `zip` to be implemented.
 
 In v0.12.0, Elixir's Enumerable protocol has been extended to allow suspension and halting mechanisms, making operations like `take` simpler and operations that require interleaving, like `zip`, possible.
 

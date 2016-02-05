@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: A peek inside Elixir's Parallel Compiler
 author: José Valim
 category: Internals
@@ -28,7 +27,7 @@ In Elixir, we could write this code as follows:
           :erlang.raise(:error, reason, where)
       end
     end
-    
+
     def spawn_compilers([], _output) do
       :done
     end

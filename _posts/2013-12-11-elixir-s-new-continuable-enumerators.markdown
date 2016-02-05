@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: Elixir's new continuable enumerators
 author: Peter Minten
 category: Internals
@@ -113,7 +112,7 @@ same as in the old system. A consumer may return `:halt` to have the producer
 terminate earlier than it normally would.
 
 The real magic is in `:suspend` though. It tells a producer to return the
-accumulator and a continuation function. 
+accumulator and a continuation function.
 
 ```elixir
 { :suspended, n_, cont } = Enumerable.reduce(1..5, { :cont, 0 }, fn x, n ->

@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /blog/:year/:month/:day/:title/
 title: Elixir v0.7.1 released
 author: José Valim
 category: Releases
