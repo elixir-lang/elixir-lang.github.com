@@ -132,7 +132,7 @@ defmodule Math do
 end
 ```
 
-And it will provide the same behaviour. You may use `do:` for one-liners but always `do`/`end` for functions spawning multiple lines.
+And it will provide the same behaviour. You may use `do:` for one-liners but always use `do`/`end` for functions spanning multiple lines.
 
 ## Function capturing
 
@@ -173,7 +173,7 @@ iex> fun.(1)
 
 The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
 
-If you want to call a function from a module, you can do `&Module.function()`:
+If you want to capture a function from a module, you can do `&Module.function()`:
 
 ```iex
 iex> fun = &List.flatten(&1, &2)

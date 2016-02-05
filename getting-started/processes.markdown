@@ -131,13 +131,21 @@ receive do
 end
 ```
 
-This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend you to take a look at [the `Process` module](/docs/stable/elixir/Process.html) for other functionality provided by processes.
+```
+$ elixir spawn.exs
 
-Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don't share anything by default. And if processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.
+** (EXIT from #PID<0.47.0>) an exception was raised:
+    ** (RuntimeError) oops
+        spawn.exs:1: anonymous fn/0 in :elixir_compiler_0.__FILE__/1
+```
+
+This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend that you take a look at [the `Process` module](/docs/stable/elixir/Process.html) for other functionality provided by processes.
+
+Processes and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don't share anything by default. And since processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.
 
 While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting processes fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
 
-`spawn/1` and `spawn_link/1` are the basic primitives for creating processes in Elixir. Although we have used them exclusively so far, most of the times we are going to use abstractions that build on top of them. Let's see the most common one, called tasks.
+`spawn/1` and `spawn_link/1` are the basic primitives for creating processes in Elixir. Although we have used them exclusively so far, most of the time we are going to use abstractions that build on top of them. Let's see the most common one, called tasks.
 
 ## Tasks
 
@@ -156,7 +164,7 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
         (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
 ```
 
-Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, Tasks provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
+Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` to return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, `Task` provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
 We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better error reports.
 
@@ -232,6 +240,6 @@ iex> Agent.get(pid, fn map -> Map.get(map, :hello) end)
 :world
 ```
 
-A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), agents, tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
+A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
 
 For now, let's move on and explore the world of I/O in Elixir.

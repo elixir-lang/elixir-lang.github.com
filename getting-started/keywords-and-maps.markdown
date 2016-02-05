@@ -25,7 +25,7 @@ iex> list[:a]
 1
 ```
 
-As you can see above, Elixir supports a special syntax for defining such lists, and underneath they just map to a list of tuples. Since they are simply lists, all operations available to lists. For example, we can use `++` to add new values to a keyword list:
+As you can see above, Elixir supports a special syntax for defining such lists, and underneath they just map to a list of tuples. Since they are simply lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:
 
 ```iex
 iex> list ++ [c: 3]
@@ -152,7 +152,7 @@ iex> map = %{a: 1, b: 2}
 %{a: 1, b: 2}
 ```
 
-Another interesting property about maps is that they provide their own syntax for updating and accessing atom keys:
+Another interesting property of maps is that they provide their own syntax for updating and accessing atom keys:
 
 ```iex
 iex> map = %{:a => 1, 2 => :b}
