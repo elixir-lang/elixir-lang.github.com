@@ -16,9 +16,7 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 <h4 class="resource">Programming Elixir 1.2</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir12/programming-elixir-1-2" title="Programming Elixir 1.2
-: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun :
-– by Dave Thomas"><img src="/images/learning/programming-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
+<a class="cover" href="https://pragprog.com/book/elixir12/programming-elixir-1-2" title="Programming Elixir 1.2 : Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun : – by Dave Thomas"><img src="/images/learning/programming-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
 
 You want to explore functional programming, but are put off by the academic feel (tell me about monads just one more time). You know you need concurrent applications, but also know these are almost impossible to get right. Meet Elixir, a functional, concurrent language built on the rock-solid Erlang VM.
 
