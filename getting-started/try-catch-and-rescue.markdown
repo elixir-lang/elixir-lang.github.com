@@ -157,22 +157,6 @@ Using `try/catch` is already uncommon and using it to catch exits is even more r
 
 It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing an error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
 
-## Catch
-
-Sometimes, you may want to wrap the entire body of a function in `try`...`catch`. Elixir offers some syntactic sugar here, letting you omit the `try` line:
-
-```iex
-iex> defmodule CatchIt do
-...>   def without_even_trying do
-...>     throw "an exception"
-...>   catch
-...>     it -> "caught #{it}"
-...>   end
-...> end
-iex> CatchIt.without_even_trying
-"caught an exception!"
-```
-
 ## After
 
 Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and guarantee it will be closed (even if something goes wrong) with a `try/after` block:
@@ -187,6 +171,23 @@ iex> try do
 ...> end
 ** (RuntimeError) oops, something went wrong
 ```
+
+Sometimes you may want to wrap the entire body of a function in a `try` construct, often to guarantee some code will be executed afterwards. In such cases, Elixir allows you to omit the `try` line:
+
+```iex
+iex> defmodule RunAfter do
+...>   def without_even_trying do
+...>     raise "oops"
+...>   after
+...>     IO.puts "cleaning up!"
+...>   end
+...> end
+iex> RunAfter.without_even_trying
+cleaning up!
+** (RuntimeError) oops
+```
+
+Elixir will automatically wrap the function body in a `try` whenever one of `after`, `rescue` or `catch` is specified.
 
 ## Variables scope
 
