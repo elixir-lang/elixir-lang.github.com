@@ -162,13 +162,13 @@ Elixir allows you to omit parentheses in function calls, Erlang does not.
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
 ```erlang
-orddict:new().
+lists:last([1,2]).
 ```
 
-to invoke the `new` function from the `orddict` module. In Elixir, use the dot `.` in place of the colon `:`
+to invoke the `last` function from the `List` module. In Elixir, use the dot `.` in place of the colon `:`
 
 ```elixir
-Orddict.new
+List.last([1,2])
 ```
 
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
