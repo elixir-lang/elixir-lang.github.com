@@ -34,7 +34,7 @@ Elixir has a handful of reserved attributes. Here are just a few of them, the mo
 * `@behaviour` - (notice the British spelling) used for specifying an <abbr title="Open Telecom Platform">OTP</abbr> or user-defined behaviour.
 * `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
 
-`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation.
+`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation. You can read more about [writing documentation in Elixir in our official documentation](/docs/stable/elixir/typespecs.html).
 
 Let's go back to the `Math` module defined in the previous chapters, add some documentation and save it to the `math.ex` file:
 
@@ -73,7 +73,7 @@ iex> h Math.sum # Access the docs for the sum function
 
 We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 
-You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/elixir/typespecs.html).
+You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/getting-started/typespecs-and-behaviours.html).
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
