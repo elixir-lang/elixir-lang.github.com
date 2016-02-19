@@ -70,6 +70,7 @@ When going through this getting started guide, it is common to have questions, a
   * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
   * [elixir-talk mailing list](https://groups.google.com/group/elixir-lang-talk)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
+  * [Elixir Forum](http://elixirforum.com)
 
 When doing so, remember these two tips:
 
