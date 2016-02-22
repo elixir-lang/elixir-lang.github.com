@@ -3,7 +3,7 @@ layout: getting-started
 title: Erlang libraries
 ---
 
-# {{ page.title }}<span hidden>.</span>
+# {{ page.title }}
 
 {% include toc.html %}
 
@@ -69,8 +69,11 @@ time conversion functions.
 ```iex
 iex> :calendar.day_of_the_week(1980, 6, 28)
 6
-iex> :calendar.now_to_local_time(:erlang.timestamp)
-{{2016, 2, 17}, {22, 4, 55}}
+iex> {date, time} = :calendar.now_to_local_time(:erlang.timestamp)
+iex> date
+{2016, 2, 17}
+iex> time
+{22, 4, 55}
 ```
 
 ## The crypto module
@@ -134,13 +137,14 @@ side-effect.
 
 ```iex
 iex> table = :ets.new(:ets_test, [])
-iex> :ets.insert(table, {%{name: "China", population: 1_374_000_000}})
-iex> :ets.insert(table, {%{name: "India", population: 1_284_000_000}})
-iex> :ets.insert(table, {%{name: "USA", population: 322_000_000}})
+# Store as tuples with {name, population}
+iex> :ets.insert(table, {"China", 1_374_000_000})
+iex> :ets.insert(table, {"India", 1_284_000_000})
+iex> :ets.insert(table, {"USA", 322_000_000})
 iex> :ets.i(table)
-<1   > {#{name => <<"USA">>,population => 322000000}}
-<2   > {#{name => <<"China">>,population => 1374000000}}
-<3   > {#{name => <<"India">>,population => 1284000000}}
+<1   > {"USA", 322000000}
+<2   > {"China", 1_374_000_000}
+<3   > {"India", 1_284_000_000}
 ```
 
 ## The math module
@@ -168,15 +172,15 @@ that implements (double-ended) FIFO (first-in first-out) queues efficiently:
 iex> q = :queue.new
 iex> q = :queue.in("A", q)
 iex> q = :queue.in("B", q)
-iex> q = :queue.in("C", q)
-iex> {_, q} = :queue.out(q)
-{{:value, "A"}, {["C"], ["B"]}}
-iex> {_, q} = :queue.out(q)
-{{:value, "B"}, {[], ["C"]}}
-iex> {_, q} = :queue.out(q)
-{{:value, "C"}, {[], []}}
-iex> {_, q} = :queue.out(q)
-{:empty, {[], []}}
+iex> {value, q} = :queue.out(q)
+iex> value
+{:value, "A"}
+iex> {value, q} = :queue.out(q)
+iex> value
+{:value, "B"}
+iex> {value, q} = :queue.out(q)
+iex> value
+:empty
 ```
 
 ## The rand module
