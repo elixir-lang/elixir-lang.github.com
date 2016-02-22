@@ -7,24 +7,20 @@ title: Erlang libraries
 
 {% include toc.html %}
 
-Elixir provides excellent interoperability with Erlang libraries. You will not
-find Elixir wrappers for libraries and applications from the Erlang standard
-library in the Elixir standard library. Instead, you are encouraged to use the
-Erlang libraries directly. In this section we will present some of the most
-common and useful Erlang libraries that are not found in Elixir core libraries.
+Elixir provides excellent interoperability with Erlang libraries. In fact,
+Elixir discourages simply wrapping Erlang libraries in favor of directly
+interfacing with Erlang code. In this section we will present some of the
+most common and useful Erlang functionality that are not found in Elixir.
 
 As you grow more proficient in Elixir, you may want to explore the Erlang 
 [STDLIB Reference Manual](http://erlang.org/doc/apps/stdlib/index.html) in more
 detail.
 
-
-
-
 ## The binary module
 
-The built-in Elixir String module handles binaries that are encoded in utf-8
-format. The binary module is useful when you are dealing with binary data that
-is not necessarily utf-8 encoded.
+The built-in Elixir String module handles binaries that are UTF-8 encoded.
+[The binary module](http://erlang.org/doc/man/binary.html) is useful when
+you are dealing with binary data that is not necessarily UTF-8 encoded.
 
 ```iex
 iex> String.to_char_list "Ø"
@@ -33,13 +29,14 @@ iex> :binary.bin_to_list "Ø"
 [195, 152]
 ```
 
-The above example shows the difference; the `String` module returns utf-8
+The above example shows the difference; the `String` module returns UTF-8
 codepoints, while `:binary` deals with raw data bytes.
 
 ## Formatted text output
 
-Elixir does not contain a function similar to C `printf`. An option is relying
-on string interpolation that is built into the language to do this, eg.:
+Elixir does not contain a function similar to `printf` found in C and other
+languages. An option is to rely on string interpolation to achieve similar
+result:
 
 ```iex
 iex> f = Float.to_string(:math.pi, decimals: 3) |> String.rjust(10)
@@ -47,26 +44,27 @@ iex> str = "Pi is approximately given by: #{f}"
 "Pi is approximately given by:      3.142"
 ```
 
-Alternatively, the Erlang standard library functions `:io.format\2` and
-`:io_lib.format\2` may be used. The first formats to terminal output, while the
-second formats to a string. The format specifiers differ from `printf`, refer
-to the Erlang documentation for details.
+Alternatively, the Erlang standard library functions `:io.format/2` and
+`:io_lib.format/2` may be used. The first formats to terminal output, while
+the second formats to an iolist. The format specifiers differ from `printf`,
+[refer to the Erlang documentation for details](http://erlang.org/doc/man/io.html#format-1).
 
 ```iex
 iex> :io.format("Pi is approximately given by:~10.3f~n", [:math.pi])
 Pi is approximately given by:     3.142
 :ok
-iex> str = :io_lib.format("Pi is approximately given by:~10.3f~n", [:math.pi]) |> IO.iodata_to_binary
+iex> to_string :io_lib.format("Pi is approximately given by:~10.3f~n", [:math.pi])
 "Pi is approximately given by:     3.142\n"
 ```
 
 Also note that Erlangs formatting functions require special attention to
-unicode handling.
+Unicode handling.
 
 ## The calendar module
 
-The calendar module contains functions for conversion between local and
-universal time, as well as time conversion functions.
+[The calendar module](http://erlang.org/doc/man/calendar.html) contains
+functions for conversion between local and universal time, as well as
+time conversion functions.
 
 ```iex
 iex> :calendar.day_of_the_week(1980, 6, 28)
@@ -77,12 +75,18 @@ iex> :calendar.now_to_local_time(:erlang.timestamp)
 
 ## The crypto module
 
-The crypto module contains hashing functions, digital signatures, encryption
-and more. The library also contains the `crypto` application that must be
-registered as a dependency to your application for some of this functionality
-to work.
+[The crypto module](http://erlang.org/doc/man/crypto.html) contains hashing
+functions, digital signatures, encryption and more:
 
-To do this, edit your `mix.exs` file to include:
+```iex
+iex> Base.encode16(:crypto.hash(:sha256, "Elixir"))
+"3315715A7A3AD57428298676C5AE465DADA38D951BDFAC9348A8A31E9C7401CB"
+```
+
+The `:crypto` module is not part of the Erlang standard library, but is
+included with the Erlang distribution. This means you must list `:crypto`
+in your project's applications list whenever you use it. To do this,
+edit your `mix.exs` file to include:
 
 ```elixir
   def application do
@@ -90,24 +94,16 @@ To do this, edit your `mix.exs` file to include:
   end
 ```
 
-The `crypto` module is not part of the Erlang standard library, but is included
-with the Erlang distribution. The documentation is found at
-[this page](http://erlang.org/doc/man/crypto.html).
-
-```iex
-iex> Base.encode16(:crypto.hash(:sha256, "Elixir"))
-"3315715A7A3AD57428298676C5AE465DADA38D951BDFAC9348A8A31E9C7401CB"
-```
-
 ## The digraph module
 
-The `digraph` and `digraph_utils` modules contain functions for dealing with
-directed graphs built of vertices and edges. After constructing the graph, the
-algorithms in here will help finding for instance the shortest path between two
-vertices, or loops in the graph.
+[The digraph module](http://erlang.org/doc/man/digraph.html) (as well as
+[digraph_utils](http://erlang.org/doc/man/digraph_utils.html)) contains
+functions for dealing with directed graphs built of vertices and edges.
+After constructing the graph, the algorithms in there will help finding
+for instance the shortest path between two vertices, or loops in the graph.
 
-Note that the functions in :digraph alter the graph structure indirectly as a
-side effect, while returning the added vertices or edges.
+Note that the functions in `:digraph` alter the graph structure indirectly
+as a side effect, while returning the added vertices or edges.
 
 Given three vertices, find the shortest path from the first to the last.
 
@@ -122,19 +118,19 @@ iex> :digraph.get_short_path(digraph, v0, v2)
 [{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}]
 ```
 
-
 ## Erlang Term Storage
 
-The modules `ets` and `dets` handle storage of large data structures in memory
-or on disk respectively.
+The modules [`ets`](http://erlang.org/doc/man/ets.html) and
+[`dets`](http://erlang.org/doc/man/dets.html) handle storage of large
+data structures in memory or on disk respectively.
 
-ETS lets you create a table containing tuples that is owned by a single
-process. For large amounts of data, ETS may be more performant than storing
-data as large Elixir data structures. ETS has some functionality to be used as
-a simple database or key-value store.
+ETS lets you create a table containing tuples. By default, ETS tables
+are protected, which means only the owner process may write to the table
+but any other process can read. ETS has some functionality to be used as
+a simple database, a key-value store or as a cache mechanism.
 
-The functions in the `ets` module will modify the state of the table as a side
-effect.
+The functions in the `ets` module will modify the state of the table as a
+side-effect.
 
 ```iex
 iex> table = :ets.new(:ets_test, [])
@@ -147,12 +143,11 @@ iex> :ets.i(table)
 <3   > {#{name => <<"India">>,population => 1284000000}}
 ```
 
-ETS is described in more detail in it's own section.
-
 ## The math module
 
-The `math` module contains common mathematical operations covering trigonometry,
-exponential and logarithmic functions.
+[The `math` module](http://erlang.org/doc/man/math.html) contains common
+mathematical operations covering trigonometry, exponential and logarithmic
+functions.
 
 ```iex
 iex> angle_45_deg = :math.pi() * 45.0 / 180.0
@@ -164,15 +159,10 @@ iex> :math.log(7.694785265142018e23)
 55.0
 ```
 
-
 ## The queue module
 
-The `queue` is a data structure that allows efficient FIFO (first in first out)
-operation.
-
-A regular Elixir list may not be performant as removing the first element in
-the list requires building a new list with the remaining elements, not reusing
-any data.
+The [`queue` is a data structure](http://erlang.org/doc/man/queue.html)
+that implements (double-ended) FIFO (first-in first-out) queues efficiently:
 
 ```iex
 iex> q = :queue.new
@@ -191,8 +181,8 @@ iex> {_, q} = :queue.out(q)
 
 ## The rand module
 
-This module has functions for returning random values and setting the random
-seed.
+[`rand` has functions](http://erlang.org/doc/man/rand.html) for returning
+random values and setting the random seed.
 
 ```iex
 iex> :rand.uniform()
@@ -204,9 +194,9 @@ iex> :rand.uniform(6)
 6
 ```
 
-## The zlib and zip modules
+## The zip and zlib modules
 
-The `zip` module lets you read and write zip files to and from disk or memory,
+[The `zip` module](http://erlang.org/doc/man/zip.html) lets you read and write zip files to and from disk or memory,
 as well as extracting file information.
 
 This code counts the number of files in a zip file:
@@ -216,7 +206,7 @@ iex> :zip.foldl(fn _, _, _, acc -> acc + 1 end, 0, :binary.bin_to_list("file.zip
 {:ok, 633}
 ```
 
-The `zlib` module deals with data compression in zlib format, as found in the
+[The `zlib` module](http://erlang.org/doc/man/zlib.html) deals with data compression in zlib format, as found in the
 `gzip` command.
 
 ```iex
