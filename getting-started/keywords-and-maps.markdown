@@ -76,7 +76,7 @@ In general, when the keyword list is the last argument of a function, the square
 
 In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
-Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists require the number of items and their order to match:
+Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists requires the number of items and their order to match:
 
 ```iex
 iex> [a: a] = [a: 1]
@@ -203,7 +203,7 @@ iex> users = put_in users[:john].age, 31
  mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}]
 ```
 
-The `update_in/2` macro is similar but allow us to pass a function that controls how the value changes. For example, let's remove "Clojure" from Mary's list of languages:
+The `update_in/2` macro is similar but allows us to pass a function that controls how the value changes. For example, let's remove "Clojure" from Mary's list of languages:
 
 ```iex
 iex> users = update_in users[:mary].languages, &List.delete(&1, "Clojure")
