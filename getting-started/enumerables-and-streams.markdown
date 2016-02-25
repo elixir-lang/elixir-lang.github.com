@@ -62,7 +62,7 @@ iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))
 7500000000
 ```
 
-Find more about the pipe operator [by reading its documentation](/docs/stable/elixir/Kernel.html#|>/2).
+Find more about the pipe operator [by reading its documentation](/docs/stable/elixir/Kernel.html#%7C>/2).
 
 ## Streams
 
