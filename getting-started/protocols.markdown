@@ -117,7 +117,7 @@ If desired, you could come up with your own semantics for a user being blank. No
 
 ## Implementing `Any`
 
-Manually implementing protocols for all structs can quickly become repetitive and tedious.  In such cases, Elixir provides two options: we can explicitly derive the protocol implementation for our types or automatically implement the protocol for all types. In both cases, we need to implement the protocol for `Any`.
+Manually implementing protocols for all types can quickly become repetitive and tedious.  In such cases, Elixir provides two options: we can explicitly derive the protocol implementation for our types or automatically implement the protocol for all types. In both cases, we need to implement the protocol for `Any`.
 
 ### Deriving
 
