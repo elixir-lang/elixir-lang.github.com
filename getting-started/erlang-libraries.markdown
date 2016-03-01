@@ -10,7 +10,7 @@ title: Erlang libraries
 Elixir provides excellent interoperability with Erlang libraries. In fact,
 Elixir discourages simply wrapping Erlang libraries in favor of directly
 interfacing with Erlang code. In this section we will present some of the
-most common and useful Erlang functionality that are not found in Elixir.
+most common and useful Erlang functionality that is not found in Elixir.
 
 As you grow more proficient in Elixir, you may want to explore the Erlang 
 [STDLIB Reference Manual](http://erlang.org/doc/apps/stdlib/index.html) in more
@@ -35,7 +35,7 @@ codepoints, while `:binary` deals with raw data bytes.
 ## Formatted text output
 
 Elixir does not contain a function similar to `printf` found in C and other
-languages. An option is to rely on string interpolation to achieve similar
+languages. An option is to rely on string interpolation to achieve a similar
 result:
 
 ```iex
@@ -57,7 +57,7 @@ iex> to_string :io_lib.format("Pi is approximately given by:~10.3f~n", [:math.pi
 "Pi is approximately given by:     3.142\n"
 ```
 
-Also note that Erlangs formatting functions require special attention to
+Also note that Erlang's formatting functions require special attention to
 Unicode handling.
 
 ## The calendar module
@@ -113,7 +113,6 @@ Given three vertices, find the shortest path from the first to the last.
 ```iex
 iex> digraph = :digraph.new()
 iex> coords = [{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}]
-iex> for c <- coords, do: :digraph.add_vertex(digraph, c)
 iex> [v0, v1, v2] = (for c <- coords, do: :digraph.add_vertex(digraph, c))
 iex> :digraph.add_edge(digraph, v0, v1)
 iex> :digraph.add_edge(digraph, v1, v2)
