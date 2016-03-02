@@ -34,7 +34,7 @@ Elixir has a handful of reserved attributes. Here are just a few of them, the mo
 * `@behaviour` - (notice the British spelling) used for specifying an <abbr title="Open Telecom Platform">OTP</abbr> or user-defined behaviour.
 * `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
 
-`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation. You can read more about [writing documentation in Elixir in our official documentation](/docs/stable/elixir/typespecs.html).
+`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation. You can read more about [writing documentation in Elixir in our official documentation](/docs/stable/elixir/writing-documentation.html).
 
 Let's go back to the `Math` module defined in the previous chapters, add some documentation and save it to the `math.ex` file:
 
