@@ -65,6 +65,14 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <div class="clear"></div>
 
+<h4 class="resource">Elixir School</h4>
+
+<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
+
+Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content is peer-reviewed lessons on various Elixir topics. The lessons are currently available in 8 languages (Chinese, English, Japanese, Portuguese, Russian, Slovak, Spanish and Vietnamese) to make programming Elixir more accessible to non-English speakers.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">Elixir Sips</h4>
@@ -117,3 +125,4 @@ Write code that writes code with Elixir macros. Macros make metaprogramming poss
 This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
 
 <div class="clear"></div>
+
