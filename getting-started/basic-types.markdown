@@ -257,6 +257,7 @@ Throughout the tutorial, we will talk a lot about the head and tail of a list. T
 
 ```iex
 iex> list = [1,2,3]
+[1, 2, 3]
 iex> hd(list)
 1
 iex> tl(list)
