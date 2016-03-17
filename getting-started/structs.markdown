@@ -90,7 +90,7 @@ iex> john.__struct__
 User
 ```
 
-Notice that we referred to structs as **bare** maps because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
+Notice that we referred to structs as **bare** maps because none of the protocols implemented for maps are available for structs. For example, you can neither enumerate nor access a struct:
 
 ```iex
 iex> john = %User{}
