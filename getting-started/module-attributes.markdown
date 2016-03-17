@@ -79,7 +79,7 @@ This section covers built-in attributes. However, attributes can also be used by
 
 ## As constants
 
-Elixir developers will often use module attributes to be used as constants:
+Elixir developers will often use module attributes as constants:
 
 ```elixir
 defmodule MyServer do
