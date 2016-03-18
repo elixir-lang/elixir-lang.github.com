@@ -134,6 +134,7 @@ iex> map = %{n => :one}
 iex> map[n]
 :one
 iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}
+** (CompileError) iex:4: unbound variable ^n
 ```
 
 [The `Map` module](/docs/stable/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:
