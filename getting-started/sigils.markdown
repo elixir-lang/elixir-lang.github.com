@@ -162,14 +162,14 @@ def convert(...)
 
 ## Custom sigils
 
-As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling the `sigil_r` function with a binary and a char list as argument:
+As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling `sigil_r` with a binary and a char list as argument:
 
 ```iex
 iex> sigil_r(<<"foo">>, 'i')
 ~r"foo"i
 ```
 
-We can access the documentation for the `~r` sigil via the `sigil_r` function:
+We can access the documentation for the `~r` sigil via `sigil_r`:
 
 ```iex
 iex> h sigil_r
