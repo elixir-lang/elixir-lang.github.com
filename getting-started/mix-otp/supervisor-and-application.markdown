@@ -326,7 +326,7 @@ Once we perform those changes, our test suite should fail as there is no bucket 
 
 In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervise other supervisors, forming so-called "supervision trees."
 
-Open up `lib/kv/supervisor.ex`, add an additional module attribute for the buckets supervisor name, and change `init/1` to match the following:
+Open up `lib/kv/supervisor.ex` and change `init/1` to match the following:
 
 ```elixir
   def init(:ok) do
