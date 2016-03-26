@@ -55,7 +55,7 @@ defmodule KV.Registry do
   @doc """
   Starts the registry.
   """
-  def start_link() do
+  def start_link do
     GenServer.start_link(__MODULE__, :ok, [])
   end
 
@@ -89,7 +89,7 @@ defmodule KV.Registry do
     if Map.has_key?(names, name) do
       {:noreply, names}
     else
-      {:ok, bucket} = KV.Bucket.start_link()
+      {:ok, bucket} = KV.Bucket.start_link
       {:noreply, Map.put(names, name, bucket)}
     end
   end
@@ -186,11 +186,11 @@ iex> Process.monitor(pid)
 #Reference<0.0.0.551>
 iex> Agent.stop(pid)
 :ok
-iex> flush()
+iex> flush
 {:DOWN, #Reference<0.0.0.551>, :process, #PID<0.66.0>, :normal}
 ```
 
-Note `Process.monitor(pid)` returns a unique reference that allows us to match upcoming messages to that monitoring reference. After we stop the agent, we can `flush()` all messages and notice a `:DOWN` message arrived, with the exact reference returned by monitor, notifying that the bucket process exited with reason `:normal`.
+Note `Process.monitor(pid)` returns a unique reference that allows us to match upcoming messages to that monitoring reference. After we stop the agent, we can `flush/0` all messages and notice a `:DOWN` message arrived, with the exact reference returned by monitor, notifying that the bucket process exited with reason `:normal`.
 
 Let's reimplement the server callbacks to fix the bug and make the test pass. First, we will modify the GenServer state to two dictionaries: one that contains `name -> pid` and another that holds `ref -> name`. Then we need to monitor the buckets on `handle_cast/2` as well as implement a `handle_info/2` callback to handle the monitoring messages. The full server callbacks implementation is shown below:
 
@@ -211,7 +211,7 @@ Let's reimplement the server callbacks to fix the bug and make the test pass. Fi
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
-      {:ok, pid} = KV.Bucket.start_link()
+      {:ok, pid} = KV.Bucket.start_link
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       names = Map.put(names, name, pid)
@@ -257,7 +257,7 @@ Links are bi-directional. If you link two process and one of them crashes, the o
 Returning to our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link()
+{:ok, pid} = KV.Bucket.start_link
 ref = Process.monitor(pid)
 ```
 
