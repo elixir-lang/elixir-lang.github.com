@@ -57,7 +57,7 @@ to your fork and then [submit a **pull
 request**](https://help.github.com/articles/using-pull-requests/). For a nice
 wrap-up on how to open a good pull request have a look at the [Elixir
 contributing
-guide](https://github.com/elixir-lang/elixir/blob/master/CONTRIBUTING.md#pull-requests).
+guide](https://github.com/elixir-lang/elixir/#contributing).
 
 ## License
 
