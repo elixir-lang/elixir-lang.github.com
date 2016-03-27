@@ -69,7 +69,7 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
 
-Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content is peer-reviewed lessons on various Elixir topics. The lessons are currently available in 8 languages (Chinese, English, Japanese, Portuguese, Russian, Slovak, Spanish and Vietnamese) to make programming Elixir more accessible to non-English speakers.
+Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
 
 <div class="clear"></div>
 
