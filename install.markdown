@@ -29,7 +29,7 @@ The preferred option for installing Elixir. Choose your operating system and too
   * Arch Linux (Community repo)
     * Run: `pacman -S elixir`
   * openSUSE (and SLES 11 SP3+)
-    * Add Erlang devel repo: `zypper ar -f obs://devel:languages:erlang/ erlang`
+    * Add Erlang devel repo: `zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang`
     * Run: `zypper in elixir`
   * Gentoo
     * Run: `emerge --ask dev-lang/elixir`
