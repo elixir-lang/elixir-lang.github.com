@@ -233,6 +233,8 @@ iex> x
 42
 ```
 
+Capture syntax `&()`can also be used for creating anonymous functions. This type of syntax will be discussed in Chapter 8.
+
 ## (Linked) Lists
 
 Elixir uses square brackets to specify a list of values. Values can be of any type:
