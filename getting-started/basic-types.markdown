@@ -233,7 +233,7 @@ iex> x
 42
 ```
 
-Capture syntax `&()`can also be used for creating anonymous functions. This type of syntax will be discussed in Chapter 8.
+The capture syntax [`&()`](/docs/stable/elixir/Kernel.SpecialForms.html) can also be used for creating anonymous functions. This type of syntax will be discussed in [Chapter 8](/getting-started/models.html).
 
 ## (Linked) Lists
 
