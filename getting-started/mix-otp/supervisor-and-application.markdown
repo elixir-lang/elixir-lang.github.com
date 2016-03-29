@@ -220,7 +220,7 @@ We have now successfully defined our supervisor which is automatically started (
 Remember however that our `KV.Registry` is both linking and monitoring bucket processes in the `handle_cast/2` callback:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link()
+{:ok, pid} = KV.Bucket.start_link
 ref = Process.monitor(pid)
 ```
 
@@ -267,7 +267,7 @@ defmodule KV.Bucket.Supervisor do
   # A simple module attribute that stores the supervisor name
   @name KV.Bucket.Supervisor
 
-  def start_link() do
+  def start_link do
     Supervisor.start_link(__MODULE__, :ok, name: @name)
   end
 
@@ -296,7 +296,7 @@ Run `iex -S mix` so we can give our new supervisor a try:
 ```iex
 iex> {:ok, _} = KV.Bucket.Supervisor.start_link
 {:ok, #PID<0.70.0>}
-iex> {:ok, bucket} = KV.Bucket.Supervisor.start_bucket()
+iex> {:ok, bucket} = KV.Bucket.Supervisor.start_bucket
 {:ok, #PID<0.72.0>}
 iex> KV.Bucket.put(bucket, "eggs", 3)
 :ok
@@ -311,7 +311,7 @@ Let's change the registry to work with the buckets supervisor by rewriting how b
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
-      {:ok, pid} = KV.Bucket.Supervisor.start_bucket()
+      {:ok, pid} = KV.Bucket.Supervisor.start_bucket
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       names = Map.put(names, name, pid)
