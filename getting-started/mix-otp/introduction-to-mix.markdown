@@ -255,7 +255,7 @@ $ MIX_ENV=prod mix compile
 Or on Windows:
 
 ```batch
-> set /a "MIX_ENV=prod" && mix compile
+> set "MIX_ENV=prod" && mix compile
 ```
 
 ## Exploring
