@@ -101,7 +101,7 @@ defmodule KV.Registry do
       {:ok, _pid} ->
         {:noreply, {names, refs}}
       :error ->
-        {:ok, pid} = KV.Bucket.Supervisor.start_bucket()
+        {:ok, pid} = KV.Bucket.Supervisor.start_bucket
         ref = Process.monitor(pid)
         refs = Map.put(refs, ref, name)
         :ets.insert(names, {name, pid})
@@ -192,7 +192,7 @@ To fix the failure we just need to make `KV.Registry.create/2` synchronous by us
       {:ok, pid} ->
         {:reply, pid, {names, refs}}
       :error ->
-        {:ok, pid} = KV.Bucket.Supervisor.start_bucket()
+        {:ok, pid} = KV.Bucket.Supervisor.start_bucket
         ref = Process.monitor(pid)
         refs = Map.put(refs, ref, name)
         :ets.insert(names, {name, pid})
