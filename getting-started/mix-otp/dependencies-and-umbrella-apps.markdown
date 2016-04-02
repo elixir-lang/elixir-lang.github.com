@@ -277,7 +277,7 @@ In this chapter we have learned more about Mix dependencies and umbrella project
 
 In the future, you are going to write applications and you will notice they can be extracted into a concise unit that can be used by different projects. In such cases, using Git or Hex dependencies is the way to go.
 
-Here are a couple questions you can ask yourself when working with dependencies. Start with: does this application makes sense outside this project?
+Here are a couple questions you can ask yourself when working with dependencies. Start with: does this application make sense outside this project?
 
 * If no, use an umbrella project with umbrella children.
 * If yes, can this project be shared outside your company / organization?
