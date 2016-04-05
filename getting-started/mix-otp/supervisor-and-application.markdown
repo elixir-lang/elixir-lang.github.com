@@ -356,7 +356,7 @@ We should consider moving to another supervision strategy like `:one_for_all` or
   end
 ```
 
-If the registry worker crashes, both registry and bucket supervisor is restarted. If the bucket supervisor crashes, only the bucket supervisor is restared.
+If the registry worker crashes, both registry and bucket supervisor is restarted. If the bucket supervisor crashes, only the bucket supervisor is restarted.
 
 There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](/docs/stable/elixir/Supervisor.html) and [`Supervisor.Spec`](/docs/stable/elixir/Supervisor.Spec.html) modules.
 
