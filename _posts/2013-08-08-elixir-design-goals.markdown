@@ -145,7 +145,7 @@ Many language constructs are also inspired by their Erlang counter-parts, like s
 tuple = { 1, 2, 3 }
 
 # Adding two lists
-[1,2,3] ++ [4,5,6]
+[1, 2, 3] ++ [4, 5, 6]
 
 # Case
 case expr do
@@ -161,7 +161,7 @@ maps to Erlang:
 Tuple = { 1, 2, 3 }.
 
 % Adding two lists
-[1,2,3] ++ [4,5,6].
+[1, 2, 3] ++ [4, 5, 6].
 
 % Case
 case Expr of
@@ -189,17 +189,17 @@ And much more.
 Most of the features above provide their own extensibility mechanisms, too. For example, take the `Enum` module. The `Enum` module allow us to enumerate the built-in ranges, lists, sets, etc:
 
 ```elixir
-list = [1,2,3]
+list = [1, 2, 3]
 Enum.map list, fn(x) -> x * 2 end
-#=> [2,4,6]
+#=> [2, 4, 6]
 
 range = 1..3
 Enum.map range, fn(x) -> x * 2 end
-#=> [2,4,6]
+#=> [2, 4, 6]
 
-set = HashSet.new [1,2,3]
+set = HashSet.new [1, 2, 3]
 Enum.map set, fn(x) -> x * 2 end
-#=> [2,4,6]
+#=> [2, 4, 6]
 ```
 
 Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](/docs/stable/elixir/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.

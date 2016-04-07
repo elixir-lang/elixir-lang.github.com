@@ -212,7 +212,7 @@ As in previous Elixir versions, there is also support for a bitstring generator.
 ```iex
 iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>
 iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
-[{213,45,132}, {64,76,32}, {76,0,0}, {234,32,15}]
+[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
 ```
 
 By default, a comprehension returns a list as a result. However the result of a comprehension can be inserted into different data structures by passing the `:into` option. For example, we can use bitstring generators with the `:into` option to easily remove all spaces in a string:

@@ -178,7 +178,7 @@ iex> _
 Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:
 
 ```iex
-iex> length([1,[2],3]) = 3
+iex> length([1, [2], 3]) = 3
 ** (CompileError) iex:1: illegal pattern
 ```
 

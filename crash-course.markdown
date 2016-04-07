@@ -162,13 +162,13 @@ Elixir allows you to omit parentheses in function calls, Erlang does not.
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
 ```erlang
-lists:last([1,2]).
+lists:last([1, 2]).
 ```
 
 to invoke the `last` function from the `List` module. In Elixir, use the dot `.` in place of the colon `:`
 
 ```elixir
-List.last([1,2])
+List.last([1, 2])
 ```
 
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
@@ -526,7 +526,7 @@ sum(1, 2).
 %=> 3
 
 sum([1], [2]).
-%=> [1,2]
+%=> [1, 2]
 
 sum("a", "b").
 %=> "ab"
@@ -551,7 +551,7 @@ sum 1, 2
 #=> 3
 
 sum [1], [2]
-#=> [1,2]
+#=> [1, 2]
 
 sum "a", "b"
 #=> "ab"
@@ -613,7 +613,7 @@ F([]).
 %=> "Empty"
 
 F({a, b}).
-%=> "All your {a,b} are belong to us"
+%=> "All your {a, b} are belong to us"
 ```
 
 **Elixir**

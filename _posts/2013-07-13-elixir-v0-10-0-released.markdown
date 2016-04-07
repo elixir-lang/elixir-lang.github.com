@@ -13,17 +13,17 @@ Elixir v0.10.0 is released with support for streams, sets and many improvements 
 The default mechanism for working with collections in Elixir is the `Enum` module. With it, you can map over ranges, lists, sets, dictionaries and any other structure as long as it implements the `Enumerable` protocol:
 
 ```elixir
-Enum.map([1,2,3], fn(x) -> x * 2 end)
-#=> [2,4,6]
+Enum.map([1, 2, 3], fn(x) -> x * 2 end)
+#=> [2, 4, 6]
 ```
 
 The `Enum` module performs eager evaluation. Consider the following example:
 
 ```elixir
-[1,2,3]
+[1, 2, 3]
   |> Enum.take_while(fn(x) -> x < 3 end)
   |> Enum.map(fn(x) -> x * 2 end)
-#=> [2,4]
+#=> [2, 4]
 ```
 
 In the example above, we enumerate the items in list once, taking all elements that are less than 3, and then we enumerate the remaining elements again, multiplying them by two. In order to retrieve the final result, we have created one intermediate list. As we add more operations, more intermediate lists will be generated.
@@ -31,7 +31,7 @@ In the example above, we enumerate the items in list once, taking all elements t
 This approach is simple and efficient for the majority of the cases but, when working with large collections, we can generate many, possibly large, intermediate lists affecting performance. That's one of the problems Streams solve. Let's rewrite the example above using Streams:
 
 ```elixir
-[1,2,3]
+[1, 2, 3]
   |> Stream.take_while(fn(x) -> x < 3 end)
   |> Stream.map(fn(x) -> x * 2 end)
 #=> #Stream.Lazy<...>

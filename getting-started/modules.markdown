@@ -116,9 +116,9 @@ defmodule Math do
   end
 end
 
-IO.puts Math.zero?(0)       #=> true
-IO.puts Math.zero?(1)       #=> false
-IO.puts Math.zero?([1,2,3]) #=> ** (FunctionClauseError)
+IO.puts Math.zero?(0)         #=> true
+IO.puts Math.zero?(1)         #=> false
+IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
 ```
 
 Giving an argument that does not match any of the clauses raises an error.
