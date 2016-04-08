@@ -143,7 +143,7 @@ iex> "hellö #{:world}"
 "hellö world"
 ```
 
-Strings can have line breaks in them or introduce them using escape sequences:
+Strings can have line breaks in them. You can introduce them using escape sequences:
 
 ```iex
 iex> "hello
