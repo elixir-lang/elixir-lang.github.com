@@ -178,7 +178,7 @@ Finally, note `cond` considers any value besides `nil` and `false` to be true:
 
 ```iex
 iex> cond do
-...>   hd([1,2,3]) ->
+...>   hd([1, 2, 3]) ->
 ...>     "1 is considered as true"
 ...> end
 "1 is considered as true"

@@ -186,7 +186,7 @@ defmodule Interleave do
   end
 end
 
-Interleave.interleave([1,2], [:a, :b, :c, :d])
+Interleave.interleave([1, 2], [:a, :b, :c, :d])
 #=> [1, :a, 2, :b, :c, :d]
 ```
 

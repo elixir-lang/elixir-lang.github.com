@@ -167,7 +167,7 @@ Elixir ships with some built-in protocols. In previous chapters, we have discuss
 
 ```iex
 iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
-[2,4,6]
+[2, 4, 6]
 iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 6
 ```
@@ -205,7 +205,7 @@ The `Inspect` protocol is the protocol used to transform any data structure into
 
 ```iex
 iex> {1, 2, 3}
-{1,2,3}
+{1, 2, 3}
 iex> %User{}
 %User{name: "john", age: 27}
 ```

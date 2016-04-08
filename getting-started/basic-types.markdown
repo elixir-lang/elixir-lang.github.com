@@ -258,7 +258,7 @@ iex> [1, true, 2, false, 3, true] -- [true, false]
 Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of a list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
 
 ```iex
-iex> list = [1,2,3]
+iex> list = [1, 2, 3]
 iex> hd(list)
 1
 iex> tl(list)

@@ -55,11 +55,11 @@ A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implem
 Elixir v0.9.0 changes its main abstraction for enumeration from iterators to reducers. Before Elixir v0.9.0, when you invoked:
 
 ```elixir
-Enum.map([1,2,3], fn(x) -> x * x end)
+Enum.map([1, 2, 3], fn(x) -> x * x end)
 #=> [1, 4, 9]
 ```
 
-It asked the `Enum.Iterator` protocol for instructions on how to iterate the list `[1,2,3]`. This iteration happened by retrieving each item in the list, one by one, until there were no items left.
+It asked the `Enum.Iterator` protocol for instructions on how to iterate the list `[1, 2, 3]`. This iteration happened by retrieving each item in the list, one by one, until there were no items left.
 
 This approach posed many problems:
 
@@ -91,7 +91,7 @@ The implementation above works as a simple `reduce` function (also called `fold`
 
 ```elixir
 # Sum all elements in a list
-Enumerable.reduce([1,2,3], 0, fn(x, acc) -> x + acc end)
+Enumerable.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
 #=> 6
 ```
 
