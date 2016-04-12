@@ -14,7 +14,7 @@ The idea of the parallel compiler is very simple: for each file we want to compi
 
 In Elixir, we could write this code as follows:
 
-    def spawn_compilers([current|files], output) do
+    def spawn_compilers([current | files], output) do
       parent = Process.self()
       child  = spawn_link(fn ->
         :elixir_compiler.file_to_path(current, output)
@@ -32,7 +32,7 @@ In Elixir, we could write this code as follows:
       :done
     end
 
-In the first line, we define a function named `spawn_compilers` that receives two arguments, the first is a list of files to compile and the second is a string telling us where to write the compiled file. The first argument is represented as a list with head and tail (`[current|files]`) where the top of the list is assigned to `current` and the remaining items to `files`. If the list is empty, the first clause of `spawn_compilers` is not going to match, the clause `spawn_compilers([], _output)` defined at the end will instead.
+In the first line, we define a function named `spawn_compilers` that receives two arguments, the first is a list of files to compile and the second is a string telling us where to write the compiled file. The first argument is represented as a list with head and tail (`[current | files]`) where the top of the list is assigned to `current` and the remaining items to `files`. If the list is empty, the first clause of `spawn_compilers` is not going to match, the clause `spawn_compilers([], _output)` defined at the end will instead.
 
 Inside `spawn_compilers`, we first retrieve the PID of the current process with `Process.self` (remember we are talking about Erlang processes/actors and not OS processes) and then proceed to spawn a new process to execute the given function in parallel. Spawning a new process is done with the `spawn_link` function.
 
@@ -121,13 +121,13 @@ Notice that we have two small additions. First we store the `:elixir_parent_comp
 
 Second, our main process can now receive a new `{ :waiting, child, module }` message, so we need to extend it to account for those messages. Not only that, we need to control which PIDs we have spawned so we can notify them whenever a new module is compiled, forcing us to add a new argument to the `spawn_compilers` function. `spawn_compilers` would then be rewritten as follows:
 
-    def spawn_compilers([current|files], output, stack) do
+    def spawn_compilers([current | files], output, stack) do
       parent = Process.self()
       child  = spawn_link(fn ->
         :elixir_compiler.file_to_path(current, output)
         send parent, { :compiled, Process.self() }
       end)
-      wait_for_messages(files, output, [child|stack])
+      wait_for_messages(files, output, [child | stack])
     end
 
     # No more files and stack is empty, we are done
