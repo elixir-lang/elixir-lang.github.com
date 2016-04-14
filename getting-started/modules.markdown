@@ -111,7 +111,7 @@ defmodule Math do
     true
   end
 
-  def zero?(x) when is_number(x) do
+  def zero?(x) when is_integer(x) do
     false
   end
 end
@@ -119,6 +119,7 @@ end
 IO.puts Math.zero?(0)         #=> true
 IO.puts Math.zero?(1)         #=> false
 IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
+IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 ```
 
 Giving an argument that does not match any of the clauses raises an error.
@@ -128,7 +129,7 @@ Similar to constructs like `if`, named functions support both `do:` and `do`/`en
 ```elixir
 defmodule Math do
   def zero?(0), do: true
-  def zero?(x) when is_number(x), do: false
+  def zero?(x) when is_integer(x), do: false
 end
 ```
 
