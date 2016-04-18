@@ -196,7 +196,7 @@ This is similar to the mistake we made when we called `KV.Bucket.start_link/0` s
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
-We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already come with a solution: a simple one for one supervisor with temporary workers that we can just use in our supervision tree!
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor with temporary workers that we can just use in our supervision tree!
 
 Let's change `start/2` once again, to add a supervisor to our tree:
 
