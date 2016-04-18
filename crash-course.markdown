@@ -347,9 +347,9 @@ Elixir supports a literal syntax for regular expressions. Such syntax allows reg
 **Erlang**
 
 ```erlang
-{ ok, Pattern } = re:compile("abc\\s").
+{ok, Pattern} = re:compile("abc\\s").
 re:run("abc ", Pattern).
-%=> { match, ["abc "] }
+%=> {match,[{0,4}]}
 ```
 
 **Elixir**

@@ -91,7 +91,7 @@ iex> a
 A list also supports matching on its own head and tail:
 
 ```iex
-iex> [head | tail] = [1, 2, 3]
+iex> [head|tail] = [1, 2, 3]
 [1, 2, 3]
 iex> head
 1
@@ -106,7 +106,7 @@ iex> [h|t] = []
 ** (MatchError) no match of right hand side value: []
 ```
 
-The `[head | tail]` format is not only used on pattern matching but also for prepending items to a list:
+The `[head|tail]` format is not only used on pattern matching but also for prepending items to a list:
 
 ```iex
 iex> list = [1, 2, 3]
