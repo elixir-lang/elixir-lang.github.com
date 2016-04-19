@@ -251,7 +251,7 @@ One thing to keep in mind when using `do/end` blocks is they are always bound to
 iex> Integer.to_string if true do
 ...>  1 + 2
 ...> end
-** (CompileError) undefined function if/1
+** (CompileError) undefined function: if/1
 ```
 
 Would be parsed as:
@@ -260,7 +260,7 @@ Would be parsed as:
 iex> Integer.to_string(if true) do
 ...>  1 + 2
 ...> end
-** (CompileError) undefined function if/1
+** (CompileError) undefined function: if/1
 ```
 
 Which leads to an undefined function error as Elixir attempts to invoke `if/1`. Adding explicit parentheses is enough to resolve the ambiguity:
