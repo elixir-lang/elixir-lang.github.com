@@ -159,7 +159,7 @@ defimpl Blank, for: Any do
 end
 ```
 
-Now all data types (including structs) that we have not implemented the `Blank` protocol will be considered non-blank. In contrast to `@derive`, falling back to `Any` is opt-out: all data types get a pre-defined behaviour unless they provide their own implementation of the protocol. Which technique is best depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
+Now all data types (including structs) that have not implemented the `Blank` protocol will be considered non-blank. In contrast to `@derive`, falling back to `Any` is opt-out: all data types get a pre-defined behaviour unless they provide their own implementation of the protocol. Which technique is best depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
 
 ## Built-in protocols
 
