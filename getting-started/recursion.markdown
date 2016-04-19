@@ -56,7 +56,7 @@ Let's now see how we can use the power of recursion to sum a list of numbers:
 
 ```elixir
 defmodule Math do
-  def sum_list([head|tail], accumulator) do
+  def sum_list([head | tail], accumulator) do
     sum_list(tail, head + accumulator)
   end
 
@@ -68,9 +68,9 @@ end
 IO.puts Math.sum_list([1, 2, 3], 0) #=> 6
 ```
 
-We invoke `sum_list` with the list `[1, 2, 3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1, 2, 3]` matches against `[head|tail]` which binds `head` to `1` and `tail` to `[2, 3]`; `accumulator` is set to `0`.
+We invoke `sum_list` with the list `[1, 2, 3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1, 2, 3]` matches against `[head | tail]` which binds `head` to `1` and `tail` to `[2, 3]`; `accumulator` is set to `0`.
 
-Then, we add the head of the list to the accumulator `head + accumulator` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[head|tail]` until the list is empty, as seen below:
+Then, we add the head of the list to the accumulator `head + accumulator` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[head | tail]` until the list is empty, as seen below:
 
 ```elixir
 sum_list [1, 2, 3], 0
@@ -87,8 +87,8 @@ What if we instead want to double all of the values in our list?
 
 ```elixir
 defmodule Math do
-  def double_each([head|tail]) do
-    [head * 2|double_each(tail)]
+  def double_each([head | tail]) do
+    [head * 2 | double_each(tail)]
   end
 
   def double_each([]) do

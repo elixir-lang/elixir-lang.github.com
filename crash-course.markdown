@@ -461,7 +461,7 @@ Pattern matching in Elixir is based on Erlang's implementation and in general is
 **Erlang**
 
 ```erlang
-loop_through([H|T]) ->
+loop_through([H | T]) ->
   io:format('~p~n', [H]),
   loop_through(T);
 
@@ -472,7 +472,7 @@ loop_through([]) ->
 **Elixir**
 
 ```elixir
-def loop_through([h|t]) do
+def loop_through([h | t]) do
   IO.inspect h
   loop_through t
 end

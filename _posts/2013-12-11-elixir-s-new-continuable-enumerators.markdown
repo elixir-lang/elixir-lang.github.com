@@ -152,7 +152,7 @@ function.
 ```elixir
 defmodule Interleave do
   def interleave(a, b) do
-    step = fn x, acc -> { :suspend, [x|acc] } end
+    step = fn x, acc -> { :suspend, [x | acc] } end
     af = &Enumerable.reduce(a, &1, step)
     bf = &Enumerable.reduce(b, &1, step)
     do_interleave(af, bf, []) |> :lists.reverse()

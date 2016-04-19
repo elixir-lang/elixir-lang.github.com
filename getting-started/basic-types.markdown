@@ -348,7 +348,7 @@ What is the difference between lists and tuples?
 Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. We call each pair of value and pointer a **cons cell**:
 
 ```iex
-iex> list = [1|[2|[3|[]]]]
+iex> list = [1 | [2 | [3 | []]]]
 [1, 2, 3]
 ```
 

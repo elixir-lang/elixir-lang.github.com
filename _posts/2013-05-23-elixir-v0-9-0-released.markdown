@@ -77,7 +77,7 @@ defimpl Enumerable, for: List do
     do_reduce(list, acc, fun)
   end
 
-  defp do_reduce([h|t], acc, fun) do
+  defp do_reduce([h | t], acc, fun) do
     do_reduce(t, fun.(h, acc), fun)
   end
 
@@ -101,7 +101,7 @@ The `Enum.map/2` we have used above is now implemented in terms of this reducing
 defmodule Enum do
   def map(collection, fun) do
     Enumerable.reduce(collection, [], fn(x, acc) ->
-      [fun.(x, acc)|acc]
+      [fun.(x, acc) | acc]
     end) |> reverse
   end
 end
