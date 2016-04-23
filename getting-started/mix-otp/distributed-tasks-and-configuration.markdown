@@ -145,7 +145,7 @@ Our first distributed task simply retrieves the name of the node the task is run
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
 %Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
 iex> Task.await(task)
-{:ok, :"foo@computer-name"}
+:"foo@computer-name"
 ```
 
 The difference is that anonymous functions requires the target node to have exactly the same code version as the caller. Using module, function and arguments is more robust because you only need to find a function with matching arity in the given module.
@@ -168,7 +168,7 @@ defmodule KV.Router do
 
     # Try to find an entry in the table or raise
     entry =
-      Enum.find(table, fn {enum, node} ->
+      Enum.find(table, fn {enum, _node} ->
         first in enum
       end) || no_entry_error(bucket)
 
