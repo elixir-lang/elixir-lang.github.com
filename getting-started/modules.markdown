@@ -124,7 +124,7 @@ IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 
 Giving an argument that does not match any of the clauses raises an error.
 
-Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is just a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#do-end-blocks). For example, we can edit `math.exs` to look like this:
+Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is just a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#doend-blocks). For example, we can edit `math.exs` to look like this:
 
 ```elixir
 defmodule Math do
