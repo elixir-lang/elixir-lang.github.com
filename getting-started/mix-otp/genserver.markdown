@@ -44,7 +44,7 @@ We will use a [GenServer](/docs/stable/elixir/GenServer.html) to create a regist
 
 ## Our first GenServer
 
-A GenServer is implemented in two parts: the client API and the server callbacks, either in a single module or in two different modules implementing client API in one and server callbacks in the other. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we use a single module for both the server callbacks and client API. Create a new file at `lib/kv/registry.ex` with the following contents:
+A GenServer is implemented in two parts: the client API and the server callbacks, either in a single module or in two different modules implementing client API in one and server callbacks in the other. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we use a single module for both the server callbacks and client API. Create a new file at `kv/lib/registry.ex` with the following contents:
 
 ```elixir
 defmodule KV.Registry do
