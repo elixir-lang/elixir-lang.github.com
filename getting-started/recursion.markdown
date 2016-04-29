@@ -13,7 +13,7 @@ Due to immutability, loops in Elixir (as in any functional programming language)
 
 ```javascript
 for(i = 0; i < array.length; i++) {
-  array[i] = array[i] * 2
+  array[i] = array[i] * 2;
 }
 ```
 
