@@ -209,7 +209,7 @@ At first, the process map has no keys, so sending a `:get` message and then flus
 
 ```iex
 iex> send pid, {:put, :hello, :world}
-#PID<0.62.0>
+{:put, :hello, :world}
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
 iex> flush
