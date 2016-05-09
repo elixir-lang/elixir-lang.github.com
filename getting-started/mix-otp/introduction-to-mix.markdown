@@ -242,7 +242,7 @@ def project do
 end
 ```
 
-When you compile your source code, Elixir compiles artifacts to the `_build` directory. However, in many occasions to avoid unecessary copying, Elixir will create filesystem links from `_build` to actual source files. When true, `:build_embedded` disables this behaviour as it aims to provide everything you need to run your application inside `_build`.
+When you compile your source code, Elixir compiles artifacts to the `_build` directory. However, in many occasions to avoid unnecessary copying, Elixir will create filesystem links from `_build` to actual source files. When true, `:build_embedded` disables this behaviour as it aims to provide everything you need to run your application inside `_build`.
 
 Similarly, when true, the `:start_permanent` option starts your application in permanent mode, which means the Erlang VM will crash if your application's supervision tree shuts down. Notice we don't want this behaviour in dev and test because it is useful to keep the VM instance running in those environments for troubleshooting purposes.
 
