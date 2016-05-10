@@ -159,7 +159,7 @@ It is exactly this supervision system that makes constructs like `try/catch` and
 
 ## After
 
-Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and guarantee it will be closed (even if something goes wrong) with a `try/after` block:
+Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and use an `after` clause to close it--even if something goes wrong:
 
 ```iex
 iex> {:ok, file} = File.open "sample", [:utf8, :write]
@@ -171,6 +171,11 @@ iex> try do
 ...> end
 ** (RuntimeError) oops, something went wrong
 ```
+
+The `after` clause will be executed regardless of whether or not the
+tried block succeeds. Note, however, that if a linked process exits,
+this process will exit and the `after` clause will not get run. Thus,
+`after` provides only a soft guarantee.
 
 Sometimes you may want to wrap the entire body of a function in a `try` construct, often to guarantee some code will be executed afterwards. In such cases, Elixir allows you to omit the `try` line:
 
