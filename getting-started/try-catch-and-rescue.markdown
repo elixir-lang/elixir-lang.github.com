@@ -172,13 +172,9 @@ iex> try do
 ** (RuntimeError) oops, something went wrong
 ```
 
-The `after` clause will be executed regardless of whether or not the
-tried block succeeds. Note, however, that if a linked process exits,
-this process will exit and the `after` clause will not get run. Thus,
-`after` provides only a soft guarantee. In this case, `after` works just
-fine, because the opened file is also linked to the current process and
-will always get closed if the current process crashes, independent of the
-`after` clause.
+The `after` clause will be executed regardless of whether or not the tried block succeeds. Note, however, that if a linked process exits,
+this process will exit and the `after` clause will not get run. Thus `after` provides only a soft guarantee. Luckily, files in Elixir are also linked to the current processes and therefore they will always get closed if the current process crashes, independent of the
+`after` clause. You will find the same to be true for other resources like ETS tables, sockets, ports and more.
 
 Sometimes you may want to wrap the entire body of a function in a `try` construct, often to guarantee some code will be executed afterwards. In such cases, Elixir allows you to omit the `try` line:
 
