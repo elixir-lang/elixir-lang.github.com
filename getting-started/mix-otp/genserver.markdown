@@ -147,7 +147,7 @@ end
 
 Our test should pass right out of the box!
 
-We don't need to explictly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
+We don't need to explicitly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
   ## Client API
