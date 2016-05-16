@@ -84,7 +84,7 @@ Macros are chunks of code that are executed and expanded at compilation time. Th
 iex> Integer.is_odd(3)
 ** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
 iex> require Integer
-nil
+Integer
 iex> Integer.is_odd(3)
 true
 ```
@@ -99,7 +99,7 @@ We use `import` whenever we want to easily access functions or macros from other
 
 ```iex
 iex> import List, only: [duplicate: 2]
-nil
+List
 iex> duplicate :ok, 3
 [:ok, :ok, :ok]
 ```
