@@ -86,7 +86,7 @@ defmodule KV.Registry do
 
   ## Server callbacks
 
-  def init(table) do
+  def init(:ok, table) do
     # 3. We have replaced the names map by the ETS table
     names = :ets.new(table, [:named_table, read_concurrency: true])
     refs  = %{}
