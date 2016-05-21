@@ -96,7 +96,7 @@ defmodule KV.Registry do
 end
 ```
 
-The first function is `start_link/0`, which starts a new GenServer passing three arguments:
+The first function is `start_link/3`, which starts a new GenServer passing three arguments:
 
 1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
 
