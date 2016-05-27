@@ -234,9 +234,9 @@ Using processes around state and name registering are very common patterns in El
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)
 {:ok, #PID<0.72.0>}
-iex> Agent.update(pid, fn map -> Map.put(map, :hello, :world) end)
+iex> Agent.update(pid, &Map.put(&1, :hello, :world))
 :ok
-iex> Agent.get(pid, fn map -> Map.get(map, :hello) end)
+iex> Agent.get(pid, &Map.get(&1, :hello))
 :world
 ```
 
