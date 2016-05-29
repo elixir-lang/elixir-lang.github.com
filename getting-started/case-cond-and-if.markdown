@@ -263,7 +263,7 @@ iex> is_number(if true) do
 ** (CompileError) undefined function: is_number/2
 ```
 
-which leads to an undefined function error as Elixir attempts to invoke `is_number/1`, but passing it *two* arguments (the `if true` expression - which would throw an undefined function error itself as `if` needs a second argument, the `do/end` block - and the `do/end` block). Adding explicit parentheses is enough to resolve the ambiguity:
+which leads to an undefined function error as Elixir attempts to invoke `is_number/1`, but passing it *two* arguments (the `if true` expression - which would throw an undefined function error itself as `if` needs a second argument - the `do/end` block). Adding explicit parentheses is enough to resolve the ambiguity:
 
 ```iex
 iex> is_number(if true do
