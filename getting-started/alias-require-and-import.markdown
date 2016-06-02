@@ -166,7 +166,7 @@ defmodule Example do
 end
 ```
 
-With this we are almost finishing our tour about Elixir modules. The last topic to cover is module attributes.
+With this we have almost finished our tour of Elixir modules. The last topic to cover is module attributes.
 
 ## Understanding Aliases
 
