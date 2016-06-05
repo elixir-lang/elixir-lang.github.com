@@ -35,7 +35,7 @@ A variable can only be assigned on the left side of `=`:
 
 ```iex
 iex> 1 = unknown
-** (RuntimeError) undefined function: unknown/0
+** (CompileError) iex:1: undefined function unknown/0
 ````
 
 Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but such a function does not exist.
