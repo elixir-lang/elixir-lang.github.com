@@ -142,6 +142,14 @@ iex> f.(-1, 3)
 
 The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised.
 
+```iex
+iex> f2 = fn
+...>   x, y when x > 0 -> x + y
+...>   x, y, z -> x * y + z
+...> end
+** (CompileError) iex:1: cannot mix clauses with different arities in function definition
+```
+
 ## `cond`
 
 `case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:
@@ -160,7 +168,7 @@ iex> cond do
 
 This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
 
-If none of the conditions return true, an error is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
+If none of the conditions return true, an error(`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 
 ```iex
 iex> cond do
