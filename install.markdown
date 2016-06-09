@@ -49,7 +49,7 @@ The preferred option for installing Elixir. Choose your operating system and too
 ### Windows
 
   * Web installer
-    * [Download the installer](https://s3.amazonaws.com/s3.hex.pm/elixir-websetup.exe)
+    * [Download the installer](https://repo.hex.pm/elixir-websetup.exe)
     * Click next, next, ..., finish
   * Chocolatey
     * `cinst elixir`
