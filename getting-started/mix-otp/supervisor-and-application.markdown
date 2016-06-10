@@ -304,20 +304,41 @@ iex> KV.Bucket.get(bucket, "eggs")
 3
 ```
 
-Let's change the registry to work with the buckets supervisor by rewriting how buckets are started:
+Let's change the registry to work with the buckets supervisor by rewriting how buckets are started. We will modify the `GenServer` state to be a tuple of `{names, refs}` instead of a lone `names` map. In this new state, `names` will map a `name` to its `PID`, while `refs` will link a supervisor's monitoring process to a `name`.
+
+First, we must initialize the registry with the new state:
 
 ```elixir
-  def handle_cast({:create, name}, {names, refs}) do
-    if Map.has_key?(names, name) do
-      {:noreply, {names, refs}}
-    else
-      {:ok, pid} = KV.Bucket.Supervisor.start_bucket
-      ref = Process.monitor(pid)
-      refs = Map.put(refs, ref, name)
-      names = Map.put(names, name, pid)
-      {:noreply, {names, refs}}
-    end
+## Server Callbacks
+def init(:ok) do
+  names = Map.new
+  refs = Map.new
+  {:ok, {names, refs}}
+end
+```
+
+Now, whenever a bucket created and then mapped to `KV.Registry`'s state inside `handle_cast`, we will also reference its monitoring process:
+
+```elixir
+def handle_cast({:create, name}, {names, refs}) do
+  if Map.has_key?(names, name) do
+    {:noreply, {names, refs}}
+  else
+    {:ok, pid} = KV.Bucket.Supervisor.start_bucket
+    ref = Process.monitor(pid)
+    refs = Map.put(refs, ref, name)
+    names = Map.put(names, name, pid)
+    {:noreply, {names, refs}}
   end
+end
+```
+
+Lastly, don't forget to update `handle_call` to work with the new state definition:
+
+```elixir
+def handle_call({:lookup, name}, _from, {names, refs}) do
+  {:reply, Map.fetch(names, name), {names, refs}}
+end
 ```
 
 Once we perform those changes, our test suite should fail as there is no bucket supervisor. Instead of directly starting the bucket supervisor on every test, let's automatically start it as part of our main supervision tree.
