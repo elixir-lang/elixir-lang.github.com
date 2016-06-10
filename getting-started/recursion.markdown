@@ -9,10 +9,10 @@ title: Recursion
 
 ## Loops through recursion
 
-Due to immutability, loops in Elixir (as in any functional programming language) are written differently from imperative languages. For example, in an imperative language like JavaScript, one would write:
+Due to immutability, loops in Elixir (as in any functional programming language) are written differently from imperative languages. For example, in an imperative language like C, one would write:
 
-```javascript
-for(i = 0; i < array.length; i++) {
+```c
+for(i = 0; i < sizeof(array); i++) {
   array[i] = array[i] * 2;
 }
 ```
