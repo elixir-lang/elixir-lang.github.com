@@ -341,9 +341,9 @@ Open up `lib/kv/supervisor.ex` and change `init/1` to match the following:
 
 This time we have added a supervisor as child, starting it with no arguments. Re-run the test suite and now all tests should pass.
 
-Since we have added more children to the supervisor, it is also important to evaluate if the `:one_for_one` strategy is still correct. One flaw that shows up right away is the relationship between registry and buckets supervisor. If the registry dies, the buckets supervisor must die too, because once the registry dies all information linking the bucket name to the bucket process is lost. If the buckets supervisor is kept alive, it would be impossible to reach those buckets.
+Since we have added more children to the supervisor, it is also important to evaluate if the `:one_for_one` supervision strategy is still correct. One flaw that shows up right away is the relationship between the `KV.Registry` worker process and the `KV.Bucket.Supervisor` supervisor process. If `KV.Registry` dies, all information linking `KV.Bucket` names to `KV.Bucket` processes is lost, and therefore `KV.Bucket.Supervisor` must die too- otherwise, the `KV.Bucket` processes it manages would be orphaned.
 
-We should consider moving to another supervision strategy like `:one_for_all` or `:rest_for_one`. The `:one_for_all` strategy kills and restarts all children whenever one of the children die. This would suit our case but may be too harsh as there is no need to crash the registry once the bucket supervisor dies since the registry supervises every bucket and would be able to clean itself up. That's when the `:rest_for_one` strategy is handy: `:rest_for_one` will only restart the crashed process along side the rest of the tree. Let's rewrite our supervision tree to use it:
+In light of this observation, we should consider moving to another supervision strategy. Two likely candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:one_for_all` strategy will kill and restart all of its children processes whenever any one of them dies. At first glance, this would appear to suit our use case, but it also seems a little heavy-handed, because `KV.Registry` is perfectly capable of cleaning itself up if `KV.Bucket.Supervisor` dies. In this case, the `:rest_for_one` strategy comes in handy- when a child process crashes, the supervisor will only kill and restart child processes which were started *after* the crashed child. Let's rewrite our supervision tree to use this strategy instead:
 
 ```elixir
   def init(:ok) do
@@ -356,7 +356,7 @@ We should consider moving to another supervision strategy like `:one_for_all` or
   end
 ```
 
-If the registry worker crashes, both registry and bucket supervisor is restarted. If the bucket supervisor crashes, only the bucket supervisor is restarted.
+Now, if the registry worker crashes, both the registry and the "rest" of `KV.Supervisor`'s children (i.e. `KV.Bucket.Supervisor`) will be restarted. However, if `KV.Bucket.Supervisor` crashes, `KV.Registry` will not be restarted, because it was started prior to `KV.Bucket.Supervisor`.
 
 There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](/docs/stable/elixir/Supervisor.html) and [`Supervisor.Spec`](/docs/stable/elixir/Supervisor.Spec.html) modules.
 
