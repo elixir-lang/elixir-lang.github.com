@@ -106,7 +106,10 @@ The most common form of spawning in Elixir is actually via `spawn_link/1`. Befor
 iex> spawn fn -> raise "oops" end
 #PID<0.58.0>
 
-[error] Error in process <0.58.0> with exit value: ...
+[error] Process #PID<0.58.00> raised an exception
+** (RuntimeError) oops
+    :erlang.apply/2
+
 ```
 
 It merely logged an error but the spawning process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
@@ -156,17 +159,16 @@ iex(1)> Task.start fn -> raise "oops" end
 {:ok, #PID<0.55.0>}
 
 15:22:33.046 [error] Task #PID<0.55.0> started from #PID<0.53.0> terminating
+** (RuntimeError) oops
+    (elixir) lib/task/supervised.ex:74: Task.Supervised.do_apply/2
+    (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
 Function: #Function<20.90072148/0 in :erl_eval.expr/5>
     Args: []
-** (exit) an exception was raised:
-    ** (RuntimeError) oops
-        (elixir) lib/task/supervised.ex:74: Task.Supervised.do_apply/2
-        (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
 ```
 
 Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` to return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, `Task` provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
-We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Tasks to get better error reports.
+We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Task to get better error reports.
 
 ## State
 
@@ -203,6 +205,7 @@ iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
 iex> flush
 nil
+:ok
 ```
 
 At first, the process map has no keys, so sending a `:get` message and then flushing the current process inbox returns `nil`. Let's send a `:put` message and try it again:
@@ -214,6 +217,7 @@ iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
 iex> flush
 :world
+:ok
 ```
 
 Notice how the process is keeping a state and we can get and update this state by sending the process messages. In fact, any process that knows the `pid` above will be able to send it messages and manipulate the state.
@@ -227,6 +231,7 @@ iex> send :kv, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
 iex> flush
 :world
+:ok
 ```
 
 Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
