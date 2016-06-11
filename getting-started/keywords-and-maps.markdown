@@ -113,9 +113,9 @@ In contrast to keyword lists, maps are very useful with pattern matching. When a
 
 ```iex
 iex> %{} = %{:a => 1, 2 => :b}
-%{:a => 1, 2 => :b}
+%{2 => :b, :a => 1}
 iex> %{:a => a} = %{:a => 1, 2 => :b}
-%{:a => 1, 2 => :b}
+%{2 => :b, :a => 1}
 iex> a
 1
 iex> %{:c => c} = %{:a => 1, 2 => :b}
@@ -134,6 +134,7 @@ iex> map = %{n => :one}
 iex> map[n]
 :one
 iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}
+%{1 => :one, 2 => :two, 3 => :three}
 ```
 
 [The `Map` module](/docs/stable/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:
@@ -156,7 +157,7 @@ Another interesting property of maps is that they provide their own syntax for u
 
 ```iex
 iex> map = %{:a => 1, 2 => :b}
-%{:a => 1, 2 => :b}
+%{2 => :b, :a => 1}
 
 iex> map.a
 1
@@ -164,7 +165,7 @@ iex> map.c
 ** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 
 iex> %{map | :a => 2}
-%{:a => 2, 2 => :b}
+%{2 => :b, :a => 2}
 iex> %{map | :c => 3}
 ** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
@@ -186,6 +187,8 @@ iex> users = [
   john: %{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]},
   mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}
 ]
+[john: %{age: 27, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
+ mary: %{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}]
 ```
 
 We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:
@@ -199,16 +202,16 @@ It happens we can also use this same syntax for updating the value:
 
 ```iex
 iex> users = put_in users[:john].age, 31
-[john: %{name: "John", age: 31, languages: ["Erlang", "Ruby", "Elixir"]},
- mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}]
+[john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
+ mary: %{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}]
 ```
 
 The `update_in/2` macro is similar but allows us to pass a function that controls how the value changes. For example, let's remove "Clojure" from Mary's list of languages:
 
 ```iex
 iex> users = update_in users[:mary].languages, &List.delete(&1, "Clojure")
-[john: %{name: "John", age: 31, languages: ["Erlang", "Ruby", "Elixir"]},
- mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#"]}]
+[john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
+ mary: %{age: 29, languages: ["Elixir", "F#"], name: "Mary"}]
 ```
 
 There is more to learn about `put_in/2` and `update_in/2`, including the `get_and_update_in/2` that allows us to extract a value and update the data structure at once. There are also `put_in/3`, `update_in/3` and `get_and_update_in/3` which allow dynamic access into the data structure. [Check their respective documentation in the `Kernel` module for more information](/docs/stable/elixir/Kernel.html).
