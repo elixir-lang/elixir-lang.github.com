@@ -115,7 +115,7 @@ iex> pid = spawn fn ->
 ...> end
 #PID<0.57.0>
 iex> IO.write(pid, "hello")
-{:io_request, #PID<0.41.0>, #PID<0.57.0>, {:put_chars, :unicode, "hello"}}
+{:io_request, #PID<0.41.0>, #Reference<0.0.8.91>, {:put_chars, :unicode, "hello"}}
 ** (ErlangError) erlang error: :terminated
 ```
 
