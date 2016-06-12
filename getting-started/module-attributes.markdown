@@ -57,7 +57,7 @@ defmodule Math do
 end
 ```
 
-Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:
+Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple double-quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:
 
 ```bash
 $ elixirc math.ex
@@ -96,7 +96,7 @@ Trying to access an attribute that was not defined will print a warning:
 defmodule MyServer do
   @unknown
 end
-warning: undefined module attribute @unknown, please remove access to @unknown or explicitly set it to nil before access
+warning: undefined module attribute @unknown, please remove access to @unknown or explicitly set it before access
 ```
 
 Finally, attributes can also be read inside functions:
