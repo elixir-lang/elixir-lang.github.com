@@ -154,7 +154,7 @@ If a variable is mentioned more than once in a pattern, all references should bi
 
 ```iex
 iex> {x, x} = {1, 1}
-1
+{1, 1}
 iex> {x, x} = {1, 2}
 ** (MatchError) no match of right hand side value: {1, 2}
 ```
