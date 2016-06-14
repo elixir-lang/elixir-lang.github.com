@@ -142,7 +142,7 @@ When deriving, Elixir will implement the `Blank` protocol for `DeriveUser` based
 
 ### Fallback to `Any`
 
-Another alternative to `@derive` is to explicitly tell the protocol the fallback to `Any` when an implementation cannot be found. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
+Another alternative to `@derive` is to explicitly tell the protocol to fallback to `Any` when an implementation cannot be found. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
 
 ```elixir
 defprotocol Blank do
