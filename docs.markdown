@@ -26,7 +26,16 @@ Choose which version you want documentation for.
 * [Logger](/docs/master/logger/) - builtin Logger
 * [Mix](/docs/master/mix/) - build tool
 
-<h4 id="v1.2">v1.2 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.2.3/Docs.zip">download</a>)</small></h4>
+<h4 id="v1.3">v1.3 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.3.0/Docs.zip">download</a>)</small></h4>
+
+* [Elixir](/docs/v1.3/elixir/) - standard library
+* [EEx](/docs/v1.3/eex/) - templating library
+* [ExUnit](/docs/v1.3/ex_unit/) - unit test library
+* [IEx](/docs/v1.3/iex/) - interactive shell
+* [Logger](/docs/v1.3/logger/) - builtin Logger
+* [Mix](/docs/v1.3/mix/) - build tool
+
+<h4 id="v1.2">v1.2 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.2.6/Docs.zip">download</a>)</small></h4>
 
 * [Elixir](/docs/v1.2/elixir/) - standard library
 * [EEx](/docs/v1.2/eex/) - templating library
@@ -43,12 +52,3 @@ Choose which version you want documentation for.
 * [IEx](/docs/v1.1/iex/) - interactive shell
 * [Logger](/docs/v1.1/logger/) - builtin Logger
 * [Mix](/docs/v1.1/mix/) - build tool
-
-<h4 id="v1.0">v1.0</h4>
-
-* [Elixir](/docs/v1.0/elixir/) - standard library
-* [EEx](/docs/v1.0/eex/) - templating library
-* [ExUnit](/docs/v1.0/ex_unit/) - unit test library
-* [IEx](/docs/v1.0/iex/) - interactive shell
-* [Logger](/docs/v1.0/logger/) - builtin Logger
-* [Mix](/docs/v1.0/mix/) - build tool
