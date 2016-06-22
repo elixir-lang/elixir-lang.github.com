@@ -118,8 +118,8 @@ The following escape codes can be used in strings and char lists:
 * `\t` – tab
 * `\v` – vertical tab
 * `\0` - null byte
-* `\xDD` - character with hexadecimal representation DD (e.g., `\x13`)
-* `\x{D...}` - character with hexadecimal representation with one or more hexadecimal digits (e.g., `\x{abc13}`)
+* `\xDD` - represents a single byte in hexadecimal (such as `\x13`)
+* `\uDDDD` and `\u{D...}` - represents a Unicode codepoint in hexadecimal (such as `\u{1F600}`)
 
 Sigils also support heredocs, that is, triple double- or single-quotes as separators:
 
