@@ -181,7 +181,7 @@ This file will be automatically required by Mix every time before we run our tes
     .
 
     Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
-    1 tests, 0 failures
+    1 test, 0 failures
 
     Randomized with seed 540224
 
@@ -207,7 +207,7 @@ Now run `mix test` again (notice this time there will be no compilation):
          test/kv_test.exs:6
 
     Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
-    1 tests, 1 failures
+    1 test, 1 failure
 
 For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left-hand side (lhs) and right-hand side (rhs) of the `==` operator.
 
