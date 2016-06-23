@@ -664,7 +664,7 @@ Enum.map [1, 2, 3], &Math.square/1
 ```
 
 
-### Partials in Elixir
+### Partials and function captures in Elixir
 
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
 
@@ -676,7 +676,7 @@ List.foldl [1, 2, 3, 4], 0, &(&1 + &2)
 #=> 10
 ```
 
-Partials also allow us to pass named functions as arguments.
+We use the same `&` operator to capture a function, allowing us to pass named functions as arguments.
 
 ```elixir
 defmodule Math do
@@ -689,6 +689,7 @@ Enum.map [1, 2, 3], &Math.square/1
 #=> [1, 4, 9]
 ```
 
+The above would be equivalent to Erlang's `fun math:square/1`.
 
 ## Control flow
 
