@@ -65,7 +65,7 @@ defmodule KV.Registry do
   def lookup(server, name) when is_atom(server) do
     # 2. Lookup is now done directly in ETS, without accessing the server
     case :ets.lookup(server, name) do
-      [{^name, bucket}] -> {:ok, bucket}
+      [{^name, pid}] -> {:ok, pid}
       [] -> :error
     end
   end
