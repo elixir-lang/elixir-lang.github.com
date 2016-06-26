@@ -186,7 +186,7 @@ Erlang and Elixir have the same data types for the most part, but there are a nu
 
 ### Atoms
 
-In Erlang, an `atom` is any identifier that starts with a lowercase letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letters are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as atom aliases. Atoms in Elixir always start with a colon `:`.
+In Erlang, an `atom` is any identifier that starts with a lowercase letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letter are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as atom aliases. Atoms in Elixir always start with a colon `:`.
 
 **Erlang**
 
