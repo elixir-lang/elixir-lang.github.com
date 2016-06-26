@@ -269,7 +269,7 @@ Excluding tags: [distributed: true]
 .......
 
 Finished in 0.1 seconds (0.1s on load, 0.01s on tests)
-7 tests, 0 failures
+7 tests, 0 failures, 1 skipped
 ```
 
 This time all tests passed and ExUnit warned us that distributed tests were being excluded. If you run tests with `$ elixir --sname foo -S mix test`, one extra test should run and successfully pass as long as the `bar@computer-name` node is available.
