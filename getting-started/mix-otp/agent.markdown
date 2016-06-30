@@ -174,9 +174,9 @@ This distinction is important. If there are expensive actions to be done, you mu
 
 ```elixir
 def delete(bucket, key) do
-  :timer.sleep(1000) # puts client to sleep
+  Process.sleep(1000) # puts client to sleep
   Agent.get_and_update(bucket, fn dict ->
-    :timer.sleep(1000) # puts server to sleep
+    Process.sleep(1000) # puts server to sleep
     Map.pop(dict, key)
   end)
 end
