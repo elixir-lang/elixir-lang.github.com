@@ -59,7 +59,7 @@ Elixir v1.3 introduces the `Calendar` module as well as 4 new calendar types:
   * `NaiveDateTime` - used to store datetimes without a timezone (year, month, day, hour, minute, second, microseconds) in a given calendar. It is called naïve because without a timezone, the datetime may not actually exist. For example, when there are daylight savings changes, a whole hour may not exist (when the clock moves forward) or a particular instant may happen twice (when the clock moves backwards)
   * `DateTime` - used to store datetimes with timezone (year, month, day, hour, minute, second, microsecond and time zone, with abbreviation, UTC and standard offset)
 
-The current Calendar modules and its types is to provide a base for interoperatibility in the ecosystem instead of full-featured datetime API. This release includes basic functionality for building new types and converting them from and back strings.
+The aim of the current implementation of the Calendar modules and its types is to provide a base for interoperatibility in the ecosystem instead of full-featured datetime API. This release includes basic functionality for building new types and converting them from and back strings.
 
 Elixir v1.3 also introduces 3 new sigils related to the types above:
 
