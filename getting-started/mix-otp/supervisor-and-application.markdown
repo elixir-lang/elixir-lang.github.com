@@ -9,7 +9,7 @@ title: Supervisor and Application
 
 So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.
 
-When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to setup a supervisor that will start a fresh copy of the registry.
+When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
 
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
 
