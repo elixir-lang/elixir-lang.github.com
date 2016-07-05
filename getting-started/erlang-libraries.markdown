@@ -35,16 +35,7 @@ codepoints, while `:binary` deals with raw data bytes.
 ## Formatted text output
 
 Elixir does not contain a function similar to `printf` found in C and other
-languages. An option is to rely on string interpolation to achieve a similar
-result:
-
-```iex
-iex> f = Float.to_string(:math.pi, decimals: 3) |> String.rjust(10)
-iex> str = "Pi is approximately given by: #{f}"
-"Pi is approximately given by:      3.142"
-```
-
-Alternatively, the Erlang standard library functions `:io.format/2` and
+languages. Luckily, the Erlang standard library functions `:io.format/2` and
 `:io_lib.format/2` may be used. The first formats to terminal output, while
 the second formats to an iolist. The format specifiers differ from `printf`,
 [refer to the Erlang documentation for details](http://erlang.org/doc/man/io.html#format-1).
@@ -59,22 +50,6 @@ iex> to_string :io_lib.format("Pi is approximately given by:~10.3f~n", [:math.pi
 
 Also note that Erlang's formatting functions require special attention to
 Unicode handling.
-
-## The calendar module
-
-[The calendar module](http://erlang.org/doc/man/calendar.html) contains
-functions for conversion between local and universal time, as well as
-time conversion functions.
-
-```iex
-iex> :calendar.day_of_the_week(1980, 6, 28)
-6
-iex> {date, time} = :calendar.now_to_local_time(:erlang.timestamp)
-iex> date
-{2016, 2, 17}
-iex> time
-{22, 4, 55}
-```
 
 ## The crypto module
 
