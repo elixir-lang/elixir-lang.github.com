@@ -146,11 +146,17 @@ iex> Map.to_list(%{:a => 1, 2 => :b})
 [{2, :b}, {:a, 1}]
 ```
 
-When all the keys in a map are atoms, you can use the keyword syntax for convenience:
+When last keys in a map are atoms, you can use the keyword syntax for them:
 
 ```iex
-iex> map = %{a: 1, b: 2}
+iex> %{a: 1, b: 2}
 %{a: 1, b: 2}
+
+iex> %{"a" => 1, b: 2}
+%{:b => 2, "a" => 1}
+
+iex> %{a: 1, "b" => 2}
+** (SyntaxError) syntax error before: "b"
 ```
 
 Another interesting property of maps is that they provide their own syntax for updating and accessing atom keys:
