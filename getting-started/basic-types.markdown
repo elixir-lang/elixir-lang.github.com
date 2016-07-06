@@ -317,7 +317,7 @@ iex> tuple_size {:ok, "hello"}
 2
 ```
 
-Tuples store elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation (indexes start from zero):
+Tuples store elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation. Indexes start from zero:
 
 ```iex
 iex> tuple = {:ok, "hello"}
