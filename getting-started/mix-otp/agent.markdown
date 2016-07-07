@@ -50,7 +50,7 @@ iex> Agent.stop(agent)
 
 We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](/docs/stable/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](/docs/stable/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that [`Agent.get/3`](/docs/stable/elixir/Agent.html#get/3) itself will return. Once we are done with the agent, we can call [`Agent.stop/3`](/docs/stable/elixir/Agent.html#stop/3) to terminate the agent process.
 
-Let's implement our `KV.Bucket` using agents. But before starting the implementation, let's first write some tests. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
+Let's implement our `KV.Bucket` using agents. But before starting the implementation, let's first write some tests. Create a file at `kv/test/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
 defmodule KV.BucketTest do
