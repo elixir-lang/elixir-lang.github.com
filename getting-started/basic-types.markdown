@@ -216,7 +216,9 @@ Note a dot (`.`) between the variable and parenthesis is required to invoke an a
 Anonymous functions are closures, and as such they can access variables that are in scope when the function is defined:
 
 ```iex
-iex> add_two = fn a -> add.(a, 2) end
+iex> b = 2
+2
+iex> add_two = fn a -> add.(a, b) end
 #Function<6.71889879/1 in :erl_eval.expr/5>
 iex> add_two.(2)
 4
