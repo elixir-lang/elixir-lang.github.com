@@ -156,7 +156,9 @@ HygieneTest.go
 
 Variable hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined on line 3 of a module would be represented as:
 
-    {:x, [line: 3], nil}
+```elixir
+{:x, [line: 3], nil}
+```
 
 However, a quoted variable is represented as:
 
