@@ -22,7 +22,6 @@ iex> case {1, 2, 3} do
 ...>   _ ->
 ...>     "This clause would match any value"
 ...> end
-"This clause will match and bind x to 2 in this clause"
 ```
 
 If you want to pattern match against an existing variable, you need to use the `^` operator:
