@@ -218,7 +218,7 @@ Anonymous functions are closures, and as such they can access variables that are
 ```iex
 iex> b = 2
 2
-iex> add_two = fn a -> add.(a, b) end
+iex> add_two = fn a -> add.(a, a) end
 #Function<6.71889879/1 in :erl_eval.expr/5>
 iex> add_two.(2)
 4
