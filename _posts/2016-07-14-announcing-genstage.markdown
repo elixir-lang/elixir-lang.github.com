@@ -3,22 +3,22 @@ layout: post
 title: Announcing GenStage
 author: José Valim
 category: Announcements
-excerpt: GenStage is a new Elixir behaviour for exchanging events between Elixir processes with back-pressure. In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. 
+excerpt: GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases.
 ---
 
-Today we are glad to announce the official release GenStage. GenStage is a new Elixir behaviour for exchanging events between Elixir processes with back-pressure. In the short-term, we expect GenStage to replace the use cases for GenEvent as well as providing a composable abstraction for consuming data from third party systems.
+Today we are glad to announce the official release of GenStage. GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In the short-term, we expect GenStage to replace the use cases for GenEvent as well as providing a composable abstraction for consuming data from third party systems.
 
 In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. If instead you are looking for a quick reference, [check the project source code](https://github.com/elixir-lang/gen_stage) and [access its documentation](https://hexdocs.pm/gen_stage/).
 
 ## Background
 
-One of the original motivations for [creating and designing in Elixir was to introduce better abstractions for working with collection](https://www.youtube.com/watch?v=Lqo9-pQuRKE). Not only that, we want to provide developers interested in manipulating collections with a path to take their code from eager, to lazy, to concurrent and then distributed.
+One of the original motivations for [creating and designing Elixir was to introduce better abstractions for working with collection](https://www.youtube.com/watch?v=Lqo9-pQuRKE). Not only that, we want to provide developers interested in manipulating collections with a path to take their code from eager, to lazy, to concurrent and then distributed.
 
 Let's discuss a simple but actual example: word counting. The idea of word counting is to receive one file and count how many times each word appeards in the document. Using the `Enum` module it could be implemented as follows:
 
 ```elixir
 File.read!("path/to/some/file")
-|> String.split(" ")
+|> String.split("\n")
 |> Enum.flat_map(fn line ->
     String.split(line, " ")
    end)
@@ -28,11 +28,11 @@ File.read!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-While the solution above works fine and is efficient for small files, it is quite restrictive for large inputs as it loads the whole file into memory. If the file is a couple gigabytes, it will all be loaded into memory.
+While the solution above works fine and is efficient for small files, it is quite restrictive for large inputs as it loads the whole file into memory.
 
-Another issue with the solution above is that the `Enum.flat_map/2` step will build a huge list, with all the words in the comment, before we effectively start counting them. Again, for a large document, this means more memory usage and a waste of processing time in building a list that will be traversed right after.
+Another issue with the solution above is that the `Enum.flat_map/2` step will build a huge list, with all the words in the file, before we effectively start counting them. Again, for a large document, this means more memory usage and a waste of processing time in building a list that will be traversed right after.
 
-Luckily, Elixir provides an answer to this problem, for quite some time, called streams. One of the advantage of streams is they are lazy, allowing us traverse collections item by item, in this case, line by line, instead of loading the whole data set into memory. Let's rewrite the example above to use streams:
+Luckily, Elixir provides a solution to this problem (and has provided it for quite some time): streams. One of the advantage of streams is they are lazy, allowing us traverse collections item by item, in this case, line by line, instead of loading the whole data set into memory. Let's rewrite the example above to use streams:
 
 ```elixir
 File.stream!("path/to/some/file")
@@ -45,7 +45,7 @@ File.stream!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](http://elixir-lang.org/docs/stable/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map` only happen when we call a function in the `Enum` module.
+By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](http://elixir-lang.org/docs/stable/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happen when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](http://blog.plataformatec.com.br/2015/05/introducing-reducees/) in another article.
 
 The solution above allows us to work with large dataset without loading them all into memory. For large files, it is going to provide much better performance than the eager version. However, the solution above still does not leverage concurrency. For a machine with more than one core, which is the huge majority of machines we have available today, it is a suboptimal solution.
 
@@ -147,7 +147,7 @@ defmodule C do
     # Sleep the configured time.
     Process.sleep(sleeping_time)
 
-    # We are a consumer, so we never emit items.
+    # We are a consumer, so we never emit events.
     {:noreply, [], sleeping_time}
   end
 end
@@ -297,7 +297,7 @@ The v0.3.0 release also includes the [`GenStage.stream`](https://hexdocs.pm/gen_
 
 However, we are far from done!
 
-First of all, now is the moment for the community to step in and given GenStage a try. If you have used GenEvent in the past, can it be replaced by a GenStage? Similarly, if you were planning to implement an event handling system, give GenStage a try.
+First of all, now is the moment for the community to step in and try GenStage out. If you have used GenEvent in the past, can it be replaced by a GenStage? Similarly, if you were planning to implement an event handling system, give GenStage a try.
 
 Developers who maintain libraries that integrate with external data sources, be it a RabbitMQ, Redis or Apacha Kafka, can explore GenStage as an abstraction for consuming data from those sources. Library developers must implement producers and leave it up for their users to plug the consumer stages.
 
@@ -353,6 +353,6 @@ For the word counting problem with a fixed data, early experiments show a linear
 
 If you are interested in `GenStage.Flow`, [we have written some documentation based on the prototypes we have built so far](https://hexdocs.pm/gen_stage/Experimental.GenStage.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
 
-We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, flows and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/), so if need one more reason to attend, we will be waiting for you!
+We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, flows and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/) and we hope to see you there.
 
 Happy coding!
