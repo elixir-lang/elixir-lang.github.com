@@ -73,7 +73,7 @@ Although the solution above has many flaws, it has helped us ask the right quest
 
   * If `Stream.async` is introducing new processes, how can we guarantee those processes are supervised?
 
-  * Since we are exchanging messages between stages, how can we do so with back-pressure?
+  * Since we are exchanging messages between processes, how can we do so with back-pressure? After all, if one process cannot process data as fast as it receives them, we want to slow down the processes sending the data so we guarantee the slowest process does not get overflown with messages
 
 We have jumped through different abstractions trying to answer those questions until we have finally settled on GenStage.
 
@@ -81,7 +81,7 @@ We have jumped through different abstractions trying to answer those questions u
 
 GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. Developers who use GenStage only need to worry about how the data is produced, manipulated and consumed. The act of dispatching the data and providing back-pressure is completely abstracted away from the developers.
 
-As a quick example, let's write a simple pipeline that will produce events as increasing numbers, multiply those numbers by two, and then print them to terminal. We will do so by implementing three stages, the `:producer`, the `:producer_consumer` and the `:consumer`.
+As a quick example, let's write a simple pipeline that will produce events as increasing numbers, multiply those numbers by two, and then print them to terminal. We will do so by implementing three stages, the `:producer`, the `:producer_consumer` and the `:consumer`, which we will call `A`, `B` and `C` respectively. We will go back to the word counting example at the end of this post.
 
 Let's start with the producer that we will call `A`. Since `A` is a producer, its main responsibility is to receive demand, which is the number of events the consumer is willing to handle, and generate events. Those events may be in memory or an external data source. For now let's implement a simple counter starting from a given value of `counter` received on `init/1`:
 
@@ -349,9 +349,9 @@ end)
 |> Enum.to_list()
 ```
 
-For the word counting problem with a fixed data, early experiments show a linear increase in performance with a fixed overhead of 20%. In other words, a dataset that takes 60s with a single core, takes 36s on a machine with 2 cores and 18s in one with four cores. All of those gains by simply moving your computations from streams to flow. We plan to benchmark on machines with over 40 cores in the short term.
+Flow will look at the computations we want to perform and start a series of stages to execute our code while keeping the amount of data being transfered between processes to a minimum. If you are interested in `GenStage.Flow` and how the computations above are spread across multiple stages, [we have written some documentation based on the prototypes we have built so far](https://hexdocs.pm/gen_stage/Experimental.GenStage.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
 
-If you are interested in `GenStage.Flow`, [we have written some documentation based on the prototypes we have built so far](https://hexdocs.pm/gen_stage/Experimental.GenStage.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
+For the word counting problem with a fixed data, early experiments show a linear increase in performance with a fixed overhead of 20%. In other words, a dataset that takes 60s with a single core, takes 36s on a machine with 2 cores and 18s in one with four cores. All of those gains by simply moving your computations from streams to flow. We plan to benchmark on machines with over 40 cores in the short term.
 
 We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, flows and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/) and we hope to see you there.
 
