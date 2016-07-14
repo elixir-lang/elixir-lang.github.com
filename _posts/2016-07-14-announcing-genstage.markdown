@@ -246,7 +246,8 @@ defmodule EventManager do
 
   defp dispatch_events(queue, demand, events) do
     with d when d > 0 <- demand,
-         {{:value, {from, event}}, queue} <- :queue.out(queue) do
+         {item, queue} = :queue.out(queue),
+         {:value, {from, event}} <- item do
       GenStage.reply(from, :ok)
       dispatch_events(queue, demand - 1, [event | events])
     else
