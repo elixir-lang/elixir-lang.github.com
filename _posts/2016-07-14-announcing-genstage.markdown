@@ -260,7 +260,7 @@ The `EventManager` works as a buffer. If there is demand but not events to be se
 
 By implementing the event manager as a producer, we can configure all sorts of behaviours that is simply not possible with `GenEvent`, such as how much data we want to queue (or for how long) and if events should be buffered or not when there are no consumers (via the `handle_subscribe/4` and `handle_cancel/3` callbacks).
 
-Implenting event handlers is as easy as implementing any other consumer. We could in fact use the `C` consumer implemented earlier. However, given event managers are often defined before the handlers, it is recommended for handlers to subscribe to managers when they start:
+Implementing event handlers is as straight-forward as writing any other consumer. We could in fact use the `C` consumer implemented earlier. However, given event managers are often defined before the handlers, it is recommended for handlers to subscribe to managers when they start:
 
 ```elixir
 alias Experimental.GenStage
@@ -287,7 +287,7 @@ defmodule EventHandler do
 end
 ```
 
-The guarantees that, if a supervised `EventHandler` crashes, the supervisor will start a new event handler which will promptly subscribe to the same manager, solving the ackward error handling semantics we have seen with GenEvent.
+Such guarantees that, if a supervised `EventHandler` crashes, the supervisor will start a new event handler which will promptly subscribe to the same manager, solving the ackward error handling semantics we have seen with `GenEvent`.
 
 ## The path forward
 
