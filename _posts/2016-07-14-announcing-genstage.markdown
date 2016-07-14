@@ -326,8 +326,8 @@ alias Experimental.GenStage.Flow
 File.stream!("path/to/some/file")
 |> Flow.from_enumerable()
 |> Flow.flat_map(fn line ->
-  for word <- String.split(" "), do: {word, 1}
-end)
+    for word <- String.split(" "), do: {word, 1}
+   end)
 |> Flow.reduce_by_key(& &1 + &2)
 |> Enum.to_list()
 ```
@@ -343,8 +343,8 @@ empty_space = :binary.compile_pattern(" ") # NEW!
 File.stream!("path/to/some/file", read_ahead: 100_000) # NEW!
 |> Flow.from_enumerable()
 |> Flow.flat_map(fn line ->
-  for word <- String.split(empty_space), do: {word, 1}
-end)
+    for word <- String.split(empty_space), do: {word, 1}
+   end)
 |> Flow.partition_with(storage: :ets) # NEW!
 |> Flow.reduce_by_key(& &1 + &2)
 |> Enum.to_list()
