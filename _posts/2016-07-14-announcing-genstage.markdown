@@ -8,7 +8,7 @@ excerpt: GenStage is a new Elixir behaviour for exchanging events with back-pres
 
 Today we are glad to announce the official release of GenStage. GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In the short-term, we expect GenStage to replace the use cases for GenEvent as well as providing a composable abstraction for consuming data from third party systems.
 
-In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. If instead you are looking for a quick reference, [check the project source code](https://github.com/elixir-lang/gen_stage) and [access its documentation](https://hexdocs.pm/gen_stage/).
+In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. If instead you are looking for a quick reference, [check the project source code](https://github.com/elixir-lang/gen_stage) and [access its documentation](https://hexdocs.pm/gen_stage/Experimental.GenStage.html).
 
 ## Background
 
