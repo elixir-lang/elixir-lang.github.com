@@ -14,7 +14,7 @@ In this blog post we will cover the background that led us to GenStage, some exa
 
 One of the original motivations for [creating and designing Elixir was to introduce better abstractions for working with collections](https://www.youtube.com/watch?v=Lqo9-pQuRKE). Not only that, we want to provide developers interested in manipulating collections with a path to take their code from eager to lazy, to concurrent and then distributed.
 
-Let's discuss a simple but actual example: word counting. The idea of word counting is to receive one file and count how many times each word appeards in the document. Using the `Enum` module it could be implemented as follows:
+Let's discuss a simple but actual example: word counting. The idea of word counting is to receive one file and count how many times each word appears in the document. Using the `Enum` module it could be implemented as follows:
 
 ```elixir
 File.read!("path/to/some/file")
