@@ -63,8 +63,8 @@ iex> {a, b, c} = {:hello, "world"}
 And also when comparing different types:
 
 ```iex
-iex> {a, b, c} = [:hello, "world", "!"]
-** (MatchError) no match of right hand side value: [:hello, "world", "!"]
+iex> {a, b, c} = [:hello, "world", 42]
+** (MatchError) no match of right hand side value: [:hello, "world", 42]
 ```
 
 More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side when the right side is a tuple that starts with the atom `:ok`:
