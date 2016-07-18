@@ -1,0 +1,51 @@
+# usage:
+#   just exec this and then view results
+
+# dependencies:
+#   pandoc
+#   nodejs
+#   texlive
+
+# author: Li, Yu (liyu1981@gmail.com)
+
+SRC="../getting_started/meta"
+DST="meta"
+TOTAL_DOCS=3
+
+DOCUMENT_SETTING="\documentclass{article}
+\usepackage{minted}
+\usepackage[bookmarks]{hyperref}
+\hypersetup{pdftex,colorlinks=true,allcolors=blue}
+\begin{document}
+"
+DOCUMENT_HEADER="
+\title{Meta-Programming In Elixir}
+\date{July 2014}
+\author{Plataformatec}
+\maketitle
+"
+
+rm -rf *.markdown
+rm -rf *.tex
+rm -rf texwd; mkdir -p texwd
+rm -rf ${DST}.pdf
+
+for i in `seq $TOTAL_DOCS`; do
+  cat ${SRC}/$i.markdown >> all.markdown
+done
+
+node preprocess.js >new.markdown
+
+pandoc new.markdown -o new.tex
+
+echo "$DOCUMENT_SETTING" >>final.tex
+echo "$DOCUMENT_HEADER" >>final.tex
+cat new.tex >>final.tex
+echo "\end{document}" >>final.tex
+
+mv final.tex texwd/
+cd texwd/
+pdflatex -shell-escape final.tex
+pdflatex -shell-escape final.tex # second time for the bookmarks
+cd ..
+cp texwd/final.pdf ${DST}.pdf
