@@ -6,7 +6,7 @@ category: Announcements
 excerpt: GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases.
 ---
 
-Today we are glad to announce the official release of GenStage. GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In the short-term, we expect GenStage to replace the use cases for GenEvent as well as providing a composable abstraction for consuming data from third party systems.
+Today we are glad to announce the official release of GenStage. GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In the short-term, we expect GenStage to replace the use cases for GenEvent as well as providing a composable abstraction for consuming data from third-party systems.
 
 In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. If instead you are looking for a quick reference, [check the project source code](https://github.com/elixir-lang/gen_stage) and [access its documentation](https://hexdocs.pm/gen_stage/Experimental.GenStage.html).
 
@@ -45,7 +45,7 @@ File.stream!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](http://elixir-lang.org/docs/stable/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happen when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](http://blog.plataformatec.com.br/2015/05/introducing-reducees/) in another article.
+By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](http://elixir-lang.org/docs/stable/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happens when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](http://blog.plataformatec.com.br/2015/05/introducing-reducees/) in another article.
 
 The solution above allows us to work with large datasets without loading them all into memory. For large files, it is going to provide much better performance than the eager version. However, the solution above still does not leverage concurrency. For a machine with more than one core, which is the huge majority of machines we have available today, it is a suboptimal solution.
 
@@ -67,13 +67,13 @@ File.stream!("path/to/some/file")
 
 The idea is that `Stream.async` would run the previous computations in a separate process that would stream its messages to the process that called `Enum.reduce`. Unfortunately, the solution above is less than ideal.
 
-First of all, we want to avoid moving data between processes as much as possible. Instead, we want to start multiple processes that perform the same computation in parallel. Not only that, if we are requiring developers to place `Stream.async` manually, it may lead to inneficient and error prone solutions.
+First of all, we want to avoid moving data between processes as much as possible. Instead, we want to start multiple processes that perform the same computation in parallel. Not only that, if we are requiring developers to place `Stream.async` manually, it may lead to inefficient and error prone solutions.
 
 Although the solution above has many flaws, it has helped us ask the right questions:
 
   * If `Stream.async` is introducing new processes, how can we guarantee those processes are supervised?
 
-  * Since we are exchanging messages between processes, how can we do so with back-pressure? After all, if one process cannot process data as fast as it receives them, we want to slow down the processes sending the data so we guarantee the slowest process does not get overflown with messages
+  * Since we are exchanging messages between processes, how do we prevent a process from receiving too many messages? We need a back-pressure mechanism that allows the receiving process to specify how much it can handle from the sending process.
 
 We have jumped through different abstractions trying to answer those questions until we have finally settled on GenStage.
 
@@ -81,7 +81,7 @@ We have jumped through different abstractions trying to answer those questions u
 
 GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. Developers who use GenStage only need to worry about how the data is produced, manipulated and consumed. The act of dispatching the data and providing back-pressure is completely abstracted away from the developers.
 
-As a quick example, let's write a simple pipeline that will produce events as increasing numbers, multiply those numbers by two, and then print them to terminal. We will do so by implementing three stages, the `:producer`, the `:producer_consumer` and the `:consumer`, which we will call `A`, `B` and `C` respectively. We will go back to the word counting example at the end of this post.
+As a quick example, let's write a simple pipeline that will produce events as increasing numbers, multiply those numbers by two, and then print them to the terminal. We will do so by implementing three stages, the `:producer`, the `:producer_consumer` and the `:consumer`, which we will call `A`, `B` and `C` respectively. We will go back to the word counting example at the end of this post.
 
 Let's start with the producer that we will call `A`. Since `A` is a producer, its main responsibility is to receive demand, which is the number of events the consumer is willing to handle, and generate events. Those events may be in memory or an external data source. For now let's implement a simple counter starting from a given value of `counter` received on `init/1`:
 
@@ -167,9 +167,9 @@ GenStage.sync_subscribe(b, to: a)
 Process.sleep(:infinity)
 ```
 
-As soon as we subscribe the stages, we should see items being printed to the terminal. Notice that, even though we have introduced a sleep command to the consumer, the producers will never overflow the consumer with data. That's because the communication between stages is demand-driven. The producer can only send items to consumers after the consumers have sent demand upstream. Producers must never send more items than consumers have asked.
+As soon as we subscribe the stages, we should see items being printed to the terminal. Notice that, even though we have introduced a sleep command to the consumer, the producers will never overflow the consumer with data. That's because the communication between stages is demand-driven. The producer can only send items to consumers after the consumers have sent demand upstream. The producer must never send more items than the consumer has specified.
 
-One consequence of this design decision is that parallelizing stateless stages like the consumer above is really straight-forward:
+One consequence of this design decision is that parallelizing stateless stages like the consumer above is really straightforward:
 
 ```elixir
 {:ok, a} = GenStage.start_link(A, 0)     # starting from zero
@@ -190,7 +190,7 @@ GenStage.sync_subscribe(b, to: a)
 Process.sleep(:infinity)
 ```
 
-By simply starting multiple consumers, the stage `B` will now receive demand from multiple stages and dispatch events to those stages which are now running concurrently, always picking the stage that is able to process more items. We can also leverage concurrency from the opposite direction too: if the producer is the slow stage in a pipeline, you can start multiple producers and have the (multiple) consumers subscribing to them.
+By simply starting multiple consumers, the stage `B` will now receive demand from multiple stages and dispatch events to those stages which are now running concurrently, always picking the stage that is able to process more items. We can also leverage concurrency from the opposite direction: if the producer is the slow stage in a pipeline, you can start multiple producers and have each consumer subscribe to them.
 
 In order to know which consumer should receive a particular event, producer stages depend on a behaviour called [`GenStage.Dispatcher`](https://hexdocs.pm/gen_stage/Experimental.GenStage.Dispatcher.html). The default dispatcher is the `GenStage.DemandDispatcher` we have briefly described above: it will collect the demand from different consumers and dispatch to the one with highest demand. This means if one consumer is slow, maybe because we increased its sleeping time to 10 seconds, it will receive less items.
 
@@ -206,7 +206,7 @@ During the Elixir London Meetup, I have live-coded a short example that shows ho
 
 Another scenario where GenStage can be useful today is to replace cases where developers would have used [GenEvent](http://elixir-lang.org/docs/stable/elixir/GenEvent.html) in the past. For those unfamiliar with GenEvent, it is a behaviour where events are sent to an "event manager" which then proceeds to invoke "event handlers" for each event. GenEvent, however, has one big flaw: the event manager and all event handlers run in the same process. This means GenEvent handlers cannot easily leverage concurrency without forcing developers to implement those mechanisms themselves. Furthermore, GenEvent handlers have very awkward error semantics. Because event handlers are not separate processes, we cannot simply rely on supervisors restarting them.
 
-GenStage solves those problems by having a producer as the event manager. The producer itself should be configured to use [`GenStage.BroadcastDispatcher`](https://hexdocs.pm/gen_stage/Experimental.GenStage.BroadcastDispatcher.html) as its dispacther. The broadcast dispatcher will guarantee events are dispatched to all consumers in a way to not exceed the demand of any of the consumers. This allows us to leverage concurrency and, not only that, having the "event manager" as a producer gives us much more flexibility in terms of buffering and reacting to failures.
+GenStage solves those problems by having a producer as the event manager. The producer itself should be configured to use [`GenStage.BroadcastDispatcher`](https://hexdocs.pm/gen_stage/Experimental.GenStage.BroadcastDispatcher.html) as its dispatcher. The broadcast dispatcher will guarantee events are dispatched to all consumers in a way that does not exceed the demand of any of the consumers. This allows us to leverage concurrency and having the "event manager" as a producer gives us much more flexibility in terms of buffering and reacting to failures.
 
 Let's see an example of building an event manager as a producer:
 
@@ -257,11 +257,11 @@ defmodule EventManager do
 end
 ```
 
-The `EventManager` works as a buffer. If there is demand but not events to be sent, we store such demand. If there are events but no demand, we store such events in a queue. If a client tries to broadcast an event, the `sync_notify` call will block until the event is effectively broadcast. The bulk of the logic is in the `dispatch_events/3` function that takes events from the queue while there is demand.
+The `EventManager` works as a buffer. If there is demand but not events to be sent, we store such demand. If there are events but no demand, we store such events in a queue. If a client tries to broadcast an event, the `sync_notify` call will block until the event is effectively broadcasted. The bulk of the logic is in the `dispatch_events/3` function that takes events from the queue while there is demand.
 
-By implementing the event manager as a producer, we can configure all sorts of behaviours that is simply not possible with `GenEvent`, such as how much data we want to queue (or for how long) and if events should be buffered or not when there are no consumers (via the `handle_subscribe/4` and `handle_cancel/3` callbacks).
+By implementing the event manager as a producer, we can configure all sorts of behaviours that are simply not possible with `GenEvent`, such as how much data we want to queue (or for how long) and if events should be buffered or not when there are no consumers (via the `handle_subscribe/4` and `handle_cancel/3` callbacks).
 
-Implementing event handlers is as straight-forward as writing any other consumer. We could in fact use the `C` consumer implemented earlier. However, given event managers are often defined before the handlers, it is recommended for handlers to subscribe to managers when they start:
+Implementing event handlers is as straightforward as writing any other consumer. We could in fact use the `C` consumer implemented earlier. However, given event managers are often defined before the handlers, it is recommended for handlers to subscribe to managers when they start:
 
 ```elixir
 alias Experimental.GenStage
@@ -288,7 +288,7 @@ defmodule EventHandler do
 end
 ```
 
-Such guarantees that, if a supervised `EventHandler` crashes, the supervisor will start a new event handler which will promptly subscribe to the same manager, solving the ackward error handling semantics we have seen with `GenEvent`.
+Such guarantees that, if a supervised `EventHandler` crashes, the supervisor will start a new event handler which will promptly subscribe to the same manager, solving the awkward error handling semantics we have seen with `GenEvent`.
 
 ## The path forward
 
@@ -300,7 +300,7 @@ However, we are far from done!
 
 First of all, now is the moment for the community to step in and try GenStage out. If you have used GenEvent in the past, can it be replaced by a GenStage? Similarly, if you were planning to implement an event handling system, give GenStage a try.
 
-Developers who maintain libraries that integrate with external data sources, be it a RabbitMQ, Redis or Apacha Kafka, can explore GenStage as an abstraction for consuming data from those sources. Library developers must implement producers and leave it up for their users to plug the consumer stages.
+Developers who maintain libraries that integrate with external data sources, be it a RabbitMQ, Redis or Apacha Kafka, can explore GenStage as an abstraction for consuming data from those sources. Library developers must implement producers and leave it up for their users to configure the consumer stages.
 
 Once we get enough feedback, `GenStage` will be included in some shape as part of the standard library. The goal is to introduce `GenStage` and phase `GenEvent` out in the long term.
 
@@ -319,7 +319,7 @@ File.stream!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-While the above is helpful when working with large, possibly infinite collections, it still does not leverage concurrency. To address that, we are currently exploring a solution named [`GenStage.Flow`](https://hexdocs.pm/gen_stage/Experimental.GenStage.Flow.html), that allows us to express our computations similarly to streams, except they will run across multiple stages instead of a single process:
+While the above is helpful when working with large or infinite collections, it still does not leverage concurrency. To address that, we are currently exploring a solution named [`GenStage.Flow`](https://hexdocs.pm/gen_stage/Experimental.GenStage.Flow.html), that allows us to express our computations similarly to streams, except they will run across multiple stages instead of a single process:
 
 ```elixir
 alias Experimental.GenStage.Flow
@@ -352,8 +352,8 @@ File.stream!("path/to/some/file", read_ahead: 100_000) # NEW!
 
 Flow will look at the computations we want to perform and start a series of stages to execute our code while keeping the amount of data being transfered between processes to a minimum. If you are interested in `GenStage.Flow` and how the computations above are spread across multiple stages, [we have written some documentation based on the prototypes we have built so far](https://hexdocs.pm/gen_stage/Experimental.GenStage.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
 
-For the word counting problem with a fixed data, early experiments show a linear increase in performance with a fixed overhead of 20%. In other words, a dataset that takes 60s with a single core, takes 36s on a machine with 2 cores and 18s in one with four cores. All of those gains by simply moving your computations from streams to flow. We plan to benchmark on machines with over 40 cores in the short term.
+For the word counting problem with a fixed data, early experiments show a linear increase in performance with a fixed overhead of 20%. In other words, a dataset that takes 60s with a single core, takes 36s on a machine with 2 cores and 18s in one with 4 cores. All of those gains by simply moving your computations from streams to Flow. We plan to benchmark on machines with over 40 cores soon.
 
-We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, flows and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/) and we hope to see you there.
+We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, Flows, and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/) and we hope to see you there.
 
 Happy coding!
