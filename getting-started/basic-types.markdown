@@ -213,7 +213,7 @@ Functions are "first class citizens" in Elixir meaning they can be passed as arg
 
 Note a dot (`.`) between the variable and parenthesis is required to invoke an anonymous function.
 
-Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anynomous function we have previously defined:
+Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
 ```iex
 iex> double = fn a -> add.(a, a) end
