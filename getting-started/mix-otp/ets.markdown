@@ -235,7 +235,7 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
     Agent.stop(bucket)
 
-    # Do a call to ensure the registry processed the down message
+    # Do a call to ensure the registry processed the DOWN message
     _ = KV.Registry.create(registry, "bogus")
     assert KV.Registry.lookup(registry, "shopping") == :error
   end
