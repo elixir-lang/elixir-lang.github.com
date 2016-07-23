@@ -150,14 +150,14 @@ Our test should pass right out of the box!
 We don't need to explicitly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
-  ## Client API
+## Client API
 
-  @doc """
-  Stops the registry.
-  """
-  def stop(server) do
-    GenServer.stop(server)
-  end
+@doc """
+Stops the registry.
+"""
+def stop(server) do
+  GenServer.stop(server)
+end
 ```
 
 ## The need for monitoring
@@ -165,12 +165,12 @@ We don't need to explicitly shut down the registry because it will receive a `:s
 Our registry is almost complete. The only remaining issue is that the registry may become stale if a bucket stops or crashes. Let's add a test to `KV.RegistryTest` that exposes this bug:
 
 ```elixir
-  test "removes buckets on exit", %{registry: registry} do
-    KV.Registry.create(registry, "shopping")
-    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-    Agent.stop(bucket)
-    assert KV.Registry.lookup(registry, "shopping") == :error
-  end
+test "removes buckets on exit", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  Agent.stop(bucket)
+  assert KV.Registry.lookup(registry, "shopping") == :error
+end
 ```
 
 The test above will fail on the last assertion as the bucket name remains in the registry even after we stop the bucket process.
@@ -195,39 +195,39 @@ Note `Process.monitor(pid)` returns a unique reference that allows us to match u
 Let's reimplement the server callbacks to fix the bug and make the test pass. First, we will modify the GenServer state to two dictionaries: one that contains `name -> pid` and another that holds `ref -> name`. Then we need to monitor the buckets on `handle_cast/2` as well as implement a `handle_info/2` callback to handle the monitoring messages. The full server callbacks implementation is shown below:
 
 ```elixir
-  ## Server callbacks
+## Server callbacks
 
-  def init(:ok) do
-    names = %{}
-    refs  = %{}
-    {:ok, {names, refs}}
-  end
+def init(:ok) do
+  names = %{}
+  refs  = %{}
+  {:ok, {names, refs}}
+end
 
-  def handle_call({:lookup, name}, _from, {names, _} = state) do
-    {:reply, Map.fetch(names, name), state}
-  end
+def handle_call({:lookup, name}, _from, {names, _} = state) do
+  {:reply, Map.fetch(names, name), state}
+end
 
-  def handle_cast({:create, name}, {names, refs}) do
-    if Map.has_key?(names, name) do
-      {:noreply, {names, refs}}
-    else
-      {:ok, pid} = KV.Bucket.start_link
-      ref = Process.monitor(pid)
-      refs = Map.put(refs, ref, name)
-      names = Map.put(names, name, pid)
-      {:noreply, {names, refs}}
-    end
-  end
-
-  def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-    {name, refs} = Map.pop(refs, ref)
-    names = Map.delete(names, name)
+def handle_cast({:create, name}, {names, refs}) do
+  if Map.has_key?(names, name) do
+    {:noreply, {names, refs}}
+  else
+    {:ok, pid} = KV.Bucket.start_link
+    ref = Process.monitor(pid)
+    refs = Map.put(refs, ref, name)
+    names = Map.put(names, name, pid)
     {:noreply, {names, refs}}
   end
+end
 
-  def handle_info(_msg, state) do
-    {:noreply, state}
-  end
+def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
+  {name, refs} = Map.pop(refs, ref)
+  names = Map.delete(names, name)
+  {:noreply, {names, refs}}
+end
+
+def handle_info(_msg, state) do
+  {:noreply, state}
+end
 ```
 
 Observe that we were able to considerably change the server implementation without changing any of the client API. That's one of the benefits of explicitly segregating the server and the client.
