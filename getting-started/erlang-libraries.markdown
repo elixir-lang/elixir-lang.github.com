@@ -67,9 +67,9 @@ in your project's applications list whenever you use it. To do this,
 edit your `mix.exs` file to include:
 
 ```elixir
-  def application do
-    [applications: [:crypto]]
-  end
+def application do
+  [applications: [:crypto]]
+end
 ```
 
 ## The digraph module

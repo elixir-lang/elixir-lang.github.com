@@ -56,21 +56,21 @@ The supervision strategy dictates what happens when one of the children crashes.
 Since `KV.Registry.start_link/1` is now expecting an argument, we need to change our implementation to receive such argument. Open up `lib/kv/registry.ex` and replace the `start_link/0` definition by:
 
 ```elixir
-  @doc """
-  Starts the registry with the given `name`.
-  """
-  def start_link(name) do
-    GenServer.start_link(__MODULE__, :ok, name: name)
-  end
+@doc """
+Starts the registry with the given `name`.
+"""
+def start_link(name) do
+  GenServer.start_link(__MODULE__, :ok, name: name)
+end
 ```
 
 We also need to update our tests to give a name when starting the registry. Replace the `setup` function in `test/kv/registry_test.exs` by:
 
 ```elixir
-  setup context do
-    {:ok, registry} = KV.Registry.start_link(context.test)
-    {:ok, registry: registry}
-  end
+setup context do
+  {:ok, registry} = KV.Registry.start_link(context.test)
+  {:ok, registry: registry}
+end
 ```
 
 `setup/2` may also receive the test context, similar to `test/3`. Besides whatever value we may add in our setup blocks, the context includes some default keys, like `:case`, `:test`, `:file` and `:line`. We have used `context.test` as a shortcut to spawn a registry with the same name of the test currently running.
@@ -172,10 +172,10 @@ We can specify an application callback function. This is a function that will be
 We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
 
 ```elixir
-  def application do
-    [applications: [:logger],
-     mod: {KV, []}]
-  end
+def application do
+  [applications: [:logger],
+   mod: {KV, []}]
+end
 ```
 
 The `:mod` option specifies the "application callback module", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](/docs/stable/elixir/Application.html) behaviour.
@@ -233,19 +233,19 @@ Links are bi-directional, which implies that a crash in a bucket will crash the 
 In other words, we want the registry to keep on running even if a bucket crashes. Let's write a new registry test:
 
 ```elixir
-  test "removes bucket on crash", %{registry: registry} do
-    KV.Registry.create(registry, "shopping")
-    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+test "removes bucket on crash", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Stop the bucket with non-normal reason
-    Process.exit(bucket, :shutdown)
+  # Stop the bucket with non-normal reason
+  Process.exit(bucket, :shutdown)
 
-    # Wait until the bucket is dead
-    ref = Process.monitor(bucket)
-    assert_receive {:DOWN, ^ref, _, _, _}
+  # Wait until the bucket is dead
+  ref = Process.monitor(bucket)
+  assert_receive {:DOWN, ^ref, _, _, _}
 
-    assert KV.Registry.lookup(registry, "shopping") == :error
-  end
+  assert KV.Registry.lookup(registry, "shopping") == :error
+end
 ```
 
 The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. Opposite to `Agent.stop/1`, `Process.exit/2` is an asynchronous operation, therefore we cannot simply query `KV.Registry.lookup/2` right after sending the exit signal because there will be no guarantee the bucket will be dead by then. To solve this, we also monitor the bucket during test and only query the registry once we are sure it is DOWN, avoiding race conditions.
@@ -311,17 +311,17 @@ iex> KV.Bucket.get(bucket, "eggs")
 Let's change the registry to work with the buckets supervisor by rewriting how buckets are started:
 
 ```elixir
-  def handle_cast({:create, name}, {names, refs}) do
-    if Map.has_key?(names, name) do
-      {:noreply, {names, refs}}
-    else
-      {:ok, pid} = KV.Bucket.Supervisor.start_bucket
-      ref = Process.monitor(pid)
-      refs = Map.put(refs, ref, name)
-      names = Map.put(names, name, pid)
-      {:noreply, {names, refs}}
-    end
+def handle_cast({:create, name}, {names, refs}) do
+  if Map.has_key?(names, name) do
+    {:noreply, {names, refs}}
+  else
+    {:ok, pid} = KV.Bucket.Supervisor.start_bucket
+    ref = Process.monitor(pid)
+    refs = Map.put(refs, ref, name)
+    names = Map.put(names, name, pid)
+    {:noreply, {names, refs}}
   end
+end
 ```
 
 Once we perform those changes, our test suite should fail as there is no bucket supervisor. Instead of directly starting the bucket supervisor on every test, let's automatically start it as part of our main supervision tree.
@@ -333,14 +333,14 @@ In order to use the buckets supervisor in our application, we need to add it as 
 Open up `lib/kv/supervisor.ex` and change `init/1` to match the following:
 
 ```elixir
-  def init(:ok) do
-    children = [
-      worker(KV.Registry, [KV.Registry]),
-      supervisor(KV.Bucket.Supervisor, [])
-    ]
+def init(:ok) do
+  children = [
+    worker(KV.Registry, [KV.Registry]),
+    supervisor(KV.Bucket.Supervisor, [])
+  ]
 
-    supervise(children, strategy: :one_for_one)
-  end
+  supervise(children, strategy: :one_for_one)
+end
 ```
 
 This time we have added a supervisor as child, starting it with no arguments. Re-run the test suite and now all tests should pass.
@@ -350,14 +350,14 @@ Since we have added more children to the supervisor, it is also important to eva
 In light of this observation, we should consider moving to another supervision strategy. Two likely candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:one_for_all` strategy will kill and restart all of its children processes whenever any one of them dies. At first glance, this would appear to suit our use case, but it also seems a little heavy-handed, because `KV.Registry` is perfectly capable of cleaning itself up if `KV.Bucket.Supervisor` dies. In this case, the `:rest_for_one` strategy comes in handy- when a child process crashes, the supervisor will only kill and restart child processes which were started *after* the crashed child. Let's rewrite our supervision tree to use this strategy instead:
 
 ```elixir
-  def init(:ok) do
-    children = [
-      worker(KV.Registry, [KV.Registry]),
-      supervisor(KV.Bucket.Supervisor, [])
-    ]
+def init(:ok) do
+  children = [
+    worker(KV.Registry, [KV.Registry]),
+    supervisor(KV.Bucket.Supervisor, [])
+  ]
 
-    supervise(children, strategy: :rest_for_one)
-  end
+  supervise(children, strategy: :rest_for_one)
+end
 ```
 
 Now, if the registry worker crashes, both the registry and the "rest" of `KV.Supervisor`'s children (i.e. `KV.Bucket.Supervisor`) will be restarted. However, if `KV.Bucket.Supervisor` crashes, `KV.Registry` will not be restarted, because it was started prior to `KV.Bucket.Supervisor`.
@@ -396,10 +396,10 @@ At the end of the day, tools like Observer is one of the main reasons you want t
 So far we have been starting one registry per test to ensure they are isolated:
 
 ```elixir
-  setup context do
-    {:ok, registry} = KV.Registry.start_link(context.test)
-    {:ok, registry: registry}
-  end
+setup context do
+  {:ok, registry} = KV.Registry.start_link(context.test)
+  {:ok, registry: registry}
+end
 ```
 
 Since we have now changed our registry to use `KV.Bucket.Supervisor`, which is registered globally, our tests are now relying on this shared, global supervisor even though each test has its own registry. The question is: should we?

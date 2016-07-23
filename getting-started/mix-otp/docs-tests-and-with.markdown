@@ -432,15 +432,15 @@ Before setup, add the following call:
 In case the test crashes, you will see a report as follows:
 
 ```
-  1) test server interaction (KVServerTest)
-     test/kv_server_test.exs:17
-     ** (RuntimeError) oops
-     stacktrace:
-       test/kv_server_test.exs:29
+1) test server interaction (KVServerTest)
+   test/kv_server_test.exs:17
+   ** (RuntimeError) oops
+   stacktrace:
+     test/kv_server_test.exs:29
 
-     The following output was logged:
+   The following output was logged:
 
-     13:44:10.035 [info]  Application kv exited: :stopped
+   13:44:10.035 [info]  Application kv exited: :stopped
 ```
 
 With this simple integration test, we start to see why integration tests may be slow. Not only can this particular test not run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
