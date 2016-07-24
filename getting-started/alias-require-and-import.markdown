@@ -237,4 +237,3 @@ From Elixir v1.2, it is possible to alias, import or require multiple modules at
 ```elixir
 alias MyApp.{Foo, Bar, Baz}
 ```
-

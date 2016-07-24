@@ -201,4 +201,3 @@ iex> byte_size compressed
 iex> :zlib.uncompress(compressed)
 "\nMary had a little lamb,\nHis fleece was white as snow,\nAnd everywhere that Mary went,\nThe lamb was sure to go."
 ```
-

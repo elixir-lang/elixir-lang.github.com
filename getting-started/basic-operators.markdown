@@ -46,7 +46,6 @@ iex> 1 and true
 ```iex
 iex> false and raise("This error will never be raised")
 false
-
 iex> true or raise("This error will never be raised")
 true
 ```

@@ -109,7 +109,6 @@ iex> spawn fn -> raise "oops" end
 [error] Process #PID<0.58.00> raised an exception
 ** (RuntimeError) oops
     :erlang.apply/2
-
 ```
 
 It merely logged an error but the spawning process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
