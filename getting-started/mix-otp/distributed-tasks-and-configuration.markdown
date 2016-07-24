@@ -47,7 +47,7 @@ Let's define a module named `Hello` in this shell:
 
 ```iex
 iex> defmodule Hello do
-...>  def world, do: IO.puts "hello world"
+...>   def world, do: IO.puts "hello world"
 ...> end
 ```
 
