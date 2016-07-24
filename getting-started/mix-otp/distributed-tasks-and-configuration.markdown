@@ -11,8 +11,10 @@ In this last chapter, we will go back to the `:kv` application and add a routing
 
 The routing layer will receive a routing table of the following format:
 
-    [{?a..?m, :"foo@computer-name"},
-     {?n..?z, :"bar@computer-name"}]
+```elixir
+[{?a..?m, :"foo@computer-name"},
+ {?n..?z, :"bar@computer-name"}]
+```
 
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
 
@@ -34,8 +36,10 @@ $ iex --sname foo
 
 You can see now the prompt is slightly different and shows the node name followed by the computer name:
 
-    Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
-    iex(foo@jv)1>
+```
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+iex(foo@jv)1>
+```
 
 My computer is named `jv`, so I see `foo@jv` in the example above, but you will get a different result. We will use `foo@computer-name` in the following examples and you should update them accordingly when trying out the code.
 

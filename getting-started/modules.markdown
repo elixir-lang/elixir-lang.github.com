@@ -261,7 +261,9 @@ end
 
 If we save the code above in a file named "concat.ex" and compile it, Elixir will emit the following warning:
 
-    concat.ex:7: warning: this clause cannot match because a previous clause at line 2 always matches
+```
+concat.ex:7: warning: this clause cannot match because a previous clause at line 2 always matches
+```
 
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 

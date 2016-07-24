@@ -13,7 +13,9 @@ Eager to learn more? Keep reading!
 
 In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by simply running:
 
-    mix new path/to/new/project
+```bash
+mix new path/to/new/project
+```
 
 We have written a guide that covers how to build an Elixir application, with its own supervision tree, configuration, tests and more. The application works as a distributed key-value store where we organize key-value pairs into buckets and distribute those buckets across multiple nodes:
 
