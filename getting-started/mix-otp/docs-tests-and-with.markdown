@@ -289,7 +289,6 @@ The last step is to implement `KVServer.Command.run/1`, to run the parsed comman
 @doc """
 Runs the given command.
 """
-def run(command)
 
 def run({:create, bucket}) do
   KV.Registry.create(KV.Registry, bucket)
