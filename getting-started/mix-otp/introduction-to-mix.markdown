@@ -92,11 +92,11 @@ defmodule KV.Mixfile do
 
   def project do
     [app: :kv,
-     version: "0.0.1",
-     elixir: "~> 1.2",
+     version: "0.1.0",
+     elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps()]
   end
 
   def application do
@@ -128,15 +128,8 @@ $ mix compile
 ```
 
 Will output:
-
-    Compiled lib/kv.ex
+    Compiling 1 file (.ex)
     Generated kv app
-    Consolidated List.Chars
-    Consolidated Collectable
-    Consolidated String.Chars
-    Consolidated Enumerable
-    Consolidated IEx.Info
-    Consolidated Inspect
 
 The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated and [all protocols were consolidated as described in the Getting Started guide](/getting-started/protocols.html#protocol-consolidation). All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
 
