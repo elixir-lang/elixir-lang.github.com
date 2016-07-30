@@ -121,7 +121,7 @@ iex> bit_size(<< 1 :: size(1)>>)
 1
 ```
 
-The value is no longer a binary, but a bitstring -- just a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8!
+The value is no longer a binary, but a bitstring -- just a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8.
 
 We can also pattern match on binaries / bitstrings:
 
@@ -134,7 +134,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 ** (MatchError) no match of right hand side value: <<0, 1, 2, 3>>
 ```
 
-Note each entry in the binary is expected to match exactly 8 bits. However, we can match on the rest of the binary modifier:
+Note each entry in the binary pattern is expected to match exactly 8 bits. If we want to match on a binary of unknown size, it is possible by using the binary modifier at the end of the pattern:
 
 ```iex
 iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
@@ -143,7 +143,7 @@ iex> x
 <<2, 3>>
 ```
 
-The pattern above only works if the binary is at the end of `<<>>`. Similar results can be achieved with the string concatenation operator `<>`:
+Similar results can be achieved with the string concatenation operator `<>`:
 
 ```iex
 iex> "he" <> rest = "hello"
@@ -152,7 +152,7 @@ iex> rest
 "llo"
 ```
 
-This finishes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary, and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
+A complete reference about the binary / bitstring constructor `<<>>` can be found [in the Elixir documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.SpecialForms.html#%3C%3C%3E%3E/1). This concludes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
 
 ## Char lists
 
