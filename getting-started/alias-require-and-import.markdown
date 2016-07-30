@@ -170,7 +170,7 @@ With this we have almost finished our tour of Elixir modules. The last topic to 
 
 ## Understanding Aliases
 
-At this point you may be wondering: what exactly an Elixir alias is and how is it represented?
+At this point, you may be wondering: what exactly is an Elixir alias and how is it represented?
 
 An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
 
