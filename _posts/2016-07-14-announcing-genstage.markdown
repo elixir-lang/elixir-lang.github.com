@@ -356,4 +356,6 @@ For the word counting problem with a fixed data, early experiments show a linear
 
 We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, Flows, and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/) and we hope to see you there.
 
+Finally, we want to thank the [akka-streams and reactive-streams projects](http://reactive-streams.io) which provided us guidance in implementing the demand-driven exchange between stages as well as the [Apache Spark](http://spark.apache.org/) and [Apache Beam](http://beam.incubator.apache.org/) initiatives that inspire the work behind `GenStage.Flow`.
+
 Happy coding!
