@@ -45,9 +45,9 @@ iex> new_list[:a]
 
 Keyword lists are important because they have three special characteristics:
 
-* Keys must be atoms.
-* Keys are ordered, as specified by the developer.
-* Keys can be given more than once.
+  * Keys must be atoms.
+  * Keys are ordered, as specified by the developer.
+  * Keys can be given more than once.
 
 For example, [the Ecto library](https://github.com/elixir-lang/ecto) makes use of these features to provide an elegant DSL for writing database queries:
 
@@ -106,8 +106,8 @@ nil
 
 Compared to keyword lists, we can already see two differences:
 
-* Maps allow any value as a key.
-* Maps' keys do not follow any ordering.
+  * Maps allow any value as a key.
+  * Maps' keys do not follow any ordering.
 
 In contrast to keyword lists, maps are very useful with pattern matching. When a map is used in a pattern, it will always match on a subset of the given value:
 
