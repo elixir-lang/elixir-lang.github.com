@@ -70,13 +70,15 @@ end
 
 Run the test suite and the doctest should fail:
 
-    1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
-       test/kv_server/command_test.exs:3
-       Doctest failed
-       code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
-       lhs:  :not_implemented
-       stacktrace:
-         lib/kv_server/command.ex:11: KVServer.Command (module)
+```
+  1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
+     test/kv_server/command_test.exs:3
+     Doctest failed
+     code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
+     lhs:  :not_implemented
+     stacktrace:
+       lib/kv_server/command.ex:11: KVServer.Command (module)
+ ```
 
 Excellent!
 

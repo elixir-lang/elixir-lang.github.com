@@ -11,8 +11,10 @@ In this last chapter, we will go back to the `:kv` application and add a routing
 
 The routing layer will receive a routing table of the following format:
 
-    [{?a..?m, :"foo@computer-name"},
-     {?n..?z, :"bar@computer-name"}]
+```elixir
+[{?a..?m, :"foo@computer-name"},
+ {?n..?z, :"bar@computer-name"}]
+```
 
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
 
@@ -43,7 +45,7 @@ Let's define a module named `Hello` in this shell:
 
 ```iex
 iex> defmodule Hello do
-...>  def world, do: IO.puts "hello world"
+...>   def world, do: IO.puts "hello world"
 ...> end
 ```
 

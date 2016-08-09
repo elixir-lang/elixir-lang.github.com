@@ -128,6 +128,7 @@ $ mix compile
 ```
 
 Will output:
+
     Compiling 1 file (.ex)
     Generated kv app
 
@@ -190,17 +191,19 @@ assert 1 + 1 == 3
 
 Now run `mix test` again (notice this time there will be no compilation):
 
-    1) test the truth (KVTest)
-       test/kv_test.exs:5
-       Assertion with == failed
-       code: 1 + 1 == 3
-       lhs:  2
-       rhs:  3
-       stacktrace:
-         test/kv_test.exs:6
+```
+  1) test the truth (KVTest)
+     test/kv_test.exs:5
+     Assertion with == failed
+     code: 1 + 1 == 3
+     lhs:  2
+     rhs:  3
+     stacktrace:
+       test/kv_test.exs:6
 
-    Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
-    1 test, 1 failure
+Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
+1 test, 1 failure
+```
 
 For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left-hand side (lhs) and right-hand side (rhs) of the `==` operator.
 

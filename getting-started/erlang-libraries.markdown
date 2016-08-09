@@ -67,9 +67,9 @@ in your project's applications list whenever you use it. To do this,
 edit your `mix.exs` file to include:
 
 ```elixir
-  def application do
-    [applications: [:crypto]]
-  end
+def application do
+  [applications: [:crypto]]
+end
 ```
 
 ## The digraph module
@@ -201,4 +201,3 @@ iex> byte_size compressed
 iex> :zlib.uncompress(compressed)
 "\nMary had a little lamb,\nHis fleece was white as snow,\nAnd everywhere that Mary went,\nThe lamb was sure to go."
 ```
-
