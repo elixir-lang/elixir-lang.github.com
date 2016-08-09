@@ -107,9 +107,7 @@ true
 
 The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
 
-```
-number < atom < reference < functions < port < pid < tuple < maps < list < bitstring
-```
+    number < atom < reference < functions < port < pid < tuple < maps < list < bitstring
 
 You don't actually need to memorize this ordering, but it is important just to know an order exists.
 

@@ -55,18 +55,16 @@ $ mix new kv --module KV
 
 Mix will create a directory named `kv` with a few files in it:
 
-```
-* creating README.md
-* creating .gitignore
-* creating mix.exs
-* creating config
-* creating config/config.exs
-* creating lib
-* creating lib/kv.ex
-* creating test
-* creating test/test_helper.exs
-* creating test/kv_test.exs
-```
+    * creating README.md
+    * creating .gitignore
+    * creating mix.exs
+    * creating config
+    * creating config/config.exs
+    * creating lib
+    * creating lib/kv.ex
+    * creating test
+    * creating test/test_helper.exs
+    * creating test/kv_test.exs
 
 Let's take a brief look at those generated files.
 
@@ -131,10 +129,8 @@ $ mix compile
 
 Will output:
 
-```
-Compiling 1 file (.ex)
-Generated kv app
-```
+    Compiling 1 file (.ex)
+    Generated kv app
 
 The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated and [all protocols were consolidated as described in the Getting Started guide](/getting-started/protocols.html#protocol-consolidation). All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
 
@@ -173,17 +169,15 @@ ExUnit.start()
 
 This file will be automatically required by Mix every time before we run our tests. We can run tests with `mix test`:
 
-```
-Compiled lib/kv.ex
-Generated kv app
-[...]
-.
+    Compiled lib/kv.ex
+    Generated kv app
+    [...]
+    .
 
-Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
-1 test, 0 failures
+    Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
+    1 test, 0 failures
 
-Randomized with seed 540224
-```
+    Randomized with seed 540224
 
 Notice that by running `mix test`, Mix has compiled the source files and generated the application file once again. This happens because Mix supports multiple environments, which we will explore in the next section.
 

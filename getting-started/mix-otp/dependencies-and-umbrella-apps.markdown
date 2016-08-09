@@ -95,12 +95,10 @@ For this reason, Mix supports "umbrella projects." Umbrella projects allow you t
 
 Let's create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
-```
-+ kv_umbrella
-  + apps
-    + kv
-    + kv_server
-```
+    + kv_umbrella
+      + apps
+        + kv
+        + kv_server
 
 The interesting thing about this approach is that Mix has many conveniences for working with such projects, such as the ability to compile and test all applications inside `apps` with a single command. However, even though they are all listed together inside `apps`, they are still decoupled from each other, so you can build, test and deploy each application in isolation if you want to.
 
@@ -255,12 +253,10 @@ Now Mix will guarantee the `:kv` application is started before `:kv_server` is s
 
 Finally, copy the `kv` application we have built so far to the `apps` directory in our new umbrella project. The final directory structure should match the structure we mentioned earlier:
 
-```
-+ kv_umbrella
-  + apps
-    + kv
-    + kv_server
-```
+    + kv_umbrella
+      + apps
+        + kv
+        + kv_server
 
 We now just need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project` function:
 

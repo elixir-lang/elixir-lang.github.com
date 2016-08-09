@@ -36,10 +36,8 @@ $ iex --sname foo
 
 You can see now the prompt is slightly different and shows the node name followed by the computer name:
 
-```
-Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
-iex(foo@jv)1>
-```
+    Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+    iex(foo@jv)1>
 
 My computer is named `jv`, so I see `foo@jv` in the example above, but you will get a different result. We will use `foo@computer-name` in the following examples and you should update them accordingly when trying out the code.
 

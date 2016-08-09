@@ -107,12 +107,10 @@ My particular telnet client can be exited by typing `ctrl + ]`, typing `quit`, a
 
 Once you exit the telnet client, you will likely see an error in the IEx session:
 
-```
-** (MatchError) no match of right hand side value: {:error, :closed}
-    (kv_server) lib/kv_server.ex:41: KVServer.read_line/1
-    (kv_server) lib/kv_server.ex:33: KVServer.serve/1
-    (kv_server) lib/kv_server.ex:27: KVServer.loop_acceptor/1
-```
+    ** (MatchError) no match of right hand side value: {:error, :closed}
+        (kv_server) lib/kv_server.ex:41: KVServer.read_line/1
+        (kv_server) lib/kv_server.ex:33: KVServer.serve/1
+        (kv_server) lib/kv_server.ex:27: KVServer.loop_acceptor/1
 
 That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in future revisions of our server.
 
