@@ -33,6 +33,8 @@ The preferred option for installing Elixir. Choose your operating system and too
     * Run: `zypper in elixir`
   * Gentoo
     * Run: `emerge --ask dev-lang/elixir`
+  * GNU Guix
+    * Run: `guix package -i elixir`
   * Fedora 17 and newer
     * Run: `yum install elixir`
   * Fedora 22 and newer
