@@ -212,14 +212,14 @@ $ mix test --trace
 The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:
 
 ```
-1) test removes buckets on exit (KV.RegistryTest)
-   test/kv/registry_test.exs:19
-   Assertion with == failed
-   code: KV.Registry.lookup(registry, "shopping") == :error
-   lhs:  {:ok, #PID<0.109.0>}
-   rhs:  :error
-   stacktrace:
-     test/kv/registry_test.exs:23
+  1) test removes buckets on exit (KV.RegistryTest)
+     test/kv/registry_test.exs:19
+     Assertion with == failed
+     code: KV.Registry.lookup(registry, "shopping") == :error
+     lhs:  {:ok, #PID<0.109.0>}
+     rhs:  :error
+     stacktrace:
+       test/kv/registry_test.exs:23
 ```
 
 According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
