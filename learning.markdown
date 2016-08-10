@@ -8,7 +8,7 @@ layout: default
 
 {% include toc.html %}
 
-Our website provides a [Getting Started](/getting-started/introduction.html) guide to learn more about Elixir's foundation and explore how to build projects with [Mix and OTP](getting-started/mix-otp/introduction-to-mix.html).
+Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundation and explore how to build projects with [Mix and OTP](getting-started/mix-otp/introduction-to-mix.html).
 
 The Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that follows your pace and interests.
 
