@@ -78,7 +78,7 @@ Run the test suite and the doctest should fail:
      lhs:  :not_implemented
      stacktrace:
        lib/kv_server/command.ex:11: KVServer.Command (module)
- ```
+```
 
 Excellent!
 
