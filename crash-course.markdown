@@ -95,7 +95,7 @@ Some operators are spelled differently.
 
 ### Delimiters
 
-Erlang expressions are terminated with a dot `.` and comma `,` is used to evaluates multiple expressions within one context (in a function definition, for instance). In Elixir, expressions are delimited by a line break or a semicolon `;`.
+Erlang expressions are terminated with a dot `.` and comma `,` is used to evaluate multiple expressions within one context (in a function definition, for instance). In Elixir, expressions are delimited by a line break or a semicolon `;`.
 
 **Erlang**
 
