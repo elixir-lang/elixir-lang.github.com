@@ -74,9 +74,12 @@ And it then returned a quoted expression as follows:
 
 {% raw %}
 ```elixir
-{:if, [], [
-  {:!, [], [true]},
-  {{:., [], [IO, :puts], [], ["this should never be printed"]}}]}
+{:if, [],
+ [{:!, [], [true]},
+  [do: {{:., [],
+     [{:__aliases__,
+       [], [:IO]},
+      :puts]}, [], ["this should never be printed"]}]]}
 ```
 {% endraw %}
 
