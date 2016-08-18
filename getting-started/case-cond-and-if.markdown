@@ -112,7 +112,7 @@ iex> hd(1)
     :erlang.hd(1)
 iex> case 1 do
 ...>   x when hd(x) -> "Won't match"
-...>   x -> "Got: #{x}"
+...>   x -> "Got #{x}"
 ...> end
 "Got 1"
 ```
