@@ -7,6 +7,8 @@ title: GenServer
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In the [previous chapter](/getting-started/mix-otp/agent.html) we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
 
 ```elixir

@@ -7,6 +7,8 @@ title: Dependencies and umbrella projects
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In this chapter, we will discuss how to manage dependencies in Mix.
 
 Our `kv` application is complete, so it's time to implement the server that will handle the requests we defined in the first chapter:

@@ -7,6 +7,8 @@ title: ETS
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 Every time we need to look up a bucket, we need to send a message to the registry. In case our registry is being accessed concurrently by multiple processes, the registry may become a bottleneck!
 
 In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.
