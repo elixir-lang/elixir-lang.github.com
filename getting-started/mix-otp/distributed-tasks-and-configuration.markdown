@@ -7,6 +7,8 @@ title: Distributed tasks and configuration
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In this last chapter, we will go back to the `:kv` application and add a routing layer that will allow us to distribute requests between nodes based on the bucket name.
 
 The routing layer will receive a routing table of the following format:

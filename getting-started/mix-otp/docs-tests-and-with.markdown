@@ -8,6 +8,8 @@ redirect_from: /getting-started/mix_otp/docs-tests-and-pipelines.html
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In this chapter, we will implement the code that parses the commands we described in the first chapter:
 
 ```
