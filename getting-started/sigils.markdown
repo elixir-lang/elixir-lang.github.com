@@ -176,7 +176,9 @@ iex> h sigil_r
 ...
 ```
 
-We can also provide our own sigils by simply implementing functions that follow the `sigil_{identifier}` pattern. For example, let's implement the `~i` sigil that returns an integer (with the optional `n` modifier to make it negative):
+We can also provide our own sigils by simply implementing functions that follow the `sigil_{identifier}` pattern, where `{identifier}` is either a lowercase or uppercase letter. Use a lowercase letter if you want to allow the interpolation of variables with `#{..}` inside the sigil, and an uppercase letter if you do not. The unescaping of above-mentioned escape codes like `\n` or `\t` does not happen automatically, but there are functions that do this for you. Check the [documentation on custom sigils](http://elixir-lang.org/docs/stable/elixir/Macro.html#module-custom-sigils) for more info.
+
+For example, let's implement the `~i` sigil that returns an integer (with the optional `n` modifier to make it negative):
 
 ```iex
 iex> defmodule MySigils do
