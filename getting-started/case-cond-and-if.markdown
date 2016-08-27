@@ -51,60 +51,7 @@ iex> case {1, 2, 3} do
 
 The first clause above will only match when `x` is positive.
 
-## Expressions in guard clauses
-
-Elixir imports and allows the following expressions in guards by default:
-
-* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `>=`, `<`, `<=`)
-* boolean operators (`and`, `or`, `not`)
-* arithmetic operations (`+`, `-`, `*`, `/`)
-* arithmetic unary operators (`+`, `-`)
-* the binary concatenation operator `<>`
-* the `in` operator as long as the right side is a range or a list
-* all the following type check functions:
-    * `is_atom/1`
-    * `is_binary/1`
-    * `is_bitstring/1`
-    * `is_boolean/1`
-    * `is_float/1`
-    * `is_function/1`
-    * `is_function/2`
-    * `is_integer/1`
-    * `is_list/1`
-    * `is_map/1`
-    * `is_nil/1`
-    * `is_number/1`
-    * `is_pid/1`
-    * `is_port/1`
-    * `is_reference/1`
-    * `is_tuple/1`
-* plus these functions:
-    * `abs(number)`
-    * `binary_part(binary, start, length)`
-    * `bit_size(bitstring)`
-    * `byte_size(bitstring)`
-    * `div(integer, integer)`
-    * `elem(tuple, n)`
-    * `hd(list)`
-    * `length(list)`
-    * `map_size(map)`
-    * `node()`
-    * `node(pid | ref | port)`
-    * `rem(integer, integer)`
-    * `round(number)`
-    * `self()`
-    * `tl(list)`
-    * `trunc(number)`
-    * `tuple_size(tuple)`
-
-Additionally, users may define their own guards. For example, the `Bitwise`
-module defines guards as functions and operators: `bnot`, `~~~`, `band`,
-`&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>`.
-
-Note that while boolean operators such as `and`, `or`, `not` are allowed in guards,
-the more general operators `&&`, `||`, and `!` are not.
-
-Keep in mind errors in guards do not leak but instead make the guard fail:
+Keep in mind errors in guards do not leak but simply make the guard fail:
 
 ```iex
 iex> hd(1)
@@ -124,6 +71,8 @@ iex> case :ok do
 ...> end
 ** (CaseClauseError) no case clause matching: :ok
 ```
+
+Consult [the full documentation for guards](/docs/master/elixir/guards.html) for more information about guards, how they are used, and what expressions are allowed in them.
 
 Note anonymous functions can also have multiple clauses and guards:
 
