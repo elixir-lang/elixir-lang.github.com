@@ -84,7 +84,7 @@ Run the test suite and the doctest should fail:
 
 Excellent!
 
-Now it is just a matter of making the doctest pass. Let's implement the `parse/1` function:
+Now let's make the doctest pass. Let's implement the `parse/1` function:
 
 ```elixir
 def parse(line) do
@@ -94,7 +94,7 @@ def parse(line) do
 end
 ```
 
-Our implementation simply splits the line on whitespace and then matches the command against a list. Using `String.split/1` means our commands will be whitespace-insensitive. Leading and trailing whitespace won't matter, nor will consecutive spaces between words. Let's add some new doctests to test this behaviour along with the other commands:
+Our implementation splits the line on whitespace and then matches the command against a list. Using `String.split/1` means our commands will be whitespace-insensitive. Leading and trailing whitespace won't matter, nor will consecutive spaces between words. Let's add some new doctests to test this behaviour along with the other commands:
 
 ```elixir
 @doc ~S"""
@@ -329,7 +329,7 @@ defp lookup(bucket, callback) do
 end
 ```
 
-The implementation is straightforward: we just dispatch to the `KV.Registry` server that we registered during the `:kv` application startup. Since our `:kv_server` depends on the `:kv` application, it is completely fine to depend on the servers/services it provides.
+Every function clause dispatches the appropriate command to the `KV.Registry` server that we registered during the `:kv` application startup. Since our `:kv_server` depends on the `:kv` application, it is completely fine to depend on the services it provides.
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
@@ -341,7 +341,7 @@ defp write_line(socket, {:error, :not_found}) do
 end
 ```
 
-And our server functionality is almost complete! We just need to add tests. This time, we have left tests for last because there are some important considerations to be made.
+And our server functionality is almost complete! Only tests are missing. This time, we have left tests for last because there are some important considerations to be made.
 
 `KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production.
 

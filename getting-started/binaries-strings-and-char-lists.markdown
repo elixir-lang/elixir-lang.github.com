@@ -57,7 +57,7 @@ iex> String.codepoints("hełło")
 
 You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
 
-However, strings are just part of the story. If a string is a binary, and we have used the `is_binary/1` function, Elixir must have an underlying type empowering strings. And it does. Let's talk about binaries!
+However, strings are just part of the story. If a string is a binary, and we have used the `is_binary/1` function, Elixir must have an underlying type empowering strings. And it does! Let's talk about binaries.
 
 ## Binaries (and bitstrings)
 
@@ -70,7 +70,7 @@ iex> byte_size(<<0, 1, 2, 3>>)
 4
 ```
 
-A binary is just a sequence of bytes. Of course, those bytes can be organized in any way, even in a sequence that does not make them a valid string:
+A binary is a sequence of bytes. Those bytes can be organized in any way, even in a sequence that does not make them a valid string:
 
 ```iex
 iex> String.valid?(<<239, 191, 191>>)
@@ -121,7 +121,7 @@ iex> bit_size(<< 1 :: size(1)>>)
 1
 ```
 
-The value is no longer a binary, but a bitstring -- just a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8.
+The value is no longer a binary, but a bitstring -- a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8.
 
 We can also pattern match on binaries / bitstrings:
 

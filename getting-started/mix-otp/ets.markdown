@@ -182,7 +182,7 @@ However, since `KV.Registry.create/2` is a cast operation, the command will retu
 3. The command above returns `:error`
 4. The registry creates the bucket and updates the cache table
 
-To fix the failure we just need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:
+To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:
 
 ```elixir
 def create(server, name) do
@@ -203,7 +203,7 @@ def handle_call({:create, name}, _from, {names, refs}) do
 end
 ```
 
-We simply changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure (you block until you get a reply). Using `cast/2` when not necessary can also be considered a premature optimization.
+We changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure (you block until you get a reply). Using `cast/2` when not necessary can also be considered a premature optimization.
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 

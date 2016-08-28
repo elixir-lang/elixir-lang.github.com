@@ -209,7 +209,7 @@ iex> add.(1, 2)
 3
 ```
 
-Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions just as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
+Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
 
 Note a dot (`.`) between the variable and parenthesis is required to invoke an anonymous function.
 

@@ -55,7 +55,7 @@ The example above has a pipeline of operations. We start with a range and then m
 
 ## The pipe operator
 
-The `|>` symbol used in the snippet above is the **pipe operator**: it simply takes the output from the expression on its left side and passes it as the first argument to the function call on its right side. It's similar to the Unix `|` operator.  Its purpose is to highlight the flow of data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the `|>` operator:
+The `|>` symbol used in the snippet above is the **pipe operator**: it takes the output from the expression on its left side and passes it as the first argument to the function call on its right side. It's similar to the Unix `|` operator.  Its purpose is to highlight the data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the `|>` operator:
 
 ```iex
 iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))

@@ -11,7 +11,7 @@ Eager to learn more? Keep reading!
 
 ## Build your first Elixir project
 
-In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by simply running:
+In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by running:
 
 ```bash
 $ mix new path/to/new/project

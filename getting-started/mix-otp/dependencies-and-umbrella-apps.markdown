@@ -79,7 +79,7 @@ Internal dependencies are the ones that are specific to your project. They usual
 
 If you have an internal dependency, Mix supports two methods to work with them: git repositories or umbrella projects.
 
-For example, if you push the `kv` project to a git repository, you just need to list it in your deps code in order to use it:
+For example, if you push the `kv` project to a git repository, you'll need to list it in your deps code in order to use it:
 
 ```elixir
 def deps do
@@ -139,7 +139,7 @@ defmodule KvUmbrella.Mixfile do
 end
 ```
 
-What makes this project different from the previous one is simply the `apps_path: "apps"` entry in the project definition. This means this project will act as an umbrella. Such projects do not have source files nor tests, although they can have their own dependencies (not shared with children). We'll create new applications inside the apps directory.
+What makes this project different from the previous one is the `apps_path: "apps"` entry in the project definition. This means this project will act as an umbrella. Such projects do not have source files nor tests, although they can have their own dependencies. Each child application must be defined inside the `apps` directory.
 
 Let's move inside the apps directory and start building `kv_server`. This time, we are going to pass the `--sup` flag, which will tell Mix to generate a supervision tree automatically for us, instead of building one manually as we did in previous chapters:
 
@@ -260,7 +260,7 @@ Finally, copy the `kv` application we have built so far to the `apps` directory 
         + kv
         + kv_server
 
-We now just need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project` function:
+We now need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project` function:
 
 ```elixir
 build_path: "../../_build",

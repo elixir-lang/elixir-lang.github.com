@@ -104,7 +104,7 @@ module defines guards as functions and operators: `bnot`, `~~~`, `band`,
 Note that while boolean operators such as `and`, `or`, `not` are allowed in guards,
 the more general and short-circuiting operators `&&`, `||` and `!` are not.
 
-Keep in mind errors in guards do not leak but simply make the guard fail:
+Keep in mind errors in guards do not leak but instead make the guard fail:
 
 ```iex
 iex> hd(1)
@@ -194,7 +194,7 @@ iex> cond do
 
 ## `if` and `unless`
 
-Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for just one condition:
+Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for only one condition:
 
 ```iex
 iex> if true do
@@ -207,7 +207,7 @@ iex> unless true do
 nil
 ```
 
-If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and it simply returns `nil`. The opposite happens with `unless/2`.
+If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and instead it returns `nil`. The opposite happens with `unless/2`.
 
 They also support `else` blocks:
 

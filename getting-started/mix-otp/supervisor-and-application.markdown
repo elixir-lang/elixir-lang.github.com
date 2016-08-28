@@ -163,7 +163,7 @@ iex> Application.ensure_all_started(:kv)
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
 ### The application callback
 
@@ -260,7 +260,7 @@ Since the bucket is linked to the registry, which is then linked to the test pro
    ** (EXIT from #PID<0.94.0>) shutdown
 ```
 
-One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it from the registry, removing the link between registry and buckets. However, this would be a bad idea because buckets would not be linked to any process after this change. This means that if someone stops the `:kv` application, all buckets would remain alive as they are unreachable. Not only that, if a process is unreacheable, they are harder to introspect.
+One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it from the registry, removing the link between registry and buckets. However, this would be a bad idea because buckets would not be linked to any process after this change. This means that, if someone stops the `:kv` application, all buckets would remain alive as they are unreachable. Not only that, if a process is unreacheable, they are harder to introspect.
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization, and a new worker is started each time `start_child/2` is called.
 
@@ -293,9 +293,9 @@ end
 
 There are three changes in this supervisor compared to the first one.
 
-Instead of receiving the registered process name as argument, we have simply decided to name it `KV.Bucket.Supervisor` as we won't spawn different versions of this process. We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.Bucket.Supervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link` directly in the registry.
+First of all, we have decided to give the supervisor a local name of `KV.Bucket.Supervisor`. We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.Bucket.Supervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link` directly in the registry.
 
-Finally, in the `init/1` callback, we are marking the worker as `:temporary`. This means that if the bucket dies, it won't be restarted! That's because we only want to use the supervisor as a mechanism to group the buckets. The creation of buckets should always pass through the registry.
+Finally, in the `init/1` callback, we are marking the worker as `:temporary`. This means that if the bucket dies, it won't be restarted. That's because we only want to use the supervisor as a mechanism to group the buckets.
 
 Run `iex -S mix` so we can give our new supervisor a try:
 
@@ -330,7 +330,7 @@ Once we perform those changes, our test suite should fail as there is no bucket 
 
 ## Supervision trees
 
-In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervise other supervisors, forming so-called "supervision trees."
+In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervise other supervisors, forming so-called "supervision trees".
 
 Open up `lib/kv/supervisor.ex` and change `init/1` to match the following:
 
@@ -349,7 +349,7 @@ This time we have added a supervisor as child, starting it with no arguments. Re
 
 Since we have added more children to the supervisor, it is also important to evaluate if the `:one_for_one` supervision strategy is still correct. One flaw that shows up right away is the relationship between the `KV.Registry` worker process and the `KV.Bucket.Supervisor` supervisor process. If `KV.Registry` dies, all information linking `KV.Bucket` names to `KV.Bucket` processes is lost, and therefore `KV.Bucket.Supervisor` must die too- otherwise, the `KV.Bucket` processes it manages would be orphaned.
 
-In light of this observation, we should consider moving to another supervision strategy. Two likely candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:one_for_all` strategy will kill and restart all of its children processes whenever any one of them dies. At first glance, this would appear to suit our use case, but it also seems a little heavy-handed, because `KV.Registry` is perfectly capable of cleaning itself up if `KV.Bucket.Supervisor` dies. In this case, the `:rest_for_one` strategy comes in handy- when a child process crashes, the supervisor will only kill and restart child processes which were started *after* the crashed child. Let's rewrite our supervision tree to use this strategy instead:
+In light of this observation, we should consider moving to another supervision strategy. The two other candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:one_for_all` strategy will kill and restart all of its children processes whenever any one of them dies. At first glance, this would appear to suit our use case, but it also seems a little heavy-handed, because `KV.Registry` is perfectly capable of cleaning itself up if `KV.Bucket.Supervisor` dies. In this case, the `:rest_for_one` strategy comes in handy: when a child process crashes, the supervisor will only kill and restart child processes which were started *after* the crashed child. Let's rewrite our supervision tree to use this strategy instead:
 
 ```elixir
 def init(:ok) do

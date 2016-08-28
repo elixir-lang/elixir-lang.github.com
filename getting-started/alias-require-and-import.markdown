@@ -72,7 +72,7 @@ defmodule Math do
 end
 ```
 
-In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
+In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will be valid only inside the function `plus/2`. `minus/2` won't be affected at all.
 
 ## require
 
@@ -95,7 +95,7 @@ In general a module does not need to be required before usage, except if we want
 
 ## import
 
-We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can simply import it:
+We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
 ```iex
 iex> import List, only: [duplicate: 2]
@@ -183,7 +183,7 @@ iex> :"Elixir.String" == String
 true
 ```
 
-By using the `alias/2` directive, we are simply changing the atom the alias expands to.
+By using the `alias/2` directive, we are changing the atom the alias expands to.
 
 Aliases expand to atoms because in the Erlang <abbr title="Virtual Machine">VM</abbr> (and consequently Elixir) modules are always represented by atoms. For example, that's the mechanism we use to call Erlang modules:
 
@@ -191,17 +191,6 @@ Aliases expand to atoms because in the Erlang <abbr title="Virtual Machine">VM</
 iex> :lists.flatten([1, [2], 3])
 [1, 2, 3]
 ```
-
-This is also the mechanism that allows us to dynamically call a given function in a module:
-
-```iex
-iex> mod = :lists
-:lists
-iex> mod.flatten([1, [2], 3])
-[1, 2, 3]
-```
-
-We are simply calling the function `flatten` on the atom `:lists`.
 
 ## Module nesting
 

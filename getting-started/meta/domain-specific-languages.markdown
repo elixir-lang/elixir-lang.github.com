@@ -69,17 +69,17 @@ end
 MyTest.run
 ```
 
-In the example above, by using `TestCase`, we can write tests using the `test` macro, which defines a function named `run` to automatically run all tests for us. Our prototype will simply rely on the match operator (`=`) as a mechanism to do assertions.
+In the example above, by using `TestCase`, we can write tests using the `test` macro, which defines a function named `run` to automatically run all tests for us. Our prototype will rely on the match operator (`=`) as a mechanism to do assertions.
 
 ## The `test` macro
 
-Let's start by creating a module that simply defines and imports the `test` macro when used:
+Let's start by creating a module that defines and imports the `test` macro when used:
 
 ```elixir
 defmodule TestCase do
   # Callback invoked by `use`.
   #
-  # For now it simply returns a quoted expression that
+  # For now it returns a quoted expression that
   # imports the module itself into the user code.
   @doc false
   defmacro __using__(_opts) do
