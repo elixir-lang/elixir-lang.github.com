@@ -14,18 +14,16 @@ In Elixir, we have two main associative data structures: keyword lists and maps.
 
 ## Keyword lists
 
-In many functional programming languages, it is common to use a list of 2-item tuples as the representation of an associative data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:
+In many functional programming languages, it is common to use a list of 2-item tuples as the representation of a key-value data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:
 
 ```iex
 iex> list = [{:a, 1}, {:b, 2}]
 [a: 1, b: 2]
 iex> list == [a: 1, b: 2]
 true
-iex> list[:a]
-1
 ```
 
-As you can see above, Elixir supports a special syntax for defining such lists, and underneath they just map to a list of tuples. Since they are simply lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:
+As you can see above, Elixir supports a special syntax for defining such lists: `[key: value]`. Underneath it maps to the same list of tuples as above. Since keyword lists are lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:
 
 ```iex
 iex> list ++ [c: 3]
@@ -58,7 +56,7 @@ query = from w in Weather,
      select: w
 ```
 
-These features are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned the following syntax is supported:
+These characteristics are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned the following syntax is supported:
 
 ```iex
 iex> if false, do: :this, else: :that
@@ -72,9 +70,14 @@ iex> if(false, [do: :this, else: :that])
 :that
 ```
 
-In general, when the keyword list is the last argument of a function, the square brackets are optional.
+Which, as we have seen above, is the same as:
 
-In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
+```iex
+iex> if(false, [{:do, :this}, {:else, :that}])
+:that
+```
+
+In general, when the keyword list is the last argument of a function, the square brackets are optional.
 
 Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists requires the number of items and their order to match:
 
@@ -88,6 +91,8 @@ iex> [a: a] = [a: 1, b: 2]
 iex> [b: b, a: a] = [a: 1, b: 2]
 ** (MatchError) no match of right hand side value: [a: 1, b: 2]
 ```
+
+In order to manipulate keyword lists, Elixir provides [the `Keyword` module](/docs/stable/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
 ## Maps
 
