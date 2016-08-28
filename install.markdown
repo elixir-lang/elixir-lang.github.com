@@ -16,6 +16,8 @@ Note Elixir requires Erlang 18.0 or later. Many of the instructions below will a
 
 The preferred option for installing Elixir. Choose your operating system and tool.
 
+If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.
+
 ### Mac OS X
 
   * Homebrew
@@ -35,10 +37,8 @@ The preferred option for installing Elixir. Choose your operating system and too
     * Run: `emerge --ask dev-lang/elixir`
   * GNU Guix
     * Run: `guix package -i elixir`
-  * Fedora 17 and newer
+  * Fedora 21 (and older)
     * Run: `yum install elixir`
-  * Fedora 22 and newer
-    * Run: `dnf install elixir`
   * FreeBSD
     * From ports: `cd /usr/ports/lang/elixir && make install clean`
     * From pkg: `pkg install elixir`
