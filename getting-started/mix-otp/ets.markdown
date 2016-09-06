@@ -178,7 +178,7 @@ What is happening in our tests is that there is a delay in between an operation 
 However, since `KV.Registry.create/2` is a cast operation, the command will return before we actually write to the table! In other words, this is happening:
 
 1. We invoke `KV.Registry.create(registry, "shopping")`
-2. We access the information from the table with `KV.Registry.lookup(ets, "shopping")`
+2. We access the information from the table with `KV.Registry.lookup(registry, "shopping")`
 3. The command above returns `:error`
 4. The registry creates the bucket and updates the cache table
 
