@@ -264,3 +264,7 @@ ref = Process.monitor(pid)
 ```
 
 This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
+
+## Having trouble remembering everything?
+
+You don't have to! [Benjamin Tan Wei Hao](http://benjamintan.io), author of [The Little Elixir and OTP Guidebook](http://www.manning.com/tanweihao?a_aid=exotpbook&a_bid=99f537ec), has created a [GenServer cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/GenServer_CheatSheet.pdf) that captures the essential steps needed to quickly get started with using GenServer. Get it [here](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/GenServer_CheatSheet.pdf).
