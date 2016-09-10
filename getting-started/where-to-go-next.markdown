@@ -31,8 +31,6 @@ Elixir is an extensible and very customizable programming language thanks to its
 
 We have a [Learning](/learning.html) section that suggests books, screencasts and other resources for learning Elixir and exploring the ecosystem. There are also plenty of Elixir resources out there, like conference talks, open source projects, and other learning material produced by the community.
 
-Remember that in case of any difficulties, you can always visit the **#elixir-lang** channel on **irc.freenode.net** or send a message to the [mailing list](https://groups.google.com/group/elixir-lang-talk). You can be sure that there will be someone willing to help. To keep posted on the latest news and announcements, follow the [blog](/blog/) and follow the language development on the [elixir-core mailing list](https://groups.google.com/group/elixir-lang-core).
-
 Don't forget that you can also check the [source code of Elixir itself](https://github.com/elixir-lang/elixir), which is mostly written in Elixir (mainly the `lib` directory), or [explore Elixir's documentation](/docs.html).
 
 ## A byte of Erlang
