@@ -27,11 +27,11 @@ layout: default
       <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>
 
 {% highlight elixir %}
-parent = self()
+current_process = self()
 
 # Spawns an Elixir process (not an operating system one!)
 spawn_link(fn ->
-  send parent, {:msg, "hello world"}
+  send current_process, {:msg, "hello world"}
 end)
 
 # Block until the message is received
@@ -175,4 +175,3 @@ iex> :crypto.md5("Using crypto from Erlang OTP")
     </div>
   </div>
 </div>
-
