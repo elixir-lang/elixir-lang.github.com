@@ -251,7 +251,7 @@ iex> defmodule Sample do
 ** (CompileError) iex:2: function two/0 undefined
 ```
 
-Private macros are only available at compilation time. That means you can't execute a macro outside of a definition:
+Private macros are only available at compilation time. That means you can't execute a private macro outside of a definition:
 
 ```iex
 iex> defmodule Sample do
@@ -261,7 +261,7 @@ iex> defmodule Sample do
 ** (CompileError) iex:32: undefined function two/0
 ```
 
-It also means you can't both create and use a function-defining macro in a module, even with `defmacrop`. As an example, suppose I want to define a function that's only used for its side effects. To prevent the value of the last calculation from "leaking" to its caller, it will always return an innocuous symbol. Like this:
+It also means you can't both create and use a function-defining macro in the same module, even with `defmacrop`. As an example, suppose I want to define a number of functions that are only used for side effects. To prevent the value of the last calculation from "leaking" to the caller, such functions should always return an innocuous symbol. Like this:
 
 ```iex
 iex> Sample.add_and_print(1, 3)
@@ -269,7 +269,8 @@ iex> Sample.add_and_print(1, 3)
 :"add_and_print does not have a useful return value"
 ```
 
-This is what happens if you try to both define and use the macro in the same module:
+Because I want many of these functions, I decide to create a `def_without_return_value` macro that's just like `def` but returns that special symbol. 
+This is what happens if you try to both define and use that macro in the same module:
 
 ```iex
 iex> defmodule Sample do
@@ -288,6 +289,7 @@ iex> defmodule Sample do
 ** (CompileError): undefined function def_without_return_value/2
 ```
 
+`def_without_return` value will have to be defined in a different module, then `required` in the one that uses it.
 
 ## Write macros responsibly
 
