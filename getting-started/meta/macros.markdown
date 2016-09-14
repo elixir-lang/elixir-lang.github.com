@@ -227,7 +227,19 @@ Many of the functions in the `Macro` module expect an environment. You can read 
 
 ## Private macros
 
-Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time.
+Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them. Here's an example:
+
+```iex
+iex> defmodule Sample do
+...>  defmacrop two, do: 2
+...>  def four, do: two + two
+...> end
+
+iex> Sample.four
+4
+iex> Sample.two
+** (UndefinedFunctionError) function Sample.two/0 is undefined or private
+```
 
 It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
 
@@ -238,6 +250,44 @@ iex> defmodule Sample do
 ...> end
 ** (CompileError) iex:2: function two/0 undefined
 ```
+
+Private macros are only available at compilation time. That means you can't execute a macro outside of a definition:
+
+```iex
+iex> defmodule Sample do
+...>  defmacrop two, do: 2
+...>  IO.puts two
+...> end
+** (CompileError) iex:32: undefined function two/0
+```
+
+It also means you can't both create and use a function-defining macro in a module, even with `defmacrop`. As an example, suppose I want to define a function that's only used for its side effects. To prevent the value of the last calculation from "leaking" to its caller, it will always return an innocuous symbol. Like this:
+
+```iex
+iex> Sample.add_and_print(1, 3)
+4
+:"add_and_print does not have a useful return value"
+```
+
+This is what happens if you try to both define and use the macro in the same module:
+
+```iex
+iex> defmodule Sample do
+...>   defmacrop def_without_return_value({name, _, _} = head, do: body) do
+...>     return_value = String.to_atom("#{name} does not have a useful return value")
+...>     quote do
+...>       def unquote(head) do
+...>         unquote(body)
+...>         unquote(return_value)
+...>       end
+...>     end
+...>   end
+...> 
+...>   def_without_return_value add_and_print(a, b), do: IO.puts a + b
+...> end
+** (CompileError): undefined function def_without_return_value/2
+```
+
 
 ## Write macros responsibly
 
