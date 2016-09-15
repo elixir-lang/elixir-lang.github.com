@@ -70,7 +70,6 @@ When going through this getting started guide, it is common to have questions, a
   * [#elixir-lang on freenode IRC](irc://irc.freenode.net/elixir-lang)
   * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
   * [Elixir Forum](http://elixirforum.com)
-  * [elixir-talk mailing list](https://groups.google.com/group/elixir-lang-talk)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 
 When asking questions, remember these two tips:

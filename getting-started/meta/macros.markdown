@@ -74,9 +74,12 @@ And it then returned a quoted expression as follows:
 
 {% raw %}
 ```elixir
-{:if, [], [
-  {:!, [], [true]},
-  {{:., [], [IO, :puts], [], ["this should never be printed"]}}]}
+{:if, [],
+ [{:!, [], [true]},
+  [do: {{:., [],
+     [{:__aliases__,
+       [], [:IO]},
+      :puts]}, [], ["this should never be printed"]}]]}
 ```
 {% endraw %}
 
@@ -156,7 +159,9 @@ HygieneTest.go
 
 Variable hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined on line 3 of a module would be represented as:
 
-    {:x, [line: 3], nil}
+```elixir
+{:x, [line: 3], nil}
+```
 
 However, a quoted variable is represented as:
 

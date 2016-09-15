@@ -41,7 +41,9 @@ In this chapter, we will create our first project using Mix and explore differen
 
 > Note: this guide requires Elixir v1.2.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
 >
-> If you have any questions or improvements to the guide, please let us know in [our mailing list](https://groups.google.com/d/forum/elixir-lang-talk) or [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues) respectively. Your input is really important to help us guarantee the guides are accessible and up to date!
+> If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
+>
+> The final code for this guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.
 
 ## Our first project
 
@@ -92,11 +94,11 @@ defmodule KV.Mixfile do
 
   def project do
     [app: :kv,
-     version: "0.0.1",
-     elixir: "~> 1.2",
+     version: "0.1.0",
+     elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps()]
   end
 
   def application do
@@ -129,14 +131,8 @@ $ mix compile
 
 Will output:
 
-    Compiled lib/kv.ex
+    Compiling 1 file (.ex)
     Generated kv app
-    Consolidated List.Chars
-    Consolidated Collectable
-    Consolidated String.Chars
-    Consolidated Enumerable
-    Consolidated IEx.Info
-    Consolidated Inspect
 
 The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated and [all protocols were consolidated as described in the Getting Started guide](/getting-started/protocols.html#protocol-consolidation). All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
 
@@ -197,17 +193,19 @@ assert 1 + 1 == 3
 
 Now run `mix test` again (notice this time there will be no compilation):
 
-    1) test the truth (KVTest)
-       test/kv_test.exs:5
-       Assertion with == failed
-       code: 1 + 1 == 3
-       lhs:  2
-       rhs:  3
-       stacktrace:
-         test/kv_test.exs:6
+```
+  1) test the truth (KVTest)
+     test/kv_test.exs:5
+     Assertion with == failed
+     code: 1 + 1 == 3
+     lhs:  2
+     rhs:  3
+     stacktrace:
+       test/kv_test.exs:6
 
-    Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
-    1 test, 1 failure
+Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
+1 test, 1 failure
+```
 
 For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left-hand side (lhs) and right-hand side (rhs) of the `==` operator.
 

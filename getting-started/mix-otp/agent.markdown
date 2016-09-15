@@ -7,6 +7,8 @@ title: Agent
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way it can be read and modified by other processes.
 
 If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting-started/processes.html). We will use it as a starting point.
@@ -66,7 +68,7 @@ defmodule KV.BucketTest do
 end
 ```
 
-Our first test starts a new `KV.Bucket` and perform some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes. This will always work unless the process is named.
+Our first test starts a new `KV.Bucket` and performs some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes. This will always work unless the process is named.
 
 Also note that we passed the `async: true` option to `ExUnit.Case`. This option makes this test case run in parallel with other test cases that set up the `:async` option. This is extremely useful to speed up our test suite by using multiple cores in our machine. Note though the `:async` option must only be set if the test case does not rely or change any global value. For example, if the test requires writing to the filesystem, registering processes, accessing a database, you must not make it async to avoid race conditions in between tests.
 

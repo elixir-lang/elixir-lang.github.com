@@ -7,18 +7,22 @@ title: Distributed tasks and configuration
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In this last chapter, we will go back to the `:kv` application and add a routing layer that will allow us to distribute requests between nodes based on the bucket name.
 
 The routing layer will receive a routing table of the following format:
 
-    [{?a..?m, :"foo@computer-name"},
-     {?n..?z, :"bar@computer-name"}]
+```elixir
+[{?a..?m, :"foo@computer-name"},
+ {?n..?z, :"bar@computer-name"}]
+```
 
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
 
 If the matching entry points to the node evaluating the request, then we've finished routing, and this node will perform the requested operation. If the matching entry points to a different node, we'll pass the request to this node, which will look at its own routing table (which may be different from the one in the first node) and act accordingly. If no entry matches, an error will be raised.
 
-You may wonder why we don't simply tell the node we find in our routing table to perform the requested operation directly, but instead pass the routing request on to that node to process. While a routing table as simple as the one above might reasonably be shared between all nodes, passing on the routing request in this way makes it much simpler to break the routing table into smaller pieces as our application grows. Perhaps at some point, `foo@computer-name` will only be responsible for routing bucket requests, and the buckets it handles will be dispatched to different nodes. In this way, `bar@computer-name` does not need to know anything about this change.
+You may wonder why we don't tell the node we found in our routing table to perform the requested operation directly, but instead pass the routing request on to that node to process. While a routing table as simple as the one above might reasonably be shared between all nodes, passing on the routing request in this way makes it much simpler to break the routing table into smaller pieces as our application grows. Perhaps at some point, `foo@computer-name` will only be responsible for routing bucket requests, and the buckets it handles will be dispatched to different nodes. In this way, `bar@computer-name` does not need to know anything about this change.
 
 > Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines in the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Second, you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info). Third, if you want to learn more about distribution in general, we recommend [this great Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon).
 
@@ -43,11 +47,11 @@ Let's define a module named `Hello` in this shell:
 
 ```iex
 iex> defmodule Hello do
-...>  def world, do: IO.puts "hello world"
+...>   def world, do: IO.puts "hello world"
 ...> end
 ```
 
-If you have another computer on the same network with both Erlang and Elixir installed, you can start another shell on it. If you don't, you can simply start another IEx session in another terminal. In either case, give it the short name of `bar`:
+If you have another computer on the same network with both Erlang and Elixir installed, you can start another shell on it. If you don't, you can start another IEx session in another terminal. In either case, give it the short name of `bar`:
 
 ```bash
 $ iex --sname bar
@@ -87,13 +91,13 @@ iex> flush
 :ok
 ```
 
-From our quick exploration, we could conclude that we should simply use `Node.spawn_link/2` to spawn processes on a remote node every time we need to do a distributed computation. However we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options.
+From our quick exploration, we could conclude that we should use `Node.spawn_link/2` to spawn processes on a remote node every time we need to do a distributed computation. However we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options.
 
 There are three better alternatives to `Node.spawn_link/2` that we could use in our implementation:
 
 1. We could use Erlang's [:rpc](http://www.erlang.org/doc/man/rpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:rpc.call(:"foo@computer-name", Hello, :world, [])` and it will print "hello world"
 
-2. We could have a server running on the other node and send requests to that node via the [GenServer](/docs/stable/elixir/GenServer.html) API. For example, you can call a remote named server using `GenServer.call({name, node}, arg)` or simply passing the remote process PID as first argument
+2. We could have a server running on the other node and send requests to that node via the [GenServer](/docs/stable/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as first argument
 
 3. We could use [tasks](/docs/stable/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
 
@@ -139,7 +143,7 @@ iex> Task.await(task)
 {:ok, :"foo@computer-name"}
 ```
 
-Our first distributed task simply retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function and arguments explicitly:
+Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function and arguments explicitly:
 
 ```iex
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
@@ -218,9 +222,9 @@ defmodule KV.RouterTest do
 end
 ```
 
-The first test simply invokes `Kernel.node/0`, which returns the name of the current node, based on the bucket names "hello" and "world". According to our routing table so far, we should get `foo@computer-name` and `bar@computer-name` as responses, respectively.
+The first test invokes `Kernel.node/0`, which returns the name of the current node, based on the bucket names "hello" and "world". According to our routing table so far, we should get `foo@computer-name` and `bar@computer-name` as responses, respectively.
 
-The second test just checks that the code raises for unknown entries.
+The second test checks that the code raises for unknown entries.
 
 In order to run the first test, we need to have two nodes running. Move into `apps/kv` and let's restart the node named `bar` which is going to be used by tests.
 
@@ -300,7 +304,7 @@ end
 
 We have added a new `:env` key to the application. It returns the application default environment, which has an entry of key `:routing_table` and value of an empty list. It makes sense for the application environment to ship with an empty table, as the specific routing table depends on the testing/deployment structure.
 
-In order to use the application environment in our code, we just need to replace `KV.Router.table/0` with the definition below:
+In order to use the application environment in our code, we need to replace `KV.Router.table/0` with the definition below:
 
 ```elixir
 @doc """
@@ -363,7 +367,7 @@ Finally, we have learned some new things in this chapter, and they could be appl
 
 * change the `:kv_server` application to read the port from its application environment instead of using the hardcoded value of 4040
 
-* change and configure the `:kv_server` application to use the routing functionality instead of dispatching directly to the local `KV.Registry`. For `:kv_server` tests, you can make the routing table simply point to the current node itself
+* change and configure the `:kv_server` application to use the routing functionality instead of dispatching directly to the local `KV.Registry`. For `:kv_server` tests, you can make the routing table point to the current node itself
 
 ## Summing up
 

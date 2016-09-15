@@ -64,7 +64,9 @@ When working on actual projects, the build tool called `mix` will be responsible
 
 ## Scripted mode
 
-In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting, without the need for compilation. For instance, we can create a file called `math.exs`:
+In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting. When executed, both extensions compile and load their modules into memory, although only `.ex` files write their bytecode to disk in the format of `.beam` files.
+
+For instance, we can create a file called `math.exs`:
 
 ```elixir
 defmodule Math do
@@ -124,7 +126,7 @@ IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 
 Giving an argument that does not match any of the clauses raises an error.
 
-Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is just a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#doend-blocks). For example, we can edit `math.exs` to look like this:
+Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#doend-blocks). For example, we can edit `math.exs` to look like this:
 
 ```elixir
 defmodule Math do
@@ -200,7 +202,7 @@ IO.puts Concat.join("Hello", "world")      #=> Hello world
 IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 ```
 
-Any expression is allowed to serve as a default value, but it won't be evaluated during the function definition; it will simply be stored for later use. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated:
+Any expression is allowed to serve as a default value, but it won't be evaluated during the function definition. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated:
 
 ```elixir
 defmodule DefaultTest do

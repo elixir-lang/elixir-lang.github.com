@@ -209,20 +209,20 @@ iex> add.(1, 2)
 3
 ```
 
-Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions just as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
+Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
 
 Note a dot (`.`) between the variable and parenthesis is required to invoke an anonymous function.
 
-Anonymous functions are closures, and as such they can access variables that are in scope when the function is defined:
+Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
 ```iex
-iex> add_two = fn a -> add.(a, 2) end
+iex> double = fn a -> add.(a, a) end
 #Function<6.71889879/1 in :erl_eval.expr/5>
-iex> add_two.(2)
+iex> double.(2)
 4
 ```
 
-A variable assigned inside a function does not affect its surrounding environment:
+Keep in mind a variable assigned inside a function does not affect its surrounding environment:
 
 ```iex
 iex> x = 42
@@ -317,7 +317,7 @@ iex> tuple_size {:ok, "hello"}
 2
 ```
 
-Tuples store elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation (indexes start from zero):
+Tuples store elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation. Indexes start from zero:
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -372,7 +372,7 @@ iex> File.read("path/to/unknown/file")
 
 If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as the first element and the file contents as the second. Otherwise, it returns a tuple with `:error` and the error description.
 
-Most of the time, Elixir is going to guide you to do the right thing. For example, there is a `elem/2` function to access a tuple item but there is no built-in equivalent for lists:
+Most of the time, Elixir is going to guide you to do the right thing. For example, there is an `elem/2` function to access a tuple item but there is no built-in equivalent for lists:
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -383,6 +383,6 @@ iex> elem(tuple, 1)
 
 When "counting" the number of elements in a data structure, Elixir also abides by a simple rule: the function is named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation is linear (i.e. calculating the length gets slower as the input grows).
 
-For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of graphemes in a string). That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be traversed.
+For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of graphemes in a string). That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, which may be expensive since the whole string needs to be traversed.
 
 Elixir also provides `Port`, `Reference` and `PID` as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operators that go with our basic types.

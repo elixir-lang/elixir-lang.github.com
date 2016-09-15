@@ -72,7 +72,7 @@ defmodule Math do
 end
 ```
 
-In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will just be valid inside the function `plus/2`. `minus/2` won't be affected at all.
+In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will be valid only inside the function `plus/2`. `minus/2` won't be affected at all.
 
 ## require
 
@@ -84,7 +84,7 @@ Macros are chunks of code that are executed and expanded at compilation time. Th
 iex> Integer.is_odd(3)
 ** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
 iex> require Integer
-nil
+Integer
 iex> Integer.is_odd(3)
 true
 ```
@@ -95,11 +95,11 @@ In general a module does not need to be required before usage, except if we want
 
 ## import
 
-We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can simply import it:
+We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
 ```iex
 iex> import List, only: [duplicate: 2]
-nil
+List
 iex> duplicate :ok, 3
 [:ok, :ok, :ok]
 ```
@@ -170,7 +170,7 @@ With this we have almost finished our tour of Elixir modules. The last topic to 
 
 ## Understanding Aliases
 
-At this point you may be wondering: what exactly an Elixir alias is and how is it represented?
+At this point, you may be wondering: what exactly is an Elixir alias and how is it represented?
 
 An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
 
@@ -183,7 +183,7 @@ iex> :"Elixir.String" == String
 true
 ```
 
-By using the `alias/2` directive, we are simply changing the atom the alias expands to.
+By using the `alias/2` directive, we are changing the atom the alias expands to.
 
 Aliases expand to atoms because in the Erlang <abbr title="Virtual Machine">VM</abbr> (and consequently Elixir) modules are always represented by atoms. For example, that's the mechanism we use to call Erlang modules:
 
@@ -191,17 +191,6 @@ Aliases expand to atoms because in the Erlang <abbr title="Virtual Machine">VM</
 iex> :lists.flatten([1, [2], 3])
 [1, 2, 3]
 ```
-
-This is also the mechanism that allows us to dynamically call a given function in a module:
-
-```iex
-iex> mod = :lists
-:lists
-iex> mod.flatten([1, [2], 3])
-[1, 2, 3]
-```
-
-We are simply calling the function `flatten` on the atom `:lists`.
 
 ## Module nesting
 
@@ -237,4 +226,3 @@ From Elixir v1.2, it is possible to alias, import or require multiple modules at
 ```elixir
 alias MyApp.{Foo, Bar, Baz}
 ```
-

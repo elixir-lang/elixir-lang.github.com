@@ -27,7 +27,7 @@ end
 
 In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang <abbr title="Virtual Machine">VM</abbr> to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
 
-Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones:
+Elixir has a handful of reserved attributes. Here are a few of them, the most commonly used ones:
 
 * `@moduledoc` - provides documentation for the current module.
 * `@doc` - provides documentation for the function or macro that follows the attribute.

@@ -46,7 +46,6 @@ iex> 1 and true
 ```iex
 iex> false and raise("This error will never be raised")
 false
-
 iex> true or raise("This error will never be raised")
 true
 ```
@@ -112,30 +111,6 @@ The reason we can compare different data types is pragmatism. Sorting algorithms
 
 You don't actually need to memorize this ordering, but it is important just to know an order exists.
 
-## Operator table
+For reference information about operators, you can visit the ["Operators" page](/docs/master/elixir/operators.html) in the documentation.
 
-Although we have learned only a handful of operators so far, we present below the complete operator table for Elixir ordered from higher to lower precedence for reference:
-
-Operator | Associativity
--------- | -------------
- `@` | Unary
- `.` | Left to right
- `+` `-` `!` `^` `not` `~~~` | Unary
- `*` `/` | Left to right
- `+` `-` | Left to right
- `++` `--` `..` `<>` | Right to left
- `in` | Left to right
- <code>&#124;></code> `<<<` `>>>` `~>>` `<<~` `~>` `<~` `<~>` <code>&lt;&#124;&gt;</code>  | Left to right
- `<` `>` `<=` `>=` | Left to right
- `==` `!=` `=~` `===` `!==` | Left to right
- `&&` `&&&` `and` | Left to right
- <code>&#124;&#124;</code> <code>&#124;&#124;&#124;</code> `or` | Left to right
- `=` | Right to left
- `=>` | Right to left
- <code>&#124;</code> | Right to left
- `::` | Right to left
- `when` | Right to left
- `<-`, `\\` | Left to right
- `&` | Unary
-
-We will learn the majority of those operators as we go through the getting started guide. In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
+In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.

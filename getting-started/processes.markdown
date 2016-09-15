@@ -109,7 +109,6 @@ iex> spawn fn -> raise "oops" end
 [error] Process #PID<0.58.00> raised an exception
 ** (RuntimeError) oops
     :erlang.apply/2
-
 ```
 
 It merely logged an error but the spawning process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
@@ -234,7 +233,7 @@ iex> flush
 :ok
 ```
 
-Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ships with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
+Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ship with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
 
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)

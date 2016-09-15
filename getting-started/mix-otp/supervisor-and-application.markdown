@@ -7,9 +7,11 @@ title: Supervisor and Application
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.
 
-When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to setup a supervisor that will start a fresh copy of the registry.
+When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions, as commonly seen in other languages. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
 
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
 
@@ -56,21 +58,21 @@ The supervision strategy dictates what happens when one of the children crashes.
 Since `KV.Registry.start_link/1` is now expecting an argument, we need to change our implementation to receive such argument. Open up `lib/kv/registry.ex` and replace the `start_link/0` definition by:
 
 ```elixir
-  @doc """
-  Starts the registry with the given `name`.
-  """
-  def start_link(name) do
-    GenServer.start_link(__MODULE__, :ok, name: name)
-  end
+@doc """
+Starts the registry with the given `name`.
+"""
+def start_link(name) do
+  GenServer.start_link(__MODULE__, :ok, name: name)
+end
 ```
 
 We also need to update our tests to give a name when starting the registry. Replace the `setup` function in `test/kv/registry_test.exs` by:
 
 ```elixir
-  setup context do
-    {:ok, registry} = KV.Registry.start_link(context.test)
-    {:ok, registry: registry}
-  end
+setup context do
+  {:ok, registry} = KV.Registry.start_link(context.test)
+  {:ok, registry: registry}
+end
 ```
 
 `setup/2` may also receive the test context, similar to `test/3`. Besides whatever value we may add in our setup blocks, the context includes some default keys, like `:case`, `:test`, `:file` and `:line`. We have used `context.test` as a shortcut to spawn a registry with the same name of the test currently running.
@@ -161,7 +163,7 @@ iex> Application.ensure_all_started(:kv)
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
 ### The application callback
 
@@ -172,10 +174,10 @@ We can specify an application callback function. This is a function that will be
 We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
 
 ```elixir
-  def application do
-    [applications: [:logger],
-     mod: {KV, []}]
-  end
+def application do
+  [applications: [:logger],
+   mod: {KV, []}]
+end
 ```
 
 The `:mod` option specifies the "application callback module", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](/docs/stable/elixir/Application.html) behaviour.
@@ -203,7 +205,11 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 {:ok, #PID<0.88.0>}
 ```
 
-Excellent!
+How do we know this is working? After all, we are creating the bucket and then looking it up; of course it should work, right? Well, remember that `KV.Registry.create/2` uses `GenServer.cast/3`, and therefore will return `:ok` regardless of whether the message finds its target or not. At that point, we don't know whether the supervisor and the server are up, and if the bucket was created. However, `KV.Registry.lookup/2` uses `GenServer.call/3`, and will block and wait for a response from the server. We do get a positive response, so we know all is up and running.
+
+For an experiment, try reimplementing `KV.Registry.create/2` to use `GenServer.call/3` instead, and momentarily disable the application callback. Run the code above on the console again, and you will see the creation step fail straightaway.
+
+Don't forget to bring the code back to normal before resuming this tutorial!
 
 ### Projects or applications?
 
@@ -229,19 +235,19 @@ Links are bi-directional, which implies that a crash in a bucket will crash the 
 In other words, we want the registry to keep on running even if a bucket crashes. Let's write a new registry test:
 
 ```elixir
-  test "removes bucket on crash", %{registry: registry} do
-    KV.Registry.create(registry, "shopping")
-    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+test "removes bucket on crash", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Stop the bucket with non-normal reason
-    Process.exit(bucket, :shutdown)
+  # Stop the bucket with non-normal reason
+  Process.exit(bucket, :shutdown)
 
-    # Wait until the bucket is dead
-    ref = Process.monitor(bucket)
-    assert_receive {:DOWN, ^ref, _, _, _}
+  # Wait until the bucket is dead
+  ref = Process.monitor(bucket)
+  assert_receive {:DOWN, ^ref, _, _, _}
 
-    assert KV.Registry.lookup(registry, "shopping") == :error
-  end
+  assert KV.Registry.lookup(registry, "shopping") == :error
+end
 ```
 
 The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. Opposite to `Agent.stop/1`, `Process.exit/2` is an asynchronous operation, therefore we cannot simply query `KV.Registry.lookup/2` right after sending the exit signal because there will be no guarantee the bucket will be dead by then. To solve this, we also monitor the bucket during test and only query the registry once we are sure it is DOWN, avoiding race conditions.
@@ -254,7 +260,7 @@ Since the bucket is linked to the registry, which is then linked to the test pro
    ** (EXIT from #PID<0.94.0>) shutdown
 ```
 
-One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it from the registry, removing the link between registry and buckets. However, this would be a bad idea because buckets would not be linked to any process after this change. This means that if someone stops the `:kv` application, all buckets would remain alive as they are unreachable. Not only that, if a process is unreacheable, they are harder to introspect.
+One possible solution to this issue would be to provide a `KV.Bucket.start/0`, that invokes `Agent.start/1`, and use it from the registry, removing the link between registry and buckets. However, this would be a bad idea because buckets would not be linked to any process after this change. This means that, if someone stops the `:kv` application, all buckets would remain alive as they are unreachable. Not only that, if a process is unreacheable, they are harder to introspect.
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization, and a new worker is started each time `start_child/2` is called.
 
@@ -287,9 +293,9 @@ end
 
 There are three changes in this supervisor compared to the first one.
 
-Instead of receiving the registered process name as argument, we have simply decided to name it `KV.Bucket.Supervisor` as we won't spawn different versions of this process. We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.Bucket.Supervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link` directly in the registry.
+First of all, we have decided to give the supervisor a local name of `KV.Bucket.Supervisor`. We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.Bucket.Supervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link` directly in the registry.
 
-Finally, in the `init/1` callback, we are marking the worker as `:temporary`. This means that if the bucket dies, it won't be restarted! That's because we only want to use the supervisor as a mechanism to group the buckets. The creation of buckets should always pass through the registry.
+Finally, in the `init/1` callback, we are marking the worker as `:temporary`. This means that if the bucket dies, it won't be restarted. That's because we only want to use the supervisor as a mechanism to group the buckets.
 
 Run `iex -S mix` so we can give our new supervisor a try:
 
@@ -307,53 +313,53 @@ iex> KV.Bucket.get(bucket, "eggs")
 Let's change the registry to work with the buckets supervisor by rewriting how buckets are started:
 
 ```elixir
-  def handle_cast({:create, name}, {names, refs}) do
-    if Map.has_key?(names, name) do
-      {:noreply, {names, refs}}
-    else
-      {:ok, pid} = KV.Bucket.Supervisor.start_bucket
-      ref = Process.monitor(pid)
-      refs = Map.put(refs, ref, name)
-      names = Map.put(names, name, pid)
-      {:noreply, {names, refs}}
-    end
+def handle_cast({:create, name}, {names, refs}) do
+  if Map.has_key?(names, name) do
+    {:noreply, {names, refs}}
+  else
+    {:ok, pid} = KV.Bucket.Supervisor.start_bucket
+    ref = Process.monitor(pid)
+    refs = Map.put(refs, ref, name)
+    names = Map.put(names, name, pid)
+    {:noreply, {names, refs}}
   end
+end
 ```
 
 Once we perform those changes, our test suite should fail as there is no bucket supervisor. Instead of directly starting the bucket supervisor on every test, let's automatically start it as part of our main supervision tree.
 
 ## Supervision trees
 
-In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervise other supervisors, forming so-called "supervision trees."
+In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervise other supervisors, forming so-called "supervision trees".
 
 Open up `lib/kv/supervisor.ex` and change `init/1` to match the following:
 
 ```elixir
-  def init(:ok) do
-    children = [
-      worker(KV.Registry, [KV.Registry]),
-      supervisor(KV.Bucket.Supervisor, [])
-    ]
+def init(:ok) do
+  children = [
+    worker(KV.Registry, [KV.Registry]),
+    supervisor(KV.Bucket.Supervisor, [])
+  ]
 
-    supervise(children, strategy: :one_for_one)
-  end
+  supervise(children, strategy: :one_for_one)
+end
 ```
 
 This time we have added a supervisor as child, starting it with no arguments. Re-run the test suite and now all tests should pass.
 
 Since we have added more children to the supervisor, it is also important to evaluate if the `:one_for_one` supervision strategy is still correct. One flaw that shows up right away is the relationship between the `KV.Registry` worker process and the `KV.Bucket.Supervisor` supervisor process. If `KV.Registry` dies, all information linking `KV.Bucket` names to `KV.Bucket` processes is lost, and therefore `KV.Bucket.Supervisor` must die too- otherwise, the `KV.Bucket` processes it manages would be orphaned.
 
-In light of this observation, we should consider moving to another supervision strategy. Two likely candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:one_for_all` strategy will kill and restart all of its children processes whenever any one of them dies. At first glance, this would appear to suit our use case, but it also seems a little heavy-handed, because `KV.Registry` is perfectly capable of cleaning itself up if `KV.Bucket.Supervisor` dies. In this case, the `:rest_for_one` strategy comes in handy- when a child process crashes, the supervisor will only kill and restart child processes which were started *after* the crashed child. Let's rewrite our supervision tree to use this strategy instead:
+In light of this observation, we should consider moving to another supervision strategy. The two other candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:one_for_all` strategy will kill and restart all of its children processes whenever any one of them dies. At first glance, this would appear to suit our use case, but it also seems a little heavy-handed, because `KV.Registry` is perfectly capable of cleaning itself up if `KV.Bucket.Supervisor` dies. In this case, the `:rest_for_one` strategy comes in handy: when a child process crashes, the supervisor will only kill and restart child processes which were started *after* the crashed child. Let's rewrite our supervision tree to use this strategy instead:
 
 ```elixir
-  def init(:ok) do
-    children = [
-      worker(KV.Registry, [KV.Registry]),
-      supervisor(KV.Bucket.Supervisor, [])
-    ]
+def init(:ok) do
+  children = [
+    worker(KV.Registry, [KV.Registry]),
+    supervisor(KV.Bucket.Supervisor, [])
+  ]
 
-    supervise(children, strategy: :rest_for_one)
-  end
+  supervise(children, strategy: :rest_for_one)
+end
 ```
 
 Now, if the registry worker crashes, both the registry and the "rest" of `KV.Supervisor`'s children (i.e. `KV.Bucket.Supervisor`) will be restarted. However, if `KV.Bucket.Supervisor` crashes, `KV.Registry` will not be restarted, because it was started prior to `KV.Bucket.Supervisor`.
@@ -374,7 +380,7 @@ A GUI should pop-up containing all sorts of information about our system, from g
 
 In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
 
- <img src="/images/contents/kv-observer.png" width="640px">
+<img src="/images/contents/kv-observer.png" width="640px">
 
 Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:
 
@@ -392,10 +398,10 @@ At the end of the day, tools like Observer is one of the main reasons you want t
 So far we have been starting one registry per test to ensure they are isolated:
 
 ```elixir
-  setup context do
-    {:ok, registry} = KV.Registry.start_link(context.test)
-    {:ok, registry: registry}
-  end
+setup context do
+  {:ok, registry} = KV.Registry.start_link(context.test)
+  {:ok, registry: registry}
+end
 ```
 
 Since we have now changed our registry to use `KV.Bucket.Supervisor`, which is registered globally, our tests are now relying on this shared, global supervisor even though each test has its own registry. The question is: should we?
@@ -404,6 +410,6 @@ It depends. It is ok to rely on shared global state as long as we depend only on
 
 Similar reasoning should be applied to our bucket supervisor. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.Bucket.Supervisor)` which would count all buckets from all registries, potentially giving different results when tests run concurrently.
 
-Since we have relied only on a non-shared partition of the bucket supervisor so far, we don't need to worry about concurrency issues in our test suite. In case it ever becomes a problem, we can start a supervisor per test and pass it as argument to the registry `start_link` function.
+Since we have relied only on a non-shared partition of the bucket supervisor so far, we don't need to worry about concurrency issues in our test suite. In case it ever becomes a problem, we can start a supervisor per test and pass it as an argument to the registry `start_link` function.
 
 Now that our application is properly supervised and tested, let's see how we can speed things up.

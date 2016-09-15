@@ -81,7 +81,7 @@ iex> %User{} = %{}
 
 ## Structs are bare maps underneath
 
-In the example above, pattern matching works because underneath structs are just bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
+In the example above, pattern matching works because underneath structs are bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
 
 ```iex
 iex> is_map(john)

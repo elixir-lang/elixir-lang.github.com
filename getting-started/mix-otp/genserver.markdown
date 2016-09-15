@@ -7,6 +7,8 @@ title: GenServer
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In the [previous chapter](/getting-started/mix-otp/agent.html) we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
 
 ```elixir
@@ -150,14 +152,14 @@ Our test should pass right out of the box!
 We don't need to explicitly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
-  ## Client API
+## Client API
 
-  @doc """
-  Stops the registry.
-  """
-  def stop(server) do
-    GenServer.stop(server)
-  end
+@doc """
+Stops the registry.
+"""
+def stop(server) do
+  GenServer.stop(server)
+end
 ```
 
 ## The need for monitoring
@@ -165,12 +167,12 @@ We don't need to explicitly shut down the registry because it will receive a `:s
 Our registry is almost complete. The only remaining issue is that the registry may become stale if a bucket stops or crashes. Let's add a test to `KV.RegistryTest` that exposes this bug:
 
 ```elixir
-  test "removes buckets on exit", %{registry: registry} do
-    KV.Registry.create(registry, "shopping")
-    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-    Agent.stop(bucket)
-    assert KV.Registry.lookup(registry, "shopping") == :error
-  end
+test "removes buckets on exit", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  Agent.stop(bucket)
+  assert KV.Registry.lookup(registry, "shopping") == :error
+end
 ```
 
 The test above will fail on the last assertion as the bucket name remains in the registry even after we stop the bucket process.
@@ -195,39 +197,39 @@ Note `Process.monitor(pid)` returns a unique reference that allows us to match u
 Let's reimplement the server callbacks to fix the bug and make the test pass. First, we will modify the GenServer state to two dictionaries: one that contains `name -> pid` and another that holds `ref -> name`. Then we need to monitor the buckets on `handle_cast/2` as well as implement a `handle_info/2` callback to handle the monitoring messages. The full server callbacks implementation is shown below:
 
 ```elixir
-  ## Server callbacks
+## Server callbacks
 
-  def init(:ok) do
-    names = %{}
-    refs  = %{}
-    {:ok, {names, refs}}
-  end
+def init(:ok) do
+  names = %{}
+  refs  = %{}
+  {:ok, {names, refs}}
+end
 
-  def handle_call({:lookup, name}, _from, {names, _} = state) do
-    {:reply, Map.fetch(names, name), state}
-  end
+def handle_call({:lookup, name}, _from, {names, _} = state) do
+  {:reply, Map.fetch(names, name), state}
+end
 
-  def handle_cast({:create, name}, {names, refs}) do
-    if Map.has_key?(names, name) do
-      {:noreply, {names, refs}}
-    else
-      {:ok, pid} = KV.Bucket.start_link
-      ref = Process.monitor(pid)
-      refs = Map.put(refs, ref, name)
-      names = Map.put(names, name, pid)
-      {:noreply, {names, refs}}
-    end
-  end
-
-  def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-    {name, refs} = Map.pop(refs, ref)
-    names = Map.delete(names, name)
+def handle_cast({:create, name}, {names, refs}) do
+  if Map.has_key?(names, name) do
+    {:noreply, {names, refs}}
+  else
+    {:ok, pid} = KV.Bucket.start_link
+    ref = Process.monitor(pid)
+    refs = Map.put(refs, ref, name)
+    names = Map.put(names, name, pid)
     {:noreply, {names, refs}}
   end
+end
 
-  def handle_info(_msg, state) do
-    {:noreply, state}
-  end
+def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
+  {name, refs} = Map.pop(refs, ref)
+  names = Map.delete(names, name)
+  {:noreply, {names, refs}}
+end
+
+def handle_info(_msg, state) do
+  {:noreply, state}
+end
 ```
 
 Observe that we were able to considerably change the server implementation without changing any of the client API. That's one of the benefits of explicitly segregating the server and the client.
@@ -236,23 +238,23 @@ Finally, different from the other callbacks, we have defined a "catch-all" claus
 
 ## `call`, `cast` or `info`?
 
-So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handle_info/2`. Deciding when to use each is straightforward:
+So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handle_info/2`. Here is what we should consider when deciding when to use each:
 
 1. `handle_call/3` must be used for synchronous requests. This should be the default choice as waiting for the server reply is a useful backpressure mechanism.
 
 2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. A cast does not even guarantee the server has received the message and, for this reason, must be used sparingly. For example, the `create/2` function we have defined in this chapter should have used `call/2`. We have used `cast/2` for didactic purposes.
 
-3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are a perfect example of this.
+3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are such an example of this.
 
-Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could lead our registry to crash, because no clause would match.
+Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could lead our registry to crash, because no clause would match. We don't need to worry about such cases for `handle_call/3` and `handle_cast/2` though. Calls and casts are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
 
-We don't need to worry about this for `handle_call/3` and `handle_cast/2` because these requests are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
+To help developers remember the differences between call, cast and info, the supported return values and more, [Benjamin Tan Wei Hao](http://benjamintan.io) has created an excellent [GenServer cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/GenServer_CheatSheet.pdf).
 
 ## Monitors or links?
 
 We have previously learned about links in the [Process chapter](/getting-started/processes.html). Now, with the registry complete, you may be wondering: when should we use monitors and when should we use links?
 
-Links are bi-directional. If you link two process and one of them crashes, the other side will crash too (unless it is trapping exits). A monitor is uni-directional: only the monitoring process will receive notifications about the monitored one. Simply put, use links when you want linked crashes, and monitors when you just want to be informed of crashes, exits, and so on.
+Links are bi-directional. If you link two processes and one of them crashes, the other side will crash too (unless it is trapping exits). A monitor is uni-directional: only the monitoring process will receive notifications about the monitored one. In other words: use links when you want linked crashes, and monitors when you just want to be informed of crashes, exits, and so on.
 
 Returning to our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
 
@@ -262,3 +264,4 @@ ref = Process.monitor(pid)
 ```
 
 This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
+

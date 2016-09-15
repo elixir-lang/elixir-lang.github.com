@@ -194,7 +194,7 @@ iex> "tuple: #{tuple}"
 ** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}
 ```
 
-When there is a need to "print" a more complex data structure, one can simply use the `inspect` function, based on the `Inspect` protocol:
+When there is a need to "print" a more complex data structure, one can use the `inspect` function, based on the `Inspect` protocol:
 
 ```iex
 iex> "tuple: #{inspect tuple}"

@@ -7,6 +7,8 @@ title: ETS
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 Every time we need to look up a bucket, we need to send a message to the registry. In case our registry is being accessed concurrently by multiple processes, the registry may become a bottleneck!
 
 In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.
@@ -129,24 +131,24 @@ In order for the cache mechanism to work, the created ETS table needs to have ac
 The changes we have performed above have broken our tests because they were using the pid of the registry process for all operations and now the registry lookup requires the ETS table name. However, since the ETS table has the same name as the registry process, it is an easy fix. Change the setup function in `test/kv/registry_test.exs` to the following:
 
 ```elixir
-  setup context do
-    {:ok, _} = KV.Registry.start_link(context.test)
-    {:ok, registry: context.test}
-  end
+setup context do
+  {:ok, _} = KV.Registry.start_link(context.test)
+  {:ok, registry: context.test}
+end
 ```
 
 Once we change `setup`, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the "spawns buckets" test:
 
 ```elixir
-  test "spawns buckets", %{registry: registry} do
-    assert KV.Registry.lookup(registry, "shopping") == :error
+test "spawns buckets", %{registry: registry} do
+  assert KV.Registry.lookup(registry, "shopping") == :error
 
-    KV.Registry.create(registry, "shopping")
-    assert {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  KV.Registry.create(registry, "shopping")
+  assert {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    KV.Bucket.put(bucket, "milk", 1)
-    assert KV.Bucket.get(bucket, "milk") == 1
-  end
+  KV.Bucket.put(bucket, "milk", 1)
+  assert KV.Bucket.get(bucket, "milk") == 1
+end
 ```
 
 may be failing on this line:
@@ -176,32 +178,32 @@ What is happening in our tests is that there is a delay in between an operation 
 However, since `KV.Registry.create/2` is a cast operation, the command will return before we actually write to the table! In other words, this is happening:
 
 1. We invoke `KV.Registry.create(registry, "shopping")`
-2. We access the information from the table with `KV.Registry.lookup(ets, "shopping")`
+2. We access the information from the table with `KV.Registry.lookup(registry, "shopping")`
 3. The command above returns `:error`
 4. The registry creates the bucket and updates the cache table
 
-To fix the failure we just need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:
+To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:
 
 ```elixir
-  def create(server, name) do
-    GenServer.call(server, {:create, name})
-  end
+def create(server, name) do
+  GenServer.call(server, {:create, name})
+end
 
-  def handle_call({:create, name}, _from, {names, refs}) do
-    case lookup(names, name) do
-      {:ok, pid} ->
-        {:reply, pid, {names, refs}}
-      :error ->
-        {:ok, pid} = KV.Bucket.Supervisor.start_bucket
-        ref = Process.monitor(pid)
-        refs = Map.put(refs, ref, name)
-        :ets.insert(names, {name, pid})
-        {:reply, pid, {names, refs}}
-    end
+def handle_call({:create, name}, _from, {names, refs}) do
+  case lookup(names, name) do
+    {:ok, pid} ->
+      {:reply, pid, {names, refs}}
+    :error ->
+      {:ok, pid} = KV.Bucket.Supervisor.start_bucket
+      ref = Process.monitor(pid)
+      refs = Map.put(refs, ref, name)
+      :ets.insert(names, {name, pid})
+      {:reply, pid, {names, refs}}
   end
+end
 ```
 
-We simply changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure (you block until you get a reply). Using `cast/2` when not necessary can also be considered a premature optimization.
+We changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure (you block until you get a reply). Using `cast/2` when not necessary can also be considered a premature optimization.
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 
@@ -230,31 +232,31 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
 
 
 ```elixir
-  test "removes buckets on exit", %{registry: registry} do
-    KV.Registry.create(registry, "shopping")
-    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-    Agent.stop(bucket)
+test "removes buckets on exit", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  Agent.stop(bucket)
 
-    # Do a call to ensure the registry processed the down message
-    _ = KV.Registry.create(registry, "bogus")
-    assert KV.Registry.lookup(registry, "shopping") == :error
-  end
+  # Do a call to ensure the registry processed the DOWN message
+  _ = KV.Registry.create(registry, "bogus")
+  assert KV.Registry.lookup(registry, "shopping") == :error
+end
 
-  test "removes bucket on crash", %{registry: registry} do
-    KV.Registry.create(registry, "shopping")
-    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+test "removes bucket on crash", %{registry: registry} do
+  KV.Registry.create(registry, "shopping")
+  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Kill the bucket and wait for the notification
-    Process.exit(bucket, :shutdown)
+  # Kill the bucket and wait for the notification
+  Process.exit(bucket, :shutdown)
 
-    # Wait until the bucket is dead
-    ref = Process.monitor(bucket)
-    assert_receive {:DOWN, ^ref, _, _, _}
+  # Wait until the bucket is dead
+  ref = Process.monitor(bucket)
+  assert_receive {:DOWN, ^ref, _, _, _}
 
-    # Do a call to ensure the registry processed the DOWN message
-    _ = KV.Registry.create(registry, "bogus")
-    assert KV.Registry.lookup(registry, "shopping") == :error
-  end
+  # Do a call to ensure the registry processed the DOWN message
+  _ = KV.Registry.create(registry, "bogus")
+  assert KV.Registry.lookup(registry, "shopping") == :error
+end
 ```
 
 Our tests should now (always) pass!

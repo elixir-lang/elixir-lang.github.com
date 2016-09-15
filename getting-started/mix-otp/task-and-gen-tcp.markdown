@@ -7,11 +7,13 @@ title: Task and gen_tcp
 
 {% include toc.html %}
 
+{% include mix-otp-preface.html %}
+
 In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://www.erlang.org/doc/man/gen_tcp.html) to serve requests. This provides a great opportunity to explore Elixir's `Task` module. In future chapters we will expand our server so it can actually serve the commands.
 
 ## Echo server
 
-We will start our TCP server by first implementing an echo server. It will simply send a response with the text it received in the request. We will slowly improve our server until it is supervised and ready to handle multiple connections.
+We will start our TCP server by first implementing an echo server. It will send a response with the text it received in the request. We will slowly improve our server until it is supervised and ready to handle multiple connections.
 
 A TCP server, in broad strokes, performs the following steps:
 
@@ -62,7 +64,7 @@ defp write_line(line, socket) do
 end
 ```
 
-We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is just a loop accepting client connections. For each accepted connection, we call `serve/1`.
+We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
 
 `serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](/docs/stable/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
 
@@ -196,7 +198,7 @@ This is similar to the mistake we made when we called `KV.Bucket.start_link/0` s
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
-We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor with temporary workers that we can just use in our supervision tree!
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor that starts temporary tasks as part of our supervision tree!
 
 Let's change `start/2` once again, to add a supervisor to our tree:
 
@@ -214,9 +216,9 @@ def start(_type, _args) do
 end
 ```
 
-We simply start a [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
+We'll now start a [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
 
-Now we just need to change `loop_acceptor/1` to use `Task.Supervisor` to serve each request:
+Now we need to change `loop_acceptor/1` to use `Task.Supervisor` to serve each request:
 
 ```elixir
 defp loop_acceptor(socket) do
@@ -227,7 +229,7 @@ defp loop_acceptor(socket) do
 end
 ```
 
-You might notice that we added a line, `:ok = :gen_tcp.controlling_process(client, pid)`. This makes the child process the "controlling process" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets are tied to the process that `accept`ed them by default.
+You might notice that we added a line, `:ok = :gen_tcp.controlling_process(client, pid)`. This makes the child process the "controlling process" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets would be tied to the process that accepted them (which is the default behaviour).
 
 Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!
 
