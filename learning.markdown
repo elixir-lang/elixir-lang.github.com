@@ -75,7 +75,7 @@ Elixir-School is an open and community driven effort inspired by Twitter’s Sca
 
 <h4 class="resource">Take Off With Elixir</h4>
 
-<a class="cover" href="http://redfour.io" title="Take Off With Elixir"><img src="https://dl.dropboxusercontent.com/u/3532678/red4_cover.jpg" alt="Red:4" width="190" /></a>
+<a class="cover" href="http://bit.ly/2cyMhwj" title="Take Off With Elixir"><img src="https://dl.dropboxusercontent.com/u/3532678/red4_cover.jpg" alt="Red:4" width="190" /></a>
 
 Red:4 is a fictional aerospace startup that needs your help! Through a book, a video, or both you can learn Elixir the fun way by immersing yourself in an on-the-job style set of problems. For instance, you will set up a project to calculate escape velocity for each of the planets in our solar system, learning pattern matching and language basics along the way. You'll move on to orbital mechanics while learning how to debug and refactor your code for clarity and meaning. You'll learn list basics and data storage techniques as you build a solar flare tracking system. Finally, you'll dive into OTP using Ecto and PostgreSQL - all in an effort to overwhelm our internal systems with the power of Elixir!
 
