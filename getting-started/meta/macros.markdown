@@ -232,7 +232,7 @@ Elixir also supports private macros via `defmacrop`. As private functions, these
 ```iex
 iex> defmodule Sample do
 ...>  defmacrop two, do: 2
-...>  def four, do: two + two
+...>  def four, do: two() + two()
 ...> end
 
 iex> Sample.four
@@ -241,55 +241,59 @@ iex> Sample.two
 ** (UndefinedFunctionError) function Sample.two/0 is undefined or private
 ```
 
-It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
+It is important that a macro be defined before its use. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
 
 ```iex
 iex> defmodule Sample do
-...>  def four, do: two + two
+...>  def four, do: two() + two()
 ...>  defmacrop two, do: 2
 ...> end
 ** (CompileError) iex:2: function two/0 undefined
 ```
 
-Private macros are only available at compilation time. That means you can't execute a private macro outside of a definition:
+Private macros must be fully defined before we use them. That means you can't execute a private macro outside of a definition:
 
 ```iex
 iex> defmodule Sample do
 ...>  defmacrop two, do: 2
-...>  IO.puts two
+...>  IO.puts two()
 ...> end
 ** (CompileError) iex:32: undefined function two/0
 ```
 
-It also means you can't both create and use a function-defining macro in the same module, even with `defmacrop`. As an example, suppose I want to define a number of functions that are only used for side effects. To prevent the value of the last calculation from "leaking" to the caller, such functions should always return an innocuous symbol. Like this:
+What is the difference between this case and the case where `two` was used in the definition of `four`? [[[Need more info here.]]]
 
-```iex
-iex> Sample.add_and_print(1, 3)
-4
-:"add_and_print does not have a useful return value"
+It also means you can't both create and use a function-defining macro in the same module, even with `defmacrop`. As a contrived example, let's suppose we want to define a lot of functions that return `:ok`. Instead of adding the `:ok` at the end of each function body, we want to save one character and one line of code by using a `defok`. Like this:
+
+```elixir
+  @doc """
+  A version of `IO.inspect` that doesn't return its argument. 
+  Convenient when working with IEx.
+  """
+  defok inspect_complicated(data) do 
+    IO.inspect(complicated_data)
+    # The macro adds `:ok` here.
+  end
 ```
 
-Because I want many of these functions, I decide to create a `def_without_return_value` macro that's just like `def` but returns that special symbol. 
-This is what happens if you try to both define and use that macro in the same module:
-
+Here's what happens if we define and use `defok` in the same module:
 ```iex
 iex> defmodule Sample do
-...>   defmacrop def_without_return_value({name, _, _} = head, do: body) do
-...>     return_value = String.to_atom("#{name} does not have a useful return value")
+...>   defmacrop defok(head, do: body) do
 ...>     quote do
 ...>       def unquote(head) do
 ...>         unquote(body)
-...>         unquote(return_value)
+...>         :ok
 ...>       end
 ...>     end
 ...>   end
 ...> 
-...>   def_without_return_value add_and_print(a, b), do: IO.puts a + b
+...>   defok inspect_complicated(data), do: IO.inspect(complicated_data)
 ...> end
-** (CompileError): undefined function def_without_return_value/2
+** (CompileError): undefined function defok/2
 ```
 
-`def_without_return` value will have to be defined in a different module, then `required` in the one that uses it.
+`defok` will have to be defined in a different module (using `defmacro`, not `defmacrop`), then `required` in the module that defines `inspect_complicated`.
 
 ## Write macros responsibly
 
