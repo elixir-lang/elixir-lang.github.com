@@ -100,9 +100,9 @@ end
 That's what macros are all about. They are about receiving quoted expressions and transforming them into something else. In fact, `unless/2` in Elixir is implemented as a macro:
 
 ```elixir
-defmacro unless(clause, options) do
+defmacro unless(clause, expression) do
   quote do
-    if(!unquote(clause), do: unquote(options))
+    if(!unquote(clause), do: unquote(expression))
   end
 end
 ```
