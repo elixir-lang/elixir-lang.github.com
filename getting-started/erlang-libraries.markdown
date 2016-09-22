@@ -172,6 +172,21 @@ iex> :rand.uniform(6)
 6
 ```
 
+`rand`'s documentation states that `rand`'s default seed is not cryptographically
+strong. It suggests using the `crypto` library for seeding `rand` with a
+cryptographically strong seed when needed.
+
+For example, to seed `rand` with a strong 12 bytes seed you can do something
+like this:
+
+```iex
+iex> << i1 :: unsigned-integer-32, i2 :: unsigned-integer-32, i3 :: unsigned-integer-32>> = :crypto.strong_rand_bytes(12)
+iex> :rand.seed(:exsplus, {i1, i2 , i3})
+```
+
+For more information about `:exsplus` and other available seeding algorithms
+check [`rand` official documentation](http://erlang.org/doc/man/rand.html).
+
 ## The zip and zlib modules
 
 [The `zip` module](http://erlang.org/doc/man/zip.html) lets you read and write zip files to and from disk or memory,
