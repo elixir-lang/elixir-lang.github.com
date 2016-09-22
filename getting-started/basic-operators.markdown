@@ -109,8 +109,8 @@ The reason we can compare different data types is pragmatism. Sorting algorithms
 
     number < atom < reference < function < port < pid < tuple < map < list < bitstring
 
-You don't actually need to memorize this ordering, but it is important just to know an order exists.
+You don't actually need to memorize this ordering, it's enough to know that this ordering exists.
 
-For reference information about operators, you can visit the ["Operators" page](/docs/master/elixir/operators.html) in the documentation.
+For reference information about operators (and ordering), check the [reference page on operators](/docs/master/elixir/operators.html).
 
 In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
