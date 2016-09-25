@@ -51,6 +51,7 @@ defp serve(socket) do
   |> write_line(socket)
 
   serve(socket)
+  loop_acceptor(socket)
 end
 
 defp read_line(socket) do
@@ -78,6 +79,8 @@ write_line(read_line(socket), socket)
 ```
 
 The `read_line/1` implementation receives data from the socket using `:gen_tcp.recv/2` and `write_line/2` writes to the socket using `:gen_tcp.send/2`.
+
+Note that `serve/1` is an infinite loop called sequentially inside `loop_acceptor/1`, so the tail call to `loop_acceptor/1` is never reached and could be avoided. However, as we shall see, we will need to execute `serve/1` in a separate process, so we will need that tail call soon.
 
 This is pretty much all we need to implement our echo server. Let's give it a try!
 
