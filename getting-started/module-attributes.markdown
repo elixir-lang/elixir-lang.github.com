@@ -113,7 +113,7 @@ MyServer.first_data #=> 14
 MyServer.second_data #=> 13
 ```
 
-Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during module compilation.
+Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful to be used as storage during module compilation.
 
 ## As temporary storage
 
