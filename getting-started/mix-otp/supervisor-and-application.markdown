@@ -366,7 +366,7 @@ Now, if the registry worker crashes, both the registry and the "rest" of `KV.Sup
 
 There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](/docs/stable/elixir/Supervisor.html) and [`Supervisor.Spec`](/docs/stable/elixir/Supervisor.Spec.html) modules. 
 
-To help developers remember how to work with Supervisors and it's convenience functions, [Benjamin Tan Wei Hao](http://benjamintan.io/) has created a [Supervisor cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf).
+To help developers remember how to work with Supervisors and its convenience functions, [Benjamin Tan Wei Hao](http://benjamintan.io/) has created a [Supervisor cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf).
 
 There are two topics left before we move on to the next chapter.
 
