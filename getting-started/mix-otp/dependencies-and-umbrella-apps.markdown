@@ -63,12 +63,13 @@ Mix provides many tasks for working with dependencies, which can be seen in `mix
 
 ```bash
 $ mix help
-mix deps              # List dependencies and their status
-mix deps.clean        # Remove the given dependencies' files
-mix deps.compile      # Compile dependencies
-mix deps.get          # Get all out of date dependencies
-mix deps.unlock       # Unlock the given dependencies
-mix deps.update       # Update the given dependencies
+mix deps              # Lists dependencies and their status
+mix deps.clean        # Deletes the given dependencies' files
+mix deps.compile      # Compiles dependencies
+mix deps.get          # Gets all out of date dependencies
+mix deps.tree         # Prints the dependency tree
+mix deps.unlock       # Unlocks the given dependencies
+mix deps.update       # Updates the given dependencies
 ```
 
 The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependencies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](/docs/stable/mix/Mix.Tasks.Deps.html).
