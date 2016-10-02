@@ -169,10 +169,10 @@ iex> 'hello'
 
 You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that IEx will only output code points if any of the chars is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represents a char list (i.e. a list).
 
-In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_char_list/1` functions:
+In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_charlist/1` functions:
 
 ```iex
-iex> to_char_list "hełło"
+iex> to_charlist "hełło"
 [104, 101, 322, 322, 111]
 iex> to_string 'hełło'
 "hełło"
