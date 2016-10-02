@@ -23,7 +23,7 @@ The built-in Elixir String module handles binaries that are UTF-8 encoded.
 you are dealing with binary data that is not necessarily UTF-8 encoded.
 
 ```iex
-iex> String.to_char_list "Ø"
+iex> String.to_charlist "Ø"
 [216]
 iex> :binary.bin_to_list "Ø"
 [195, 152]
