@@ -233,7 +233,7 @@ iex> flush
 :ok
 ```
 
-Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ship with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
+Using processes to maintain state and name registration are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ship with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
 
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)
