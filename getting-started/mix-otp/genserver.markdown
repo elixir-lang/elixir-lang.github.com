@@ -40,7 +40,7 @@ In practice it is more likely you will reach the Erlang <abbr title="Virtual Mac
 
 Instead of abusing the name registry facility, we will create our own *registry process* that holds a map that associates the bucket name to the bucket process.
 
-The registry needs to guarantee the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
+The registry needs to guarantee that the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
 We will use a [GenServer](/docs/stable/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
