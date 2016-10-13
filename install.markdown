@@ -56,6 +56,15 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   * Chocolatey
     * `cinst elixir`
 
+### Docker
+
+If you are familiar with Docker you can use the offical Docker image to get started quickly with Elixir. 
+
+  * Using interactive shell
+    * Run: `docker run -it --rm elixir`
+  * Enter container
+    * Run: `docker run -it --rm elixir bash`
+
 Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
 
 ## Precompiled package
