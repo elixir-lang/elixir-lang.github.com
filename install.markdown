@@ -58,6 +58,15 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
 
+### Docker
+
+If you are familiar with Docker you can use the offical Docker image to get started quickly with Elixir. 
+
+  * Enter interactive mode
+    * Run: `docker run -it --rm elixir`
+  * Enter bash within container with installed `elixir`
+    * Run: `docker run -it --rm elixir bash`
+
 ## Precompiled package
 
 Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
