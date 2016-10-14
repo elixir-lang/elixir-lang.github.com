@@ -116,7 +116,7 @@ Structs alongside protocols provide one of the most important features for Elixi
 
 ## Default values and required values
 
-If you don't specify default field values when defining a struct, **nil** will be assumed:
+If you don't specify default field values when defining a struct, `nil` will be assumed:
 
 ```iex
 iex> defmodule Product do
