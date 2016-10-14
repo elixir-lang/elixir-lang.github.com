@@ -114,26 +114,26 @@ iex> Map.keys(john)
 
 Structs alongside protocols provide one of the most important features for Elixir developers: data polymorphism. That's what we will explore in the next chapter.
 
-## Default values and required values
+## Default values and required keys
 
-If you don't specify default field values when defining a struct, `nil` will be assumed:
+If you don't specify a default field value when defining a struct, `nil` will be assumed:
 
 ```iex
 iex> defmodule Product do
 ...>   defstruct [:name]
 ...> end
-iex> prod = %Product{}
+iex> %Product{}
 %Product{name: nil}
 ```
 
-You can also enforce that certain fields have to be specified when creating the struct:
+You can also enforce that certain keys have to be specified when creating the struct:
 
 ```iex
 iex> defmodule Car do
 ...>   @enforce_keys [:make]
 ...>   defstruct [:model, :make]
 ...> end
-iex> car = %Car{}
+iex> %Car{}
 ** (ArgumentError) the following keys must also be given when building struct Car: [:make]
     expanding struct: Car.__struct__/1
 ```
