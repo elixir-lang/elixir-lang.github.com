@@ -136,5 +136,4 @@ iex> defmodule Car do
 iex> car = %Car{}
 ** (ArgumentError) the following keys must also be given when building struct Car: [:make]
     expanding struct: Car.__struct__/1
-    iex:48: (file)
 ```
