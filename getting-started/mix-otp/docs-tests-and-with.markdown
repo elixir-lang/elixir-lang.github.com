@@ -345,27 +345,22 @@ And our server functionality is almost complete! Only tests are missing. This ti
 
 `KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production.
 
-So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. This means we would need to change `run`'s signature to `def run(command, pid)` and the implementation for the `:create` command would look like:
+So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. For example, we would need to change `run`'s signature to `def run(command, pid)` and then change all clauses accordingly:
 
 ```elixir
 def run({:create, bucket}, pid) do
   KV.Registry.create(pid, bucket)
   {:ok, "OK\r\n"}
 end
+
+# ... other run clauses ...
 ```
 
-Then in `KVServer.Command`'s test case, we would need to start an instance of the `KV.Registry`, similar to what we've done in `apps/kv/test/kv/registry_test.exs`, and pass it as an argument to `run/2`.
+Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state.
 
-This has been the approach we have taken so far in our tests, and it has some benefits:
+Since this is the approach we have done so far in our tests, we will try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation.
 
-1. Our implementation is not coupled to any particular server name
-2. We can keep our tests running asynchronously, because there is no shared state
-
-However, it comes with the downside that our APIs become increasingly large in order to accommodate all external parameters.
-
-The alternative is to write integration tests that will rely on the global server names to exercise the whole stack, from the TCP server to the bucket. The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
-
-This time we will write an integration test. The integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.
+Our integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.
 
 Let's implement the integration test in `test/kv_server_test.exs` as shown below:
 
