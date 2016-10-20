@@ -355,7 +355,7 @@ iex> list = [1 | [2 | [3 | []]]]
 This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size. Updating a list is fast as long as we are prepending elements:
 
 ```iex
-iex> [0 | list]
+iex> [0|list]
 [0, 1, 2, 3]
 ```
 
