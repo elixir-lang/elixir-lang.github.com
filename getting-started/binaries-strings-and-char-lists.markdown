@@ -91,7 +91,7 @@ iex> "hełło" <> <<0>>
 <<104, 101, 197, 130, 197, 130, 111, 0>>
 ```
 
-Each number given to a binary is meant to represent a byte and therefore must go up to 255. Binaries allow modifiers to be given to store numbers bigger than 255 or to convert a code point to its utf8 representation:
+Each number given to a binary is meant to represent a byte and therefore must go up to 255. Binaries allow modifiers to be given to store numbers bigger than 255 or to convert a code point to its UTF-8 representation:
 
 ```iex
 iex> <<255>>
@@ -113,9 +113,9 @@ iex> <<1 :: size(1)>>
 <<1::size(1)>>
 iex> <<2 :: size(1)>> # truncated
 <<0::size(1)>>
-iex> is_binary(<< 1 :: size(1)>>)
+iex> is_binary(<<1 :: size(1)>>)
 false
-iex> is_bitstring(<< 1 :: size(1)>>)
+iex> is_bitstring(<<1 :: size(1)>>)
 true
 iex> bit_size(<< 1 :: size(1)>>)
 1
