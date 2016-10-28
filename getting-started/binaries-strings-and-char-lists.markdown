@@ -123,6 +123,13 @@ iex> bit_size(<< 1 :: size(1)>>)
 
 The value is no longer a binary, but a bitstring -- a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8.
 
+```iex
+iex>  is_binary(<<1 :: size(16)>>)
+true
+iex>  is_binary(<<1 :: size(15)>>)
+false
+```
+
 We can also pattern match on binaries / bitstrings:
 
 ```iex
@@ -167,7 +174,7 @@ iex> 'hello'
 'hello'
 ```
 
-You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that IEx will only output code points if any of the chars is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represents a char list (i.e. a list).
+You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that by default IEx will only output code points if any of the chars is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represent a char list (i.e. a list).
 
 In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_charlist/1` functions:
 
