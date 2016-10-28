@@ -7,7 +7,7 @@ excerpt: Elixir v0.7.0 is released with many improvements! Read on for more info
 
 ---
 
-Elixir v0.7.0 was released with bug fixes and many improvements, like a `String` module to handle utf-8 binaries and support to environments and nested dependencies in Mix.
+Elixir v0.7.0 was released with bug fixes and many improvements, like a `String` module to handle UTF-8 binaries and support to environments and nested dependencies in Mix.
 
 We have also taken important steps into normalizing our APIs. In Erlang, accesses to tuple and lists are one-based and binaries are zero-based, but in Elixir we have normalized all of them to rely on zero-based access.
 

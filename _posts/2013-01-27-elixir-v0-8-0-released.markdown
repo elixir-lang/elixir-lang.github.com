@@ -22,7 +22,7 @@ We have written a whole [guide chapter about creating OTP applications, supervis
 
 ## Improved Unicode support
 
-Elixir favors the use of utf-8 binaries since its first release. In the latest releases, we took it up a notch by adding Unicode support, built upon the Unicode Standard 6.2.0. Elixir v0.8 takes this even further, adding more convenience functions and better support to named sequences:
+Elixir favors the use of UTF-8 binaries since its first release. In the latest releases, we took it up a notch by adding Unicode support, built upon the Unicode Standard 6.2.0. Elixir v0.8 takes this even further, adding more convenience functions and better support to named sequences:
 
 ```elixir
 String.capitalize("ﬁN") #=> "Fin"
