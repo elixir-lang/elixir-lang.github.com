@@ -9,9 +9,9 @@ title: Agent
 
 {% include mix-otp-preface.html %}
 
-In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way it can be read and modified by other processes.
+In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
 
-If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about [Processes](/getting-started/processes.html). We will use it as a starting point.
+If you have skipped the Getting Started guide or read it long ago, be sure to re-read the [Processes](/getting-started/processes.html) chapter. We will use it as a starting point.
 
 ## The trouble with state
 
@@ -70,9 +70,9 @@ end
 
 Our first test starts a new `KV.Bucket` and performs some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes. This will always work unless the process is named.
 
-Also note that we passed the `async: true` option to `ExUnit.Case`. This option makes this test case run in parallel with other test cases that set up the `:async` option. This is extremely useful to speed up our test suite by using multiple cores in our machine. Note though the `:async` option must only be set if the test case does not rely or change any global value. For example, if the test requires writing to the filesystem, registering processes, accessing a database, you must not make it async to avoid race conditions in between tests.
+Also note the `async: true` option passed to `ExUnit.Case`. This option makes the test case run in parallel with other `:async` test cases by using multiple cores in our machine. This is extremely useful to speed up our test suite. However, `:async` must *only* be set if the test case does not rely on or change any global values. For example, if the test requires writing to the filesystem, registering processes, or accessing a database, keep it synchronous (omit the `:async` option) to avoid race conditions between tests.
 
-Regardless of being async or not, our new test should obviously fail, as none of the functionality is implemented.
+Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested.
 
 In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
 
@@ -105,7 +105,7 @@ We are using a map to store our keys and values. The capture operator, `&`, is i
 
 Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test`.
 
-## ExUnit callbacks
+## Test setup with ExUnit callbacks
 
 Before moving on and adding more features to `KV.Bucket`, let's talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket to be started during setup and stopped after the test. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.
 
