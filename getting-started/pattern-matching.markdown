@@ -53,7 +53,7 @@ iex> b
 "world"
 ```
 
-A pattern match will error in the case the sides can't match. This is, for example, the case when the tuples have different sizes:
+A pattern match will error if the sides can't be matched, for example if the tuples have different sizes:
 
 ```iex
 iex> {a, b, c} = {:hello, "world"}
@@ -115,7 +115,7 @@ iex> [0 | list]
 [0, 1, 2, 3]
 ```
 
-Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
+Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in the following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
 
 ## The pin operator
 
@@ -128,7 +128,7 @@ iex> x = 2
 2
 ```
 
-The pin operator `^` should be used when you want to pattern match against an existing variable's value rather than rebinding the variable:
+Use the pin operator `^` when you want to pattern match against an existing variable's value rather than rebinding the variable:
 
 ```iex
 iex> x = 1
