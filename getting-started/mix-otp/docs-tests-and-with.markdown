@@ -265,7 +265,7 @@ This means our implementation is going in the correct direction, but it doesn't 
 
 The previous implementation used pipelines which made the logic straight-forward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many `case` calls.
 
-Thankfully, Elixir v1.2 introduced a construct called `with` which allows to simplify code like above. Let's rewrite the `serve/1` function to use it:
+Thankfully, Elixir v1.2 introduced the `with` construct, which allows you to simplify code like the above, replacing nested `case` calls with a chain of matching clauses. Let's rewrite the `serve/1` function to use `with`:
 
 ```elixir
 defp serve(socket) do
@@ -333,7 +333,7 @@ Every function clause dispatches the appropriate command to the `KV.Registry` se
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
-By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KV.Server` to print such error as well:
+By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:
 
 ```elixir
 defp write_line(socket, {:error, :not_found}) do
