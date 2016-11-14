@@ -10,7 +10,7 @@ redirect_from: /getting_started/1.html
 
 Welcome!
 
-In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
+In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
 
 Our requirements are:
 
@@ -34,13 +34,16 @@ For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which
 Open up `iex` and type the following expressions:
 
 ```iex
-Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-iex> 40 + 2
+Interactive Elixir (1.3.4) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> 40 + 2
 42
-iex> "hello" <> " world"
+iex(2)> "hello" <> " world"
 "hello world"
 ```
+
+Please note that some details like version numbers may differ a bit in your session, that's not important. From now on `iex` sessions will be stripped down to focus on the code. To exit `iex` press `Ctrl+C` twice.
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
