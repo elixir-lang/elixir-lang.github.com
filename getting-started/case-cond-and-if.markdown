@@ -102,7 +102,7 @@ module defines guards as functions and operators: `bnot`, `~~~`, `band`,
 `&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>`.
 
 Note that while boolean operators such as `and`, `or`, `not` are allowed in guards,
-the more general and short-circuiting operators `&&`, `||` and `!` are not.
+the more general operators `&&`, `||` and `!` are not.
 
 Keep in mind errors in guards do not leak but instead make the guard fail:
 
