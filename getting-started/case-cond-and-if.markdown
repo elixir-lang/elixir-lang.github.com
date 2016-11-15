@@ -1,13 +1,13 @@
 ---
 layout: getting-started
-title: case, cond and if
+title: case, cond, and if
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-In this chapter, we will learn about the `case`, `cond` and `if` control-flow structures.
+In this chapter, we will learn about the `case`, `cond`, and `if` control flow structures.
 
 ## `case`
 
@@ -102,14 +102,13 @@ module defines guards as functions and operators: `bnot`, `~~~`, `band`,
 `&&&`, `bor`, `|||`, `bxor`, `^^^`, `bsl`, `<<<`, `bsr`, `>>>`.
 
 Note that while boolean operators such as `and`, `or`, `not` are allowed in guards,
-the more general operators `&&`, `||` and `!` are not.
+the more general operators `&&`, `||`, and `!` are not.
 
 Keep in mind errors in guards do not leak but instead make the guard fail:
 
 ```iex
 iex> hd(1)
 ** (ArgumentError) argument error
-    :erlang.hd(1)
 iex> case 1 do
 ...>   x when hd(x) -> "Won't match"
 ...>   x -> "Got #{x}"
@@ -168,7 +167,7 @@ iex> cond do
 
 This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
 
-If none of the conditions return true, an error(`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
+If none of the conditions return true, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 
 ```iex
 iex> cond do
@@ -224,14 +223,14 @@ iex> if nil do
 
 ## `do/end` blocks
 
-At this point, we have learned four control structures: `case`, `cond`, `if` and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:
+At this point, we have learned four control structures: `case`, `cond`, `if`, and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:
 
 ```iex
 iex> if true, do: 1 + 2
 3
 ```
 
-Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by comma. We say this syntax is using **keyword lists**. We can pass `else` using keywords too:
+Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by comma. We say this syntax is using *keyword lists*. We can pass `else` using keywords too:
 
 ```iex
 iex> if false, do: :this, else: :that
@@ -271,7 +270,9 @@ iex> is_number(if true) do
 ** (CompileError) undefined function: is_number/2
 ```
 
-which leads to an undefined function error as Elixir attempts to invoke `is_number/1`, but passing it *two* arguments (the `if true` expression - which would throw an undefined function error itself as `if` needs a second argument - the `do/end` block). Adding explicit parentheses is enough to resolve the ambiguity:
+which leads to an undefined function error because that invocation passes two arguments, and `is_number/2` does not exist. The `if true` expression is invalid in itself because it needs the block, but since the arity of `is_number/2` does not match, Elixir does not even reach its evaluation.
+
+Adding explicit parentheses is enough to bind the block to `if`:
 
 ```iex
 iex> is_number(if true do
@@ -280,4 +281,4 @@ iex> is_number(if true do
 true
 ```
 
-Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings and char lists".
+Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings, and char lists".
