@@ -78,7 +78,7 @@ true
 
 As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`.
 
-Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
+Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<`, and `>` as comparison operators:
 
 ```iex
 iex> 1 == 1
@@ -113,4 +113,4 @@ You don't actually need to memorize this ordering, it's enough to know that this
 
 For reference information about operators (and ordering), check the [reference page on operators](/docs/master/elixir/operators.html).
 
-In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
+In the next chapter, we are going to discuss some basic functions, data type conversions, and a bit of control flow.
