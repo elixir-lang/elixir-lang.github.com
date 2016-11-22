@@ -26,7 +26,7 @@ The Unicode standard assigns code points to many of the characters we know. For 
 
 When representing code points in bytes, we need to encode them somehow. Elixir chose the UTF-8 encoding as its main and default encoding. When we say a string is a UTF-8 encoded binary, we mean a string is a bunch of bytes organized in a way to represent certain code points, as specified by the UTF-8 encoding.
 
-Since we have code points like `ł` assigned to the number `322`, we actually need more than one byte to represent it. That's why we see a difference when we calculate the `byte_size/1` of a string compared to its `String.length/1`:
+Since we have characters like `ł` assigned to the code point `322`, we actually need more than one byte to represent them. That's why we see a difference when we calculate the `byte_size/1` of a string compared to its `String.length/1`:
 
 ```iex
 iex> string = "hełło"
@@ -37,9 +37,11 @@ iex> String.length(string)
 5
 ```
 
+There, `byte_size/1` counts the underlying raw bytes, and `String.length/1` counts characters.
+
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
-UTF-8 requires one byte to represent the code points `h`, `e` and `o`, but two bytes to represent `ł`. In Elixir, you can get a code point's value by using `?`:
+UTF-8 requires one byte to represent the characters `h`, `e`, and `o`, but two bytes to represent `ł`. In Elixir, you can get a character's code point by using `?`:
 
 ```iex
 iex> ?a
@@ -48,7 +50,7 @@ iex> ?ł
 322
 ```
 
-You can also use the functions in [the `String` module](/docs/stable/elixir/String.html) to split a string in its code points:
+You can also use the functions in [the `String` module](/docs/stable/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
 
 ```iex
 iex> String.codepoints("hełło")
@@ -163,7 +165,7 @@ A complete reference about the binary / bitstring constructor `<<>>` can be foun
 
 ## Char lists
 
-A char list is nothing more than a list of characters:
+A char list is nothing more than a list of code points. Char lists may be created with single-quoted literals:
 
 ```iex
 iex> 'hełło'
@@ -172,9 +174,11 @@ iex> is_list 'hełło'
 true
 iex> 'hello'
 'hello'
+iex> List.first('hello')
+104
 ```
 
-You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that by default IEx will only output code points if any of the chars is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represent a char list (i.e. a list).
+You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that by default IEx will only output code points if any of the integers is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represent a char list (i.e. a list).
 
 In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_charlist/1` functions:
 
