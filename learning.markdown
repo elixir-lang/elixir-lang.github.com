@@ -14,14 +14,14 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 ## Learn Elixir
 
-<h4 class="resource">Programming Elixir 1.2</h4>
+<h4 class="resource">Programming Elixir 1.3</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir12/programming-elixir-1-2" title="Programming Elixir 1.2: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
-– by Dave Thomas"><img src="/images/learning/programming-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
+<a class="cover" href="https://pragprog.com/book/elixir13/programming-elixir-1-3" title="Programming Elixir 1.3: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
+– by Dave Thomas"><img src="/images/learning/programming-elixir-1-3.jpg" alt="Programming Elixir cover" width="190" /></a>
 
-You want to explore functional programming, but are put off by the academic feel (tell me about monads just one more time). You know you need concurrent applications, but also know these are almost impossible to get right. Meet Elixir, a functional, concurrent language built on the rock-solid Erlang VM.
+Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches. Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM.
 
-Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. And Programming Elixir is the introduction to Elixir for experienced programmers, written by the same person that wrote the first English books on Ruby and then Rails. Starting with pattern matching, it takes you all the way through concurrency, agents, supervisors, and ends with OTP applications. Along the way, you'll learn tools, techniques, and good practices for creating tomorrow's applications.
+Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir. This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.3.
 
 <div class="clear"></div>
 
@@ -135,4 +135,3 @@ Write code that writes code with Elixir macros. Macros make metaprogramming poss
 This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
 
 <div class="clear"></div>
-
