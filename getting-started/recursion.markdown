@@ -127,4 +127,10 @@ iex> Enum.map([1, 2, 3], &(&1 * 2))
 [2, 4, 6]
 ```
 
+In this special example above we can simplify the `Enum.reduce/3` call even further and replace it with `Enum.reduce/2` where the first element of the list gets used as the accumulator.
+```iex
+iex> Enum.reduce([1,2,3], &+/2)
+6
+```
+
 Let's take a deeper look at `Enumerable`s and, while we're at it, their lazy counterpart, `Stream`s.
