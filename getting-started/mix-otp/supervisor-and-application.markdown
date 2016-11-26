@@ -70,12 +70,12 @@ We also need to update our tests to give a name when starting the registry. Repl
 
 ```elixir
 setup context do
-  {:ok, registry} = KV.Registry.start_link(context.test)
+  {:ok, registry} = KV.Registry.start_link(context[:test])
   {:ok, registry: registry}
 end
 ```
 
-`setup/2` may also receive the test context, similar to `test/3`. Besides whatever value we may add in our setup blocks, the context includes some default keys, like `:case`, `:test`, `:file` and `:line`. We have used `context.test` as a shortcut to spawn a registry with the same name of the test currently running.
+`setup/2` may also receive the test context, similar to `test/3`. Besides whatever value we may add in our setup blocks, the context includes some default keys, like `:case`, `:test`, `:file` and `:line`. We have used `context[:test]` as a shortcut to spawn a registry with the same name of the test currently running.
 
 Now with our tests passing, we can take our supervisor for a spin. If we start a console inside our project using `iex -S mix`, we can manually start the supervisor:
 
@@ -401,14 +401,14 @@ So far we have been starting one registry per test to ensure they are isolated:
 
 ```elixir
 setup context do
-  {:ok, registry} = KV.Registry.start_link(context.test)
+  {:ok, registry} = KV.Registry.start_link(context[:test])
   {:ok, registry: registry}
 end
 ```
 
 Since we have now changed our registry to use `KV.Bucket.Supervisor`, which is registered globally, our tests are now relying on this shared, global supervisor even though each test has its own registry. The question is: should we?
 
-It depends. It is ok to rely on shared global state as long as we depend only on a non-shared partition of this state. For example, every time we register a process under a given name, we are registering a process against a shared name registry. However, as long as we guarantee the names are specific to each test, by using a construct like `context.test`, we won't have concurrency or data dependency issues between tests.
+It depends. It is ok to rely on shared global state as long as we depend only on a non-shared partition of this state. For example, every time we register a process under a given name, we are registering a process against a shared name registry. However, as long as we guarantee the names are specific to each test, by using a construct like `context[:test]`, we won't have concurrency or data dependency issues between tests.
 
 Similar reasoning should be applied to our bucket supervisor. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.Bucket.Supervisor)` which would count all buckets from all registries, potentially giving different results when tests run concurrently.
 
