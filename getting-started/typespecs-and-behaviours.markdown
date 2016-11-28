@@ -16,7 +16,7 @@ Elixir is a dynamically typed language, so all types in Elixir are inferred by t
 
 ### Function specifications
 
-By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](/docs/stable/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
+By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
 ```
 round(number) :: integer
@@ -29,7 +29,7 @@ round(number) :: integer
 def round(number), do: # implementation...
 ```
 
-Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](/docs/stable/elixir/typespecs.html).
+Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html).
 
 ### Defining custom types
 
@@ -47,7 +47,7 @@ defmodule LousyCalculator do
 end
 ```
 
-As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](/docs/stable/elixir/typespecs.html#notes).
+As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html#notes).
 
 Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type.
 

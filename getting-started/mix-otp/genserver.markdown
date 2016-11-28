@@ -42,7 +42,7 @@ Instead of abusing the name registry facility, we will create our own *registry 
 
 The registry needs to guarantee that the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
-We will use a [GenServer](/docs/stable/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
+We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
 ## Our first GenServer
 
@@ -118,7 +118,7 @@ For `call/2` requests, we must implement a `handle_call/3` callback that receive
 
 For `cast/2` requests, we must implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). The `handle_cast/2` callback returns a tuple in the format `{:noreply, new_state}`.
 
-There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `terminate/2` and `code_change/3` that we could implement. You are welcome to explore the [full GenServer documentation](/docs/stable/elixir/GenServer.html) to learn more about those.
+There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `terminate/2` and `code_change/3` that we could implement. You are welcome to explore the [full GenServer documentation](https://hexdocs.pm/elixir/GenServer.html) to learn more about those.
 
 For now, let's write some tests to guarantee our GenServer works as expected.
 

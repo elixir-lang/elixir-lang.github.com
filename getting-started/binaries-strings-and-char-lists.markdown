@@ -50,7 +50,7 @@ iex> ?ł
 322
 ```
 
-You can also use the functions in [the `String` module](/docs/stable/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
+You can also use the functions in [the `String` module](https://hexdocs.pm/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
 
 ```iex
 iex> String.codepoints("hełło")
@@ -161,7 +161,7 @@ iex> rest
 "llo"
 ```
 
-A complete reference about the binary / bitstring constructor `<<>>` can be found [in the Elixir documentation](http://elixir-lang.org/docs/stable/elixir/Kernel.SpecialForms.html#%3C%3C%3E%3E/1). This concludes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
+A complete reference about the binary / bitstring constructor `<<>>` can be found [in the Elixir documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#%3C%3C%3E%3E/1). This concludes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
 
 ## Char lists
 

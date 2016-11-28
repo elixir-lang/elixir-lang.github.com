@@ -161,7 +161,7 @@ It is important to note a couple things:
 
 1. the test file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
-2. we define a test module named `KVTest`, use [`ExUnit.Case`](/docs/stable/ex_unit/ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
+2. we define a test module named `KVTest`, use [`ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
 
 Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework:
 
@@ -229,7 +229,7 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
 
-Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in both `:build_embedded` and `:start_permanent` options:
+Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in both `:build_embedded` and `:start_permanent` options:
 
 ```elixir
 def project do
@@ -258,7 +258,7 @@ Or on Windows:
 
 ## Exploring
 
-There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](/docs/stable/mix/).
+There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/).
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 

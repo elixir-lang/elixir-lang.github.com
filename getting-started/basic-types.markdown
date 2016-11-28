@@ -185,7 +185,7 @@ iex> String.length("hellö")
 5
 ```
 
-The [String module](/docs/stable/elixir/String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:
+The [String module](https://hexdocs.pm/elixir/String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:
 
 ```iex
 iex> String.upcase("hellö")
@@ -233,7 +233,7 @@ iex> x
 42
 ```
 
-The capture syntax [`&()`](/docs/stable/elixir/Kernel.SpecialForms.html) can also be used for creating anonymous functions. This type of syntax will be discussed in [Chapter 8](/getting-started/modules.html).
+The capture syntax [`&()`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html) can also be used for creating anonymous functions. This type of syntax will be discussed in [Chapter 8](/getting-started/modules.html).
 
 ## (Linked) Lists
 

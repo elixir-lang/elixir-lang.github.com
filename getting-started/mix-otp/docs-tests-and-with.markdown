@@ -164,7 +164,7 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 {:error, :unknown_command}
 ```
 
-You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/ExUnit.DocTest.html).
+You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html).
 
 ## with
 
@@ -283,7 +283,7 @@ Much better! Syntax-wise, `with` is quite similar to `for` comprehensions. `with
 
 In other words, we converted each expression given to `case/2` as a step in `with`. As soon as any of the steps return something that does not match `{:ok, x}`, `with` aborts, and returns the non-matching value.
 
-You can read more about [`with` in our documentation](/docs/stable/elixir/Kernel.SpecialForms.html#with/1).
+You can read more about [`with` in our documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#with/1).
 
 ## Running commands
 

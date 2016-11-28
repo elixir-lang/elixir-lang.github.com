@@ -97,9 +97,9 @@ There are three better alternatives to `Node.spawn_link/2` that we could use in 
 
 1. We could use Erlang's [:rpc](http://www.erlang.org/doc/man/rpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:rpc.call(:"foo@computer-name", Hello, :world, [])` and it will print "hello world"
 
-2. We could have a server running on the other node and send requests to that node via the [GenServer](/docs/stable/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as first argument
+2. We could have a server running on the other node and send requests to that node via the [GenServer](https://hexdocs.pm/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as first argument
 
-3. We could use [tasks](/docs/stable/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
+3. We could use [tasks](https://hexdocs.pm/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
 
 The options above have different properties. Both `:rpc` and using a GenServer would serialize your requests on a single server, while tasks are effectively running asynchronously on the remote node, with the only serialization point being the spawning done by the supervisor.
 
@@ -115,7 +115,7 @@ res  = compute_something_else()
 res + Task.await(task)
 ```
 
-`async/await` provides a very simple mechanism to compute values concurrently. Not only that, `async/await` can also be used with the same [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) we have used in previous chapters. We just need to call `Task.Supervisor.async/2` instead of `Task.Supervisor.start_child/2` and use `Task.await/2` to read the result later on.
+`async/await` provides a very simple mechanism to compute values concurrently. Not only that, `async/await` can also be used with the same [`Task.Supervisor`](https://hexdocs.pm/elixir/Task.Supervisor.html) we have used in previous chapters. We just need to call `Task.Supervisor.async/2` instead of `Task.Supervisor.start_child/2` and use `Task.await/2` to read the result later on.
 
 ## Distributed tasks
 
@@ -284,7 +284,7 @@ The `mix test` command also allows us to dynamically include and exclude tags. F
 $ elixir --sname foo -S mix test --only distributed
 ```
 
-You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html).
+You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](https://hexdocs.pm/ex_unit/ExUnit.Case.html).
 
 ## Application environment and configuration
 
@@ -315,7 +315,7 @@ def table do
 end
 ```
 
-We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](/docs/stable/elixir/Application.html).
+We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](https://hexdocs.pm/elixir/Application.html).
 
 Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
 

@@ -17,7 +17,7 @@ In this chapter, we are going to learn about supervisors and also about applicat
 
 ## Our first supervisor
 
-Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the [Supervisor](/docs/stable/elixir/Supervisor.html) behaviour, inside the `lib/kv/supervisor.ex` file:
+Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) behaviour, inside the `lib/kv/supervisor.ex` file:
 
 ```elixir
 defmodule KV.Supervisor do
@@ -180,7 +180,7 @@ def application do
 end
 ```
 
-The `:mod` option specifies the "application callback module", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](/docs/stable/elixir/Application.html) behaviour.
+The `:mod` option specifies the "application callback module", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](https://hexdocs.pm/elixir/Application.html) behaviour.
 
 Now that we have specified `KV` as the module callback, we need to change the `KV` module, defined in `lib/kv.ex`:
 
@@ -217,7 +217,7 @@ Mix makes a distinction between projects and applications. Based on the contents
 
 When we say "project" you should think about Mix. Mix is the tool that manages your project. It knows how to compile your project, test your project and more. It also knows how to compile and start the application relevant to your project.
 
-When we talk about applications, we talk about  <abbr title="Open Telecom Platform">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications in the [docs for the Application module](/docs/stable/elixir/Application.html), as well as by running `mix help compile.app` to learn more about the supported options in `def application`.
+When we talk about applications, we talk about  <abbr title="Open Telecom Platform">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications in the [docs for the Application module](https://hexdocs.pm/elixir/Application.html), as well as by running `mix help compile.app` to learn more about the supported options in `def application`.
 
 ## Simple one for one supervisors
 
@@ -364,7 +364,7 @@ end
 
 Now, if the registry worker crashes, both the registry and the "rest" of `KV.Supervisor`'s children (i.e. `KV.Bucket.Supervisor`) will be restarted. However, if `KV.Bucket.Supervisor` crashes, `KV.Registry` will not be restarted, because it was started prior to `KV.Bucket.Supervisor`.
 
-There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](/docs/stable/elixir/Supervisor.html) and [`Supervisor.Spec`](/docs/stable/elixir/Supervisor.Spec.html) modules. 
+There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](https://hexdocs.pm/elixir/Supervisor.html) and [`Supervisor.Spec`](https://hexdocs.pm/elixir/Supervisor.Spec.html) modules. 
 
 To help developers remember how to work with Supervisors and its convenience functions, [Benjamin Tan Wei Hao](http://benjamintan.io/) has created a [Supervisor cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf).
 

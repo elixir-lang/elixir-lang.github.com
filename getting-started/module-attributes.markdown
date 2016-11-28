@@ -34,7 +34,7 @@ Elixir has a handful of reserved attributes. Here are a few of them, the most co
 * `@behaviour` - (notice the British spelling) used for specifying an <abbr title="Open Telecom Platform">OTP</abbr> or user-defined behaviour.
 * `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
 
-`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation. You can read more about [writing documentation in Elixir in our official documentation](/docs/stable/elixir/writing-documentation.html).
+`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation. You can read more about [writing documentation in Elixir in our official documentation](https://hexdocs.pm/elixir/writing-documentation.html).
 
 Let's go back to the `Math` module defined in the previous chapters, add some documentation and save it to the `math.ex` file:
 
@@ -73,7 +73,7 @@ iex> h Math.sum # Access the docs for the sum function
 
 We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
 
-You can take a look at the docs for [Module](/docs/stable/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/getting-started/typespecs-and-behaviours.html).
+You can take a look at the docs for [Module](https://hexdocs.pm/elixir/Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/getting-started/typespecs-and-behaviours.html).
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
@@ -88,7 +88,7 @@ defmodule MyServer do
 end
 ```
 
-> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](/docs/stable/elixir/Module.html#register_attribute/3).
+> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](https://hexdocs.pm/elixir/Module.html#register_attribute/3).
 
 Trying to access an attribute that was not defined will print a warning:
 
@@ -145,7 +145,7 @@ In the example above, we have used the `plug/1` macro to connect functions that 
 
 In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is on how using module attributes as storage allows developers to create DSLs.
 
-Another example comes from [the ExUnit framework](/docs/stable/ex_unit/) which uses module attributes as annotation and storage:
+Another example comes from [the ExUnit framework](https://hexdocs.pm/ex_unit/) which uses module attributes as annotation and storage:
 
 ```elixir
 defmodule MyTest do

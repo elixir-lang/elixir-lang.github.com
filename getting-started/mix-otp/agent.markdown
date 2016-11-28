@@ -22,16 +22,16 @@ Elixir is an immutable language where nothing is shared by default. If we want t
 
 We have already talked about processes, while <abbr title="Erlang Term Storage">ETS</abbr> is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
 
-* [Agent](/docs/stable/elixir/Agent.html) - Simple wrappers around state.
-* [GenServer](/docs/stable/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
-* [GenEvent](/docs/stable/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
-* [Task](/docs/stable/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.
+* [Agent](https://hexdocs.pm/elixir/Agent.html) - Simple wrappers around state.
+* [GenServer](https://hexdocs.pm/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
+* [GenEvent](https://hexdocs.pm/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
+* [Task](https://hexdocs.pm/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.
 
 We will explore most of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
 
 ## Agents
 
-[Agents](/docs/stable/elixir/Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
+[Agents](https://hexdocs.pm/elixir/Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
 
 ```bash
 $ iex -S mix
@@ -50,7 +50,7 @@ iex> Agent.stop(agent)
 :ok
 ```
 
-We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](/docs/stable/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](/docs/stable/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that [`Agent.get/3`](/docs/stable/elixir/Agent.html#get/3) itself will return. Once we are done with the agent, we can call [`Agent.stop/3`](/docs/stable/elixir/Agent.html#stop/3) to terminate the agent process.
+We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](https://hexdocs.pm/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) itself will return. Once we are done with the agent, we can call [`Agent.stop/3`](https://hexdocs.pm/elixir/Agent.html#stop/3) to terminate the agent process.
 
 Let's implement our `KV.Bucket` using agents. But before starting the implementation, let's first write some tests. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
@@ -139,7 +139,7 @@ test "stores values by key", %{bucket: bucket} do
 end
 ```
 
-You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](/docs/stable/ex_unit/ExUnit.Callbacks.html).
+You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](https://hexdocs.pm/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html).
 
 ## Other agent actions
 
@@ -156,7 +156,7 @@ def delete(bucket, key) do
 end
 ```
 
-Now it is your turn to write a test for the functionality above! Also, be sure to explore [the documentation for the `Agent` module](/docs/stable/elixir/Agent.html) to learn more about them.
+Now it is your turn to write a test for the functionality above! Also, be sure to explore [the documentation for the `Agent` module](https://hexdocs.pm/elixir/Agent.html) to learn more about them.
 
 ## Client/Server in agents
 

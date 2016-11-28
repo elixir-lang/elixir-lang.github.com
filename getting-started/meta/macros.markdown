@@ -109,7 +109,7 @@ end
 
 Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many others used throughout this getting started guide are implemented in pure Elixir, often as a macro. This means that the constructs being used to build the language can be used by developers to extend the language to the domains they are working on.
 
-We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](/docs/stable/elixir/Kernel.SpecialForms.html#summary).
+We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#summary).
 
 ## Macros hygiene
 
@@ -223,7 +223,7 @@ iex> __ENV__.requires
 [IEx.Helpers, Integer, Kernel, Kernel.Typespec]
 ```
 
-Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](/docs/stable/elixir/Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](/docs/stable/elixir/Macro.Env.html).
+Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](https://hexdocs.pm/elixir/Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](https://hexdocs.pm/elixir/Macro.Env.html).
 
 ## Private macros
 
