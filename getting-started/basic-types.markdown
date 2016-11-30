@@ -191,6 +191,12 @@ The [String module](https://hexdocs.pm/elixir/String.html) contains a bunch of f
 iex> String.upcase("hellö")
 "HELLÖ"
 ```
+> Note: Double quotes and single quotes are treated differently
+
+```iex
+iex> 'hello' == "hello"
+false
+```
 
 ## Anonymous functions
 
