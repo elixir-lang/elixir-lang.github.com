@@ -72,7 +72,6 @@ It's possible to implement protocols for all Elixir data types:
 * `Reference`
 * `Tuple`
 
-```
 
 ## Protocols and structs
 
