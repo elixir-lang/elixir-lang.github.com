@@ -126,7 +126,7 @@ The implementation above is arguably not a reasonable one. For example, it makes
 However, should we be fine with the implementation for `Any`, in order to use such implementation we would need to tell our struct to explicitly derive the `Size` protocol:
 
 ```elixir
-defprotocol OtherUser do
+defmodule OtherUser do
   @derive [Size]
   defstruct [:name, :age]
 end
