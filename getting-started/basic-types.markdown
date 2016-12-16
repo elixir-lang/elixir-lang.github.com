@@ -77,7 +77,7 @@ iex> trunc(3.58)
 3
 ```
 
-## Identifying function
+## Identifying functions
 
 Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments which the function takes. From this point on we will use both the function name and its arity to decribe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of only `2`.
 
