@@ -77,6 +77,10 @@ iex> trunc(3.58)
 3
 ```
 
+## Identifying function
+
+Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments which the function takes. From this point on we will use both the function name and its arity to decribe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of only `2`.
+
 ## Booleans
 
 Elixir supports `true` and `false` as booleans:
@@ -88,7 +92,7 @@ iex> true == false
 false
 ```
 
-Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean` function can be used to check if a value is a boolean or not:
+Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean/1` function can be used to check if a value is a boolean or not:
 
 
 ```iex
@@ -98,9 +102,9 @@ iex> is_boolean(1)
 false
 ```
 
-You can also use `is_integer`, `is_float` or `is_number` to check, respectively, if an argument is an integer, a float, or either.
+You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, a float, or either.
 
-> Note: At any moment you can type `h` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer` is going to print the documentation for the `is_integer` function. It also works with operators and other constructs (try `h ==/2`).
+> Note: At any moment you can type `h` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`).
 
 ## Atoms
 
@@ -152,7 +156,7 @@ iex> "hello\nworld"
 "hello\nworld"
 ```
 
-You can print a string using the `IO.puts` function from the `IO` module:
+You can print a string using the `IO.puts/1` function from the `IO` module:
 
 ```iex
 iex> IO.puts "hello\nworld"
@@ -161,7 +165,7 @@ world
 :ok
 ```
 
-Notice the `IO.puts` function returns the atom `:ok` as result after printing.
+Notice the `IO.puts/1` function returns the atom `:ok` as result after printing.
 
 Strings in Elixir are represented internally by binaries which are sequences of bytes:
 
@@ -198,35 +202,19 @@ Functions are delimited by the keywords `fn` and `end`:
 ```iex
 iex> add = fn a, b -> a + b end
 #Function<12.71889879/2 in :erl_eval.expr/5>
-iex> add.(1, 2)
-3
-```
-
-Note the dot (`.`) between the variable and parenthesis which is required to invoke the anonymous function passed to the variable `add`.
-
-Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions as integers and strings can:
-
-
-```iex
-iex> add = fn a, b -> a + b end
-#Function<12.71889879/2 in :erl_eval.expr/5>
 iex> is_function(add)
 true
 iex> is_function(add, 2)
 true
 iex> is_function(add, 1)
 false
+iex> add.(1, 2)
+3
 ```
 
-In this example, we have first passed the function referenced by the variable `add` to the `is_function` function which correctly returned `true`. 
+Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
 
-Second, we check if the function takes on two arguments by calling `is_function` with the arguments `add` and `2`. Here we are checking for the arity of the function. The arity of the function describes the number of arguments which a function takes. As we defined our anonymous function assigned to the variable `add` to take in two parameters `a` and `b` in its function definition, `is_function(add, 2)` will correctly return true, whereas `is_function(add, 1)` returns false as expected.
-
-As functions in Elixir are identified by both their name and their arity, we will from this point use this to mention functions more explicitly throughout the documentation. `add/2` identifies the function which is named `add` and takes 2 arguments. `add/1` identifies a different (nonexistent) function with the same name but with an arity of only `1`.
-
-
-
-
+Note a dot (`.`) between the variable and parenthesis is required to invoke an anonymous function.
 
 Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
