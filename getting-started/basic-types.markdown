@@ -77,6 +77,10 @@ iex> trunc(3.58)
 3
 ```
 
+## Identifying functions
+
+Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments which the function takes. From this point on we will use both the function name and its arity to decribe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of only `2`.
+
 ## Booleans
 
 Elixir supports `true` and `false` as booleans:
@@ -90,7 +94,6 @@ false
 
 Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean/1` function can be used to check if a value is a boolean or not:
 
-> Note: Functions in Elixir are identified by name and by number of arguments (i.e. arity). Therefore, `is_boolean/1` identifies a function named `is_boolean` that takes 1 argument. `is_boolean/2` identifies a different (nonexistent) function with the same name but different arity.
 
 ```iex
 iex> is_boolean(true)
