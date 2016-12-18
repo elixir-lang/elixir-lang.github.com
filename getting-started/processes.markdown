@@ -11,11 +11,11 @@ In Elixir, all code runs inside processes. Processes are isolated from each othe
 
 Elixir's processes should not be confused with operating system processes. Processes in Elixir are extremely lightweight in terms of memory and CPU (unlike threads in many other programming languages). Because of this, it is not uncommon to have tens or even hundreds of thousands of processes running simultaneously.
 
-In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between different processes.
+In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between processes.
 
 ## `spawn`
 
-The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
+The basic mechanism for spawning new processes is the auto-imported `spawn/1` function:
 
 ```iex
 iex> spawn fn -> 1 + 2 end
@@ -61,6 +61,8 @@ iex> receive do
 ```
 
 When a message is sent to a process, the message is stored in the process mailbox. The `receive/1` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports guards and many clauses, such as `case/2`.
+
+The process that sends the message does not block on `send/2`, it just puts the message in the recipient's mailbox and continues. In particular, a process can send messages to itself. In the previous example, when the `receive` block gets executed the sender process may be already dead.
 
 If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
 
@@ -165,9 +167,9 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
     Args: []
 ```
 
-Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` to return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, `Task` provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
+Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` which return `{:ok, pid}` rather than just the PID. This is what enables tasks to be used in supervision trees. Furthermore, `Task` provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
-We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Task to get better error reports.
+We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use `Task` to get better error reports.
 
 ## State
 
@@ -199,7 +201,7 @@ Let's give it a try by running `iex kv.exs`:
 
 ```iex
 iex> {:ok, pid} = KV.start_link
-#PID<0.62.0>
+{:ok, #PID<0.62.0>}
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
 iex> flush
@@ -244,6 +246,6 @@ iex> Agent.get(pid, fn map -> Map.get(map, :hello) end)
 :world
 ```
 
-A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
+A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called `GenServer`), tasks, and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
 
 For now, let's move on and explore the world of I/O in Elixir.
