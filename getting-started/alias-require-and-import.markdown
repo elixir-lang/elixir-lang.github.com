@@ -82,7 +82,11 @@ Macros are chunks of code that are executed and expanded at compilation time. Th
 
 ```iex
 iex> Integer.is_odd(3)
-** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
+** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. Did you mean one of:
+
+      * is_odd/1
+
+    (elixir) Integer.is_odd(3)
 iex> require Integer
 Integer
 iex> Integer.is_odd(3)
