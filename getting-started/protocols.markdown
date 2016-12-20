@@ -25,8 +25,8 @@ end
 The `Size` protocol expects a function called `size` that receives one argument (the data structure we want to know the size of) to be implemented. We can now implement this protocol for the data structures that would have a compliant implementation:
 
 ```elixir
-defimpl Size, for: Binary do
-  def size(binary), do: byte_size(binary)
+defimpl Size, for: BitString do
+  def size(string), do: byte_size(string)
 end
 
 defimpl Size, for: Map do
