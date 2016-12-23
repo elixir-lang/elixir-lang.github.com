@@ -42,7 +42,7 @@ Instead of abusing the name registry facility, we will create our own *registry 
 
 The registry needs to guarantee that the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
-We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServer provides an industrial strength framework for building servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
+We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServer provides industrial strength functionality for building servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
 ## Our first GenServer
 
