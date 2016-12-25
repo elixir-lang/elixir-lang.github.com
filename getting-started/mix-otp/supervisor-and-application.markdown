@@ -364,7 +364,7 @@ end
 
 Now, if the registry worker crashes, both the registry and the "rest" of `KV.Supervisor`'s children (i.e. `KV.Bucket.Supervisor`) will be restarted. However, if `KV.Bucket.Supervisor` crashes, `KV.Registry` will not be restarted, because it was started prior to `KV.Bucket.Supervisor`.
 
-There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](https://hexdocs.pm/elixir/Supervisor.html) and [`Supervisor.Spec`](https://hexdocs.pm/elixir/Supervisor.Spec.html) modules. 
+There are other strategies and other options that could be given to `worker/2`, `supervisor/2` and `supervise/2` functions, so don't forget to check both [`Supervisor`](https://hexdocs.pm/elixir/Supervisor.html) and [`Supervisor.Spec`](https://hexdocs.pm/elixir/Supervisor.Spec.html) modules.
 
 To help developers remember how to work with Supervisors and its convenience functions, [Benjamin Tan Wei Hao](http://benjamintan.io/) has created a [Supervisor cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf).
 
@@ -382,7 +382,7 @@ A GUI should pop-up containing all sorts of information about our system, from g
 
 In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
 
-<img src="/images/contents/kv-observer.png" width="640px">
+<img src="/images/contents/kv-observer.png" width="640px"/>
 
 Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:
 
