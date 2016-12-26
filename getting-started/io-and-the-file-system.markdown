@@ -13,7 +13,7 @@ We had originally sketched this chapter to come much earlier in the getting star
 
 ## The `IO` module
 
-The `IO` module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straightforward:
+The [`IO`](http://elixir-lang.org/docs/v1.0/elixir/IO.html) module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files, and other IO devices. Usage of the module is pretty straightforward:
 
 ```iex
 iex> IO.puts "hello world"
@@ -24,7 +24,7 @@ yes or no? yes
 "yes\n"
 ```
 
-By default, functions in the IO module read from the standard input and write to the standard output. We can change that by passing, for example, `:stderr` as an argument (in order to write to the standard error device):
+By default, functions in the `IO` module read from the standard input and write to the standard output. We can change that by passing, for example, `:stderr` as an argument (in order to write to the standard error device):
 
 ```iex
 iex> IO.puts :stderr, "hello world"
@@ -61,10 +61,12 @@ iex> File.read! "hello"
 iex> File.read "unknown"
 {:error, :enoent}
 iex> File.read! "unknown"
-** (File.Error) could not read file unknown: no such file or directory
+** (File.Error) could not read file "unknown": no such file or directory
 ```
 
-Notice that when the file does not exist, the version with `!` raises an error. The version without `!` is preferred when you want to handle different outcomes using pattern matching:
+Notice that the version with `!` returns the contents of the file instead of a tuple, and if anything goes wrong the function raises an error.
+
+The version without `!` is preferred when you want to handle different outcomes using pattern matching:
 
 ```elixir
 case File.read(file) do
@@ -115,7 +117,8 @@ iex> pid = spawn fn ->
 ...> end
 #PID<0.57.0>
 iex> IO.write(pid, "hello")
-{:io_request, #PID<0.41.0>, #Reference<0.0.8.91>, {:put_chars, :unicode, "hello"}}
+{:io_request, #PID<0.41.0>, #Reference<0.0.8.91>,
+ {:put_chars, :unicode, "hello"}}
 ** (ErlangError) erlang error: :terminated
 ```
 
