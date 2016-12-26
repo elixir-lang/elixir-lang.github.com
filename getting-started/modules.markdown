@@ -154,7 +154,7 @@ iex> is_function(fun)
 true
 iex> fun.(0)
 true
-````
+```
 
 Local or imported functions, like `is_function/1`, can be captured without the module:
 
