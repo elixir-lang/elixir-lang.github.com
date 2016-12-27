@@ -42,11 +42,13 @@ Instead of abusing the name registry facility, we will create our own *registry 
 
 The registry needs to guarantee that the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
 
-We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
+We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServer provides industrial strength functionality for building servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
 ## Our first GenServer
 
-A GenServer is implemented in two parts: the client API and the server callbacks, either in a single module or in two different modules implementing client API in one and server callbacks in the other. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we use a single module for both the server callbacks and client API. Create a new file at `lib/kv/registry.ex` with the following contents:
+A GenServer is implemented in two parts: the client API and the server callbacks. You can either combine both parts into a single module or you can separate them into a client module and a server module. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we'll use a single module for both the server callbacks and the client API.
+
+Create a new file at `lib/kv/registry.ex` with the following contents:
 
 ```elixir
 defmodule KV.Registry do
@@ -104,19 +106,19 @@ The first function is `start_link/3`, which starts a new GenServer passing three
 
 2. The initialization arguments, in this case the atom `:ok`
 
-3. A list of options which can, for example, hold the name of the server. For now, we pass an empty list
+3. A list of options which can be used to specify things like the name of the server. For now, we pass an empty list
 
 There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
-The next two functions, `lookup/2` and `create/2` are responsible for sending these requests to the server. The requests are represented by the first argument to `handle_call/3` or `handle_cast/2`. In this case, we have used `{:lookup, name}` and `{:create, name}` respectively. Requests are often specified as tuples, like this, in order to provide more than one "argument" in that first argument slot. It's common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements.
+The next two functions, `lookup/2` and `create/2` are responsible for sending these requests to the server.  In this case, we have used `{:lookup, name}` and `{:create, name}` respectively.  Requests are often specified as tuples, like this, in order to provide more than one "argument" in that first argument slot. It's common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements. Note that the requests must match the first argument to `handle_call/3` or `handle_cast/2`.
 
-On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.
+That's it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.
 
 The first is the `init/1` callback, that receives the argument given to `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new map. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
 
-For `call/2` requests, we must implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`, where `reply` is what will be sent to the client and the `new_state` is the new server state.
+For `call/2` requests, we  implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`. The first element of the tuple, `:reply`,  indicates that server should send a reply back to the client. The second element, `reply`, is what will be sent to the client while the third, `new_state` is the new server state.
 
-For `cast/2` requests, we must implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). The `handle_cast/2` callback returns a tuple in the format `{:noreply, new_state}`.
+For `cast/2` requests, we implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). The `handle_cast/2` callback returns a tuple in the format `{:noreply, new_state}`. Note that in a real application we would have probably implemented the callback for `:create` with a synchronous call instead of an asynchronous cast. We are doing it this way to illustrate how to implemented a cast callback.
 
 There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `terminate/2` and `code_change/3` that we could implement. You are welcome to explore the [full GenServer documentation](https://hexdocs.pm/elixir/GenServer.html) to learn more about those.
 
@@ -242,7 +244,7 @@ So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handl
 
 1. `handle_call/3` must be used for synchronous requests. This should be the default choice as waiting for the server reply is a useful backpressure mechanism.
 
-2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. A cast does not even guarantee the server has received the message and, for this reason, must be used sparingly. For example, the `create/2` function we have defined in this chapter should have used `call/2`. We have used `cast/2` for didactic purposes.
+2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. A cast does not even guarantee the server has received the message and, for this reason, should be used sparingly. For example, the `create/2` function we have defined in this chapter should have used `call/2`. We have used `cast/2` for didactic purposes.
 
 3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are such an example of this.
 
@@ -264,4 +266,3 @@ ref = Process.monitor(pid)
 ```
 
 This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
-
