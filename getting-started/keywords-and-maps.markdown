@@ -17,9 +17,7 @@ In Elixir, we have two main associative data structures: keyword lists and maps.
 In many functional programming languages, it is common to use a list of 2-item tuples as the representation of a key-value data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:
 
 ```iex
-iex> list = [{:a, 1}, {:b, 2}]
-[a: 1, b: 2]
-iex> list == [a: 1, b: 2]
+iex> [{:a, 1}, {:b, 2}] == [a: 1, b: 2]
 true
 ```
 
