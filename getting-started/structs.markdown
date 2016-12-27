@@ -48,7 +48,7 @@ Structs provide *compile-time* guarantees that only the fields (and *all* of the
 
 ```iex
 iex> %User{oops: :field}
-** (CompileError) iex:3: unknown key :oops for struct User
+** (KeyError) key :oops not found in: %User{age: 27, name: "John"}
 ```
 
 ## Accessing and updating structs
