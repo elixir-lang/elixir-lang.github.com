@@ -96,7 +96,8 @@ Notice that we referred to structs as **bare** maps because none of the protocol
 iex> john = %User{}
 %User{age: 27, name: "John"}
 iex> john[:name]
-** (UndefinedFunctionError) undefined function: User.fetch/2
+** (UndefinedFunctionError) function User.fetch/2 is undefined (User does not implement the Access behaviour)
+             User.fetch(%User{age: 27, name: "John"}, :name)
 iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 ** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
