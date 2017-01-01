@@ -1,13 +1,13 @@
 ---
 layout: getting-started
-title: try, catch and rescue
+title: try, catch, and rescue
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.
+Elixir has three error mechanisms: errors, throws, and exits. In this chapter we will explore each of them and include remarks about when each should be used.
 
 ## Errors
 
@@ -222,4 +222,4 @@ iex> what_happened
 :rescued
 ```
 
-This finishes our introduction to `try`, `catch` and `rescue`. You will find they are used less frequently in Elixir than in other languages, although they may be handy in some situations where a library or some particular code is not playing "by the rules".
+This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages, although they may be handy in some situations where a library or some particular code is not playing "by the rules".
