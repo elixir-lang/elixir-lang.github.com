@@ -9,7 +9,7 @@ title: Sigils
 
 We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms, for example, are mostly created via the `:atom` representation.
 
-One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Rather, our best bet is to make the language extensible, so developers, companies and communities can extend the language to their relevant domains.
+One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Rather, our best bet is to make the language extensible, so developers, companies, and communities can extend the language to their relevant domains.
 
 In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (`~`) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.
 
@@ -51,15 +51,15 @@ So far, all examples have used `/` to delimit a regular expression. However sigi
 ~r<hello>
 ```
 
-The reason behind supporting different delimiters is that different delimiters can be more suited for different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for other sigils, as we will see in the next section.
+The reason behind supporting different delimiters is to provide a way to write literals without escaped delimiters. For example, a regular expression with forward slashes like `~r(^https?://)` reads arguably better than `~r/^https?:\/\/`. Similarly, if the regular expression has forward slashes and capturing groups (that use `()`), you may then choose double quotes instead of parentheses.
 
-## Strings, char lists and words sigils
+## Strings, char lists, and word lists sigils
 
 Besides regular expressions, Elixir ships with three other sigils.
 
 ### Strings
 
-The `~s` sigil is used to generate strings, like double quotes are. The `~s` sigil is useful, for example, when a string contains both double and single quotes:
+The `~s` sigil is used to generate strings, like double quotes are. The `~s` sigil is useful when a string contains double quotes:
 
 ```iex
 iex> ~s(this is a string with "double" quotes, not 'single' ones)
@@ -68,7 +68,7 @@ iex> ~s(this is a string with "double" quotes, not 'single' ones)
 
 ### Char lists
 
-The `~c` sigil is used to generate char lists:
+The `~c` sigil is useful for generating char lists that contain single quotes:
 
 ```iex
 iex> ~c(this is a char list containing 'single quotes')
@@ -104,8 +104,6 @@ iex> ~S(String without escape codes \x26 without #{interpolation})
 
 The following escape codes can be used in strings and char lists:
 
-* `\"` – double quote
-* `\'` – single quote
 * `\\` – single backslash
 * `\a` – bell/alert
 * `\b` – backspace
@@ -120,6 +118,8 @@ The following escape codes can be used in strings and char lists:
 * `\0` - null byte
 * `\xDD` - represents a single byte in hexadecimal (such as `\x13`)
 * `\uDDDD` and `\u{D...}` - represents a Unicode codepoint in hexadecimal (such as `\u{1F600}`)
+
+In addition to those, a double quote inside a double-quoted string needs to be escaped as `\"`, and, analogously, a single quote inside a single-quoted char list needs to be escaped as `\'`. Nevertheless, it is better style to change delimiters as seen above than to escape them.
 
 Sigils also support heredocs, that is, triple double- or single-quotes as separators:
 
