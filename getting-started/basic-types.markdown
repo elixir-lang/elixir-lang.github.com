@@ -44,7 +44,7 @@ iex> rem 10, 3
 1
 ```
 
-Notice that parentheses are not required in order to invoke a function.
+Notice Elixir allows you to drop the parentheses when invoking named functions. Such feature gives a cleaner syntax when writing declarations and control-flow constructs.
 
 Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:
 
@@ -94,7 +94,6 @@ false
 
 Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean/1` function can be used to check if a value is a boolean or not:
 
-
 ```iex
 iex> is_boolean(true)
 true
@@ -104,7 +103,7 @@ false
 
 You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, a float, or either.
 
-> Note: At any moment you can type `h` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`).
+> Note: At any moment you can type `h()` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`).
 
 ## Atoms
 
@@ -197,24 +196,24 @@ iex> String.upcase("hellö")
 
 ## Anonymous functions
 
-Functions are delimited by the keywords `fn` and `end`:
+Anonymous functions can be created inline and are delimited by the keywords `fn` and `end`:
 
 ```iex
 iex> add = fn a, b -> a + b end
 #Function<12.71889879/2 in :erl_eval.expr/5>
-iex> is_function(add)
-true
-iex> is_function(add, 2)
-true
-iex> is_function(add, 1)
-false
 iex> add.(1, 2)
 3
+iex> is_function(add)
+true
+iex> is_function(add, 2) # check if it expects exactly 2 arguments
+true
+iex> is_function(add, 1) # check if it expects exactly 1 argument
+false
 ```
 
-Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
+Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions in the same way as integers and strings. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
 
-Note a dot (`.`) between the variable and parenthesis is required to invoke an anonymous function.
+Note a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling an anonymous function named `add` and a named function `add/2`. In this sense, Elixir makes a clear distinction between anonymous functions and named functions. We will explore those differences in [Chapter 8](/getting-started/modules.html).
 
 Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
@@ -235,8 +234,6 @@ iex> (fn -> x = 0 end).()
 iex> x
 42
 ```
-
-The capture syntax [`&()`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html) can also be used for creating anonymous functions. This type of syntax will be discussed in [Chapter 8](/getting-started/modules.html).
 
 ## (Linked) Lists
 

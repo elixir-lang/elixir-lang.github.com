@@ -136,7 +136,7 @@ defmodule Hello do
 end
 ```
 
-Given my previous background in Ruby, it is natural that some of the constructs added were borrowed from Ruby. However, those additions were a by-product, never a language goal.
+Given my previous background in Ruby, it is natural that some of the constructs added were borrowed from Ruby. However, those additions were a by-product, and not a language goal.
 
 Many language constructs are also inspired by their Erlang counter-parts, like some of the control-flow macros, operators and containers. Notice how some Elixir code:
 

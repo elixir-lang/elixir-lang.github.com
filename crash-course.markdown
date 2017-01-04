@@ -152,13 +152,6 @@ iex> ^a = 3
 
 ### Calling functions
 
-Elixir allows you to omit parentheses in function calls, Erlang does not.
-
-| Erlang            | Elixir         |
-|-------------------|----------------|
-| some_function().  | some_function  |
-| sum(A, B)         | sum a, b       |
-
 Invoking a function from a module uses different syntax. In Erlang, you would write
 
 ```erlang
@@ -174,7 +167,7 @@ List.last([1, 2])
 **Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
 
 ```elixir
-:lists.sort [3, 2, 1]
+:lists.sort([3, 2, 1])
 ```
 
 All of the Erlang built-ins reside in the `:erlang` module.
