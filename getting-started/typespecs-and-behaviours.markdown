@@ -11,8 +11,9 @@ title: Typespecs and behaviours
 
 Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
-1. declaring custom data types;
-2. declaring typed function signatures (specifications).
+1. declaring typed function signatures (specifications);
+2. declaring custom data types.
+
 
 ### Function specifications
 
@@ -35,7 +36,7 @@ Elixir supports compound types as well. For example, a list of integers has type
 
 While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive.
 
-Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
+Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product, and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
 
 ```elixir
 defmodule LousyCalculator do
