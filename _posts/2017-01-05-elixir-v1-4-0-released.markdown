@@ -6,7 +6,7 @@ category: Releases
 excerpt: Elixir v1.4 brings many improvements to the language, its standard library and the Mix build tool.
 ---
 
-Elixir v1.4 brings new features, enhancements and bug fixes into Elixir. The most notable changes are the addition of the `Registry` module, the `Task.async_stream/3` and `Task.async_stream/5` function which aid developers in writing concurrent software, and the new application inference and commands added to Mix.
+Elixir v1.4 brings new features, enhancements and bug fixes. The most notable changes are the addition of the `Registry` module, the `Task.async_stream/3` and `Task.async_stream/5` function which aid developers in writing concurrent software, and the new application inference and commands added to Mix.
 
 In this post we will cover the main additions. The complete [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0) are also available.
 
@@ -29,7 +29,7 @@ iex> Registry.lookup(MyRegistry, "hello")
 [{self(), 1}]
 ```
 
-Finally, huge thanks to [Bram Verburg](https://twitter.com/voltonez) has performed [extensive benchmarks](https://docs.google.com/spreadsheets/d/1MByRZJMCnZ1wPiLhBEnSRRSuy1QXp8kr27PIOXO3qqg/edit#gid=0) on the registry to show it scales linearly with the number of cores by increasing the number of partitions.
+Finally, huge thanks to [Bram Verburg](https://twitter.com/voltonez) who has performed [extensive benchmarks](https://docs.google.com/spreadsheets/d/1MByRZJMCnZ1wPiLhBEnSRRSuy1QXp8kr27PIOXO3qqg/edit#gid=0) on the registry to show it scales linearly with the number of cores by increasing the number of partitions.
 
 ## Syntax coloring
 
@@ -123,7 +123,7 @@ will fetch `ex_doc` and its dependencies, build them, and then install `ex_doc` 
 
     ex_doc
 
-You can now also install archives from Hex in this way. Since they are fetched and built on the user's machine, they do not have the same limitations as pre-built archives. However, keep in mind archives are loaded on every Mix command and may conflict with modules or dependnecies in your projects. For this reason, escripts is the preferred format for sharing executables.
+You can now also install archives from Hex in this way. Since they are fetched and built on the user's machine, they do not have the same limitations as pre-built archives. However, keep in mind archives are loaded on every Mix command and may conflict with modules or dependencies in your projects. For this reason, escripts is the preferred format for sharing executables.
 
 It is also possible to install escripts and archives by providing a Git/GitHub repo. See `mix help escript.install` and `mix help archive.install` for more details.
 
