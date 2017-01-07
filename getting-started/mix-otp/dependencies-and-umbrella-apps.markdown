@@ -169,7 +169,7 @@ defmodule KVServer.Mixfile do
   end
 
   def application do
-    [applications: [:logger],
+    [extra_applications: [:logger],
      mod: {KVServer, []}]
   end
 
@@ -195,7 +195,7 @@ The second change is in the `application` function inside `mix.exs`:
 
 ```elixir
 def application do
-  [applications: [:logger],
+  [extra_applications: [:logger],
    mod: {KVServer, []}]
 end
 ```
@@ -247,7 +247,7 @@ The line above makes `:kv` available as a dependency inside `:kv_server`. We can
 
 ```elixir
 def application do
-  [applications: [:logger, :kv],
+  [extra_applications: [:logger, :kv],
    mod: {KVServer, []}]
 end
 ```

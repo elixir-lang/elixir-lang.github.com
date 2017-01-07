@@ -175,7 +175,7 @@ We can configure the application callback in two steps. First, open up the `mix.
 
 ```elixir
 def application do
-  [applications: [:logger],
+  [extra_applications: [:logger],
    mod: {KV, []}]
 end
 ```
