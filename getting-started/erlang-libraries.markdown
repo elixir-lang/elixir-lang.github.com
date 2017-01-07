@@ -68,7 +68,7 @@ edit your `mix.exs` file to include:
 
 ```elixir
 def application do
-  [applications: [:crypto]]
+  [extra_applications: [:crypto]]
 end
 ```
 

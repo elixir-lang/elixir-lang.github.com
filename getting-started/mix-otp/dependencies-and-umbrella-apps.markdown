@@ -243,16 +243,7 @@ defp deps do
 end
 ```
 
-The line above makes `:kv` available as a dependency inside `:kv_server`. We can invoke the modules defined in `:kv` but it does not automatically start the `:kv` application. For that, we also need to list `:kv` as an application inside `application/0`:
-
-```elixir
-def application do
-  [extra_applications: [:logger, :kv],
-   mod: {KVServer, []}]
-end
-```
-
-Now Mix will guarantee the `:kv` application is started before `:kv_server` is started.
+The line above makes `:kv` available as a dependency inside `:kv_server` and automatically starts the `:kv` application before the server starts.
 
 Finally, copy the `kv` application we have built so far to the `apps` directory in our new umbrella project. The final directory structure should match the structure we mentioned earlier:
 
