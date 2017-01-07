@@ -296,7 +296,7 @@ Open up `apps/kv/mix.exs` and change the `application/0` function to return the 
 
 ```elixir
 def application do
-  [applications: [],
+  [extra_applications: [:logger],
    env: [routing_table: []],
    mod: {KV, []}]
 end
