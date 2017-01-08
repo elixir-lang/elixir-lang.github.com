@@ -181,7 +181,7 @@ defmodule KVServer.Command do
 end
 ```
 
-Before we implement this function, let's change our server to start using our new `parse/1` and `run/1` functions. Remember, our `read_line/1` function was also crashing when the client closed the socket, so let's take the opportunity to fix it, too. Open up `lib/kv_server.ex` and replace the existing server definition:
+Before we implement this function, let's change our server to start using our new `parse/1` and `run/1` functions. Remember, our `read_line/1` function was also crashing when the client closed the socket, so let's take the opportunity to fix it, too. Open up `lib/kv_server/application.ex` and replace the existing server definition:
 
 ```elixir
 defp serve(socket) do
@@ -333,7 +333,7 @@ Every function clause dispatches the appropriate command to the `KV.Registry` se
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
-By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:
+By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer.Application` to print such error as well:
 
 ```elixir
 defp write_line(socket, {:error, :not_found}) do
@@ -422,7 +422,7 @@ This time, since our test relies on global data, we have not given `async: true`
 
 To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test case, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report.
 
-Before setup, add the following call:
+Between `use ExUnit.Case` and setup, add the following call:
 
 ```elixir
 @moduletag :capture_log

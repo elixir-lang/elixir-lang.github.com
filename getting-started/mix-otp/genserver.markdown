@@ -190,7 +190,7 @@ iex> Process.monitor(pid)
 #Reference<0.0.0.551>
 iex> Agent.stop(pid)
 :ok
-iex> flush
+iex> flush()
 {:DOWN, #Reference<0.0.0.551>, :process, #PID<0.66.0>, :normal}
 ```
 

@@ -170,7 +170,7 @@ defmodule KVServer.Mixfile do
 
   def application do
     [extra_applications: [:logger],
-     mod: {KVServer, []}]
+     mod: {KVServer.Application, []}]
   end
 
   defp deps do
@@ -196,25 +196,33 @@ The second change is in the `application` function inside `mix.exs`:
 ```elixir
 def application do
   [extra_applications: [:logger],
-   mod: {KVServer, []}]
+   mod: {KVServer.Application, []}]
 end
 ```
 
-Because we passed the `--sup` flag, Mix automatically added `mod: {KVServer, []}`, specifying that `KVServer` is our application callback module. `KVServer` will start our application supervision tree.
+Because we passed the `--sup` flag, Mix automatically added `mod: {KVServer.Application, []}`, specifying that `KVServer.Application` is our application callback module. `KVServer.Application` will start our application supervision tree.
 
-In fact, let's open up `lib/kv_server.ex`:
+In fact, let's open up `lib/kv_server/application.ex`:
 
 ```elixir
-defmodule KVServer do
+defmodule KVServer.Application do
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
+  # for more information on OTP Applications
+  @moduledoc false
+
   use Application
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    # Define workers and child supervisors to be supervised
     children = [
-      # worker(KVServer.Worker, [arg1, arg2, arg3])
+      # Starts a worker by calling: KVServer.Worker.start_link(arg1, arg2, arg3)
+      # worker(KVServer.Worker, [arg1, arg2, arg3]),
     ]
 
+    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
     Supervisor.start_link(children, opts)
   end
