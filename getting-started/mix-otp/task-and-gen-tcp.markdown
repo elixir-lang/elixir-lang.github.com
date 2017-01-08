@@ -17,11 +17,11 @@ We will start our TCP server by first implementing an echo server. It will send 
 
 A TCP server, in broad strokes, performs the following steps:
 
-1. Listens to a port until the port is available and it gets hold of the socket
-2. Waits for a client connection on that port and accepts it
-3. Reads the client request and writes a response back
+  1. Listens to a port until the port is available and it gets hold of the socket
+  2. Waits for a client connection on that port and accepts it
+  3. Reads the client request and writes a response back
 
-Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server/application.ex`, and add the following functions:
+Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
 
 ```elixir
 require Logger
@@ -64,7 +64,7 @@ defp write_line(line, socket) do
 end
 ```
 
-We are going to start our server by calling `KVServer.Application.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
+We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
 
 `serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
 
@@ -87,7 +87,7 @@ This is pretty much all we need to implement our echo server. Let's give it a tr
 Start an IEx session inside the `kv_server` application with `iex -S mix`. Inside IEx, run:
 
 ```iex
-iex> KVServer.Application.accept(4040)
+iex> KVServer.accept(4040)
 ```
 
 The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](https://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
@@ -112,9 +112,9 @@ My particular telnet client can be exited by typing `ctrl + ]`, typing `quit`, a
 Once you exit the telnet client, you will likely see an error in the IEx session:
 
     ** (MatchError) no match of right hand side value: {:error, :closed}
-        (kv_server) lib/kv_server/application.ex:45: KVServer.Application.read_line/1
-        (kv_server) lib/kv_server/application.ex:37: KVServer.Application.serve/1
-        (kv_server) lib/kv_server/application.ex:30: KVServer.Application.loop_acceptor/1
+        (kv_server) lib/kv_server.ex:45: KVServer.read_line/1
+        (kv_server) lib/kv_server.ex:37: KVServer.serve/1
+        (kv_server) lib/kv_server.ex:30: KVServer.loop_acceptor/1
 
 That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in future revisions of our server.
 
@@ -133,7 +133,7 @@ def start(_type, _args) do
   import Supervisor.Spec
 
   children = [
-    worker(Task, [KVServer.Application, :accept, [4040]])
+    worker(Task, [KVServer, :accept, [4040]])
   ]
 
   opts = [strategy: :one_for_one, name: KVServer.Supervisor]
@@ -141,7 +141,7 @@ def start(_type, _args) do
 end
 ```
 
-With this change, we are saying that we want to run `KVServer.Application.accept(4040)` as a worker. We are hardcoding the port for now, but we will discuss ways in which this could be changed later.
+With this change, we are saying that we want to run `KVServer.accept(4040)` as a worker. We are hardcoding the port for now, but we will discuss ways in which this could be changed later.
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
 
@@ -200,7 +200,7 @@ This is similar to the mistake we made when we called `KV.Bucket.start_link/0` s
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
-We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor that starts temporary tasks as part of our supervision tree!
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor that starts temporary tasks as part of our supervision tree.
 
 Let's change `start/2` once again, to add a supervisor to our tree:
 
@@ -235,27 +235,11 @@ You might notice that we added a line, `:ok = :gen_tcp.controlling_process(clien
 
 Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!
 
-Here is the full echo server implementation, in a single module:
+Here is the full echo server implementation:
 
 ```elixir
-defmodule KVServer.Application do
-  @moduledoc false
-
-  use Application
+defmodule KVServer do
   require Logger
-
-  @doc false
-  def start(_type, _args) do
-    import Supervisor.Spec
-
-    children = [
-      supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
-      worker(Task, [KVServer, :accept, [4040]])
-    ]
-
-    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
-    Supervisor.start_link(children, opts)
-  end
 
   @doc """
   Starts accepting connections on the given `port`.

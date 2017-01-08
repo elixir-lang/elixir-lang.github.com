@@ -181,7 +181,7 @@ defmodule KVServer.Command do
 end
 ```
 
-Before we implement this function, let's change our server to start using our new `parse/1` and `run/1` functions. Remember, our `read_line/1` function was also crashing when the client closed the socket, so let's take the opportunity to fix it, too. Open up `lib/kv_server/application.ex` and replace the existing server definition:
+Before we implement this function, let's change our server to start using our new `parse/1` and `run/1` functions. Remember, our `read_line/1` function was also crashing when the client closed the socket, so let's take the opportunity to fix it, too. Open up `lib/kv_server.ex` and replace the existing server definition:
 
 ```elixir
 defp serve(socket) do
@@ -279,7 +279,7 @@ defp serve(socket) do
 end
 ```
 
-Much better! Syntax-wise, `with` is quite similar to `for` comprehensions. `with` will retrieve the value returned by the right-side of `<-` and match it against the pattern on the left side. If the value matches the pattern, `with` moves on to the next expression. In case there is no match, the non-matching value is returned.
+Much better! `with` will retrieve the value returned by the right-side of `<-` and match it against the pattern on the left side. If the value matches the pattern, `with` moves on to the next expression. In case there is no match, the non-matching value is returned.
 
 In other words, we converted each expression given to `case/2` as a step in `with`. As soon as any of the steps return something that does not match `{:ok, x}`, `with` aborts, and returns the non-matching value.
 
@@ -333,7 +333,7 @@ Every function clause dispatches the appropriate command to the `KV.Registry` se
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
-By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer.Application` to print such error as well:
+By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:
 
 ```elixir
 defp write_line(socket, {:error, :not_found}) do
@@ -341,7 +341,7 @@ defp write_line(socket, {:error, :not_found}) do
 end
 ```
 
-And our server functionality is almost complete! Only tests are missing. This time, we have left tests for last because there are some important considerations to be made.
+Our server functionality is almost complete. Only tests are missing. This time, we have left tests for last because there are some important considerations to be made.
 
 `KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production.
 
@@ -442,7 +442,7 @@ In case the test crashes, you will see a report as follows:
      13:44:10.035 [info]  Application kv exited: :stopped
 ```
 
-With this simple integration test, we start to see why integration tests may be slow. Not only can this particular test not run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
+With this simple integration test, we start to see why integration tests may be slow. Not only this test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
 
 At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test.
 

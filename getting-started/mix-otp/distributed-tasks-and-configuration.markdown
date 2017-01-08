@@ -187,7 +187,7 @@ defmodule KV.Router do
   end
 
   defp no_entry_error(bucket) do
-    raise "could not find entry for #{inspect bucket} in table() #{inspect table()}"
+    raise "could not find entry for #{inspect bucket} in table #{inspect table()}"
   end
 
   @doc """
@@ -238,7 +238,7 @@ And now run tests with:
 $ elixir --sname foo -S mix test
 ```
 
-Our test should successfully pass. Excellent!
+The test should pass.
 
 ## Test filters and tags
 
