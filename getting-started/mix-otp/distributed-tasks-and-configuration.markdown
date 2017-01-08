@@ -84,9 +84,9 @@ iex> pid = Node.spawn_link :"foo@computer-name", fn ->
 ...>   end
 ...> end
 #PID<9014.59.0>
-iex> send pid, {:ping, self}
+iex> send pid, {:ping, self()}
 {:ping, #PID<0.73.0>}
-iex> flush
+iex> flush()
 :pong
 :ok
 ```
@@ -138,7 +138,7 @@ From inside `bar@computer-name`, we can now spawn a task directly on the other n
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, fn ->
 ...>   {:ok, node()}
 ...> end
-%Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
+%Task{owner: #PID<0.122.0>, pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
 iex> Task.await(task)
 {:ok, :"foo@computer-name"}
 ```
@@ -147,7 +147,7 @@ Our first distributed task retrieves the name of the node the task is running on
 
 ```iex
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
-%Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
+%Task{owner: #PID<0.122.0>, pid: #PID<12467.89.0>, ref: #Reference<0.0.0.404>}
 iex> Task.await(task)
 :"foo@computer-name"
 ```
@@ -170,9 +170,9 @@ defmodule KV.Router do
     # Get the first byte of the binary
     first = :binary.first(bucket)
 
-    # Try to find an entry in the table or raise
+    # Try to find an entry in the table() or raise
     entry =
-      Enum.find(table, fn {enum, _node} ->
+      Enum.find(table(), fn {enum, _node} ->
         first in enum
       end) || no_entry_error(bucket)
 
@@ -187,7 +187,7 @@ defmodule KV.Router do
   end
 
   defp no_entry_error(bucket) do
-    raise "could not find entry for #{inspect bucket} in table #{inspect table}"
+    raise "could not find entry for #{inspect bucket} in table() #{inspect table()}"
   end
 
   @doc """

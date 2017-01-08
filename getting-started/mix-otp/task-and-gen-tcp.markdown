@@ -21,7 +21,7 @@ A TCP server, in broad strokes, performs the following steps:
 2. Waits for a client connection on that port and accepts it
 3. Reads the client request and writes a response back
 
-Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
+Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server/application.ex`, and add the following functions:
 
 ```elixir
 require Logger
@@ -64,7 +64,7 @@ defp write_line(line, socket) do
 end
 ```
 
-We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
+We are going to start our server by calling `KVServer.Application.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
 
 `serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
 
@@ -87,7 +87,7 @@ This is pretty much all we need to implement our echo server. Let's give it a tr
 Start an IEx session inside the `kv_server` application with `iex -S mix`. Inside IEx, run:
 
 ```iex
-iex> KVServer.accept(4040)
+iex> KVServer.Application.accept(4040)
 ```
 
 The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](https://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
@@ -112,9 +112,9 @@ My particular telnet client can be exited by typing `ctrl + ]`, typing `quit`, a
 Once you exit the telnet client, you will likely see an error in the IEx session:
 
     ** (MatchError) no match of right hand side value: {:error, :closed}
-        (kv_server) lib/kv_server.ex:41: KVServer.read_line/1
-        (kv_server) lib/kv_server.ex:33: KVServer.serve/1
-        (kv_server) lib/kv_server.ex:27: KVServer.loop_acceptor/1
+        (kv_server) lib/kv_server/application.ex:45: KVServer.Application.read_line/1
+        (kv_server) lib/kv_server/application.ex:37: KVServer.Application.serve/1
+        (kv_server) lib/kv_server/application.ex:30: KVServer.Application.loop_acceptor/1
 
 That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in future revisions of our server.
 
@@ -126,14 +126,14 @@ We have learned about agents, generic servers, and supervisors. They are all mea
 
 [The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
 
-Let's give it a try. Open up `lib/kv_server.ex`, and let's change the supervisor in the `start/2` function to the following:
+Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
 ```elixir
 def start(_type, _args) do
   import Supervisor.Spec
 
   children = [
-    worker(Task, [KVServer, :accept, [4040]])
+    worker(Task, [KVServer.Application, :accept, [4040]])
   ]
 
   opts = [strategy: :one_for_one, name: KVServer.Supervisor]
@@ -141,7 +141,7 @@ def start(_type, _args) do
 end
 ```
 
-With this change, we are saying that we want to run `KVServer.accept(4040)` as a worker. We are hardcoding the port for now, but we will discuss ways in which this could be changed later.
+With this change, we are saying that we want to run `KVServer.Application.accept(4040)` as a worker. We are hardcoding the port for now, but we will discuss ways in which this could be changed later.
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
 
@@ -156,7 +156,7 @@ say me
 say me
 ```
 
-Yes, it works! If you kill the client, causing the whole server to crash, you will see another one starts right away. However, does it *scale*?
+Yes, it works! If you kill the client, the whole server will still crash. But you will see that another one starts right away. However, does it *scale*?
 
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
@@ -238,7 +238,9 @@ Start a new server with `mix run --no-halt` and we can now open up many concurre
 Here is the full echo server implementation, in a single module:
 
 ```elixir
-defmodule KVServer do
+defmodule KVServer.Application do
+  @moduledoc false
+
   use Application
   require Logger
 
