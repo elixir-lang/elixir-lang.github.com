@@ -193,6 +193,29 @@ cleaning up!
 
 Elixir will automatically wrap the function body in a `try` whenever one of `after`, `rescue` or `catch` is specified.
 
+## Else
+
+Providing an `else` block allows for pattern matching on the result of the expression executed.
+
+```iex
+x = 2
+try do
+  1 / x
+rescue
+  ArithmeticError ->
+    :infinity
+else
+  y when y < 1 and y > -1 ->
+    :small
+  _ ->
+    :large
+end
+```
+
+The result is passed to `else` where it can be pattern matched. Please note that the `else` block is also executed if an exception has been caught, the result of the `catch/rescue` block will then be passed in.
+
+Exceptions in the `else` block are not caught. If no pattern inside the `else` block matches an exception will be raised, this exception is not caught by the current `try/catch/rescue/after` block.
+
 ## Variables scope
 
 It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
