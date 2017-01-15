@@ -58,6 +58,24 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   * Chocolatey
     * `cinst elixir`
 
+### Raspberry Pi
+
+If necessary replace "jessie" with the name of your Raspian release.   
+  
+  * The Erlang Solutions repository has a prebuilt package for armhf.  
+    This saves significant time instead of recompiling natively.  
+  
+  * Get Erlang key   
+  
+    * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`    
+    * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`  
+    * Add to keychain: `sudo apt-key add erlang_solutions.asc`   
+     
+  * Install Elixir
+    * Update apt to latest: `sudo apt update`     
+    * Run: `sudo apt install elixir`   
+    * Check: `elixir -v`   
+
 ### Docker
 
 If you are familiar with Docker you can use the offical Docker image to get started quickly with Elixir. 
