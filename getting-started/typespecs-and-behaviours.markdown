@@ -134,5 +134,3 @@ defmodule YAMLParser do
   def extensions, do: ["yml"]
 end
 ```
-
-If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
