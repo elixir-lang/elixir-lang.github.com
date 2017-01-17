@@ -204,7 +204,7 @@ iex> {:ok, pid} = KV.start_link
 {:ok, #PID<0.62.0>}
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
-iex> flush
+iex> flush()
 nil
 :ok
 ```
@@ -216,7 +216,7 @@ iex> send pid, {:put, :hello, :world}
 {:put, :hello, :world}
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
-iex> flush
+iex> flush()
 :world
 :ok
 ```
@@ -230,7 +230,7 @@ iex> Process.register(pid, :kv)
 true
 iex> send :kv, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
-iex> flush
+iex> flush()
 :world
 :ok
 ```
