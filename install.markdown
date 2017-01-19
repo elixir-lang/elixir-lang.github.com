@@ -74,7 +74,6 @@ If necessary replace "jessie" with the name of your Raspian release.
   * Install Elixir
     * Update apt to latest: `sudo apt update`     
     * Run: `sudo apt install elixir`   
-    * Check: `elixir -v`   
 
 ### Docker
 
@@ -145,3 +144,7 @@ On **Unix systems**, you need to [find your shell profile file](https://unix.sta
 ```bash
 export PATH="$PATH:/path/to/elixir/bin"
 ```
+
+## Checking the installed version of Elixir
+
+Once you have Elixir installed, you can check its version by running `elixir --version`.

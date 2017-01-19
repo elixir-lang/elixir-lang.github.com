@@ -39,7 +39,7 @@ In order to build our key-value application, we are going to use three main tool
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
-> Note: this guide requires Elixir v1.2.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
+> Note: this guide requires Elixir v1.2.0 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
 >
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
