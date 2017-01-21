@@ -61,3 +61,12 @@ Choose which version you want documentation for.
 * [IEx](https://hexdocs.pm/iex/{{ site.data.elixir_version.v1_1.version }}/) - interactive shell
 * [Logger](https://hexdocs.pm/logger/{{ site.data.elixir_version.v1_1.version }}/) - built-in Logger
 * [Mix](https://hexdocs.pm/mix/{{ site.data.elixir_version.v1_1.version }}/) - build tool
+
+<h4 id="v1.0">v1.0</h4>
+
+* [Elixir](https://hexdocs.pm/elixir/{{ site.data.elixir_version.v1_0.version }}/) - standard library
+* [EEx](https://hexdocs.pm/eex/{{ site.data.elixir_version.v1_0.version }}/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/{{ site.data.elixir_version.v1_0.version }}/) - unit test library
+* [IEx](https://hexdocs.pm/iex/{{ site.data.elixir_version.v1_0.version }}/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/{{ site.data.elixir_version.v1_0.version }}/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/{{ site.data.elixir_version.v1_0.version }}/) - build tool
