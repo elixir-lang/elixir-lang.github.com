@@ -8,7 +8,13 @@ layout: default
 
 Choose which version you want documentation for.
 
-#### Stable
+{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
+
+<h4 id="stable">Stable
+  {% if stable.docs_zip == true %}
+    <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Docs.zip">download</a>)</small>
+  {% endif %}
+</h4>
 
 * [Elixir](https://hexdocs.pm/elixir/) - standard library
 * [EEx](https://hexdocs.pm/eex/) - templating library
@@ -26,38 +32,19 @@ Choose which version you want documentation for.
 * [Logger](https://hexdocs.pm/logger/master/) - built-in Logger
 * [Mix](https://hexdocs.pm/mix/master/) - build tool
 
-<h4 id="v1.4">v1.4 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.4.0/Docs.zip">download</a>)</small></h4>
+{% for version in site.data.elixir-versions reversed %}
+  {% if version[0] == 'stable' %}
+    {% continue %}
+  {% endif %}
 
-* [Elixir](https://hexdocs.pm/elixir/1.4.0/) - standard library
-* [EEx](https://hexdocs.pm/eex/1.4.0/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/1.4.0/) - unit test library
-* [IEx](https://hexdocs.pm/iex/1.4.0/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/1.4.0/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/1.4.0/) - build tool
+<h4 id="{{ version[1].name }}">{{ version[1].name }}
+  {% if version[1].docs_zip == true %}<small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ version[1].version }}/Docs.zip">download</a>)</small>{% endif %}
+</h4>
 
-<h4 id="v1.3">v1.3 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.3.3/Docs.zip">download</a>)</small></h4>
-
-* [Elixir](https://hexdocs.pm/elixir/1.3.3/) - standard library
-* [EEx](https://hexdocs.pm/eex/1.3.3/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/1.3.3/) - unit test library
-* [IEx](https://hexdocs.pm/iex/1.3.3/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/1.3.3/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/1.3.3/) - build tool
-
-<h4 id="v1.2">v1.2 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.2.6/Docs.zip">download</a>)</small></h4>
-
-* [Elixir](https://hexdocs.pm/elixir/1.2.6/) - standard library
-* [EEx](https://hexdocs.pm/eex/1.2.6/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/1.2.6/) - unit test library
-* [IEx](https://hexdocs.pm/iex/1.2.6/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/1.2.6/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/1.2.6/) - build tool
-
-<h4 id="v1.1">v1.1 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.1.1/Docs.zip">download</a>)</small></h4>
-
-* [Elixir](https://hexdocs.pm/elixir/1.1.1/) - standard library
-* [EEx](https://hexdocs.pm/eex/1.1.1/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/1.1.1/) - unit test library
-* [IEx](https://hexdocs.pm/iex/1.1.1/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/1.1.1/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/1.1.1/) - build tool
+* [Elixir](https://hexdocs.pm/elixir/{{ version[1].version }}/) - standard library
+* [EEx](https://hexdocs.pm/eex/{{ version[1].version }}/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/{{ version[1].version }}/) - unit test library
+* [IEx](https://hexdocs.pm/iex/{{ version[1].version }}/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/{{ version[1].version }}/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/{{ version[1].version }}/) - build tool
+{% endfor %}
