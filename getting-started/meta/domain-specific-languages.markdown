@@ -11,7 +11,7 @@ title: Domain Specific Languages
 
 [Domain Specific Languages (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. You don't need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain Specific Language.
 
-For example, imagine we want to implement a Validator module which provides a data validation domain specific language. We could implement it using data structures, functions or macros. Let's see how those different DSLs would look like:
+For example, imagine we want to implement a Validator module which provides a data validation domain specific language. We could implement it using data structures, functions or macros. Let's see what those different DSLs would look like:
 
 ```elixir
 # 1. data structures
