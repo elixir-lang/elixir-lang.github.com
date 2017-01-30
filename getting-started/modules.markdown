@@ -208,7 +208,7 @@ Any expression is allowed to serve as a default value, but it won't be evaluated
 
 ```elixir
 defmodule DefaultTest do
-  def dowork(x \\ IO.puts "hello") do
+  def dowork(x \\ "hello") do
     x
   end
 end
@@ -216,13 +216,11 @@ end
 
 ```iex
 iex> DefaultTest.dowork
-hello
-:ok
+"hello"
 iex> DefaultTest.dowork 123
 123
 iex> DefaultTest.dowork
-hello
-:ok
+"hello"
 ```
 
 If a function with default values has multiple clauses, it is required to create a function head (without an actual body) for declaring defaults:
