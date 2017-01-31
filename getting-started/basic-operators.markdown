@@ -38,7 +38,7 @@ Providing a non-boolean will raise an exception:
 
 ```iex
 iex> 1 and true
-** (ArgumentError) argument error: 1
+** (BadBooleanError) expected a boolean on left-side of "and", got: 1
 ```
 
 `or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
