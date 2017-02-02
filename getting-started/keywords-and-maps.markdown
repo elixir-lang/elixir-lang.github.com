@@ -214,7 +214,7 @@ iex> users = put_in users[:john].age, 31
 The `update_in/2` macro is similar but allows us to pass a function that controls how the value changes. For example, let's remove "Clojure" from Mary's list of languages:
 
 ```iex
-iex> users = update_in users[:mary].languages, &List.delete(&1, "Clojure")
+iex> users = update_in users[:mary].languages, fn languages -> List.delete(languages, "Clojure") end
 [john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
  mary: %{age: 29, languages: ["Elixir", "F#"], name: "Mary"}]
 ```
