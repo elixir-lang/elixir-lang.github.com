@@ -83,6 +83,7 @@ In the [previous chapter](/getting-started/structs.html), we have learned that a
 iex> Size.size(%{})
 0
 iex> set = %MapSet{} = MapSet.new
+#MapSet<[]>
 iex> Size.size(set)
 ** (Protocol.UndefinedError) protocol Size not implemented for #MapSet<[]>
 ```
