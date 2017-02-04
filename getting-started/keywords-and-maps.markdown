@@ -26,7 +26,7 @@ true
 As you can see above, Elixir supports a special syntax for defining such lists: `[key: value]`. Underneath it maps to the same list of tuples as above. Since keyword lists are lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:
 
 ```iex
-iex> list ++ [c: 3]
+iex> list ++ [{c:, 3}]
 [a: 1, b: 2, c: 3]
 iex> [a: 0] ++ list
 [a: 0, a: 1, b: 2]
