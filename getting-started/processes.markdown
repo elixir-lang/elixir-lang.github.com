@@ -62,7 +62,7 @@ iex> receive do
 
 When a message is sent to a process, the message is stored in the process mailbox. The `receive/1` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports guards and many clauses, such as `case/2`.
 
-The process that sends the message does not block on `send/2`, it just puts the message in the recipient's mailbox and continues. In particular, a process can send messages to itself. In the previous example, when the `receive` block gets executed the sender process may be already dead.
+The process that sends the message does not block on `send/2`, it just puts the message in the recipient's mailbox and continues. In particular, a process can send messages to itself.
 
 If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
 
@@ -89,6 +89,10 @@ iex> receive do
 ...> end
 "Got hello from #PID<0.48.0>"
 ```
+
+The inspect function is used to convert any data structure into a string.
+
+Notice that when the `receive` block gets executed the sender process may be already dead.
 
 While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
 
