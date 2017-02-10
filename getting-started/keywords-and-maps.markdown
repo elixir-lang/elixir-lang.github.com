@@ -147,9 +147,25 @@ iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}
 ```iex
 iex> Map.get(%{:a => 1, 2 => :b}, :a)
 1
+iex> Map.put(%{:a => 1, 2 => :b}, :c, 3)
+%{2 => :b, :a => 1, :c => 3}
 iex> Map.to_list(%{:a => 1, 2 => :b})
 [{2, :b}, {:a, 1}]
 ```
+
+Maps have the following syntax for updating a key's value:
+
+```iex
+iex> map = %{:a => 1, 2 => :b}
+%{2 => :b, :a => 1}
+
+iex> %{map | 2 => "two"}
+%{2 => "two", :a => 1}
+iex> %{map | :c => 3}
+** (KeyError) key :c not found in: %{2 => :b, :a => 1}
+```
+
+The syntax above requires the given key to exist. It cannot be used to add new keys. For example, using it with the `:c` key failed because there is no `:c` in the map.
 
 When all the keys in a map are atoms, you can use the keyword syntax for convenience:
 
@@ -158,7 +174,7 @@ iex> map = %{a: 1, b: 2}
 %{a: 1, b: 2}
 ```
 
-Another interesting property of maps is that they provide their own syntax for updating and accessing atom keys:
+Another interesting property of maps is that they provide their own syntax for accessing atom keys:
 
 ```iex
 iex> map = %{:a => 1, 2 => :b}
@@ -168,14 +184,7 @@ iex> map.a
 1
 iex> map.c
 ** (KeyError) key :c not found in: %{2 => :b, :a => 1}
-
-iex> %{map | :a => 2}
-%{2 => :b, :a => 2}
-iex> %{map | :c => 3}
-** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
-
-Both access and update syntaxes above require the given keys to exist. For example, accessing and updating the `:c` key failed because there is no `:c` in the map.
 
 Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post](http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
