@@ -14,6 +14,14 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 ## Learn Elixir
 
+<h4 class="resource">Learn Elixir for free in your browser</h4>
+
+<a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
+
+Start learning and programming Elixir in your browser with Code School's interactive Try Elixir course. Learn the basics of functional programming with instructor-led videos before taking on challenges where you’ll code directly in the browser, receiving immediate feedback and code validation.
+
+<div class="clear"></div>
+
 <h4 class="resource">Programming Elixir 1.3</h4>
 
 <a class="cover" href="https://pragprog.com/book/elixir13/programming-elixir-1-3" title="Programming Elixir 1.3: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
