@@ -14,7 +14,7 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 ## Learn Elixir
 
-<h4 class="resource">Learn Elixir for free in your browser</h4>
+<h4 class="resource">Try Elixir with Code School</h4>
 
 <a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
 
