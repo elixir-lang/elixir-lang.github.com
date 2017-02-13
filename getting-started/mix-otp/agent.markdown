@@ -101,7 +101,7 @@ defmodule KV.Bucket do
 end
 ```
 
-We are using a map to store our keys and values. The capture operator, `&`, is introduced in [the Getting Started guide](/getting-started/modules.html#function-capturing).
+We are using a map to store our keys and values. The capture operator, `&`, is introduced in [the Getting Started guide](/getting-started/modules-and-functions.html#function-capturing).
 
 Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test`.
 

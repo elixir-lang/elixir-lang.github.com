@@ -1,6 +1,7 @@
 ---
 layout: getting-started
 title: Modules and Functions
+redirect_from: /getting-started/modules.html
 ---
 
 # {{ page.title }}
