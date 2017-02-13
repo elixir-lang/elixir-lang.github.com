@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Modules
+title: Modules and Functions
 ---
 
 # {{ page.title }}
