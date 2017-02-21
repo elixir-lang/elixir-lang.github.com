@@ -73,7 +73,7 @@ Elixir-School is an open and community driven effort inspired by Twitter’s Sca
 
 <div class="clear"></div>
 
-## Interactive Resources
+## Video/Interactive Resources
 
 <h4 class="resource">Try Elixir with Code School</h4>
 
