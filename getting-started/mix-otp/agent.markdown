@@ -164,7 +164,7 @@ Before we move on to the next chapter, let's discuss the client/server dichotomy
 
 ```elixir
 def delete(bucket, key) do
-  Agent.get_and_update(bucket, fn dict->
+  Agent.get_and_update(bucket, fn dict ->
     Map.pop(dict, key)
   end)
 end
