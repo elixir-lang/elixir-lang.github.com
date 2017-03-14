@@ -62,23 +62,23 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 ### Raspberry Pi
 
 If necessary replace "jessie" with the name of your Raspian release.   
-  
+
   * The Erlang Solutions repository has a prebuilt package for armhf.  
     This saves significant time instead of recompiling natively.  
-  
+
   * Get Erlang key   
-  
+
     * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`    
     * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`  
     * Add to keychain: `sudo apt-key add erlang_solutions.asc`   
-     
+
   * Install Elixir
     * Update apt to latest: `sudo apt update`     
     * Run: `sudo apt install elixir`   
 
 ### Docker
 
-If you are familiar with Docker you can use the offical Docker image to get started quickly with Elixir. 
+If you are familiar with Docker you can use the offical Docker image to get started quickly with Elixir.
 
   * Enter interactive mode
     * Run: `docker run -it --rm elixir`
@@ -86,6 +86,15 @@ If you are familiar with Docker you can use the offical Docker image to get star
     * Run: `docker run -it --rm elixir bash`
 
 Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
+
+### Nanobox
+
+For developers using [Nanobox](https://nanobox.io), simply specify the `elixir` engine in your `boxfile.yml` and `nanobox run`.
+
+```yaml
+run.config:
+  engine: elixir
+```
 
 ## Precompiled package
 
