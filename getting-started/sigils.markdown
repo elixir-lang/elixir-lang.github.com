@@ -51,7 +51,7 @@ So far, all examples have used `/` to delimit a regular expression. However sigi
 ~r<hello>
 ```
 
-The reason behind supporting different delimiters is to provide a way to write literals without escaped delimiters. For example, a regular expression with forward slashes like `~r(^https?://)` reads arguably better than `~r/^https?:\/\/`. Similarly, if the regular expression has forward slashes and capturing groups (that use `()`), you may then choose double quotes instead of parentheses.
+The reason behind supporting different delimiters is to provide a way to write literals without escaped delimiters. For example, a regular expression with forward slashes like `~r(^https?://)` reads arguably better than `~r/^https?:\/\//`. Similarly, if the regular expression has forward slashes and capturing groups (that use `()`), you may then choose double quotes instead of parentheses.
 
 ## Strings, char lists, and word lists sigils
 
