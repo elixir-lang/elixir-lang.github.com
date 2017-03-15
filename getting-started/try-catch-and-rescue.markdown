@@ -195,26 +195,26 @@ Elixir will automatically wrap the function body in a `try` whenever one of `aft
 
 ## Else
 
-Providing an `else` block allows for pattern matching on the result of the expression executed.
+If an `else` block is present, it will match on the results of the `try` block whenever the `try` block finishes without a throw or an error.
 
 ```iex
-x = 2
-try do
-  1 / x
-rescue
-  ArithmeticError ->
-    :infinity
-else
-  y when y < 1 and y > -1 ->
-    :small
-  _ ->
-    :large
-end
+iex> x = 2
+2
+iex> try do
+...>   1 / x
+...> rescue
+...>   ArithmeticError ->
+...>     :infinity
+...> else
+...>   y when y < 1 and y > -1 ->
+...>     :small
+...>   _ ->
+...>     :large
+...> end
+:small
 ```
 
-The result is passed to `else` where it can be pattern matched. Please note that the `else` block is also executed if an exception has been caught, the result of the `catch/rescue` block will then be passed in.
-
-Exceptions in the `else` block are not caught. If no pattern inside the `else` block matches an exception will be raised, this exception is not caught by the current `try/catch/rescue/after` block.
+Exceptions in the `else` block are not caught. If no pattern inside the `else` block matches, an exception will be raised; this exception is not caught by the current `try/catch/rescue/after` block.
 
 ## Variables scope
 
