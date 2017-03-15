@@ -78,7 +78,7 @@ If necessary replace "jessie" with the name of your Raspian release.
 
 ### Docker
 
-If you are familiar with Docker you can use the offical Docker image to get started quickly with Elixir.
+If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir.
 
   * Enter interactive mode
     * Run: `docker run -it --rm elixir`
