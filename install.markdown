@@ -78,7 +78,7 @@ If necessary replace "jessie" with the name of your Raspian release.
 
 ### Docker
 
-If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir. 
+If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir.
 
   * Enter interactive mode
     * Run: `docker run -it --rm elixir`
@@ -86,6 +86,15 @@ If you are familiar with Docker you can use the official Docker image to get sta
     * Run: `docker run -it --rm elixir bash`
 
 Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
+
+### Nanobox
+
+For developers using [Nanobox](https://nanobox.io), simply specify the `elixir` engine in your `boxfile.yml` and `nanobox run`.
+
+```yaml
+run.config:
+  engine: elixir
+```
 
 ## Precompiled package
 
