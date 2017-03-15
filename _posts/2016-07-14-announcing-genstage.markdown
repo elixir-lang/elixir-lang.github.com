@@ -200,7 +200,7 @@ One of the use cases for GenStage is to consume data from third-party systems. T
 
 During the Elixir London Meetup, I have live-coded a short example that shows how to use `GenStage` to concurrently process data stored in a PostgreSQL database as a queue:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/aZuY5-2lwW4" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aZuY5-2lwW4" frameborder="0" allowfullscreen title="Elixir London June 2016 w/ José Valim"></iframe>
 
 ### GenStage for event dispatching
 
