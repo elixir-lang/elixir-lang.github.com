@@ -243,7 +243,7 @@ test "removes bucket on crash", %{registry: registry} do
   ref = Process.monitor(bucket)
   Process.exit(bucket, :shutdown)
 
-  # Wait until the bucket is dead  
+  # Wait until the bucket is dead
   assert_receive {:DOWN, ^ref, _, _, _}
 
   assert KV.Registry.lookup(registry, "shopping") == :error
