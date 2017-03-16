@@ -382,7 +382,7 @@ A GUI should pop-up containing all sorts of information about our system, from g
 
 In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
 
-<img src="/images/contents/kv-observer.png" alt="KV Observer" width="640px"/>
+<img src="/images/contents/kv-observer.png" alt="KV Observer" width="640"/>
 
 Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:
 
