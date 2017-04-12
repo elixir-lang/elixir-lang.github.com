@@ -131,7 +131,7 @@ end
 
 We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself.
 
-Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `{:ok, bucket: bucket}` from the callback, ExUnit will merge the second element of the tuple (a dictionary) into the test context. The test context is a map which we can then match in the test definition, providing access to these values inside the block:
+Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `{:ok, bucket: bucket}` from the callback, ExUnit will merge the second element of the tuple (a keyword list) into the test context. The test context is a map which we can then match in the test definition, providing access to these values inside the block:
 
 ```elixir
 test "stores values by key", %{bucket: bucket} do
