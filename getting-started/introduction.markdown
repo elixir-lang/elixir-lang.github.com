@@ -36,7 +36,7 @@ Open up `iex` and type the following expressions:
 ```iex
 Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-Interactive Elixir (1.3.4) - press Ctrl+C to exit (type h() ENTER for help)
+Interactive Elixir (1.4.0) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)> 40 + 2
 42
 iex(2)> "hello" <> " world"
