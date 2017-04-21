@@ -32,7 +32,7 @@ iex> x = 1
 1
 iex> case 10 do
 ...>   ^x -> "Won't match"
-...>   _  -> "Will match"
+...>   _ -> "Will match"
 ...> end
 "Will match"
 ```
