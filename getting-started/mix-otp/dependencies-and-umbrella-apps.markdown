@@ -57,6 +57,14 @@ def deps do
 end
 ```
 
+You can supply a branch name to use a branch other than the master branch:
+
+```elixir
+def deps do
+  [{:plug, git: "git://github.com/elixir-lang/plug.git", branch: "my-branch"}]
+end
+```
+
 You will notice that when you add a dependency to your project, Mix generates a `mix.lock` file that guarantees *repeatable builds*. The lock file must be checked in to your version control system, to guarantee that everyone who uses the project will use the same dependency versions as you.
 
 Mix provides many tasks for working with dependencies, which can be seen in `mix help`:
