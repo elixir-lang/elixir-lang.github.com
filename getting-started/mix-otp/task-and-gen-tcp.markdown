@@ -218,6 +218,15 @@ def start(_type, _args) do
 end
 ```
 
+The port is still hardcoded when the `KVServer` is started. This could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
+
+```elixir
+port = System.get_env("PORT") || raise "missing $PORT environment variable"
+
+# ...
+worker(Task, [KVServer, :accept, [port]])
+```
+
 We'll now start a [`Task.Supervisor`](https://hexdocs.pm/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
 
 Now we need to change `loop_acceptor/1` to use `Task.Supervisor` to serve each request:
