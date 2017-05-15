@@ -90,7 +90,7 @@ iex> receive do
 "Got hello from #PID<0.48.0>"
 ```
 
-The inspect function is used to convert a data structure's internal representation into a string, typically for printing. Notice that when the `receive` block gets executed the sender process we have spawned may already be dead, as its only instruction was to send a message.
+The `inspect` function is used to convert a data structure's internal representation into a string, typically for printing. Notice that when the `receive` block gets executed the sender process we have spawned may already be dead, as its only instruction was to send a message.
 
 While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
 
