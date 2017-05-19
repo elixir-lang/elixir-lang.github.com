@@ -13,7 +13,7 @@ In order to facilitate software reuse, Elixir provides three directives (`alias`
 # Alias the module so it can be called as Bar instead of Foo.Bar
 alias Foo.Bar, as: Bar
 
-# Ensure the module is compiled and available (usually for macros)
+# Require the module in order to use its macros
 require Foo
 
 # Import functions from Foo so they can be called without the `Foo.` prefix
@@ -73,9 +73,9 @@ In the example above, since we are invoking `alias` inside the function `plus/2`
 
 ## require
 
-Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
+Elixir provides macros as a mechanism for meta-programming (writing code that generates code). Macros are expanded at compile time.
 
-Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the `require` directive:
+Public functions in modules are globally available, but in order to use macros, you need to opt-in by requiring the module they are defined in.
 
 ```iex
 iex> Integer.is_odd(3)
@@ -88,7 +88,7 @@ true
 
 In Elixir, `Integer.is_odd/1` is defined as a macro so that it can be used as a guard. This means that, in order to invoke `Integer.is_odd/1`, we need to first require the `Integer` module.
 
-In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
+Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
 ## import
 
@@ -132,7 +132,7 @@ Note that `import`ing a module automatically `require`s it.
 
 ## use
 
-Although not a directive, `use` is a macro tightly related to `require` that allows you to use a module in the current context. The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
+The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
 
 For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
 
