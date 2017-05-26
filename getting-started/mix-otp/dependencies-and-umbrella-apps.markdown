@@ -281,6 +281,6 @@ Umbrella applications can also be used as a stepping stone for eventually extrac
 
 Developers may also use umbrella applications to break large business domains apart. The caution here is to make sure the domains don't depended on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve. Overall, umbrella applications do not magically improve the design of your code. They can, however, help enforce boundaries when the code is well designed.
 
-Finally, keep in mind that applications in an umbrella project all share the same configurations. Therefore umbrella projects must be used to host applications that run together. Do not use umbrella projects to group applications that are meant to execute separately, as in those cases you likely want to specify different configurations to each of them, which is impossible in umbrellas.
+Finally, keep in mind that applications in an umbrella project all share the same configurations and dependencies. If two applications in your umbrella need to configure the same dependency in drastically different ways or even use different versions, such is impossible in umbrellas, and those apps likely need to be moved to separate projects.
 
 With our umbrella project up and running, it is time to start writing our server.
