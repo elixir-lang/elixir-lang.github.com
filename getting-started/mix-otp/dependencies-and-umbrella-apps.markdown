@@ -94,7 +94,7 @@ Using git dependencies for internal dependencies is somewhat discouraged in Elix
 
 However, if you push every application as a separate project to a git repository, your projects may become very hard to maintain as you will spend a lot of time managing those git repositories rather than writing your code.
 
-For this reason, Mix supports "umbrella projects." Umbrella projects allow you to create one project that hosts many applications while keeping all of them in a single source code repository. That is exactly the style we are going to explore in the next sections.
+For this reason, Mix supports "umbrella projects". Umbrella projects are used to build applications that run together and have clear boundaries between them in a single repository. That is exactly the style we are going to explore in the next sections.
 
 Let's create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
@@ -129,7 +129,6 @@ defmodule KvUmbrella.Mixfile do
 
   def project do
     [apps_path: "apps",
-     build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
   end
@@ -163,7 +162,6 @@ defmodule KVServer.Mixfile do
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
      elixir: "~> 1.4",
-     build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
   end
@@ -275,15 +273,14 @@ Remember that umbrella projects are a convenience to help you organize and manag
 
 ## Summing up
 
-In this chapter we have learned more about Mix dependencies and umbrella projects. We have decided to build an umbrella project because we consider `kv` and `kv_server` to be internal dependencies that matter only in the context of this project.
+In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed, tested and deployed.
 
-In the future, you are going to write applications and you will notice they can be extracted into a concise unit that can be used by different projects. In such cases, using Git or Hex dependencies is the way to go.
+When using umbrella applications, it is important to have a clear boundary between them. Our upcoming `kv_server` must only access public APIs defined in `kv`. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.
 
-Here are a couple questions you can ask yourself when working with dependencies. Start with: does this application make sense outside this project?
+Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as an umbrella application, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, extraction should be straight-forward as long as the web application respects the push notification API boundary. Regardless if it happens in 2 weeks or in 3 years from development. Once extracted, the push notifications system can be moved to a private git repository or a public hex.pm package.
 
-* If no, use an umbrella project with umbrella children.
-* If yes, can this project be shared outside your company / organization?
-  * If no, use a private git repository.
-  * If yes, push your code to a git repository and do frequent releases using [Hex](https://hex.pm).
+Developers may also use umbrella applications to break large business domains apart. The caution here is to make sure the domains don't depended on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve. Overall, umbrella applications do not magically improve the design of your code. They can, however, help enforce boundaries when the code is well designed.
+
+Finally, keep in mind that applications in an umbrella project all share the same configurations. Therefore umbrella projects must be used to host applications that run together. Do not use umbrella projects to group applications that are meant to execute separately, as in those cases you likely want to specify different configurations to each of them, which is impossible in umbrellas.
 
 With our umbrella project up and running, it is time to start writing our server.

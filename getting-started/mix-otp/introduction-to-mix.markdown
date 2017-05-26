@@ -96,7 +96,6 @@ defmodule KV.Mixfile do
     [app: :kv,
      version: "0.1.0",
      elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
   end
@@ -229,12 +228,11 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
 
-Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in both `:build_embedded` and `:start_permanent` options:
+Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
 
 ```elixir
 def project do
   [...,
-   build_embedded: Mix.env == :prod,
    start_permanent: Mix.env == :prod,
    ...]
 end
@@ -255,6 +253,8 @@ Or on Windows:
 ```batch
 > set "MIX_ENV=prod" && mix compile
 ```
+
+> Mix is a build tool and, as such, it is not always expected to be available in production, especially if your team uses explicit build steps. Therefore, it is recommended to access `Mix.env` only in configuration files and inside `mix.exs`, never in your application code (`lib`).
 
 ## Exploring
 
