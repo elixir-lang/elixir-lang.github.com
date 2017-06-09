@@ -221,7 +221,7 @@ end
 The port is still hardcoded when the `KVServer` is started. This could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
 
 ```elixir
-port = System.get_env("PORT") || raise "missing $PORT environment variable"
+port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
 
 # ...
 worker(Task, [KVServer, :accept, [port]])
