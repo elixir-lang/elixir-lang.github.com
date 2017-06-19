@@ -65,6 +65,14 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <div class="clear"></div>
 
+<h4 class="resource">Elixir School</h4>
+
+<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
+
+Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
+
+<div class="clear"></div>
+
 <h4 class="resource">Elixir Flashcards</h4>
 
 <a class="cover" href="https://elixircards.co.uk/" title="Elixir Flashcards"><img src="/images/learning/flashcards_army.jpg" alt="Elixir Flashcards" width="190" /></a>
@@ -75,14 +83,6 @@ Flashcards are a great way to highlight knowledge gaps, identify misconceptions 
 When used in groups or teams, flashcards can help spark interesting discussions, and help bring people together to learn in a fun way by playing games.
 
 Combined with books, tutorials and screencasts, using flashcards is the killer combination to master Elixir.
-
-<div class="clear"></div>
-
-<h4 class="resource">Elixir School</h4>
-
-<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
-
-Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
 
 <div class="clear"></div>
 
