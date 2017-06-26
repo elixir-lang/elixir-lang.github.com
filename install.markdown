@@ -100,6 +100,8 @@ run.config:
 
 Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Precompiled.zip).
 
+The Precompiled.zip package is compiled for the oldest supported OTP version to ensure maximum compatability for all users. Packages compiled for all supported OTP versions are also provided at a URL following this format: https://repo.hex.pm/builds/elixir/v{ELIXIR_VERSION}-otp-{OTP_MAJOR_VERSION}.zip, for example: https://repo.hex.pm/builds/elixir/v1.4.5-otp-20.zip. An Elixir compiled for the latest supported OTP version should be used to make all features available.
+
 Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
 ## Compiling with version managers
