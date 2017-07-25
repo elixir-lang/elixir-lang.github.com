@@ -8,11 +8,11 @@ excerpt: Elixir v1.5 integrates with Erlang/OTP 20 and bring changes that improv
 
 Elixir v1.5 includes new features, enhancements and bug fixes. While [Elixir v1.4](/blog/2017/01/05/elixir-v1-4-0-released/) focused on tools for concurrency and scalability, Elixir v1.5 brings many improvements to the developer experience and quality of life. As we will see, many of those are powered by the latest Erlang/OTP 20. This is also the last Elixir release that supports Erlang/OTP 18.
 
-Note: this announcement contains [asciicinema](https://asciinema.org) snippets. You may need to enable 3rd-party javascript on this site in order to see them. If JavaScript is disabled, noscript tags with the proper links will be shown.
+Note: this announcement contains [asciicinema](https://asciinema.org) snippets. You may need to enable 3rd-party JavaScript on this site in order to see them. If JavaScript is disabled, noscript tags with the proper links will be shown.
 
 ## UTF-8 atoms, function names and variables
 
-Elixir v1.5 supports non-quoted atoms and variables to be in UTF-8 when using Erlang/OTP 20+. For example:
+Elixir v1.5 supports non-quoted atoms and variables to be in UTF-8 when using Erlang/OTP 20. For example:
 
 ```elixir
 test "こんにちは世界" do
@@ -74,7 +74,7 @@ In the example above, an argument that did not match or guard that did not evalu
 
 Since blaming an exception can be expensive, `Exception.blame/3` must be used exclusively in debugging situations. It is not advised to apply it to production components such as a Logger. This feature has been integrated into the compiler, the command line, ExUnit and IEx.
 
-This feature also requires Erlang/OTP 20+.
+This feature also requires Erlang/OTP 20.
 
 ## Streamlined child specs
 
@@ -173,4 +173,6 @@ Overall, using `@impl` has the following advantages:
 
 ## Summing up
 
-The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.5.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.5.0). There are many other exciting changes, such as compiler enhancements that reduces compilation times by 10%-15% on averages. When taken into account with the compiler improvements in Erlang/OTP 20 itself, some applications have seen gains up to 30% in compilation times.
+
+Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
