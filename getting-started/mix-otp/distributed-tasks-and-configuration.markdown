@@ -122,7 +122,7 @@ res + Task.await(task)
 Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `lib/kv/supervisor.ex` from the `:kv` application. Let's add a task supervisor as the last child of the tree:
 
 ```elixir
-supervisor(Task.Supervisor, [[name: KV.RouterTasks]]),
+{Task.Supervisor, name: KV.RouterTasks},
 ```
 
 Now, let's start two named nodes again, but inside the `:kv` application:
@@ -377,4 +377,4 @@ Throughout the guide, we have built a very simple distributed key-value store as
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/riak/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
 
-There are many more lessons to learn and we hope you had fun so far!
+Happy coding!

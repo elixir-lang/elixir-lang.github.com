@@ -23,7 +23,9 @@ GET shopping milk
 OK
 ```
 
-Since agents are processes, each bucket has a process identifier (pid) but it doesn't have a name. We have learned about the name registry [in the Process chapter](/getting-started/processes.html) and you could be inclined to solve this problem by using such registry. For example, we could create a bucket as:
+In the session above we interacted with the "shopping" bucket.
+
+Since agents are processes, each bucket has a process identifier (pid), but buckets do not have a name. Back [in the Process chapter](/getting-started/processes.html), we have learned that we can register processes in Elixir by giving them atom names:
 
 ```iex
 iex> Agent.start_link(fn -> %{} end, name: :shopping)
@@ -34,13 +36,13 @@ iex> KV.Bucket.get(:shopping, "milk")
 1
 ```
 
-However, this is a terrible idea! Process names in Elixir must be atoms, which means we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory!
+However, naming dynamic processes with atoms is a terrible idea! If we use atoms, we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory!
 
 In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
 
-Instead of abusing the name registry facility, we will create our own *registry process* that holds a map that associates the bucket name to the bucket process.
+Instead of abusing the built-in name facility, we will create our own *process registry* that associates the bucket name to the bucket process.
 
-The registry needs to guarantee that the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to *monitor* each bucket.
+The registry needs to guarantee that it is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must notice this change and avoid serving stale entries. In Elixir, we say the registry needs to *monitor* each bucket.
 
 We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServer provides industrial strength functionality for building servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
@@ -59,8 +61,8 @@ defmodule KV.Registry do
   @doc """
   Starts the registry.
   """
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, [])
+  def start_link(opts) do
+    GenServer.start_link(__MODULE__, :ok, opts)
   end
 
   @doc """
@@ -93,20 +95,20 @@ defmodule KV.Registry do
     if Map.has_key?(names, name) do
       {:noreply, names}
     else
-      {:ok, bucket} = KV.Bucket.start_link
+      {:ok, bucket} = KV.Bucket.start_link([])
       {:noreply, Map.put(names, name, bucket)}
     end
   end
 end
 ```
 
-The first function is `start_link/3`, which starts a new GenServer passing three arguments:
+The first function is `start_link/1`, which starts a new GenServer passing three arguments:
 
 1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
 
 2. The initialization arguments, in this case the atom `:ok`
 
-3. A list of options which can be used to specify things like the name of the server. For now, we pass an empty list
+3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1`, which defaults to an empty list. We will customize it later on
 
 There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
@@ -133,8 +135,8 @@ defmodule KV.RegistryTest do
   use ExUnit.Case, async: true
 
   setup do
-    {:ok, registry} = KV.Registry.start_link
-    {:ok, registry: registry}
+    {:ok, registry} = start_supervised KV.Registry
+    %{registry: registry}
   end
 
   test "spawns buckets", %{registry: registry} do
@@ -151,7 +153,7 @@ end
 
 Our test should pass right out of the box!
 
-We don't need to explicitly shut down the registry because it will receive a `:shutdown` signal when our test finishes. While this solution is ok for tests, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
+Once again, ExUnit will take care of shutting down the registry after every test since we used `start_supervised` to start it. If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
 ## Client API
@@ -179,12 +181,12 @@ end
 
 The test above will fail on the last assertion as the bucket name remains in the registry even after we stop the bucket process.
 
-In order to fix this bug, we need the registry to monitor every bucket it spawns. Once we set up a monitor, the registry will receive a notification every time a bucket exits, allowing us to clean the dictionary up.
+In order to fix this bug, we need the registry to monitor every bucket it spawns. Once we set up a monitor, the registry will receive a notification every time a bucket process exits, allowing us to clean the registry up.
 
 Let's first play with monitors by starting a new console with `iex -S mix`:
 
 ```iex
-iex> {:ok, pid} = KV.Bucket.start_link
+iex> {:ok, pid} = KV.Bucket.start_link([])
 {:ok, #PID<0.66.0>}
 iex> Process.monitor(pid)
 #Reference<0.0.0.551>
@@ -215,7 +217,7 @@ def handle_cast({:create, name}, {names, refs}) do
   if Map.has_key?(names, name) do
     {:noreply, {names, refs}}
   else
-    {:ok, pid} = KV.Bucket.start_link
+    {:ok, pid} = KV.Bucket.start_link([])
     ref = Process.monitor(pid)
     refs = Map.put(refs, ref, name)
     names = Map.put(names, name, pid)
@@ -248,7 +250,7 @@ So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handl
 
 3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are such an example of this.
 
-Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could lead our registry to crash, because no clause would match. We don't need to worry about such cases for `handle_call/3` and `handle_cast/2` though. Calls and casts are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
+Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could cause our registry to crash, because no clause would match. We don't need to worry about such cases for `handle_call/3` and `handle_cast/2` though. Calls and casts are only done via the `GenServer` API, so an unknown message is quite likely a developer mistake.
 
 To help developers remember the differences between call, cast and info, the supported return values and more, [Benjamin Tan Wei Hao](http://benjamintan.io) has created an excellent [GenServer cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/GenServer_CheatSheet.pdf).
 
@@ -261,7 +263,7 @@ Links are bi-directional. If you link two processes and one of them crashes, the
 Returning to our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link
+{:ok, pid} = KV.Bucket.start_link([])
 ref = Process.monitor(pid)
 ```
 

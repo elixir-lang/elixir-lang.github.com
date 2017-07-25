@@ -129,19 +129,23 @@ We have learned about agents, generic servers, and supervisors. They are all mea
 Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
 ```elixir
-def start(_type, _args) do
-  import Supervisor.Spec
+  def start(_type, _args) do
+    children = [
+      {Task, fn -> KVServer.accept(4040) end}
+    ]
 
-  children = [
-    worker(Task, [KVServer, :accept, [4040]])
-  ]
-
-  opts = [strategy: :one_for_one, name: KVServer.Supervisor]
-  Supervisor.start_link(children, opts)
-end
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
 ```
 
-With this change, we are saying that we want to run `KVServer.accept(4040)` as a worker. We are hardcoding the port for now, but we will discuss ways in which this could be changed later.
+With this change, we are saying that we want to run `KVServer.accept(4040)` as a task. We are hardcoding the port for now but this could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
+
+```elixir
+port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+# ...
+{Task, fn -> KVServer.accept(port) end}
+```
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
 
@@ -196,7 +200,7 @@ end
 
 We are starting a linked Task directly from the acceptor process. But we've already made this mistake once. Do you remember?
 
-This is similar to the mistake we made when we called `KV.Bucket.start_link/0` straight from the registry. That meant a failure in any bucket would bring the whole registry down.
+This is similar to the mistake we made when we called `KV.Bucket.start_link/1` straight from the registry. That meant a failure in any bucket would bring the whole registry down.
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
@@ -205,26 +209,15 @@ We fixed the issue for the registry by using a simple one for one supervisor. We
 Let's change `start/2` once again, to add a supervisor to our tree:
 
 ```elixir
-def start(_type, _args) do
-  import Supervisor.Spec
+  def start(_type, _args) do
+    children = [
+      {Task.Supervisor, name: KVServer.TaskSupervisor},
+      {Task, fn -> KVServer.accept(4040) end}
+    ]
 
-  children = [
-    supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
-    worker(Task, [KVServer, :accept, [4040]])
-  ]
-
-  opts = [strategy: :one_for_one, name: KVServer.Supervisor]
-  Supervisor.start_link(children, opts)
-end
-```
-
-The port is still hardcoded when the `KVServer` is started. This could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
-
-```elixir
-port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
-
-# ...
-worker(Task, [KVServer, :accept, [port]])
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
 ```
 
 We'll now start a [`Task.Supervisor`](https://hexdocs.pm/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
@@ -289,5 +282,23 @@ end
 Since we have changed the supervisor specification, we need to ask: is our supervision strategy still correct?
 
 In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too.
+
+However, there is still one concern left, which are the restart strategies. Tasks, by default, have the `:restart` value set to `:temporary`, which means they are not restarted. This is an excellent default for the connections started via the `Task.Supervisor`, as it makes no sense to restart a failed connection, but it is a bad choice for the acceptor. If the acceptor crashes, we want to bring the acceptor up and running again.
+
+We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `init/1` in `KVServer.Application` once more:
+
+```elixir
+  def start(_type, _args) do
+    children = [
+      {Task.Supervisor, name: KVServer.TaskSupervisor},
+      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end}, restart: :permanent)
+    ]
+
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+```
+
+`Supervisor.child_spec/2` is capable of building a child specification from a given module and/or tuple, and it also accepts values that override the underlying child specification. Now we have an always running acceptor that starts temporary task processes under an always running task supervisor.
 
 In the next chapter we will start parsing the client requests and sending responses, finishing our server.

@@ -41,7 +41,7 @@ iex> :ets.lookup(:buckets_registry, "foo")
 [{"foo", #PID<0.41.0>}]
 ```
 
-Let's change the `KV.Registry` to use ETS tables. Since our registry requires a name as argument, we are going to name the ETS table with the same name as the registry. ETS names and process names are stored in different locations, so there is no chance of conflicts.
+Let's change the `KV.Registry` to use ETS tables. The first change is to modify our registry to require a name argument, we will use it to name the ETS table and the registry process itself. ETS names and process names are stored in different locations, so there is no chance of conflicts.
 
 Open up `lib/kv/registry.ex`, and let's change its implementation. We've added comments to the source code to highlight the changes we've made:
 
@@ -52,11 +52,14 @@ defmodule KV.Registry do
   ## Client API
 
   @doc """
-  Starts the registry with the given `name`.
+  Starts the registry with the given options.
+
+  `:name` is always required.
   """
-  def start_link(name) do
+  def start_link(opts) do
     # 1. Pass the name to GenServer's init
-    GenServer.start_link(__MODULE__, name, name: name)
+    server = Keyword.fetch!(opts, :name)
+    GenServer.start_link(__MODULE__, server, opts)
   end
 
   @doc """
@@ -64,7 +67,7 @@ defmodule KV.Registry do
 
   Returns `{:ok, pid}` if the bucket exists, `:error` otherwise.
   """
-  def lookup(server, name) when is_atom(server) do
+  def lookup(server, name) do
     # 2. Lookup is now done directly in ETS, without accessing the server
     case :ets.lookup(server, name) do
       [{^name, pid}] -> {:ok, pid}
@@ -77,13 +80,6 @@ defmodule KV.Registry do
   """
   def create(server, name) do
     GenServer.cast(server, {:create, name})
-  end
-
-  @doc """
-  Stops the registry.
-  """
-  def stop(server) do
-    GenServer.stop(server)
   end
 
   ## Server callbacks
@@ -103,7 +99,7 @@ defmodule KV.Registry do
       {:ok, _pid} ->
         {:noreply, {names, refs}}
       :error ->
-        {:ok, pid} = KV.Bucket.Supervisor.start_bucket
+        {:ok, pid} = KV.BucketSupervisor.start_bucket()
         ref = Process.monitor(pid)
         refs = Map.put(refs, ref, name)
         :ets.insert(names, {name, pid})
@@ -128,13 +124,13 @@ Notice that before our changes `KV.Registry.lookup/2` sent requests to the serve
 
 In order for the cache mechanism to work, the created ETS table needs to have access `:protected` (the default), so all clients can read from it, while only the `KV.Registry` process writes to it. We have also set `read_concurrency: true` when starting the table, optimizing the table for the common scenario of concurrent read operations.
 
-The changes we have performed above have broken our tests because they were using the pid of the registry process for all operations and now the registry lookup requires the ETS table name. However, since the ETS table has the same name as the registry process, it is an easy fix. Change the setup function in `test/kv/registry_test.exs` to the following:
+The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:
 
 ```elixir
-setup context do
-  {:ok, _} = KV.Registry.start_link(context.test)
-  {:ok, registry: context.test}
-end
+  setup context do
+    {:ok, _} = start_supervised({KV.Registry, name: context.test})
+    %{registry: context.test}
+  end
 ```
 
 Once we change `setup`, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the "spawns buckets" test:
@@ -166,7 +162,7 @@ The reason those failures are happening is because, for didactic purposes, we ha
 
 ## Race conditions?
 
-Developing in Elixir does not make your code free of race conditions. However, Elixir's simple abstractions where nothing is shared by default make it easier to spot a race condition's root cause.
+Developing in Elixir does not make your code free of race conditions. However, Elixir's abstractions where nothing is shared by default make it easier to spot a race condition's root cause.
 
 What is happening in our tests is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we were expecting to happen:
 
@@ -194,7 +190,7 @@ def handle_call({:create, name}, _from, {names, refs}) do
     {:ok, pid} ->
       {:reply, pid, {names, refs}}
     :error ->
-      {:ok, pid} = KV.Bucket.Supervisor.start_bucket
+      {:ok, pid} = KV.BucketSupervisor.start_bucket()
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       :ets.insert(names, {name, pid})
@@ -203,7 +199,7 @@ def handle_call({:create, name}, _from, {names, refs}) do
 end
 ```
 
-We changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure (you block until you get a reply). Using `cast/2` when not necessary can also be considered a premature optimization.
+We changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure - you block until you get a reply. Using `cast/2` when not necessary can also be considered a premature optimization.
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 
@@ -232,35 +228,33 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
 
 
 ```elixir
-test "removes buckets on exit", %{registry: registry} do
-  KV.Registry.create(registry, "shopping")
-  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-  Agent.stop(bucket)
+  test "removes buckets on exit", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+    Agent.stop(bucket)
 
-  # Do a call to ensure the registry processed the DOWN message
-  _ = KV.Registry.create(registry, "bogus")
-  assert KV.Registry.lookup(registry, "shopping") == :error
-end
+    # Do a call to ensure the registry processed the DOWN message
+    _ = KV.Registry.create(registry, "bogus")
+    assert KV.Registry.lookup(registry, "shopping") == :error
+  end
 
-test "removes bucket on crash", %{registry: registry} do
-  KV.Registry.create(registry, "shopping")
-  {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+  test "removes bucket on crash", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-  # Kill the bucket and wait for the notification
-  Process.exit(bucket, :shutdown)
+    # Stop the bucket with non-normal reason
+    Agent.stop(bucket, :shutdown)
 
-  # Wait until the bucket is dead
-  ref = Process.monitor(bucket)
-  assert_receive {:DOWN, ^ref, _, _, _}
-
-  # Do a call to ensure the registry processed the DOWN message
-  _ = KV.Registry.create(registry, "bogus")
-  assert KV.Registry.lookup(registry, "shopping") == :error
-end
+    # Do a call to ensure the registry processed the DOWN message
+    _ = KV.Registry.create(registry, "bogus")
+    assert KV.Registry.lookup(registry, "shopping") == :error
+  end
 ```
 
 Our tests should now (always) pass!
 
 This concludes our optimization chapter. We have used ETS as a cache mechanism where reads can happen from any processes but writes are still serialized through a single process. More importantly, we have also learned that once data can be read asynchronously, we need to be aware of the race conditions it might introduce.
+
+In practice, if you find yourself in a position where you need a process registry for dynamic processes, you should use [the `Registry` module](https://hexdocs.pm/elixir/Agent.html) provided as part of Elixir. It provides functionality similar to the one we have built using a GenServer + `:ets` while also being able to perform both writes and reads concurrently. [It has been benchmarked to scale across all cores even on machines with 40 cores](https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/).
 
 Next let's discuss external and internal dependencies and how Mix helps us manage large codebases.

@@ -15,16 +15,15 @@ If you have skipped the Getting Started guide or read it long ago, be sure to re
 
 ## The trouble with state
 
-Elixir is an immutable language where nothing is shared by default. If we want to provide state, where we create buckets putting and reading values from multiple places, we have two main options in Elixir:
+Elixir is an immutable language where nothing is shared by default. If we want to provide buckets, which can be read and modified from multiple places, we have two main options in Elixir:
 
 * Processes
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
 
-We have already talked about processes, while <abbr title="Erlang Term Storage">ETS</abbr> is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
+We covered processes in the Getting Started guide. <abbr title="Erlang Term Storage">ETS</abbr> is a new topic that will explore on later chapters. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
 
 * [Agent](https://hexdocs.pm/elixir/Agent.html) - Simple wrappers around state.
 * [GenServer](https://hexdocs.pm/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
-* [GenEvent](https://hexdocs.pm/elixir/GenEvent.html) - "Generic event" managers that allow publishing events to multiple handlers.
 * [Task](https://hexdocs.pm/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.
 
 We will explore most of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
@@ -59,7 +58,7 @@ defmodule KV.BucketTest do
   use ExUnit.Case, async: true
 
   test "stores values by key" do
-    {:ok, bucket} = KV.Bucket.start_link
+    {:ok, bucket} = start_supervised KV.Bucket
     assert KV.Bucket.get(bucket, "milk") == nil
 
     KV.Bucket.put(bucket, "milk", 3)
@@ -68,20 +67,28 @@ defmodule KV.BucketTest do
 end
 ```
 
-Our first test starts a new `KV.Bucket` and performs some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes. This will always work unless the process is named.
+Our first test starts a new `KV.Bucket` using the `start_supervised` function and performs some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because we used `start_supervised/1` and that takes care of automatically terminating the processes under test when the test finishes.
 
-Also note the `async: true` option passed to `ExUnit.Case`. This option makes the test case run in parallel with other `:async` test cases by using multiple cores in our machine. This is extremely useful to speed up our test suite. However, `:async` must *only* be set if the test case does not rely on or change any global values. For example, if the test requires writing to the filesystem, registering processes, or accessing a database, keep it synchronous (omit the `:async` option) to avoid race conditions between tests.
+Also note the `async: true` option passed to `ExUnit.Case`. This option makes the test case run in parallel with other `:async` test cases by using multiple cores in our machine. This is extremely useful to speed up our test suite. However, `:async` must *only* be set if the test case does not rely on or change any global values. For example, if the test requires writing to the filesystem or access a database, keep it synchronous (omit the `:async` option) to avoid race conditions between tests.
 
-Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested.
+Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested:
+
+```
+** (ArgumentError) The module KV.Bucket was given as a child to a supervisor but it does not implement child_spec/1
+```
+
+Since the module has not yet been defined, the `child_spec/1` does not yet exist.
 
 In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
 
 ```elixir
 defmodule KV.Bucket do
+  use Agent
+
   @doc """
   Starts a new bucket.
   """
-  def start_link do
+  def start_link(_opts) do
     Agent.start_link(fn -> %{} end)
   end
 
@@ -101,13 +108,17 @@ defmodule KV.Bucket do
 end
 ```
 
-We are using a map to store our keys and values. The capture operator, `&`, is introduced in [the Getting Started guide](/getting-started/modules-and-functions.html#function-capturing).
+The first step in our implementation is to call `use Agent`. By doing so, it will define a `child_spec/1` function containing the exact steps to start our process.
+
+Then we define a `start_link/1` function, which will effectively start the agent. The `start_link/1` function always receives a list of options, but we don't plan on using it right now. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent initial state.
+
+We are keeping a map inside the agent to store our keys and values. Getting and putting values on the map is done with the Agent API  and the capture operator `&`, introduced in [the Getting Started guide](/getting-started/modules-and-functions.html#function-capturing).
 
 Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test`.
 
 ## Test setup with ExUnit callbacks
 
-Before moving on and adding more features to `KV.Bucket`, let's talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket to be started during setup and stopped after the test. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.
+Before moving on and adding more features to `KV.Bucket`, let's talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket agent to be up and running. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.
 
 Let's rewrite the test case to use callbacks:
 
@@ -116,8 +127,8 @@ defmodule KV.BucketTest do
   use ExUnit.Case, async: true
 
   setup do
-    {:ok, bucket} = KV.Bucket.start_link
-    {:ok, bucket: bucket}
+    {:ok, bucket} = start_supervised(KV.Bucket)
+    %{bucket: bucket}
   end
 
   test "stores values by key", %{bucket: bucket} do
@@ -131,7 +142,7 @@ end
 
 We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself.
 
-Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `{:ok, bucket: bucket}` from the callback, ExUnit will merge the second element of the tuple (a keyword list) into the test context. The test context is a map which we can then match in the test definition, providing access to these values inside the block:
+Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `%{bucket: bucket}` from the callback, ExUnit will merge this map into the test context. Since the test context is a map itself, we can pattern match the bucket out of it, providing access to the bucket inside the test:
 
 ```elixir
 test "stores values by key", %{bucket: bucket} do
@@ -186,4 +197,4 @@ end
 
 When a long action is performed on the server, all other requests to that particular server will wait until the action is done, which may cause some clients to timeout.
 
-In the next chapter we will explore GenServers, where the segregation between clients and servers is made even more apparent.
+In the next chapter we will explore GenServers, where the segregation between clients and servers is made more apparent.

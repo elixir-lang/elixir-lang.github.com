@@ -128,9 +128,11 @@ defmodule KvUmbrella.Mixfile do
   use Mix.Project
 
   def project do
-    [apps_path: "apps",
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+    [
+      apps_path: "apps",
+      start_permanent: Mix.env == :prod,
+      deps: deps
+    ]
   end
 
   defp deps do
@@ -155,27 +157,36 @@ defmodule KVServer.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :kv_server,
-     version: "0.1.0",
-     build_path: "../../_build",
-     config_path: "../../config/config.exs",
-     deps_path: "../../deps",
-     lockfile: "../../mix.lock",
-     elixir: "~> 1.4",
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+    [
+      app: :kv_server,
+      version: "0.1.0",
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
+      elixir: "~> 1.6-dev",
+      start_permanent: Mix.env == :prod,
+      deps: deps()
+    ]
   end
 
+  # Run "mix help compile.app" to learn about applications.
   def application do
-    [extra_applications: [:logger],
-     mod: {KVServer.Application, []}]
+    [
+      extra_applications: [:logger],
+      mod: {KVServer.Application, []}
+    ]
   end
 
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      # {:dep_from_hexpm, "~> 0.3.0"},
+      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      # {:sibling_app_in_umbrella, in_umbrella: true},
+    ]
   end
 end
-
 ```
 
 First of all, since we generated this project inside `kv_umbrella/apps`, Mix automatically detected the umbrella structure and added four lines to the project definition:
@@ -193,8 +204,10 @@ The second change is in the `application` function inside `mix.exs`:
 
 ```elixir
 def application do
-  [extra_applications: [:logger],
-   mod: {KVServer.Application, []}]
+  [
+    extra_applications: [:logger],
+    mod: {KVServer.Application, []}
+  ]
 end
 ```
 
@@ -204,22 +217,20 @@ In fact, let's open up `lib/kv_server/application.ex`:
 
 ```elixir
 defmodule KVServer.Application do
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
+  # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
 
   use Application
 
   def start(_type, _args) do
-    import Supervisor.Spec, warn: false
-
-    # Define workers and child supervisors to be supervised
+    # List all child processes to be supervised
     children = [
-      # Starts a worker by calling: KVServer.Worker.start_link(arg1, arg2, arg3)
-      # worker(KVServer.Worker, [arg1, arg2, arg3]),
+      # Starts a worker by calling: KVServer.Worker.start_link(arg)
+      # {KVServer.Worker, arg},
     ]
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
     Supervisor.start_link(children, opts)
@@ -273,7 +284,7 @@ Remember that umbrella projects are a convenience to help you organize and manag
 
 ## Summing up
 
-In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed, tested and deployed.
+In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed and tested.
 
 When using umbrella applications, it is important to have a clear boundary between them. Our upcoming `kv_server` must only access public APIs defined in `kv`. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.
 

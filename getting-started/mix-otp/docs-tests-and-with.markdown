@@ -51,7 +51,7 @@ defmodule KVServer.Command do
       {:ok, {:create, "shopping"}}
 
   """
-  def parse(line) do
+  def parse(_line) do
     :not_implemented
   end
 end
@@ -79,7 +79,7 @@ Run the test suite and the doctest should fail:
      code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
      lhs:  :not_implemented
      stacktrace:
-       lib/kv_server/command.ex:11: KVServer.Command (module)
+       lib/kv_server/command.ex:7: KVServer.Command (module)
 ```
 
 Excellent!
@@ -358,7 +358,7 @@ end
 
 Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state.
 
-Since this is the approach we have done so far in our tests, we will try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation.
+But let's also try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation.
 
 Our integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.
 
@@ -376,7 +376,7 @@ defmodule KVServerTest do
   setup do
     opts = [:binary, packet: :line, active: false]
     {:ok, socket} = :gen_tcp.connect('localhost', 4040, opts)
-    {:ok, socket: socket}
+    %{socket: socket}
   end
 
   test "server interaction", %{socket: socket} do
