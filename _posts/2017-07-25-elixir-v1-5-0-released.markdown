@@ -6,7 +6,7 @@ category: Releases
 excerpt: Elixir v1.5 integrates with Erlang/OTP 20 and bring changes that improves the language reach and the developer experience
 ---
 
-Elixir v1.5 includes new features, enhancements and bug fixes. While [Elixir v1.4](/blog/2017/01/05/elixir-v1-4-0-released/) focused on tools for concurrency and scalability, Elixir v1.5 brings many improvements to the developer experience and quality of life. As we will see, many of those are powered by the latest Erlang/OTP 20. This is also the last Elixir release that supports Erlang/OTP 18.
+Elixir v1.5 includes new features, enhancements, and bug fixes. While [Elixir v1.4](/blog/2017/01/05/elixir-v1-4-0-released/) focused on tools for concurrency and scalability, Elixir v1.5 brings many improvements to the developer experience and quality of life. As we will see, many of those are powered by the latest Erlang/OTP 20. This is also the last Elixir release that supports Erlang/OTP 18.
 
 Note: this announcement contains [asciicinema](https://asciinema.org) snippets. You may need to enable 3rd-party JavaScript on this site in order to see them. If JavaScript is disabled, noscript tags with the proper links will be shown.
 
@@ -26,7 +26,7 @@ Or:
 saudação = "Bom dia!"
 ```
 
-Elixir follows the recommendations in [Unicode Annex #31](http://unicode.org/reports/tr31/) to make Elixir more accessible to other languages and communities. Identifiers must still be a sequence of letters, followed by digits and combining marks. This means symbols, such as mathematical notations and emoji, are not allowed identifiers.
+Elixir follows the recommendations in [Unicode Annex #31](http://unicode.org/reports/tr31/) to make Elixir more accessible to other languages and communities. Identifiers must still be a sequence of letters, followed by digits and combining marks. This means symbols, such as mathematical notations and emoji, are not allowed in identifiers.
 
 For a complete reference on Elixir syntax, see the [Syntax Reference](https://hexdocs.pm/elixir/1.5/syntax-reference.html). For technical details on Unicode support, see [Unicode Syntax](https://hexdocs.pm/elixir/1.5/unicode-syntax.html).
 
@@ -52,7 +52,7 @@ Finally, IEx also features a breakpoint system for code debugging when running o
   * `remove_breaks/0` - removes all breakpoints in all modules
   * `remove_breaks/1` - removes all breakpoints in a given module
   * `reset_break/1` - sets the number of stops on the given id to zero
-  * `reset_break/3` - sets the number of stops on the given module, function, arity to zer
+  * `reset_break/3` - sets the number of stops on the given module, function, arity to zero
   * `respawn/0` - starts a new shell (breakpoints will ask for permission once more)
   * `whereami/1` - shows the current location
 
@@ -62,7 +62,7 @@ Let's see an example:
 
 In the snippet above we set a breakpoint in the `URI.decode_query/2` function, which is then triggered when invoked the function. We used `whereami/1` to get more information about the surrounded code and we were also able to access the variables at place of debugging. From there, we can either set more breakpoints, remove existing breakpoints and continue execution. The session ended by calling `open`, which will open your editor at the file and line under debugging. `open/1` can also be invoked by passing any module or function, and IEx will open your editor at that place.
 
-The debugging functions do not only improve the experience within IEx but also during testing. For example, if you are debugging a Phoenix application, you can start `IEx` while running your test suite with `iex -S mix test --trace` and then call `IEx.break!(MyAppWeb.UserController.index/2)` to debug the `index` action of the `UserController`. Note we gave the `--trace` flag to `mix test`, which ensures only one test runs at a time and removes any timeouts from the suite.
+The debugging functions improve the experience both within IEx and during testing. For example, if you are debugging a Phoenix application, you can start `IEx` while running your test suite with `iex -S mix test --trace` and then call `IEx.break!(MyAppWeb.UserController.index/2)` to debug the `index` action of the `UserController`. Note we gave the `--trace` flag to `mix test`, which ensures only one test runs at a time and removes any timeouts from the suite.
 
 ## Exception.blame
 
