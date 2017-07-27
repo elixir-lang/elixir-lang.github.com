@@ -8,7 +8,7 @@ excerpt: Elixir v1.5 integrates with Erlang/OTP 20 and bring changes that improv
 
 Elixir v1.5 includes new features, enhancements, and bug fixes. While [Elixir v1.4](/blog/2017/01/05/elixir-v1-4-0-released/) focused on tools for concurrency and scalability, Elixir v1.5 brings many improvements to the developer experience and quality of life. As we will see, many of those are powered by the latest Erlang/OTP 20. This is also the last Elixir release that supports Erlang/OTP 18.
 
-Note: this announcement contains [asciicinema](https://asciinema.org) snippets. You may need to enable 3rd-party JavaScript on this site in order to see them. If JavaScript is disabled, noscript tags with the proper links will be shown.
+Note: this announcement contains [asciinema](https://asciinema.org) snippets. You may need to enable 3rd-party JavaScript on this site in order to see them. If JavaScript is disabled, noscript tags with the proper links will be shown.
 
 ## UTF-8 atoms, function names and variables
 
@@ -36,11 +36,11 @@ IEx got many enhancements to the developer experience.
 
 First of all, the autocompletion system is now capable of autocompleting variables and user imports:
 
-<script type="text/javascript" src="https://asciinema.org/a/iAOk0yaZtQDsuJqn2sXa1FRQW.js" id="asciicast-iAOk0yaZtQDsuJqn2sXa1FRQW" async></script><noscript><p><a href="https://asciinema.org/a/iAOk0yaZtQDsuJqn2sXa1FRQW">See the example in asciicinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/iAOk0yaZtQDsuJqn2sXa1FRQW.js" id="asciicast-iAOk0yaZtQDsuJqn2sXa1FRQW" async></script><noscript><p><a href="https://asciinema.org/a/iAOk0yaZtQDsuJqn2sXa1FRQW">See the example in asciinema</a></p></noscript>
 
 IEx also got new functions, such as `exports/1`, for listing all functions and macros in a module, and the new `runtime_info/0`:
 
-<script type="text/javascript" src="https://asciinema.org/a/NT3xvSaB8f1vv7yaTvzaoJxBD.js" id="asciicast-NT3xvSaB8f1vv7yaTvzaoJxBD" async></script><noscript><p><a href="https://asciinema.org/a/NT3xvSaB8f1vv7yaTvzaoJxBD">See the example in asciicinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/NT3xvSaB8f1vv7yaTvzaoJxBD.js" id="asciicast-NT3xvSaB8f1vv7yaTvzaoJxBD" async></script><noscript><p><a href="https://asciinema.org/a/NT3xvSaB8f1vv7yaTvzaoJxBD">See the example in asciinema</a></p></noscript>
 
 Finally, IEx also features a breakpoint system for code debugging when running on Erlang/OTP 20. The following functions have been added to aid debugging:
 
@@ -58,7 +58,7 @@ Finally, IEx also features a breakpoint system for code debugging when running o
 
 Let's see an example:
 
-<script type="text/javascript" src="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs.js" id="asciicast-0h3po0AmTcBAorc5GBNU97nrs" async></script><noscript><p><a href="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs">See the example in asciicinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs.js" id="asciicast-0h3po0AmTcBAorc5GBNU97nrs" async></script><noscript><p><a href="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs">See the example in asciinema</a></p></noscript>
 
 In the snippet above we set a breakpoint in the `URI.decode_query/2` function, which is then triggered when invoked the function. We used `whereami/1` to get more information about the surrounded code and we were also able to access the variables at place of debugging. From there, we can either set more breakpoints, remove existing breakpoints and continue execution. The session ended by calling `open`, which will open your editor at the file and line under debugging. `open/1` can also be invoked by passing any module or function, and IEx will open your editor at that place.
 
@@ -68,7 +68,7 @@ The debugging functions improve the experience both within IEx and during testin
 
 `Exception.blame/3` is a new function in Elixir that is capable of attaching debug information to certain exceptions. Currently this is used to augment `FunctionClauseError`s with a summary of all clauses and which parts of clause match and which ones didn't. Let's try it out:
 
-<script type="text/javascript" src="https://asciinema.org/a/EgQUdDe1CIz90EYYeipiS8jo8.js" id="asciicast-EgQUdDe1CIz90EYYeipiS8jo8" async></script><noscript><p><a href="https://asciinema.org/a/EgQUdDe1CIz90EYYeipiS8jo8">See the example in asciicinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/EgQUdDe1CIz90EYYeipiS8jo8.js" id="asciicast-EgQUdDe1CIz90EYYeipiS8jo8" async></script><noscript><p><a href="https://asciinema.org/a/EgQUdDe1CIz90EYYeipiS8jo8">See the example in asciinema</a></p></noscript>
 
 In the example above, an argument that did not match or guard that did not evaluate to true are shown between in red. If the terminal does not support ANSI coloring, they are wrapped in `-` instead of shown in red.
 
