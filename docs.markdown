@@ -4,7 +4,7 @@ section: docs
 layout: default
 ---
 
-## Documentation
+# Documentation
 
 Choose which version you want documentation for.
 
