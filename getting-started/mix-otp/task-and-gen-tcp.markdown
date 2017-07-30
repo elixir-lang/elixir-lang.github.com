@@ -160,7 +160,7 @@ say me
 say me
 ```
 
-Yes, it works! If you kill the client, the whole server will still crash. But you will see that another one starts right away. However, does it *scale*?
+Yes, it works! However, does it *scale*?
 
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
@@ -285,7 +285,7 @@ In this case, the answer is yes: if the acceptor crashes, there is no need to cr
 
 However, there is still one concern left, which are the restart strategies. Tasks, by default, have the `:restart` value set to `:temporary`, which means they are not restarted. This is an excellent default for the connections started via the `Task.Supervisor`, as it makes no sense to restart a failed connection, but it is a bad choice for the acceptor. If the acceptor crashes, we want to bring the acceptor up and running again.
 
-We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `init/1` in `KVServer.Application` once more:
+We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `start/2` in `KVServer.Application` once more:
 
 ```elixir
   def start(_type, _args) do
