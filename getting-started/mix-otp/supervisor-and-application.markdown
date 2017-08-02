@@ -238,7 +238,7 @@ When we talk about applications, we talk about  <abbr title="Open Telecom Platfo
 
 We have now successfully defined our supervisor which is automatically started (and stopped) as part of our application lifecycle.
 
-Remember however that our `KV.Registry` is both linking and monitoring bucket processes in the `handle_cast/2` callback:
+Remember however that our `KV.Registry` is both linking (via `start_link`) and monitoring (via `monitor`) bucket processes in the `handle_cast/2` callback:
 
 ```elixir
 {:ok, pid} = KV.Bucket.start_link([])
@@ -255,19 +255,14 @@ test "removes bucket on crash", %{registry: registry} do
   {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
   # Stop the bucket with non-normal reason
-  ref = Process.monitor(bucket)
-  Process.exit(bucket, :shutdown)
-
-  # Wait until the bucket is dead
-  assert_receive {:DOWN, ^ref, _, _, _}
-
+  Agent.stop(bucket, :shutdown)
   assert KV.Registry.lookup(registry, "shopping") == :error
 end
 ```
 
-The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. Opposite to `Agent.stop/1`, `Process.exit/2` is an asynchronous operation, therefore we cannot simply query `KV.Registry.lookup/2` right after sending the exit signal because there will be no guarantee the bucket will be dead by then. To solve this, we also monitor the bucket during test and only query the registry once we are sure the bucket is DOWN, avoiding race conditions.
+The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. If a process terminates with a reason different than `:normal`, all linked processes receive an EXIT signal, causing the linked process to also terminate unless they are trapping exits.
 
-Since the bucket no longer exists, our test fails when trying to `GenServer.call/3` it:
+Since the bucket terminated, the registry went away with it, and our test fails when trying to `GenServer.call/3` it:
 
 ```
   1) test removes bucket on crash (KV.RegistryTest)
@@ -280,7 +275,7 @@ Since the bucket no longer exists, our test fails when trying to `GenServer.call
        test/kv/registry_test.exs:33: (test)
 ```
 
-We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization, and a new worker is started each time `start_child/2` is called.
+We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization. Instead, a worker is started manually via the `Supervisor.start_child/2` function.
 
 Let's define our `KV.BucketSupervisor` in `lib/kv/bucket_supervisor.ex` as follows:
 
