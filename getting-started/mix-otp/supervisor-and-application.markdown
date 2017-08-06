@@ -373,7 +373,7 @@ Our test uses the `Supervisor.child_spec/2` function to retrieve the child speci
 
 When we added `KV.BucketSupervisor` as a child of `KV.Supervisor`, we began to have supervisors that supervise other supervisors, forming so-called "supervision trees".
 
-Every time you add a new child to a supervisor, it is important to evaluate if the supervisor strategy is correct as well as the order of child processes In this case, we are using `:one_for_one` and the `KV.Registry` is started before `KV.BucketSupervisor`.
+Every time you add a new child to a supervisor, it is important to evaluate if the supervisor strategy is correct as well as the order of child processes. In this case, we are using `:one_for_one` and the `KV.Registry` is started before `KV.BucketSupervisor`.
 
 One flaw that shows up right away is the ordering issue. Since `KV.Registry` invokes `KV.BucketSupervisor`, then the `KV.BucketSupervisor` must be started before `KV.Registry`. Otherwise it may happen that the registry attempts to reach the bucket supervisor before it has started.
 
