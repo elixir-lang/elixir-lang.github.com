@@ -345,17 +345,19 @@ Notice that `put_elem/3` returned a new tuple. The original tuple stored in the 
 
 What is the difference between lists and tuples?
 
-Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. We call each pair of value and pointer a **cons cell**:
+Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size.
+
+Updating a list is fast as long as we are prepending elements:
 
 ```iex
-iex> list = [1 | [2 | [3 | []]]]
-[1, 2, 3]
-```
+iex> list = [1, 2, 3]
 
-This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size. Updating a list is fast as long as we are prepending elements:
+# This is fast as we don't need to traverse `list` to prepend 0
+iex> [0] ++ list
+[0, 1, 2, 3]
 
-```iex
-iex> [0 | list]
+# This is slow as we need to traverse `list` to append 3
+iex> list ++ [3]
 [0, 1, 2, 3]
 ```
 
