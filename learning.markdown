@@ -12,7 +12,7 @@ Our website provides a [Getting Started guide](/getting-started/introduction.htm
 
 The Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that follows your pace and interests.
 
-## Learn Elixir
+## Books
 
 <h4 class="resource">Programming Elixir 1.3</h4>
 
@@ -73,6 +73,26 @@ Elixir-School is an open and community driven effort inspired by Twitter’s Sca
 
 <div class="clear"></div>
 
+## Video/Interactive Resources
+
+<h4 class="resource">Try Elixir with Code School</h4>
+
+<a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
+
+Start learning and programming Elixir in your browser with Code School's interactive Try Elixir course. Learn the basics of functional programming with instructor-led videos before taking on challenges where you’ll code directly in the browser, receiving immediate feedback and code validation.
+
+<div class="clear"></div>
+
+<h4 class="resource">Take Off With Elixir</h4>
+
+<a class="cover" href="https://goo.gl/9w33lp" title="Take Off With Elixir"><img src="/images/learning/take-off-with-elixir.jpg" alt="Red:4" width="190" /></a>
+
+Red:4 is a fictional aerospace startup that needs your help! Through a book, a video, or both you can learn Elixir the fun way by immersing yourself in an on-the-job style set of problems. For instance, you will set up a project to calculate escape velocity for each of the planets in our solar system, learning pattern matching and language basics along the way. You'll move on to orbital mechanics while learning how to debug and refactor your code for clarity and meaning. You'll learn list basics and data storage techniques as you build a solar flare tracking system. Finally, you'll dive into OTP using Ecto and PostgreSQL - all in an effort to overwhelm our internal systems with the power of Elixir!
+
+<div class="clear"></div>
+
+## Other Resources
+
 <h4 class="resource">Elixir Flashcards</h4>
 
 <a class="cover" href="https://elixircards.co.uk/" title="Elixir Flashcards"><img src="/images/learning/flashcards_army.jpg" alt="Elixir Flashcards" width="190" /></a>
@@ -91,24 +111,6 @@ Combined with books, tutorials and screencasts, using flashcards is the killer c
 <a class="cover" href="http://elixirkoans.io/" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
 
 Elixir koans is a fun, easy way to get started with the Elixir programming language. It is an idiomatic tour of the language.
-
-<div class="clear"></div>
-
-## Video/Interactive Resources
-
-<h4 class="resource">Try Elixir with Code School</h4>
-
-<a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
-
-Start learning and programming Elixir in your browser with Code School's interactive Try Elixir course. Learn the basics of functional programming with instructor-led videos before taking on challenges where you’ll code directly in the browser, receiving immediate feedback and code validation.
-
-<div class="clear"></div>
-
-<h4 class="resource">Take Off With Elixir</h4>
-
-<a class="cover" href="https://goo.gl/9w33lp" title="Take Off With Elixir"><img src="/images/learning/take-off-with-elixir.jpg" alt="Red:4" width="190" /></a>
-
-Red:4 is a fictional aerospace startup that needs your help! Through a book, a video, or both you can learn Elixir the fun way by immersing yourself in an on-the-job style set of problems. For instance, you will set up a project to calculate escape velocity for each of the planets in our solar system, learning pattern matching and language basics along the way. You'll move on to orbital mechanics while learning how to debug and refactor your code for clarity and meaning. You'll learn list basics and data storage techniques as you build a solar flare tracking system. Finally, you'll dive into OTP using Ecto and PostgreSQL - all in an effort to overwhelm our internal systems with the power of Elixir!
 
 <div class="clear"></div>
 
@@ -138,15 +140,6 @@ It's intended to help beginners get familiar with all of Elixir's features by bu
 <div class="clear"></div>
 
 ## In-depth Resources
-
-<h4 class="resource">Études for Elixir</h4>
-
-<a class="cover" href="http://chimera.labs.oreilly.com/books/1234000001642" title="Études for Elixir
--– by J. David Eisenberg"><img src="/images/learning/etude-for-elixir.jpg" alt="Études for Elixir" width="190" /></a>
-
-Études for Elixir is an open source book of programming exercises. Each one has been designed to provide practice material for a particular Elixir programming concept. The topics are keyed to the chapters in "Introducing Elixir," but they are general enough to be used with any Elixir book. Études for Elixir can be read free online.
-
-<div class="clear"></div>
 
 <h4 class="resource">Metaprogramming Elixir</h4>
 
