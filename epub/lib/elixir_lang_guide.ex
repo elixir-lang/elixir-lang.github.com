@@ -180,7 +180,7 @@ defmodule ElixirLangGuide do
   end
 
   defp fix_images(content) do
-    String.replace(content, ~r{/images/contents/kv-observer.png" width="640px}, "assets/kv-observer.png")
+    String.replace(content, ~r{/images/contents/kv-observer.png" width="640}, "assets/kv-observer.png")
   end
 
   defp map_links(content, options) do
