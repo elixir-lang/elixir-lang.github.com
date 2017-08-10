@@ -7,7 +7,7 @@ var output = {
 var loaders = [{
   test: /\.js$/,
   exclude: /(node_modules|bower_components)/,
-  loader: 'babel',
+  loader: 'babel-loader',
   query: {
     presets: ['es2015']
   }
@@ -15,7 +15,6 @@ var loaders = [{
 
 module.exports = {
   development: {
-    debug: true,
     devtool: 'eval-source-map',
     output: output,
     module: {
@@ -26,9 +25,6 @@ module.exports = {
     output: output,
     module: {
       loaders: loaders
-    },
-    plugins: [
-      new webpack.optimize.DedupePlugin()
-    ]
+    }
   }
 }
