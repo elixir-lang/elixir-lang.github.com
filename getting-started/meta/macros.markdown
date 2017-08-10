@@ -13,12 +13,6 @@ Even though Elixir attempts its best to provide a safe environment for macros, t
 
 Elixir already provides mechanisms to write your every day code in a simple and readable fashion by using its data structures and functions. Macros should only be used as a last resort. Remember that **explicit is better than implicit**. **Clear code is better than concise code.**
 
-> The Elixir guides are also available in EPUB format:
->
->   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)
->   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)
->   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)
-
 ## Our first macro
 
 Macros in Elixir are defined via `defmacro/2`.

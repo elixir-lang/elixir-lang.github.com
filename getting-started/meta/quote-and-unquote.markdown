@@ -7,7 +7,13 @@ title: Quote and unquote
 
 {% include toc.html %}
 
-An Elixir program can be represented by its own data structures. In this chapter, we will learn what those structures look like and how to compose them. The concepts learned in this chapter are the building blocks for macros, which we are going to take a deeper look at in the next chapter.
+This guide aims to introduce the meta-programming techniques available in Elixir. The ability to represent an Elixir program by its own data structures is at the heart of meta-programming. This chapter starts by exploring those structures and the associated `quote` and `unquote` constructs, so we can take a look at macros in the next chapter and finally build our own domain specific language.
+
+> The Elixir guides are also available in EPUB format:
+>
+>   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)
+>   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)
+>   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)
 
 ## Quoting
 
