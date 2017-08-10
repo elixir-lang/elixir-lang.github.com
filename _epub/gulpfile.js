@@ -22,7 +22,7 @@ var config = require('./assets/webpack.config')
 var environment = $.util.env.type || 'development'
 var isProduction = environment === 'production'
 
-var distPath = 'assets/dist'
+var distPath = 'priv'
 
 var npmPlugin = new LessPluginNpmImport()
 var autoprefixPlugin = new LessPluginAutoPrefix({

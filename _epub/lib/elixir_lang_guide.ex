@@ -1,15 +1,50 @@
-defmodule ElixirLangGuide.EPUB do
+defmodule ElixirLangGuide do
   @moduledoc """
-  Generate an EPUB document of the given Elixir Lang guide
+  Generate EPUB documents for Elixir guides.
   """
 
-  require EEx
+  @type config :: %{
+    guide: String.t,
+    homepage: String.t,
+    output: Path.t,
+    root_dir: Path.t,
+    scripts: [Path.t],
+    styles: [Path.t],
+    images: [Path.t]
+  }
 
-  @doc """
-  Generate EPUB documentation for the given Elixir Lang guide
-  """
-  @spec run(ElixirLangGuide.Config.t) :: String.t
-  def run(options) do
+  @doc "Generate all guides"
+  @spec run(Path.t) :: :ok
+  def run(source) do
+    config = %{
+      guide: nil,
+      homepage: "http://elixir-lang.org",
+      output: ".",
+      root_dir: source,
+      scripts: assets("priv/app-*.js"),
+      styles: assets("priv/app-*.css"),
+      images: []
+    }
+
+    for guide <- ~w(getting_started meta mix_otp) do
+      config |> Map.put(:guide, guide) |> to_epub() |> log()
+    end
+
+    :ok
+  end
+
+  defp assets(path) do
+    :elixir_lang_guide
+    |> Application.app_dir(path)
+    |> Path.wildcard()
+  end
+
+  defp log(file) do
+    Mix.shell.info [:green, "Generated guide at #{inspect file}"]
+  end
+
+  @spec to_epub(config) :: String.t
+  defp to_epub(options) do
     nav =
       options.root_dir
       |> Path.expand()
@@ -17,15 +52,17 @@ defmodule ElixirLangGuide.EPUB do
       |> YamlElixir.read_from_file()
       |> generate_nav(options)
 
-    nav |> convert_markdown_pages(options) |> to_epub(nav, options)
+    nav
+    |> convert_markdown_pages(options)
+    |> to_epub(nav, options)
   end
 
   defp generate_nav(yaml, options) do
     yaml =
       case options.guide do
-        "getting_started" -> List.first(yaml)
-        "meta" -> List.last(yaml)
+        "getting_started" -> Enum.at(yaml, 0)
         "mix_otp" -> Enum.at(yaml, 1)
+        "meta" -> Enum.at(yaml, 2)
         _ -> raise "invalid guide, allowed: `mix_otp`, `meta` or `getting_started`"
       end
 
@@ -87,8 +124,8 @@ defmodule ElixirLangGuide.EPUB do
       unique_identifier: title_to_filename(title),
       source: "#{options.homepage}/getting-started/",
       pages: files,
-      scripts: List.wrap(options.scripts),
-      styles: List.wrap(options.styles),
+      scripts: options.scripts,
+      styles: options.styles,
       images: images,
       nav: nav
     }
@@ -143,7 +180,7 @@ defmodule ElixirLangGuide.EPUB do
   end
 
   defp fix_images(content) do
-    String.replace(content, ~r{/images/contents/kv-observer.png" width="640px}, "assets/kv-observer.png")
+    String.replace(content, ~r{/images/contents/kv-observer.png" width="640}, "assets/kv-observer.png")
   end
 
   defp map_links(content, options) do
@@ -174,6 +211,7 @@ defmodule ElixirLangGuide.EPUB do
 
   defp map_section_links(text, path), do: "[#{text}](#{String.replace(path, "html", "xhtml")})"
 
+  require EEx
   EEx.function_from_file(:defp, :wrap_html,
                          Path.expand("templates/page.eex", __DIR__),
                          [:content, :config])
