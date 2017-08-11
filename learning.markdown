@@ -139,6 +139,18 @@ It's intended to help beginners get familiar with all of Elixir's features by bu
 
 <div class="clear"></div>
 
+<h4 class="resource">ElixirCasts.io</h4>
+
+<a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
+  <img src="/images/learning/elixircasts.png" alt="elixircasts.io cover" width="190" />
+</a>
+
+ElixirCasts is a collection of simple screencasts that cover a wide range of Elixir and Phoenix topics. Each episode tackles a specific problem or explores a new library, demystifying it in a language that's easy to understand.
+
+Episodes range from beginner focused to more moderate and advanced topics. Come build your knowledge of Elixir with us, one episode at a time.
+
+<div class="clear"></div>
+
 ## In-depth Resources
 
 <h4 class="resource">Metaprogramming Elixir</h4>
