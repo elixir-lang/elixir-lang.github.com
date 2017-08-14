@@ -356,9 +356,9 @@ iex> list = [1, 2, 3]
 iex> [0] ++ list
 [0, 1, 2, 3]
 
-# This is slow as we need to traverse `list` to append 3
-iex> list ++ [3]
-[0, 1, 2, 3]
+# This is slow as we need to traverse `list` to append 4
+iex> list ++ [4]
+[1, 2, 3, 4]
 ```
 
 Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory.
