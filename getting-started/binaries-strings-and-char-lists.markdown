@@ -75,7 +75,7 @@ iex> byte_size(<<0, 1, 2, 3>>)
 A binary is a sequence of bytes. Those bytes can be organized in any way, even in a sequence that does not make them a valid string:
 
 ```iex
-iex> String.valid?(<<239, 191, 191>>)
+iex> String.valid?(<<239, 191, 19>>)
 false
 ```
 
