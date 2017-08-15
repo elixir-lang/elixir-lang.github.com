@@ -1,13 +1,14 @@
 ---
 layout: getting-started
-title: Modules
+title: Modules and Functions
+redirect_from: /getting-started/modules.html
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](/docs/stable/elixir/String.html):
+In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](https://hexdocs.pm/elixir/String.html):
 
 ```iex
 iex> String.length("hello")
@@ -154,7 +155,9 @@ iex> is_function(fun)
 true
 iex> fun.(0)
 true
-````
+```
+
+Remember Elixir makes a distinction between anonymous functions and named functions, where the former must be invoked with a dot (`.`) between the variable name and parentheses. The capture operator bridges this gap by allowing named functions to be assigned to variables and passed as arguments in the same way we assign, invoke and pass anonymous functions.
 
 Local or imported functions, like `is_function/1`, can be captured without the module:
 
@@ -185,7 +188,7 @@ iex> fun.([1, [[2], 3]], [4, 5])
 [1, 2, 3, 4, 5]
 ```
 
-`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end` which in this case is equivalent to `&List.flatten/2`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/Kernel.SpecialForms.html#&/1).
+`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end` which in this case is equivalent to `&List.flatten/2`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#&/1).
 
 ## Default arguments
 
@@ -206,7 +209,7 @@ Any expression is allowed to serve as a default value, but it won't be evaluated
 
 ```elixir
 defmodule DefaultTest do
-  def dowork(x \\ IO.puts "hello") do
+  def dowork(x \\ "hello") do
     x
   end
 end
@@ -214,13 +217,11 @@ end
 
 ```iex
 iex> DefaultTest.dowork
-hello
-:ok
+"hello"
 iex> DefaultTest.dowork 123
 123
 iex> DefaultTest.dowork
-hello
-:ok
+"hello"
 ```
 
 If a function with default values has multiple clauses, it is required to create a function head (without an actual body) for declaring defaults:
@@ -261,7 +262,7 @@ end
 
 If we save the code above in a file named "concat.ex" and compile it, Elixir will emit the following warning:
 
-    concat.ex:7: warning: this clause cannot match because a previous clause at line 2 always matches
+    warning: this clause cannot match because a previous clause at line 2 always matches
 
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 

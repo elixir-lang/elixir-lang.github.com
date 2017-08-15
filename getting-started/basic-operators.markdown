@@ -38,7 +38,7 @@ Providing a non-boolean will raise an exception:
 
 ```iex
 iex> 1 and true
-** (ArgumentError) argument error: 1
+** (BadBooleanError) expected a boolean on left-side of "and", got: 1
 ```
 
 `or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
@@ -78,7 +78,7 @@ true
 
 As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`.
 
-Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
+Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<`, and `>` as comparison operators:
 
 ```iex
 iex> 1 == 1
@@ -107,10 +107,10 @@ true
 
 The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
 
-    number < atom < reference < functions < port < pid < tuple < maps < list < bitstring
+    number < atom < reference < function < port < pid < tuple < map < list < bitstring
 
-You don't actually need to memorize this ordering, but it is important just to know an order exists.
+You don't actually need to memorize this ordering, it's enough to know that this ordering exists.
 
-For reference information about operators, you can visit the ["Operators" page](/docs/master/elixir/operators.html) in the documentation.
+For reference information about operators (and ordering), check the [reference page on operators](/docs/master/elixir/operators.html).
 
-In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
+In the next chapter, we are going to discuss some basic functions, data type conversions, and a bit of control flow.

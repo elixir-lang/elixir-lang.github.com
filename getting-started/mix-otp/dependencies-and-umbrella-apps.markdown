@@ -47,7 +47,7 @@ def deps do
 end
 ```
 
-This dependency refers to the latest version of Plug in the 1.x.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](/docs/stable/elixir/Version.html).
+This dependency refers to the latest version of Plug in the 1.x.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](https://hexdocs.pm/elixir/Version.html).
 
 Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies too:
 
@@ -63,15 +63,16 @@ Mix provides many tasks for working with dependencies, which can be seen in `mix
 
 ```bash
 $ mix help
-mix deps              # List dependencies and their status
-mix deps.clean        # Remove the given dependencies' files
-mix deps.compile      # Compile dependencies
-mix deps.get          # Get all out of date dependencies
-mix deps.unlock       # Unlock the given dependencies
-mix deps.update       # Update the given dependencies
+mix deps              # Lists dependencies and their status
+mix deps.clean        # Deletes the given dependencies' files
+mix deps.compile      # Compiles dependencies
+mix deps.get          # Gets all out of date dependencies
+mix deps.tree         # Prints the dependency tree
+mix deps.unlock       # Unlocks the given dependencies
+mix deps.update       # Updates the given dependencies
 ```
 
-The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependencies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](/docs/stable/mix/Mix.Tasks.Deps.html).
+The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependencies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](https://hexdocs.pm/mix/Mix.Tasks.Deps.html).
 
 ## Internal dependencies
 
@@ -93,7 +94,7 @@ Using git dependencies for internal dependencies is somewhat discouraged in Elix
 
 However, if you push every application as a separate project to a git repository, your projects may become very hard to maintain as you will spend a lot of time managing those git repositories rather than writing your code.
 
-For this reason, Mix supports "umbrella projects." Umbrella projects allow you to create one project that hosts many applications while keeping all of them in a single source code repository. That is exactly the style we are going to explore in the next sections.
+For this reason, Mix supports "umbrella projects". Umbrella projects are used to build applications that run together and have clear boundaries between them in a single repository. That is exactly the style we are going to explore in the next sections.
 
 Let's create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
@@ -127,10 +128,11 @@ defmodule KvUmbrella.Mixfile do
   use Mix.Project
 
   def project do
-    [apps_path: "apps",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+    [
+      apps_path: "apps",
+      start_permanent: Mix.env == :prod,
+      deps: deps
+    ]
   end
 
   defp deps do
@@ -155,28 +157,36 @@ defmodule KVServer.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :kv_server,
-     version: "0.1.0",
-     build_path: "../../_build",
-     config_path: "../../config/config.exs",
-     deps_path: "../../deps",
-     lockfile: "../../mix.lock",
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+    [
+      app: :kv_server,
+      version: "0.1.0",
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
+      elixir: "~> 1.6-dev",
+      start_permanent: Mix.env == :prod,
+      deps: deps()
+    ]
   end
 
+  # Run "mix help compile.app" to learn about applications.
   def application do
-    [applications: [:logger],
-     mod: {KVServer, []}]
+    [
+      extra_applications: [:logger],
+      mod: {KVServer.Application, []}
+    ]
   end
 
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      # {:dep_from_hexpm, "~> 0.3.0"},
+      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      # {:sibling_app_in_umbrella, in_umbrella: true},
+    ]
   end
 end
-
 ```
 
 First of all, since we generated this project inside `kv_umbrella/apps`, Mix automatically detected the umbrella structure and added four lines to the project definition:
@@ -194,33 +204,41 @@ The second change is in the `application` function inside `mix.exs`:
 
 ```elixir
 def application do
-  [applications: [:logger],
-   mod: {KVServer, []}]
+  [
+    extra_applications: [:logger],
+    mod: {KVServer.Application, []}
+  ]
 end
 ```
 
-Because we passed the `--sup` flag, Mix automatically added `mod: {KVServer, []}`, specifying that `KVServer` is our application callback module. `KVServer` will start our application supervision tree.
+Because we passed the `--sup` flag, Mix automatically added `mod: {KVServer.Application, []}`, specifying that `KVServer.Application` is our application callback module. `KVServer.Application` will start our application supervision tree.
 
-In fact, let's open up `lib/kv_server.ex`:
+In fact, let's open up `lib/kv_server/application.ex`:
 
 ```elixir
-defmodule KVServer do
+defmodule KVServer.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
+  @moduledoc false
+
   use Application
 
   def start(_type, _args) do
-    import Supervisor.Spec, warn: false
-
+    # List all child processes to be supervised
     children = [
-      # worker(KVServer.Worker, [arg1, arg2, arg3])
+      # Starts a worker by calling: KVServer.Worker.start_link(arg)
+      # {KVServer.Worker, arg},
     ]
 
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
 ```
 
-Notice that it defines the application callback function, `start/2`, and instead of defining a supervisor named `KVServer.Supervisor` that uses the `Supervisor` module, it conveniently defined the supervisor inline! You can read more about such supervisors by reading [the Supervisor module documentation](/docs/stable/elixir/Supervisor.html).
+Notice that it defines the application callback function, `start/2`, and instead of defining a supervisor named `KVServer.Supervisor` that uses the `Supervisor` module, it conveniently defined the supervisor inline! You can read more about such supervisors by reading [the Supervisor module documentation](https://hexdocs.pm/elixir/Supervisor.html).
 
 We can already try out our first umbrella child. We could run tests inside the `apps/kv_server` directory, but that wouldn't be much fun. Instead, go to the root of the umbrella project and run `mix test`:
 
@@ -242,16 +260,7 @@ defp deps do
 end
 ```
 
-The line above makes `:kv` available as a dependency inside `:kv_server`. We can invoke the modules defined in `:kv` but it does not automatically start the `:kv` application. For that, we also need to list `:kv` as an application inside `application/0`:
-
-```elixir
-def application do
-  [applications: [:logger, :kv],
-   mod: {KVServer, []}]
-end
-```
-
-Now Mix will guarantee the `:kv` application is started before `:kv_server` is started.
+The line above makes `:kv` available as a dependency inside `:kv_server` and automatically starts the `:kv` application before the server starts.
 
 Finally, copy the `kv` application we have built so far to the `apps` directory in our new umbrella project. The final directory structure should match the structure we mentioned earlier:
 
@@ -275,15 +284,14 @@ Remember that umbrella projects are a convenience to help you organize and manag
 
 ## Summing up
 
-In this chapter we have learned more about Mix dependencies and umbrella projects. We have decided to build an umbrella project because we consider `kv` and `kv_server` to be internal dependencies that matter only in the context of this project.
+In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed and tested.
 
-In the future, you are going to write applications and you will notice they can be extracted into a concise unit that can be used by different projects. In such cases, using Git or Hex dependencies is the way to go.
+When using umbrella applications, it is important to have a clear boundary between them. Our upcoming `kv_server` must only access public APIs defined in `kv`. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.
 
-Here are a couple questions you can ask yourself when working with dependencies. Start with: does this application make sense outside this project?
+Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as an umbrella application, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, extraction should be straight-forward as long as the web application respects the push notification API boundary. Regardless if it happens in 2 weeks or in 3 years from development. Once extracted, the push notifications system can be moved to a private git repository or a public hex.pm package.
 
-* If no, use an umbrella project with umbrella children.
-* If yes, can this project be shared outside your company / organization?
-  * If no, use a private git repository.
-  * If yes, push your code to a git repository and do frequent releases using [Hex](https://hex.pm).
+Developers may also use umbrella applications to break large business domains apart. The caution here is to make sure the domains don't depend on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve. Overall, umbrella applications do not magically improve the design of your code. They can, however, help enforce boundaries when the code is well designed.
+
+Finally, keep in mind that applications in an umbrella project all share the same configurations and dependencies. If two applications in your umbrella need to configure the same dependency in drastically different ways or even use different versions, such is impossible in umbrellas, and those apps likely need to be moved to separate projects.
 
 With our umbrella project up and running, it is time to start writing our server.

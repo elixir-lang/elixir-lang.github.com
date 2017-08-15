@@ -48,7 +48,7 @@ Structs provide *compile-time* guarantees that only the fields (and *all* of the
 
 ```iex
 iex> %User{oops: :field}
-** (CompileError) iex:3: unknown key :oops for struct User
+** (KeyError) key :oops not found in: %User{age: 27, name: "John"}
 ```
 
 ## Accessing and updating structs
@@ -96,7 +96,8 @@ Notice that we referred to structs as **bare** maps because none of the protocol
 iex> john = %User{}
 %User{age: 27, name: "John"}
 iex> john[:name]
-** (UndefinedFunctionError) undefined function: User.fetch/2
+** (UndefinedFunctionError) function User.fetch/2 is undefined (User does not implement the Access behaviour)
+             User.fetch(%User{age: 27, name: "John"}, :name)
 iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 ** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
@@ -113,3 +114,27 @@ iex> Map.keys(john)
 ```
 
 Structs alongside protocols provide one of the most important features for Elixir developers: data polymorphism. That's what we will explore in the next chapter.
+
+## Default values and required keys
+
+If you don't specify a default key value when defining a struct, `nil` will be assumed:
+
+```iex
+iex> defmodule Product do
+...>   defstruct [:name]
+...> end
+iex> %Product{}
+%Product{name: nil}
+```
+
+You can also enforce that certain keys have to be specified when creating the struct:
+
+```iex
+iex> defmodule Car do
+...>   @enforce_keys [:make]
+...>   defstruct [:model, :make]
+...> end
+iex> %Car{}
+** (ArgumentError) the following keys must also be given when building struct Car: [:make]
+    expanding struct: Car.__struct__/1
+```

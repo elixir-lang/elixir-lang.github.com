@@ -109,7 +109,7 @@ Here we have used recursion to traverse a list, doubling each element and return
 
 Recursion and [tail call](https://en.wikipedia.org/wiki/Tail_call) optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists.
 
-The [`Enum` module](/docs/stable/elixir/Enum.html), which we're going to see in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:
+The [`Enum` module](https://hexdocs.pm/elixir/Enum.html), which we're going to see in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:
 
 ```iex
 iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)

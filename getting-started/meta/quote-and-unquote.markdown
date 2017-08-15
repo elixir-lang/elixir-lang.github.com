@@ -7,7 +7,13 @@ title: Quote and unquote
 
 {% include toc.html %}
 
-An Elixir program can be represented by its own data structures. In this chapter, we will learn what those structures look like and how to compose them. The concepts learned in this chapter are the building blocks for macros, which we are going to take a deeper look at in the next chapter.
+This guide aims to introduce the meta-programming techniques available in Elixir. The ability to represent an Elixir program by its own data structures is at the heart of meta-programming. This chapter starts by exploring those structures and the associated `quote` and `unquote` constructs, so we can take a look at macros in the next chapter and finally build our own domain specific language.
+
+> The Elixir guides are also available in EPUB format:
+>
+>   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)
+>   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)
+>   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)
 
 ## Quoting
 
@@ -150,6 +156,6 @@ Macros receive quoted expressions and must return quoted expressions. However, s
 
 In other words, it is important to make a distinction between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values, such as integers, atoms and strings, have a quoted expression equal to the value itself. Other values, like maps, need to be explicitly converted. Finally, values like functions and references cannot be converted to a quoted expression at all.
 
-You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](/docs/stable/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other functions related to quoted expressions can be found in the [`Macro` module](/docs/stable/elixir/Macro.html).
+You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](https://hexdocs.pm/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other functions related to quoted expressions can be found in the [`Macro` module](https://hexdocs.pm/elixir/Macro.html).
 
 In this introduction we have laid the groundwork to finally write our first macro, so let's move to the next chapter.

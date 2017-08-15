@@ -4,51 +4,47 @@ section: docs
 layout: default
 ---
 
-## Documentation
+# Documentation
 
 Choose which version you want documentation for.
 
-#### Stable
+{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
-* [Elixir](/docs/stable/elixir/) - standard library
-* [EEx](/docs/stable/eex/) - templating library
-* [ExUnit](/docs/stable/ex_unit/) - unit test library
-* [IEx](/docs/stable/iex/) - interactive shell
-* [Logger](/docs/stable/logger/) - builtin Logger
-* [Mix](/docs/stable/mix/) - build tool
+<h4 id="stable">Stable
+  {% if stable.docs_zip == true %}
+    <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Docs.zip">download</a>)</small>
+  {% endif %}
+</h4>
+
+* [Elixir](https://hexdocs.pm/elixir/) - standard library
+* [EEx](https://hexdocs.pm/eex/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/) - unit test library
+* [IEx](https://hexdocs.pm/iex/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/) - build tool
 
 #### Master
 
-* [Elixir](/docs/master/elixir/) - standard library
-* [EEx](/docs/master/eex/) - templating library
-* [ExUnit](/docs/master/ex_unit/) - unit test library
-* [IEx](/docs/master/iex/) - interactive shell
-* [Logger](/docs/master/logger/) - builtin Logger
-* [Mix](/docs/master/mix/) - build tool
+* [Elixir](https://hexdocs.pm/elixir/master/) - standard library
+* [EEx](https://hexdocs.pm/eex/master/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/master/) - unit test library
+* [IEx](https://hexdocs.pm/iex/master/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/master/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/master/) - build tool
 
-<h4 id="v1.3">v1.3 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.3.1/Docs.zip">download</a>)</small></h4>
+{% for version in site.data.elixir-versions reversed %}
+  {% if version[0] == 'stable' %}
+    {% continue %}
+  {% endif %}
 
-* [Elixir](/docs/v1.3/elixir/) - standard library
-* [EEx](/docs/v1.3/eex/) - templating library
-* [ExUnit](/docs/v1.3/ex_unit/) - unit test library
-* [IEx](/docs/v1.3/iex/) - interactive shell
-* [Logger](/docs/v1.3/logger/) - builtin Logger
-* [Mix](/docs/v1.3/mix/) - build tool
+<h4 id="{{ version[1].name }}">{{ version[1].name }}
+  {% if version[1].docs_zip == true %}<small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ version[1].version }}/Docs.zip">download</a>)</small>{% endif %}
+</h4>
 
-<h4 id="v1.2">v1.2 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.2.6/Docs.zip">download</a>)</small></h4>
-
-* [Elixir](/docs/v1.2/elixir/) - standard library
-* [EEx](/docs/v1.2/eex/) - templating library
-* [ExUnit](/docs/v1.2/ex_unit/) - unit test library
-* [IEx](/docs/v1.2/iex/) - interactive shell
-* [Logger](/docs/v1.2/logger/) - builtin Logger
-* [Mix](/docs/v1.2/mix/) - build tool
-
-<h4 id="v1.1">v1.1 <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v1.1.1/Docs.zip">download</a>)</small></h4>
-
-* [Elixir](/docs/v1.1/elixir/) - standard library
-* [EEx](/docs/v1.1/eex/) - templating library
-* [ExUnit](/docs/v1.1/ex_unit/) - unit test library
-* [IEx](/docs/v1.1/iex/) - interactive shell
-* [Logger](/docs/v1.1/logger/) - builtin Logger
-* [Mix](/docs/v1.1/mix/) - build tool
+* [Elixir](https://hexdocs.pm/elixir/{{ version[1].version }}/) - standard library
+* [EEx](https://hexdocs.pm/eex/{{ version[1].version }}/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/{{ version[1].version }}/) - unit test library
+* [IEx](https://hexdocs.pm/iex/{{ version[1].version }}/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/{{ version[1].version }}/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/{{ version[1].version }}/) - build tool
+{% endfor %}

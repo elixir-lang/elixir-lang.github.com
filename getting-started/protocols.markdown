@@ -9,48 +9,56 @@ title: Protocols
 
 Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
 
-In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
+In Elixir, we have two idioms for checking how many items there are in a data structure: `length` and `size`. `length` means the information must be computed. For example, `length(list)` needs to traverse the whole list to calculate its length. On the other hand, `tuple_size(tuple)` and `byte_size(binary)` do not depend on the tuple and binary size as the size information is precomputed in the data structure.
 
-We could define this protocol as follows:
+Even if we have type-specific functions for getting the size built into Elixir (such as `tuple_size/1`), we could implement a generic `Size` protocol that all data structures for which size is precomputed would implement.
+
+The protocol definition would look like this:
 
 ```elixir
-defprotocol Blank do
-  @doc "Returns true if data is considered blank/empty"
-  def blank?(data)
+defprotocol Size do
+  @doc "Calculates the size (and not the length!) of a data structure"
+  def size(data)
 end
 ```
 
-The protocol expects a function called `blank?` that receives one argument to be implemented. We can implement this protocol for different Elixir data types as follows:
+The `Size` protocol expects a function called `size` that receives one argument (the data structure we want to know the size of) to be implemented. We can now implement this protocol for the data structures that would have a compliant implementation:
 
 ```elixir
-# Integers are never blank
-defimpl Blank, for: Integer do
-  def blank?(_), do: false
+defimpl Size, for: BitString do
+  def size(string), do: byte_size(string)
 end
 
-# Just empty list is blank
-defimpl Blank, for: List do
-  def blank?([]), do: true
-  def blank?(_),  do: false
+defimpl Size, for: Map do
+  def size(map), do: map_size(map)
 end
 
-# Just empty map is blank
-defimpl Blank, for: Map do
-  # Keep in mind we could not pattern match on %{} because
-  # it matches on all maps. We can however check if the size
-  # is zero (and size is a fast operation).
-  def blank?(map), do: map_size(map) == 0
-end
-
-# Just the atoms false and nil are blank
-defimpl Blank, for: Atom do
-  def blank?(false), do: true
-  def blank?(nil),   do: true
-  def blank?(_),     do: false
+defimpl Size, for: Tuple do
+  def size(tuple), do: tuple_size(tuple)
 end
 ```
 
-And we would do so for all native data types. The types available are:
+We didn't implement the `Size` protocol for lists as there is no "size" information precomputed for lists, and the length of a list has to be computed (with `length/1`).
+
+Now with the protocol defined and implementations in hand, we can start using it:
+
+```iex
+iex> Size.size("foo")
+3
+iex> Size.size({:ok, "hello"})
+2
+iex> Size.size(%{label: "some label"})
+1
+```
+
+Passing a data type that doesn't implement the protocol raises an error:
+
+```iex
+iex> Size.size([1, 2, 3])
+** (Protocol.UndefinedError) protocol Size not implemented for [1, 2, 3]
+```
+
+It's possible to implement protocols for all Elixir data types:
 
 * `Atom`
 * `BitString`
@@ -64,102 +72,91 @@ And we would do so for all native data types. The types available are:
 * `Reference`
 * `Tuple`
 
-Now with the protocol defined and implementations in hand, we can invoke it:
-
-```iex
-iex> Blank.blank?(0)
-false
-iex> Blank.blank?([])
-true
-iex> Blank.blank?([1, 2, 3])
-false
-```
-
-Passing a data type that does not implement the protocol raises an error:
-
-```iex
-iex> Blank.blank?("hello")
-** (Protocol.UndefinedError) protocol Blank not implemented for "hello"
-```
 
 ## Protocols and structs
 
 The power of Elixir's extensibility comes when protocols and structs are used together.
 
-In the [previous chapter](/getting-started/structs.html), we have learned that although structs are maps, they do not share protocol implementations with maps. Let's define a `User` struct as in that chapter:
+In the [previous chapter](/getting-started/structs.html), we have learned that although structs are maps, they do not share protocol implementations with maps. For example, [`MapSet`](https://hexdocs.pm/elixir/MapSet.html)s (sets based on maps) are implemented as structs. Let's try to use the `Size` protocol with a `MapSet`:
 
 ```iex
-iex> defmodule User do
-...>   defstruct name: "john", age: 27
-...> end
-{:module, User,
- <<70, 79, 82, ...>>, {:__struct__, 0}}
+iex> Size.size(%{})
+0
+iex> set = %MapSet{} = MapSet.new
+#MapSet<[]>
+iex> Size.size(set)
+** (Protocol.UndefinedError) protocol Size not implemented for #MapSet<[]>
 ```
 
-And then check:
-
-```iex
-iex> Blank.blank?(%{})
-true
-iex> Blank.blank?(%User{})
-** (Protocol.UndefinedError) protocol Blank not implemented for %User{age: 27, name: "john"}
-```
-
-Instead of sharing protocol implementation with maps, structs require their own protocol implementation:
+Instead of sharing protocol implementation with maps, structs require their own protocol implementation. Since a `MapSet` has its size precomputed and accessible through `MapSet.size/1`, we can define a `Size` implementation for it:
 
 ```elixir
-defimpl Blank, for: User do
-  def blank?(_), do: false
+defimpl Size, for: MapSet do
+  def size(set), do: MapSet.size(set)
 end
 ```
 
-If desired, you could come up with your own semantics for a user being blank. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as `Enumerable` and possibly `Blank`, for this data type.
+If desired, you could come up with your own semantics for the size of your struct. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as `Enumerable` and possibly `Size`, for this data type.
+
+```elixir
+defmodule User do
+  defstruct [:name, :age]
+end
+
+defimpl Size, for: User do
+  def size(_user), do: 2
+end
+```
 
 ## Implementing `Any`
 
-Manually implementing protocols for all types can quickly become repetitive and tedious.  In such cases, Elixir provides two options: we can explicitly derive the protocol implementation for our types or automatically implement the protocol for all types. In both cases, we need to implement the protocol for `Any`.
+Manually implementing protocols for all types can quickly become repetitive and tedious. In such cases, Elixir provides two options: we can explicitly derive the protocol implementation for our types or automatically implement the protocol for all types. In both cases, we need to implement the protocol for `Any`.
 
 ### Deriving
 
 Elixir allows us to derive a protocol implementation based on the `Any` implementation. Let's first implement `Any` as follows:
 
 ```elixir
-defimpl Blank, for: Any do
-  def blank?(_), do: false
+defimpl Size, for: Any do
+  def size(_), do: 0
 end
 ```
 
-Now, when defining the struct, we can explicitly derive the implementation for the `Blank` protocol. Let's create another struct, this one called `DeriveUser`:
+The implementation above is arguably not a reasonable one. For example, it makes no sense to say that the size of a `PID` or an `Integer` is `0`.
+
+However, should we be fine with the implementation for `Any`, in order to use such implementation we would need to tell our struct to explicitly derive the `Size` protocol:
 
 ```elixir
-defmodule DeriveUser do
-  @derive Blank
-  defstruct name: "john", age: 27
+defmodule OtherUser do
+  @derive [Size]
+  defstruct [:name, :age]
 end
 ```
 
-When deriving, Elixir will implement the `Blank` protocol for `DeriveUser` based on the implementation provided for `Any`. Note this behaviour is opt-in: structs will only work with the protocol as long as they explicitly implement or derive it.
+When deriving, Elixir will implement the `Size` protocol for `OtherUser` based on the implementation provided for `Any`.
 
 ### Fallback to `Any`
 
 Another alternative to `@derive` is to explicitly tell the protocol to fallback to `Any` when an implementation cannot be found. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
 
 ```elixir
-defprotocol Blank do
+defprotocol Size do
   @fallback_to_any true
-  def blank?(data)
+  def size(data)
 end
 ```
 
-Assuming we have implemented `Any` as in the previous section:
+As we said in the previous section, the implementation of `Size` for `Any` is not one that can apply to any data type. That's one of the reasons why `@fallback_to_any` is an opt-in behaviour. For the majority of protocols, raising an error when a protocol is not implemented is the proper behaviour. That said, assuming we have implemented `Any` as in the previous section:
 
 ```elixir
-defimpl Blank, for: Any do
-  def blank?(_), do: false
+defimpl Size, for: Any do
+  def size(_), do: 0
 end
 ```
 
-Now all data types (including structs) that have not implemented the `Blank` protocol will be considered non-blank. In contrast to `@derive`, falling back to `Any` is opt-out: all data types get a pre-defined behaviour unless they provide their own implementation of the protocol. Which technique is best depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
+Now all data types (including structs) that have not implemented the `Size` protocol will be considered to have a size of `0`.
+
+Which technique is best between deriving and falling back to any depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
 
 ## Built-in protocols
 

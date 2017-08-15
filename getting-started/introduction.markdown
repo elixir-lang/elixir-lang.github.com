@@ -10,20 +10,26 @@ redirect_from: /getting_started/1.html
 
 Welcome!
 
-In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
+In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
 
 Our requirements are:
 
-  * Elixir - Version 1.2.0 onwards
+  * Elixir - Version 1.4.0 onwards
   * Erlang - Version 18.0 onwards
 
 Let's get started!
 
 > If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com).
 
+> The Elixir guides are also available in EPUB format:
+>
+>   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)
+>   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)
+>   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)
+
 ## Installation
 
-If you still haven't installed Elixir, run to our [installation page](/install.html). Once you are done, you can run `elixir -v` to get the current Elixir version.
+If you still haven't installed Elixir, run to our [installation page](/install.html). Once you are done, you can run `elixir --version` to get the current Elixir version.
 
 ## Interactive mode
 
@@ -34,13 +40,16 @@ For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which
 Open up `iex` and type the following expressions:
 
 ```iex
-Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-iex> 40 + 2
+Interactive Elixir (1.4.0) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> 40 + 2
 42
-iex> "hello" <> " world"
+iex(2)> "hello" <> " world"
 "hello world"
 ```
+
+Please note that some details like version numbers may differ a bit in your session, that's not important. From now on `iex` sessions will be stripped down to focus on the code. To exit `iex` press `Ctrl+C` twice.
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
@@ -61,7 +70,7 @@ $ elixir simple.exs
 Hello world from Elixir
 ```
 
-Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-started/modules.html)) and how to use the Mix build tool (in the [Mix & OTP guide](/getting-started/mix-otp/introduction-to-mix.html)). For now, let's move on to [Chapter 2](/getting-started/basic-types.html).
+Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-started/modules-and-functions.html)) and how to use the Mix build tool (in the [Mix & OTP guide](/getting-started/mix-otp/introduction-to-mix.html)). For now, let's move on to [Chapter 2](/getting-started/basic-types.html).
 
 ## Asking questions
 

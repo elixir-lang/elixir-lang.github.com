@@ -7,13 +7,13 @@ title: IO and the file system
 
 {% include toc.html %}
 
-This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html) and [`Path`](/docs/stable/elixir/Path.html).
+This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](https://hexdocs.pm/elixir/IO.html), [`File`](https://hexdocs.pm/elixir/File.html) and [`Path`](https://hexdocs.pm/elixir/Path.html).
 
 We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the <abbr title="Virtual Machine">VM</abbr>.
 
 ## The `IO` module
 
-The `IO` module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files and other IO devices. Usage of the module is pretty straightforward:
+The [`IO`](http://elixir-lang.org/docs/v1.0/elixir/IO.html) module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files, and other IO devices. Usage of the module is pretty straightforward:
 
 ```iex
 iex> IO.puts "hello world"
@@ -24,7 +24,7 @@ yes or no? yes
 "yes\n"
 ```
 
-By default, functions in the IO module read from the standard input and write to the standard output. We can change that by passing, for example, `:stderr` as an argument (in order to write to the standard error device):
+By default, functions in the `IO` module read from the standard input and write to the standard output. We can change that by passing, for example, `:stderr` as an argument (in order to write to the standard error device):
 
 ```iex
 iex> IO.puts :stderr, "hello world"
@@ -34,7 +34,7 @@ hello world
 
 ## The `File` module
 
-The [`File`](/docs/stable/elixir/File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
+The [`File`](https://hexdocs.pm/elixir/File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
 ```iex
 iex> {:ok, file} = File.open "hello", [:write]
@@ -61,10 +61,12 @@ iex> File.read! "hello"
 iex> File.read "unknown"
 {:error, :enoent}
 iex> File.read! "unknown"
-** (File.Error) could not read file unknown: no such file or directory
+** (File.Error) could not read file "unknown": no such file or directory
 ```
 
-Notice that when the file does not exist, the version with `!` raises an error. The version without `!` is preferred when you want to handle different outcomes using pattern matching:
+Notice that the version with `!` returns the contents of the file instead of a tuple, and if anything goes wrong the function raises an error.
+
+The version without `!` is preferred when you want to handle different outcomes using pattern matching:
 
 ```elixir
 case File.read(file) do
@@ -85,7 +87,7 @@ Therefore, if you don't want to handle the error outcomes, prefer using `File.re
 
 ## The `Path` module
 
-The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](/docs/stable/elixir/Path.html) module provides facilities for working with such paths:
+The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](https://hexdocs.pm/elixir/Path.html) module provides facilities for working with such paths:
 
 ```iex
 iex> Path.join("foo", "bar")
@@ -94,7 +96,7 @@ iex> Path.expand("~/hello")
 "/Users/jose/hello"
 ```
 
-Using functions from the `Path` module as opposed to directly manipulating string is preferred since the `Path` module takes care of different operating systems transparently. Finally, keep in mind that Elixir will automatically convert slashes (`/`) into backslashes (`\`) on Windows when performing file operations.
+Using functions from the `Path` module as opposed to directly manipulating strings is preferred since the `Path` module takes care of different operating systems transparently. Finally, keep in mind that Elixir will automatically convert slashes (`/`) into backslashes (`\`) on Windows when performing file operations.
 
 With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.
 
@@ -115,13 +117,14 @@ iex> pid = spawn fn ->
 ...> end
 #PID<0.57.0>
 iex> IO.write(pid, "hello")
-{:io_request, #PID<0.41.0>, #Reference<0.0.8.91>, {:put_chars, :unicode, "hello"}}
+{:io_request, #PID<0.41.0>, #Reference<0.0.8.91>,
+ {:put_chars, :unicode, "hello"}}
 ** (ErlangError) erlang error: :terminated
 ```
 
 After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result that we did not supply.
 
-The [`StringIO`](/docs/stable/elixir/StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
+The [`StringIO`](https://hexdocs.pm/elixir/StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
 
 ```iex
 iex> {:ok, pid} = StringIO.open("hello")
@@ -166,4 +169,4 @@ On the other hand, `:stdio` and files opened with `:utf8` encoding work with the
 
 Although this is a subtle difference, you only need to worry about these details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always "raw".
 
-This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - [`IO`](/docs/stable/elixir/IO.html), [`File`](/docs/stable/elixir/File.html), [`Path`](/docs/stable/elixir/Path.html) and [`StringIO`](/docs/stable/elixir/StringIO.html) - as well as how the <abbr title="Virtual Machine">VM</abbr> uses processes for the underlying IO mechanisms and how to use `chardata` and `iodata` for IO operations.
+This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - [`IO`](https://hexdocs.pm/elixir/IO.html), [`File`](https://hexdocs.pm/elixir/File.html), [`Path`](https://hexdocs.pm/elixir/Path.html) and [`StringIO`](https://hexdocs.pm/elixir/StringIO.html) - as well as how the <abbr title="Virtual Machine">VM</abbr> uses processes for the underlying IO mechanisms and how to use `chardata` and `iodata` for IO operations.

@@ -17,9 +17,9 @@ We will start our TCP server by first implementing an echo server. It will send 
 
 A TCP server, in broad strokes, performs the following steps:
 
-1. Listens to a port until the port is available and it gets hold of the socket
-2. Waits for a client connection on that port and accepts it
-3. Reads the client request and writes a response back
+  1. Listens to a port until the port is available and it gets hold of the socket
+  2. Waits for a client connection on that port and accepts it
+  3. Reads the client request and writes a response back
 
 Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
 
@@ -66,7 +66,7 @@ end
 
 We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
 
-`serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](/docs/stable/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
+`serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
 
 ```elixir
 socket |> read_line() |> write_line(socket)
@@ -79,6 +79,8 @@ write_line(read_line(socket), socket)
 ```
 
 The `read_line/1` implementation receives data from the socket using `:gen_tcp.recv/2` and `write_line/2` writes to the socket using `:gen_tcp.send/2`.
+
+Note that `serve/1` is an infinite loop called sequentially inside `loop_acceptor/1`, so the tail call to `loop_acceptor/1` is never reached and could be avoided. However, as we shall see, we will need to execute `serve/1` in a separate process, so we will need that tail call soon.
 
 This is pretty much all we need to implement our echo server. Let's give it a try!
 
@@ -110,9 +112,9 @@ My particular telnet client can be exited by typing `ctrl + ]`, typing `quit`, a
 Once you exit the telnet client, you will likely see an error in the IEx session:
 
     ** (MatchError) no match of right hand side value: {:error, :closed}
-        (kv_server) lib/kv_server.ex:41: KVServer.read_line/1
-        (kv_server) lib/kv_server.ex:33: KVServer.serve/1
-        (kv_server) lib/kv_server.ex:27: KVServer.loop_acceptor/1
+        (kv_server) lib/kv_server.ex:45: KVServer.read_line/1
+        (kv_server) lib/kv_server.ex:37: KVServer.serve/1
+        (kv_server) lib/kv_server.ex:30: KVServer.loop_acceptor/1
 
 That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in future revisions of our server.
 
@@ -122,24 +124,28 @@ For now there is a more important bug we need to fix: what happens if our TCP ac
 
 We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](/docs/stable/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
+[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
 
-Let's give it a try. Open up `lib/kv_server.ex`, and let's change the supervisor in the `start/2` function to the following:
+Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
 ```elixir
-def start(_type, _args) do
-  import Supervisor.Spec
+  def start(_type, _args) do
+    children = [
+      {Task, fn -> KVServer.accept(4040) end}
+    ]
 
-  children = [
-    worker(Task, [KVServer, :accept, [4040]])
-  ]
-
-  opts = [strategy: :one_for_one, name: KVServer.Supervisor]
-  Supervisor.start_link(children, opts)
-end
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
 ```
 
-With this change, we are saying that we want to run `KVServer.accept(4040)` as a worker. We are hardcoding the port for now, but we will discuss ways in which this could be changed later.
+With this change, we are saying that we want to run `KVServer.accept(4040)` as a task. We are hardcoding the port for now but this could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
+
+```elixir
+port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+# ...
+{Task, fn -> KVServer.accept(port) end}
+```
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
 
@@ -154,7 +160,7 @@ say me
 say me
 ```
 
-Yes, it works! If you kill the client, causing the whole server to crash, you will see another one starts right away. However, does it *scale*?
+Yes, it works! However, does it *scale*?
 
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
@@ -194,29 +200,27 @@ end
 
 We are starting a linked Task directly from the acceptor process. But we've already made this mistake once. Do you remember?
 
-This is similar to the mistake we made when we called `KV.Bucket.start_link/0` straight from the registry. That meant a failure in any bucket would bring the whole registry down.
+This is similar to the mistake we made when we called `KV.Bucket.start_link/1` straight from the registry. That meant a failure in any bucket would bring the whole registry down.
 
 The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down.
 
-We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor that starts temporary tasks as part of our supervision tree!
+We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor that starts temporary tasks as part of our supervision tree.
 
 Let's change `start/2` once again, to add a supervisor to our tree:
 
 ```elixir
-def start(_type, _args) do
-  import Supervisor.Spec
+  def start(_type, _args) do
+    children = [
+      {Task.Supervisor, name: KVServer.TaskSupervisor},
+      {Task, fn -> KVServer.accept(4040) end}
+    ]
 
-  children = [
-    supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
-    worker(Task, [KVServer, :accept, [4040]])
-  ]
-
-  opts = [strategy: :one_for_one, name: KVServer.Supervisor]
-  Supervisor.start_link(children, opts)
-end
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
 ```
 
-We'll now start a [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
+We'll now start a [`Task.Supervisor`](https://hexdocs.pm/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first.
 
 Now we need to change `loop_acceptor/1` to use `Task.Supervisor` to serve each request:
 
@@ -231,27 +235,13 @@ end
 
 You might notice that we added a line, `:ok = :gen_tcp.controlling_process(client, pid)`. This makes the child process the "controlling process" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets would be tied to the process that accepted them (which is the default behaviour).
 
-Start a new server with `mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!
+Start a new server with `PORT=4040 mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!
 
-Here is the full echo server implementation, in a single module:
+Here is the full echo server implementation:
 
 ```elixir
 defmodule KVServer do
-  use Application
   require Logger
-
-  @doc false
-  def start(_type, _args) do
-    import Supervisor.Spec
-
-    children = [
-      supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
-      worker(Task, [KVServer, :accept, [4040]])
-    ]
-
-    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
-    Supervisor.start_link(children, opts)
-  end
 
   @doc """
   Starts accepting connections on the given `port`.
@@ -292,5 +282,23 @@ end
 Since we have changed the supervisor specification, we need to ask: is our supervision strategy still correct?
 
 In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too.
+
+However, there is still one concern left, which are the restart strategies. Tasks, by default, have the `:restart` value set to `:temporary`, which means they are not restarted. This is an excellent default for the connections started via the `Task.Supervisor`, as it makes no sense to restart a failed connection, but it is a bad choice for the acceptor. If the acceptor crashes, we want to bring the acceptor up and running again.
+
+We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `start/2` in `KVServer.Application` once more:
+
+```elixir
+  def start(_type, _args) do
+    children = [
+      {Task.Supervisor, name: KVServer.TaskSupervisor},
+      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end}, restart: :permanent)
+    ]
+
+    opts = [strategy: :one_for_one, name: KVServer.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+```
+
+`Supervisor.child_spec/2` is capable of building a child specification from a given module and/or tuple, and it also accepts values that override the underlying child specification. Now we have an always running acceptor that starts temporary task processes under an always running task supervisor.
 
 In the next chapter we will start parsing the client requests and sending responses, finishing our server.

@@ -11,11 +11,11 @@ In Elixir, all code runs inside processes. Processes are isolated from each othe
 
 Elixir's processes should not be confused with operating system processes. Processes in Elixir are extremely lightweight in terms of memory and CPU (unlike threads in many other programming languages). Because of this, it is not uncommon to have tens or even hundreds of thousands of processes running simultaneously.
 
-In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between different processes.
+In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between processes.
 
 ## `spawn`
 
-The basic mechanism for spawning new processes is with the auto-imported `spawn/1` function:
+The basic mechanism for spawning new processes is the auto-imported `spawn/1` function:
 
 ```iex
 iex> spawn fn -> 1 + 2 end
@@ -62,6 +62,8 @@ iex> receive do
 
 When a message is sent to a process, the message is stored in the process mailbox. The `receive/1` block goes through the current process mailbox searching for a message that matches any of the given patterns. `receive/1` supports guards and many clauses, such as `case/2`.
 
+The process that sends the message does not block on `send/2`, it puts the message in the recipient's mailbox and continues. In particular, a process can send messages to itself.
+
 If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:
 
 ```iex
@@ -88,6 +90,8 @@ iex> receive do
 "Got hello from #PID<0.48.0>"
 ```
 
+The `inspect/1` function is used to convert a data structure's internal representation into a string, typically for printing. Notice that when the `receive` block gets executed the sender process we have spawned may already be dead, as its only instruction was to send a message.
+
 While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
 
 ```iex
@@ -100,7 +104,7 @@ iex> flush()
 
 ## Links
 
-The most common form of spawning in Elixir is actually via `spawn_link/1`. Before we show an example with `spawn_link/1`, let's try to see what happens when a process fails:
+The majority of times we spawn processes in Elixir, we spawn them as linked processes. Before we show an example with `spawn_link/1`, let's see what happens when a process started with `spawn/1` fails:
 
 ```iex
 iex> spawn fn -> raise "oops" end
@@ -111,7 +115,7 @@ iex> spawn fn -> raise "oops" end
     :erlang.apply/2
 ```
 
-It merely logged an error but the spawning process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
+It merely logged an error but the parent process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
 
 ```iex
 iex> spawn_link fn -> raise "oops" end
@@ -122,28 +126,11 @@ iex> spawn_link fn -> raise "oops" end
         :erlang.apply/2
 ```
 
-When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let's use `spawn_link/1` inside a file and run it:
+Because processes are linked, we now see a message saying the parent process, which is the shell process, has received an EXIT signal from another process causing the shell to terminate. IEx detects this situation and starts a new shell session.
 
-```iex
-# spawn.exs
-spawn_link fn -> raise "oops" end
+Linking can also be done manually by calling `Process.link/1`. We recommend that you take a look at [the `Process` module](https://hexdocs.pm/elixir/Process.html) for other functionality provided by processes.
 
-receive do
-  :hello -> "let's wait until the process fails"
-end
-```
-
-```
-$ elixir spawn.exs
-
-** (EXIT from #PID<0.47.0>) an exception was raised:
-    ** (RuntimeError) oops
-        spawn.exs:1: anonymous fn/0 in :elixir_compiler_0.__FILE__/1
-```
-
-This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling `Process.link/1`. We recommend that you take a look at [the `Process` module](/docs/stable/elixir/Process.html) for other functionality provided by processes.
-
-Processes and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don't share anything by default. And since processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.
+Processes and links play an important role when building fault-tolerant systems. Elixir processes are isolated and don't share anything by default. Therefore, a failure in a process will never crash or corrupt the state of another process. Links, however, allow processes to establish a relationship in a case of failures. We often link our processes to supervisors which will detect when a process dies and start a new process in its place.
 
 While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting processes fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
 
@@ -165,9 +152,9 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
     Args: []
 ```
 
-Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` to return `{:ok, pid}` rather than just the PID. This is what enables Tasks to be used in supervision trees. Furthermore, `Task` provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
+Instead of `spawn/1` and `spawn_link/1`, we use `Task.start/1` and `Task.start_link/1` which return `{:ok, pid}` rather than just the PID. This is what enables tasks to be used in supervision trees. Furthermore, `Task` provides convenience functions, like `Task.async/1` and `Task.await/1`, and functionality to ease distribution.
 
-We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use Task to get better error reports.
+We will explore those functionalities in the ***Mix and OTP guide***, for now it is enough to remember to use `Task` to get better error reports.
 
 ## State
 
@@ -199,10 +186,10 @@ Let's give it a try by running `iex kv.exs`:
 
 ```iex
 iex> {:ok, pid} = KV.start_link
-#PID<0.62.0>
+{:ok, #PID<0.62.0>}
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
-iex> flush
+iex> flush()
 nil
 :ok
 ```
@@ -214,7 +201,7 @@ iex> send pid, {:put, :hello, :world}
 {:put, :hello, :world}
 iex> send pid, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
-iex> flush
+iex> flush()
 :world
 :ok
 ```
@@ -228,12 +215,12 @@ iex> Process.register(pid, :kv)
 true
 iex> send :kv, {:get, :hello, self()}
 {:get, :hello, #PID<0.41.0>}
-iex> flush
+iex> flush()
 :world
 :ok
 ```
 
-Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ship with Elixir. For example, Elixir provides [agents](/docs/stable/elixir/Agent.html), which are simple abstractions around state:
+Using processes to maintain state and name registration are very common patterns in Elixir applications. However, most of the time, we won't implement those patterns manually as above, but by using one of the many abstractions that ship with Elixir. For example, Elixir provides [agents](https://hexdocs.pm/elixir/Agent.html), which are simple abstractions around state:
 
 ```iex
 iex> {:ok, pid} = Agent.start_link(fn -> %{} end)
@@ -244,6 +231,6 @@ iex> Agent.get(pid, fn map -> Map.get(map, :hello) end)
 :world
 ```
 
-A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
+A `:name` option could also be given to `Agent.start_link/2` and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called `GenServer`), tasks, and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the ***Mix and OTP guide*** which will build a complete Elixir application from start to finish.
 
 For now, let's move on and explore the world of I/O in Elixir.

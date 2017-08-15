@@ -23,11 +23,11 @@ In order to better understand how macros work, let's create a new module where w
 
 ```elixir
 defmodule Unless do
-  def fun_unless(clause, expression) do
+  def fun_unless(clause, do: expression) do
     if(!clause, do: expression)
   end
 
-  defmacro macro_unless(clause, expression) do
+  defmacro macro_unless(clause, do: expression) do
     quote do
       if(!unquote(clause), do: unquote(expression))
     end
@@ -47,9 +47,9 @@ And play with those definitions:
 
 ```iex
 iex> require Unless
-iex> Unless.macro_unless true, IO.puts "this should never be printed"
+iex> Unless.macro_unless true, do: IO.puts "this should never be printed"
 nil
-iex> Unless.fun_unless true, IO.puts "this should never be printed"
+iex> Unless.fun_unless true, do: IO.puts "this should never be printed"
 "this should never be printed"
 nil
 ```
@@ -59,14 +59,14 @@ Note that in our macro implementation, the sentence was not printed, although it
 In other words, when invoked as:
 
 ```elixir
-Unless.macro_unless true, IO.puts "this should never be printed"
+Unless.macro_unless true, do: IO.puts "this should never be printed"
 ```
 
 Our `macro_unless` macro received the following:
 
 {% raw %}
 ```elixir
-macro_unless(true, {{:., [], [{:aliases, [], [:IO]}, :puts]}, [], ["this should never be printed"]})
+macro_unless(true, [do: {{:., [], [{:__aliases__, [alias: false], [:IO]}, :puts]}, [], ["this should never be printed"]}])
 ```
 {% endraw %}
 
@@ -86,7 +86,7 @@ And it then returned a quoted expression as follows:
 We can actually verify that this is the case by using `Macro.expand_once/2`:
 
 ```iex
-iex> expr = quote do: Unless.macro_unless(true, IO.puts "this should never be printed")
+iex> expr = quote do: Unless.macro_unless(true, do: IO.puts "this should never be printed")
 iex> res  = Macro.expand_once(expr, __ENV__)
 iex> IO.puts Macro.to_string(res)
 if(!true) do
@@ -100,16 +100,16 @@ end
 That's what macros are all about. They are about receiving quoted expressions and transforming them into something else. In fact, `unless/2` in Elixir is implemented as a macro:
 
 ```elixir
-defmacro unless(clause, options) do
+defmacro unless(clause, do: expression) do
   quote do
-    if(!unquote(clause), do: unquote(options))
+    if(!unquote(clause), do: unquote(expression))
   end
 end
 ```
 
-Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many others used throughout this getting started guide are implemented in pure Elixir, often as a macros. This means that the constructs being used to build the language can be used by developers to extend the language to the domains they are working on.
+Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many others used throughout this getting started guide are implemented in pure Elixir, often as a macro. This means that the constructs being used to build the language can be used by developers to extend the language to the domains they are working on.
 
-We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](/docs/stable/elixir/Kernel.SpecialForms.html#summary).
+We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#summary).
 
 ## Macros hygiene
 
@@ -223,7 +223,7 @@ iex> __ENV__.requires
 [IEx.Helpers, Integer, Kernel, Kernel.Typespec]
 ```
 
-Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](/docs/stable/elixir/Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](/docs/stable/elixir/Macro.Env.html).
+Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](https://hexdocs.pm/elixir/Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](https://hexdocs.pm/elixir/Macro.Env.html).
 
 ## Private macros
 

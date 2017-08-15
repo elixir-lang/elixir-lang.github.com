@@ -3,6 +3,7 @@ title: "Installing Elixir"
 section: install
 layout: default
 ---
+{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
 # {{ page.title }}
 
@@ -39,10 +40,12 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Run: `guix package -i elixir`
   * Fedora 21 (and older)
     * Run: `yum install elixir`
+  * Fedora 22 (and newer)
+    * Run `dnf install elixir`
   * FreeBSD
     * From ports: `cd /usr/ports/lang/elixir && make install clean`
     * From pkg: `pkg install elixir`
-  * Ubuntu 12.04 and 14.04 / Debian 7
+  * Ubuntu 12.04/14.04/16.04 or Debian 7
     * Add Erlang Solutions repo: `wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb`
     * Run: `sudo apt-get update`
     * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
@@ -56,11 +59,46 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   * Chocolatey
     * `cinst elixir`
 
+### Raspberry Pi
+
+If necessary replace "jessie" with the name of your Raspian release.   
+
+  * The Erlang Solutions repository has a prebuilt package for armhf.  
+    This saves significant time instead of recompiling natively.  
+
+  * Get Erlang key   
+
+    * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`    
+    * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`  
+    * Add to keychain: `sudo apt-key add erlang_solutions.asc`   
+
+  * Install Elixir
+    * Update apt to latest: `sudo apt update`     
+    * Run: `sudo apt install elixir`   
+
+### Docker
+
+If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir.
+
+  * Enter interactive mode
+    * Run: `docker run -it --rm elixir`
+  * Enter bash within container with installed `elixir`
+    * Run: `docker run -it --rm elixir bash`
+
 Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
+
+### Nanobox
+
+For developers using [Nanobox](https://nanobox.io), simply specify the `elixir` engine in your `boxfile.yml` and `nanobox run`.
+
+```yaml
+run.config:
+  engine: elixir
+```
 
 ## Precompiled package
 
-Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/).
+Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Precompiled.zip).
 
 Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
@@ -79,7 +117,7 @@ If you would prefer to compile from source manually, don't worry, we got your ba
 
 You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#installing-erlang).
 
-Next you should download the [latest release](https://github.com/elixir-lang/elixir/releases/), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows)).
+Next you should download source code ([.zip](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.zip), [.tar.gz](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.tar.gz)) of the [latest release](https://github.com/elixir-lang/elixir/releases/tag/v{{ stable.version }}), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows)).
 
 After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
@@ -116,3 +154,7 @@ On **Unix systems**, you need to [find your shell profile file](https://unix.sta
 ```bash
 export PATH="$PATH:/path/to/elixir/bin"
 ```
+
+## Checking the installed version of Elixir
+
+Once you have Elixir installed, you can check its version by running `elixir --version`.

@@ -23,13 +23,13 @@ The built-in Elixir String module handles binaries that are UTF-8 encoded.
 you are dealing with binary data that is not necessarily UTF-8 encoded.
 
 ```iex
-iex> String.to_char_list "Ø"
+iex> String.to_charlist "Ø"
 [216]
 iex> :binary.bin_to_list "Ø"
 [195, 152]
 ```
 
-The above example shows the difference; the `String` module returns UTF-8
+The above example shows the difference; the `String` module returns Unicode
 codepoints, while `:binary` deals with raw data bytes.
 
 ## Formatted text output
@@ -68,7 +68,7 @@ edit your `mix.exs` file to include:
 
 ```elixir
 def application do
-  [applications: [:crypto]]
+  [extra_applications: [:crypto]]
 end
 ```
 
@@ -79,9 +79,6 @@ end
 functions for dealing with directed graphs built of vertices and edges.
 After constructing the graph, the algorithms in there will help finding
 for instance the shortest path between two vertices, or loops in the graph.
-
-Note that the functions in `:digraph` alter the graph structure indirectly
-as a side effect, while returning the added vertices or edges.
 
 Given three vertices, find the shortest path from the first to the last.
 
@@ -94,6 +91,9 @@ iex> :digraph.add_edge(digraph, v1, v2)
 iex> :digraph.get_short_path(digraph, v0, v2)
 [{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}]
 ```
+
+Note that the functions in `:digraph` alter the graph structure in-place, this
+is possible because they are implemented as ETS tables, explained next.
 
 ## Erlang Term Storage
 
@@ -116,15 +116,15 @@ iex> :ets.insert(table, {"China", 1_374_000_000})
 iex> :ets.insert(table, {"India", 1_284_000_000})
 iex> :ets.insert(table, {"USA", 322_000_000})
 iex> :ets.i(table)
-<1   > {"USA", 322000000}
-<2   > {"China", 1_374_000_000}
-<3   > {"India", 1_284_000_000}
+<1   > {<<"India">>,1284000000}
+<2   > {<<"USA">>,322000000}
+<3   > {<<"China">>,1374000000}
 ```
 
 ## The math module
 
 [The `math` module](http://erlang.org/doc/man/math.html) contains common
-mathematical operations covering trigonometry, exponential and logarithmic
+mathematical operations covering trigonometry, exponential, and logarithmic
 functions.
 
 ```iex
@@ -174,10 +174,10 @@ iex> :rand.uniform(6)
 
 ## The zip and zlib modules
 
-[The `zip` module](http://erlang.org/doc/man/zip.html) lets you read and write zip files to and from disk or memory,
-as well as extracting file information.
+[The `zip` module](http://erlang.org/doc/man/zip.html) lets you read and write
+ZIP files to and from disk or memory, as well as extracting file information.
 
-This code counts the number of files in a zip file:
+This code counts the number of files in a ZIP file:
 
 ```iex
 iex> :zip.foldl(fn _, _, _, acc -> acc + 1 end, 0, :binary.bin_to_list("file.zip"))

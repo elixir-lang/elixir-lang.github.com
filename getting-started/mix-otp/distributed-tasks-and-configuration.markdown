@@ -84,9 +84,9 @@ iex> pid = Node.spawn_link :"foo@computer-name", fn ->
 ...>   end
 ...> end
 #PID<9014.59.0>
-iex> send pid, {:ping, self}
+iex> send pid, {:ping, self()}
 {:ping, #PID<0.73.0>}
-iex> flush
+iex> flush()
 :pong
 :ok
 ```
@@ -97,9 +97,9 @@ There are three better alternatives to `Node.spawn_link/2` that we could use in 
 
 1. We could use Erlang's [:rpc](http://www.erlang.org/doc/man/rpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:rpc.call(:"foo@computer-name", Hello, :world, [])` and it will print "hello world"
 
-2. We could have a server running on the other node and send requests to that node via the [GenServer](/docs/stable/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as first argument
+2. We could have a server running on the other node and send requests to that node via the [GenServer](https://hexdocs.pm/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as first argument
 
-3. We could use [tasks](/docs/stable/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
+3. We could use [tasks](https://hexdocs.pm/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
 
 The options above have different properties. Both `:rpc` and using a GenServer would serialize your requests on a single server, while tasks are effectively running asynchronously on the remote node, with the only serialization point being the spawning done by the supervisor.
 
@@ -115,14 +115,14 @@ res  = compute_something_else()
 res + Task.await(task)
 ```
 
-`async/await` provides a very simple mechanism to compute values concurrently. Not only that, `async/await` can also be used with the same [`Task.Supervisor`](/docs/stable/elixir/Task.Supervisor.html) we have used in previous chapters. We just need to call `Task.Supervisor.async/2` instead of `Task.Supervisor.start_child/2` and use `Task.await/2` to read the result later on.
+`async/await` provides a very simple mechanism to compute values concurrently. Not only that, `async/await` can also be used with the same [`Task.Supervisor`](https://hexdocs.pm/elixir/Task.Supervisor.html) we have used in previous chapters. We just need to call `Task.Supervisor.async/2` instead of `Task.Supervisor.start_child/2` and use `Task.await/2` to read the result later on.
 
 ## Distributed tasks
 
 Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `lib/kv/supervisor.ex` from the `:kv` application. Let's add a task supervisor as the last child of the tree:
 
 ```elixir
-supervisor(Task.Supervisor, [[name: KV.RouterTasks]]),
+{Task.Supervisor, name: KV.RouterTasks},
 ```
 
 Now, let's start two named nodes again, but inside the `:kv` application:
@@ -138,7 +138,7 @@ From inside `bar@computer-name`, we can now spawn a task directly on the other n
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, fn ->
 ...>   {:ok, node()}
 ...> end
-%Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
+%Task{owner: #PID<0.122.0>, pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
 iex> Task.await(task)
 {:ok, :"foo@computer-name"}
 ```
@@ -147,7 +147,7 @@ Our first distributed task retrieves the name of the node the task is running on
 
 ```iex
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
-%Task{pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
+%Task{owner: #PID<0.122.0>, pid: #PID<12467.89.0>, ref: #Reference<0.0.0.404>}
 iex> Task.await(task)
 :"foo@computer-name"
 ```
@@ -170,9 +170,9 @@ defmodule KV.Router do
     # Get the first byte of the binary
     first = :binary.first(bucket)
 
-    # Try to find an entry in the table or raise
+    # Try to find an entry in the table() or raise
     entry =
-      Enum.find(table, fn {enum, _node} ->
+      Enum.find(table(), fn {enum, _node} ->
         first in enum
       end) || no_entry_error(bucket)
 
@@ -187,7 +187,7 @@ defmodule KV.Router do
   end
 
   defp no_entry_error(bucket) do
-    raise "could not find entry for #{inspect bucket} in table #{inspect table}"
+    raise "could not find entry for #{inspect bucket} in table #{inspect table()}"
   end
 
   @doc """
@@ -238,7 +238,7 @@ And now run tests with:
 $ elixir --sname foo -S mix test
 ```
 
-Our test should successfully pass. Excellent!
+The test should pass.
 
 ## Test filters and tags
 
@@ -284,7 +284,7 @@ The `mix test` command also allows us to dynamically include and exclude tags. F
 $ elixir --sname foo -S mix test --only distributed
 ```
 
-You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](/docs/stable/ex_unit/ExUnit.Case.html).
+You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](https://hexdocs.pm/ex_unit/ExUnit.Case.html).
 
 ## Application environment and configuration
 
@@ -296,7 +296,7 @@ Open up `apps/kv/mix.exs` and change the `application/0` function to return the 
 
 ```elixir
 def application do
-  [applications: [],
+  [extra_applications: [:logger],
    env: [routing_table: []],
    mod: {KV, []}]
 end
@@ -315,7 +315,7 @@ def table do
 end
 ```
 
-We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](/docs/stable/elixir/Application.html).
+We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](https://hexdocs.pm/elixir/Application.html).
 
 Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
 
@@ -361,7 +361,7 @@ Overall, the built-in ability to configure applications and the fact that we hav
 
 As we add more applications in the future, we can continue controlling our deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production.
 
-You can also consider building multiple releases with a tool like [exrm](https://github.com/bitwalker/exrm), which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so we can deploy the application even if the runtime is not pre-installed on the target system.
+You can also consider building multiple releases with a tool like [Distillery](https://github.com/bitwalker/distillery), which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so we can deploy the application even if the runtime is not pre-installed on the target system.
 
 Finally, we have learned some new things in this chapter, and they could be applied to the `:kv_server` application as well. We are going to leave the next steps as an exercise:
 
@@ -377,4 +377,4 @@ Throughout the guide, we have built a very simple distributed key-value store as
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/riak/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
 
-There are many more lessons to learn and we hope you had fun so far!
+Happy coding!

@@ -20,7 +20,7 @@ Mix also provides faster re-compilation times. Every time you compile your Elixi
 
 We have also seen great progress on areas that go beyond the source code. In particular, we have added a [CODE\_OF\_CONDUCT.md](https://github.com/elixir-lang/elixir/blob/v1.1/CODE_OF_CONDUCT.md) to guarantee our community continues to grow into a safe and welcoming place for everyone.
 
-We have also released a new ExDoc version. It provides a [beautiful, clean and readable way to navigate the Elixir documentation](http://elixir-lang.org/docs/v1.1/elixir) and it is available to any Elixir project. The latest version includes initial support for User Guides and we have more features and improvements coming on the way.
+We have also released a new ExDoc version. It provides a [beautiful, clean and readable way to navigate the Elixir documentation](https://hexdocs.pm/elixir/1.1.0) and it is available to any Elixir project. The latest version includes initial support for User Guides and we have more features and improvements coming on the way.
 
 The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.1.0). Don't forget to check [the Install section](/install.html) to get Elixir installed.
 

@@ -51,7 +51,7 @@ defmodule KVServer.Command do
       {:ok, {:create, "shopping"}}
 
   """
-  def parse(line) do
+  def parse(_line) do
     :not_implemented
   end
 end
@@ -79,7 +79,7 @@ Run the test suite and the doctest should fail:
      code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
      lhs:  :not_implemented
      stacktrace:
-       lib/kv_server/command.ex:11: KVServer.Command (module)
+       lib/kv_server/command.ex:7: KVServer.Command (module)
 ```
 
 Excellent!
@@ -164,7 +164,7 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 {:error, :unknown_command}
 ```
 
-You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/ExUnit.DocTest.html).
+You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html).
 
 ## with
 
@@ -265,7 +265,7 @@ This means our implementation is going in the correct direction, but it doesn't 
 
 The previous implementation used pipelines which made the logic straight-forward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many `case` calls.
 
-Thankfully, Elixir v1.2 introduced a construct called `with` which allows to simplify code like above. Let's rewrite the `serve/1` function to use it:
+Thankfully, Elixir v1.2 introduced the `with` construct, which allows you to simplify code like the above, replacing nested `case` calls with a chain of matching clauses. Let's rewrite the `serve/1` function to use `with`:
 
 ```elixir
 defp serve(socket) do
@@ -279,11 +279,11 @@ defp serve(socket) do
 end
 ```
 
-Much better! Syntax-wise, `with` is quite similar to `for` comprehensions. `with` will retrieve the value returned by the right-side of `<-` and match it against the pattern on the left side. If the value matches the pattern, `with` moves on to the next expression. In case there is no match, the non-matching value is returned.
+Much better! `with` will retrieve the value returned by the right-side of `<-` and match it against the pattern on the left side. If the value matches the pattern, `with` moves on to the next expression. In case there is no match, the non-matching value is returned.
 
 In other words, we converted each expression given to `case/2` as a step in `with`. As soon as any of the steps return something that does not match `{:ok, x}`, `with` aborts, and returns the non-matching value.
 
-You can read more about [`with` in our documentation](/docs/stable/elixir/Kernel.SpecialForms.html#with/1).
+You can read more about [`with` in our documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#with/1).
 
 ## Running commands
 
@@ -333,7 +333,7 @@ Every function clause dispatches the appropriate command to the `KV.Registry` se
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
-By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KV.Server` to print such error as well:
+By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:
 
 ```elixir
 defp write_line(socket, {:error, :not_found}) do
@@ -341,31 +341,26 @@ defp write_line(socket, {:error, :not_found}) do
 end
 ```
 
-And our server functionality is almost complete! Only tests are missing. This time, we have left tests for last because there are some important considerations to be made.
+Our server functionality is almost complete. Only tests are missing. This time, we have left tests for last because there are some important considerations to be made.
 
 `KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production.
 
-So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. This means we would need to change `run`'s signature to `def run(command, pid)` and the implementation for the `:create` command would look like:
+So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. For example, we would need to change `run`'s signature to `def run(command, pid)` and then change all clauses accordingly:
 
 ```elixir
 def run({:create, bucket}, pid) do
   KV.Registry.create(pid, bucket)
   {:ok, "OK\r\n"}
 end
+
+# ... other run clauses ...
 ```
 
-Then in `KVServer.Command`'s test case, we would need to start an instance of the `KV.Registry`, similar to what we've done in `apps/kv/test/kv/registry_test.exs`, and pass it as an argument to `run/2`.
+Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state.
 
-This has been the approach we have taken so far in our tests, and it has some benefits:
+But let's also try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation.
 
-1. Our implementation is not coupled to any particular server name
-2. We can keep our tests running asynchronously, because there is no shared state
-
-However, it comes with the downside that our APIs become increasingly large in order to accommodate all external parameters.
-
-The alternative is to write integration tests that will rely on the global server names to exercise the whole stack, from the TCP server to the bucket. The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.
-
-This time we will write an integration test. The integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.
+Our integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.
 
 Let's implement the integration test in `test/kv_server_test.exs` as shown below:
 
@@ -381,7 +376,7 @@ defmodule KVServerTest do
   setup do
     opts = [:binary, packet: :line, active: false]
     {:ok, socket} = :gen_tcp.connect('localhost', 4040, opts)
-    {:ok, socket: socket}
+    %{socket: socket}
   end
 
   test "server interaction", %{socket: socket} do
@@ -427,7 +422,7 @@ This time, since our test relies on global data, we have not given `async: true`
 
 To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test case, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report.
 
-Before setup, add the following call:
+Between `use ExUnit.Case` and setup, add the following call:
 
 ```elixir
 @moduletag :capture_log
@@ -447,7 +442,7 @@ In case the test crashes, you will see a report as follows:
      13:44:10.035 [info]  Application kv exited: :stopped
 ```
 
-With this simple integration test, we start to see why integration tests may be slow. Not only can this particular test not run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
+With this simple integration test, we start to see why integration tests may be slow. Not only this test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
 
 At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test.
 

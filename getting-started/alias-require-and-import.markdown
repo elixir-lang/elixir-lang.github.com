@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: alias, require and import
+title: alias, require, and import
 ---
 
 # {{ page.title }}
@@ -13,7 +13,7 @@ In order to facilitate software reuse, Elixir provides three directives (`alias`
 # Alias the module so it can be called as Bar instead of Foo.Bar
 alias Foo.Bar, as: Bar
 
-# Ensure the module is compiled and available (usually for macros)
+# Require the module in order to use its macros
 require Foo
 
 # Import functions from Foo so they can be called without the `Foo.` prefix
@@ -27,23 +27,20 @@ We are going to explore them in detail now. Keep in mind the first three are cal
 
 ## alias
 
-`alias` allows you to set up aliases for any given module name. Imagine our `Math` module uses a special list implementation for doing math specific operations:
+`alias` allows you to set up aliases for any given module name.
+
+Imagine a module uses a specialized list implemented in `Math.List`. The `alias` directive allows referring to `Math.List` just as `List` within the module definition:
 
 ```elixir
-defmodule Math do
+defmodule Stats do
   alias Math.List, as: List
+  # In the remaining module definition List expands to Math.List.
 end
 ```
 
-From now on, any reference to `List` will automatically expand to `Math.List`. In case one wants to access the original `List`, it can be done by prefixing the module name with `Elixir.`:
+The original `List` can still be accessed within `Stats` by the fully-qualified name `Elixir.List`.
 
-```elixir
-List.flatten             #=> uses Math.List.flatten
-Elixir.List.flatten      #=> uses List.flatten
-Elixir.Math.List.flatten #=> uses Math.List.flatten
-```
-
-> Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit "Elixir." when referencing them.
+> Note: All modules defined in Elixir are defined inside a main `Elixir` namespace. However, for convenience, you can omit "Elixir." when referencing them.
 
 Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `:as` option sets the alias automatically to the last part of the module name, for example:
 
@@ -76,13 +73,13 @@ In the example above, since we are invoking `alias` inside the function `plus/2`
 
 ## require
 
-Elixir provides macros as a mechanism for meta-programming (writing code that generates code).
+Elixir provides macros as a mechanism for meta-programming (writing code that generates code). Macros are expanded at compile time.
 
-Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the `require` directive:
+Public functions in modules are globally available, but in order to use macros, you need to opt-in by requiring the module they are defined in.
 
 ```iex
 iex> Integer.is_odd(3)
-** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
+** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. However there is a macro with the same name and arity. Be sure to require Integer if you intend to invoke this macro
 iex> require Integer
 Integer
 iex> Integer.is_odd(3)
@@ -91,7 +88,7 @@ true
 
 In Elixir, `Integer.is_odd/1` is defined as a macro so that it can be used as a guard. This means that, in order to invoke `Integer.is_odd/1`, we need to first require the `Integer` module.
 
-In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
+Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter.
 
 ## import
 
@@ -135,7 +132,7 @@ Note that `import`ing a module automatically `require`s it.
 
 ## use
 
-Although not a directive, `use` is a macro tightly related to `require` that allows you to use a module in the current context. The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
+The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
 
 For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
 
@@ -165,8 +162,6 @@ defmodule Example do
   Feature.__using__(option: :value)
 end
 ```
-
-With this we have almost finished our tour of Elixir modules. The last topic to cover is module attributes.
 
 ## Understanding Aliases
 
@@ -226,3 +221,5 @@ From Elixir v1.2, it is possible to alias, import or require multiple modules at
 ```elixir
 alias MyApp.{Foo, Bar, Baz}
 ```
+
+With this we have finished our tour of Elixir modules. The last topic to cover is module attributes.

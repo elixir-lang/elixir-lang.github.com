@@ -45,7 +45,7 @@ File.stream!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](http://elixir-lang.org/docs/stable/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happens when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](http://blog.plataformatec.com.br/2015/05/introducing-reducees/) in another article.
+By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](https://hexdocs.pm/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happens when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](http://blog.plataformatec.com.br/2015/05/introducing-reducees/) in another article.
 
 The solution above allows us to work with large datasets without loading them all into memory. For large files, it is going to provide much better performance than the eager version. However, the solution above still does not leverage concurrency. For a machine with more than one core, which is the huge majority of machines we have available today, it is a suboptimal solution.
 
@@ -200,11 +200,11 @@ One of the use cases for GenStage is to consume data from third-party systems. T
 
 During the Elixir London Meetup, I have live-coded a short example that shows how to use `GenStage` to concurrently process data stored in a PostgreSQL database as a queue:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/aZuY5-2lwW4" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aZuY5-2lwW4" class="video" allowfullscreen title="Elixir London June 2016 w/ José Valim"></iframe>
 
 ### GenStage for event dispatching
 
-Another scenario where GenStage can be useful today is to replace cases where developers would have used [GenEvent](http://elixir-lang.org/docs/stable/elixir/GenEvent.html) in the past. For those unfamiliar with GenEvent, it is a behaviour where events are sent to an "event manager" which then proceeds to invoke "event handlers" for each event. GenEvent, however, has one big flaw: the event manager and all event handlers run in the same process. This means GenEvent handlers cannot easily leverage concurrency without forcing developers to implement those mechanisms themselves. Furthermore, GenEvent handlers have very awkward error semantics. Because event handlers are not separate processes, we cannot simply rely on supervisors restarting them.
+Another scenario where GenStage can be useful today is to replace cases where developers would have used [GenEvent](https://hexdocs.pm/elixir/GenEvent.html) in the past. For those unfamiliar with GenEvent, it is a behaviour where events are sent to an "event manager" which then proceeds to invoke "event handlers" for each event. GenEvent, however, has one big flaw: the event manager and all event handlers run in the same process. This means GenEvent handlers cannot easily leverage concurrency without forcing developers to implement those mechanisms themselves. Furthermore, GenEvent handlers have very awkward error semantics. Because event handlers are not separate processes, we cannot simply rely on supervisors restarting them.
 
 GenStage solves those problems by having a producer as the event manager. The producer itself should be configured to use [`GenStage.BroadcastDispatcher`](https://hexdocs.pm/gen_stage/Experimental.GenStage.BroadcastDispatcher.html) as its dispatcher. The broadcast dispatcher will guarantee events are dispatched to all consumers in a way that does not exceed the demand of any of the consumers. This allows us to leverage concurrency and having the "event manager" as a producer gives us much more flexibility in terms of buffering and reacting to failures.
 

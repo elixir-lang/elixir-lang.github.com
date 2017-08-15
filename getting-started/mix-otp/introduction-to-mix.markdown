@@ -39,11 +39,17 @@ In order to build our key-value application, we are going to use three main tool
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
-> Note: this guide requires Elixir v1.2.0 or later. You can check your Elixir version with `elixir -v` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/getting-started/introduction.html).
+> This guide requires Elixir v1.5.0 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/install.html).
 >
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
 > The final code for this guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.
+
+> The Elixir guides are also available in EPUB format:
+>
+>   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)
+>   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)
+>   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)
 
 ## Our first project
 
@@ -70,43 +76,39 @@ Mix will create a directory named `kv` with a few files in it:
 
 Let's take a brief look at those generated files.
 
-> Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have Elixir's executable in your PATH. If not, you can run it by passing the script as argument to `elixir`:
->
-> ```bash
-> $ bin/elixir bin/mix new kv --module KV
-> ```
->
-> Note that you can also execute any script in your PATH from Elixir via the -S option:
->
-> ```bash
-> $ bin/elixir -S mix new kv --module KV
-> ```
->
-> When using -S, `elixir` finds the script wherever it is in your PATH and executes it.
+> Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have both `mix` and `elixir` executables in your PATH. That's what happens when you install Elixir.
 
 ## Project compilation
 
-A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let's take a look at it (comments removed):
+A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let's take a look at it:
 
 ```elixir
 defmodule KV.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :kv,
-     version: "0.1.0",
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps()]
+    [
+      app: :kv,
+      version: "0.1.0",
+      elixir: "~> 1.6-dev",
+      start_permanent: Mix.env == :prod,
+      deps: deps()
+    ]
   end
 
+  # Run "mix help compile.app" to learn about applications.
   def application do
-    [applications: [:logger]]
+    [
+      extra_applications: [:logger]
+    ]
   end
 
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      # {:dep_from_hexpm, "~> 0.3.0"},
+      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+    ]
   end
 end
 ```
@@ -115,11 +117,28 @@ Our `mix.exs` defines two public functions: `project`, which returns project con
 
 There is also a private function named `deps`, which is invoked from the `project` function, that defines our project dependencies. Defining `deps` as a separate function is not required, but it helps keep the project configuration tidy.
 
-Mix also generates a file at `lib/kv.ex` with a simple module definition:
+Mix also generates a file at `lib/kv.ex` with a module containing exactly one function, called `hello`:
 
 ```elixir
 defmodule KV do
+  @moduledoc """
+  Documentation for KV.
+  """
+
+  @doc """
+  Hello world.
+
+  ## Examples
+
+      iex> KV.hello
+      :world
+
+  """
+  def hello do
+    :world
+  end
 end
+
 ```
 
 This structure is enough to compile our project:
@@ -151,8 +170,8 @@ defmodule KVTest do
   use ExUnit.Case
   doctest KV
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "greets the world" do
+    assert KV.hello() == :world
   end
 end
 ```
@@ -161,7 +180,7 @@ It is important to note a couple things:
 
 1. the test file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
-2. we define a test module named `KVTest`, use [`ExUnit.Case`](/docs/stable/ex_unit/ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
+2. we define a test module named `KVTest`, use [`ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
 
 Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework:
 
@@ -169,53 +188,54 @@ Mix also generated a file named `test/test_helper.exs` which is responsible for 
 ExUnit.start()
 ```
 
-This file will be automatically required by Mix every time before we run our tests. We can run tests with `mix test`:
+This file will be required by Mix every time before we run our tests. We can run tests with `mix test`:
 
     Compiled lib/kv.ex
     Generated kv app
-    [...]
-    .
+    ..
 
-    Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
-    1 test, 0 failures
+    Finished in 0.04 seconds
+    2 tests, 0 failures
 
     Randomized with seed 540224
 
-Notice that by running `mix test`, Mix has compiled the source files and generated the application file once again. This happens because Mix supports multiple environments, which we will explore in the next section.
+Notice that by running `mix test`, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will explore in the next section.
 
 Furthermore, you can see that ExUnit prints a dot for each successful test and automatically randomizes tests too. Let's make the test fail on purpose and see what happens.
 
 Change the assertion in `test/kv_test.exs` to the following:
 
 ```elixir
-assert 1 + 1 == 3
+assert KV.hello() == :oops
 ```
 
 Now run `mix test` again (notice this time there will be no compilation):
 
 ```
-  1) test the truth (KVTest)
+  1) test greets the world (KVTest)
      test/kv_test.exs:5
      Assertion with == failed
-     code: 1 + 1 == 3
-     lhs:  2
-     rhs:  3
+     code:  assert KV.hello() == :oops
+     left:  :world
+     right: :oops
      stacktrace:
-       test/kv_test.exs:6
+       test/kv_test.exs:6: (test)
 
-Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
-1 test, 1 failure
+.
+
+Finished in 0.05 seconds
+2 tests, 1 failure
 ```
 
-For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left-hand side (lhs) and right-hand side (rhs) of the `==` operator.
+For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left side and right side (rhs) of the `==` operator.
 
-In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in this full second line (including the file and line number) and append it to `mix test`, Mix will load and run just that particular test:
+In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in full, including the file and line number, and append it to `mix test`, Mix will load and run just that particular test:
 
 ```bash
 $ mix test test/kv_test.exs:5
 ```
 
-This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running just a specific test.
+This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running a single test.
 
 Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.
 
@@ -229,20 +249,17 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
 
-Customization per environment can be done by accessing [the `Mix.env` function](/docs/stable/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in both `:build_embedded` and `:start_permanent` options:
+Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
 
 ```elixir
 def project do
   [...,
-   build_embedded: Mix.env == :prod,
    start_permanent: Mix.env == :prod,
    ...]
 end
 ```
 
-When you compile your source code, Elixir compiles artifacts to the `_build` directory. However, in many occasions to avoid unnecessary copying, Elixir will create filesystem links from `_build` to actual source files. When true, `:build_embedded` disables this behaviour as it aims to provide everything you need to run your application inside `_build`.
-
-Similarly, when true, the `:start_permanent` option starts your application in permanent mode, which means the Erlang VM will crash if your application's supervision tree shuts down. Notice we don't want this behaviour in dev and test because it is useful to keep the VM instance running in those environments for troubleshooting purposes.
+When true, the `:start_permanent` option starts your application in permanent mode, which means the Erlang VM will crash if your application's supervision tree shuts down. Notice we don't want this behaviour in dev and test because it is useful to keep the VM instance running in those environments for troubleshooting purposes.
 
 Mix will default to the `:dev` environment, except for the `test` task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
 
@@ -256,9 +273,11 @@ Or on Windows:
 > set "MIX_ENV=prod" && mix compile
 ```
 
+> Mix is a build tool and, as such, it is not always expected to be available in production, especially if your team uses explicit build steps. Therefore, it is recommended to access `Mix.env` only in configuration files and inside `mix.exs`, never in your application code (`lib`).
+
 ## Exploring
 
-There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](/docs/stable/mix/).
+There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/).
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 

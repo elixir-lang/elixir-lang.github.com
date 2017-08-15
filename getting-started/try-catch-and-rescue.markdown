@@ -1,13 +1,13 @@
 ---
 layout: getting-started
-title: try, catch and rescue
+title: try, catch, and rescue
 ---
 
 # {{ page.title }}
 
 {% include toc.html %}
 
-Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.
+Elixir has three error mechanisms: errors, throws, and exits. In this chapter we will explore each of them and include remarks about when each should be used.
 
 ## Errors
 
@@ -99,7 +99,7 @@ iex> File.read! "unknown"
     (elixir) lib/file.ex:305: File.read!/1
 ```
 
-Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](/docs/stable/elixir/File.html) is a good example of this convention.
+Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](https://hexdocs.pm/elixir/File.html) is a good example of this convention.
 
 In Elixir, we avoid using `try/rescue` because **we don't use errors for control flow**. We take errors literally: they are reserved for unexpected and/or exceptional situations. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
 
@@ -193,6 +193,29 @@ cleaning up!
 
 Elixir will automatically wrap the function body in a `try` whenever one of `after`, `rescue` or `catch` is specified.
 
+## Else
+
+If an `else` block is present, it will match on the results of the `try` block whenever the `try` block finishes without a throw or an error.
+
+```iex
+iex> x = 2
+2
+iex> try do
+...>   1 / x
+...> rescue
+...>   ArithmeticError ->
+...>     :infinity
+...> else
+...>   y when y < 1 and y > -1 ->
+...>     :small
+...>   _ ->
+...>     :large
+...> end
+:small
+```
+
+Exceptions in the `else` block are not caught. If no pattern inside the `else` block matches, an exception will be raised; this exception is not caught by the current `try/catch/rescue/after` block.
+
 ## Variables scope
 
 It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
@@ -222,4 +245,4 @@ iex> what_happened
 :rescued
 ```
 
-This finishes our introduction to `try`, `catch` and `rescue`. You will find they are used less frequently in Elixir than in other languages, although they may be handy in some situations where a library or some particular code is not playing "by the rules".
+This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages, although they may be handy in some situations where a library or some particular code is not playing "by the rules".

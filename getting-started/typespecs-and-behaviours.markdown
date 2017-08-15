@@ -11,12 +11,13 @@ title: Typespecs and behaviours
 
 Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
-1. declaring custom data types;
-2. declaring typed function signatures (specifications).
+1. declaring typed function signatures (specifications);
+2. declaring custom data types.
+
 
 ### Function specifications
 
-By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](/docs/stable/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
+By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
 ```
 round(number) :: integer
@@ -29,13 +30,13 @@ round(number) :: integer
 def round(number), do: # implementation...
 ```
 
-Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](/docs/stable/elixir/typespecs.html).
+Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html).
 
 ### Defining custom types
 
 While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive.
 
-Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
+Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product, and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
 
 ```elixir
 defmodule LousyCalculator do
@@ -47,7 +48,7 @@ defmodule LousyCalculator do
 end
 ```
 
-As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](/docs/stable/elixir/typespecs.html#notes).
+As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html#notes).
 
 Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type.
 
@@ -84,7 +85,7 @@ If you want to keep a custom type private, you can use the `@typep` directive in
 
 ### Static code analysis
 
-Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `QuietCalculator` example, we wrote a spec for the `make_quiet/1` function even if it was defined as a private function.
+Typespecs are not only useful to developers as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `QuietCalculator` example, we wrote a spec for the `make_quiet/1` function even though it was defined as a private function.
 
 ## Behaviours
 

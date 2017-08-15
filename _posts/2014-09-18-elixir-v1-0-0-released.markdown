@@ -22,12 +22,12 @@ Elixir will follow [semantic versioning](http://semver.org), which means code wr
 
 Elixir is composed of 6 applications, all under the same versioning constraints:
 
-  * [Elixir](/docs/stable/elixir/) - the Elixir compiler, runtime and the standard library
-  * [EEx](/docs/stable/eex/) - Elixir's templating library, useful for generating any kind of document dynamically
-  * [ExUnit](/docs/stable/ex_unit/) - Elixir's unit test library, with support for concurrent testing, custom formatters, filters and much more
-  * [IEx](/docs/stable/iex/) - Elixir's interactive shell with code reloading, auto-complete, and easy access to documentation, typespecs and more
-  * [Logger](/docs/stable/logger/) - the latest addition to the group, Logger provides reliable logging and configurable backends (with syslog, file and many other backends provided by the community)
-  * [Mix](/docs/stable/mix/) - Elixir's build tool that generates, compiles and tests projects as well as manages your dependencies
+  * [Elixir](https://hexdocs.pm/elixir/) - the Elixir compiler, runtime and the standard library
+  * [EEx](https://hexdocs.pm/eex/) - Elixir's templating library, useful for generating any kind of document dynamically
+  * [ExUnit](https://hexdocs.pm/ex_unit/) - Elixir's unit test library, with support for concurrent testing, custom formatters, filters and much more
+  * [IEx](https://hexdocs.pm/iex/) - Elixir's interactive shell with code reloading, auto-complete, and easy access to documentation, typespecs and more
+  * [Logger](https://hexdocs.pm/logger/) - the latest addition to the group, Logger provides reliable logging and configurable backends (with syslog, file and many other backends provided by the community)
+  * [Mix](https://hexdocs.pm/mix/) - Elixir's build tool that generates, compiles and tests projects as well as manages your dependencies
 
 With v1.0, we are providing a stable platform for the community to leverage and extend, and we are extremely excited with the projects and possibilities that are ahead of us!
 
