@@ -645,7 +645,7 @@ square(X) -> X * X.
 Eshell V5.9  (abort with ^G)
 1> c(math).
 {ok,math}
-2> lists:map(fun math:square/1,[1,2,3]).
+2> lists:map(fun math:square/1, [1,2,3]).
 [1,4,9]
 ```
 
