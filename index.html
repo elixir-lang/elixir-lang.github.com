@@ -12,7 +12,7 @@ layout: default
 
       <p>Elixir leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain.</p>
 
-      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a>. Or keep reading to get an overview of the platform, language and tools.</p>
+      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a> and our <a href="/learning.html">learning page for other resources</a>. Or keep reading to get an overview of the platform, language and tools.</p>
     </div>
   </div>
 
@@ -55,11 +55,9 @@ end
       <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
 
 {% highlight elixir %}
-import Supervisor.Spec
-
 children = [
-  supervisor(TCP.Pool, []),
-  worker(TCP.Acceptor, [4040])
+  TCP.Pool,
+  {TCP.Acceptor, port: 4040}
 ]
 
 Supervisor.start_link(children, strategy: :one_for_one)
@@ -152,10 +150,10 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 {% highlight text %}
 $ iex
 Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
-iex> c "my_file.ex"        # Compiles a file
-iex> t Enum                # Prints types defined in the module Enum
-iex> h IEx.pry             # Prints the documentation for IEx pry functionality
-iex> i "Hello, World"      # Prints information about the given data type
+iex> h String.trim           # Prints the documentation for function
+iex> i "Hello, World"        # Prints information about the given data type
+iex> break! String.trim/1    # Sets a breakpoint in the String.trim/1 function
+iex> recompile               # Recompiles the current project on the fly
 {% endhighlight %}
     </div>
   </div>
