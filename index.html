@@ -55,11 +55,9 @@ end
       <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
 
 {% highlight elixir %}
-import Supervisor.Spec
-
 children = [
-  supervisor(TCP.Pool, []),
-  worker(TCP.Acceptor, [4040])
+  MyApp.Repo,
+  MyApp.Endpoint
 ]
 
 Supervisor.start_link(children, strategy: :one_for_one)
