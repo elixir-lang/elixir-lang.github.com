@@ -179,7 +179,7 @@ Although pattern matching allows us to build powerful constructs, its usage is l
 
 ```iex
 iex> length([1, [2], 3]) = 3
-** (CompileError) iex:1: illegal pattern
+** (CompileError) iex:1: cannot invoke remote function :erlang.length/1 inside match
 ```
 
 This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs.
