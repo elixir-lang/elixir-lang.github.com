@@ -249,7 +249,7 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
 
-Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
+Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/0) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
 
 ```elixir
 def project do
