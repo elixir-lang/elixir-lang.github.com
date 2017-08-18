@@ -634,13 +634,19 @@ Anonymous functions are first-class values, so they can be passed as arguments t
 **Erlang**
 
 ```erlang
+% math.erl
 -module(math).
 -export([square/1]).
 
 square(X) -> X * X.
+```
 
-lists:map(fun math:square/1, [1, 2, 3]).
-%=> [1, 4, 9]
+```erl
+Eshell V5.9  (abort with ^G)
+1> c(math).
+{ok,math}
+2> lists:map(fun math:square/1, [1, 2, 3]).
+[1,4,9]
 ```
 
 **Elixir**
