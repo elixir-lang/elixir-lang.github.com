@@ -12,7 +12,7 @@ defmodule ElixirLangGuide.Mixfile do
   end
 
   def application do
-    []
+    [extra_applications: [:logger]]
   end
 
   defp epub(_args) do
