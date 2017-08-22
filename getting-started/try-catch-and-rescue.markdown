@@ -7,7 +7,7 @@ title: try, catch, and rescue
 
 {% include toc.html %}
 
-Elixir has three error mechanisms: errors, throws, and exits. In this chapter we will explore each of them and include remarks about when each should be used.
+Elixir has three error mechanisms: errors, throws, and exits. In this chapter, we will explore each of them and include remarks about when each should be used.
 
 ## Errors
 
@@ -138,7 +138,7 @@ iex> spawn_link fn -> exit(1) end
 ** (EXIT from #PID<0.56.0>) 1
 ```
 
-In the example above, the linked process died by sending an `exit` signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
+In the example above, the linked process died by sending an `exit` signal with a value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
 
 `exit` can also be "caught" using `try/catch`:
 
@@ -151,7 +151,7 @@ iex> try do
 "not really"
 ```
 
-Using `try/catch` is already uncommon and using it to catch exits is even more rare.
+Using `try/catch` is already uncommon and using it to catch exits is even rarer.
 
 `exit` signals are an important part of the fault tolerant system provided by the Erlang <abbr title="Virtual Machine">VM</abbr>. Processes usually run under supervision trees which are themselves processes that listen to `exit` signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
 

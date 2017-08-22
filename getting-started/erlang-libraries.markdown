@@ -9,10 +9,10 @@ title: Erlang libraries
 
 Elixir provides excellent interoperability with Erlang libraries. In fact,
 Elixir discourages simply wrapping Erlang libraries in favor of directly
-interfacing with Erlang code. In this section we will present some of the
+interfacing with Erlang code. In this section, we will present some of the
 most common and useful Erlang functionality that is not found in Elixir.
 
-As you grow more proficient in Elixir, you may want to explore the Erlang 
+As you grow more proficient in Elixir, you may want to explore the Erlang
 [STDLIB Reference Manual](http://erlang.org/doc/apps/stdlib/index.html) in more
 detail.
 
@@ -77,8 +77,8 @@ end
 [The digraph module](http://erlang.org/doc/man/digraph.html) (as well as
 [digraph_utils](http://erlang.org/doc/man/digraph_utils.html)) contains
 functions for dealing with directed graphs built of vertices and edges.
-After constructing the graph, the algorithms in there will help finding
-for instance the shortest path between two vertices, or loops in the graph.
+After constructing the graph, the algorithms in there will help finding,
+for instance, the shortest path between two vertices, or loops in the graph.
 
 Given three vertices, find the shortest path from the first to the last.
 

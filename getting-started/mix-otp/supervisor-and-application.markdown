@@ -9,7 +9,7 @@ title: Supervisor and Application
 
 {% include mix-otp-preface.html %}
 
-So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.
+So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug-free, and failures are definitely going to happen.
 
 When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
 
@@ -60,13 +60,13 @@ We will learn those details as we move forward on this guide. If you would rathe
 
 After the supervisor retrieves all child specifications, it proceeds to start its children one by one, in the order they were defined, using the information in the `:start` key in the child specification. For our current specification, it will call `KV.Registry.start_link([])`.
 
-So far `start_link/1` has always receive an empty list of options. It is time we change that.
+So far `start_link/1` has always received an empty list of options. It is the time we change that.
 
 ## Naming processes
 
 While our application will have many buckets, it will only have a single registry. So instead of always passing the registry PID around, we can give the registry a name, and always reference it by its name.
 
-Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferrably under a supervisor, when our application boots.
+Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots.
 
 So let's do that. Let's slightly change our children definition to be a list of tuples instead of a list of atoms:
 
@@ -103,7 +103,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 
 When we started the supervisor, the registry was automatically started with the given name, allowing us to create buckets without the need to manually start it.
 
-In practice we rarely start the application supervisor manually. Instead it is started as part of the application callback.
+In practice, we rarely start the application supervisor manually. Instead, it is started as part of the application callback.
 
 ## Understanding applications
 
@@ -222,7 +222,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 
 How do we know this is working? After all, we are creating the bucket and then looking it up; of course it should work, right? Well, remember that `KV.Registry.create/2` uses `GenServer.cast/2`, and therefore will return `:ok` regardless of whether the message finds its target or not. At that point, we don't know whether the supervisor and the server are up, and if the bucket was created. However, `KV.Registry.lookup/2` uses `GenServer.call/3`, and will block and wait for a response from the server. We do get a positive response, so we know all is up and running.
 
-For an experiment, try reimplementing `KV.Registry.create/2` to use `GenServer.call/3` instead, and momentarily disable the application callback. Run the code above on the console again, and you will see the creation step fails straightaway.
+For an experiment, try reimplementing `KV.Registry.create/2` to use `GenServer.call/3` instead, and momentarily disable the application callback. Run the code above on the console again, and you will see the creation step fails straight away.
 
 Don't forget to bring the code back to normal before resuming this tutorial!
 
