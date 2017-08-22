@@ -9,7 +9,7 @@ title: GenServer
 
 {% include mix-otp-preface.html %}
 
-In the [previous chapter](/getting-started/mix-otp/agent.html) we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
+In the [previous chapter](/getting-started/mix-otp/agent.html), we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
 
 ```elixir
 CREATE shopping
@@ -38,7 +38,7 @@ iex> KV.Bucket.get(:shopping, "milk")
 
 However, naming dynamic processes with atoms is a terrible idea! If we use atoms, we would need to convert the bucket name (often received from an external client) to atoms, and **we should never convert user input to atoms**. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory!
 
-In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
+In practice, it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
 
 Instead of abusing the built-in name facility, we will create our own *process registry* that associates the bucket name to the bucket process.
 
@@ -75,7 +75,7 @@ defmodule KV.Registry do
   end
 
   @doc """
-  Ensures there is a bucket associated to the given `name` in `server`.
+  Ensures there is a bucket associated with the given `name` in `server`.
   """
   def create(server, name) do
     GenServer.cast(server, {:create, name})
@@ -106,7 +106,7 @@ The first function is `start_link/1`, which starts a new GenServer passing three
 
 1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
 
-2. The initialization arguments, in this case the atom `:ok`
+2. The initialization arguments, in this case, the atom `:ok`
 
 3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1`, which defaults to an empty list. We will customize it later on
 
@@ -114,7 +114,7 @@ There are two types of requests you can send to a GenServer: calls and casts. Ca
 
 The next two functions, `lookup/2` and `create/2` are responsible for sending these requests to the server.  In this case, we have used `{:lookup, name}` and `{:create, name}` respectively.  Requests are often specified as tuples, like this, in order to provide more than one "argument" in that first argument slot. It's common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements. Note that the requests must match the first argument to `handle_call/3` or `handle_cast/2`.
 
-That's it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.
+That's it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination, and handling of requests. Those callbacks are optional and for now, we have only implemented the ones we care about.
 
 The first is the `init/1` callback, that receives the second argument given to `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new map. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
 
@@ -267,4 +267,4 @@ Returning to our `handle_cast/2` implementation, you can see the registry is bot
 ref = Process.monitor(pid)
 ```
 
-This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
+This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead, we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.

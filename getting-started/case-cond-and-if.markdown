@@ -179,7 +179,7 @@ iex> if true, do: 1 + 2
 3
 ```
 
-Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by comma. We say this syntax is using *keyword lists*. We can pass `else` using keywords too:
+Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by a comma. We say this syntax is using *keyword lists*. We can pass `else` using keywords too:
 
 ```iex
 iex> if false, do: :this, else: :that

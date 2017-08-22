@@ -18,7 +18,7 @@ Remember however that our `KV.Registry` is both linking (via `start_link`) and m
 ref = Process.monitor(pid)
 ```
 
-Links are bi-directional, which implies that a crash in a bucket will crash the registry. Although we now have the supervisor, which guarantees the registry will be back up and running, crashing the registry still means we lose all data associating bucket names to their respective processes.
+Links are bidirectional, which implies that a crash in a bucket will crash the registry. Although we now have the supervisor, which guarantees the registry will be back up and running, crashing the registry still means we lose all data associating bucket names to their respective processes.
 
 In other words, we want the registry to keep on running even if a bucket crashes. Let's write a new registry test:
 
@@ -150,13 +150,13 @@ When we added `KV.BucketSupervisor` as a child of `KV.Supervisor`, we began to h
 
 Every time you add a new child to a supervisor, it is important to evaluate if the supervisor strategy is correct as well as the order of child processes. In this case, we are using `:one_for_one` and the `KV.Registry` is started before `KV.BucketSupervisor`.
 
-One flaw that shows up right away is the ordering issue. Since `KV.Registry` invokes `KV.BucketSupervisor`, then the `KV.BucketSupervisor` must be started before `KV.Registry`. Otherwise it may happen that the registry attempts to reach the bucket supervisor before it has started.
+One flaw that shows up right away is the ordering issue. Since `KV.Registry` invokes `KV.BucketSupervisor`, then the `KV.BucketSupervisor` must be started before `KV.Registry`. Otherwise, it may happen that the registry attempts to reach the bucket supervisor before it has started.
 
 The second flaw is related to the supervision strategy. If `KV.Registry` dies, all information linking `KV.Bucket` names to bucket processes is lost. Therefore the `KV.BucketSupervisor` and all children must terminate too - otherwise we will have orphan processes.
 
 In light of this observation, we should consider moving to another supervision strategy. The two other candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:rest_for_one` will kill and restart child processes which were started *after* the crashed child. In this case, we would want `KV.BucketSupervisor` to terminate if `KV.Bucket` terminates. This would require the bucket supervisor to be placed after the registry. Which violates the ordering constraints we have established two paragraphs above.
 
-So our last option is to go all in and pick the `:one_for_all` strategy: the supervisor will kill and restart all of its children processes whenever any one of them dies. This is a complete reasonable approach for our application, since the registry can't work without the bucket supervisor, and the bucket supervisor should terminate without the registry. Let's reimplement `init/1` in `KV.Supervisor` to encode those properties:
+So our last option is to go all in and pick the `:one_for_all` strategy: the supervisor will kill and restart all of its children processes whenever any one of them dies. This is a completely reasonable approach for our application, since the registry can't work without the bucket supervisor, and the bucket supervisor should terminate without the registry. Let's reimplement `init/1` in `KV.Supervisor` to encode those properties:
 
 ```elixir
   def init(:ok) do

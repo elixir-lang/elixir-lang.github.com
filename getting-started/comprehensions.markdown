@@ -16,11 +16,11 @@ iex> for n <- [1, 2, 3, 4], do: n * n
 [1, 4, 9, 16]
 ```
 
-A comprehension is made of three parts: generators, filters and collectables.
+A comprehension is made of three parts: generators, filters, and collectables.
 
 ## Generators and filters
 
-In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:
+In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed on the right-hand side of the generator expression:
 
 ```iex
 iex> for n <- 1..4, do: n * n
@@ -135,7 +135,7 @@ iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 "helloworld"
 ```
 
-Sets, maps and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the `Collectable` protocol.
+Sets, maps, and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the `Collectable` protocol.
 
 A common use case of `:into` can be transforming values in a map, without touching the keys:
 

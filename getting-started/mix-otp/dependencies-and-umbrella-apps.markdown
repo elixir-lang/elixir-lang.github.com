@@ -37,7 +37,7 @@ Before creating our new application, we must discuss how Mix handles dependencie
 
 ## External dependencies
 
-External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the [Plug](https://github.com/elixir-lang/plug) project as an external dependency.
+External dependencies are the ones not tied to your business domain. For example, if you need an HTTP API for your distributed KV application, you can use the [Plug](https://github.com/elixir-lang/plug) project as an external dependency.
 
 Installing external dependencies is simple. Most commonly, we use the [Hex Package Manager](https://hex.pm), by listing the dependency inside the deps function in our `mix.exs` file:
 
@@ -284,11 +284,11 @@ Remember that umbrella projects are a convenience to help you organize and manag
 
 ## Summing up
 
-In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed and tested.
+In this chapter, we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed and tested.
 
 When using umbrella applications, it is important to have a clear boundary between them. Our upcoming `kv_server` must only access public APIs defined in `kv`. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.
 
-Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as an umbrella application, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, extraction should be straight-forward as long as the web application respects the push notification API boundary. Regardless if it happens in 2 weeks or in 3 years from development. Once extracted, the push notifications system can be moved to a private git repository or a public hex.pm package.
+Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as an umbrella application, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, extraction should be straightforward as long as the web application respects the push notification API boundary. Regardless if it happens in 2 weeks or in 3 years from development. Once extracted, the push notifications system can be moved to a private git repository or a public hex.pm package.
 
 Developers may also use umbrella applications to break large business domains apart. The caution here is to make sure the domains don't depend on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve. Overall, umbrella applications do not magically improve the design of your code. They can, however, help enforce boundaries when the code is well designed.
 

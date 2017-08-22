@@ -39,9 +39,9 @@ Of all the approaches above, the first is definitely the most flexible. If our d
 
 The second approach uses function calls which better suits more complex APIs (for example, if you need to pass many options) and reads nicely in Elixir thanks to the pipe operator.
 
-The third approach, uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.
+The third approach uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.
 
-To drive the point home, imagine you want to validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However it is impossible to do so with the macros approach unless its DSL is augmented.
+To drive the point home, imagine you want to validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However, it is impossible to do so with the macros approach unless its DSL is augmented.
 
 In other words:
 
@@ -119,7 +119,7 @@ iex> defmodule MyTest do
 ...> end
 ```
 
-For now we don't have a mechanism to run tests, but we know that a function named "test hello" was defined behind the scenes. When we invoke it, it should fail:
+For now, we don't have a mechanism to run tests, but we know that a function named "test hello" was defined behind the scenes. When we invoke it, it should fail:
 
 ```iex
 iex> MyTest."test hello"()

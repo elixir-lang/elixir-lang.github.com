@@ -40,7 +40,7 @@ end
 
 The original `List` can still be accessed within `Stats` by the fully-qualified name `Elixir.List`.
 
-> Note: All modules defined in Elixir are defined inside a main `Elixir` namespace. However, for convenience, you can omit "Elixir." when referencing them.
+> Note: All modules defined in Elixir are defined inside the main `Elixir` namespace. However, for convenience, you can omit "Elixir." when referencing them.
 
 Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `:as` option sets the alias automatically to the last part of the module name, for example:
 
@@ -222,4 +222,4 @@ From Elixir v1.2, it is possible to alias, import or require multiple modules at
 alias MyApp.{Foo, Bar, Baz}
 ```
 
-With this we have finished our tour of Elixir modules. The last topic to cover is module attributes.
+With this, we have finished our tour of Elixir modules. The last topic to cover is module attributes.
