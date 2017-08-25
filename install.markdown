@@ -45,6 +45,8 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   * FreeBSD
     * From ports: `cd /usr/ports/lang/elixir && make install clean`
     * From pkg: `pkg install elixir`
+  * Solus
+    * Run: `eopkg install elixir`
   * Ubuntu 12.04/14.04/16.04 or Debian 7
     * Add Erlang Solutions repo: `wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb`
     * Run: `sudo apt-get update`
