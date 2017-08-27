@@ -60,7 +60,7 @@ We will learn those details as we move forward on this guide. If you would rathe
 
 After the supervisor retrieves all child specifications, it proceeds to start its children one by one, in the order they were defined, using the information in the `:start` key in the child specification. For our current specification, it will call `KV.Registry.start_link([])`.
 
-So far `start_link/1` has always received an empty list of options. It is the time we change that.
+So far `start_link/1` has always received an empty list of options. It is time we change that.
 
 ## Naming processes
 
