@@ -230,7 +230,7 @@ If a function with default values has multiple clauses, it is required to create
 defmodule Concat do
   def join(a, b \\ nil, sep \\ " ")
 
-  def join(a, b, _sep) when is_nil(b) do
+  def join(a, b, sep) when is_nil(b) do
     a
   end
 
