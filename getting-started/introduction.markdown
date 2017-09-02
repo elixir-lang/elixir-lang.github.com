@@ -29,7 +29,7 @@ Let's get started!
 
 ## Installation
 
-If you still haven't installed Elixir, run to our [installation page](/install.html). Once you are done, you can run `elixir --version` to get the current Elixir version.
+If you haven't yet installed Elixir, visit our [installation page](/install.html). Once you are done, you can run `elixir --version` to get the current Elixir version.
 
 ## Interactive mode
 
