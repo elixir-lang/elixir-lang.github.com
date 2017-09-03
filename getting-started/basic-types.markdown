@@ -349,12 +349,12 @@ What is the difference between lists and tuples?
 
 Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size.
 
-Updating a list is fast as long as we are prepending elements:
+Similarly, the performance of list concatenation depends on the length of the left-hand list:
 
 ```iex
 iex> list = [1, 2, 3]
 
-# This is fast as we don't need to traverse `list` to prepend 0
+# This is fast as we only need to traverse `[0]` to prepend to `list`
 iex> [0] ++ list
 [0, 1, 2, 3]
 
