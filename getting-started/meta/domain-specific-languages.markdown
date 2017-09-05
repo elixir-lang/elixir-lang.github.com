@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Domain Specific Languages
+title: Domain-specific languages
 ---
 
 # {{ page.title }}
@@ -9,9 +9,9 @@ title: Domain Specific Languages
 
 ## Foreword
 
-[Domain Specific Languages (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. You don't need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain Specific Language.
+[Domain-specific languages (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. You don't need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain-specific language.
 
-For example, imagine we want to implement a Validator module which provides a data validation domain specific language. We could implement it using data structures, functions or macros. Let's see what those different DSLs would look like:
+For example, imagine we want to implement a Validator module which provides a data validation domain-specific language. We could implement it using data structures, functions or macros. Let's see what those different DSLs would look like:
 
 ```elixir
 # 1. data structures
@@ -47,7 +47,7 @@ In other words:
 
     data > functions > macros
 
-That said, there are still cases where using macros and modules to build domain specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.
+That said, there are still cases where using macros and modules to build domain-specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.
 
 ## Building our own test case
 
@@ -201,6 +201,6 @@ Running test hello
 ** (MatchError) no match of right hand side value: "world"
 ```
 
-Although we have overlooked some details, this is the main idea behind creating domain specific modules in Elixir. Macros enable us to return quoted expressions that are executed in the caller, which we can then use to transform code and store relevant information in the target module via module attributes. Finally, callbacks such as `@before_compile` allow us to inject code into the module when its definition is complete.
+Although we have overlooked some details, this is the main idea behind creating domain-specific modules in Elixir. Macros enable us to return quoted expressions that are executed in the caller, which we can then use to transform code and store relevant information in the target module via module attributes. Finally, callbacks such as `@before_compile` allow us to inject code into the module when its definition is complete.
 
 Besides `@before_compile`, there are other useful module attributes like `@on_definition` and `@after_compile`, which you can read more about in [the docs for the `Module` module](https://hexdocs.pm/elixir/Module.html). You can also find useful information about macros and the compilation environment in the documentation for the [`Macro` module](https://hexdocs.pm/elixir/Macro.html) and [`Macro.Env`](https://hexdocs.pm/elixir/Macro.Env.html).
