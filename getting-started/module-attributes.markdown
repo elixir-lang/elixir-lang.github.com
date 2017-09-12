@@ -115,6 +115,10 @@ MyServer.second_data #=> 13
 
 Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful to be used as storage during module compilation.
 
+Any functions may be called when defining a module attribute.
+
+Do not leave a line break between the annotation name and its value.
+
 ## As temporary storage
 
 One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
