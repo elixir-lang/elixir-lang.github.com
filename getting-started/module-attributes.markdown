@@ -77,7 +77,7 @@ You can take a look at the docs for [Module](https://hexdocs.pm/elixir/Module.ht
 
 This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
 
-## As constants
+## As "constants"
 
 Elixir developers will often use module attributes as constants:
 
@@ -114,6 +114,10 @@ MyServer.second_data #=> 13
 ```
 
 Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful to be used as storage during module compilation.
+
+Any functions may be called when defining a module attribute.
+
+When defining an attribute, do not leave a line break between the attribute name and its value.
 
 ## As temporary storage
 
