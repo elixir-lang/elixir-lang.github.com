@@ -173,7 +173,7 @@ defmodule TestCase do
   # This will be invoked right before the target module is compiled
   # giving us the perfect opportunity to inject the `run/0` function
   @doc false
-  defmacro __before_compile__(env) do
+  defmacro __before_compile__(_env) do
     quote do
       def run do
         Enum.each @tests, fn name ->
