@@ -275,7 +275,7 @@ defmodule MyModule do
     quote do
       # Keep what you need to do here to a minimum
       # and move everything else to a function
-      do_this_that_and_that(unquote(a), unquote(b), unquote(c))
+      MyModule.do_this_that_and_that(unquote(a), unquote(b), unquote(c))
     end
   end
 
