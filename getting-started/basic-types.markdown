@@ -127,6 +127,13 @@ iex> is_boolean(:false)
 true
 ```
 
+Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case are also atoms:
+
+```iex
+iex> is_atom(Hello)
+true
+```
+
 ## Strings
 
 Strings in Elixir are delimited by double quotes, and they are encoded in UTF-8:
