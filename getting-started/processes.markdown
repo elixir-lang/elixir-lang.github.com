@@ -112,18 +112,23 @@ iex> spawn fn -> raise "oops" end
 
 [error] Process #PID<0.58.00> raised an exception
 ** (RuntimeError) oops
-    :erlang.apply/2
+    (stdlib) erl_eval.erl:668: :erl_eval.do_apply/6
 ```
 
 It merely logged an error but the parent process is still running. That's because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with `spawn_link/1`:
 
 ```iex
-iex> spawn_link fn -> raise "oops" end
+iex> self()
 #PID<0.41.0>
+iex> spawn_link fn -> raise "oops" end
 
-** (EXIT from #PID<0.41.0>) an exception was raised:
+** (EXIT from #PID<0.41.0>) evaluator process exited with reason: an exception was raised:
     ** (RuntimeError) oops
-        :erlang.apply/2
+        (stdlib) erl_eval.erl:668: :erl_eval.do_apply/6
+
+[error] Process #PID<0.289.0> raised an exception
+** (RuntimeError) oops
+    (stdlib) erl_eval.erl:668: :erl_eval.do_apply/6
 ```
 
 Because processes are linked, we now see a message saying the parent process, which is the shell process, has received an EXIT signal from another process causing the shell to terminate. IEx detects this situation and starts a new shell session.
@@ -146,9 +151,10 @@ iex(1)> Task.start fn -> raise "oops" end
 
 15:22:33.046 [error] Task #PID<0.55.0> started from #PID<0.53.0> terminating
 ** (RuntimeError) oops
-    (elixir) lib/task/supervised.ex:74: Task.Supervised.do_apply/2
-    (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3
-Function: #Function<20.90072148/0 in :erl_eval.expr/5>
+    (stdlib) erl_eval.erl:668: :erl_eval.do_apply/6
+    (elixir) lib/task/supervised.ex:85: Task.Supervised.do_apply/2
+    (stdlib) proc_lib.erl:247: :proc_lib.init_p_do_apply/3
+Function: #Function<20.99386804/0 in :erl_eval.expr/5>
     Args: []
 ```
 

@@ -96,7 +96,7 @@ For the cases where you do expect a file to exist (and the lack of that file is 
 ```iex
 iex> File.read! "unknown"
 ** (File.Error) could not read file unknown: no such file or directory
-    (elixir) lib/file.ex:305: File.read!/1
+    (elixir) lib/file.ex:272: File.read!/1
 ```
 
 Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](https://hexdocs.pm/elixir/File.html) is a good example of this convention.
@@ -134,8 +134,7 @@ All Elixir code runs inside processes that communicate with each other. When a p
 
 ```iex
 iex> spawn_link fn -> exit(1) end
-#PID<0.56.0>
-** (EXIT from #PID<0.56.0>) 1
+** (EXIT from #PID<0.56.0>) evaluator process exited with reason: 1
 ```
 
 In the example above, the linked process died by sending an `exit` signal with a value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
