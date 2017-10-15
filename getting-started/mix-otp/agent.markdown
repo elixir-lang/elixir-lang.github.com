@@ -20,7 +20,7 @@ Elixir is an immutable language where nothing is shared by default. If we want t
 * Processes
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
 
-We covered processes in the Getting Started guide. <abbr title="Erlang Term Storage">ETS</abbr> is a new topic that will explore in later chapters. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
+We covered processes in the Getting Started guide. <abbr title="Erlang Term Storage">ETS</abbr> is a new topic that we will explore in later chapters. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
 
 * [Agent](https://hexdocs.pm/elixir/Agent.html) - Simple wrappers around state.
 * [GenServer](https://hexdocs.pm/elixir/GenServer.html) - "Generic servers" (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.
