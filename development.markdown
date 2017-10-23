@@ -8,7 +8,7 @@ layout: default
 
 In this section we outline the language's past and future development.
 
-Elixir was created by José Valim as a Research and Development effort at [Plataformatec](http://plataformatec.com.br/), a consultancy based in Brazil, back in 2012. Elixir's goal is to be a productive language for writing maintainable and reliable software.
+[Plataformatec](http://plataformatec.com.br/), a software consultancy, created Elixir in 2012 as a Research and Development project led by José Valim. Elixir's goal is to be a productive language for writing maintainable and reliable software.
 
 Elixir runs on top of the Erlang Virtual Machine, which provides a scalable and fault-tolerant foundation. Elixir was designed to leverage this foundation without performance costs and aims to contribute to the wider ecosystem whenever possible.
 
