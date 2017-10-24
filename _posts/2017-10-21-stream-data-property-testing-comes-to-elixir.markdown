@@ -8,13 +8,13 @@ excerpt: StreamData is a data-generation and property-based testing library that
 
 We are happy to officially announce that Elixir v1.6 will come equipped with two new features: sample data generation as well as tools for property-based testing. We will mostly talk about property-based testing in this post, as sample data generation is a feature we introduced so that it could be leveraged by property-based testing. These functionalities are available today to developers (albeit in beta form) through the [stream_data][] library.
 
-In this blog post, we'll cover what is property-based testing and how it can benefit your programs, why we want it in Elixir, and what we are exploring for the future of it. If you want to use the features discussed below or you want to read more formal documentation, head over to [stream_data][].
+In this blog post, we'll cover what property-based testing is and how it can benefit your programs, why we want it in Elixir, and what we are exploring for the future of it. If you want to use the features discussed below or you want to read more formal documentation, head over to [stream_data][].
 
 ## Sample data generation
 
 The core of the [stream_data][] library is `StreamData`: this module (which will be renamed to `Stream.Data` once the library is merged into Elixir) provides all the functionalities related to generating sample data of many kinds. It includes both data generators for data types (like integers or booleans) as well as tools to combine other generators (such as `one_of(list_of_generators)`).
 
-Developers are not supposed to create generators from scratch, but use the provided generators and the provided ways to combine them. An example of a generator is the one returned by `StreamData.integer()`: this function returns a generator that generates integers. Generators implement the `Enumerable` protocol and they are infinite streams of terms. This means we can do operations such as taking terms out of a generator through functions from `Enum` and `Stream`:
+Developers are not supposed to create generators from scratch, but use the provided generators and the provided combinator functions to compose them. An example of a generator is the one returned by `StreamData.integer()`: this function returns a generator that generates integers. Generators are infinite streams of terms that implement the `Enumerable` protocol. This means we can do operations such as taking terms out of a generator through functions from `Enum` and `Stream`:
 
 ```elixir
 Enum.take(StreamData.integer(), 5)
