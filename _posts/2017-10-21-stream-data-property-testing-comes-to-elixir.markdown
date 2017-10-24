@@ -29,9 +29,9 @@ Enum.take(generator, 5)
 #=> [0, 1, 3, 3, 2]
 ```
 
-The reason why for example `StreamData.map/2` is encouraged over `Stream.map/2` when building generators is that generators only return "simple" terms when enumerated. When used in property-based testing, they return wrapped values that contain the simple terms but also contain ways to *shrink* those terms, which is something property-based testing uses as we'll see later on.
+`StreamData.map/2` is encouraged over `Stream.map/2` because generators only return "simple" terms when enumerated. When used in property-based testing, `StreamData` generators return wrapped values that contain the simple terms but also contain ways to *shrink* those terms, which is something property-based testing uses as we'll see later on.
 
-Data generation is something we decided to separate from property-based testing because it's something that developers can take advantage of in situations outside of property-based testing. For example, data streams can be used to seed a database or to have randomly generated data available during regular tests.
+We decided to separate data-generation from property-based testing because it's something that developers can take advantage of in situations outside of property-based testing. For example, data streams can be used to seed a database or to have randomly generated data available during regular tests.
 
 ## Property-based testing
 
@@ -57,11 +57,11 @@ property "length/1 is always >= 0" do
 end
 ```
 
-With property-based testing, you specify a set of valid inputs (that is, lists in the example above) for your code and verify that your code holds some property for values taken at random from the valid inputs. In the example above, the test takes many (usually around 100) values at random from the `list_of(term())` *generator* and verifies that the property of `length/1` always returning a non-negative integer holds. A generator is just a `StreamData` generator, as we discussed in the previous section.
+With property-based testing, you specify a set of valid inputs (lists in the example above) for your code and verify that your code holds some property for values taken at random from the valid inputs. In the example above, the test takes many (usually around 100) values at random from the `list_of(term())` *generator* and verifies that the property of `length/1` always returning a non-negative integer holds. A generator is just a `StreamData` generator, as we discussed in the previous section.
 
 ### Shrinking
 
-Since we're generating many random data, if we hit a failure then the data that caused it is often complex and convolute. Take this trivial example of a property:
+Since we're generating lots of random inputs to test, inputs that cause failures are often complex and convoluted. Take this trivial example of a property:
 
 ```elixir
 property "list does not contain multiples of 4" do
@@ -139,7 +139,7 @@ There's not much more to the mechanics of `StreamData`. Most of the work you wil
 
 ### Advantages of property-based testing
 
-Using property-based testing has some advantages. First of all, it lets you test properties of your code over many more values that you otherwise would with example-based testing. While it's true that random data generation can't cover all the possible values that a piece of code can deal with, the confidence in your codebase can still increase over time because the property-based tests will likely generate different values on each run. Example-based testing means your test data will not change over time.
+Using property-based testing has some advantages. First of all, it lets you test properties of your code over many more values than you otherwise would with example-based testing. While it's true that random data generation can't cover all the possible values that a piece of code can deal with, the confidence in your codebase can still increase over time because the property-based tests will likely generate different values on each run. Example-based testing means your test data will not change over time.
 
 Property-based testing however can also have a more powerful impact on the way you design software. When you start writing property-based tests, you will start thinking about what guarantees your code provides and what properties it satisfies. If you write properties before writing code, this can easily influence the way you write that code.
 
@@ -153,9 +153,9 @@ A young but awesome book about property-based testing written by Fred Hebert is 
 
 The community has expressed some concern regarding two main things: why do we want to include a property-based testing tool in Elixir's standard library? And why write such a tool from scratch instead of using one of the existing Erlang or Elixir solutions?
 
-The answer to the first question is that we want to include such a tool in Elixir because we believe that providing such a tool in the standard library will encourage developers to use property-based testing and ultimately improve their software and the way they write it. At the same time, we want to be able to use property-based testing to test the Elixir codebase itself (which already turned out great [in the past][quickcheck-pr]). To do this, we can't rely on an external library, so we need to have a solution built into the standard library.
+The answer to the first question is that we believe that providing such a tool in the standard library will encourage developers to use property-based testing and ultimately improve their software and the way they write it. At the same time, we want to be able to use property-based testing to test the Elixir codebase itself (which already turned out great [in the past][quickcheck-pr]). To do this, we can't rely on an external library, so we need to have a solution built into the standard library.
 
-The reasons for writing such a tool from scratch are best explained by José in [this ElixirForum post][elixirforum-post]:
+The reasons for writing a new property-based testing library from scratch are best explained by José in [this ElixirForum post][elixirforum-post]:
 
 > * Since we want to bundle it as part of Elixir, the code should be open source with an appropriate license.
 > * We wanted to add both data generation and property testing to Elixir. That's why the library is called stream_data instead of something named after property tests. The goal is to reduce the learning curve behind property testing by exposing the data generation aspect as streams, which is a known construct to most Elixir developers. We had this approach in mind for a while and the first library we saw leveraging this in practice was [@pragdave's pollution][pollution].
