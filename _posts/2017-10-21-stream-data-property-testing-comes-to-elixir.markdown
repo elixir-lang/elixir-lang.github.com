@@ -6,9 +6,7 @@ category: Releases
 excerpt: StreamData is a data-generation and property-based testing library that will be included in Elixir v1.6
 ---
 
-We are happy to officially announce that Elixir v1.6 will come equipped with two new features: sample data generation as well as tools for property-based testing. We will mostly talk about property-based testing in this post, as sample data generation is a feature we introduced so that it could be leveraged by property-based testing. These functionalities are available today to developers (albeit in beta form) through the [stream_data][] library.
-
-In this blog post, we'll cover what property-based testing is and how it can benefit your programs, why we want it in Elixir, and what we are exploring for the future of it. If you want to use the features discussed below or you want to read more formal documentation, head over to [stream_data][].
+In this blog post, we'll talk about property-based testing and sample data generation. We'll cover what these are, why we want them in Elixir, and what are are plans for the future. If you want to use the features discussed here or you want to read more formal documentation, head over to [stream_data][], which is a library that currently provides both features (albeit in beta form) and which is where we are focusing our efforts.
 
 ## Sample data generation
 
@@ -29,7 +27,7 @@ Enum.take(generator, 5)
 #=> [0, 1, 3, 3, 2]
 ```
 
-`StreamData.map/2` is encouraged over `Stream.map/2` because generators only return "simple" terms when enumerated. When used in property-based testing, `StreamData` generators return wrapped values that contain the simple terms but also contain ways to *shrink* those terms, which is something property-based testing uses as we'll see later on.
+`StreamData.map/2` is encouraged over `Stream.map/2` because generators return values that can shrink, which is something property-based testing takes advantage of as we'll see later on. When treated as enumerables, generators return normal values that cannot be shrinked.
 
 We decided to separate data-generation from property-based testing because it's something that developers can take advantage of in situations outside of property-based testing. For example, data streams can be used to seed a database or to have randomly generated data available during regular tests.
 
@@ -45,7 +43,7 @@ test "length/1 calculates the length of a list" do
 end
 ```
 
-This test is written using an *example-based approach*. We are writing both the input to the piece of software we are testing as well as the expected output, and the testing tool is verifying that running the software on the given input results in the expected output. This style of testing is common and useful because it lets you get up and running easily and also lets you test known corner cases in an explicit way. However, this also means that it's hard to test many cases this way and even harder to uncover *unknown* corner cases that may reveal bugs in your code.
+This test is written using an *example-based approach*. We are writing both the input to the piece of software we are testing as well as the expected output, and the testing tool is verifying that running the software on the given input results in the expected output. This style of testing is common and useful because it lets you get up and running easily and also lets you test known corner cases in an explicit way. However, it's hard to test many cases this way and even harder to uncover *unknown* corner cases that may reveal bugs in your code.
 
 Property-based testing is an intuitive way to fix some of the problems mentioned above.
 
@@ -57,7 +55,7 @@ property "length/1 is always >= 0" do
 end
 ```
 
-With property-based testing, you specify a set of valid inputs (lists in the example above) for your code and verify that your code holds some property for values taken at random from the valid inputs. In the example above, the test takes many (usually around 100) values at random from the `list_of(term())` *generator* and verifies that the property of `length/1` always returning a non-negative integer holds. A generator is just a `StreamData` generator, as we discussed in the previous section.
+With property-based testing, you specify a set of valid inputs (lists in the example above) for your code and verify that your code holds some property for values taken at random from the valid inputs. In the example above, the test takes many (usually around 100) values at random from the `list_of(term())` *generator* and verifies a property of `length/1`, that is, that `length/1` always returns a non-negative integer. A generator is just a `StreamData` generator, as we discussed in the previous section.
 
 ### Shrinking
 
@@ -95,7 +93,7 @@ This error shows the minimal generated value that triggers the failure, that is,
 
 ### Using property-based testing in stream_data
 
-As you saw in the previous section, the core of property-based testing in `StreamData` is the `check all` macro. In this macro, you list a bunch of generators and filters (very similarly to how you would in `for` comprehensions) and then pass a body where you can verify that a property holds for the generated data.
+The core of property-based testing in stream_data is the `check all` macro. In this macro, you list a bunch of generators and filters (very similarly to how you would in `for` comprehensions) and then pass a body where you can verify that a property holds for the generated data.
 
 To make the `check all` macro available in your test, alongside importing all functions from `StreamData`, you can `use ExUnitProperties`:
 
@@ -135,7 +133,15 @@ defmodule MyPropertyTest do
 end
 ```
 
-There's not much more to the mechanics of `StreamData`. Most of the work you will have to do revolves around finding good properties to test for your code and writing good generators for the data over which you want to test. Head over to [stream_data][]'s documentation for detailed documentation.
+By doing this your properties will also be tagged with the `:property` tag, which means you will be able to do things like:
+
+```bash
+mix test --only property
+```
+
+to run only properties.
+
+There's not much more to the mechanics of stream_data. Most of the work you will have to do revolves around finding good properties to test for your code and writing good generators for the data over which you want to test. Head over to [stream_data][]'s documentation for detailed documentation.
 
 ### Advantages of property-based testing
 
@@ -147,7 +153,7 @@ Property-based testing however can also have a more powerful impact on the way y
 
 Property-based testing is not something specific to Elixir. While having its roots in Haskell (check out the [original QuickCheck paper] if you're interested), nowadays many languages have stable and usable implementations of it: Clojure has [test.check][], Python has [Hypothesis][], and many more. One of the most famous and complete tools for property-based testing exists for Erlang itself: [QuickCheck][] by Quviq is a complete commercial solution for property-based testing in Erlang of both stateless as well as stateful systems, and Quviq even provides a custom Erlang scheduler to test race conditions in your concurrent programs.
 
-A young but awesome book about property-based testing written by Fred Hebert is also available at [propertesting.com][]. This book is a *proper* (pun intended) guide to property-based testing and uses an Erlang library called [PropEr][]. However, the concepts and techniques perfectly apply to Elixir and `StreamData` as well.
+A young but awesome book about property-based testing written by Fred Hebert is also available at [propertesting.com][]. This book is a *proper* (pun intended) guide to property-based testing and uses an Erlang library called [PropEr][]. However, the concepts and techniques perfectly apply to Elixir and stream_data as well.
 
 ## Why include property-based testing in Elixir (and rewriting from scratch)
 
@@ -162,6 +168,10 @@ The reasons for writing a new property-based testing library from scratch are be
 > * Finally, since the core team are taking the responsibility of maintaining property testing as part of Elixir for potentially the rest of our lives, we want to have full understanding of every single line of code. This is non-negotiable as it guarantees we can continue to consistently improve the code as we move forward.
 >
 > We understand rolling our own implementation has its downsides, especially since it lacks maturity compared to alternatives, but we balance it by actively seeking input from knowledgeable folks and by listening to the feedback that comes from the community, which we are very thankful for.
+
+## Roadmap
+
+stream_data and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. The plan is to rename the `StreamData` module to `Stream.Data` and the `ExUnitProperties` module to `ExUnit.Properties`, so that the separation between data generation and property-based testing can be even more defined. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
 
 [stream_data]: https://github.com/whatyouhide/stream_data
 [test.check]: https://github.com/clojure/test.check
