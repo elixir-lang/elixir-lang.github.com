@@ -3,7 +3,7 @@ layout: post
 title: StreamData: Property-based testing comes to Elixir
 author: Andrea Leopardi
 category: Releases
-excerpt: StreamData is a data-generation and property-based testing library that will be included in Elixir v1.6
+excerpt: We are working on data generation and property-based testing for the next versions of Elixir.
 ---
 
 In this blog post, we'll talk about property-based testing and sample data generation. We'll cover what these are, why we want them in Elixir, and what are are plans for the future. If you want to use the features discussed here or you want to read more formal documentation, head over to [stream_data][], which is a library that currently provides both features (albeit in beta form) and which is where we are focusing our efforts.
@@ -171,7 +171,7 @@ The reasons for writing a new property-based testing library from scratch are be
 
 ## Roadmap
 
-stream_data and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. The plan is to rename the `StreamData` module to `Stream.Data` and the `ExUnitProperties` module to `ExUnit.Properties`, so that the separation between data generation and property-based testing can be even more defined. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
+stream_data and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. We have used the names `StreamData` and `ExUnitProperties` to avoid conflicts when those modules are eventually merged into Elixir. When merged, they will be renamed to the proper `Stream.Data` and `ExUnit.Properties` modules. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
 
 [stream_data]: https://github.com/whatyouhide/stream_data
 [test.check]: https://github.com/clojure/test.check
