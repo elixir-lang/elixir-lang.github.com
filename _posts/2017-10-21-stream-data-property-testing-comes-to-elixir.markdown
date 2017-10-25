@@ -10,7 +10,7 @@ In this blog post, we'll talk about property-based testing and sample data gener
 
 ## Sample data generation
 
-The core of the [stream_data][] library is `StreamData`: this module (which will be renamed to `Stream.Data` once the library is merged into Elixir) provides all the functionalities related to generating sample data of many kinds. It includes both data generators for data types (like integers or booleans) as well as tools to combine other generators (such as `one_of(list_of_generators)`).
+The core of the [stream_data][] library is `StreamData`: this module provides all the functionalities related to generating sample data of many kinds. It includes both data generators for data types (like integers or booleans) as well as tools to combine other generators (such as `one_of(list_of_generators)`).
 
 Developers are not supposed to create generators from scratch, but use the provided generators and the provided combinator functions to compose them. An example of a generator is the one returned by `StreamData.integer()`: this function returns a generator that generates integers. Generators are infinite streams of terms that implement the `Enumerable` protocol. This means we can do operations such as taking terms out of a generator through functions from `Enum` and `Stream`:
 
@@ -159,7 +159,7 @@ A young but awesome book about property-based testing written by Fred Hebert is 
 
 The community has expressed some concern regarding two main things: why do we want to include a property-based testing tool in Elixir's standard library? And why write such a tool from scratch instead of using one of the existing Erlang or Elixir solutions?
 
-The answer to the first question is that we believe that providing such a tool in the standard library will encourage developers to use property-based testing and ultimately improve their software and the way they write it. At the same time, we want to be able to use property-based testing to test the Elixir codebase itself (which already turned out great [in the past][quickcheck-pr]). To do this, we can't rely on an external library, so we need to have a solution built into the standard library.
+The answer to the first question is that we believe providing such a tool in the standard library will encourage developers to use property-based testing and ultimately improve their software and the way they write it. At the same time, we want to be able to use property-based testing to test the Elixir codebase itself (which already turned out great [in the past][quickcheck-pr]).
 
 The reasons for writing a new property-based testing library from scratch are best explained by José in [this ElixirForum post][elixirforum-post]:
 
