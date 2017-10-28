@@ -253,7 +253,7 @@ iex> length [1, 2, 3]
 3
 ```
 
-Two lists can be concatenated or subtracted using the `++/2` and `--/2` operators:
+Two lists can be concatenated or subtracted using the `++/2` and `--/2` operators respectively:
 
 ```iex
 iex> [1, 2, 3] ++ [4, 5, 6]
