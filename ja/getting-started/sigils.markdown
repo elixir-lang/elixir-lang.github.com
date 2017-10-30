@@ -38,7 +38,7 @@ true
 
 Check out the [`Regex` module](https://hexdocs.pm/elixir/Regex.html) for more information on other modifiers and the supported operations with regular expressions.
 
-So far, all examples have used `/` to delimit a regular expression. However sigils support 8 different delimiters:
+So far, all examples have used `/` to delimit a regular expression. However, sigils support 8 different delimiters:
 
 ```
 ~r/hello/
@@ -84,7 +84,7 @@ iex> ~w(foo bar bat)
 ["foo", "bar", "bat"]
 ```
 
-The `~w` sigil also accepts the `c`, `s` and `a` modifiers (for char lists, strings and atoms, respectively), which specify the data type of the elements of the resulting list:
+The `~w` sigil also accepts the `c`, `s` and `a` modifiers (for char lists, strings, and atoms, respectively), which specify the data type of the elements of the resulting list:
 
 ```iex
 iex> ~w(foo bar bat)a
@@ -130,7 +130,7 @@ iex> ~s"""
 ...> """
 ```
 
-The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in documentation would soon become error prone because of the need to double-escape some characters:
+The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in the documentation would soon become error prone because of the need to double-escape some characters:
 
 ```elixir
 @doc """
@@ -162,7 +162,7 @@ def convert(...)
 
 ## Custom sigils
 
-As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling `sigil_r` with a binary and a char list as argument:
+As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling `sigil_r` with a binary and a char list as the argument:
 
 ```iex
 iex> sigil_r(<<"foo">>, 'i')

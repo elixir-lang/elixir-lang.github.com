@@ -9,7 +9,7 @@ title: Task and gen_tcp
 
 {% include mix-otp-preface.html %}
 
-In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://www.erlang.org/doc/man/gen_tcp.html) to serve requests. This provides a great opportunity to explore Elixir's `Task` module. In future chapters we will expand our server so it can actually serve the commands.
+In this chapter, we are going to learn how to use [Erlang's `:gen_tcp` module](http://www.erlang.org/doc/man/gen_tcp.html) to serve requests. This provides a great opportunity to explore Elixir's `Task` module. In future chapters, we will expand our server so it can actually serve the commands.
 
 ## Echo server
 
@@ -26,47 +26,49 @@ Let's implement those steps. Move to the `apps/kv_server` application, open up `
 ```elixir
 require Logger
 
-def accept(port) do
-  # The options below mean:
-  #
-  # 1. `:binary` - receives data as binaries (instead of lists)
-  # 2. `packet: :line` - receives data line by line
-  # 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available
-  # 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes
-  #
-  {:ok, socket} = :gen_tcp.listen(port,
-                    [:binary, packet: :line, active: false, reuseaddr: true])
-  Logger.info "Accepting connections on port #{port}"
-  loop_acceptor(socket)
-end
+defmodule KVServer do
+  def accept(port) do
+    # The options below mean:
+    #
+    # 1. `:binary` - receives data as binaries (instead of lists)
+    # 2. `packet: :line` - receives data line by line
+    # 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available
+    # 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes
+    #
+    {:ok, socket} = :gen_tcp.listen(port,
+                      [:binary, packet: :line, active: false, reuseaddr: true])
+    Logger.info "Accepting connections on port #{port}"
+    loop_acceptor(socket)
+  end
 
-defp loop_acceptor(socket) do
-  {:ok, client} = :gen_tcp.accept(socket)
-  serve(client)
-  loop_acceptor(socket)
-end
+  defp loop_acceptor(socket) do
+    {:ok, client} = :gen_tcp.accept(socket)
+    serve(client)
+    loop_acceptor(socket)
+  end
 
-defp serve(socket) do
-  socket
-  |> read_line()
-  |> write_line(socket)
+  defp serve(socket) do
+    socket
+    |> read_line()
+    |> write_line(socket)
 
-  serve(socket)
-end
+    serve(socket)
+  end
 
-defp read_line(socket) do
-  {:ok, data} = :gen_tcp.recv(socket, 0)
-  data
-end
+  defp read_line(socket) do
+    {:ok, data} = :gen_tcp.recv(socket, 0)
+    data
+  end
 
-defp write_line(line, socket) do
-  :gen_tcp.send(socket, line)
+  defp write_line(line, socket) do
+    :gen_tcp.send(socket, line)
+  end
 end
 ```
 
 We are going to start our server by calling `KVServer.accept(4040)`, where 4040 is the port. The first step in `accept/1` is to listen to the port until the socket becomes available and then call `loop_acceptor/1`. `loop_acceptor/1` is a loop accepting client connections. For each accepted connection, we call `serve/1`.
 
-`serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:
+`serve/1` is another loop that reads a line from the socket and writes those lines back to the socket. Note that the `serve/1` function uses [the pipe operator `|>`](https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2) to express this flow of operations. The pipe operator evaluates the left side and passes its result as the first argument to the function on the right side. The example above:
 
 ```elixir
 socket |> read_line() |> write_line(socket)
@@ -118,13 +120,13 @@ Once you exit the telnet client, you will likely see an error in the IEx session
 
 That's because we were expecting data from `:gen_tcp.recv/2` but the client closed the connection. We need to handle such cases better in future revisions of our server.
 
-For now there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won't be able to serve more requests, because it won't be restarted. That's why we must move our server to a supervision tree.
+For now, there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won't be able to serve more requests, because it won't be restarted. That's why we must move our server to a supervision tree.
 
 ## Tasks
 
 We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.
+[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function, and arguments, allowing us to run a given function as part of a supervision tree.
 
 Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
@@ -285,7 +287,7 @@ In this case, the answer is yes: if the acceptor crashes, there is no need to cr
 
 However, there is still one concern left, which are the restart strategies. Tasks, by default, have the `:restart` value set to `:temporary`, which means they are not restarted. This is an excellent default for the connections started via the `Task.Supervisor`, as it makes no sense to restart a failed connection, but it is a bad choice for the acceptor. If the acceptor crashes, we want to bring the acceptor up and running again.
 
-We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `start/2` in `KVServer.Application` once more:
+We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks, and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `start/2` in `KVServer.Application` once more:
 
 ```elixir
   def start(_type, _args) do
@@ -301,4 +303,4 @@ We could fix this by defining our own module that calls `use Task, restart: :per
 
 `Supervisor.child_spec/2` is capable of building a child specification from a given module and/or tuple, and it also accepts values that override the underlying child specification. Now we have an always running acceptor that starts temporary task processes under an always running task supervisor.
 
-In the next chapter we will start parsing the client requests and sending responses, finishing our server.
+In the next chapter, we will start parsing the client requests and sending responses, finishing our server.

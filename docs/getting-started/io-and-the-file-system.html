@@ -309,7 +309,7 @@ iex&gt; Path.expand("~/hello")
 
 <p>Using functions from the <code class="highlighter-rouge">Path</code> module as opposed to directly manipulating strings is preferred since the <code class="highlighter-rouge">Path</code> module takes care of different operating systems transparently. Finally, keep in mind that Elixir will automatically convert slashes (<code class="highlighter-rouge">/</code>) into backslashes (<code class="highlighter-rouge">\</code>) on Windows when performing file operations.</p>
 
-<p>With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.</p>
+<p>With this, we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.</p>
 
 <h2 id="processes-and-group-leaders">Processes and group leaders</h2>
 
@@ -341,7 +341,7 @@ iex&gt; IO.read(pid, 2)
 "he"
 </code></pre>
 
-<p>By modelling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the <strong>group leader</strong>.</p>
+<p>By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the <strong>group leader</strong>.</p>
 
 <p>When you write to <code class="highlighter-rouge">:stdio</code>, you are actually sending a message to the group leader, which writes to the standard-output file descriptor:</p>
 
@@ -357,9 +357,9 @@ hello
 
 <h2 id="iodata-and-chardata"><code class="highlighter-rouge">iodata</code> and <code class="highlighter-rouge">chardata</code></h2>
 
-<p>In all of the examples above, we used binaries when writing to files. In the chapter <a href="/getting-started/binaries-strings-and-char-lists.html">“Binaries, strings and char lists”</a>, we mentioned how strings are made of bytes while char lists are lists with unicode codepoints.</p>
+<p>In all of the examples above, we used binaries when writing to files. In the chapter <a href="/getting-started/binaries-strings-and-char-lists.html">“Binaries, strings and char lists”</a>, we mentioned how strings are made of bytes while char lists are lists with Unicode codepoints.</p>
 
-<p>The functions in <code class="highlighter-rouge">IO</code> and <code class="highlighter-rouge">File</code> also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:</p>
+<p>The functions in <code class="highlighter-rouge">IO</code> and <code class="highlighter-rouge">File</code> also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers, and binaries to be given:</p>
 
 <pre><code class="language-iex">iex&gt; IO.puts 'hello world'
 hello world
@@ -369,7 +369,7 @@ hello world
 :ok
 </code></pre>
 
-<p>However, using list in IO operations requires some attention. A list may represent either a bunch of bytes or a bunch of characters and which one to use depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the <code class="highlighter-rouge">IO</code> module starting with <code class="highlighter-rouge">bin*</code> must be used. Those functions expect an <code class="highlighter-rouge">iodata</code> as argument; i.e., they expect a list of integers representing bytes and binaries to be given.</p>
+<p>However, using lists in IO operations requires some attention. A list may represent either a bunch of bytes or a bunch of characters and which one to use depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the <code class="highlighter-rouge">IO</code> module starting with <code class="highlighter-rouge">bin*</code> must be used. Those functions expect an <code class="highlighter-rouge">iodata</code> as an argument; i.e., they expect a list of integers representing bytes and binaries to be given.</p>
 
 <p>On the other hand, <code class="highlighter-rouge">:stdio</code> and files opened with <code class="highlighter-rouge">:utf8</code> encoding work with the remaining functions in the <code class="highlighter-rouge">IO</code> module. Those functions expect a <code class="highlighter-rouge">char_data</code> as an argument, that is, a list of characters or strings.</p>
 

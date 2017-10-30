@@ -223,7 +223,7 @@
 
 <div id="toc" class="toc"></div>
 
-<p>Elixir has three error mechanisms: errors, throws, and exits. In this chapter we will explore each of them and include remarks about when each should be used.</p>
+<p>Elixir has three error mechanisms: errors, throws, and exits. In this chapter, we will explore each of them and include remarks about when each should be used.</p>
 
 <h2 id="errors">Errors</h2>
 
@@ -303,7 +303,7 @@ iex&gt; File.read "hello"
 
 <pre><code class="language-iex">iex&gt; File.read! "unknown"
 ** (File.Error) could not read file unknown: no such file or directory
-    (elixir) lib/file.ex:305: File.read!/1
+    (elixir) lib/file.ex:272: File.read!/1
 </code></pre>
 
 <p>Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (<code class="highlighter-rouge">foo</code>) which returns <code class="highlighter-rouge"><span class="p">{</span><span class="err">:ok,</span><span class="w"> </span><span class="err">result</span><span class="p">}</span></code> or <code class="highlighter-rouge"><span class="p">{</span><span class="err">:error,</span><span class="w"> </span><span class="err">reason</span><span class="p">}</span></code> tuples and another function (<code class="highlighter-rouge">foo!</code>, same name but with a trailing <code class="highlighter-rouge">!</code>) that takes the same arguments as <code class="highlighter-rouge">foo</code> but which raises an exception if there’s an error. <code class="highlighter-rouge">foo!</code> should return the result (not wrapped in a tuple) if everything goes fine. The <a href="https://hexdocs.pm/elixir/File.html"><code class="highlighter-rouge">File</code> module</a> is a good example of this convention.</p>
@@ -338,11 +338,10 @@ iex&gt; File.read "hello"
 <p>All Elixir code runs inside processes that communicate with each other. When a process dies of “natural causes” (e.g., unhandled exceptions), it sends an <code class="highlighter-rouge">exit</code> signal. A process can also die by explicitly sending an exit signal:</p>
 
 <pre><code class="language-iex">iex&gt; spawn_link fn -&gt; exit(1) end
-#PID&lt;0.56.0&gt;
-** (EXIT from #PID&lt;0.56.0&gt;) 1
+** (EXIT from #PID&lt;0.56.0&gt;) evaluator process exited with reason: 1
 </code></pre>
 
-<p>In the example above, the linked process died by sending an <code class="highlighter-rouge">exit</code> signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.</p>
+<p>In the example above, the linked process died by sending an <code class="highlighter-rouge">exit</code> signal with a value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.</p>
 
 <p><code class="highlighter-rouge">exit</code> can also be “caught” using <code class="highlighter-rouge">try/catch</code>:</p>
 
@@ -354,7 +353,7 @@ iex&gt; File.read "hello"
 "not really"
 </code></pre>
 
-<p>Using <code class="highlighter-rouge">try/catch</code> is already uncommon and using it to catch exits is even more rare.</p>
+<p>Using <code class="highlighter-rouge">try/catch</code> is already uncommon and using it to catch exits is even rarer.</p>
 
 <p><code class="highlighter-rouge">exit</code> signals are an important part of the fault tolerant system provided by the Erlang <abbr title="Virtual Machine">VM</abbr>. Processes usually run under supervision trees which are themselves processes that listen to <code class="highlighter-rouge">exit</code> signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.</p>
 

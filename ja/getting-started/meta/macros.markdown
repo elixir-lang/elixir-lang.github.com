@@ -11,7 +11,7 @@ title: Macros
 
 Even though Elixir attempts its best to provide a safe environment for macros, the major responsibility of writing clean code with macros falls on developers. Macros are harder to write than ordinary Elixir functions and it's considered to be bad style to use them when they're not necessary. So write macros responsibly.
 
-Elixir already provides mechanisms to write your every day code in a simple and readable fashion by using its data structures and functions. Macros should only be used as a last resort. Remember that **explicit is better than implicit**. **Clear code is better than concise code.**
+Elixir already provides mechanisms to write your everyday code in a simple and readable fashion by using its data structures and functions. Macros should only be used as a last resort. Remember that **explicit is better than implicit**. **Clear code is better than concise code.**
 
 ## Our first macro
 
@@ -208,7 +208,7 @@ Take note of the second argument to `Macro.var/2`. This is the context being use
 
 When calling `Macro.expand_once/2` earlier in this chapter, we used the special form `__ENV__`.
 
-`__ENV__` returns an instance of the `Macro.Env` struct which contains useful information about the compilation environment, including the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:
+`__ENV__` returns an instance of the `Macro.Env` struct which contains useful information about the compilation environment, including the current module, file, and line, all variables defined in the current scope, as well as imports, requires and so on:
 
 ```iex
 iex> __ENV__.module
@@ -275,7 +275,7 @@ defmodule MyModule do
     quote do
       # Keep what you need to do here to a minimum
       # and move everything else to a function
-      do_this_that_and_that(unquote(a), unquote(b), unquote(c))
+      MyModule.do_this_that_and_that(unquote(a), unquote(b), unquote(c))
     end
   end
 

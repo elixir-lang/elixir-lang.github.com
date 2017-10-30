@@ -45,7 +45,9 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   * FreeBSD
     * From ports: `cd /usr/ports/lang/elixir && make install clean`
     * From pkg: `pkg install elixir`
-  * Ubuntu 12.04/14.04/16.04 or Debian 7
+  * Solus
+    * Run: `eopkg install elixir`
+  * Ubuntu 14.04/16.04/16.10/17.04 or Debian 7/8/9
     * Add Erlang Solutions repo: `wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb`
     * Run: `sudo apt-get update`
     * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
@@ -61,20 +63,16 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### Raspberry Pi
 
-If necessary replace "jessie" with the name of your Raspian release.   
+If necessary replace "jessie" with the name of your Raspian release.
 
-  * The Erlang Solutions repository has a prebuilt package for armhf.  
-    This saves significant time instead of recompiling natively.  
-
-  * Get Erlang key   
-
-    * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`    
-    * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`  
-    * Add to keychain: `sudo apt-key add erlang_solutions.asc`   
-
+  * The Erlang Solutions repository has a prebuilt package for armhf. This saves significant time instead of recompiling natively
+  * Get Erlang key
+    * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
+    * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`
+    * Add to keychain: `sudo apt-key add erlang_solutions.asc`
   * Install Elixir
-    * Update apt to latest: `sudo apt update`     
-    * Run: `sudo apt install elixir`   
+    * Update apt to latest: `sudo apt update`
+    * Run: `sudo apt install elixir`
 
 ### Docker
 

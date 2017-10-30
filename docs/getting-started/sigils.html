@@ -252,7 +252,7 @@ true
 
 <p>Check out the <a href="https://hexdocs.pm/elixir/Regex.html"><code class="highlighter-rouge">Regex</code> module</a> for more information on other modifiers and the supported operations with regular expressions.</p>
 
-<p>So far, all examples have used <code class="highlighter-rouge">/</code> to delimit a regular expression. However sigils support 8 different delimiters:</p>
+<p>So far, all examples have used <code class="highlighter-rouge">/</code> to delimit a regular expression. However, sigils support 8 different delimiters:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>~r/hello/
 ~r|hello|
@@ -295,7 +295,7 @@ true
 ["foo", "bar", "bat"]
 </code></pre>
 
-<p>The <code class="highlighter-rouge">~w</code> sigil also accepts the <code class="highlighter-rouge">c</code>, <code class="highlighter-rouge">s</code> and <code class="highlighter-rouge">a</code> modifiers (for char lists, strings and atoms, respectively), which specify the data type of the elements of the resulting list:</p>
+<p>The <code class="highlighter-rouge">~w</code> sigil also accepts the <code class="highlighter-rouge">c</code>, <code class="highlighter-rouge">s</code> and <code class="highlighter-rouge">a</code> modifiers (for char lists, strings, and atoms, respectively), which specify the data type of the elements of the resulting list:</p>
 
 <pre><code class="language-iex">iex&gt; ~w(foo bar bat)a
 [:foo, :bar, :bat]
@@ -340,7 +340,7 @@ iex&gt; ~S(String without escape codes \x26 without #{interpolation})
 ...&gt; """
 </code></pre>
 
-<p>The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in documentation would soon become error prone because of the need to double-escape some characters:</p>
+<p>The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in the documentation would soon become error prone because of the need to double-escape some characters:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@doc</span> <span class="sd">"""
 Converts double-quotes to single-quotes.
@@ -372,7 +372,7 @@ Converts double-quotes to single-quotes.
 
 <h2 id="custom-sigils">Custom sigils</h2>
 
-<p>As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil <code class="highlighter-rouge">~r/foo/i</code> is equivalent to calling <code class="highlighter-rouge">sigil_r</code> with a binary and a char list as argument:</p>
+<p>As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil <code class="highlighter-rouge">~r/foo/i</code> is equivalent to calling <code class="highlighter-rouge">sigil_r</code> with a binary and a char list as the argument:</p>
 
 <pre><code class="language-iex">iex&gt; sigil_r(&lt;&lt;"foo"&gt;&gt;, 'i')
 ~r"foo"i

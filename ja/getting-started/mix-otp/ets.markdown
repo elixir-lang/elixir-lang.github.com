@@ -11,7 +11,7 @@ title: ETS
 
 Every time we need to look up a bucket, we need to send a message to the registry. In case our registry is being accessed concurrently by multiple processes, the registry may become a bottleneck!
 
-In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.
+In this chapter, we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.
 
 > Warning! Don't use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know *whether* you should cache, and *what* you should cache. This chapter is merely an example of how ETS can be used, once you've determined the need.
 
@@ -76,7 +76,7 @@ defmodule KV.Registry do
   end
 
   @doc """
-  Ensures there is a bucket associated to the given `name` in `server`.
+  Ensures there is a bucket associated with the given `name` in `server`.
   """
   def create(server, name) do
     GenServer.cast(server, {:create, name})
@@ -124,7 +124,7 @@ Notice that before our changes `KV.Registry.lookup/2` sent requests to the serve
 
 In order for the cache mechanism to work, the created ETS table needs to have access `:protected` (the default), so all clients can read from it, while only the `KV.Registry` process writes to it. We have also set `read_concurrency: true` when starting the table, optimizing the table for the common scenario of concurrent read operations.
 
-The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:
+The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as an argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:
 
 ```elixir
   setup context do
@@ -222,7 +222,7 @@ The `--trace` option is useful when your tests are deadlocking or there are race
 
 According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
 
-Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
+Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
 
 An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed. Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
 
@@ -257,4 +257,4 @@ This concludes our optimization chapter. We have used ETS as a cache mechanism w
 
 In practice, if you find yourself in a position where you need a process registry for dynamic processes, you should use [the `Registry` module](https://hexdocs.pm/elixir/Registry.html) provided as part of Elixir. It provides functionality similar to the one we have built using a GenServer + `:ets` while also being able to perform both writes and reads concurrently. [It has been benchmarked to scale across all cores even on machines with 40 cores](https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/).
 
-Next let's discuss external and internal dependencies and how Mix helps us manage large codebases.
+Next, let's discuss external and internal dependencies and how Mix helps us manage large codebases.

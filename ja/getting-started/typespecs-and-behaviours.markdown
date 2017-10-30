@@ -14,12 +14,11 @@ Elixir is a dynamically typed language, so all types in Elixir are inferred by t
 1. declaring typed function signatures (specifications);
 2. declaring custom data types.
 
-
 ### Function specifications
 
 By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
-```
+```elixir
 round(number) :: integer
 ```
 
@@ -100,18 +99,18 @@ If you have to, you can think of behaviours like interfaces in object oriented l
 
 ### Defining behaviours
 
-Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and an `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
+Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a MessagePack parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and an `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
 
 We can create a `Parser` behaviour:
 
 ```elixir
 defmodule Parser do
-  @callback parse(String.t) :: any
+  @callback parse(String.t) :: {:ok, term} | {:error, String.t}
   @callback extensions() :: [String.t]
 end
 ```
 
-Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` directive. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above.
+Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` directive. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
 
 ### Adopting behaviours
 
@@ -136,3 +135,23 @@ end
 ```
 
 If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
+
+### Dynamic dispatch
+
+Behaviours are frequently used with dynamic dispatching. For example, we could add a `parse!` function to the `Parser` module that dispatches to the given implementation and returns the `:ok` result or raises in cases of `:error`:
+
+```elixir
+defmodule Parser do
+  @callback parse(String.t) :: {:ok, term} | {:error, String.t}
+  @callback extensions() :: [String.t]
+
+  def parse!(implementation, contents) do
+    case implementation.parse(contents) do
+      {:ok, data} -> data
+      {:error, error} -> raise ArgumentError, "parsing error: #{error}"
+    end
+  end
+end
+```
+
+Note you don't need to define a behaviour in order to dynamically dispatch on a module, but those features often go hand in hand.

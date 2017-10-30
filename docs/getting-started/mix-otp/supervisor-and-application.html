@@ -228,7 +228,7 @@
 For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html">read the introduction guide</a> or check out the chapter index in the sidebar.</p>
 </blockquote>
 
-<p>So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug free, and failures are definitely going to happen.</p>
+<p>So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug-free, and failures are definitely going to happen.</p>
 
 <p>When things fail, your first reaction may be: “let’s rescue those errors”. But in Elixir we avoid the defensive programming habit of rescuing exceptions. Instead, we say “let it crash”. If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.</p>
 
@@ -278,13 +278,13 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p>After the supervisor retrieves all child specifications, it proceeds to start its children one by one, in the order they were defined, using the information in the <code class="highlighter-rouge">:start</code> key in the child specification. For our current specification, it will call <code class="highlighter-rouge">KV.Registry.start_link([])</code>.</p>
 
-<p>So far <code class="highlighter-rouge">start_link/1</code> has always receive an empty list of options. It is time we change that.</p>
+<p>So far <code class="highlighter-rouge">start_link/1</code> has always received an empty list of options. It is time we change that.</p>
 
 <h2 id="naming-processes">Naming processes</h2>
 
 <p>While our application will have many buckets, it will only have a single registry. So instead of always passing the registry PID around, we can give the registry a name, and always reference it by its name.</p>
 
-<p>Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferrably under a supervisor, when our application boots.</p>
+<p>Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots.</p>
 
 <p>So let’s do that. Let’s slightly change our children definition to be a list of tuples instead of a list of atoms:</p>
 
@@ -320,7 +320,7 @@ iex&gt; KV.Registry.lookup(KV.Registry, "shopping")
 
 <p>When we started the supervisor, the registry was automatically started with the given name, allowing us to create buckets without the need to manually start it.</p>
 
-<p>In practice we rarely start the application supervisor manually. Instead it is started as part of the application callback.</p>
+<p>In practice, we rarely start the application supervisor manually. Instead, it is started as part of the application callback.</p>
 
 <h2 id="understanding-applications">Understanding applications</h2>
 
@@ -397,7 +397,7 @@ iex&gt; Application.stop(:logger)
   <p>When you run <code class="highlighter-rouge">iex -S mix</code>, it is equivalent to running <code class="highlighter-rouge">iex -S mix run</code>. So whenever you need to pass more options to Mix when starting IEx, it’s a matter of typing <code class="highlighter-rouge">iex -S mix run</code> and then passing any options the <code class="highlighter-rouge">run</code> command accepts. You can find more information about <code class="highlighter-rouge">run</code> by running <code class="highlighter-rouge">mix help run</code> in your shell.</p>
 </blockquote>
 
-<h3 id="the-application-callback">The application callback</h3>
+<h2 id="the-application-callback">The application callback</h2>
 
 <p>Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!</p>
 
@@ -440,222 +440,19 @@ iex&gt; KV.Registry.lookup(KV.Registry, "shopping")
 
 <p>How do we know this is working? After all, we are creating the bucket and then looking it up; of course it should work, right? Well, remember that <code class="highlighter-rouge">KV.Registry.create/2</code> uses <code class="highlighter-rouge">GenServer.cast/2</code>, and therefore will return <code class="highlighter-rouge">:ok</code> regardless of whether the message finds its target or not. At that point, we don’t know whether the supervisor and the server are up, and if the bucket was created. However, <code class="highlighter-rouge">KV.Registry.lookup/2</code> uses <code class="highlighter-rouge">GenServer.call/3</code>, and will block and wait for a response from the server. We do get a positive response, so we know all is up and running.</p>
 
-<p>For an experiment, try reimplementing <code class="highlighter-rouge">KV.Registry.create/2</code> to use <code class="highlighter-rouge">GenServer.call/3</code> instead, and momentarily disable the application callback. Run the code above on the console again, and you will see the creation step fail straightaway.</p>
+<p>For an experiment, try reimplementing <code class="highlighter-rouge">KV.Registry.create/2</code> to use <code class="highlighter-rouge">GenServer.call/3</code> instead, and momentarily disable the application callback. Run the code above on the console again, and you will see the creation step fails straight away.</p>
 
 <p>Don’t forget to bring the code back to normal before resuming this tutorial!</p>
 
-<h3 id="projects-or-applications">Projects or applications?</h3>
+<h2 id="projects-or-applications">Projects or applications?</h2>
 
 <p>Mix makes a distinction between projects and applications. Based on the contents of our <code class="highlighter-rouge">mix.exs</code> file, we would say we have a Mix project that defines the <code class="highlighter-rouge">:kv</code> application. As we will see in later chapters, there are projects that don’t define any application.</p>
 
 <p>When we say “project” you should think about Mix. Mix is the tool that manages your project. It knows how to compile your project, test your project and more. It also knows how to compile and start the application relevant to your project.</p>
 
-<p>When we talk about applications, we talk about  <abbr title="Open Telecom Platform">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications in the <a href="https://hexdocs.pm/elixir/Application.html">docs for the Application module</a>, as well as by running <code class="highlighter-rouge">mix help compile.app</code> to learn more about the supported options in <code class="highlighter-rouge">def application</code>.</p>
+<p>When we talk about applications, we talk about <abbr title="Open Telecom Platform">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications and how they relate to booting and shutting down of your system as a whole in the <a href="https://hexdocs.pm/elixir/Application.html">docs for the Application module</a>.</p>
 
-<h2 id="simple-one-for-one-supervisors">Simple one for one supervisors</h2>
-
-<p>We have now successfully defined our supervisor which is automatically started (and stopped) as part of our application lifecycle.</p>
-
-<p>Remember however that our <code class="highlighter-rouge">KV.Registry</code> is both linking (via <code class="highlighter-rouge">start_link</code>) and monitoring (via <code class="highlighter-rouge">monitor</code>) bucket processes in the <code class="highlighter-rouge">handle_cast/2</code> callback:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">start_link</span><span class="p">([])</span>
-<span class="n">ref</span> <span class="o">=</span> <span class="no">Process</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
-</code></pre>
-</div>
-
-<p>Links are bi-directional, which implies that a crash in a bucket will crash the registry. Although we now have the supervisor, which guarantees the registry will be back up and running, crashing the registry still means we lose all data associating bucket names to their respective processes.</p>
-
-<p>In other words, we want the registry to keep on running even if a bucket crashes. Let’s write a new registry test:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">test</span> <span class="sd">"</span><span class="s2">removes bucket on crash"</span><span class="p">,</span> <span class="p">%{</span><span class="ss">registry:</span> <span class="n">registry</span><span class="p">}</span> <span class="k">do</span>
-  <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="sd">"</span><span class="s2">shopping"</span><span class="p">)</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="sd">"</span><span class="s2">shopping"</span><span class="p">)</span>
-
-  <span class="c1"># Stop the bucket with non-normal reason</span>
-  <span class="no">Agent</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="ss">:shutdown</span><span class="p">)</span>
-  <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="sd">"</span><span class="s2">shopping"</span><span class="p">)</span> <span class="o">==</span> <span class="ss">:error</span>
-<span class="k">end</span>
-</code></pre>
-</div>
-
-<p>The test is similar to “removes bucket on exit” except that we are being a bit more harsh by sending <code class="highlighter-rouge">:shutdown</code> as the exit reason instead of <code class="highlighter-rouge">:normal</code>. If a process terminates with a reason different than <code class="highlighter-rouge">:normal</code>, all linked processes receive an EXIT signal, causing the linked process to also terminate unless they are trapping exits.</p>
-
-<p>Since the bucket terminated, the registry went away with it, and our test fails when trying to <code class="highlighter-rouge">GenServer.call/3</code> it:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>  1) test removes bucket on crash (KV.RegistryTest)
-     test/kv/registry_test.exs:26
-     ** (exit) exited in: GenServer.call(#PID&lt;0.148.0&gt;, {:lookup, "shopping"}, 5000)
-         ** (EXIT) no process: the process is not alive or there's no process currently associated with the given name, possibly because its application isn't started
-     code: assert KV.Registry.lookup(registry, "shopping") == :error
-     stacktrace:
-       (elixir) lib/gen_server.ex:770: GenServer.call/3
-       test/kv/registry_test.exs:33: (test)
-</code></pre>
-</div>
-
-<p>We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called <code class="highlighter-rouge">:simple_one_for_one</code>, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization. Instead, a worker is started manually via the <code class="highlighter-rouge">Supervisor.start_child/2</code> function.</p>
-
-<p>Let’s define our <code class="highlighter-rouge">KV.BucketSupervisor</code> in <code class="highlighter-rouge">lib/kv/bucket_supervisor.ex</code> as follows:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span> <span class="k">do</span>
-  <span class="kn">use</span> <span class="no">Supervisor</span>
-
-  <span class="c1"># A simple module attribute that stores the supervisor name</span>
-  <span class="nv">@name</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span>
-
-  <span class="k">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">_opts</span><span class="p">)</span> <span class="k">do</span>
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="ss">:ok</span><span class="p">,</span> <span class="ss">name:</span> <span class="nv">@name</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="n">start_bucket</span> <span class="k">do</span>
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="nv">@name</span><span class="p">,</span> <span class="p">[])</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p">([</span><span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">],</span> <span class="ss">strategy:</span> <span class="ss">:simple_one_for_one</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre>
-</div>
-
-<p>There are two changes in this supervisor compared to the first one.</p>
-
-<p>First of all, we have decided to give the supervisor a local name of <code class="highlighter-rouge">KV.BucketSupervisor</code>. While we could have passed the <code class="highlighter-rouge">opts</code> received on <code class="highlighter-rouge">start_link/1</code> to the supervisor, we chose to hard code the name for simplicity. Note this approach has downsides. For example, you wouldn’t be able to start multiple instances of the <code class="highlighter-rouge">KV.BucketSupervisor</code> during tests, as they would conflict on the name. In this case, we will just allow all registries to use the same bucket supervisor at once, that won’t be a problem since children of a simple one for one supervisor don’t interfere with one another.</p>
-
-<p>We have also defined a <code class="highlighter-rouge">start_bucket/0</code> function that will start a bucket as a child of our supervisor named <code class="highlighter-rouge">KV.BucketSupervisor</code>. <code class="highlighter-rouge">start_bucket/0</code> is the function we are going to invoke instead of calling <code class="highlighter-rouge">KV.Bucket.start_link/1</code> directly in the registry.</p>
-
-<p>Run <code class="highlighter-rouge">iex -S mix</code> so we can give our new supervisor a try:</p>
-
-<pre><code class="language-iex">iex&gt; {:ok, _} = KV.BucketSupervisor.start_link([])
-{:ok, #PID&lt;0.70.0&gt;}
-iex&gt; {:ok, bucket} = KV.BucketSupervisor.start_bucket
-{:ok, #PID&lt;0.72.0&gt;}
-iex&gt; KV.Bucket.put(bucket, "eggs", 3)
-:ok
-iex&gt; KV.Bucket.get(bucket, "eggs")
-3
-</code></pre>
-
-<p>We are almost ready to use the simple one for one supervisor in our application. The first step is to change the registry to invoke <code class="highlighter-rouge">start_bucket</code>:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">})</span> <span class="k">do</span>
-    <span class="k">if</span> <span class="no">Map</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
-      <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
-    <span class="k">else</span>
-      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="o">.</span><span class="n">start_bucket</span><span class="p">()</span>
-      <span class="n">ref</span> <span class="o">=</span> <span class="no">Process</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
-      <span class="n">refs</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-      <span class="n">names</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
-      <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-</code></pre>
-</div>
-
-<p>The second step is to make sure <code class="highlighter-rouge">KV.BucketSupervisor</code> is started when our application boots. We can do this by opening <code class="highlighter-rouge">lib/kv/supervisor.ex</code> and changing <code class="highlighter-rouge">init/1</code> to the following:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="p">{</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">},</span>
-      <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span>
-    <span class="p">]</span>
-
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">)</span>
-  <span class="k">end</span>
-</code></pre>
-</div>
-
-<p>That’s enough for our tests to pass but there is a resource leakage in our application. When a bucket terminates, the supervisor will start a new bucket in its place. After all, that’s the role of the supervisor!</p>
-
-<p>However, when the supervisor restarts the new bucket, the registry does not know about it. So we will have an empty bucket in the supervisor that nobody can access! To solve this, we want to say that buckets are actually temporary. If they crash, regardless of the reason, they should not be restarted.</p>
-
-<p>We can do this by passing the <code class="highlighter-rouge">restart: :temporary</code> option to <code class="highlighter-rouge">use Agent</code> in <code class="highlighter-rouge">KV.Bucket</code>:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span> <span class="k">do</span>
-  <span class="kn">use</span> <span class="no">Agent</span><span class="p">,</span> <span class="ss">restart:</span> <span class="ss">:temporary</span>
-</code></pre>
-</div>
-
-<p>Let’s also add a test to <code class="highlighter-rouge">test/kv/bucket_test.exs</code> that guarantees the bucket is temporary:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="n">test</span> <span class="sd">"</span><span class="s2">are temporary workers"</span> <span class="k">do</span>
-    <span class="n">assert</span> <span class="no">Supervisor</span><span class="o">.</span><span class="n">child_spec</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">restart</span> <span class="o">==</span> <span class="ss">:temporary</span>
-  <span class="k">end</span>
-</code></pre>
-</div>
-
-<p>Our test uses the <code class="highlighter-rouge">Supervisor.child_spec/2</code> function to retrieve the child specification out of a module and then assert its restart value is <code class="highlighter-rouge">:temporary</code>. At this point, you may be wondering why use a supervisor if it never restarts its children. It happens that supervisors provide more than restarts, they are also responsible to guarantee proper startup and shutdown, especially in case of crashes in a supervision tree.</p>
-
-<h2 id="supervision-trees">Supervision trees</h2>
-
-<p>When we added <code class="highlighter-rouge">KV.BucketSupervisor</code> as a child of <code class="highlighter-rouge">KV.Supervisor</code>, we began to have supervisors that supervise other supervisors, forming so-called “supervision trees”.</p>
-
-<p>Every time you add a new child to a supervisor, it is important to evaluate if the supervisor strategy is correct as well as the order of child processes. In this case, we are using <code class="highlighter-rouge">:one_for_one</code> and the <code class="highlighter-rouge">KV.Registry</code> is started before <code class="highlighter-rouge">KV.BucketSupervisor</code>.</p>
-
-<p>One flaw that shows up right away is the ordering issue. Since <code class="highlighter-rouge">KV.Registry</code> invokes <code class="highlighter-rouge">KV.BucketSupervisor</code>, then the <code class="highlighter-rouge">KV.BucketSupervisor</code> must be started before <code class="highlighter-rouge">KV.Registry</code>. Otherwise it may happen that the registry attempts to reach the bucket supervisor before it has started.</p>
-
-<p>The second flaw is related to the supervision strategy. If <code class="highlighter-rouge">KV.Registry</code> dies, all information linking <code class="highlighter-rouge">KV.Bucket</code> names to bucket processes is lost. Therefore the <code class="highlighter-rouge">KV.BucketSupervisor</code> and all children must terminate too - otherwise we will have orphan processes.</p>
-
-<p>In light of this observation, we should consider moving to another supervision strategy. The two other candidates are <code class="highlighter-rouge">:one_for_all</code> and <code class="highlighter-rouge">:rest_for_one</code>. A supervisor using the <code class="highlighter-rouge">:rest_for_one</code> will kill and restart child processes which were started <em>after</em> the crashed child. In this case, we would want <code class="highlighter-rouge">KV.BucketSupervisor</code> to terminate if <code class="highlighter-rouge">KV.Bucket</code> terminates. This would require the bucket supervisor to be placed after the registry. Which violates the ordering constraints we have established two paragraphs above.</p>
-
-<p>So our last option is to go all in and pick the <code class="highlighter-rouge">:one_for_all</code> strategy: the supervisor will kill and restart all of its children processes whenever any one of them dies. This is a complete reasonable approach for our application, since the registry can’t work without the bucket supervisor, and the bucket supervisor should terminate without the registry. Let’s reimplement <code class="highlighter-rouge">init/1</code> in <code class="highlighter-rouge">KV.Supervisor</code> to encode those properties:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span>
-      <span class="p">{</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">}</span>
-    <span class="p">]</span>
-
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_all</span><span class="p">)</span>
-  <span class="k">end</span>
-</code></pre>
-</div>
-
-<p>To help developers remember how to work with Supervisors and its convenience functions, <a href="http://benjamintan.io/">Benjamin Tan Wei Hao</a> has created a <a href="https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf">Supervisor cheat sheet</a>.</p>
-
-<p>There are two topics left before we move on to the next chapter.</p>
-
-<h2 id="observer">Observer</h2>
-
-<p>Now that we have defined our supervision tree, it is a great opportunity to introduce the Observer tool that ships with Erlang. Start your application with <code class="highlighter-rouge">iex -S mix</code> and key this in:</p>
-
-<pre><code class="language-iex">iex&gt; :observer.start
-</code></pre>
-
-<p>A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.</p>
-
-<p>In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the <code class="highlighter-rouge">kv</code> application to explore it further:</p>
-
-<p><img src="/images/contents/kv-observer.png" width="640" alt="Observer GUI screenshot" /></p>
-
-<p>Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:</p>
-
-<pre><code class="language-iex">iex&gt; KV.Registry.create KV.Registry, "shopping"
-:ok
-</code></pre>
-
-<p>We will leave it up to you to further explore what Observer provides. Note you can double click any process in the supervision tree to retrieve more information about it, as well as right-click a process to send “a kill signal”, a perfect way to emulate failures and see if your supervisor reacts as expected.</p>
-
-<p>At the end of the day, tools like Observer is one of the main reasons you want to always start processes inside supervision trees, even if they are temporary, to ensure they are always reachable and introspectable.</p>
-
-<h2 id="shared-state-in-tests">Shared state in tests</h2>
-
-<p>So far we have been starting one registry per test to ensure they are isolated:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">setup</span> <span class="k">do</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">registry</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">)</span>
-  <span class="p">%{</span><span class="ss">registry:</span> <span class="n">registry</span><span class="p">}</span>
-<span class="k">end</span>
-</code></pre>
-</div>
-
-<p>Since we have now changed our registry to use <code class="highlighter-rouge">KV.BucketSupervisor</code>, which is registered globally, our tests are now relying on this shared supervisor even though each test has its own registry. The question is: should we?</p>
-
-<p>It depends. It is ok to rely on shared state as long as we depend only on a non-shared partition of this state. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like <code class="highlighter-rouge">Supervisor.count_children(KV.Bucket.Supervisor)</code> which would count all buckets from all registries, potentially giving different results when tests run concurrently.</p>
-
-<p>Since we have relied only on a non-shared partition of the bucket supervisor so far, we don’t need to worry about concurrency issues in our test suite. In case it ever becomes a problem, we can start a supervisor per test and pass it as an argument to the registry <code class="highlighter-rouge">start_link</code> function.</p>
-
-<p>Now that our application is properly supervised and tested, let’s see how we can speed things up.</p>
+<p>Next let’s learn about one special type of supervisor that is designed to start and shut down children dynamically, called simple one for one.</p>
 
   </article><!-- .hfeed -->
 

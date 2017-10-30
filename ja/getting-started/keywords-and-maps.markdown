@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Keywords and maps
+title: Keyword lists and maps
 redirect_from: /getting-started/maps-and-dicts.html
 ---
 

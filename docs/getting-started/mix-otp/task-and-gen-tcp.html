@@ -228,7 +228,7 @@
 For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html">read the introduction guide</a> or check out the chapter index in the sidebar.</p>
 </blockquote>
 
-<p>In this chapter, we are going to learn how to use <a href="http://www.erlang.org/doc/man/gen_tcp.html">Erlang’s <code class="highlighter-rouge">:gen_tcp</code> module</a> to serve requests. This provides a great opportunity to explore Elixir’s <code class="highlighter-rouge">Task</code> module. In future chapters we will expand our server so it can actually serve the commands.</p>
+<p>In this chapter, we are going to learn how to use <a href="http://www.erlang.org/doc/man/gen_tcp.html">Erlang’s <code class="highlighter-rouge">:gen_tcp</code> module</a> to serve requests. This provides a great opportunity to explore Elixir’s <code class="highlighter-rouge">Task</code> module. In future chapters, we will expand our server so it can actually serve the commands.</p>
 
 <h2 id="echo-server">Echo server</h2>
 
@@ -246,48 +246,50 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="kn">require</span> <span class="no">Logger</span>
 
-<span class="k">def</span> <span class="n">accept</span><span class="p">(</span><span class="n">port</span><span class="p">)</span> <span class="k">do</span>
-  <span class="c1"># The options below mean:</span>
-  <span class="c1">#</span>
-  <span class="c1"># 1. `:binary` - receives data as binaries (instead of lists)</span>
-  <span class="c1"># 2. `packet: :line` - receives data line by line</span>
-  <span class="c1"># 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available</span>
-  <span class="c1"># 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes</span>
-  <span class="c1">#</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">socket</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">port</span><span class="p">,</span>
-                    <span class="p">[</span><span class="ss">:binary</span><span class="p">,</span> <span class="ss">packet:</span> <span class="ss">:line</span><span class="p">,</span> <span class="ss">active:</span> <span class="no">false</span><span class="p">,</span> <span class="ss">reuseaddr:</span> <span class="no">true</span><span class="p">])</span>
-  <span class="no">Logger</span><span class="o">.</span><span class="n">info</span> <span class="sd">"</span><span class="s2">Accepting connections on port </span><span class="si">#{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span>
-  <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
-<span class="k">end</span>
+<span class="k">defmodule</span> <span class="no">KVServer</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">accept</span><span class="p">(</span><span class="n">port</span><span class="p">)</span> <span class="k">do</span>
+    <span class="c1"># The options below mean:</span>
+    <span class="c1">#</span>
+    <span class="c1"># 1. `:binary` - receives data as binaries (instead of lists)</span>
+    <span class="c1"># 2. `packet: :line` - receives data line by line</span>
+    <span class="c1"># 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available</span>
+    <span class="c1"># 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes</span>
+    <span class="c1">#</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">socket</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">port</span><span class="p">,</span>
+                      <span class="p">[</span><span class="ss">:binary</span><span class="p">,</span> <span class="ss">packet:</span> <span class="ss">:line</span><span class="p">,</span> <span class="ss">active:</span> <span class="no">false</span><span class="p">,</span> <span class="ss">reuseaddr:</span> <span class="no">true</span><span class="p">])</span>
+    <span class="no">Logger</span><span class="o">.</span><span class="n">info</span> <span class="sd">"</span><span class="s2">Accepting connections on port </span><span class="si">#{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+  <span class="k">end</span>
 
-<span class="k">defp</span> <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">client</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
-  <span class="n">serve</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
-  <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="k">defp</span> <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">client</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+    <span class="n">serve</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+    <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+  <span class="k">end</span>
 
-<span class="k">defp</span> <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
-  <span class="n">socket</span>
-  <span class="o">|&gt;</span> <span class="n">read_line</span><span class="p">()</span>
-  <span class="o">|&gt;</span> <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+  <span class="k">defp</span> <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">socket</span>
+    <span class="o">|&gt;</span> <span class="n">read_line</span><span class="p">()</span>
+    <span class="o">|&gt;</span> <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
 
-  <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
-<span class="k">end</span>
+    <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+  <span class="k">end</span>
 
-<span class="k">defp</span> <span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">data</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
-  <span class="n">data</span>
-<span class="k">end</span>
+  <span class="k">defp</span> <span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">data</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+    <span class="n">data</span>
+  <span class="k">end</span>
 
-<span class="k">defp</span> <span class="n">write_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
-  <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+  <span class="k">defp</span> <span class="n">write_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+    <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+  <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
 </div>
 
 <p>We are going to start our server by calling <code class="highlighter-rouge">KVServer.accept(4040)</code>, where 4040 is the port. The first step in <code class="highlighter-rouge">accept/1</code> is to listen to the port until the socket becomes available and then call <code class="highlighter-rouge">loop_acceptor/1</code>. <code class="highlighter-rouge">loop_acceptor/1</code> is a loop accepting client connections. For each accepted connection, we call <code class="highlighter-rouge">serve/1</code>.</p>
 
-<p><code class="highlighter-rouge">serve/1</code> is another loop that reads a line from the socket and writes those lines back to the socket. Note that the <code class="highlighter-rouge">serve/1</code> function uses <a href="https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2">the pipe operator <code class="highlighter-rouge">|&gt;</code></a> to express this flow of operations. The pipe operator evaluates the left side and passes its result as first argument to the function on the right side. The example above:</p>
+<p><code class="highlighter-rouge">serve/1</code> is another loop that reads a line from the socket and writes those lines back to the socket. Note that the <code class="highlighter-rouge">serve/1</code> function uses <a href="https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2">the pipe operator <code class="highlighter-rouge">|&gt;</code></a> to express this flow of operations. The pipe operator evaluates the left side and passes its result as the first argument to the function on the right side. The example above:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">socket</span> <span class="o">|&gt;</span> <span class="n">read_line</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
 </code></pre>
@@ -340,13 +342,13 @@ you are looking <span class="k">for</span>?
 
 <p>That’s because we were expecting data from <code class="highlighter-rouge">:gen_tcp.recv/2</code> but the client closed the connection. We need to handle such cases better in future revisions of our server.</p>
 
-<p>For now there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won’t be able to serve more requests, because it won’t be restarted. That’s why we must move our server to a supervision tree.</p>
+<p>For now, there is a more important bug we need to fix: what happens if our TCP acceptor crashes? Since there is no supervision, the server dies and we won’t be able to serve more requests, because it won’t be restarted. That’s why we must move our server to a supervision tree.</p>
 
 <h2 id="tasks">Tasks</h2>
 
 <p>We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?</p>
 
-<p><a href="https://hexdocs.pm/elixir/Task.html">The Task module</a> provides this functionality exactly. For example, it has a <code class="highlighter-rouge">start_link/3</code> function that receives a module, function and arguments, allowing us to run a given function as part of a supervision tree.</p>
+<p><a href="https://hexdocs.pm/elixir/Task.html">The Task module</a> provides this functionality exactly. For example, it has a <code class="highlighter-rouge">start_link/3</code> function that receives a module, function, and arguments, allowing us to run a given function as part of a supervision tree.</p>
 
 <p>Let’s give it a try. Open up <code class="highlighter-rouge">lib/kv_server/application.ex</code>, and let’s change the supervisor in the <code class="highlighter-rouge">start/2</code> function to the following:</p>
 
@@ -507,7 +509,7 @@ HELLOOOOOO?
 
 <p>However, there is still one concern left, which are the restart strategies. Tasks, by default, have the <code class="highlighter-rouge">:restart</code> value set to <code class="highlighter-rouge">:temporary</code>, which means they are not restarted. This is an excellent default for the connections started via the <code class="highlighter-rouge">Task.Supervisor</code>, as it makes no sense to restart a failed connection, but it is a bad choice for the acceptor. If the acceptor crashes, we want to bring the acceptor up and running again.</p>
 
-<p>We could fix this by defining our own module that calls <code class="highlighter-rouge">use Task, restart: :permanent</code> and invokes a <code class="highlighter-rouge">start_link</code> function responsible for restarting the task, quite similar to <code class="highlighter-rouge">Agent</code> and <code class="highlighter-rouge">GenServer</code>. However, let’s take a different approach here. When integrating with someone else’s library, we won’t be able to change how their agents, tasks and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using <code class="highlighter-rouge">Supervisor.child_spec/2</code>, a function that we happen to know from previous chapters. Let’s rewrite <code class="highlighter-rouge">start/2</code> in <code class="highlighter-rouge">KVServer.Application</code> once more:</p>
+<p>We could fix this by defining our own module that calls <code class="highlighter-rouge">use Task, restart: :permanent</code> and invokes a <code class="highlighter-rouge">start_link</code> function responsible for restarting the task, quite similar to <code class="highlighter-rouge">Agent</code> and <code class="highlighter-rouge">GenServer</code>. However, let’s take a different approach here. When integrating with someone else’s library, we won’t be able to change how their agents, tasks, and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using <code class="highlighter-rouge">Supervisor.child_spec/2</code>, a function that we happen to know from previous chapters. Let’s rewrite <code class="highlighter-rouge">start/2</code> in <code class="highlighter-rouge">KVServer.Application</code> once more:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">start</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">_args</span><span class="p">)</span> <span class="k">do</span>
     <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
@@ -523,7 +525,7 @@ HELLOOOOOO?
 
 <p><code class="highlighter-rouge">Supervisor.child_spec/2</code> is capable of building a child specification from a given module and/or tuple, and it also accepts values that override the underlying child specification. Now we have an always running acceptor that starts temporary task processes under an always running task supervisor.</p>
 
-<p>In the next chapter we will start parsing the client requests and sending responses, finishing our server.</p>
+<p>In the next chapter, we will start parsing the client requests and sending responses, finishing our server.</p>
 
   </article><!-- .hfeed -->
 

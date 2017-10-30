@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Modules and Functions
+title: Modules and functions
 redirect_from: /getting-started/modules.html
 ---
 

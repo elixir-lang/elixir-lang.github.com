@@ -283,7 +283,7 @@ OK
 
 <p>When you install Elixir, besides getting the <code class="highlighter-rouge">elixir</code>, <code class="highlighter-rouge">elixirc</code> and <code class="highlighter-rouge">iex</code> executables, you also get an executable Elixir script named <code class="highlighter-rouge">mix</code>.</p>
 
-<p>Let’s create our first project by invoking <code class="highlighter-rouge">mix new</code> from the command line. We’ll pass the project name as argument (<code class="highlighter-rouge">kv</code>, in this case), and tell Mix that our main module should be the all-uppercase <code class="highlighter-rouge">KV</code>, instead of the default, which would have been <code class="highlighter-rouge">Kv</code>:</p>
+<p>Let’s create our first project by invoking <code class="highlighter-rouge">mix new</code> from the command line. We’ll pass the project name as the argument (<code class="highlighter-rouge">kv</code>, in this case), and tell Mix that our main module should be the all-uppercase <code class="highlighter-rouge">KV</code>, instead of the default, which would have been <code class="highlighter-rouge">Kv</code>:</p>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix new kv --module KV
 </code></pre>
@@ -492,7 +492,7 @@ Finished in 0.05 seconds
 
 <p>The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the <code class="highlighter-rouge">:prod</code> environment.</p>
 
-<p>Customization per environment can be done by accessing <a href="https://hexdocs.pm/mix/Mix.html#env/1">the <code class="highlighter-rouge">Mix.env</code> function</a> in your <code class="highlighter-rouge">mix.exs</code> file, which returns the current environment as an atom. That’s what we have used in the <code class="highlighter-rouge">:start_permanent</code> options:</p>
+<p>Customization per environment can be done by accessing <a href="https://hexdocs.pm/mix/Mix.html#env/0">the <code class="highlighter-rouge">Mix.env</code> function</a> in your <code class="highlighter-rouge">mix.exs</code> file, which returns the current environment as an atom. That’s what we have used in the <code class="highlighter-rouge">:start_permanent</code> options:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">project</span> <span class="k">do</span>
   <span class="p">[</span><span class="o">...</span><span class="p">,</span>

@@ -44,7 +44,7 @@ iex> rem 10, 3
 1
 ```
 
-Notice Elixir allows you to drop the parentheses when invoking named functions. Such feature gives a cleaner syntax when writing declarations and control-flow constructs.
+Notice that Elixir allows you to drop the parentheses when invoking named functions. This feature gives a cleaner syntax when writing declarations and control-flow constructs.
 
 Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:
 
@@ -57,7 +57,7 @@ iex> 0x1F
 31
 ```
 
-Float numbers require a dot followed by at least one digit and also support `e` for the exponent number:
+Float numbers require a dot followed by at least one digit and also support `e` for scientific notation:
 
 ```iex
 iex> 1.0
@@ -66,7 +66,7 @@ iex> 1.0e-10
 1.0e-10
 ```
 
-Floats in Elixir are 64 bit double precision.
+Floats in Elixir are 64-bit double precision.
 
 You can invoke the `round` function to get the closest integer to a given float, or the `trunc` function to get the integer part of a float.
 
@@ -79,7 +79,7 @@ iex> trunc(3.58)
 
 ## Identifying functions
 
-Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments which the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of `2`.
+Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments that the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of `2`.
 
 ## Booleans
 
@@ -107,7 +107,7 @@ You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respect
 
 ## Atoms
 
-Atoms are constants where their name is their own value. Some other languages call these symbols:
+An atom is a constant whose name is its own value. Some other languages call these symbols:
 
 ```iex
 iex> :hello
@@ -127,9 +127,16 @@ iex> is_boolean(:false)
 true
 ```
 
+Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case are also atoms:
+
+```iex
+iex> is_atom(Hello)
+true
+```
+
 ## Strings
 
-Strings in Elixir are inserted between double quotes, and they are encoded in UTF-8:
+Strings in Elixir are delimited by double quotes, and they are encoded in UTF-8:
 
 ```iex
 iex> "hellö"
@@ -164,7 +171,7 @@ world
 :ok
 ```
 
-Notice the `IO.puts/1` function returns the atom `:ok` as result after printing.
+Notice that the `IO.puts/1` function returns the atom `:ok` after printing.
 
 Strings in Elixir are represented internally by binaries which are sequences of bytes:
 
@@ -180,7 +187,7 @@ iex> byte_size("hellö")
 6
 ```
 
-Notice the number of bytes in that string is 6, even though it has 5 characters. That's because the character "ö" takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the `String.length/1` function:
+Notice that the number of bytes in that string is 6, even though it has 5 characters. That's because the character "ö" takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the `String.length/1` function:
 
 ```iex
 iex> String.length("hellö")
@@ -213,7 +220,7 @@ false
 
 Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions in the same way as integers and strings. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
 
-Note a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling an anonymous function named `add` and a named function `add/2`. In this sense, Elixir makes a clear distinction between anonymous functions and named functions. We will explore those differences in [Chapter 8](/getting-started/modules-and-functions.html).
+Note that a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling an anonymous function named `add` and a named function `add/2`. In this sense, Elixir makes a clear distinction between anonymous functions and named functions. We will explore those differences in [Chapter 8](/getting-started/modules-and-functions.html).
 
 Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
@@ -246,7 +253,7 @@ iex> length [1, 2, 3]
 3
 ```
 
-Two lists can be concatenated or subtracted using the `++/2` and `--/2` operators:
+Two lists can be concatenated or subtracted using the `++/2` and `--/2` operators respectively:
 
 ```iex
 iex> [1, 2, 3] ++ [4, 5, 6]
@@ -254,6 +261,8 @@ iex> [1, 2, 3] ++ [4, 5, 6]
 iex> [1, true, 2, false, 3, true] -- [true, false]
 [1, 2, 3, true]
 ```
+
+List operators never modify the existing list. Concatenating to or removing elements from a list returns a new list. We say that Elixir data structures are *immutable*. One advantage of immutability is that it leads to clearer code. You can freely pass the data around with the guarantee no one will change it - only transform it.
 
 Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of the list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
 
@@ -281,7 +290,7 @@ iex> [104, 101, 108, 108, 111]
 'hello'
 ```
 
-When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the `i/1` to retrieve information about it:
+When Elixir sees a list of printable ASCII numbers, Elixir will print that as a charlist (literally a list of characters). Charlists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the `i/1` to retrieve information about it:
 
 ```iex
 iex> i 'hello'
@@ -304,7 +313,7 @@ iex> 'hello' == "hello"
 false
 ```
 
-Single quotes are char lists, double quotes are strings. We will talk more about them in the ["Binaries, strings and char lists"](/getting-started/binaries-strings-and-char-lists.html) chapter.
+Single quotes are charlists, double quotes are strings. We will talk more about them in the ["Binaries, strings and charlists"](/getting-started/binaries-strings-and-char-lists.html) chapter.
 
 ## Tuples
 
@@ -339,7 +348,7 @@ iex> tuple
 {:ok, "hello"}
 ```
 
-Notice that `put_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry that any code might be mutating your data structure in place.
+Notice that `put_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified. Like lists, tuples are also immutable. Every operation on a tuple returns a new tuple, it never changes the given one.
 
 ## Lists or tuples?
 
@@ -347,12 +356,12 @@ What is the difference between lists and tuples?
 
 Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size.
 
-Updating a list is fast as long as we are prepending elements:
+Similarly, the performance of list concatenation depends on the length of the left-hand list:
 
 ```iex
 iex> list = [1, 2, 3]
 
-# This is fast as we don't need to traverse `list` to prepend 0
+# This is fast as we only need to traverse `[0]` to prepend to `list`
 iex> [0] ++ list
 [0, 1, 2, 3]
 
@@ -361,9 +370,17 @@ iex> list ++ [4]
 [1, 2, 3, 4]
 ```
 
-Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory.
+Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires creating a new tuple in memory:
 
-Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents. It returns tuples:
+```iex
+iex> tuple = {:a, :b, :c, :d}
+iex> put_elem(tuple, 2, :e)
+{:a, :b, :e, :d}
+```
+
+Note that this applies only to the tuple itself, not its contents. For instance, when you update a tuple, all entries are shared between the old and the new tuple, except for the entry that has been replaced. In other words, tuples and lists in Elixir are capable of sharing their contents. This reduces the amount of memory allocation the language needs to perform and is only possible thanks to the immutable semantics of the language.
+
+Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents. It returns a tuple:
 
 ```iex
 iex> File.read("path/to/existing/file")
@@ -385,6 +402,6 @@ iex> elem(tuple, 1)
 
 When counting the elements in a data structure, Elixir also abides by a simple rule: the function is named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation is linear (i.e. calculating the length gets slower as the input grows). As a mnemonic, both "length" and "linear" start with "l".
 
-For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for tuple size), `length/1` (for list length) and `String.length/1` (for the number of graphemes in a string). We use `byte_size` to get the number of bytes in a string -- a cheap operation. Retrieving the number of unicode characters, on the other hand, uses `String.length`, and may be expensive as it relies on a traversal of the entire string.
+For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for tuple size), `length/1` (for list length) and `String.length/1` (for the number of graphemes in a string). We use `byte_size` to get the number of bytes in a string -- a cheap operation. Retrieving the number of Unicode characters, on the other hand, uses `String.length`, and may be expensive as it relies on a traversal of the entire string.
 
 Elixir also provides `Port`, `Reference`, and `PID` as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operators that go with our basic types.

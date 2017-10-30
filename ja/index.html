@@ -12,7 +12,7 @@ layout: default
 
       <p>Elixirは、低レイテンシで分散型のフォールトトレラントシステムや、Webや組み込みシステムの領域で成功を収めている、Erlang VMを利用します。</p>
 
-      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a>. Or keep reading to get an overview of the platform, language and tools.</p>
+      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a> and our <a href="/learning.html">learning page for other resources</a>. Or keep reading to get an overview of the platform, language and tools.</p>
     </div>
   </div>
 
@@ -55,11 +55,9 @@ end
       <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
 
 {% highlight elixir %}
-import Supervisor.Spec
-
 children = [
-  supervisor(TCP.Pool, []),
-  worker(TCP.Acceptor, [4040])
+  TCP.Pool,
+  {TCP.Acceptor, port: 4040}
 ]
 
 Supervisor.start_link(children, strategy: :one_for_one)
@@ -152,10 +150,10 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 {% highlight text %}
 $ iex
 Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
-iex> c "my_file.ex"        # Compiles a file
-iex> t Enum                # Prints types defined in the module Enum
-iex> h IEx.pry             # Prints the documentation for IEx pry functionality
-iex> i "Hello, World"      # Prints information about the given data type
+iex> h String.trim           # Prints the documentation for function
+iex> i "Hello, World"        # Prints information about the given data type
+iex> break! String.trim/1    # Sets a breakpoint in the String.trim/1 function
+iex> recompile               # Recompiles the current project on the fly
 {% endhighlight %}
     </div>
   </div>
@@ -164,7 +162,7 @@ iex> i "Hello, World"      # Prints information about the given data type
     <h4>Erlang compatible</h4>
 
     <div class="entry-summary">
-      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang&rsquo;s ecosystem, used by companies like <a href="https://www.heroku.com">Heroku</a>, <a href="https://www.whatsapp.com">WhatsApp</a>, <a href="https://klarna.com">Klarna</a>, <a href="http://basho.com">Basho</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang&rsquo;s ecosystem, used by companies like <a href="https://www.heroku.com">Heroku</a>, <a href="https://www.whatsapp.com">WhatsApp</a>, <a href="https://klarna.com">Klarna</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
 
 {% highlight iex %}
 iex> :crypto.hash(:md5, "Using crypto from Erlang OTP")

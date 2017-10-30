@@ -230,7 +230,7 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p>Every time we need to look up a bucket, we need to send a message to the registry. In case our registry is being accessed concurrently by multiple processes, the registry may become a bottleneck!</p>
 
-<p>In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.</p>
+<p>In this chapter, we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism.</p>
 
 <blockquote>
   <p>Warning! Don’t use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know <em>whether</em> you should cache, and <em>what</em> you should cache. This chapter is merely an example of how ETS can be used, once you’ve determined the need.</p>
@@ -294,7 +294,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
   <span class="k">end</span>
 
   <span class="nv">@doc</span> <span class="sd">"""
-  Ensures there is a bucket associated to the given `name` in `server`.
+  Ensures there is a bucket associated with the given `name` in `server`.
   """</span>
   <span class="k">def</span> <span class="n">create</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
     <span class="no">GenServer</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">})</span>
@@ -343,7 +343,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
 
 <p>In order for the cache mechanism to work, the created ETS table needs to have access <code class="highlighter-rouge">:protected</code> (the default), so all clients can read from it, while only the <code class="highlighter-rouge">KV.Registry</code> process writes to it. We have also set <code class="highlighter-rouge">read_concurrency: true</code> when starting the table, optimizing the table for the common scenario of concurrent read operations.</p>
 
-<p>The changes we have performed above have broken our tests because the registry requires the <code class="highlighter-rouge">:name</code> option when starting up. Furthermore, some registry operations such as <code class="highlighter-rouge">lookup/2</code> require the name to be given as argument, instead of a PID, so we can do the ETS table lookup. Let’s change the setup function in <code class="highlighter-rouge">test/kv/registry_test.exs</code> to fix both issues:</p>
+<p>The changes we have performed above have broken our tests because the registry requires the <code class="highlighter-rouge">:name</code> option when starting up. Furthermore, some registry operations such as <code class="highlighter-rouge">lookup/2</code> require the name to be given as an argument, instead of a PID, so we can do the ETS table lookup. Let’s change the setup function in <code class="highlighter-rouge">test/kv/registry_test.exs</code> to fix both issues:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="n">setup</span> <span class="n">context</span> <span class="k">do</span>
     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">_</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span><span class="p">({</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="n">context</span><span class="o">.</span><span class="n">test</span><span class="p">})</span>
@@ -447,7 +447,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
 
 <p>According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.</p>
 
-<p>Unfortunately this time we cannot simply change <code class="highlighter-rouge">handle_info/2</code>, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead we need to find a way to guarantee the registry has processed the <code class="highlighter-rouge">:DOWN</code> notification sent when the bucket crashed.</p>
+<p>Unfortunately this time we cannot simply change <code class="highlighter-rouge">handle_info/2</code>, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the <code class="highlighter-rouge">:DOWN</code> notification sent when the bucket crashed.</p>
 
 <p>An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the <code class="highlighter-rouge">Agent.stop</code> call, it means that the <code class="highlighter-rouge">:DOWN</code> message has been processed. Let’s do so by creating a “bogus” bucket, which is a synchronous request, after <code class="highlighter-rouge">Agent.stop</code> in both tests:</p>
 
@@ -481,7 +481,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
 
 <p>In practice, if you find yourself in a position where you need a process registry for dynamic processes, you should use <a href="https://hexdocs.pm/elixir/Registry.html">the <code class="highlighter-rouge">Registry</code> module</a> provided as part of Elixir. It provides functionality similar to the one we have built using a GenServer + <code class="highlighter-rouge">:ets</code> while also being able to perform both writes and reads concurrently. <a href="https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/">It has been benchmarked to scale across all cores even on machines with 40 cores</a>.</p>
 
-<p>Next let’s discuss external and internal dependencies and how Mix helps us manage large codebases.</p>
+<p>Next, let’s discuss external and internal dependencies and how Mix helps us manage large codebases.</p>
 
   </article><!-- .hfeed -->
 

@@ -55,7 +55,7 @@ In this chapter, we will create our first project using Mix and explore differen
 
 When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` executables, you also get an executable Elixir script named `mix`.
 
-Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
+Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as the argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
 
 ```bash
 $ mix new kv --module KV
@@ -249,7 +249,7 @@ Mix supports the concept of "environments". They allow a developer to customize 
 
 The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
 
-Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/1) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
+Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/0) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
 
 ```elixir
 def project do

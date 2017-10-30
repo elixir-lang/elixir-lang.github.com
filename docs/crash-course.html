@@ -727,14 +727,20 @@ lines.
 
 <p><strong>Erlang</strong></p>
 
-<div class="language-erlang highlighter-rouge"><pre class="highlight"><code><span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">math</span><span class="p">).</span>
+<div class="language-erlang highlighter-rouge"><pre class="highlight"><code><span class="c">% math.erl
+</span><span class="p">-</span><span class="ni">module</span><span class="p">(</span><span class="n">math</span><span class="p">).</span>
 <span class="p">-</span><span class="ni">export</span><span class="p">([</span><span class="n">square</span><span class="o">/</span><span class="mi">1</span><span class="p">]).</span>
 
 <span class="nf">square</span><span class="p">(</span><span class="nv">X</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nv">X</span> <span class="o">*</span> <span class="nv">X</span><span class="p">.</span>
+</code></pre>
+</div>
 
-<span class="nn">lists</span><span class="p">:</span><span class="nf">map</span><span class="p">(</span><span class="k">fun</span> <span class="nn">math</span><span class="p">:</span><span class="n">square</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]).</span>
-<span class="c">%=&gt; [1, 4, 9]
-</span></code></pre>
+<div class="language-erl highlighter-rouge"><pre class="highlight"><code><span class="nv">Eshell</span> <span class="nv">V5</span><span class="p">.</span><span class="mi">9</span>  <span class="p">(</span><span class="n">abort</span> <span class="n">with</span> <span class="err">^</span><span class="nv">G</span><span class="p">)</span>
+<span class="mi">1</span><span class="o">&gt;</span> <span class="nf">c</span><span class="p">(</span><span class="n">math</span><span class="p">).</span>
+<span class="p">{</span><span class="n">ok</span><span class="p">,</span><span class="n">math</span><span class="p">}</span>
+<span class="mi">2</span><span class="o">&gt;</span> <span class="nn">lists</span><span class="p">:</span><span class="nf">map</span><span class="p">(</span><span class="k">fun</span> <span class="nn">math</span><span class="p">:</span><span class="n">square</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]).</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+</code></pre>
 </div>
 
 <p><strong>Elixir</strong></p>

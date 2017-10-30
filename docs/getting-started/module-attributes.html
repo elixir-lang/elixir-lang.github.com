@@ -277,7 +277,7 @@
 </code></pre>
 </div>
 
-<p>Elixir promotes the use of Markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple double-quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:</p>
+<p>Elixir promotes the use of Markdown with heredocs to write readable documentation. Heredocs are multi-line strings, they start and end with triple double-quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:</p>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixirc math.ex
 <span class="gp">$ </span>iex
@@ -296,7 +296,7 @@ iex&gt; h Math.sum # Access the docs for the sum function
 
 <p>This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.</p>
 
-<h2 id="as-constants">As constants</h2>
+<h2 id="as-constants">As “constants”</h2>
 
 <p>Elixir developers will often use module attributes as constants:</p>
 
@@ -336,6 +336,10 @@ iex&gt; h Math.sum # Access the docs for the sum function
 
 <p>Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful to be used as storage during module compilation.</p>
 
+<p>Any functions may be called when defining a module attribute.</p>
+
+<p>When defining an attribute, do not leave a line break between the attribute name and its value.</p>
+
 <h2 id="as-temporary-storage">As temporary storage</h2>
 
 <p>One of the projects in the Elixir organization is <a href="https://github.com/elixir-lang/plug">the <code class="highlighter-rouge">Plug</code> project</a>, which is meant to be a common foundation for building web libraries and frameworks in Elixir.</p>
@@ -364,7 +368,7 @@ iex&gt; h Math.sum # Access the docs for the sum function
 
 <p>In the example above, we have used the <code class="highlighter-rouge">plug/1</code> macro to connect functions that will be invoked when there is a web request. Internally, every time you call <code class="highlighter-rouge">plug/1</code>, the Plug library stores the given argument in a <code class="highlighter-rouge">@plugs</code> attribute. Just before the module is compiled, Plug runs a callback that defines a function (<code class="highlighter-rouge">call/2</code>) which handles HTTP requests. This function will run all plugs inside <code class="highlighter-rouge">@plugs</code> in order.</p>
 
-<p>In order to understand the underlying code, we’d need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is on how using module attributes as storage allows developers to create DSLs.</p>
+<p>In order to understand the underlying code, we’d need macros, so we will revisit this pattern in the meta-programming guide. However, the focus here is on how using module attributes as storage allows developers to create DSLs.</p>
 
 <p>Another example comes from <a href="https://hexdocs.pm/ex_unit/">the ExUnit framework</a> which uses module attributes as annotation and storage:</p>
 
@@ -383,7 +387,7 @@ iex&gt; h Math.sum # Access the docs for the sum function
 
 <p>We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so.</p>
 
-<p>In the next chapters we’ll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions.</p>
+<p>In the next chapters, we’ll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions.</p>
 
   </article><!-- .hfeed -->
 

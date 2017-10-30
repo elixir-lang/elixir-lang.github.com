@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Docs, tests and with - Elixir</title>
+  <title>Doctests, patterns and with - Elixir</title>
   <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
@@ -25,10 +25,10 @@
   ga('send', 'pageview');
   </script>
   <!-- Begin Jekyll SEO tag v2.2.3 -->
-<meta property="og:title" content="Docs, tests and with" />
+<meta property="og:title" content="Doctests, patterns and with" />
 <meta property="og:locale" content="en_US" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Docs, tests and with","url":"/ja/getting-started/mix-otp/docs-tests-and-with.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Doctests, patterns and with","url":"/ja/getting-started/mix-otp/docs-tests-and-with.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -219,7 +219,7 @@
 
 <div id="content">
   <article>
-    <h1 id="docs-tests-and-with">Docs, tests and with</h1>
+    <h1 id="doctests-patterns-and-with">Doctests, patterns and with</h1>
 
 <div id="toc" class="toc"></div>
 
@@ -254,7 +254,7 @@ OK
 
 <p>On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via <code class="highlighter-rouge">mix help</code> or by typing <code class="highlighter-rouge">h Enum</code> or another module in an IEx console.</p>
 
-<p>In this section, we will implement the parse functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples.</p>
+<p>In this section, we will implement the parsing functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples.</p>
 
 <p>Let’s create our command parser at <code class="highlighter-rouge">lib/kv_server/command.ex</code> and start with the doctest:</p>
 
@@ -275,9 +275,9 @@ OK
 </code></pre>
 </div>
 
-<p>Doctests are specified in by an indentation of four spaces followed by the <code class="highlighter-rouge">iex&gt;</code> prompt in a documentation string. If a command spans multiple lines, you can use <code class="highlighter-rouge">...&gt;</code>, as in IEx. The expected result should start at the next line after <code class="highlighter-rouge">iex&gt;</code> or <code class="highlighter-rouge">...&gt;</code> line(s) and is terminated either by a newline or a new <code class="highlighter-rouge">iex&gt;</code> prefix.</p>
+<p>Doctests are specified by an indentation of four spaces followed by the <code class="highlighter-rouge">iex&gt;</code> prompt in a documentation string. If a command spans multiple lines, you can use <code class="highlighter-rouge">...&gt;</code>, as in IEx. The expected result should start at the next line after <code class="highlighter-rouge">iex&gt;</code> or <code class="highlighter-rouge">...&gt;</code> line(s) and is terminated either by a newline or a new <code class="highlighter-rouge">iex&gt;</code> prefix.</p>
 
-<p>Also note that we started the documentation string using <code class="highlighter-rouge">@doc ~S"""</code>. The <code class="highlighter-rouge">~S</code> prevents the <code class="highlighter-rouge">\r\n</code> characters from being converted to a carriage return and line feed until they are evaluated in the test.</p>
+<p>Also, note that we started the documentation string using <code class="highlighter-rouge">@doc ~S"""</code>. The <code class="highlighter-rouge">~S</code> prevents the <code class="highlighter-rouge">\r\n</code> characters from being converted to a carriage return and line feed until they are evaluated in the test.</p>
 
 <p>To run our doctests, we’ll create a file at <code class="highlighter-rouge">test/kv_server/command_test.exs</code> and call <code class="highlighter-rouge">doctest KVServer.Command</code> in the test case:</p>
 
@@ -464,7 +464,7 @@ iex&gt; KVServer.Command.parse "GET shopping\r\n"
 </code></pre>
 </div>
 
-<p>If we start our server, we can now send commands to it. For now we will get two different responses: “OK” when the command is known and “UNKNOWN COMMAND” otherwise:</p>
+<p>If we start our server, we can now send commands to it. For now, we will get two different responses: “OK” when the command is known and “UNKNOWN COMMAND” otherwise:</p>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>telnet 127.0.0.1 4040
 Trying 127.0.0.1...
@@ -479,7 +479,7 @@ UNKNOWN COMMAND
 
 <p>This means our implementation is going in the correct direction, but it doesn’t look very elegant, does it?</p>
 
-<p>The previous implementation used pipelines which made the logic straight-forward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many <code class="highlighter-rouge">case</code> calls.</p>
+<p>The previous implementation used pipelines which made the logic straightforward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many <code class="highlighter-rouge">case</code> calls.</p>
 
 <p>Thankfully, Elixir v1.2 introduced the <code class="highlighter-rouge">with</code> construct, which allows you to simplify code like the above, replacing nested <code class="highlighter-rouge">case</code> calls with a chain of matching clauses. Let’s rewrite the <code class="highlighter-rouge">serve/1</code> function to use <code class="highlighter-rouge">with</code>:</p>
 
@@ -561,7 +561,7 @@ Runs the given command.
 
 <p><code class="highlighter-rouge">KVServer.Command.run/1</code>’s implementation is sending commands directly to the server named <code class="highlighter-rouge">KV.Registry</code>, which is registered by the <code class="highlighter-rouge">:kv</code> application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application’s full stack as it is meant to be exercised in production.</p>
 
-<p>So far we have only written unit tests, typically testing a single module directly. However, in order to make <code class="highlighter-rouge">KVServer.Command.run/1</code> testable as a unit we would need to change its implementation to not send commands directly to the <code class="highlighter-rouge">KV.Registry</code> process but instead pass a server as argument. For example, we would need to change <code class="highlighter-rouge">run</code>’s signature to <code class="highlighter-rouge">def run(command, pid)</code> and then change all clauses accordingly:</p>
+<p>So far we have only written unit tests, typically testing a single module directly. However, in order to make <code class="highlighter-rouge">KVServer.Command.run/1</code> testable as a unit we would need to change its implementation to not send commands directly to the <code class="highlighter-rouge">KV.Registry</code> process but instead pass a server as an argument. For example, we would need to change <code class="highlighter-rouge">run</code>’s signature to <code class="highlighter-rouge">def run(command, pid)</code> and then change all clauses accordingly:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">bucket</span><span class="p">},</span> <span class="n">pid</span><span class="p">)</span> <span class="k">do</span>
   <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)</span>
@@ -572,9 +572,9 @@ Runs the given command.
 </code></pre>
 </div>
 
-<p>Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the <code class="highlighter-rouge">KV.Registry</code> and pass it as argument to <code class="highlighter-rouge">run/2</code> instead of relying on the global <code class="highlighter-rouge">KV.Registry</code>. This has the advantage of keeping our tests asynchronous as there is no shared state.</p>
+<p>Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the <code class="highlighter-rouge">KV.Registry</code> and pass it as an argument to <code class="highlighter-rouge">run/2</code> instead of relying on the global <code class="highlighter-rouge">KV.Registry</code>. This has the advantage of keeping our tests asynchronous as there is no shared state.</p>
 
-<p>But let’s also try something different. Let’s write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation.</p>
+<p>But let’s also try something different. Let’s write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests, we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation.</p>
 
 <p>Our integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses.</p>
 
@@ -662,7 +662,7 @@ Runs the given command.
 
 <p>At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don’t have the weight of an integration test.</p>
 
-<p>In the next chapter we will finally make our system distributed by adding a bucket routing mechanism. We’ll also learn about application configuration.</p>
+<p>In the next chapter, we will finally make our system distributed by adding a bucket routing mechanism. We’ll also learn about application configuration.</p>
 
   </article><!-- .hfeed -->
 
