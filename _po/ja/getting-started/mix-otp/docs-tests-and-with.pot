@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:1
 msgid "---\n"
 "layout: getting-started\n"
-"title: Docs, tests and with\n"
+"title: Doctests, patterns and with\n"
 "redirect_from: /getting-started/mix_otp/docs-tests-and-pipelines.html\n"
 "---"
 msgstr ""
@@ -82,7 +82,7 @@ msgid "On the language homepage, we mention that Elixir makes documentation a fi
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:39
-msgid "In this section, we will implement the parse functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples."
+msgid "In this section, we will implement the parsing functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:41
@@ -115,11 +115,11 @@ msgid "  \"\"\"\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:60
-msgid "Doctests are specified in by an indentation of four spaces followed by the `iex>` prompt in a documentation string. If a command spans multiple lines, you can use `...>`, as in IEx. The expected result should start at the next line after `iex>` or `...>` line(s) and is terminated either by a newline or a new `iex>` prefix."
+msgid "Doctests are specified by an indentation of four spaces followed by the `iex>` prompt in a documentation string. If a command spans multiple lines, you can use `...>`, as in IEx. The expected result should start at the next line after `iex>` or `...>` line(s) and is terminated either by a newline or a new `iex>` prefix."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:62
-msgid "Also note that we started the documentation string using `@doc ~S\"\"\"`. The `~S` prevents the `\\r\\n` characters from being converted to a carriage return and line feed until they are evaluated in the test."
+msgid "Also, note that we started the documentation string using `@doc ~S\"\"\"`. The `~S` prevents the `\\r\\n` characters from being converted to a carriage return and line feed until they are evaluated in the test."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:64
@@ -398,7 +398,7 @@ msgid "defp write_line(socket, {:error, error}) do\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:251
-msgid "If we start our server, we can now send commands to it. For now we will get two different responses: \"OK\" when the command is known and \"UNKNOWN COMMAND\" otherwise:"
+msgid "If we start our server, we can now send commands to it. For now, we will get two different responses: \"OK\" when the command is known and \"UNKNOWN COMMAND\" otherwise:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:253
@@ -419,7 +419,7 @@ msgid "This means our implementation is going in the correct direction, but it d
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:266
-msgid "The previous implementation used pipelines which made the logic straight-forward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many `case` calls."
+msgid "The previous implementation used pipelines which made the logic straightforward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many `case` calls."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:268
@@ -543,7 +543,7 @@ msgid "`KVServer.Command.run/1`'s implementation is sending commands directly to
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:348
-msgid "So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. For example, we would need to change `run`'s signature to `def run(command, pid)` and then change all clauses accordingly:"
+msgid "So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as an argument. For example, we would need to change `run`'s signature to `def run(command, pid)` and then change all clauses accordingly:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:350
@@ -560,11 +560,11 @@ msgid "# ... other run clauses ...\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:359
-msgid "Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state."
+msgid "Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as an argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:361
-msgid "But let's also try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation."
+msgid "But let's also try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests, we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:363
@@ -704,6 +704,6 @@ msgid "At the end of the day, it is up to you and your team to figure out the be
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:449
-msgid "In the next chapter we will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration."
+msgid "In the next chapter, we will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration."
 msgstr ""
 

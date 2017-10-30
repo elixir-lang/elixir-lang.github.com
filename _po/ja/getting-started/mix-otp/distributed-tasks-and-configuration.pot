@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgid "You may wonder why we don't tell the node we found in our routing table t
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:27
-msgid "> Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines in the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Second, you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info). Third, if you want to learn more about distribution in general, we recommend [this great Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon)."
+msgid "> Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines on the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Second, you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info). Third, if you want to learn more about distribution in general, we recommend [this great Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon)."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:29
@@ -133,7 +133,7 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:68
-msgid "However we can spawn a new process on `foo@computer-name` from `bar@computer-name`! Let's give it a try (where `@computer-name` is the one you see locally):"
+msgid "However, we can spawn a new process on `foo@computer-name` from `bar@computer-name`! Let's give it a try (where `@computer-name` is the one you see locally):"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:70
@@ -149,7 +149,7 @@ msgid "Elixir spawned a process on another node and returned its pid. The code t
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:78
-msgid "We can send and receive message from the pid returned by `Node.spawn_link/2` as usual. Let's try a quick ping-pong example:"
+msgid "We can send and receive messages from the pid returned by `Node.spawn_link/2` as usual. Let's try a quick ping-pong example:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:80
@@ -169,7 +169,7 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:94
-msgid "From our quick exploration, we could conclude that we should use `Node.spawn_link/2` to spawn processes on a remote node every time we need to do a distributed computation. However we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options."
+msgid "From our quick exploration, we could conclude that we should use `Node.spawn_link/2` to spawn processes on a remote node every time we need to do a distributed computation. However, we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:96
@@ -181,7 +181,7 @@ msgid "1. We could use Erlang's [:rpc](http://www.erlang.org/doc/man/rpc.html) m
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:100
-msgid "2. We could have a server running on the other node and send requests to that node via the [GenServer](https://hexdocs.pm/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as first argument"
+msgid "2. We could have a server running on the other node and send requests to that node via the [GenServer](https://hexdocs.pm/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as the first argument"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:102
@@ -257,7 +257,7 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:146
-msgid "Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function and arguments explicitly:"
+msgid "Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function, and arguments explicitly:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:148
@@ -270,7 +270,7 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:155
-msgid "The difference is that anonymous functions requires the target node to have exactly the same code version as the caller. Using module, function and arguments is more robust because you only need to find a function with matching arity in the given module."
+msgid "The difference is that anonymous functions require the target node to have exactly the same code version as the caller. Using module, function, and arguments is more robust because you only need to find a function with matching arity in the given module."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:157
@@ -623,7 +623,7 @@ msgid "## Summing up"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:374
-msgid "In this chapter we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title=\"Virtual Machine\">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title=\"Open Telecom Platform\">OTP</abbr> guide."
+msgid "In this chapter, we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title=\"Virtual Machine\">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title=\"Open Telecom Platform\">OTP</abbr> guide."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/distributed-tasks-and-configuration.markdown:376

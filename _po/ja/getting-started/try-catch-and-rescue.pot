@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgid "{% include toc.html %}"
 msgstr ""
 
 #: ../../../getting-started/try-catch-and-rescue.markdown:10
-msgid "Elixir has three error mechanisms: errors, throws, and exits. In this chapter we will explore each of them and include remarks about when each should be used."
+msgid "Elixir has three error mechanisms: errors, throws, and exits. In this chapter, we will explore each of them and include remarks about when each should be used."
 msgstr ""
 
 #: ../../../getting-started/try-catch-and-rescue.markdown:12
@@ -164,7 +164,7 @@ msgstr ""
 msgid "```iex\n"
 "iex> File.read! \"unknown\"\n"
 "** (File.Error) could not read file unknown: no such file or directory\n"
-"    (elixir) lib/file.ex:305: File.read!/1\n"
+"    (elixir) lib/file.ex:272: File.read!/1\n"
 "```"
 msgstr ""
 
@@ -224,20 +224,19 @@ msgstr ""
 #: ../../../getting-started/try-catch-and-rescue.markdown:135
 msgid "```iex\n"
 "iex> spawn_link fn -> exit(1) end\n"
-"#PID<0.56.0>\n"
-"** (EXIT from #PID<0.56.0>) 1\n"
+"** (EXIT from #PID<0.56.0>) evaluator process exited with reason: 1\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:141
-msgid "In the example above, the linked process died by sending an `exit` signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal."
+#: ../../../getting-started/try-catch-and-rescue.markdown:140
+msgid "In the example above, the linked process died by sending an `exit` signal with a value of 1. The Elixir shell automatically handles those messages and prints them to the terminal."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:143
+#: ../../../getting-started/try-catch-and-rescue.markdown:142
 msgid "`exit` can also be \"caught\" using `try/catch`:"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:145
+#: ../../../getting-started/try-catch-and-rescue.markdown:144
 msgid "```iex\n"
 "iex> try do\n"
 "...>   exit \"I am exiting\"\n"
@@ -248,27 +247,27 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:154
-msgid "Using `try/catch` is already uncommon and using it to catch exits is even more rare."
+#: ../../../getting-started/try-catch-and-rescue.markdown:153
+msgid "Using `try/catch` is already uncommon and using it to catch exits is even rarer."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:156
+#: ../../../getting-started/try-catch-and-rescue.markdown:155
 msgid "`exit` signals are an important part of the fault tolerant system provided by the Erlang <abbr title=\"Virtual Machine\">VM</abbr>. Processes usually run under supervision trees which are themselves processes that listen to `exit` signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:158
+#: ../../../getting-started/try-catch-and-rescue.markdown:157
 msgid "It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing an error, we'd rather \"fail fast\" since the supervision tree will guarantee our application will go back to a known initial state after the error."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:160
+#: ../../../getting-started/try-catch-and-rescue.markdown:159
 msgid "## After"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:162
+#: ../../../getting-started/try-catch-and-rescue.markdown:161
 msgid "Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and use an `after` clause to close it--even if something goes wrong:"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:164
+#: ../../../getting-started/try-catch-and-rescue.markdown:163
 msgid "```iex\n"
 "iex> {:ok, file} = File.open \"sample\", [:utf8, :write]\n"
 "iex> try do\n"
@@ -281,17 +280,17 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:175
+#: ../../../getting-started/try-catch-and-rescue.markdown:174
 msgid "The `after` clause will be executed regardless of whether or not the tried block succeeds. Note, however, that if a linked process exits,\n"
 "this process will exit and the `after` clause will not get run. Thus `after` provides only a soft guarantee. Luckily, files in Elixir are also linked to the current processes and therefore they will always get closed if the current process crashes, independent of the\n"
 "`after` clause. You will find the same to be true for other resources like ETS tables, sockets, ports and more."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:179
+#: ../../../getting-started/try-catch-and-rescue.markdown:178
 msgid "Sometimes you may want to wrap the entire body of a function in a `try` construct, often to guarantee some code will be executed afterwards. In such cases, Elixir allows you to omit the `try` line:"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:181
+#: ../../../getting-started/try-catch-and-rescue.markdown:180
 msgid "```iex\n"
 "iex> defmodule RunAfter do\n"
 "...>   def without_even_trying do\n"
@@ -306,19 +305,19 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:194
+#: ../../../getting-started/try-catch-and-rescue.markdown:193
 msgid "Elixir will automatically wrap the function body in a `try` whenever one of `after`, `rescue` or `catch` is specified."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:196
+#: ../../../getting-started/try-catch-and-rescue.markdown:195
 msgid "## Else"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:198
+#: ../../../getting-started/try-catch-and-rescue.markdown:197
 msgid "If an `else` block is present, it will match on the results of the `try` block whenever the `try` block finishes without a throw or an error."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:200
+#: ../../../getting-started/try-catch-and-rescue.markdown:199
 msgid "```iex\n"
 "iex> x = 2\n"
 "2\n"
@@ -337,19 +336,19 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:217
+#: ../../../getting-started/try-catch-and-rescue.markdown:216
 msgid "Exceptions in the `else` block are not caught. If no pattern inside the `else` block matches, an exception will be raised; this exception is not caught by the current `try/catch/rescue/after` block."
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:219
+#: ../../../getting-started/try-catch-and-rescue.markdown:218
 msgid "## Variables scope"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:221
+#: ../../../getting-started/try-catch-and-rescue.markdown:220
 msgid "It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:223
+#: ../../../getting-started/try-catch-and-rescue.markdown:222
 msgid "```iex\n"
 "iex> try do\n"
 "...>   raise \"fail\"\n"
@@ -362,11 +361,11 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:234
+#: ../../../getting-started/try-catch-and-rescue.markdown:233
 msgid "Instead, you can store the value of the `try` expression:"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:236
+#: ../../../getting-started/try-catch-and-rescue.markdown:235
 msgid "```iex\n"
 "iex> what_happened =\n"
 "...>   try do\n"
@@ -380,7 +379,7 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/try-catch-and-rescue.markdown:248
+#: ../../../getting-started/try-catch-and-rescue.markdown:247
 msgid "This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages, although they may be handy in some situations where a library or some particular code is not playing \"by the rules\"."
 msgstr ""
 

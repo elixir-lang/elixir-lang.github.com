@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgid "  @doc \"\"\"\n"
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:60
-msgid "Elixir promotes the use of Markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple double-quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:"
+msgid "Elixir promotes the use of Markdown with heredocs to write readable documentation. Heredocs are multi-line strings, they start and end with triple double-quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:"
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:62
@@ -147,7 +147,7 @@ msgid "This section covers built-in attributes. However, attributes can also be 
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:80
-msgid "## As constants"
+msgid "## As \"constants\""
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:82
@@ -205,66 +205,74 @@ msgid "Every time an attribute is read inside a function, a snapshot of its curr
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:118
-msgid "## As temporary storage"
+msgid "Any functions may be called when defining a module attribute."
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:120
-msgid "One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir."
+msgid "When defining an attribute, do not leave a line break between the attribute name and its value."
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:122
-msgid "The Plug library also allows developers to define their own plugs which can be run in a web server:"
+msgid "## As temporary storage"
 msgstr ""
 
 #: ../../../getting-started/module-attributes.markdown:124
+msgid "One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir."
+msgstr ""
+
+#: ../../../getting-started/module-attributes.markdown:126
+msgid "The Plug library also allows developers to define their own plugs which can be run in a web server:"
+msgstr ""
+
+#: ../../../getting-started/module-attributes.markdown:128
 msgid "```elixir\n"
 "defmodule MyPlug do\n"
 "  use Plug.Builder"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:128
+#: ../../../getting-started/module-attributes.markdown:132
 msgid "  plug :set_header\n"
 "  plug :send_ok"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:131
+#: ../../../getting-started/module-attributes.markdown:135
 msgid "  def set_header(conn, _opts) do\n"
 "    put_resp_header(conn, \"x-header\", \"set\")\n"
 "  end"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:135
+#: ../../../getting-started/module-attributes.markdown:139
 msgid "  def send_ok(conn, _opts) do\n"
 "    send(conn, 200, \"ok\")\n"
 "  end\n"
 "end"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:140
+#: ../../../getting-started/module-attributes.markdown:144
 msgid "IO.puts \"Running MyPlug with Cowboy on http://localhost:4000\"\n"
 "Plug.Adapters.Cowboy.http MyPlug, []\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:144
+#: ../../../getting-started/module-attributes.markdown:148
 msgid "In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given argument in a `@plugs` attribute. Just before the module is compiled, Plug runs a callback that defines a function (`call/2`) which handles HTTP requests. This function will run all plugs inside `@plugs` in order."
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:146
-msgid "In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is on how using module attributes as storage allows developers to create DSLs."
+#: ../../../getting-started/module-attributes.markdown:150
+msgid "In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However, the focus here is on how using module attributes as storage allows developers to create DSLs."
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:148
+#: ../../../getting-started/module-attributes.markdown:152
 msgid "Another example comes from [the ExUnit framework](https://hexdocs.pm/ex_unit/) which uses module attributes as annotation and storage:"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:150
+#: ../../../getting-started/module-attributes.markdown:154
 msgid "```elixir\n"
 "defmodule MyTest do\n"
 "  use ExUnit.Case"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:154
+#: ../../../getting-started/module-attributes.markdown:158
 msgid "  @tag :external\n"
 "  test \"contacts external service\" do\n"
 "    # ...\n"
@@ -273,15 +281,15 @@ msgid "  @tag :external\n"
 "```"
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:161
+#: ../../../getting-started/module-attributes.markdown:165
 msgid "Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests. For example, you can avoid running external tests on your machine because they are slow and dependent on other services, while they can still be enabled in your build system."
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:163
+#: ../../../getting-started/module-attributes.markdown:167
 msgid "We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so."
 msgstr ""
 
-#: ../../../getting-started/module-attributes.markdown:165
-msgid "In the next chapters we'll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions."
+#: ../../../getting-started/module-attributes.markdown:169
+msgid "In the next chapters, we'll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions."
 msgstr ""
 
