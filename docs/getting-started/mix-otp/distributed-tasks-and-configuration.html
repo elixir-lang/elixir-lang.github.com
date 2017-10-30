@@ -244,7 +244,7 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 <p>You may wonder why we don’t tell the node we found in our routing table to perform the requested operation directly, but instead pass the routing request on to that node to process. While a routing table as simple as the one above might reasonably be shared between all nodes, passing on the routing request in this way makes it much simpler to break the routing table into smaller pieces as our application grows. Perhaps at some point, <code class="highlighter-rouge">foo@computer-name</code> will only be responsible for routing bucket requests, and the buckets it handles will be dispatched to different nodes. In this way, <code class="highlighter-rouge">bar@computer-name</code> does not need to know anything about this change.</p>
 
 <blockquote>
-  <p>Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines in the same network but you need to do some prep work. First of all, you need to ensure all machines have a <code class="highlighter-rouge">~/.erlang.cookie</code> file with exactly the same value. Second, you need to guarantee <a href="http://www.erlang.org/doc/man/epmd.html">epmd</a> is running on a port that is not blocked (you can run <code class="highlighter-rouge">epmd -d</code> for debug info). Third, if you want to learn more about distribution in general, we recommend <a href="http://learnyousomeerlang.com/distribunomicon">this great Distribunomicon chapter from Learn You Some Erlang</a>.</p>
+  <p>Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines on the same network but you need to do some prep work. First of all, you need to ensure all machines have a <code class="highlighter-rouge">~/.erlang.cookie</code> file with exactly the same value. Second, you need to guarantee <a href="http://www.erlang.org/doc/man/epmd.html">epmd</a> is running on a port that is not blocked (you can run <code class="highlighter-rouge">epmd -d</code> for debug info). Third, if you want to learn more about distribution in general, we recommend <a href="http://learnyousomeerlang.com/distribunomicon">this great Distribunomicon chapter from Learn You Some Erlang</a>.</p>
 </blockquote>
 
 <h2 id="our-first-distributed-code">Our first distributed code</h2>
@@ -286,7 +286,7 @@ iex(foo@jv)1&gt;
     Hello.world()
 </code></pre>
 
-<p>However we can spawn a new process on <code class="highlighter-rouge">foo@computer-name</code> from <code class="highlighter-rouge">bar@computer-name</code>! Let’s give it a try (where <code class="highlighter-rouge">@computer-name</code> is the one you see locally):</p>
+<p>However, we can spawn a new process on <code class="highlighter-rouge">foo@computer-name</code> from <code class="highlighter-rouge">bar@computer-name</code>! Let’s give it a try (where <code class="highlighter-rouge">@computer-name</code> is the one you see locally):</p>
 
 <pre><code class="language-iex">iex&gt; Node.spawn_link :"foo@computer-name", fn -&gt; Hello.world end
 #PID&lt;9014.59.0&gt;
@@ -295,7 +295,7 @@ hello world
 
 <p>Elixir spawned a process on another node and returned its pid. The code then executed on the other node where the <code class="highlighter-rouge">Hello.world/0</code> function exists and invoked that function. Note that the result of “hello world” was printed on the current node <code class="highlighter-rouge">bar</code> and not on <code class="highlighter-rouge">foo</code>. In other words, the message to be printed was sent back from <code class="highlighter-rouge">foo</code> to <code class="highlighter-rouge">bar</code>. This happens because the process spawned on the other node (<code class="highlighter-rouge">foo</code>) still has the group leader of the current node (<code class="highlighter-rouge">bar</code>). We have briefly talked about group leaders in the <a href="/getting-started/io-and-the-file-system.html#processes-and-group-leaders">IO chapter</a>.</p>
 
-<p>We can send and receive message from the pid returned by <code class="highlighter-rouge">Node.spawn_link/2</code> as usual. Let’s try a quick ping-pong example:</p>
+<p>We can send and receive messages from the pid returned by <code class="highlighter-rouge">Node.spawn_link/2</code> as usual. Let’s try a quick ping-pong example:</p>
 
 <pre><code class="language-iex">iex&gt; pid = Node.spawn_link :"foo@computer-name", fn -&gt;
 ...&gt;   receive do
@@ -310,7 +310,7 @@ iex&gt; flush()
 :ok
 </code></pre>
 
-<p>From our quick exploration, we could conclude that we should use <code class="highlighter-rouge">Node.spawn_link/2</code> to spawn processes on a remote node every time we need to do a distributed computation. However we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options.</p>
+<p>From our quick exploration, we could conclude that we should use <code class="highlighter-rouge">Node.spawn_link/2</code> to spawn processes on a remote node every time we need to do a distributed computation. However, we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options.</p>
 
 <p>There are three better alternatives to <code class="highlighter-rouge">Node.spawn_link/2</code> that we could use in our implementation:</p>
 
@@ -319,7 +319,7 @@ iex&gt; flush()
     <p>We could use Erlang’s <a href="http://www.erlang.org/doc/man/rpc.html">:rpc</a> module to execute functions on a remote node. Inside the <code class="highlighter-rouge">bar@computer-name</code> shell above, you can call <code class="highlighter-rouge">:rpc.call(:"foo@computer-name", Hello, :world, [])</code> and it will print “hello world”</p>
   </li>
   <li>
-    <p>We could have a server running on the other node and send requests to that node via the <a href="https://hexdocs.pm/elixir/GenServer.html">GenServer</a> API. For example, you can call a server on a remote node by using <code class="highlighter-rouge">GenServer.call({name, node}, arg)</code> or passing the remote process PID as first argument</p>
+    <p>We could have a server running on the other node and send requests to that node via the <a href="https://hexdocs.pm/elixir/GenServer.html">GenServer</a> API. For example, you can call a server on a remote node by using <code class="highlighter-rouge">GenServer.call({name, node}, arg)</code> or passing the remote process PID as the first argument</p>
   </li>
   <li>
     <p>We could use <a href="https://hexdocs.pm/elixir/Task.html">tasks</a>, which we have learned about in <a href="/getting-started/mix-otp/task-and-gen-tcp.html">a previous chapter</a>, as they can be spawned on both local and remote nodes</p>
@@ -367,7 +367,7 @@ iex&gt; Task.await(task)
 {:ok, :"foo@computer-name"}
 </code></pre>
 
-<p>Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to <code class="highlighter-rouge">Task.Supervisor.async/2</code> but, in distributed cases, it is preferable to give the module, function and arguments explicitly:</p>
+<p>Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to <code class="highlighter-rouge">Task.Supervisor.async/2</code> but, in distributed cases, it is preferable to give the module, function, and arguments explicitly:</p>
 
 <pre><code class="language-iex">iex&gt; task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
 %Task{owner: #PID&lt;0.122.0&gt;, pid: #PID&lt;12467.89.0&gt;, ref: #Reference&lt;0.0.0.404&gt;}
@@ -375,7 +375,7 @@ iex&gt; Task.await(task)
 :"foo@computer-name"
 </code></pre>
 
-<p>The difference is that anonymous functions requires the target node to have exactly the same code version as the caller. Using module, function and arguments is more robust because you only need to find a function with matching arity in the given module.</p>
+<p>The difference is that anonymous functions require the target node to have exactly the same code version as the caller. Using module, function, and arguments is more robust because you only need to find a function with matching arity in the given module.</p>
 
 <p>With this knowledge in hand, let’s finally write the routing code.</p>
 
@@ -605,7 +605,7 @@ The routing table.
 
 <h2 id="summing-up">Summing up</h2>
 
-<p>In this chapter we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.</p>
+<p>In this chapter, we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.</p>
 
 <p>Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.</p>
 

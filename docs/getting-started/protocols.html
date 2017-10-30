@@ -225,9 +225,9 @@
 
 <p>Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let’s see an example.</p>
 
-<p>In Elixir, we have two idioms for checking how many items there are in a data structure: <code class="highlighter-rouge">length</code> and <code class="highlighter-rouge">size</code>. <code class="highlighter-rouge">length</code> means the information must be computed. For example, <code class="highlighter-rouge">length(list)</code> needs to traverse the whole list to calculate its length. On the other hand, <code class="highlighter-rouge">tuple_size(tuple)</code> and <code class="highlighter-rouge">byte_size(binary)</code> do not depend on the tuple and binary size as the size information is precomputed in the data structure.</p>
+<p>In Elixir, we have two idioms for checking how many items there are in a data structure: <code class="highlighter-rouge">length</code> and <code class="highlighter-rouge">size</code>. <code class="highlighter-rouge">length</code> means the information must be computed. For example, <code class="highlighter-rouge">length(list)</code> needs to traverse the whole list to calculate its length. On the other hand, <code class="highlighter-rouge">tuple_size(tuple)</code> and <code class="highlighter-rouge">byte_size(binary)</code> do not depend on the tuple and binary size as the size information is pre-computed in the data structure.</p>
 
-<p>Even if we have type-specific functions for getting the size built into Elixir (such as <code class="highlighter-rouge">tuple_size/1</code>), we could implement a generic <code class="highlighter-rouge">Size</code> protocol that all data structures for which size is precomputed would implement.</p>
+<p>Even if we have type-specific functions for getting the size built into Elixir (such as <code class="highlighter-rouge">tuple_size/1</code>), we could implement a generic <code class="highlighter-rouge">Size</code> protocol that all data structures for which size is pre-computed would implement.</p>
 
 <p>The protocol definition would look like this:</p>
 
@@ -254,7 +254,7 @@
 </code></pre>
 </div>
 
-<p>We didn’t implement the <code class="highlighter-rouge">Size</code> protocol for lists as there is no “size” information precomputed for lists, and the length of a list has to be computed (with <code class="highlighter-rouge">length/1</code>).</p>
+<p>We didn’t implement the <code class="highlighter-rouge">Size</code> protocol for lists as there is no “size” information pre-computed for lists, and the length of a list has to be computed (with <code class="highlighter-rouge">length/1</code>).</p>
 
 <p>Now with the protocol defined and implementations in hand, we can start using it:</p>
 
@@ -425,7 +425,7 @@ iex&gt; %User{}
 
 <h2 id="protocol-consolidation">Protocol consolidation</h2>
 
-<p>When working with Elixir projects, using the Mix build tool, you may see output as follows:</p>
+<p>When working with Elixir projects, using the Mix build tool, you may see the output as follows:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>Consolidated String.Chars
 Consolidated Collectable

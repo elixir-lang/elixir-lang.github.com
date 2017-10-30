@@ -257,7 +257,7 @@ iex&gt; rem 10, 3
 1
 </code></pre>
 
-<p>Notice Elixir allows you to drop the parentheses when invoking named functions. Such feature gives a cleaner syntax when writing declarations and control-flow constructs.</p>
+<p>Notice that Elixir allows you to drop the parentheses when invoking named functions. This feature gives a cleaner syntax when writing declarations and control-flow constructs.</p>
 
 <p>Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:</p>
 
@@ -269,7 +269,7 @@ iex&gt; 0x1F
 31
 </code></pre>
 
-<p>Float numbers require a dot followed by at least one digit and also support <code class="highlighter-rouge">e</code> for the exponent number:</p>
+<p>Float numbers require a dot followed by at least one digit and also support <code class="highlighter-rouge">e</code> for scientific notation:</p>
 
 <pre><code class="language-iex">iex&gt; 1.0
 1.0
@@ -277,7 +277,7 @@ iex&gt; 1.0e-10
 1.0e-10
 </code></pre>
 
-<p>Floats in Elixir are 64 bit double precision.</p>
+<p>Floats in Elixir are 64-bit double precision.</p>
 
 <p>You can invoke the <code class="highlighter-rouge">round</code> function to get the closest integer to a given float, or the <code class="highlighter-rouge">trunc</code> function to get the integer part of a float.</p>
 
@@ -289,7 +289,7 @@ iex&gt; trunc(3.58)
 
 <h2 id="identifying-functions">Identifying functions</h2>
 
-<p>Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments which the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. <code class="highlighter-rouge">round/1</code> identifies the function which is named <code class="highlighter-rouge">round</code> and takes 1 argument, whereas <code class="highlighter-rouge">round/2</code> identifies a different (nonexistent) function with the same name but with an arity of <code class="highlighter-rouge">2</code>.</p>
+<p>Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments that the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. <code class="highlighter-rouge">round/1</code> identifies the function which is named <code class="highlighter-rouge">round</code> and takes 1 argument, whereas <code class="highlighter-rouge">round/2</code> identifies a different (nonexistent) function with the same name but with an arity of <code class="highlighter-rouge">2</code>.</p>
 
 <h2 id="booleans">Booleans</h2>
 
@@ -317,7 +317,7 @@ false
 
 <h2 id="atoms">Atoms</h2>
 
-<p>Atoms are constants where their name is their own value. Some other languages call these symbols:</p>
+<p>An atom is a constant whose name is its own value. Some other languages call these symbols:</p>
 
 <pre><code class="language-iex">iex&gt; :hello
 :hello
@@ -335,9 +335,15 @@ iex&gt; is_boolean(:false)
 true
 </code></pre>
 
+<p>Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case are also atoms:</p>
+
+<pre><code class="language-iex">iex&gt; is_atom(Hello)
+true
+</code></pre>
+
 <h2 id="strings">Strings</h2>
 
-<p>Strings in Elixir are inserted between double quotes, and they are encoded in UTF-8:</p>
+<p>Strings in Elixir are delimited by double quotes, and they are encoded in UTF-8:</p>
 
 <pre><code class="language-iex">iex&gt; "hellö"
 "hellö"
@@ -370,7 +376,7 @@ world
 :ok
 </code></pre>
 
-<p>Notice the <code class="highlighter-rouge">IO.puts/1</code> function returns the atom <code class="highlighter-rouge">:ok</code> as result after printing.</p>
+<p>Notice that the <code class="highlighter-rouge">IO.puts/1</code> function returns the atom <code class="highlighter-rouge">:ok</code> after printing.</p>
 
 <p>Strings in Elixir are represented internally by binaries which are sequences of bytes:</p>
 
@@ -384,7 +390,7 @@ true
 6
 </code></pre>
 
-<p>Notice the number of bytes in that string is 6, even though it has 5 characters. That’s because the character “ö” takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the <code class="highlighter-rouge">String.length/1</code> function:</p>
+<p>Notice that the number of bytes in that string is 6, even though it has 5 characters. That’s because the character “ö” takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the <code class="highlighter-rouge">String.length/1</code> function:</p>
 
 <pre><code class="language-iex">iex&gt; String.length("hellö")
 5
@@ -414,7 +420,7 @@ false
 
 <p>Functions are “first class citizens” in Elixir meaning they can be passed as arguments to other functions in the same way as integers and strings. In the example, we have passed the function in the variable <code class="highlighter-rouge">add</code> to the <code class="highlighter-rouge">is_function/1</code> function which correctly returned <code class="highlighter-rouge">true</code>. We can also check the arity of the function by calling <code class="highlighter-rouge">is_function/2</code>.</p>
 
-<p>Note a dot (<code class="highlighter-rouge">.</code>) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling an anonymous function named <code class="highlighter-rouge">add</code> and a named function <code class="highlighter-rouge">add/2</code>. In this sense, Elixir makes a clear distinction between anonymous functions and named functions. We will explore those differences in <a href="/getting-started/modules-and-functions.html">Chapter 8</a>.</p>
+<p>Note that a dot (<code class="highlighter-rouge">.</code>) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling an anonymous function named <code class="highlighter-rouge">add</code> and a named function <code class="highlighter-rouge">add/2</code>. In this sense, Elixir makes a clear distinction between anonymous functions and named functions. We will explore those differences in <a href="/getting-started/modules-and-functions.html">Chapter 8</a>.</p>
 
 <p>Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let’s define a new anonymous function that uses the <code class="highlighter-rouge">add</code> anonymous function we have previously defined:</p>
 
@@ -444,13 +450,15 @@ iex&gt; length [1, 2, 3]
 3
 </code></pre>
 
-<p>Two lists can be concatenated or subtracted using the <code class="highlighter-rouge">++/2</code> and <code class="highlighter-rouge">--/2</code> operators:</p>
+<p>Two lists can be concatenated or subtracted using the <code class="highlighter-rouge">++/2</code> and <code class="highlighter-rouge">--/2</code> operators respectively:</p>
 
 <pre><code class="language-iex">iex&gt; [1, 2, 3] ++ [4, 5, 6]
 [1, 2, 3, 4, 5, 6]
 iex&gt; [1, true, 2, false, 3, true] -- [true, false]
 [1, 2, 3, true]
 </code></pre>
+
+<p>List operators never modify the existing list. Concatenating to or removing elements from a list returns a new list. We say that Elixir data structures are <em>immutable</em>. One advantage of immutability is that it leads to clearer code. You can freely pass the data around with the guarantee no one will change it - only transform it.</p>
 
 <p>Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of the list. They can be retrieved with the functions <code class="highlighter-rouge">hd/1</code> and <code class="highlighter-rouge">tl/1</code>. Let’s assign a list to a variable and retrieve its head and tail:</p>
 
@@ -475,7 +483,7 @@ iex&gt; [104, 101, 108, 108, 111]
 'hello'
 </code></pre>
 
-<p>When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the <code class="highlighter-rouge">i/1</code> to retrieve information about it:</p>
+<p>When Elixir sees a list of printable ASCII numbers, Elixir will print that as a charlist (literally a list of characters). Charlists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the <code class="highlighter-rouge">i/1</code> to retrieve information about it:</p>
 
 <pre><code class="language-iex">iex&gt; i 'hello'
 Term
@@ -496,7 +504,7 @@ Reference modules
 false
 </code></pre>
 
-<p>Single quotes are char lists, double quotes are strings. We will talk more about them in the <a href="/getting-started/binaries-strings-and-char-lists.html">“Binaries, strings and char lists”</a> chapter.</p>
+<p>Single quotes are charlists, double quotes are strings. We will talk more about them in the <a href="/getting-started/binaries-strings-and-char-lists.html">“Binaries, strings and charlists”</a> chapter.</p>
 
 <h2 id="tuples">Tuples</h2>
 
@@ -528,7 +536,7 @@ iex&gt; tuple
 {:ok, "hello"}
 </code></pre>
 
-<p>Notice that <code class="highlighter-rouge">put_elem/3</code> returned a new tuple. The original tuple stored in the <code class="highlighter-rouge">tuple</code> variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry that any code might be mutating your data structure in place.</p>
+<p>Notice that <code class="highlighter-rouge">put_elem/3</code> returned a new tuple. The original tuple stored in the <code class="highlighter-rouge">tuple</code> variable was not modified. Like lists, tuples are also immutable. Every operation on a tuple returns a new tuple, it never changes the given one.</p>
 
 <h2 id="lists-or-tuples">Lists or tuples?</h2>
 
@@ -536,11 +544,11 @@ iex&gt; tuple
 
 <p>Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size.</p>
 
-<p>Updating a list is fast as long as we are prepending elements:</p>
+<p>Similarly, the performance of list concatenation depends on the length of the left-hand list:</p>
 
 <pre><code class="language-iex">iex&gt; list = [1, 2, 3]
 
-# This is fast as we don't need to traverse `list` to prepend 0
+# This is fast as we only need to traverse `[0]` to prepend to `list`
 iex&gt; [0] ++ list
 [0, 1, 2, 3]
 
@@ -549,9 +557,16 @@ iex&gt; list ++ [4]
 [1, 2, 3, 4]
 </code></pre>
 
-<p>Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory.</p>
+<p>Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires creating a new tuple in memory:</p>
 
-<p>Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, <code class="highlighter-rouge">File.read/1</code> is a function that can be used to read file contents. It returns tuples:</p>
+<pre><code class="language-iex">iex&gt; tuple = {:a, :b, :c, :d}
+iex&gt; put_elem(tuple, 2, :e)
+{:a, :b, :e, :d}
+</code></pre>
+
+<p>Note that this applies only to the tuple itself, not its contents. For instance, when you update a tuple, all entries are shared between the old and the new tuple, except for the entry that has been replaced. In other words, tuples and lists in Elixir are capable of sharing their contents. This reduces the amount of memory allocation the language needs to perform and is only possible thanks to the immutable semantics of the language.</p>
+
+<p>Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, <code class="highlighter-rouge">File.read/1</code> is a function that can be used to read file contents. It returns a tuple:</p>
 
 <pre><code class="language-iex">iex&gt; File.read("path/to/existing/file")
 {:ok, "... contents ..."}
@@ -571,7 +586,7 @@ iex&gt; elem(tuple, 1)
 
 <p>When counting the elements in a data structure, Elixir also abides by a simple rule: the function is named <code class="highlighter-rouge">size</code> if the operation is in constant time (i.e. the value is pre-calculated) or <code class="highlighter-rouge">length</code> if the operation is linear (i.e. calculating the length gets slower as the input grows). As a mnemonic, both “length” and “linear” start with “l”.</p>
 
-<p>For example, we have used 4 counting functions so far: <code class="highlighter-rouge">byte_size/1</code> (for the number of bytes in a string), <code class="highlighter-rouge">tuple_size/1</code> (for tuple size), <code class="highlighter-rouge">length/1</code> (for list length) and <code class="highlighter-rouge">String.length/1</code> (for the number of graphemes in a string). We use <code class="highlighter-rouge">byte_size</code> to get the number of bytes in a string – a cheap operation. Retrieving the number of unicode characters, on the other hand, uses <code class="highlighter-rouge">String.length</code>, and may be expensive as it relies on a traversal of the entire string.</p>
+<p>For example, we have used 4 counting functions so far: <code class="highlighter-rouge">byte_size/1</code> (for the number of bytes in a string), <code class="highlighter-rouge">tuple_size/1</code> (for tuple size), <code class="highlighter-rouge">length/1</code> (for list length) and <code class="highlighter-rouge">String.length/1</code> (for the number of graphemes in a string). We use <code class="highlighter-rouge">byte_size</code> to get the number of bytes in a string – a cheap operation. Retrieving the number of Unicode characters, on the other hand, uses <code class="highlighter-rouge">String.length</code>, and may be expensive as it relies on a traversal of the entire string.</p>
 
 <p>Elixir also provides <code class="highlighter-rouge">Port</code>, <code class="highlighter-rouge">Reference</code>, and <code class="highlighter-rouge">PID</code> as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let’s take a look at some of the basic operators that go with our basic types.</p>
 

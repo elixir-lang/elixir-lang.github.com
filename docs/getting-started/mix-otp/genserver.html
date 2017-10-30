@@ -228,7 +228,7 @@
 For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html">read the introduction guide</a> or check out the chapter index in the sidebar.</p>
 </blockquote>
 
-<p>In the <a href="/getting-started/mix-otp/agent.html">previous chapter</a> we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:</p>
+<p>In the <a href="/getting-started/mix-otp/agent.html">previous chapter</a>, we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="no">CREATE</span> <span class="n">shopping</span>
 <span class="no">OK</span>
@@ -256,7 +256,7 @@ iex&gt; KV.Bucket.get(:shopping, "milk")
 
 <p>However, naming dynamic processes with atoms is a terrible idea! If we use atoms, we would need to convert the bucket name (often received from an external client) to atoms, and <strong>we should never convert user input to atoms</strong>. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory!</p>
 
-<p>In practice it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.</p>
+<p>In practice, it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.</p>
 
 <p>Instead of abusing the built-in name facility, we will create our own <em>process registry</em> that associates the bucket name to the bucket process.</p>
 
@@ -292,7 +292,7 @@ iex&gt; KV.Bucket.get(:shopping, "milk")
   <span class="k">end</span>
 
   <span class="nv">@doc</span> <span class="sd">"""
-  Ensures there is a bucket associated to the given `name` in `server`.
+  Ensures there is a bucket associated with the given `name` in `server`.
   """</span>
   <span class="k">def</span> <span class="n">create</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
     <span class="no">GenServer</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">})</span>
@@ -327,7 +327,7 @@ iex&gt; KV.Bucket.get(:shopping, "milk")
     <p>The module where the server callbacks are implemented, in this case <code class="highlighter-rouge">__MODULE__</code>, meaning the current module</p>
   </li>
   <li>
-    <p>The initialization arguments, in this case the atom <code class="highlighter-rouge">:ok</code></p>
+    <p>The initialization arguments, in this case, the atom <code class="highlighter-rouge">:ok</code></p>
   </li>
   <li>
     <p>A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on <code class="highlighter-rouge">start_link/1</code>, which defaults to an empty list. We will customize it later on</p>
@@ -338,7 +338,7 @@ iex&gt; KV.Bucket.get(:shopping, "milk")
 
 <p>The next two functions, <code class="highlighter-rouge">lookup/2</code> and <code class="highlighter-rouge">create/2</code> are responsible for sending these requests to the server.  In this case, we have used <code class="highlighter-rouge"><span class="p">{</span><span class="err">:lookup,</span><span class="w"> </span><span class="err">name</span><span class="p">}</span></code> and <code class="highlighter-rouge"><span class="p">{</span><span class="err">:create,</span><span class="w"> </span><span class="err">name</span><span class="p">}</span></code> respectively.  Requests are often specified as tuples, like this, in order to provide more than one “argument” in that first argument slot. It’s common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements. Note that the requests must match the first argument to <code class="highlighter-rouge">handle_call/3</code> or <code class="highlighter-rouge">handle_cast/2</code>.</p>
 
-<p>That’s it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.</p>
+<p>That’s it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination, and handling of requests. Those callbacks are optional and for now, we have only implemented the ones we care about.</p>
 
 <p>The first is the <code class="highlighter-rouge">init/1</code> callback, that receives the second argument given to <code class="highlighter-rouge">GenServer.start_link/3</code> and returns <code class="highlighter-rouge"><span class="p">{</span><span class="err">:ok,</span><span class="w"> </span><span class="err">state</span><span class="p">}</span></code>, where state is a new map. We can already notice how the <code class="highlighter-rouge">GenServer</code> API makes the client/server segregation more apparent. <code class="highlighter-rouge">start_link/3</code> happens in the client, while <code class="highlighter-rouge">init/1</code> is the respective callback that runs on the server.</p>
 
@@ -496,7 +496,7 @@ iex&gt; flush()
 </code></pre>
 </div>
 
-<p>This is a bad idea, as we don’t want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we’ll see in the next chapter, supervisors rely on links and that explains why link-based APIs (<code class="highlighter-rouge">spawn_link</code>, <code class="highlighter-rouge">start_link</code>, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.</p>
+<p>This is a bad idea, as we don’t want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead, we delegate this responsibility to supervisors. As we’ll see in the next chapter, supervisors rely on links and that explains why link-based APIs (<code class="highlighter-rouge">spawn_link</code>, <code class="highlighter-rouge">start_link</code>, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.</p>
 
   </article><!-- .hfeed -->
 

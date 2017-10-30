@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Domain Specific Languages
+title: Domain-specific languages
 ---
 
 # {{ page.title }}
@@ -9,9 +9,9 @@ title: Domain Specific Languages
 
 ## Foreword
 
-[Domain Specific Languages (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. You don't need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain Specific Language.
+[Domain-specific languages (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) allow developers to tailor their application to a particular domain. You don't need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain-specific language.
 
-For example, imagine we want to implement a Validator module which provides a data validation domain specific language. We could implement it using data structures, functions or macros. Let's see what those different DSLs would look like:
+For example, imagine we want to implement a Validator module which provides a data validation domain-specific language. We could implement it using data structures, functions or macros. Let's see what those different DSLs would look like:
 
 ```elixir
 # 1. data structures
@@ -39,15 +39,15 @@ Of all the approaches above, the first is definitely the most flexible. If our d
 
 The second approach uses function calls which better suits more complex APIs (for example, if you need to pass many options) and reads nicely in Elixir thanks to the pipe operator.
 
-The third approach, uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.
+The third approach uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.
 
-To drive the point home, imagine you want to validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However it is impossible to do so with the macros approach unless its DSL is augmented.
+To drive the point home, imagine you want to validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However, it is impossible to do so with the macros approach unless its DSL is augmented.
 
 In other words:
 
     data > functions > macros
 
-That said, there are still cases where using macros and modules to build domain specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.
+That said, there are still cases where using macros and modules to build domain-specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.
 
 ## Building our own test case
 
@@ -119,7 +119,7 @@ iex> defmodule MyTest do
 ...> end
 ```
 
-For now we don't have a mechanism to run tests, but we know that a function named "test hello" was defined behind the scenes. When we invoke it, it should fail:
+For now, we don't have a mechanism to run tests, but we know that a function named "test hello" was defined behind the scenes. When we invoke it, it should fail:
 
 ```iex
 iex> MyTest."test hello"()
@@ -173,7 +173,7 @@ defmodule TestCase do
   # This will be invoked right before the target module is compiled
   # giving us the perfect opportunity to inject the `run/0` function
   @doc false
-  defmacro __before_compile__(env) do
+  defmacro __before_compile__(_env) do
     quote do
       def run do
         Enum.each @tests, fn name ->
@@ -201,6 +201,6 @@ Running test hello
 ** (MatchError) no match of right hand side value: "world"
 ```
 
-Although we have overlooked some details, this is the main idea behind creating domain specific modules in Elixir. Macros enable us to return quoted expressions that are executed in the caller, which we can then use to transform code and store relevant information in the target module via module attributes. Finally, callbacks such as `@before_compile` allow us to inject code into the module when its definition is complete.
+Although we have overlooked some details, this is the main idea behind creating domain-specific modules in Elixir. Macros enable us to return quoted expressions that are executed in the caller, which we can then use to transform code and store relevant information in the target module via module attributes. Finally, callbacks such as `@before_compile` allow us to inject code into the module when its definition is complete.
 
 Besides `@before_compile`, there are other useful module attributes like `@on_definition` and `@after_compile`, which you can read more about in [the docs for the `Module` module](https://hexdocs.pm/elixir/Module.html). You can also find useful information about macros and the compilation environment in the documentation for the [`Macro` module](https://hexdocs.pm/elixir/Macro.html) and [`Macro.Env`](https://hexdocs.pm/elixir/Macro.Env.html).

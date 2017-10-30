@@ -227,7 +227,7 @@
 
 <p>Even though Elixir attempts its best to provide a safe environment for macros, the major responsibility of writing clean code with macros falls on developers. Macros are harder to write than ordinary Elixir functions and it’s considered to be bad style to use them when they’re not necessary. So write macros responsibly.</p>
 
-<p>Elixir already provides mechanisms to write your every day code in a simple and readable fashion by using its data structures and functions. Macros should only be used as a last resort. Remember that <strong>explicit is better than implicit</strong>. <strong>Clear code is better than concise code.</strong></p>
+<p>Elixir already provides mechanisms to write your everyday code in a simple and readable fashion by using its data structures and functions. Macros should only be used as a last resort. Remember that <strong>explicit is better than implicit</strong>. <strong>Clear code is better than concise code.</strong></p>
 
 <h2 id="our-first-macro">Our first macro</h2>
 
@@ -420,7 +420,7 @@ end
 
 <p>When calling <code class="highlighter-rouge">Macro.expand_once/2</code> earlier in this chapter, we used the special form <code class="highlighter-rouge">__ENV__</code>.</p>
 
-<p><code class="highlighter-rouge">__ENV__</code> returns an instance of the <code class="highlighter-rouge">Macro.Env</code> struct which contains useful information about the compilation environment, including the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:</p>
+<p><code class="highlighter-rouge">__ENV__</code> returns an instance of the <code class="highlighter-rouge">Macro.Env</code> struct which contains useful information about the compilation environment, including the current module, file, and line, all variables defined in the current scope, as well as imports, requires and so on:</p>
 
 <pre><code class="language-iex">iex&gt; __ENV__.module
 nil
@@ -491,7 +491,7 @@ iex&gt; __ENV__.requires
     <span class="kn">quote</span> <span class="k">do</span>
       <span class="c1"># Keep what you need to do here to a minimum</span>
       <span class="c1"># and move everything else to a function</span>
-      <span class="n">do_this_that_and_that</span><span class="p">(</span><span class="kn">unquote</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="kn">unquote</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="kn">unquote</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+      <span class="no">MyModule</span><span class="o">.</span><span class="n">do_this_that_and_that</span><span class="p">(</span><span class="kn">unquote</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="kn">unquote</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="kn">unquote</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
     <span class="k">end</span>
   <span class="k">end</span>
 

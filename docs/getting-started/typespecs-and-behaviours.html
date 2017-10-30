@@ -236,7 +236,7 @@
 
 <p>By default, Elixir provides some basic types, such as <code class="highlighter-rouge">integer</code> or <code class="highlighter-rouge">pid</code>, as well as more complex types: for example, the <code class="highlighter-rouge">round/1</code> function, which rounds a float to its nearest integer, takes a <code class="highlighter-rouge">number</code> as an argument (an <code class="highlighter-rouge">integer</code> or a <code class="highlighter-rouge">float</code>) and returns an <code class="highlighter-rouge">integer</code>. As you can see <a href="https://hexdocs.pm/elixir/Kernel.html#round/1">in its documentation</a>, <code class="highlighter-rouge">round/1</code>’s typed signature is written as:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>round(number) :: integer
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">round</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">integer</span>
 </code></pre>
 </div>
 
@@ -319,18 +319,18 @@
 
 <h3 id="defining-behaviours">Defining behaviours</h3>
 
-<p>Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will <em>behave</em> the same way: both will provide a <code class="highlighter-rouge">parse/1</code> function and an <code class="highlighter-rouge">extensions/0</code> function. The <code class="highlighter-rouge">parse/1</code> function will return an Elixir representation of the structured data, while the <code class="highlighter-rouge">extensions/0</code> function will return a list of file extensions that can be used for each type of data (e.g., <code class="highlighter-rouge">.json</code> for JSON files).</p>
+<p>Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a MessagePack parser. Each of these two parsers will <em>behave</em> the same way: both will provide a <code class="highlighter-rouge">parse/1</code> function and an <code class="highlighter-rouge">extensions/0</code> function. The <code class="highlighter-rouge">parse/1</code> function will return an Elixir representation of the structured data, while the <code class="highlighter-rouge">extensions/0</code> function will return a list of file extensions that can be used for each type of data (e.g., <code class="highlighter-rouge">.json</code> for JSON files).</p>
 
 <p>We can create a <code class="highlighter-rouge">Parser</code> behaviour:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">Parser</span> <span class="k">do</span>
-  <span class="nv">@callback</span> <span class="n">parse</span><span class="p">(</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">::</span> <span class="n">any</span>
+  <span class="nv">@callback</span> <span class="n">parse</span><span class="p">(</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">::</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">term</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">}</span>
   <span class="nv">@callback</span> <span class="n">extensions</span><span class="p">()</span> <span class="p">::</span> <span class="p">[</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
 </div>
 
-<p>Modules adopting the <code class="highlighter-rouge">Parser</code> behaviour will have to implement all the functions defined with the <code class="highlighter-rouge">@callback</code> directive. As you can see, <code class="highlighter-rouge">@callback</code> expects a function name but also a function specification like the ones used with the <code class="highlighter-rouge">@spec</code> directive we saw above.</p>
+<p>Modules adopting the <code class="highlighter-rouge">Parser</code> behaviour will have to implement all the functions defined with the <code class="highlighter-rouge">@callback</code> directive. As you can see, <code class="highlighter-rouge">@callback</code> expects a function name but also a function specification like the ones used with the <code class="highlighter-rouge">@spec</code> directive we saw above. Also note that the <code class="highlighter-rouge">term</code> type is used to represent the parsed value. In Elixir, the <code class="highlighter-rouge">term</code> type is a shortcut to represent any type.</p>
 
 <h3 id="adopting-behaviours">Adopting behaviours</h3>
 
@@ -355,6 +355,26 @@
 </div>
 
 <p>If a module adopting a given behaviour doesn’t implement one of the callbacks required by that behaviour, a compile-time warning will be generated.</p>
+
+<h3 id="dynamic-dispatch">Dynamic dispatch</h3>
+
+<p>Behaviours are frequently used with dynamic dispatching. For example, we could add a <code class="highlighter-rouge">parse!</code> function to the <code class="highlighter-rouge">Parser</code> module that dispatches to the given implementation and returns the <code class="highlighter-rouge">:ok</code> result or raises in cases of <code class="highlighter-rouge">:error</code>:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">Parser</span> <span class="k">do</span>
+  <span class="nv">@callback</span> <span class="n">parse</span><span class="p">(</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">::</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">term</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">}</span>
+  <span class="nv">@callback</span> <span class="n">extensions</span><span class="p">()</span> <span class="p">::</span> <span class="p">[</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="n">parse!</span><span class="p">(</span><span class="n">implementation</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">case</span> <span class="n">implementation</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span> <span class="k">do</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">data</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="n">data</span>
+      <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="n">error</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="no">ArgumentError</span><span class="p">,</span> <span class="sd">"</span><span class="s2">parsing error: </span><span class="si">#{</span><span class="n">error</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Note you don’t need to define a behaviour in order to dynamically dispatch on a module, but those features often go hand in hand.</p>
 
   </article><!-- .hfeed -->
 

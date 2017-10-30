@@ -10,7 +10,7 @@ redirect_from: /getting_started/1.html
 
 Welcome!
 
-In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
+In this tutorial, we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
 
 Our requirements are:
 
@@ -29,7 +29,7 @@ Let's get started!
 
 ## Installation
 
-If you still haven't installed Elixir, run to our [installation page](/install.html). Once you are done, you can run `elixir --version` to get the current Elixir version.
+If you haven't yet installed Elixir, visit our [installation page](/install.html). Once you are done, you can run `elixir --version` to get the current Elixir version.
 
 ## Interactive mode
 
@@ -49,7 +49,7 @@ iex(2)> "hello" <> " world"
 "hello world"
 ```
 
-Please note that some details like version numbers may differ a bit in your session, that's not important. From now on `iex` sessions will be stripped down to focus on the code. To exit `iex` press `Ctrl+C` twice.
+Please note that some details like version numbers may differ a bit in your session; that's not important. From now on `iex` sessions will be stripped down to focus on the code. To exit `iex` press `Ctrl+C` twice.
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
@@ -74,7 +74,7 @@ Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-start
 
 ## Asking questions
 
-When going through this getting started guide, it is common to have questions, after all, that is part of the learning process! There are many places you could ask them to learn more about Elixir:
+When going through this getting started guide, it is common to have questions; after all, that is part of the learning process! There are many places you could ask them to learn more about Elixir:
 
   * [#elixir-lang on freenode IRC](irc://irc.freenode.net/elixir-lang)
   * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)

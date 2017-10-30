@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Domain Specific Languages - Elixir</title>
+  <title>Domain-specific languages - Elixir</title>
   <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
@@ -25,10 +25,10 @@
   ga('send', 'pageview');
   </script>
   <!-- Begin Jekyll SEO tag v2.2.3 -->
-<meta property="og:title" content="Domain Specific Languages" />
+<meta property="og:title" content="Domain-specific languages" />
 <meta property="og:locale" content="en_US" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Domain Specific Languages","url":"/ja/getting-started/meta/domain-specific-languages.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Domain-specific languages","url":"/ja/getting-started/meta/domain-specific-languages.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -219,15 +219,15 @@
 
 <div id="content">
   <article>
-    <h1 id="domain-specific-languages">Domain Specific Languages</h1>
+    <h1 id="domain-specific-languages">Domain-specific languages</h1>
 
 <div id="toc" class="toc"></div>
 
 <h2 id="foreword">Foreword</h2>
 
-<p><a href="https://en.wikipedia.org/wiki/Domain-specific_language">Domain Specific Languages (DSL)</a> allow developers to tailor their application to a particular domain. You don’t need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain Specific Language.</p>
+<p><a href="https://en.wikipedia.org/wiki/Domain-specific_language">Domain-specific languages (DSL)</a> allow developers to tailor their application to a particular domain. You don’t need macros in order to have a DSL: every data structure and every function you define in your module is part of your Domain-specific language.</p>
 
-<p>For example, imagine we want to implement a Validator module which provides a data validation domain specific language. We could implement it using data structures, functions or macros. Let’s see what those different DSLs would look like:</p>
+<p>For example, imagine we want to implement a Validator module which provides a data validation domain-specific language. We could implement it using data structures, functions or macros. Let’s see what those different DSLs would look like:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="c1"># 1. data structures</span>
 <span class="kn">import</span> <span class="no">Validator</span>
@@ -255,9 +255,9 @@
 
 <p>The second approach uses function calls which better suits more complex APIs (for example, if you need to pass many options) and reads nicely in Elixir thanks to the pipe operator.</p>
 
-<p>The third approach, uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.</p>
+<p>The third approach uses macros, and is by far the most complex. It will take more lines of code to implement, it is hard and expensive to test (compared to testing simple functions), and it limits how the user may use the library since all validations need to be defined inside a module.</p>
 
-<p>To drive the point home, imagine you want to validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However it is impossible to do so with the macros approach unless its DSL is augmented.</p>
+<p>To drive the point home, imagine you want to validate a certain attribute only if a given condition is met. We could easily achieve it with the first solution, by manipulating the data structure accordingly, or with the second solution by using conditionals (if/else) before invoking the function. However, it is impossible to do so with the macros approach unless its DSL is augmented.</p>
 
 <p>In other words:</p>
 
@@ -265,7 +265,7 @@
 </code></pre>
 </div>
 
-<p>That said, there are still cases where using macros and modules to build domain specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.</p>
+<p>That said, there are still cases where using macros and modules to build domain-specific languages is useful. Since we have explored data structures and function definitions in the Getting Started guide, this chapter will explore how to use macros and module attributes to tackle more complex DSLs.</p>
 
 <h2 id="building-our-own-test-case">Building our own test case</h2>
 
@@ -336,7 +336,7 @@
 ...&gt; end
 </code></pre>
 
-<p>For now we don’t have a mechanism to run tests, but we know that a function named “test hello” was defined behind the scenes. When we invoke it, it should fail:</p>
+<p>For now, we don’t have a mechanism to run tests, but we know that a function named “test hello” was defined behind the scenes. When we invoke it, it should fail:</p>
 
 <pre><code class="language-iex">iex&gt; MyTest."test hello"()
 ** (MatchError) no match of right hand side value: "world"
@@ -388,7 +388,7 @@
   <span class="c1"># This will be invoked right before the target module is compiled</span>
   <span class="c1"># giving us the perfect opportunity to inject the `run/0` function</span>
   <span class="nv">@doc</span> <span class="no">false</span>
-  <span class="k">defmacro</span> <span class="n">__before_compile__</span><span class="p">(</span><span class="n">env</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">defmacro</span> <span class="n">__before_compile__</span><span class="p">(</span><span class="n">_env</span><span class="p">)</span> <span class="k">do</span>
     <span class="kn">quote</span> <span class="k">do</span>
       <span class="k">def</span> <span class="n">run</span> <span class="k">do</span>
         <span class="no">Enum</span><span class="o">.</span><span class="n">each</span> <span class="nv">@tests</span><span class="p">,</span> <span class="k">fn</span> <span class="n">name</span> <span class="o">-&gt;</span>
@@ -416,7 +416,7 @@ Running test hello
 ** (MatchError) no match of right hand side value: "world"
 </code></pre>
 
-<p>Although we have overlooked some details, this is the main idea behind creating domain specific modules in Elixir. Macros enable us to return quoted expressions that are executed in the caller, which we can then use to transform code and store relevant information in the target module via module attributes. Finally, callbacks such as <code class="highlighter-rouge">@before_compile</code> allow us to inject code into the module when its definition is complete.</p>
+<p>Although we have overlooked some details, this is the main idea behind creating domain-specific modules in Elixir. Macros enable us to return quoted expressions that are executed in the caller, which we can then use to transform code and store relevant information in the target module via module attributes. Finally, callbacks such as <code class="highlighter-rouge">@before_compile</code> allow us to inject code into the module when its definition is complete.</p>
 
 <p>Besides <code class="highlighter-rouge">@before_compile</code>, there are other useful module attributes like <code class="highlighter-rouge">@on_definition</code> and <code class="highlighter-rouge">@after_compile</code>, which you can read more about in <a href="https://hexdocs.pm/elixir/Module.html">the docs for the <code class="highlighter-rouge">Module</code> module</a>. You can also find useful information about macros and the compilation environment in the documentation for the <a href="https://hexdocs.pm/elixir/Macro.html"><code class="highlighter-rouge">Macro</code> module</a> and <a href="https://hexdocs.pm/elixir/Macro.Env.html"><code class="highlighter-rouge">Macro.Env</code></a>.</p>
 

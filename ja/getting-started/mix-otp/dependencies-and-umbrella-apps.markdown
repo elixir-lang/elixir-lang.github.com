@@ -37,7 +37,7 @@ Before creating our new application, we must discuss how Mix handles dependencie
 
 ## External dependencies
 
-External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the [Plug](https://github.com/elixir-lang/plug) project as an external dependency.
+External dependencies are the ones not tied to your business domain. For example, if you need an HTTP API for your distributed KV application, you can use the [Plug](https://github.com/elixir-lang/plug) project as an external dependency.
 
 Installing external dependencies is simple. Most commonly, we use the [Hex Package Manager](https://hex.pm), by listing the dependency inside the deps function in our `mix.exs` file:
 
@@ -94,7 +94,7 @@ Using git dependencies for internal dependencies is somewhat discouraged in Elix
 
 However, if you push every application as a separate project to a git repository, your projects may become very hard to maintain as you will spend a lot of time managing those git repositories rather than writing your code.
 
-For this reason, Mix supports "umbrella projects". Umbrella projects are used to build applications that run together and have clear boundaries between them in a single repository. That is exactly the style we are going to explore in the next sections.
+For this reason, Mix supports "umbrella projects". Umbrella projects are used to build applications that run together in a single repository. That is exactly the style we are going to explore in the next sections.
 
 Let's create a new Mix project. We are going to creatively name it `kv_umbrella`, and this new project will have both the existing `kv` application and the new `kv_server` application inside. The directory structure will look like this:
 
@@ -131,7 +131,7 @@ defmodule KvUmbrella.Mixfile do
     [
       apps_path: "apps",
       start_permanent: Mix.env == :prod,
-      deps: deps
+      deps: deps()
     ]
   end
 
@@ -252,7 +252,7 @@ Since we want `kv_server` to eventually use the functionality we defined in `kv`
 
 ## In umbrella dependencies
 
-Mix supports an easy mechanism to make one umbrella child depend on another. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
+Dependencies between applications in an umbrella project must still be explicitly defined and Mix makes it easy to do so. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
 
 ```elixir
 defp deps do
@@ -280,18 +280,26 @@ lockfile: "../../mix.lock",
 
 Now you can run tests for both projects from the umbrella root with `mix test`. Sweet!
 
-Remember that umbrella projects are a convenience to help you organize and manage your applications. Applications inside the `apps` directory are still decoupled from each other. Dependencies between them must be explicitly listed. This allows them to be developed together, but compiled, tested and deployed independently if desired.
+## Don't drink the kool aid
+
+Umbrella projects are a convenience to help you organize and manage multiple applications. While it provides a degree of separation between applications, those applications are not fully decoupled, as they are assumed to share the same configuration and the same dependencies.
+
+The pattern of keeping multiple applications in the same repository is known as "mono-repo". Umbrella projects maximize this pattern by providing conveniences to compile, test and run multiple applications at once.
+
+If you find yourself in a position where you want to use different configurations to different applications in the same umbrella or to use different dependency versions, then it is likely your codebase have grown beyond what umbrellas can provide.
+
+The good news is that breaking an umbrella apart is quite straightforward, as you simply need to move applications outside of the umbrella project's `apps/` directory. In the worst case scenario, you can discard the umbrella project and all related configuration (`build_path`, `config_path`, `deps_path` and `lockfile`) and still leverage the "mono-repo" pattern by keeping all applications together in the same repository. Each application will have its own dependencies and configuration. Dependencies between those applications can still be explicitly listed by using the `:path` option (in contrast to `:git`).
 
 ## Summing up
 
-In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed and tested.
+In this chapter, we have learned more about Mix dependencies and umbrella projects. While we may run `kv` without a server, our `kv_server` depends directly on `kv`. By breaking them into separate applications, we gain more control in how they are developed and tested.
 
 When using umbrella applications, it is important to have a clear boundary between them. Our upcoming `kv_server` must only access public APIs defined in `kv`. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.
 
-Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as an umbrella application, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, extraction should be straight-forward as long as the web application respects the push notification API boundary. Regardless if it happens in 2 weeks or in 3 years from development. Once extracted, the push notifications system can be moved to a private git repository or a public hex.pm package.
+Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as a separate application in the umbrella, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, the system can be moved to a private repository or a hex.pm package.
 
-Developers may also use umbrella applications to break large business domains apart. The caution here is to make sure the domains don't depend on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve. Overall, umbrella applications do not magically improve the design of your code. They can, however, help enforce boundaries when the code is well designed.
+Developers may also use umbrella projects to break large business domains apart. The caution here is to make sure the domains don't depend on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve.
 
-Finally, keep in mind that applications in an umbrella project all share the same configurations and dependencies. If two applications in your umbrella need to configure the same dependency in drastically different ways or even use different versions, such is impossible in umbrellas, and those apps likely need to be moved to separate projects.
+Finally, keep in mind that applications in an umbrella project all share the same configurations and dependencies. If two applications in your umbrella need to configure the same dependency in drastically different ways or even use different versions, you have probably outgrown the benefits brought by umbrellas. Remember you can break the umbrella and still leverage the benefits behind "mono-repos".
 
 With our umbrella project up and running, it is time to start writing our server.

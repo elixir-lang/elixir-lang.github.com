@@ -231,11 +231,11 @@
 [1, 4, 9, 16]
 </code></pre>
 
-<p>A comprehension is made of three parts: generators, filters and collectables.</p>
+<p>A comprehension is made of three parts: generators, filters, and collectables.</p>
 
 <h2 id="generators-and-filters">Generators and filters</h2>
 
-<p>In the expression above, <code class="highlighter-rouge">n &lt;- [1, 2, 3, 4]</code> is the <strong>generator</strong>. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:</p>
+<p>In the expression above, <code class="highlighter-rouge">n &lt;- [1, 2, 3, 4]</code> is the <strong>generator</strong>. It is literally generating values to be used in the comprehension. Any enumerable can be passed on the right-hand side of the generator expression:</p>
 
 <pre><code class="language-iex">iex&gt; for n &lt;- 1..4, do: n * n
 [1, 4, 9, 16]
@@ -312,7 +312,7 @@ iex&gt; Triple.pythagorean(48)
     <span class="n">for</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="o">-</span><span class="m">2</span><span class="p">,</span>
         <span class="n">b</span> <span class="o">&lt;-</span> <span class="n">a</span><span class="o">+</span><span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="o">-</span><span class="m">1</span><span class="p">,</span>
         <span class="n">c</span> <span class="o">&lt;-</span> <span class="n">b</span><span class="o">+</span><span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="p">,</span>
-        <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">,</span>
+        <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="p">,</span>
         <span class="n">a</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">==</span> <span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">,</span>
         <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">}</span>
   <span class="k">end</span>
@@ -343,7 +343,7 @@ iex&gt; for &lt;&lt;r::8, g::8, b::8 &lt;- pixels&gt;&gt;, do: {r, g, b}
 "helloworld"
 </code></pre>
 
-<p>Sets, maps and other dictionaries can also be given to the <code class="highlighter-rouge">:into</code> option. In general, <code class="highlighter-rouge">:into</code> accepts any structure that implements the <code class="highlighter-rouge">Collectable</code> protocol.</p>
+<p>Sets, maps, and other dictionaries can also be given to the <code class="highlighter-rouge">:into</code> option. In general, <code class="highlighter-rouge">:into</code> accepts any structure that implements the <code class="highlighter-rouge">Collectable</code> protocol.</p>
 
 <p>A common use case of <code class="highlighter-rouge">:into</code> can be transforming values in a map, without touching the keys:</p>
 

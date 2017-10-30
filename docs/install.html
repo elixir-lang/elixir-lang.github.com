@@ -136,7 +136,12 @@
       <li>From pkg: <code class="highlighter-rouge">pkg install elixir</code></li>
     </ul>
   </li>
-  <li>Ubuntu 12.04/14.04/16.04 or Debian 7
+  <li>Solus
+    <ul>
+      <li>Run: <code class="highlighter-rouge">eopkg install elixir</code></li>
+    </ul>
+  </li>
+  <li>Ubuntu 14.04/16.04/16.10/17.04 or Debian 7/8/9
     <ul>
       <li>Add Erlang Solutions repo: <code class="highlighter-rouge">wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb &amp;&amp; sudo dpkg -i erlang-solutions_1.0_all.deb</code></li>
       <li>Run: <code class="highlighter-rouge">sudo apt-get update</code></li>
@@ -167,21 +172,15 @@
 <p>If necessary replace “jessie” with the name of your Raspian release.</p>
 
 <ul>
-  <li>
-    <p>The Erlang Solutions repository has a prebuilt package for armhf.<br />
-This saves significant time instead of recompiling natively.</p>
-  </li>
-  <li>
-    <p>Get Erlang key</p>
-
+  <li>The Erlang Solutions repository has a prebuilt package for armhf. This saves significant time instead of recompiling natively</li>
+  <li>Get Erlang key
     <ul>
       <li><code class="highlighter-rouge">echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list</code></li>
       <li>Run: <code class="highlighter-rouge">wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc</code></li>
       <li>Add to keychain: <code class="highlighter-rouge">sudo apt-key add erlang_solutions.asc</code></li>
     </ul>
   </li>
-  <li>
-    <p>Install Elixir</p>
+  <li>Install Elixir
     <ul>
       <li>Update apt to latest: <code class="highlighter-rouge">sudo apt update</code></li>
       <li>Run: <code class="highlighter-rouge">sudo apt install elixir</code></li>

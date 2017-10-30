@@ -7,7 +7,7 @@ title: try, catch, and rescue
 
 {% include toc.html %}
 
-Elixir has three error mechanisms: errors, throws, and exits. In this chapter we will explore each of them and include remarks about when each should be used.
+Elixir has three error mechanisms: errors, throws, and exits. In this chapter, we will explore each of them and include remarks about when each should be used.
 
 ## Errors
 
@@ -96,7 +96,7 @@ For the cases where you do expect a file to exist (and the lack of that file is 
 ```iex
 iex> File.read! "unknown"
 ** (File.Error) could not read file unknown: no such file or directory
-    (elixir) lib/file.ex:305: File.read!/1
+    (elixir) lib/file.ex:272: File.read!/1
 ```
 
 Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](https://hexdocs.pm/elixir/File.html) is a good example of this convention.
@@ -134,11 +134,10 @@ All Elixir code runs inside processes that communicate with each other. When a p
 
 ```iex
 iex> spawn_link fn -> exit(1) end
-#PID<0.56.0>
-** (EXIT from #PID<0.56.0>) 1
+** (EXIT from #PID<0.56.0>) evaluator process exited with reason: 1
 ```
 
-In the example above, the linked process died by sending an `exit` signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
+In the example above, the linked process died by sending an `exit` signal with a value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
 
 `exit` can also be "caught" using `try/catch`:
 
@@ -151,7 +150,7 @@ iex> try do
 "not really"
 ```
 
-Using `try/catch` is already uncommon and using it to catch exits is even more rare.
+Using `try/catch` is already uncommon and using it to catch exits is even rarer.
 
 `exit` signals are an important part of the fault tolerant system provided by the Erlang <abbr title="Virtual Machine">VM</abbr>. Processes usually run under supervision trees which are themselves processes that listen to `exit` signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
 
