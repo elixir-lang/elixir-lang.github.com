@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgid "Every time we need to look up a bucket, we need to send a message to the 
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:14
-msgid "In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism."
+msgid "In this chapter, we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:16
@@ -138,7 +138,7 @@ msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:78
 msgid "  @doc \"\"\"\n"
-"  Ensures there is a bucket associated to the given `name` in `server`.\n"
+"  Ensures there is a bucket associated with the given `name` in `server`.\n"
 "  \"\"\"\n"
 "  def create(server, name) do\n"
 "    GenServer.cast(server, {:create, name})\n"
@@ -204,7 +204,7 @@ msgid "In order for the cache mechanism to work, the created ETS table needs to 
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:127
-msgid "The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:"
+msgid "The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as an argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:129
@@ -354,7 +354,7 @@ msgid "According to the failure message, we are expecting that the bucket no lon
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:225
-msgid "Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed."
+msgid "Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:227
@@ -408,6 +408,6 @@ msgid "In practice, if you find yourself in a position where you need a process 
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/ets.markdown:260
-msgid "Next let's discuss external and internal dependencies and how Mix helps us manage large codebases."
+msgid "Next, let's discuss external and internal dependencies and how Mix helps us manage large codebases."
 msgstr ""
 

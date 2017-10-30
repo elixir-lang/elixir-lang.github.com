@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,7 +174,7 @@ msgid "Using functions from the `Path` module as opposed to directly manipulatin
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:101
-msgid "With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title=\"Virtual Machine\">VM</abbr> and other curiosities."
+msgid "With this, we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title=\"Virtual Machine\">VM</abbr> and other curiosities."
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:103
@@ -227,7 +227,7 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:136
-msgid "By modelling IO devices with processes, the Erlang <abbr title=\"Virtual Machine\">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**."
+msgid "By modeling IO devices with processes, the Erlang <abbr title=\"Virtual Machine\">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**."
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:138
@@ -254,11 +254,11 @@ msgid "## `iodata` and `chardata`"
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:153
-msgid "In all of the examples above, we used binaries when writing to files. In the chapter [\"Binaries, strings and char lists\"](/getting-started/binaries-strings-and-char-lists.html), we mentioned how strings are made of bytes while char lists are lists with unicode codepoints."
+msgid "In all of the examples above, we used binaries when writing to files. In the chapter [\"Binaries, strings and char lists\"](/getting-started/binaries-strings-and-char-lists.html), we mentioned how strings are made of bytes while char lists are lists with Unicode codepoints."
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:155
-msgid "The functions in `IO` and `File` also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:"
+msgid "The functions in `IO` and `File` also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers, and binaries to be given:"
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:157
@@ -273,7 +273,7 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:166
-msgid "However, using list in IO operations requires some attention. A list may represent either a bunch of bytes or a bunch of characters and which one to use depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as argument; i.e., they expect a list of integers representing bytes and binaries to be given."
+msgid "However, using lists in IO operations requires some attention. A list may represent either a bunch of bytes or a bunch of characters and which one to use depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the `IO` module starting with `bin*` must be used. Those functions expect an `iodata` as an argument; i.e., they expect a list of integers representing bytes and binaries to be given."
 msgstr ""
 
 #: ../../../getting-started/io-and-the-file-system.markdown:168

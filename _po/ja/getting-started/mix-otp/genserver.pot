@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "{% include mix-otp-preface.html %}"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:12
-msgid "In the [previous chapter](/getting-started/mix-otp/agent.html) we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:"
+msgid "In the [previous chapter](/getting-started/mix-otp/agent.html), we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:14
@@ -82,7 +82,7 @@ msgid "However, naming dynamic processes with atoms is a terrible idea! If we us
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:41
-msgid "In practice it is more likely you will reach the Erlang <abbr title=\"Virtual Machine\">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless."
+msgid "In practice, it is more likely you will reach the Erlang <abbr title=\"Virtual Machine\">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:43
@@ -143,7 +143,7 @@ msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:77
 msgid "  @doc \"\"\"\n"
-"  Ensures there is a bucket associated to the given `name` in `server`.\n"
+"  Ensures there is a bucket associated with the given `name` in `server`.\n"
 "  \"\"\"\n"
 "  def create(server, name) do\n"
 "    GenServer.cast(server, {:create, name})\n"
@@ -188,7 +188,7 @@ msgid "1. The module where the server callbacks are implemented, in this case `_
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:109
-msgid "2. The initialization arguments, in this case the atom `:ok`"
+msgid "2. The initialization arguments, in this case, the atom `:ok`"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:111
@@ -204,7 +204,7 @@ msgid "The next two functions, `lookup/2` and `create/2` are responsible for sen
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:117
-msgid "That's it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about."
+msgid "That's it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination, and handling of requests. Those callbacks are optional and for now, we have only implemented the ones we care about."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:119
@@ -449,6 +449,6 @@ msgid "```elixir\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/genserver.markdown:270
-msgid "This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title=\"Open Telecom Platform\">OTP</abbr>."
+msgid "This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead, we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title=\"Open Telecom Platform\">OTP</abbr>."
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:1
 msgid "---\n"
 "layout: getting-started\n"
-"title: Binaries, strings, and char lists\n"
+"title: Binaries, strings, and charlists\n"
 "---"
 msgstr ""
 
@@ -58,7 +58,7 @@ msgid "A string is a UTF-8 encoded binary. In order to understand exactly what w
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:25
-msgid "The Unicode standard assigns code points to many of the characters we know. For example, the letter `a` has code point `97` while the letter `ł` has code point `322`. When writing the string `\"hełło\"` to disk, we need to convert this code point to bytes. If we adopted a rule that said one byte represents one code point, we wouldn't be able to write `\"hełło\"`, because it uses the code point `322` for `ł`, and one byte can only represent a number from `0` to `255`. But of course, given you can actually read `\"hełło\"` on your screen, it must be represented *somehow*. That's where encodings come in."
+msgid "The Unicode standard assigns code points to many of the characters we know. For example, the letter `a` has code point `97` while the letter `ł` has code point `322`. When writing the string `\"hełło\"` to disk, we need to convert this sequence of characters to bytes. If we adopted a rule that said one byte represents one code point, we wouldn't be able to write `\"hełło\"`, because it uses the code point `322` for `ł`, and one byte can only represent a number from `0` to `255`. But of course, given you can actually read `\"hełło\"` on your screen, it must be represented *somehow*. That's where encodings come in."
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:27
@@ -267,11 +267,11 @@ msgid "A complete reference about the binary / bitstring constructor `<<>>` can 
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:166
-msgid "## Char lists"
+msgid "## Charlists"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:168
-msgid "A char list is nothing more than a list of code points. Char lists may be created with single-quoted literals:"
+msgid "A charlist is nothing more than a list of code points. Char lists may be created with single-quoted literals:"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:170
@@ -288,11 +288,11 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:181
-msgid "You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that by default IEx will only output code points if any of the integers is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represent a char list (i.e. a list)."
+msgid "You can see that, instead of containing bytes, a charlist contains the code points of the characters between single-quotes (note that by default IEx will only output code points if any of the integers is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represent a charlist (i.e. a list)."
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:183
-msgid "In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_charlist/1` functions:"
+msgid "In practice, charlists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:185
@@ -309,10 +309,10 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:196
-msgid "Note that those functions are polymorphic. They not only convert char lists to strings, but also integers to strings, atoms to strings, and so on."
+msgid "Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on."
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:198
-msgid "With binaries, strings, and char lists out of the way, it is time to talk about key-value data structures."
+msgid "With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures."
 msgstr ""
 

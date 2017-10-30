@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"POT-Creation-Date: 2017-10-31 01:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,9 +181,9 @@ msgstr ""
 #: ../../crash-course.markdown:570
 #: ../../crash-course.markdown:596
 #: ../../crash-course.markdown:634
-#: ../../crash-course.markdown:695
-#: ../../crash-course.markdown:717
-#: ../../crash-course.markdown:788
+#: ../../crash-course.markdown:701
+#: ../../crash-course.markdown:723
+#: ../../crash-course.markdown:794
 msgid "**Erlang**"
 msgstr ""
 
@@ -208,10 +208,10 @@ msgstr ""
 #: ../../crash-course.markdown:528
 #: ../../crash-course.markdown:582
 #: ../../crash-course.markdown:612
-#: ../../crash-course.markdown:646
-#: ../../crash-course.markdown:705
-#: ../../crash-course.markdown:742
-#: ../../crash-course.markdown:803
+#: ../../crash-course.markdown:652
+#: ../../crash-course.markdown:711
+#: ../../crash-course.markdown:748
+#: ../../crash-course.markdown:809
 msgid "**Elixir**"
 msgstr ""
 
@@ -928,22 +928,28 @@ msgstr ""
 
 #: ../../crash-course.markdown:636
 msgid "```erlang\n"
+"% math.erl\n"
 "-module(math).\n"
 "-export([square/1])."
 msgstr ""
 
-#: ../../crash-course.markdown:640
-msgid "square(X) -> X * X."
-msgstr ""
-
-#: ../../crash-course.markdown:642
-msgid "lists:map(fun math:square/1, [1, 2, 3]).\n"
-"%=> [1, 4, 9]\n"
+#: ../../crash-course.markdown:641
+msgid "square(X) -> X * X.\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:648
-#: ../../crash-course.markdown:674
+#: ../../crash-course.markdown:644
+msgid "```erl\n"
+"Eshell V5.9  (abort with ^G)\n"
+"1> c(math).\n"
+"{ok,math}\n"
+"2> lists:map(fun math:square/1, [1, 2, 3]).\n"
+"[1,4,9]\n"
+"```"
+msgstr ""
+
+#: ../../crash-course.markdown:654
+#: ../../crash-course.markdown:680
 msgid "```elixir\n"
 "defmodule Math do\n"
 "  def square(x) do\n"
@@ -952,58 +958,58 @@ msgid "```elixir\n"
 "end"
 msgstr ""
 
-#: ../../crash-course.markdown:655
-#: ../../crash-course.markdown:681
+#: ../../crash-course.markdown:661
+#: ../../crash-course.markdown:687
 msgid "Enum.map [1, 2, 3], &Math.square/1\n"
 "#=> [1, 4, 9]\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:660
+#: ../../crash-course.markdown:666
 msgid "### Partials and function captures in Elixir"
 msgstr ""
 
-#: ../../crash-course.markdown:662
+#: ../../crash-course.markdown:668
 msgid "Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:"
 msgstr ""
 
-#: ../../crash-course.markdown:664
+#: ../../crash-course.markdown:670
 msgid "```elixir\n"
 "Enum.map [1, 2, 3, 4], &(&1 * 2)\n"
 "#=> [2, 4, 6, 8]"
 msgstr ""
 
-#: ../../crash-course.markdown:668
+#: ../../crash-course.markdown:674
 msgid "List.foldl [1, 2, 3, 4], 0, &(&1 + &2)\n"
 "#=> 10\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:672
+#: ../../crash-course.markdown:678
 msgid "We use the same `&` operator to capture a function, allowing us to pass named functions as arguments."
 msgstr ""
 
-#: ../../crash-course.markdown:685
+#: ../../crash-course.markdown:691
 msgid "The above would be equivalent to Erlang's `fun math:square/1`."
 msgstr ""
 
-#: ../../crash-course.markdown:687
+#: ../../crash-course.markdown:693
 msgid "## Control flow"
 msgstr ""
 
-#: ../../crash-course.markdown:689
+#: ../../crash-course.markdown:695
 msgid "The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow as in imperative languages."
 msgstr ""
 
-#: ../../crash-course.markdown:691
+#: ../../crash-course.markdown:697
 msgid "### Case"
 msgstr ""
 
-#: ../../crash-course.markdown:693
+#: ../../crash-course.markdown:699
 msgid "The ``case`` construct provides control flow based purely on pattern matching."
 msgstr ""
 
-#: ../../crash-course.markdown:697
+#: ../../crash-course.markdown:703
 msgid "```erlang\n"
 "case {X, Y} of\n"
 "  {a, b} -> ok;\n"
@@ -1013,7 +1019,7 @@ msgid "```erlang\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:707
+#: ../../crash-course.markdown:713
 msgid "```elixir\n"
 "case {x, y} do\n"
 "  {:a, :b} -> :ok\n"
@@ -1023,11 +1029,11 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:715
+#: ../../crash-course.markdown:721
 msgid "### If"
 msgstr ""
 
-#: ../../crash-course.markdown:719
+#: ../../crash-course.markdown:725
 msgid "```erlang\n"
 "Test_fun = fun (X) ->\n"
 "  if X > 10 ->\n"
@@ -1042,23 +1048,23 @@ msgid "```erlang\n"
 "end."
 msgstr ""
 
-#: ../../crash-course.markdown:732
+#: ../../crash-course.markdown:738
 msgid "Test_fun(11).\n"
 "%=> greater_than_ten"
 msgstr ""
 
-#: ../../crash-course.markdown:735
+#: ../../crash-course.markdown:741
 msgid "Test_fun(-2).\n"
 "%=> zero_or_negative"
 msgstr ""
 
-#: ../../crash-course.markdown:738
+#: ../../crash-course.markdown:744
 msgid "Test_fun(10).\n"
 "%=> exactly_ten\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:744
+#: ../../crash-course.markdown:750
 msgid "```elixir\n"
 "test_fun = fn(x) ->\n"
 "  cond do\n"
@@ -1074,39 +1080,39 @@ msgid "```elixir\n"
 "end"
 msgstr ""
 
-#: ../../crash-course.markdown:758
+#: ../../crash-course.markdown:764
 msgid "test_fun.(44)\n"
 "#=> :greater_than_ten"
 msgstr ""
 
-#: ../../crash-course.markdown:761
+#: ../../crash-course.markdown:767
 msgid "test_fun.(0)\n"
 "#=> :zero_or_negative"
 msgstr ""
 
-#: ../../crash-course.markdown:764
+#: ../../crash-course.markdown:770
 msgid "test_fun.(10)\n"
 "#=> :exactly_ten\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:768
+#: ../../crash-course.markdown:774
 msgid "There are two important differences between Elixir's `cond` and Erlang's `if`:"
 msgstr ""
 
-#: ../../crash-course.markdown:770
+#: ../../crash-course.markdown:776
 msgid "1) `cond` allows any expression on the left side while Erlang allows only guard clauses;"
 msgstr ""
 
-#: ../../crash-course.markdown:772
+#: ../../crash-course.markdown:778
 msgid "2) `cond` uses Elixir's concepts of truthy and falsy values (everything is truthy except `nil` and `false`), Erlang's `if` expects strictly a boolean;"
 msgstr ""
 
-#: ../../crash-course.markdown:774
+#: ../../crash-course.markdown:780
 msgid "Elixir also provides an `if` function that resembles more imperative languages and is useful when you need to check if one clause is true or false:"
 msgstr ""
 
-#: ../../crash-course.markdown:776
+#: ../../crash-course.markdown:782
 msgid "```elixir\n"
 "if x > 10 do\n"
 "  :greater_than_ten\n"
@@ -1116,24 +1122,24 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:784
+#: ../../crash-course.markdown:790
 msgid "### Sending and receiving messages"
 msgstr ""
 
-#: ../../crash-course.markdown:786
+#: ../../crash-course.markdown:792
 msgid "The syntax for sending and receiving differs only slightly between Erlang and Elixir."
 msgstr ""
 
-#: ../../crash-course.markdown:790
+#: ../../crash-course.markdown:796
 msgid "```erlang\n"
 "Pid = self()."
 msgstr ""
 
-#: ../../crash-course.markdown:793
+#: ../../crash-course.markdown:799
 msgid "Pid ! {hello}."
 msgstr ""
 
-#: ../../crash-course.markdown:795
+#: ../../crash-course.markdown:801
 msgid "receive\n"
 "  {hello} -> ok;\n"
 "  Other -> Other\n"
@@ -1143,16 +1149,16 @@ msgid "receive\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:805
+#: ../../crash-course.markdown:811
 msgid "```elixir\n"
 "pid = Kernel.self"
 msgstr ""
 
-#: ../../crash-course.markdown:808
+#: ../../crash-course.markdown:814
 msgid "send pid, {:hello}"
 msgstr ""
 
-#: ../../crash-course.markdown:810
+#: ../../crash-course.markdown:816
 msgid "receive do\n"
 "  {:hello} -> :ok\n"
 "  other -> other\n"
@@ -1162,43 +1168,43 @@ msgid "receive do\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:819
+#: ../../crash-course.markdown:825
 msgid "## Adding Elixir to existing Erlang programs"
 msgstr ""
 
-#: ../../crash-course.markdown:821
+#: ../../crash-course.markdown:827
 msgid "Elixir compiles into BEAM byte code (via Erlang Abstract Format). This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the `Elixir.` prefix followed by the regular Elixir name. For example, here is how to use the UTF-8 aware `String` downcase from Elixir in Erlang:"
 msgstr ""
 
-#: ../../crash-course.markdown:823
+#: ../../crash-course.markdown:829
 msgid "```erlang\n"
 "-module(bstring).\n"
 "-export([downcase/1])."
 msgstr ""
 
-#: ../../crash-course.markdown:827
+#: ../../crash-course.markdown:833
 msgid "downcase(Bin) ->\n"
 "  'Elixir.String':downcase(Bin).\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:831
+#: ../../crash-course.markdown:837
 msgid "### Rebar integration"
 msgstr ""
 
-#: ../../crash-course.markdown:833
+#: ../../crash-course.markdown:839
 msgid "If you are using rebar, you should be able to include Elixir git repository as a dependency:"
 msgstr ""
 
-#: ../../crash-course.markdown:835
+#: ../../crash-course.markdown:841
 msgid "    https://github.com/elixir-lang/elixir.git"
 msgstr ""
 
-#: ../../crash-course.markdown:837
+#: ../../crash-course.markdown:843
 msgid "Elixir is structured similar to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen in its [source code repository](https://github.com/elixir-lang/elixir). Since rebar does not recognize such structure, we need to explicitly add to our `rebar.config` which Elixir apps we want to use, for example:"
 msgstr ""
 
-#: ../../crash-course.markdown:839
+#: ../../crash-course.markdown:845
 msgid "```erlang\n"
 "{lib_dirs, [\n"
 "  \"deps/elixir/lib\"\n"
@@ -1206,31 +1212,31 @@ msgid "```erlang\n"
 "```"
 msgstr ""
 
-#: ../../crash-course.markdown:845
+#: ../../crash-course.markdown:851
 msgid "This should be enough to invoke Elixir functions straight from your Erlang code. If you are also going to write Elixir code, you can [install Elixir's rebar plugin for automatic compilation](https://github.com/yrashk/rebar_elixir_plugin)."
 msgstr ""
 
-#: ../../crash-course.markdown:847
+#: ../../crash-course.markdown:853
 msgid "### Manual integration"
 msgstr ""
 
-#: ../../crash-course.markdown:849
+#: ../../crash-course.markdown:855
 msgid "If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](/getting-started/introduction.html) and add the `lib` directory in your checkout to `ERL_LIBS`."
 msgstr ""
 
-#: ../../crash-course.markdown:852
+#: ../../crash-course.markdown:858
 msgid "## Further reading"
 msgstr ""
 
-#: ../../crash-course.markdown:854
+#: ../../crash-course.markdown:860
 msgid "Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples."
 msgstr ""
 
-#: ../../crash-course.markdown:856
+#: ../../crash-course.markdown:862
 msgid "Elixir also provides a [Getting Started guide][6] and has [documentation available online][7]."
 msgstr ""
 
-#: ../../crash-course.markdown:858
+#: ../../crash-course.markdown:864
 msgid "[4]: http://www.erlang.org/doc/programming_examples/users_guide.html\n"
 "[5]: http://schemecookbook.org/Erlang/TOC\n"
 "[6]: /getting-started/introduction.html\n"
