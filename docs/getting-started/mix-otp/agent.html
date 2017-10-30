@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Agent - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Agent" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Agent","url":"/ja/getting-started/mix-otp/agent.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="agent">Agent</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>This chapter is part of the <i>Mix and OTP guide</i> and it depends on previous chapters in this guide.
+For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html">read the introduction guide</a> or check out the chapter index in the sidebar.</p>
+
+<p>In this chapter, we will create a module named <code class="highlighter-rouge">KV.Bucket</code>. This module will be responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.</p>
+
+<p>If you have skipped the Getting Started guide or read it long ago, be sure to re-read the <a href="/getting-started/processes.html">Processes</a> chapter. We will use it as a starting point.</p>
+
+<h2 id="the-trouble-with-state">The trouble with state</h2>
+
+<p>Elixir is an immutable language where nothing is shared by default. If we want to provide buckets, which can be read and modified from multiple places, we have two main options in Elixir:</p>
+
+<ul>
+  <li>Processes</li>
+  <li><a href="http://www.erlang.org/doc/man/ets.html">ETS (Erlang Term Storage)</a></li>
+</ul>
+
+<p>We covered processes in the Getting Started guide. <abbr title="Erlang Term Storage">ETS</abbr> is a new topic that will explore on later chapters. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:</p>
+
+<ul>
+  <li><a href="https://hexdocs.pm/elixir/Agent.html">Agent</a> - Simple wrappers around state.</li>
+  <li><a href="https://hexdocs.pm/elixir/GenServer.html">GenServer</a> - “Generic servers” (processes) that encapsulate state, provide sync and async calls, support code reloading, and more.</li>
+  <li><a href="https://hexdocs.pm/elixir/Task.html">Task</a> - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.</li>
+</ul>
+
+<p>We will explore most of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like <code class="highlighter-rouge">send</code>, <code class="highlighter-rouge">receive</code>, <code class="highlighter-rouge">spawn</code> and <code class="highlighter-rouge">link</code>.</p>
+
+<h2 id="agents">Agents</h2>
+
+<p><a href="https://hexdocs.pm/elixir/Agent.html">Agents</a> are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let’s start an <code class="highlighter-rouge">iex</code> session inside the project with:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex -S mix
+</code></pre>
+</div>
+
+<p>And play a bit with agents:</p>
+
+<pre><code class="language-iex">iex&gt; {:ok, agent} = Agent.start_link fn -&gt; [] end
+{:ok, #PID&lt;0.57.0&gt;}
+iex&gt; Agent.update(agent, fn list -&gt; ["eggs" | list] end)
+:ok
+iex&gt; Agent.get(agent, fn list -&gt; list end)
+["eggs"]
+iex&gt; Agent.stop(agent)
+:ok
+</code></pre>
+
+<p>We started an agent with an initial state of an empty list. We updated the agent’s state, adding our new item to the head of the list. The second argument of <a href="https://hexdocs.pm/elixir/Agent.html#update/3"><code class="highlighter-rouge">Agent.update/3</code></a> is a function that takes the agent’s current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of <a href="https://hexdocs.pm/elixir/Agent.html#get/3"><code class="highlighter-rouge">Agent.get/3</code></a> is a function that takes the state as input and returns the value that <a href="https://hexdocs.pm/elixir/Agent.html#get/3"><code class="highlighter-rouge">Agent.get/3</code></a> itself will return. Once we are done with the agent, we can call <a href="https://hexdocs.pm/elixir/Agent.html#stop/3"><code class="highlighter-rouge">Agent.stop/3</code></a> to terminate the agent process.</p>
+
+<p>Let’s implement our <code class="highlighter-rouge">KV.Bucket</code> using agents. But before starting the implementation, let’s first write some tests. Create a file at <code class="highlighter-rouge">test/kv/bucket_test.exs</code> (remember the <code class="highlighter-rouge">.exs</code> extension) with the following:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
+
+  <span class="n">test</span> <span class="sd">"</span><span class="s2">stores values by key"</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span>
+    <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">)</span> <span class="o">==</span> <span class="no">nil</span>
+
+    <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">)</span> <span class="o">==</span> <span class="m">3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Our first test starts a new <code class="highlighter-rouge">KV.Bucket</code> using the <code class="highlighter-rouge">start_supervised</code> function and performs some <code class="highlighter-rouge">get/2</code> and <code class="highlighter-rouge">put/3</code> operations on it, asserting the result. We don’t need to explicitly stop the agent because we used <code class="highlighter-rouge">start_supervised/2</code> and that takes care of automatically terminating the processes under test when the test finishes.</p>
+
+<p>Also note the <code class="highlighter-rouge">async: true</code> option passed to <code class="highlighter-rouge">ExUnit.Case</code>. This option makes the test case run in parallel with other <code class="highlighter-rouge">:async</code> test cases by using multiple cores in our machine. This is extremely useful to speed up our test suite. However, <code class="highlighter-rouge">:async</code> must <em>only</em> be set if the test case does not rely on or change any global values. For example, if the test requires writing to the filesystem or access a database, keep it synchronous (omit the <code class="highlighter-rouge">:async</code> option) to avoid race conditions between tests.</p>
+
+<p>Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>** (ArgumentError) The module KV.Bucket was given as a child to a supervisor but it does not implement child_spec/1
+</code></pre>
+</div>
+
+<p>Since the module has not yet been defined, the <code class="highlighter-rouge">child_spec/1</code> does not yet exist.</p>
+
+<p>In order to fix the failing test, let’s create a file at <code class="highlighter-rouge">lib/kv/bucket.ex</code> with the contents below. Feel free to give a try at implementing the <code class="highlighter-rouge">KV.Bucket</code> module yourself using agents before peeking at the implementation below.</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">Agent</span>
+
+  <span class="nv">@doc</span> <span class="sd">"""
+  Starts a new bucket.
+  """</span>
+  <span class="k">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">_opts</span><span class="p">)</span> <span class="k">do</span>
+    <span class="no">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="p">%{}</span> <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="nv">@doc</span> <span class="sd">"""
+  Gets a value from the `bucket` by `key`.
+  """</span>
+  <span class="k">def</span> <span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+    <span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="o">&amp;</span><span class="no">Map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+  <span class="k">end</span>
+
+  <span class="nv">@doc</span> <span class="sd">"""
+  Puts the `value` for the given `key` in the `bucket`.
+  """</span>
+  <span class="k">def</span> <span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">do</span>
+    <span class="no">Agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="o">&amp;</span><span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>The first step in our implementation is to call <code class="highlighter-rouge">use Agent</code>. By doing so, it will define a <code class="highlighter-rouge">child_spec/1</code> function containing the exact steps to start our process.</p>
+
+<p>Then we define a <code class="highlighter-rouge">start_link/1</code> function, which will effectively start the agent. The <code class="highlighter-rouge">start_link/1</code> function always receives a list of options, but we don’t plan on using it right now. We then proceed to call <code class="highlighter-rouge">Agent.start_link/1</code>, which receives an anonymous function that returns the Agent initial state.</p>
+
+<p>We are keeping a map inside the agent to store our keys and values. Getting and putting values on the map is done with the Agent API  and the capture operator <code class="highlighter-rouge">&amp;</code>, introduced in <a href="/getting-started/modules-and-functions.html#function-capturing">the Getting Started guide</a>.</p>
+
+<p>Now that the <code class="highlighter-rouge">KV.Bucket</code> module has been defined, our test should pass! You can try it yourself by running: <code class="highlighter-rouge">mix test</code>.</p>
+
+<h2 id="test-setup-with-exunit-callbacks">Test setup with ExUnit callbacks</h2>
+
+<p>Before moving on and adding more features to <code class="highlighter-rouge">KV.Bucket</code>, let’s talk about ExUnit callbacks. As you may expect, all <code class="highlighter-rouge">KV.Bucket</code> tests will require a bucket agent to be up and running. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.</p>
+
+<p>Let’s rewrite the test case to use callbacks:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
+
+  <span class="n">setup</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">)</span>
+    <span class="p">%{</span><span class="ss">bucket:</span> <span class="n">bucket</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">test</span> <span class="sd">"</span><span class="s2">stores values by key"</span><span class="p">,</span> <span class="p">%{</span><span class="ss">bucket:</span> <span class="n">bucket</span><span class="p">}</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">)</span> <span class="o">==</span> <span class="no">nil</span>
+
+    <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">)</span> <span class="o">==</span> <span class="m">3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>We have first defined a setup callback with the help of the <code class="highlighter-rouge">setup/1</code> macro. The <code class="highlighter-rouge">setup/1</code> callback runs before every test, in the same process as the test itself.</p>
+
+<p>Note that we need a mechanism to pass the <code class="highlighter-rouge">bucket</code> pid from the callback to the test. We do so by using the <em>test context</em>. When we return <code class="highlighter-rouge">%{bucket: bucket}</code> from the callback, ExUnit will merge this map into the test context. Since the test context is a map itself, we can pattern match the bucket out of it, providing access to the bucket inside the test:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">test</span> <span class="sd">"</span><span class="s2">stores values by key"</span><span class="p">,</span> <span class="p">%{</span><span class="ss">bucket:</span> <span class="n">bucket</span><span class="p">}</span> <span class="k">do</span>
+  <span class="c1"># `bucket` is now the bucket from the setup block</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>You can read more about ExUnit cases in the <a href="https://hexdocs.pm/ex_unit/ExUnit.Case.html"><code class="highlighter-rouge">ExUnit.Case</code> module documentation</a> and more about callbacks in <a href="https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html"><code class="highlighter-rouge">ExUnit.Callbacks</code> docs</a>.</p>
+
+<h2 id="other-agent-actions">Other agent actions</h2>
+
+<p>Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one function call via <code class="highlighter-rouge">Agent.get_and_update/2</code>. Let’s implement a <code class="highlighter-rouge">KV.Bucket.delete/2</code> function that deletes a key from the bucket, returning its current value:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@doc</span> <span class="sd">"""
+Deletes `key` from `bucket`.
+
+Returns the current value of `key`, if `key` exists.
+"""</span>
+<span class="k">def</span> <span class="n">delete</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+  <span class="no">Agent</span><span class="o">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="o">&amp;</span><span class="no">Map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Now it is your turn to write a test for the functionality above! Also, be sure to explore <a href="https://hexdocs.pm/elixir/Agent.html">the documentation for the <code class="highlighter-rouge">Agent</code> module</a> to learn more about them.</p>
+
+<h2 id="clientserver-in-agents">Client/Server in agents</h2>
+
+<p>Before we move on to the next chapter, let’s discuss the client/server dichotomy in agents. Let’s expand the <code class="highlighter-rouge">delete/2</code> function we have just implemented:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">delete</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+  <span class="no">Agent</span><span class="o">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">dict</span> <span class="o">-&gt;</span>
+    <span class="no">Map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+  <span class="k">end</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Everything that is inside the function we passed to the agent happens in the agent process. In this case, since the agent process is the one receiving and responding to our messages, we say the agent process is the server. Everything outside the function is happening in the client.</p>
+
+<p>This distinction is important. If there are expensive actions to be done, you must consider if it will be better to perform these actions on the client or on the server. For example:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">delete</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+  <span class="no">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span> <span class="c1"># puts client to sleep</span>
+  <span class="no">Agent</span><span class="o">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">dict</span> <span class="o">-&gt;</span>
+    <span class="no">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span> <span class="c1"># puts server to sleep</span>
+    <span class="no">Map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+  <span class="k">end</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>When a long action is performed on the server, all other requests to that particular server will wait until the action is done, which may cause some clients to timeout.</p>
+
+<p>In the next chapter we will explore GenServers, where the segregation between clients and servers is made more apparent.</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/mix-otp/agent.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

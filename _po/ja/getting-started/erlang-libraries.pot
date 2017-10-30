@@ -1,0 +1,309 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/erlang-libraries.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Erlang libraries\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:10
+msgid "Elixir provides excellent interoperability with Erlang libraries. In fact,\n"
+"Elixir discourages simply wrapping Erlang libraries in favor of directly\n"
+"interfacing with Erlang code. In this section we will present some of the\n"
+"most common and useful Erlang functionality that is not found in Elixir."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:15
+msgid "As you grow more proficient in Elixir, you may want to explore the Erlang \n"
+"[STDLIB Reference Manual](http://erlang.org/doc/apps/stdlib/index.html) in more\n"
+"detail."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:19
+msgid "## The binary module"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:21
+msgid "The built-in Elixir String module handles binaries that are UTF-8 encoded.\n"
+"[The binary module](http://erlang.org/doc/man/binary.html) is useful when\n"
+"you are dealing with binary data that is not necessarily UTF-8 encoded."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:25
+msgid "```iex\n"
+"iex> String.to_charlist \"Ø\"\n"
+"[216]\n"
+"iex> :binary.bin_to_list \"Ø\"\n"
+"[195, 152]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:32
+msgid "The above example shows the difference; the `String` module returns Unicode\n"
+"codepoints, while `:binary` deals with raw data bytes."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:35
+msgid "## Formatted text output"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:37
+msgid "Elixir does not contain a function similar to `printf` found in C and other\n"
+"languages. Luckily, the Erlang standard library functions `:io.format/2` and\n"
+"`:io_lib.format/2` may be used. The first formats to terminal output, while\n"
+"the second formats to an iolist. The format specifiers differ from `printf`,\n"
+"[refer to the Erlang documentation for details](http://erlang.org/doc/man/io.html#format-1)."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:43
+msgid "```iex\n"
+"iex> :io.format(\"Pi is approximately given by:~10.3f~n\", [:math.pi])\n"
+"Pi is approximately given by:     3.142\n"
+":ok\n"
+"iex> to_string :io_lib.format(\"Pi is approximately given by:~10.3f~n\", [:math.pi])\n"
+"\"Pi is approximately given by:     3.142\\n\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:51
+msgid "Also note that Erlang's formatting functions require special attention to\n"
+"Unicode handling."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:54
+msgid "## The crypto module"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:56
+msgid "[The crypto module](http://erlang.org/doc/man/crypto.html) contains hashing\n"
+"functions, digital signatures, encryption and more:"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:59
+msgid "```iex\n"
+"iex> Base.encode16(:crypto.hash(:sha256, \"Elixir\"))\n"
+"\"3315715A7A3AD57428298676C5AE465DADA38D951BDFAC9348A8A31E9C7401CB\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:64
+msgid "The `:crypto` module is not part of the Erlang standard library, but is\n"
+"included with the Erlang distribution. This means you must list `:crypto`\n"
+"in your project's applications list whenever you use it. To do this,\n"
+"edit your `mix.exs` file to include:"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:69
+msgid "```elixir\n"
+"def application do\n"
+"  [extra_applications: [:crypto]]\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:75
+msgid "## The digraph module"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:77
+msgid "[The digraph module](http://erlang.org/doc/man/digraph.html) (as well as\n"
+"[digraph_utils](http://erlang.org/doc/man/digraph_utils.html)) contains\n"
+"functions for dealing with directed graphs built of vertices and edges.\n"
+"After constructing the graph, the algorithms in there will help finding\n"
+"for instance the shortest path between two vertices, or loops in the graph."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:83
+msgid "Given three vertices, find the shortest path from the first to the last."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:85
+msgid "```iex\n"
+"iex> digraph = :digraph.new()\n"
+"iex> coords = [{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}]\n"
+"iex> [v0, v1, v2] = (for c <- coords, do: :digraph.add_vertex(digraph, c))\n"
+"iex> :digraph.add_edge(digraph, v0, v1)\n"
+"iex> :digraph.add_edge(digraph, v1, v2)\n"
+"iex> :digraph.get_short_path(digraph, v0, v2)\n"
+"[{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:95
+msgid "Note that the functions in `:digraph` alter the graph structure in-place, this\n"
+"is possible because they are implemented as ETS tables, explained next."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:98
+msgid "## Erlang Term Storage"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:100
+msgid "The modules [`ets`](http://erlang.org/doc/man/ets.html) and\n"
+"[`dets`](http://erlang.org/doc/man/dets.html) handle storage of large\n"
+"data structures in memory or on disk respectively."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:104
+msgid "ETS lets you create a table containing tuples. By default, ETS tables\n"
+"are protected, which means only the owner process may write to the table\n"
+"but any other process can read. ETS has some functionality to be used as\n"
+"a simple database, a key-value store or as a cache mechanism."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:109
+msgid "The functions in the `ets` module will modify the state of the table as a\n"
+"side-effect."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:112
+msgid "```iex\n"
+"iex> table = :ets.new(:ets_test, [])\n"
+"# Store as tuples with {name, population}\n"
+"iex> :ets.insert(table, {\"China\", 1_374_000_000})\n"
+"iex> :ets.insert(table, {\"India\", 1_284_000_000})\n"
+"iex> :ets.insert(table, {\"USA\", 322_000_000})\n"
+"iex> :ets.i(table)\n"
+"<1   > {<<\"India\">>,1284000000}\n"
+"<2   > {<<\"USA\">>,322000000}\n"
+"<3   > {<<\"China\">>,1374000000}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:124
+msgid "## The math module"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:126
+msgid "[The `math` module](http://erlang.org/doc/man/math.html) contains common\n"
+"mathematical operations covering trigonometry, exponential, and logarithmic\n"
+"functions."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:130
+msgid "```iex\n"
+"iex> angle_45_deg = :math.pi() * 45.0 / 180.0\n"
+"iex> :math.sin(angle_45_deg)\n"
+"0.7071067811865475\n"
+"iex> :math.exp(55.0)\n"
+"7.694785265142018e23\n"
+"iex> :math.log(7.694785265142018e23)\n"
+"55.0\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:140
+msgid "## The queue module"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:142
+msgid "The [`queue` is a data structure](http://erlang.org/doc/man/queue.html)\n"
+"that implements (double-ended) FIFO (first-in first-out) queues efficiently:"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:145
+msgid "```iex\n"
+"iex> q = :queue.new\n"
+"iex> q = :queue.in(\"A\", q)\n"
+"iex> q = :queue.in(\"B\", q)\n"
+"iex> {value, q} = :queue.out(q)\n"
+"iex> value\n"
+"{:value, \"A\"}\n"
+"iex> {value, q} = :queue.out(q)\n"
+"iex> value\n"
+"{:value, \"B\"}\n"
+"iex> {value, q} = :queue.out(q)\n"
+"iex> value\n"
+":empty\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:160
+msgid "## The rand module"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:162
+msgid "[`rand` has functions](http://erlang.org/doc/man/rand.html) for returning\n"
+"random values and setting the random seed."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:165
+msgid "```iex\n"
+"iex> :rand.uniform()\n"
+"0.8175669086010815\n"
+"iex> _ = :rand.seed(:exs1024, {123, 123534, 345345})\n"
+"iex> :rand.uniform()\n"
+"0.5820506340260994\n"
+"iex> :rand.uniform(6)\n"
+"6\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:175
+msgid "## The zip and zlib modules"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:177
+msgid "[The `zip` module](http://erlang.org/doc/man/zip.html) lets you read and write\n"
+"ZIP files to and from disk or memory, as well as extracting file information."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:180
+msgid "This code counts the number of files in a ZIP file:"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:182
+msgid "```iex\n"
+"iex> :zip.foldl(fn _, _, _, acc -> acc + 1 end, 0, :binary.bin_to_list(\"file.zip\"))\n"
+"{:ok, 633}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:187
+msgid "[The `zlib` module](http://erlang.org/doc/man/zlib.html) deals with data compression in zlib format, as found in the\n"
+"`gzip` command."
+msgstr ""
+
+#: ../../../getting-started/erlang-libraries.markdown:190
+msgid "```iex\n"
+"iex> song = \"\n"
+"...> Mary had a little lamb,\n"
+"...> His fleece was white as snow,\n"
+"...> And everywhere that Mary went,\n"
+"...> The lamb was sure to go.\"\n"
+"iex> compressed = :zlib.compress(song)\n"
+"iex> byte_size song\n"
+"110\n"
+"iex> byte_size compressed\n"
+"99\n"
+"iex> :zlib.uncompress(compressed)\n"
+"\"\\nMary had a little lamb,\\nHis fleece was white as snow,\\nAnd everywhere that Mary went,\\nThe lamb was sure to go.\"\n"
+"```"
+msgstr ""
+

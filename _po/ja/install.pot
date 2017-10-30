@@ -1,0 +1,288 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../install.markdown:1
+msgid "---\n"
+"title: \"Installing Elixir\"\n"
+"section: install\n"
+"layout: default\n"
+"---\n"
+"{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}"
+msgstr ""
+
+#: ../../install.markdown:8
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../install.markdown:10
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../install.markdown:12
+msgid "The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling it."
+msgstr ""
+
+#: ../../install.markdown:14
+msgid "Note Elixir requires Erlang 18.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the \"Installing Erlang\" section below."
+msgstr ""
+
+#: ../../install.markdown:16
+msgid "## Distributions"
+msgstr ""
+
+#: ../../install.markdown:18
+msgid "The preferred option for installing Elixir. Choose your operating system and tool."
+msgstr ""
+
+#: ../../install.markdown:20
+msgid "If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source."
+msgstr ""
+
+#: ../../install.markdown:22
+msgid "### Mac OS X"
+msgstr ""
+
+#: ../../install.markdown:24
+msgid "  * Homebrew\n"
+"    * Update your homebrew to latest: `brew update`\n"
+"    * Run: `brew install elixir`\n"
+"  * Macports\n"
+"    * Run: `sudo port install elixir`"
+msgstr ""
+
+#: ../../install.markdown:30
+msgid "### Unix (and Unix-like)"
+msgstr ""
+
+#: ../../install.markdown:32
+msgid "  * Arch Linux (Community repo)\n"
+"    * Run: `pacman -S elixir`\n"
+"  * openSUSE (and SLES 11 SP3+)\n"
+"    * Add Erlang devel repo: `zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang`\n"
+"    * Run: `zypper in elixir`\n"
+"  * Gentoo\n"
+"    * Run: `emerge --ask dev-lang/elixir`\n"
+"  * GNU Guix\n"
+"    * Run: `guix package -i elixir`\n"
+"  * Fedora 21 (and older)\n"
+"    * Run: `yum install elixir`\n"
+"  * Fedora 22 (and newer)\n"
+"    * Run `dnf install elixir`\n"
+"  * FreeBSD\n"
+"    * From ports: `cd /usr/ports/lang/elixir && make install clean`\n"
+"    * From pkg: `pkg install elixir`\n"
+"  * Ubuntu 12.04/14.04/16.04 or Debian 7\n"
+"    * Add Erlang Solutions repo: `wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb`\n"
+"    * Run: `sudo apt-get update`\n"
+"    * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`\n"
+"    * Install Elixir: `sudo apt-get install elixir`"
+msgstr ""
+
+#: ../../install.markdown:54
+msgid "### Windows"
+msgstr ""
+
+#: ../../install.markdown:56
+msgid "  * Web installer\n"
+"    * [Download the installer](https://repo.hex.pm/elixir-websetup.exe)\n"
+"    * Click next, next, ..., finish\n"
+"  * Chocolatey\n"
+"    * `cinst elixir`"
+msgstr ""
+
+#: ../../install.markdown:62
+msgid "### Raspberry Pi"
+msgstr ""
+
+#: ../../install.markdown:64
+msgid "If necessary replace \"jessie\" with the name of your Raspian release."
+msgstr ""
+
+#: ../../install.markdown:66
+msgid "  * The Erlang Solutions repository has a prebuilt package for armhf.  \n"
+"    This saves significant time instead of recompiling natively."
+msgstr ""
+
+#: ../../install.markdown:69
+msgid "  * Get Erlang key"
+msgstr ""
+
+#: ../../install.markdown:71
+msgid "    * `echo \"deb http://packages.erlang-solutions.com/debian jessie contrib\" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`    \n"
+"    * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`  \n"
+"    * Add to keychain: `sudo apt-key add erlang_solutions.asc`"
+msgstr ""
+
+#: ../../install.markdown:75
+msgid "  * Install Elixir\n"
+"    * Update apt to latest: `sudo apt update`     \n"
+"    * Run: `sudo apt install elixir`"
+msgstr ""
+
+#: ../../install.markdown:79
+msgid "### Docker"
+msgstr ""
+
+#: ../../install.markdown:81
+msgid "If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir."
+msgstr ""
+
+#: ../../install.markdown:83
+msgid "  * Enter interactive mode\n"
+"    * Run: `docker run -it --rm elixir`\n"
+"  * Enter bash within container with installed `elixir`\n"
+"    * Run: `docker run -it --rm elixir bash`"
+msgstr ""
+
+#: ../../install.markdown:88
+msgid "Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below."
+msgstr ""
+
+#: ../../install.markdown:90
+msgid "### Nanobox"
+msgstr ""
+
+#: ../../install.markdown:92
+msgid "For developers using [Nanobox](https://nanobox.io), simply specify the `elixir` engine in your `boxfile.yml` and `nanobox run`."
+msgstr ""
+
+#: ../../install.markdown:94
+msgid "```yaml\n"
+"run.config:\n"
+"  engine: elixir\n"
+"```"
+msgstr ""
+
+#: ../../install.markdown:99
+msgid "## Precompiled package"
+msgstr ""
+
+#: ../../install.markdown:101
+msgid "Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Precompiled.zip)."
+msgstr ""
+
+#: ../../install.markdown:103
+msgid "Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development."
+msgstr ""
+
+#: ../../install.markdown:105
+msgid "## Compiling with version managers"
+msgstr ""
+
+#: ../../install.markdown:107
+msgid "There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you can't install Erlang or Elixir as mentioned above or if your package manager is simply outdated. Here are some of those tools:"
+msgstr ""
+
+#: ../../install.markdown:109
+msgid "  * [asdf](https://github.com/asdf-vm/asdf) - install and manage different Elixir and Erlang versions\n"
+"  * [exenv](https://github.com/mururu/exenv) - install and manage different Elixir versions\n"
+"  * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions\n"
+"  * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions"
+msgstr ""
+
+#: ../../install.markdown:114
+msgid "If you would prefer to compile from source manually, don't worry, we got your back too!"
+msgstr ""
+
+#: ../../install.markdown:116
+msgid "## Compiling from source (Unix and MinGW)"
+msgstr ""
+
+#: ../../install.markdown:118
+msgid "You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#installing-erlang)."
+msgstr ""
+
+#: ../../install.markdown:120
+msgid "Next you should download source code ([.zip](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.zip), [.tar.gz](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.tar.gz)) of the [latest release](https://github.com/elixir-lang/elixir/releases/tag/v{{ stable.version }}), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows))."
+msgstr ""
+
+#: ../../install.markdown:122
+msgid "After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development."
+msgstr ""
+
+#: ../../install.markdown:124
+msgid "In case you are feeling a bit more adventurous, you can also compile from master:"
+msgstr ""
+
+#: ../../install.markdown:126
+msgid "```bash\n"
+"$ git clone https://github.com/elixir-lang/elixir.git\n"
+"$ cd elixir\n"
+"$ make clean test\n"
+"```"
+msgstr ""
+
+#: ../../install.markdown:132
+msgid "If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir)."
+msgstr ""
+
+#: ../../install.markdown:134
+msgid "## Installing Erlang"
+msgstr ""
+
+#: ../../install.markdown:136
+msgid "The only prerequisite for Elixir is Erlang, version 18.0 or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/resources/download.html). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.basho.com/riak/latest/ops/building/installing/erlang/)."
+msgstr ""
+
+#: ../../install.markdown:138
+msgid "For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools."
+msgstr ""
+
+#: ../../install.markdown:140
+msgid "After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information as follows:"
+msgstr ""
+
+#: ../../install.markdown:142
+msgid "    Erlang/OTP 18 (erts-7) [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]"
+msgstr ""
+
+#: ../../install.markdown:144
+msgid "Notice that depending on how you installed Erlang, Erlang binaries might not be available in your PATH. Be sure to have Erlang binaries in your [PATH](https://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!"
+msgstr ""
+
+#: ../../install.markdown:146
+msgid "## Setting PATH environment variable"
+msgstr ""
+
+#: ../../install.markdown:148
+msgid "It is highly recommended to add Elixir's bin path to your PATH environment variable to ease development."
+msgstr ""
+
+#: ../../install.markdown:150
+msgid "On **Windows**, there are [instructions for different versions](http://www.computerhope.com/issues/ch000549.htm) explaining the process."
+msgstr ""
+
+#: ../../install.markdown:152
+msgid "On **Unix systems**, you need to [find your shell profile file](https://unix.stackexchange.com/a/117470/101951), and then add to the end of this file the following line reflecting the path to your Elixir installation:"
+msgstr ""
+
+#: ../../install.markdown:154
+msgid "```bash\n"
+"export PATH=\"$PATH:/path/to/elixir/bin\"\n"
+"```"
+msgstr ""
+
+#: ../../install.markdown:158
+msgid "## Checking the installed version of Elixir"
+msgstr ""
+
+#: ../../install.markdown:160
+msgid "Once you have Elixir installed, you can check its version by running `elixir --version`."
+msgstr ""
+

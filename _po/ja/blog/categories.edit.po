@@ -1,0 +1,50 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../blog/categories.html:1
+msgid ""
+"---\n"
+"title: Posts by category\n"
+"section: blog\n"
+"layout: blog\n"
+"---"
+msgstr ""
+
+#: ../../../blog/categories.html:7
+msgid ""
+"<div class=\"hcat\">\n"
+"  <h2>Posts by category:</h2>\n"
+"  <ul>\n"
+"  {% for category in site.categories %}\n"
+"    <li>\n"
+"      <h5 id=\"{{ category | first }}\">&raquo; {{ category | first | capitalize }}</h5>\n"
+"      <ul>\n"
+"      {% for posts in category %}\n"
+"        {% for post in posts %}\n"
+"          {% if post.title %}\n"
+"            <li><a href=\"{{ post.url }}\">{{ post.title }}</a> <span class=\"byline\">&dash; {{ post.date | date: \"%B %d, %Y\" }}</span></li>\n"
+"          {% endif %}\n"
+"        {% endfor %}\n"
+"      {% endfor %}\n"
+"      </ul>\n"
+"    </li>\n"
+"  {% endfor %}\n"
+"  </ul>\n"
+"</div><!-- .hfeed -->"
+msgstr ""

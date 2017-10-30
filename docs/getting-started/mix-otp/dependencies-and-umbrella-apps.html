@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Dependencies and umbrella projects - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Dependencies and umbrella projects" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Dependencies and umbrella projects","url":"/ja/getting-started/mix-otp/dependencies-and-umbrella-apps.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="dependencies-and-umbrella-projects">Dependencies and umbrella projects</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>This chapter is part of the <i>Mix and OTP guide</i> and it depends on previous chapters in this guide.
+For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html">read the introduction guide</a> or check out the chapter index in the sidebar.</p>
+
+<p>In this chapter, we will discuss how to manage dependencies in Mix.</p>
+
+<p>Our <code class="highlighter-rouge">kv</code> application is complete, so it’s time to implement the server that will handle the requests we defined in the first chapter:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CREATE shopping
+OK
+
+PUT shopping milk 1
+OK
+
+PUT shopping eggs 3
+OK
+
+GET shopping milk
+1
+OK
+
+DELETE shopping eggs
+OK
+</code></pre>
+</div>
+
+<p>However, instead of adding more code to the <code class="highlighter-rouge">kv</code> application, we are going to build the TCP server as another application that is a client of the <code class="highlighter-rouge">kv</code> application. Since the whole runtime and Elixir ecosystem are geared towards applications, it makes sense to break our projects into smaller applications that work together rather than building a big, monolithic app.</p>
+
+<p>Before creating our new application, we must discuss how Mix handles dependencies. In practice, there are two kinds of dependencies we usually work with: internal and external dependencies. Mix supports mechanisms to work with both of them.</p>
+
+<h2 id="external-dependencies">External dependencies</h2>
+
+<p>External dependencies are the ones not tied to your business domain. For example, if you need a HTTP API for your distributed KV application, you can use the <a href="https://github.com/elixir-lang/plug">Plug</a> project as an external dependency.</p>
+
+<p>Installing external dependencies is simple. Most commonly, we use the <a href="https://hex.pm">Hex Package Manager</a>, by listing the dependency inside the deps function in our <code class="highlighter-rouge">mix.exs</code> file:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">deps</span> <span class="k">do</span>
+  <span class="p">[{</span><span class="ss">:plug</span><span class="p">,</span> <span class="sd">"</span><span class="s2">~&gt; 1.0"</span><span class="p">}]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>This dependency refers to the latest version of Plug in the 1.x.x version series that has been pushed to Hex. This is indicated by the <code class="highlighter-rouge">~&gt;</code> preceding the version number. For more information on specifying version requirements, see the <a href="https://hexdocs.pm/elixir/Version.html">documentation for the Version module</a>.</p>
+
+<p>Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies too:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">deps</span> <span class="k">do</span>
+  <span class="p">[{</span><span class="ss">:plug</span><span class="p">,</span> <span class="ss">git:</span> <span class="sd">"</span><span class="s2">git://github.com/elixir-lang/plug.git"</span><span class="p">}]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>You will notice that when you add a dependency to your project, Mix generates a <code class="highlighter-rouge">mix.lock</code> file that guarantees <em>repeatable builds</em>. The lock file must be checked in to your version control system, to guarantee that everyone who uses the project will use the same dependency versions as you.</p>
+
+<p>Mix provides many tasks for working with dependencies, which can be seen in <code class="highlighter-rouge">mix help</code>:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">help
+</span>mix deps              <span class="c"># Lists dependencies and their status</span>
+mix deps.clean        <span class="c"># Deletes the given dependencies' files</span>
+mix deps.compile      <span class="c"># Compiles dependencies</span>
+mix deps.get          <span class="c"># Gets all out of date dependencies</span>
+mix deps.tree         <span class="c"># Prints the dependency tree</span>
+mix deps.unlock       <span class="c"># Unlocks the given dependencies</span>
+mix deps.update       <span class="c"># Updates the given dependencies</span>
+</code></pre>
+</div>
+
+<p>The most common tasks are <code class="highlighter-rouge">mix deps.get</code> and <code class="highlighter-rouge">mix deps.update</code>. Once fetched, dependencies are automatically compiled for you. You can read more about deps by typing <code class="highlighter-rouge">mix help deps</code>, and in the <a href="https://hexdocs.pm/mix/Mix.Tasks.Deps.html">documentation for the Mix.Tasks.Deps module</a>.</p>
+
+<h2 id="internal-dependencies">Internal dependencies</h2>
+
+<p>Internal dependencies are the ones that are specific to your project. They usually don’t make sense outside the scope of your project/company/organization. Most of the time, you want to keep them private, whether due to technical, economic or business reasons.</p>
+
+<p>If you have an internal dependency, Mix supports two methods to work with them: git repositories or umbrella projects.</p>
+
+<p>For example, if you push the <code class="highlighter-rouge">kv</code> project to a git repository, you’ll need to list it in your deps code in order to use it:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">deps</span> <span class="k">do</span>
+  <span class="p">[{</span><span class="ss">:kv</span><span class="p">,</span> <span class="ss">git:</span> <span class="sd">"</span><span class="s2">https://github.com/YOUR_ACCOUNT/kv.git"</span><span class="p">}]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>If the repository is private though, you may need to specify the private URL <code class="highlighter-rouge">git@github.com:YOUR_ACCOUNT/kv.git</code>. In any case, Mix will be able to fetch it for you as long as you have the proper credentials.</p>
+
+<p>Using git dependencies for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provide the concept of applications. As such, we expect you to frequently break your code into applications that can be organized logically, even within a single project.</p>
+
+<p>However, if you push every application as a separate project to a git repository, your projects may become very hard to maintain as you will spend a lot of time managing those git repositories rather than writing your code.</p>
+
+<p>For this reason, Mix supports “umbrella projects”. Umbrella projects are used to build applications that run together and have clear boundaries between them in a single repository. That is exactly the style we are going to explore in the next sections.</p>
+
+<p>Let’s create a new Mix project. We are going to creatively name it <code class="highlighter-rouge">kv_umbrella</code>, and this new project will have both the existing <code class="highlighter-rouge">kv</code> application and the new <code class="highlighter-rouge">kv_server</code> application inside. The directory structure will look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+ kv_umbrella
+  + apps
+    + kv
+    + kv_server
+</code></pre>
+</div>
+
+<p>The interesting thing about this approach is that Mix has many conveniences for working with such projects, such as the ability to compile and test all applications inside <code class="highlighter-rouge">apps</code> with a single command. However, even though they are all listed together inside <code class="highlighter-rouge">apps</code>, they are still decoupled from each other, so you can build, test and deploy each application in isolation if you want to.</p>
+
+<p>So let’s get started!</p>
+
+<h2 id="umbrella-projects">Umbrella projects</h2>
+
+<p>Let’s start a new project using <code class="highlighter-rouge">mix new</code>. This new project will be named <code class="highlighter-rouge">kv_umbrella</code> and we need to pass the <code class="highlighter-rouge">--umbrella</code> option when creating it. Do not create this new project inside the existing <code class="highlighter-rouge">kv</code> project!</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix new kv_umbrella --umbrella
+<span class="k">*</span> creating .gitignore
+<span class="k">*</span> creating README.md
+<span class="k">*</span> creating mix.exs
+<span class="k">*</span> creating apps
+<span class="k">*</span> creating config
+<span class="k">*</span> creating config/config.exs
+</code></pre>
+</div>
+
+<p>From the printed information, we can see far fewer files are generated. The generated <code class="highlighter-rouge">mix.exs</code> file is different too. Let’s take a look (comments have been removed):</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KvUmbrella</span><span class="o">.</span><span class="no">Mixfile</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">Mix</span><span class="o">.</span><span class="no">Project</span>
+
+  <span class="k">def</span> <span class="n">project</span> <span class="k">do</span>
+    <span class="p">[</span>
+      <span class="ss">apps_path:</span> <span class="sd">"</span><span class="s2">apps"</span><span class="p">,</span>
+      <span class="ss">start_permanent:</span> <span class="no">Mix</span><span class="o">.</span><span class="n">env</span> <span class="o">==</span> <span class="ss">:prod</span><span class="p">,</span>
+      <span class="ss">deps:</span> <span class="n">deps</span>
+    <span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">deps</span> <span class="k">do</span>
+    <span class="p">[]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>What makes this project different from the previous one is the <code class="highlighter-rouge">apps_path: "apps"</code> entry in the project definition. This means this project will act as an umbrella. Such projects do not have source files nor tests, although they can have their own dependencies. Each child application must be defined inside the <code class="highlighter-rouge">apps</code> directory.</p>
+
+<p>Let’s move inside the apps directory and start building <code class="highlighter-rouge">kv_server</code>. This time, we are going to pass the <code class="highlighter-rouge">--sup</code> flag, which will tell Mix to generate a supervision tree automatically for us, instead of building one manually as we did in previous chapters:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd </span>kv_umbrella/apps
+<span class="gp">$ </span>mix new kv_server --module KVServer --sup
+</code></pre>
+</div>
+
+<p>The generated files are similar to the ones we first generated for <code class="highlighter-rouge">kv</code>, with a few differences. Let’s open up <code class="highlighter-rouge">mix.exs</code>:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">Mixfile</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">Mix</span><span class="o">.</span><span class="no">Project</span>
+
+  <span class="k">def</span> <span class="n">project</span> <span class="k">do</span>
+    <span class="p">[</span>
+      <span class="ss">app:</span> <span class="ss">:kv_server</span><span class="p">,</span>
+      <span class="ss">version:</span> <span class="sd">"</span><span class="s2">0.1.0"</span><span class="p">,</span>
+      <span class="ss">build_path:</span> <span class="sd">"</span><span class="s2">../../_build"</span><span class="p">,</span>
+      <span class="ss">config_path:</span> <span class="sd">"</span><span class="s2">../../config/config.exs"</span><span class="p">,</span>
+      <span class="ss">deps_path:</span> <span class="sd">"</span><span class="s2">../../deps"</span><span class="p">,</span>
+      <span class="ss">lockfile:</span> <span class="sd">"</span><span class="s2">../../mix.lock"</span><span class="p">,</span>
+      <span class="ss">elixir:</span> <span class="sd">"</span><span class="s2">~&gt; 1.6-dev"</span><span class="p">,</span>
+      <span class="ss">start_permanent:</span> <span class="no">Mix</span><span class="o">.</span><span class="n">env</span> <span class="o">==</span> <span class="ss">:prod</span><span class="p">,</span>
+      <span class="ss">deps:</span> <span class="n">deps</span><span class="p">()</span>
+    <span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Run "mix help compile.app" to learn about applications.</span>
+  <span class="k">def</span> <span class="n">application</span> <span class="k">do</span>
+    <span class="p">[</span>
+      <span class="ss">extra_applications:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">],</span>
+      <span class="ss">mod:</span> <span class="p">{</span><span class="no">KVServer</span><span class="o">.</span><span class="no">Application</span><span class="p">,</span> <span class="p">[]}</span>
+    <span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Run "mix help deps" to learn about dependencies.</span>
+  <span class="k">defp</span> <span class="n">deps</span> <span class="k">do</span>
+    <span class="p">[</span>
+      <span class="c1"># {:dep_from_hexpm, "~&gt; 0.3.0"},</span>
+      <span class="c1"># {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},</span>
+      <span class="c1"># {:sibling_app_in_umbrella, in_umbrella: true},</span>
+    <span class="p">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>First of all, since we generated this project inside <code class="highlighter-rouge">kv_umbrella/apps</code>, Mix automatically detected the umbrella structure and added four lines to the project definition:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="ss">build_path:</span> <span class="sd">"</span><span class="s2">../../_build"</span><span class="p">,</span>
+<span class="ss">config_path:</span> <span class="sd">"</span><span class="s2">../../config/config.exs"</span><span class="p">,</span>
+<span class="ss">deps_path:</span> <span class="sd">"</span><span class="s2">../../deps"</span><span class="p">,</span>
+<span class="ss">lockfile:</span> <span class="sd">"</span><span class="s2">../../mix.lock"</span><span class="p">,</span>
+</code></pre>
+</div>
+
+<p>Those options mean all dependencies will be checked out to <code class="highlighter-rouge">kv_umbrella/deps</code>, and they will share the same build, config and lock files. This ensures dependencies will be fetched and compiled once for the whole umbrella structure, instead of once per umbrella application.</p>
+
+<p>The second change is in the <code class="highlighter-rouge">application</code> function inside <code class="highlighter-rouge">mix.exs</code>:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">application</span> <span class="k">do</span>
+  <span class="p">[</span>
+    <span class="ss">extra_applications:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">],</span>
+    <span class="ss">mod:</span> <span class="p">{</span><span class="no">KVServer</span><span class="o">.</span><span class="no">Application</span><span class="p">,</span> <span class="p">[]}</span>
+  <span class="p">]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Because we passed the <code class="highlighter-rouge">--sup</code> flag, Mix automatically added <code class="highlighter-rouge">mod: {KVServer.Application, []}</code>, specifying that <code class="highlighter-rouge">KVServer.Application</code> is our application callback module. <code class="highlighter-rouge">KVServer.Application</code> will start our application supervision tree.</p>
+
+<p>In fact, let’s open up <code class="highlighter-rouge">lib/kv_server/application.ex</code>:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">Application</span> <span class="k">do</span>
+  <span class="c1"># See https://hexdocs.pm/elixir/Application.html</span>
+  <span class="c1"># for more information on OTP Applications</span>
+  <span class="nv">@moduledoc</span> <span class="no">false</span>
+
+  <span class="kn">use</span> <span class="no">Application</span>
+
+  <span class="k">def</span> <span class="n">start</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">_args</span><span class="p">)</span> <span class="k">do</span>
+    <span class="c1"># List all child processes to be supervised</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="c1"># Starts a worker by calling: KVServer.Worker.start_link(arg)</span>
+      <span class="c1"># {KVServer.Worker, arg},</span>
+    <span class="p">]</span>
+
+    <span class="c1"># See https://hexdocs.pm/elixir/Supervisor.html</span>
+    <span class="c1"># for other strategies and supported options</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="p">[</span><span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">Supervisor</span><span class="p">]</span>
+    <span class="no">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Notice that it defines the application callback function, <code class="highlighter-rouge">start/2</code>, and instead of defining a supervisor named <code class="highlighter-rouge">KVServer.Supervisor</code> that uses the <code class="highlighter-rouge">Supervisor</code> module, it conveniently defined the supervisor inline! You can read more about such supervisors by reading <a href="https://hexdocs.pm/elixir/Supervisor.html">the Supervisor module documentation</a>.</p>
+
+<p>We can already try out our first umbrella child. We could run tests inside the <code class="highlighter-rouge">apps/kv_server</code> directory, but that wouldn’t be much fun. Instead, go to the root of the umbrella project and run <code class="highlighter-rouge">mix test</code>:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">test</span>
+</code></pre>
+</div>
+
+<p>And it works!</p>
+
+<p>Since we want <code class="highlighter-rouge">kv_server</code> to eventually use the functionality we defined in <code class="highlighter-rouge">kv</code>, we need to add <code class="highlighter-rouge">kv</code> as a dependency to our application.</p>
+
+<h2 id="in-umbrella-dependencies">In umbrella dependencies</h2>
+
+<p>Mix supports an easy mechanism to make one umbrella child depend on another. Open up <code class="highlighter-rouge">apps/kv_server/mix.exs</code> and change the <code class="highlighter-rouge">deps/0</code> function to the following:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defp</span> <span class="n">deps</span> <span class="k">do</span>
+  <span class="p">[{</span><span class="ss">:kv</span><span class="p">,</span> <span class="ss">in_umbrella:</span> <span class="no">true</span><span class="p">}]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>The line above makes <code class="highlighter-rouge">:kv</code> available as a dependency inside <code class="highlighter-rouge">:kv_server</code> and automatically starts the <code class="highlighter-rouge">:kv</code> application before the server starts.</p>
+
+<p>Finally, copy the <code class="highlighter-rouge">kv</code> application we have built so far to the <code class="highlighter-rouge">apps</code> directory in our new umbrella project. The final directory structure should match the structure we mentioned earlier:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+ kv_umbrella
+  + apps
+    + kv
+    + kv_server
+</code></pre>
+</div>
+
+<p>We now need to modify <code class="highlighter-rouge">apps/kv/mix.exs</code> to contain the umbrella entries we have seen in <code class="highlighter-rouge">apps/kv_server/mix.exs</code>. Open up <code class="highlighter-rouge">apps/kv/mix.exs</code> and add to the <code class="highlighter-rouge">project</code> function:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="ss">build_path:</span> <span class="sd">"</span><span class="s2">../../_build"</span><span class="p">,</span>
+<span class="ss">config_path:</span> <span class="sd">"</span><span class="s2">../../config/config.exs"</span><span class="p">,</span>
+<span class="ss">deps_path:</span> <span class="sd">"</span><span class="s2">../../deps"</span><span class="p">,</span>
+<span class="ss">lockfile:</span> <span class="sd">"</span><span class="s2">../../mix.lock"</span><span class="p">,</span>
+</code></pre>
+</div>
+
+<p>Now you can run tests for both projects from the umbrella root with <code class="highlighter-rouge">mix test</code>. Sweet!</p>
+
+<p>Remember that umbrella projects are a convenience to help you organize and manage your applications. Applications inside the <code class="highlighter-rouge">apps</code> directory are still decoupled from each other. Dependencies between them must be explicitly listed. This allows them to be developed together, but compiled, tested and deployed independently if desired.</p>
+
+<h2 id="summing-up">Summing up</h2>
+
+<p>In this chapter we have learned more about Mix dependencies and umbrella projects. While we may run <code class="highlighter-rouge">kv</code> without a server, our <code class="highlighter-rouge">kv_server</code> depends directly on <code class="highlighter-rouge">kv</code>. By breaking them into separate applications, we gain more control in how they are developed and tested.</p>
+
+<p>When using umbrella applications, it is important to have a clear boundary between them. Our upcoming <code class="highlighter-rouge">kv_server</code> must only access public APIs defined in <code class="highlighter-rouge">kv</code>. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.</p>
+
+<p>Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send “push notifications” to its users. The whole “push notifications system” can be developed as an umbrella application, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, extraction should be straight-forward as long as the web application respects the push notification API boundary. Regardless if it happens in 2 weeks or in 3 years from development. Once extracted, the push notifications system can be moved to a private git repository or a public hex.pm package.</p>
+
+<p>Developers may also use umbrella applications to break large business domains apart. The caution here is to make sure the domains don’t depend on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve. Overall, umbrella applications do not magically improve the design of your code. They can, however, help enforce boundaries when the code is well designed.</p>
+
+<p>Finally, keep in mind that applications in an umbrella project all share the same configurations and dependencies. If two applications in your umbrella need to configure the same dependency in drastically different ways or even use different versions, such is impossible in umbrellas, and those apps likely need to be moved to separate projects.</p>
+
+<p>With our umbrella project up and running, it is time to start writing our server.</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/mix-otp/dependencies-and-umbrella-apps.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

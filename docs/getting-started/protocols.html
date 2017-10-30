@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Protocols - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Protocols" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Protocols","url":"/ja/getting-started/protocols.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="protocols">Protocols</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let’s see an example.</p>
+
+<p>In Elixir, we have two idioms for checking how many items there are in a data structure: <code class="highlighter-rouge">length</code> and <code class="highlighter-rouge">size</code>. <code class="highlighter-rouge">length</code> means the information must be computed. For example, <code class="highlighter-rouge">length(list)</code> needs to traverse the whole list to calculate its length. On the other hand, <code class="highlighter-rouge">tuple_size(tuple)</code> and <code class="highlighter-rouge">byte_size(binary)</code> do not depend on the tuple and binary size as the size information is precomputed in the data structure.</p>
+
+<p>Even if we have type-specific functions for getting the size built into Elixir (such as <code class="highlighter-rouge">tuple_size/1</code>), we could implement a generic <code class="highlighter-rouge">Size</code> protocol that all data structures for which size is precomputed would implement.</p>
+
+<p>The protocol definition would look like this:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defprotocol</span> <span class="no">Size</span> <span class="k">do</span>
+  <span class="nv">@doc</span> <span class="sd">"</span><span class="s2">Calculates the size (and not the length!) of a data structure"</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">Size</code> protocol expects a function called <code class="highlighter-rouge">size</code> that receives one argument (the data structure we want to know the size of) to be implemented. We can now implement this protocol for the data structures that would have a compliant implementation:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">BitString</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">string</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">byte_size</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">Map</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">map</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">map_size</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">Tuple</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">tuple</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">tuple_size</span><span class="p">(</span><span class="n">tuple</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>We didn’t implement the <code class="highlighter-rouge">Size</code> protocol for lists as there is no “size” information precomputed for lists, and the length of a list has to be computed (with <code class="highlighter-rouge">length/1</code>).</p>
+
+<p>Now with the protocol defined and implementations in hand, we can start using it:</p>
+
+<pre><code class="language-iex">iex&gt; Size.size("foo")
+3
+iex&gt; Size.size({:ok, "hello"})
+2
+iex&gt; Size.size(%{label: "some label"})
+1
+</code></pre>
+
+<p>Passing a data type that doesn’t implement the protocol raises an error:</p>
+
+<pre><code class="language-iex">iex&gt; Size.size([1, 2, 3])
+** (Protocol.UndefinedError) protocol Size not implemented for [1, 2, 3]
+</code></pre>
+
+<p>It’s possible to implement protocols for all Elixir data types:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Atom</code></li>
+  <li><code class="highlighter-rouge">BitString</code></li>
+  <li><code class="highlighter-rouge">Float</code></li>
+  <li><code class="highlighter-rouge">Function</code></li>
+  <li><code class="highlighter-rouge">Integer</code></li>
+  <li><code class="highlighter-rouge">List</code></li>
+  <li><code class="highlighter-rouge">Map</code></li>
+  <li><code class="highlighter-rouge">PID</code></li>
+  <li><code class="highlighter-rouge">Port</code></li>
+  <li><code class="highlighter-rouge">Reference</code></li>
+  <li><code class="highlighter-rouge">Tuple</code></li>
+</ul>
+
+<h2 id="protocols-and-structs">Protocols and structs</h2>
+
+<p>The power of Elixir’s extensibility comes when protocols and structs are used together.</p>
+
+<p>In the <a href="/getting-started/structs.html">previous chapter</a>, we have learned that although structs are maps, they do not share protocol implementations with maps. For example, <a href="https://hexdocs.pm/elixir/MapSet.html"><code class="highlighter-rouge">MapSet</code></a>s (sets based on maps) are implemented as structs. Let’s try to use the <code class="highlighter-rouge">Size</code> protocol with a <code class="highlighter-rouge">MapSet</code>:</p>
+
+<pre><code class="language-iex">iex&gt; Size.size(%{})
+0
+iex&gt; set = %MapSet{} = MapSet.new
+#MapSet&lt;[]&gt;
+iex&gt; Size.size(set)
+** (Protocol.UndefinedError) protocol Size not implemented for #MapSet&lt;[]&gt;
+</code></pre>
+
+<p>Instead of sharing protocol implementation with maps, structs require their own protocol implementation. Since a <code class="highlighter-rouge">MapSet</code> has its size precomputed and accessible through <code class="highlighter-rouge">MapSet.size/1</code>, we can define a <code class="highlighter-rouge">Size</code> implementation for it:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">MapSet</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">set</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="no">MapSet</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">set</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>If desired, you could come up with your own semantics for the size of your struct. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as <code class="highlighter-rouge">Enumerable</code> and possibly <code class="highlighter-rouge">Size</code>, for this data type.</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">User</span> <span class="k">do</span>
+  <span class="n">defstruct</span> <span class="p">[</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">:age</span><span class="p">]</span>
+<span class="k">end</span>
+
+<span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">User</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">_user</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">2</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h2 id="implementing-any">Implementing <code class="highlighter-rouge">Any</code></h2>
+
+<p>Manually implementing protocols for all types can quickly become repetitive and tedious. In such cases, Elixir provides two options: we can explicitly derive the protocol implementation for our types or automatically implement the protocol for all types. In both cases, we need to implement the protocol for <code class="highlighter-rouge">Any</code>.</p>
+
+<h3 id="deriving">Deriving</h3>
+
+<p>Elixir allows us to derive a protocol implementation based on the <code class="highlighter-rouge">Any</code> implementation. Let’s first implement <code class="highlighter-rouge">Any</code> as follows:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">Any</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">_</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">0</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>The implementation above is arguably not a reasonable one. For example, it makes no sense to say that the size of a <code class="highlighter-rouge">PID</code> or an <code class="highlighter-rouge">Integer</code> is <code class="highlighter-rouge">0</code>.</p>
+
+<p>However, should we be fine with the implementation for <code class="highlighter-rouge">Any</code>, in order to use such implementation we would need to tell our struct to explicitly derive the <code class="highlighter-rouge">Size</code> protocol:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">OtherUser</span> <span class="k">do</span>
+  <span class="nv">@derive</span> <span class="p">[</span><span class="no">Size</span><span class="p">]</span>
+  <span class="n">defstruct</span> <span class="p">[</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">:age</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>When deriving, Elixir will implement the <code class="highlighter-rouge">Size</code> protocol for <code class="highlighter-rouge">OtherUser</code> based on the implementation provided for <code class="highlighter-rouge">Any</code>.</p>
+
+<h3 id="fallback-to-any">Fallback to <code class="highlighter-rouge">Any</code></h3>
+
+<p>Another alternative to <code class="highlighter-rouge">@derive</code> is to explicitly tell the protocol to fallback to <code class="highlighter-rouge">Any</code> when an implementation cannot be found. This can be achieved by setting <code class="highlighter-rouge">@fallback_to_any</code> to <code class="highlighter-rouge">true</code> in the protocol definition:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defprotocol</span> <span class="no">Size</span> <span class="k">do</span>
+  <span class="nv">@fallback_to_any</span> <span class="no">true</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>As we said in the previous section, the implementation of <code class="highlighter-rouge">Size</code> for <code class="highlighter-rouge">Any</code> is not one that can apply to any data type. That’s one of the reasons why <code class="highlighter-rouge">@fallback_to_any</code> is an opt-in behaviour. For the majority of protocols, raising an error when a protocol is not implemented is the proper behaviour. That said, assuming we have implemented <code class="highlighter-rouge">Any</code> as in the previous section:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defimpl</span> <span class="no">Size</span><span class="p">,</span> <span class="ss">for:</span> <span class="no">Any</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">size</span><span class="p">(</span><span class="n">_</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">0</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Now all data types (including structs) that have not implemented the <code class="highlighter-rouge">Size</code> protocol will be considered to have a size of <code class="highlighter-rouge">0</code>.</p>
+
+<p>Which technique is best between deriving and falling back to any depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the <code class="highlighter-rouge">@derive</code> approach.</p>
+
+<h2 id="built-in-protocols">Built-in protocols</h2>
+
+<p>Elixir ships with some built-in protocols. In previous chapters, we have discussed the <code class="highlighter-rouge">Enum</code> module which provides many functions that work with any data structure that implements the <code class="highlighter-rouge">Enumerable</code> protocol:</p>
+
+<pre><code class="language-iex">iex&gt; Enum.map [1, 2, 3], fn(x) -&gt; x * 2 end
+[2, 4, 6]
+iex&gt; Enum.reduce 1..3, 0, fn(x, acc) -&gt; x + acc end
+6
+</code></pre>
+<p>Another useful example is the <code class="highlighter-rouge">String.Chars</code> protocol, which specifies how to convert a data structure with characters to a string. It’s exposed via the <code class="highlighter-rouge">to_string</code> function:</p>
+
+<pre><code class="language-iex">iex&gt; to_string :hello
+"hello"
+</code></pre>
+
+<p>Notice that string interpolation in Elixir calls the <code class="highlighter-rouge">to_string</code> function:</p>
+
+<pre><code class="language-iex">iex&gt; "age: #{25}"
+"age: 25"
+</code></pre>
+
+<p>The snippet above only works because numbers implement the <code class="highlighter-rouge">String.Chars</code> protocol. Passing a tuple, for example, will lead to an error:</p>
+
+<pre><code class="language-iex">iex&gt; tuple = {1, 2, 3}
+{1, 2, 3}
+iex&gt; "tuple: #{tuple}"
+** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}
+</code></pre>
+
+<p>When there is a need to “print” a more complex data structure, one can use the <code class="highlighter-rouge">inspect</code> function, based on the <code class="highlighter-rouge">Inspect</code> protocol:</p>
+
+<pre><code class="language-iex">iex&gt; "tuple: #{inspect tuple}"
+"tuple: {1, 2, 3}"
+</code></pre>
+
+<p>The <code class="highlighter-rouge">Inspect</code> protocol is the protocol used to transform any data structure into a readable textual representation. This is what tools like IEx use to print results:</p>
+
+<pre><code class="language-iex">iex&gt; {1, 2, 3}
+{1, 2, 3}
+iex&gt; %User{}
+%User{name: "john", age: 27}
+</code></pre>
+
+<p>Keep in mind that, by convention, whenever the inspected value starts with <code class="highlighter-rouge">#</code>, it is representing a data structure in non-valid Elixir syntax. This means the inspect protocol is not reversible as information may be lost along the way:</p>
+
+<pre><code class="language-iex">iex&gt; inspect &amp;(&amp;1+2)
+"#Function&lt;6.71889879/1 in :erl_eval.expr/5&gt;"
+</code></pre>
+
+<p>There are other protocols in Elixir but this covers the most common ones.</p>
+
+<h2 id="protocol-consolidation">Protocol consolidation</h2>
+
+<p>When working with Elixir projects, using the Mix build tool, you may see output as follows:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Consolidated String.Chars
+Consolidated Collectable
+Consolidated List.Chars
+Consolidated IEx.Info
+Consolidated Enumerable
+Consolidated Inspect
+</code></pre>
+</div>
+
+<p>Those are all protocols that ship with Elixir and they are being consolidated. Because a protocol can dispatch to any data type, the protocol must check on every call if an implementation for the given type exists. This may be expensive.</p>
+
+<p>However, after our project is compiled using a tool like Mix, we know all modules that have been defined, including protocols and their implementations. This way, the protocol can be consolidated into a very simple and fast dispatch module.</p>
+
+<p>From Elixir v1.2, protocol consolidation happens automatically for all projects. We will build our own project in the <strong><em>Mix and OTP guide</em></strong>.</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/protocols.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

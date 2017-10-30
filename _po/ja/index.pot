@@ -1,0 +1,289 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../index.html:1
+msgid "---\n"
+"section: home\n"
+"layout: default\n"
+"---"
+msgstr ""
+
+#: ../../index.html:6
+msgid "<div class=\"hfeed\">\n"
+"  <div class=\"hentry post no-border\">\n"
+"    <img src=\"/images/contents/home-code.png\" alt=\"Elixir Sample\" class=\"archive-thumbnail\" />"
+msgstr ""
+
+#: ../../index.html:10
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>Elixir is a dynamic, functional language designed for building scalable and maintainable applications.</p>"
+msgstr ""
+
+#: ../../index.html:13
+msgid "      <p>Elixir leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain.</p>"
+msgstr ""
+
+#: ../../index.html:15
+msgid "      <p>To learn more about Elixir, check our <a href=\"/getting-started/introduction.html\">getting started guide</a>. Or keep reading to get an overview of the platform, language and tools.</p>\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:19
+msgid "  <div class=\"hentry post\">\n"
+"    <h3>Platform features</h3>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:23
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>Scalability</h4>\n"
+"    <div class=\"entry-summary\">"
+msgstr ""
+
+#: ../../index.html:27
+msgid "      <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>"
+msgstr ""
+
+#: ../../index.html:29
+msgid "{% highlight elixir %}\n"
+"current_process = self()"
+msgstr ""
+
+#: ../../index.html:32
+msgid "# Spawn an Elixir process (not an operating system one!)\n"
+"spawn_link(fn ->\n"
+"  send current_process, {:msg, \"hello world\"}\n"
+"end)"
+msgstr ""
+
+#: ../../index.html:37
+msgid "# Block until the message is received\n"
+"receive do\n"
+"  {:msg, contents} -> IO.puts contents\n"
+"end\n"
+"{% endhighlight %}"
+msgstr ""
+
+#: ../../index.html:43
+msgid "      <p>Due to their lightweight nature, it is not uncommon to have hundreds of thousands of processes running <i>concurrently</i> in the same machine. Isolation allows processes to be garbage collected independently, reducing system-wide pauses, and using all machine resources as efficiently as possible (vertical scaling).</p>"
+msgstr ""
+
+#: ../../index.html:45
+msgid "      <p>Processes are also able to communicate with other processes running on different machines in the same network. This provides the foundation for distribution, allowing developers to coordinate work across multiple nodes (horizontal scaling).</p>\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:49
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>Fault-tolerance</h4>"
+msgstr ""
+
+#: ../../index.html:52
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>The unavoidable truth about software running in production is that <i>things will go wrong</i>. Even more when we take network, file systems, and other third-party resources into account.</p>"
+msgstr ""
+
+#: ../../index.html:55
+msgid "      <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>"
+msgstr ""
+
+#: ../../index.html:57
+msgid "{% highlight elixir %}\n"
+"import Supervisor.Spec"
+msgstr ""
+
+#: ../../index.html:60
+msgid "children = [\n"
+"  supervisor(TCP.Pool, []),\n"
+"  worker(TCP.Acceptor, [4040])\n"
+"]"
+msgstr ""
+
+#: ../../index.html:65
+msgid "Supervisor.start_link(children, strategy: :one_for_one)\n"
+"{% endhighlight %}\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:70
+msgid "  <div class=\"hentry post\">\n"
+"    <h3>Language features</h3>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:74
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>Functional programming</h4>"
+msgstr ""
+
+#: ../../index.html:77
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>Functional programming promotes a coding style that helps developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>"
+msgstr ""
+
+#: ../../index.html:80
+msgid "{% highlight elixir %}\n"
+"%User{name: name, age: age} = User.get(\"John Doe\")\n"
+"name #=> \"John Doe\"\n"
+"{% endhighlight %}"
+msgstr ""
+
+#: ../../index.html:85
+msgid "      <p>When mixed with guards, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>"
+msgstr ""
+
+#: ../../index.html:87
+msgid "{% highlight elixir %}\n"
+"def serve_drinks(%User{age: age}) when age >= 21 do\n"
+"  # Code that serves drinks!\n"
+"end"
+msgstr ""
+
+#: ../../index.html:92
+msgid "serve_drinks User.get(\"John Doe\")\n"
+"#=> Fails if the user is under 21\n"
+"{% endhighlight %}"
+msgstr ""
+
+#: ../../index.html:96
+msgid "      <p>Elixir relies heavily on those features to ensure your software is working under the expected constraints. And when it is not, don&rsquo;t worry, supervisors have your back!</p>\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:100
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>Extensibility and DSLs</h4>"
+msgstr ""
+
+#: ../../index.html:103
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>Elixir has been designed to be extensible, letting developers naturally extend the language to particular domains, in order to increase their productivity.</p>"
+msgstr ""
+
+#: ../../index.html:106
+msgid "      <p>As an example, let&rsquo;s write a simple test case using <a href=\"https://hexdocs.pm/ex_unit/\">Elixir&rsquo;s test framework called ExUnit</a>:</p>"
+msgstr ""
+
+#: ../../index.html:108
+msgid "{% highlight elixir %}\n"
+"defmodule MathTest do\n"
+"  use ExUnit.Case, async: true"
+msgstr ""
+
+#: ../../index.html:112
+msgid "  test \"can add two numbers\" do\n"
+"    assert 1 + 1 == 2\n"
+"  end\n"
+"end\n"
+"{% endhighlight %}"
+msgstr ""
+
+#: ../../index.html:118
+msgid "      <p>The <code>async: true</code> option allows <code>test</code>s to run in parallel, using as many CPU cores as possible, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:122
+msgid "  <div class=\"hentry post\">\n"
+"    <h3>Tooling features</h3>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:126
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>A growing ecosystem</h4>"
+msgstr ""
+
+#: ../../index.html:129
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>Elixir ships with a great set of tools to ease development. <a href=\"https://hexdocs.pm/mix/\">Mix is a build tool</a> that allows you to easily create projects, manage tasks, run tests and more:</p>"
+msgstr ""
+
+#: ../../index.html:132
+msgid "{% highlight text %}\n"
+"$ mix new my_app\n"
+"$ cd my_app\n"
+"$ mix test\n"
+"."
+msgstr ""
+
+#: ../../index.html:138
+msgid "Finished in 0.04 seconds (0.04s on load, 0.00s on tests)\n"
+"1 tests, 0 failures\n"
+"{% endhighlight %}"
+msgstr ""
+
+#: ../../index.html:142
+msgid "      <p>Mix is also able to manage dependencies and integrates nicely with the <a href=\"https://hex.pm/\">Hex package manager</a>, which provides dependency resolution and the ability to remotely fetch packages.</p>\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:146
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>Interactive development</h4>"
+msgstr ""
+
+#: ../../index.html:149
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>Tools like <a href=\"https://hexdocs.pm/iex/\">IEx (Elixir&rsquo;s interactive shell)</a> are able to leverage many aspects of the language and platform to provide auto-complete, debugging tools, code reloading, as well as nicely formatted documentation:</p>"
+msgstr ""
+
+#: ../../index.html:152
+msgid "{% highlight text %}\n"
+"$ iex\n"
+"Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)\n"
+"iex> c \"my_file.ex\"        # Compiles a file\n"
+"iex> t Enum                # Prints types defined in the module Enum\n"
+"iex> h IEx.pry             # Prints the documentation for IEx pry functionality\n"
+"iex> i \"Hello, World\"      # Prints information about the given data type\n"
+"{% endhighlight %}\n"
+"    </div>\n"
+"  </div>"
+msgstr ""
+
+#: ../../index.html:163
+msgid "  <div class=\"hentry post\">\n"
+"    <h4>Erlang compatible</h4>"
+msgstr ""
+
+#: ../../index.html:166
+msgid "    <div class=\"entry-summary\">\n"
+"      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang&rsquo;s ecosystem, used by companies like <a href=\"https://www.heroku.com\">Heroku</a>, <a href=\"https://www.whatsapp.com\">WhatsApp</a>, <a href=\"https://klarna.com\">Klarna</a>, <a href=\"http://basho.com\">Basho</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>"
+msgstr ""
+
+#: ../../index.html:169
+msgid "{% highlight iex %}\n"
+"iex> :crypto.hash(:md5, \"Using crypto from Erlang OTP\")\n"
+"<<192, 223, 75, 115, ...>>\n"
+"{% endhighlight %}"
+msgstr ""
+
+#: ../../index.html:174
+msgid "      <p>To learn more about Elixir, check our <a href=\"/getting-started/introduction.html\">getting started guide</a>. We also have <a href=\"/docs.html\">online documentation available</a> and a <a href=\"/crash-course.html\">Crash Course for Erlang developers</a>.</p>\n"
+"    </div>\n"
+"  </div>\n"
+"</div>"
+msgstr ""
+

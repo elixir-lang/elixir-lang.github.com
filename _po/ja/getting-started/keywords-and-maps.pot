@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/keywords-and-maps.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Keywords and maps\n"
+"redirect_from: /getting-started/maps-and-dicts.html\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:7
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:9
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:11
+msgid "So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, etc."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:13
+msgid "In Elixir, we have two main associative data structures: keyword lists and maps. It's time to learn more about them!"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:15
+msgid "## Keyword lists"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:17
+msgid "In many functional programming languages, it is common to use a list of 2-item tuples as the representation of a key-value data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:19
+msgid "```iex\n"
+"iex> list = [{:a, 1}, {:b, 2}]\n"
+"[a: 1, b: 2]\n"
+"iex> list == [a: 1, b: 2]\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:26
+msgid "As you can see above, Elixir supports a special syntax for defining such lists: `[key: value]`. Underneath it maps to the same list of tuples as above. Since keyword lists are lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:28
+msgid "```iex\n"
+"iex> list ++ [c: 3]\n"
+"[a: 1, b: 2, c: 3]\n"
+"iex> [a: 0] ++ list\n"
+"[a: 0, a: 1, b: 2]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:35
+msgid "Note that values added to the front are the ones fetched on lookup:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:37
+msgid "```iex\n"
+"iex> new_list = [a: 0] ++ list\n"
+"[a: 0, a: 1, b: 2]\n"
+"iex> new_list[:a]\n"
+"0\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:44
+msgid "Keyword lists are important because they have three special characteristics:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:46
+msgid "  * Keys must be atoms.\n"
+"  * Keys are ordered, as specified by the developer.\n"
+"  * Keys can be given more than once."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:50
+msgid "For example, [the Ecto library](https://github.com/elixir-lang/ecto) makes use of these features to provide an elegant DSL for writing database queries:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:52
+msgid "```elixir\n"
+"query = from w in Weather,\n"
+"      where: w.prcp > 0,\n"
+"      where: w.temp < 20,\n"
+"     select: w\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:59
+msgid "These characteristics are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned the following syntax is supported:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:61
+msgid "```iex\n"
+"iex> if false, do: :this, else: :that\n"
+":that\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:66
+msgid "The `do:` and `else:` pairs are keyword lists! In fact, the call above is equivalent to:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:68
+msgid "```iex\n"
+"iex> if(false, [do: :this, else: :that])\n"
+":that\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:73
+msgid "Which, as we have seen above, is the same as:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:75
+msgid "```iex\n"
+"iex> if(false, [{:do, :this}, {:else, :that}])\n"
+":that\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:80
+msgid "In general, when the keyword list is the last argument of a function, the square brackets are optional."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:82
+msgid "Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists requires the number of items and their order to match:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:84
+msgid "```iex\n"
+"iex> [a: a] = [a: 1]\n"
+"[a: 1]\n"
+"iex> a\n"
+"1\n"
+"iex> [a: a] = [a: 1, b: 2]\n"
+"** (MatchError) no match of right hand side value: [a: 1, b: 2]\n"
+"iex> [b: b, a: a] = [a: 1, b: 2]\n"
+"** (MatchError) no match of right hand side value: [a: 1, b: 2]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:95
+msgid "In order to manipulate keyword lists, Elixir provides [the `Keyword` module](https://hexdocs.pm/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:97
+msgid "## Maps"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:99
+msgid "Whenever you need a key-value store, maps are the \"go to\" data structure in Elixir. A map is created using the `%{}` syntax:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:101
+msgid "```iex\n"
+"iex> map = %{:a => 1, 2 => :b}\n"
+"%{2 => :b, :a => 1}\n"
+"iex> map[:a]\n"
+"1\n"
+"iex> map[2]\n"
+":b\n"
+"iex> map[:c]\n"
+"nil\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:112
+msgid "Compared to keyword lists, we can already see two differences:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:114
+msgid "  * Maps allow any value as a key.\n"
+"  * Maps' keys do not follow any ordering."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:117
+msgid "In contrast to keyword lists, maps are very useful with pattern matching. When a map is used in a pattern, it will always match on a subset of the given value:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:119
+msgid "```iex\n"
+"iex> %{} = %{:a => 1, 2 => :b}\n"
+"%{2 => :b, :a => 1}\n"
+"iex> %{:a => a} = %{:a => 1, 2 => :b}\n"
+"%{2 => :b, :a => 1}\n"
+"iex> a\n"
+"1\n"
+"iex> %{:c => c} = %{:a => 1, 2 => :b}\n"
+"** (MatchError) no match of right hand side value: %{2 => :b, :a => 1}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:130
+msgid "As shown above, a map matches as long as the keys in the pattern exist in the given map. Therefore, an empty map matches all maps."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:132
+msgid "Variables can be used when accessing, matching and adding map keys:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:134
+msgid "```iex\n"
+"iex> n = 1\n"
+"1\n"
+"iex> map = %{n => :one}\n"
+"%{1 => :one}\n"
+"iex> map[n]\n"
+":one\n"
+"iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}\n"
+"%{1 => :one, 2 => :two, 3 => :three}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:145
+msgid "[The `Map` module](https://hexdocs.pm/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:147
+msgid "```iex\n"
+"iex> Map.get(%{:a => 1, 2 => :b}, :a)\n"
+"1\n"
+"iex> Map.put(%{:a => 1, 2 => :b}, :c, 3)\n"
+"%{2 => :b, :a => 1, :c => 3}\n"
+"iex> Map.to_list(%{:a => 1, 2 => :b})\n"
+"[{2, :b}, {:a, 1}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:156
+msgid "Maps have the following syntax for updating a key's value:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:158
+#: ../../../getting-started/keywords-and-maps.markdown:179
+msgid "```iex\n"
+"iex> map = %{:a => 1, 2 => :b}\n"
+"%{2 => :b, :a => 1}"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:162
+msgid "iex> %{map | 2 => \"two\"}\n"
+"%{2 => \"two\", :a => 1}\n"
+"iex> %{map | :c => 3}\n"
+"** (KeyError) key :c not found in: %{2 => :b, :a => 1}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:168
+msgid "The syntax above requires the given key to exist. It cannot be used to add new keys. For example, using it with the `:c` key failed because there is no `:c` in the map."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:170
+msgid "When all the keys in a map are atoms, you can use the keyword syntax for convenience:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:172
+msgid "```iex\n"
+"iex> map = %{a: 1, b: 2}\n"
+"%{a: 1, b: 2}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:177
+msgid "Another interesting property of maps is that they provide their own syntax for accessing atom keys:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:183
+msgid "iex> map.a\n"
+"1\n"
+"iex> map.c\n"
+"** (KeyError) key :c not found in: %{2 => :b, :a => 1}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:189
+msgid "Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post](http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:191
+msgid "> Note: Maps were recently introduced into the Erlang <abbr title=\"Virtual Machine\">VM</abbr> and only from Elixir v1.2 they are capable of holding millions of keys efficiently. Therefore, if you are working with previous Elixir versions (v1.0 or v1.1) and you need to support at least hundreds of keys, you may consider using [the `HashDict` module](https://hexdocs.pm/elixir/HashDict.html)."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:193
+msgid "## Nested data structures"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:195
+msgid "Often we will have maps inside maps, or even keywords lists inside maps, and so forth. Elixir provides conveniences for manipulating nested data structures via the `put_in/2`, `update_in/2` and other macros giving the same conveniences you would find in imperative languages while keeping the immutable properties of the language."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:197
+msgid "Imagine you have the following structure:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:199
+msgid "```iex\n"
+"iex> users = [\n"
+"  john: %{name: \"John\", age: 27, languages: [\"Erlang\", \"Ruby\", \"Elixir\"]},\n"
+"  mary: %{name: \"Mary\", age: 29, languages: [\"Elixir\", \"F#\", \"Clojure\"]}\n"
+"]\n"
+"[john: %{age: 27, languages: [\"Erlang\", \"Ruby\", \"Elixir\"], name: \"John\"},\n"
+" mary: %{age: 29, languages: [\"Elixir\", \"F#\", \"Clojure\"], name: \"Mary\"}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:208
+msgid "We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:210
+msgid "```iex\n"
+"iex> users[:john].age\n"
+"27\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:215
+msgid "It happens we can also use this same syntax for updating the value:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:217
+msgid "```iex\n"
+"iex> users = put_in users[:john].age, 31\n"
+"[john: %{age: 31, languages: [\"Erlang\", \"Ruby\", \"Elixir\"], name: \"John\"},\n"
+" mary: %{age: 29, languages: [\"Elixir\", \"F#\", \"Clojure\"], name: \"Mary\"}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:223
+msgid "The `update_in/2` macro is similar but allows us to pass a function that controls how the value changes. For example, let's remove \"Clojure\" from Mary's list of languages:"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:225
+msgid "```iex\n"
+"iex> users = update_in users[:mary].languages, fn languages -> List.delete(languages, \"Clojure\") end\n"
+"[john: %{age: 31, languages: [\"Erlang\", \"Ruby\", \"Elixir\"], name: \"John\"},\n"
+" mary: %{age: 29, languages: [\"Elixir\", \"F#\"], name: \"Mary\"}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:231
+msgid "There is more to learn about `put_in/2` and `update_in/2`, including the `get_and_update_in/2` that allows us to extract a value and update the data structure at once. There are also `put_in/3`, `update_in/3` and `get_and_update_in/3` which allow dynamic access into the data structure. [Check their respective documentation in the `Kernel` module for more information](https://hexdocs.pm/elixir/Kernel.html)."
+msgstr ""
+
+#: ../../../getting-started/keywords-and-maps.markdown:233
+msgid "This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir."
+msgstr ""
+

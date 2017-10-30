@@ -1,0 +1,222 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/enumerables-and-streams.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Enumerables and Streams\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:10
+msgid "## Enumerables"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:12
+msgid "Elixir provides the concept of enumerables and [the `Enum` module](https://hexdocs.pm/elixir/Enum.html) to work with them. We have already learned two enumerables: lists and maps."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:14
+msgid "```iex\n"
+"iex> Enum.map([1, 2, 3], fn x -> x * 2 end)\n"
+"[2, 4, 6]\n"
+"iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)\n"
+"[2, 12]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:21
+msgid "The `Enum` module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:23
+msgid "Elixir also provides ranges:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:25
+msgid "```iex\n"
+"iex> Enum.map(1..3, fn x -> x * 2 end)\n"
+"[2, 4, 6]\n"
+"iex> Enum.reduce(1..3, 0, &+/2)\n"
+"6\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:32
+msgid "The functions in the Enum module are limited to, as the name says, enumerating values in data structures. For specific operations, like inserting and updating particular elements, you may need to reach for modules specific to the data type. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](https://hexdocs.pm/elixir/List.html), as it would make little sense to insert a value into, for example, a range."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:34
+msgid "We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](https://hexdocs.pm/elixir/Enumerable.html). We are going to discuss Protocols in a later chapter; for now we are going to move on to a specific kind of enumerable called a stream."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:36
+msgid "## Eager vs Lazy"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:38
+msgid "All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:40
+msgid "```iex\n"
+"iex> odd? = &(rem(&1, 2) != 0)\n"
+"#Function<6.80484245/1 in :erl_eval.expr/5>\n"
+"iex> Enum.filter(1..3, odd?)\n"
+"[1, 3]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:47
+msgid "This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:49
+msgid "```iex\n"
+"iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum\n"
+"7500000000\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:54
+msgid "The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with `100_000` items. Then we keep all odd elements from the list, generating a new list, now with `50_000` items, and then we sum all entries."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:56
+msgid "## The pipe operator"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:58
+msgid "The `|>` symbol used in the snippet above is the **pipe operator**: it takes the output from the expression on its left side and passes it as the first argument to the function call on its right side. It's similar to the Unix `|` operator.  Its purpose is to highlight the data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the `|>` operator:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:60
+msgid "```iex\n"
+"iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))\n"
+"7500000000\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:65
+msgid "Find more about the pipe operator [by reading its documentation](https://hexdocs.pm/elixir/Kernel.html#%7C%3E/2)."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:67
+msgid "## Streams"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:69
+msgid "As an alternative to `Enum`, Elixir provides [the `Stream` module](https://hexdocs.pm/elixir/Stream.html) which supports lazy operations:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:71
+msgid "```iex\n"
+"iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum\n"
+"7500000000\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:76
+msgid "Streams are lazy, composable enumerables."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:78
+msgid "In the example above, `1..100_000 |> Stream.map(&(&1 * 3))` returns a data type, an actual stream, that represents the `map` computation over the range `1..100_000`:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:80
+msgid "```iex\n"
+"iex> 1..100_000 |> Stream.map(&(&1 * 3))\n"
+"#Stream<[enum: 1..100000, funs: [#Function<34.16982430/1 in Stream.map/2>]]>\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:85
+msgid "Furthermore, they are composable because we can pipe many stream operations:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:87
+msgid "```iex\n"
+"iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?)\n"
+"#Stream<[enum: 1..100000, funs: [...]]>\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:92
+msgid "Instead of generating intermediate lists, streams build a series of computations that are invoked only when we pass the underlying stream to the `Enum` module. Streams are useful when working with large, *possibly infinite*, collections."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:94
+msgid "Many functions in the `Stream` module accept any enumerable as an argument and return a stream as a result. It also provides functions for creating streams. For example, `Stream.cycle/1` can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like `Enum.map/2` on such streams, as they would cycle forever:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:96
+msgid "```iex\n"
+"iex> stream = Stream.cycle([1, 2, 3])\n"
+"#Function<15.16982430/2 in Stream.cycle/1>\n"
+"iex> Enum.take(stream, 10)\n"
+"[1, 2, 3, 1, 2, 3, 1, 2, 3, 1]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:103
+msgid "On the other hand, `Stream.unfold/2` can be used to generate values from a given initial value:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:105
+msgid "```iex\n"
+"iex> stream = Stream.unfold(\"hełło\", &String.next_codepoint/1)\n"
+"#Function<39.75994740/2 in Stream.unfold/2>\n"
+"iex> Enum.take(stream, 3)\n"
+"[\"h\", \"e\", \"ł\"]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:112
+msgid "Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in the case of failures. For example, we can use it to stream a file:"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:114
+msgid "```iex\n"
+"iex> stream = File.stream!(\"path/to/file\")\n"
+"#Function<18.16982430/2 in Stream.resource/3>\n"
+"iex> Enum.take(stream, 10)\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:120
+msgid "The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:122
+msgid "The amount of functionality in the [`Enum`](https://hexdocs.pm/elixir/Enum.html) and [`Stream`](https://hexdocs.pm/elixir/Stream.html) modules can be daunting at first, but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required, to either deal with slow resources or large, possibly infinite, collections."
+msgstr ""
+
+#: ../../../getting-started/enumerables-and-streams.markdown:124
+msgid "Next we'll look at a feature central to Elixir, Processes, which allows us to write concurrent, parallel and distributed programs in an easy and understandable way."
+msgstr ""
+

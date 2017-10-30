@@ -1,0 +1,273 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Quote and unquote\n"
+"---"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:10
+msgid "This guide aims to introduce the meta-programming techniques available in Elixir. The ability to represent an Elixir program by its own data structures is at the heart of meta-programming. This chapter starts by exploring those structures and the associated `quote` and `unquote` constructs, so we can take a look at macros in the next chapter and finally build our own domain specific language."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:12
+msgid "> The Elixir guides are also available in EPUB format:\n"
+">\n"
+">   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)\n"
+">   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)\n"
+">   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:18
+msgid "## Quoting"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:20
+msgid "The building block of an Elixir program is a tuple with three elements. For example, the function call `sum(1, 2, 3)` is represented internally as:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:22
+msgid "```elixir\n"
+"{:sum, [], [1, 2, 3]}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:26
+msgid "You can get the representation of any expression by using the `quote` macro:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:28
+msgid "```iex\n"
+"iex> quote do: sum(1, 2, 3)\n"
+"{:sum, [], [1, 2, 3]}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:33
+msgid "The first element is the function name, the second is a keyword list containing metadata and the third is the arguments list."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:35
+msgid "Operators are also represented as such tuples:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:37
+msgid "```iex\n"
+"iex> quote do: 1 + 2\n"
+"{:+, [context: Elixir, import: Kernel], [1, 2]}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:42
+msgid "Even a map is represented as a call to `%{}`:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:44
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:142
+msgid "```iex\n"
+"iex> quote do: %{1 => 2}\n"
+"{:%{}, [], [{1, 2}]}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:49
+msgid "Variables are also represented using such triplets, except the last element is an atom, instead of a list:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:51
+msgid "```iex\n"
+"iex> quote do: x\n"
+"{:x, [], Elixir}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:56
+msgid "When quoting more complex expressions, we can see that the code is represented in such tuples, which are often nested inside each other in a structure resembling a tree. Many languages would call such representations an Abstract Syntax Tree (AST). Elixir calls them quoted expressions:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:58
+msgid "```iex\n"
+"iex> quote do: sum(1, 2 + 3, 4)\n"
+"{:sum, [], [1, {:+, [context: Elixir, import: Kernel], [2, 3]}, 4]}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:63
+msgid "Sometimes when working with quoted expressions, it may be useful to get the textual code representation back. This can be done with `Macro.to_string/1`:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:65
+msgid "```iex\n"
+"iex> Macro.to_string(quote do: sum(1, 2 + 3, 4))\n"
+"\"sum(1, 2 + 3, 4)\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:70
+msgid "In general, the tuples above are structured according to the following format:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:72
+msgid "```elixir\n"
+"{atom | tuple, list, list | atom}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:76
+msgid "* The first element is an atom or another tuple in the same representation;\n"
+"* The second element is a keyword list containing metadata, like numbers and contexts;\n"
+"* The third element is either a list of arguments for the function call or an atom. When this element is an atom, it means the tuple represents a variable."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:80
+msgid "Besides the tuple defined above, there are five Elixir literals that, when quoted, return themselves (and not a tuple). They are:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:82
+msgid "```elixir\n"
+":sum         #=> Atoms\n"
+"1.0          #=> Numbers\n"
+"[1, 2]       #=> Lists\n"
+"\"strings\"    #=> Strings\n"
+"{key, value} #=> Tuples with two elements\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:90
+msgid "Most Elixir code has a straight-forward translation to its underlying quoted expression. We recommend you try out different code samples and see what the results are. For example, what does `String.upcase(\"foo\")` expand to? We have also learned that `if(true, do: :this, else: :that)` is the same as `if true do :this else :that end`. How does this affirmation hold with quoted expressions?"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:92
+msgid "## Unquoting"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:94
+msgid "Quote is about retrieving the inner representation of some particular chunk of code. However, sometimes it may be necessary to inject some other particular chunk of code inside the representation we want to retrieve."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:96
+msgid "For example, imagine you have a variable `number` which contains the number you want to inject inside a quoted expression."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:98
+msgid "```iex\n"
+"iex> number = 13\n"
+"iex> Macro.to_string(quote do: 11 + number)\n"
+"\"11 + number\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:104
+msgid "That's not what we wanted, since the value of the `number` variable has not been injected and `number` has been quoted in the expression. In order to inject the *value* of the `number` variable, `unquote` has to be used inside the quoted representation:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:106
+msgid "```iex\n"
+"iex> number = 13\n"
+"iex> Macro.to_string(quote do: 11 + unquote(number))\n"
+"\"11 + 13\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:112
+msgid "`unquote` can even be used to inject function names:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:114
+msgid "```iex\n"
+"iex> fun = :hello\n"
+"iex> Macro.to_string(quote do: unquote(fun)(:world))\n"
+"\"hello(:world)\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:120
+msgid "In some cases, it may be necessary to inject many values inside a list. For example, imagine you have a list containing `[1, 2, 6]` and we want to inject `[3, 4, 5]` into it. Using `unquote` won't yield the desired result:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:122
+msgid "```iex\n"
+"iex> inner = [3, 4, 5]\n"
+"iex> Macro.to_string(quote do: [1, 2, unquote(inner), 6])\n"
+"\"[1, 2, [3, 4, 5], 6]\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:128
+msgid "That's when `unquote_splicing` becomes handy:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:130
+msgid "```iex\n"
+"iex> inner = [3, 4, 5]\n"
+"iex> Macro.to_string(quote do: [1, 2, unquote_splicing(inner), 6])\n"
+"\"[1, 2, 3, 4, 5, 6]\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:136
+msgid "Unquoting is very useful when working with macros. When writing macros, developers are able to receive code chunks and inject them inside other code chunks, which can be used to transform code or write code that generates code during compilation."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:138
+msgid "## Escaping"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:140
+msgid "As we saw at the beginning of this chapter, only some values are valid quoted expressions in Elixir. For example, a map is not a valid quoted expression. Neither is a tuple with four elements. However, such values *can* be expressed as a quoted expression:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:147
+msgid "In some cases, you may need to inject such *values* into *quoted expressions*. To do that, we need to first escape those values into quoted expressions with the help of `Macro.escape/1`:"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:149
+msgid "```iex\n"
+"iex> map = %{hello: :world}\n"
+"iex> Macro.escape(map)\n"
+"{:%{}, [], [hello: :world]}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:155
+msgid "Macros receive quoted expressions and must return quoted expressions. However, sometimes during the execution of a macro, you may need to work with values and making a distinction between values and quoted expressions will be required."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:157
+msgid "In other words, it is important to make a distinction between a regular Elixir value (like a list, a map, a process, a reference, etc) and a quoted expression. Some values, such as integers, atoms and strings, have a quoted expression equal to the value itself. Other values, like maps, need to be explicitly converted. Finally, values like functions and references cannot be converted to a quoted expression at all."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:159
+msgid "You can read more about `quote` and `unquote` in the [`Kernel.SpecialForms` module](https://hexdocs.pm/elixir/Kernel.SpecialForms.html). Documentation for `Macro.escape/1` and other functions related to quoted expressions can be found in the [`Macro` module](https://hexdocs.pm/elixir/Macro.html)."
+msgstr ""
+
+#: ../../../../getting-started/meta/quote-and-unquote.markdown:161
+msgid "In this introduction we have laid the groundwork to finally write our first macro, so let's move to the next chapter."
+msgstr ""
+

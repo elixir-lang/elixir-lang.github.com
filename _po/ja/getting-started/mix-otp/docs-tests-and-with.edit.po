@@ -1,0 +1,814 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:1
+msgid ""
+"---\n"
+"layout: getting-started\n"
+"title: Docs, tests and with\n"
+"redirect_from: /getting-started/mix_otp/docs-tests-and-pipelines.html\n"
+"---"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:7
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:9
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:11
+msgid "{% include mix-otp-preface.html %}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:13
+msgid "In this chapter, we will implement the code that parses the commands we described in the first chapter:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:15
+msgid ""
+"```\n"
+"CREATE shopping\n"
+"OK"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:19
+msgid ""
+"PUT shopping milk 1\n"
+"OK"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:22
+msgid ""
+"PUT shopping eggs 3\n"
+"OK"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:25
+msgid ""
+"GET shopping milk\n"
+"1\n"
+"OK"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:29
+msgid ""
+"DELETE shopping eggs\n"
+"OK\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:33
+msgid "After the parsing is done, we will update our server to dispatch the parsed commands to the `:kv` application we built previously."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:35
+msgid "## Doctests"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:37
+msgid "On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via `mix help` or by typing `h Enum` or another module in an IEx console."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:39
+msgid "In this section, we will implement the parse functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:41
+msgid "Let's create our command parser at `lib/kv_server/command.ex` and start with the doctest:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:43
+msgid ""
+"```elixir\n"
+"defmodule KVServer.Command do\n"
+"  @doc ~S\"\"\"\n"
+"  Parses the given `line` into a command."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:48
+msgid "  ## Examples"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:50
+msgid ""
+"      iex> KVServer.Command.parse \"CREATE shopping\n"
+"\"\n"
+"      {:ok, {:create, \"shopping\"}}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:53
+msgid ""
+"  \"\"\"\n"
+"  def parse(_line) do\n"
+"    :not_implemented\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:60
+msgid "Doctests are specified in by an indentation of four spaces followed by the `iex>` prompt in a documentation string. If a command spans multiple lines, you can use `...>`, as in IEx. The expected result should start at the next line after `iex>` or `...>` line(s) and is terminated either by a newline or a new `iex>` prefix."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:62
+msgid ""
+"Also note that we started the documentation string using `@doc ~S\"\"\"`. The `~S` prevents the `\n"
+"` characters from being converted to a carriage return and line feed until they are evaluated in the test."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:64
+msgid "To run our doctests, we'll create a file at `test/kv_server/command_test.exs` and call `doctest KVServer.Command` in the test case:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:66
+msgid ""
+"```elixir\n"
+"defmodule KVServer.CommandTest do\n"
+"  use ExUnit.Case, async: true\n"
+"  doctest KVServer.Command\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:73
+msgid "Run the test suite and the doctest should fail:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:75
+msgid ""
+"```\n"
+"  1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)\n"
+"     test/kv_server/command_test.exs:3\n"
+"     Doctest failed\n"
+"     code: KVServer.Command.parse \"CREATE shopping\n"
+"\" === {:ok, {:create, \"shopping\"}}\n"
+"     lhs:  :not_implemented\n"
+"     stacktrace:\n"
+"       lib/kv_server/command.ex:7: KVServer.Command (module)\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:85
+msgid "Excellent!"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:87
+msgid "Now let's make the doctest pass. Let's implement the `parse/1` function:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:89
+msgid ""
+"```elixir\n"
+"def parse(line) do\n"
+"  case String.split(line) do\n"
+"    [\"CREATE\", bucket] -> {:ok, {:create, bucket}}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:97
+msgid "Our implementation splits the line on whitespace and then matches the command against a list. Using `String.split/1` means our commands will be whitespace-insensitive. Leading and trailing whitespace won't matter, nor will consecutive spaces between words. Let's add some new doctests to test this behaviour along with the other commands:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:99
+msgid ""
+"```elixir\n"
+"@doc ~S\"\"\"\n"
+"Parses the given `line` into a command."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:103
+msgid "## Examples"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:105
+msgid ""
+"    iex> KVServer.Command.parse \"CREATE shopping\n"
+"\"\n"
+"    {:ok, {:create, \"shopping\"}}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:108
+msgid ""
+"    iex> KVServer.Command.parse \"CREATE  shopping  \n"
+"\"\n"
+"    {:ok, {:create, \"shopping\"}}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:111
+msgid ""
+"    iex> KVServer.Command.parse \"PUT shopping milk 1\n"
+"\"\n"
+"    {:ok, {:put, \"shopping\", \"milk\", \"1\"}}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:114
+msgid ""
+"    iex> KVServer.Command.parse \"GET shopping milk\n"
+"\"\n"
+"    {:ok, {:get, \"shopping\", \"milk\"}}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:117
+msgid ""
+"    iex> KVServer.Command.parse \"DELETE shopping eggs\n"
+"\"\n"
+"    {:ok, {:delete, \"shopping\", \"eggs\"}}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:120
+msgid ""
+"Unknown commands or commands with the wrong number of\n"
+"arguments return an error:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:123
+msgid ""
+"    iex> KVServer.Command.parse \"UNKNOWN shopping eggs\n"
+"\"\n"
+"    {:error, :unknown_command}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:126
+msgid ""
+"    iex> KVServer.Command.parse \"GET shopping\n"
+"\"\n"
+"    {:error, :unknown_command}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:129
+msgid ""
+"\"\"\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:132
+msgid "With doctests at hand, it is your turn to make tests pass! Once you're ready, you can compare your work with our solution below:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:134
+msgid ""
+"```elixir\n"
+"def parse(line) do\n"
+"  case String.split(line) do\n"
+"    [\"CREATE\", bucket] -> {:ok, {:create, bucket}}\n"
+"    [\"GET\", bucket, key] -> {:ok, {:get, bucket, key}}\n"
+"    [\"PUT\", bucket, key, value] -> {:ok, {:put, bucket, key, value}}\n"
+"    [\"DELETE\", bucket, key] -> {:ok, {:delete, bucket, key}}\n"
+"    _ -> {:error, :unknown_command}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:146
+msgid "Notice how we were able to elegantly parse the commands without adding a bunch of `if/else` clauses that check the command name and number of arguments!"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:148
+msgid "Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:150
+msgid ""
+"```iex\n"
+"iex> KVServer.Command.parse \"UNKNOWN shopping eggs\n"
+"\"\n"
+"{:error, :unknown_command}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:154
+msgid ""
+"iex> KVServer.Command.parse \"GET shopping\n"
+"\"\n"
+"{:error, :unknown_command}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:158
+msgid "Without new lines, as seen below, ExUnit compiles it into a single test:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:160
+msgid ""
+"```iex\n"
+"iex> KVServer.Command.parse \"UNKNOWN shopping eggs\n"
+"\"\n"
+"{:error, :unknown_command}\n"
+"iex> KVServer.Command.parse \"GET shopping\n"
+"\"\n"
+"{:error, :unknown_command}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:167
+msgid "You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html)."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:169
+msgid "## with"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:171
+msgid "As we are now able to parse commands, we can finally start implementing the logic that runs the commands. Let's add a stub definition for this function for now:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:173
+msgid ""
+"```elixir\n"
+"defmodule KVServer.Command do\n"
+"  @doc \"\"\"\n"
+"  Runs the given command.\n"
+"  \"\"\"\n"
+"  def run(command) do\n"
+"    {:ok, \"OK\n"
+"\"}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:184
+msgid "Before we implement this function, let's change our server to start using our new `parse/1` and `run/1` functions. Remember, our `read_line/1` function was also crashing when the client closed the socket, so let's take the opportunity to fix it, too. Open up `lib/kv_server.ex` and replace the existing server definition:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:186
+msgid ""
+"```elixir\n"
+"defp serve(socket) do\n"
+"  socket\n"
+"  |> read_line()\n"
+"  |> write_line(socket)"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:192
+msgid ""
+"  serve(socket)\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:195
+msgid ""
+"defp read_line(socket) do\n"
+"  {:ok, data} = :gen_tcp.recv(socket, 0)\n"
+"  data\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:200
+msgid ""
+"defp write_line(line, socket) do\n"
+"  :gen_tcp.send(socket, line)\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:205
+msgid "by the following:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:207
+msgid ""
+"```elixir\n"
+"defp serve(socket) do\n"
+"  msg =\n"
+"    case read_line(socket) do\n"
+"      {:ok, data} ->\n"
+"        case KVServer.Command.parse(data) do\n"
+"          {:ok, command} ->\n"
+"            KVServer.Command.run(command)\n"
+"          {:error, _} = err ->\n"
+"            err\n"
+"        end\n"
+"      {:error, _} = err ->\n"
+"        err\n"
+"    end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:222
+msgid ""
+"  write_line(socket, msg)\n"
+"  serve(socket)\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:226
+msgid ""
+"defp read_line(socket) do\n"
+"  :gen_tcp.recv(socket, 0)\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:230
+msgid ""
+"defp write_line(socket, {:ok, text}) do\n"
+"  :gen_tcp.send(socket, text)\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:234
+msgid ""
+"defp write_line(socket, {:error, :unknown_command}) do\n"
+"  # Known error. Write to the client.\n"
+"  :gen_tcp.send(socket, \"UNKNOWN COMMAND\n"
+"\")\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:239
+msgid ""
+"defp write_line(_socket, {:error, :closed}) do\n"
+"  # The connection was closed, exit politely.\n"
+"  exit(:shutdown)\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:244
+msgid ""
+"defp write_line(socket, {:error, error}) do\n"
+"  # Unknown error. Write to the client and exit.\n"
+"  :gen_tcp.send(socket, \"ERROR\n"
+"\")\n"
+"  exit(error)\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:251
+msgid "If we start our server, we can now send commands to it. For now we will get two different responses: \"OK\" when the command is known and \"UNKNOWN COMMAND\" otherwise:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:253
+msgid ""
+"```bash\n"
+"$ telnet 127.0.0.1 4040\n"
+"Trying 127.0.0.1...\n"
+"Connected to localhost.\n"
+"Escape character is '^]'.\n"
+"CREATE shopping\n"
+"OK\n"
+"HELLO\n"
+"UNKNOWN COMMAND\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:264
+msgid "This means our implementation is going in the correct direction, but it doesn't look very elegant, does it?"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:266
+msgid "The previous implementation used pipelines which made the logic straight-forward to follow. However, now that we need to handle different error codes along the way, our server logic is nested inside many `case` calls."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:268
+msgid "Thankfully, Elixir v1.2 introduced the `with` construct, which allows you to simplify code like the above, replacing nested `case` calls with a chain of matching clauses. Let's rewrite the `serve/1` function to use `with`:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:270
+msgid ""
+"```elixir\n"
+"defp serve(socket) do\n"
+"  msg =\n"
+"    with {:ok, data} <- read_line(socket),\n"
+"         {:ok, command} <- KVServer.Command.parse(data),\n"
+"         do: KVServer.Command.run(command)"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:277
+msgid ""
+"  write_line(socket, msg)\n"
+"  serve(socket)\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:282
+msgid "Much better! `with` will retrieve the value returned by the right-side of `<-` and match it against the pattern on the left side. If the value matches the pattern, `with` moves on to the next expression. In case there is no match, the non-matching value is returned."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:284
+msgid "In other words, we converted each expression given to `case/2` as a step in `with`. As soon as any of the steps return something that does not match `{:ok, x}`, `with` aborts, and returns the non-matching value."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:286
+msgid "You can read more about [`with` in our documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#with/1)."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:288
+msgid "## Running commands"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:290
+msgid "The last step is to implement `KVServer.Command.run/1`, to run the parsed commands against the `:kv` application. Its implementation is shown below:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:292
+msgid ""
+"```elixir\n"
+"@doc \"\"\"\n"
+"Runs the given command.\n"
+"\"\"\"\n"
+"def run(command)"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:298
+msgid ""
+"def run({:create, bucket}) do\n"
+"  KV.Registry.create(KV.Registry, bucket)\n"
+"  {:ok, \"OK\n"
+"\"}\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:303
+msgid ""
+"def run({:get, bucket, key}) do\n"
+"  lookup bucket, fn pid ->\n"
+"    value = KV.Bucket.get(pid, key)\n"
+"    {:ok, \"#{value}\n"
+"OK\n"
+"\"}\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:310
+msgid ""
+"def run({:put, bucket, key, value}) do\n"
+"  lookup bucket, fn pid ->\n"
+"    KV.Bucket.put(pid, key, value)\n"
+"    {:ok, \"OK\n"
+"\"}\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:317
+msgid ""
+"def run({:delete, bucket, key}) do\n"
+"  lookup bucket, fn pid ->\n"
+"    KV.Bucket.delete(pid, key)\n"
+"    {:ok, \"OK\n"
+"\"}\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:324
+msgid ""
+"defp lookup(bucket, callback) do\n"
+"  case KV.Registry.lookup(KV.Registry, bucket) do\n"
+"    {:ok, pid} -> callback.(pid)\n"
+"    :error -> {:error, :not_found}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:332
+msgid "Every function clause dispatches the appropriate command to the `KV.Registry` server that we registered during the `:kv` application startup. Since our `:kv_server` depends on the `:kv` application, it is completely fine to depend on the services it provides."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:334
+msgid "Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:336
+msgid "By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:338
+msgid ""
+"```elixir\n"
+"defp write_line(socket, {:error, :not_found}) do\n"
+"  :gen_tcp.send(socket, \"NOT FOUND\n"
+"\")\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:344
+msgid "Our server functionality is almost complete. Only tests are missing. This time, we have left tests for last because there are some important considerations to be made."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:346
+msgid "`KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:348
+msgid "So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as argument. For example, we would need to change `run`'s signature to `def run(command, pid)` and then change all clauses accordingly:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:350
+msgid ""
+"```elixir\n"
+"def run({:create, bucket}, pid) do\n"
+"  KV.Registry.create(pid, bucket)\n"
+"  {:ok, \"OK\n"
+"\"}\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:356
+msgid ""
+"# ... other run clauses ...\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:359
+msgid "Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:361
+msgid "But let's also try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:363
+msgid "Our integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:365
+msgid "Let's implement the integration test in `test/kv_server_test.exs` as shown below:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:367
+msgid ""
+"```elixir\n"
+"defmodule KVServerTest do\n"
+"  use ExUnit.Case"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:371
+msgid ""
+"  setup do\n"
+"    Application.stop(:kv)\n"
+"    :ok = Application.start(:kv)\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:376
+msgid ""
+"  setup do\n"
+"    opts = [:binary, packet: :line, active: false]\n"
+"    {:ok, socket} = :gen_tcp.connect('localhost', 4040, opts)\n"
+"    %{socket: socket}\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:382
+msgid ""
+"  test \"server interaction\", %{socket: socket} do\n"
+"    assert send_and_recv(socket, \"UNKNOWN shopping\n"
+"\") ==\n"
+"           \"UNKNOWN COMMAND\n"
+"\""
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:386
+msgid ""
+"    assert send_and_recv(socket, \"GET shopping eggs\n"
+"\") ==\n"
+"           \"NOT FOUND\n"
+"\""
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:389
+msgid ""
+"    assert send_and_recv(socket, \"CREATE shopping\n"
+"\") ==\n"
+"           \"OK\n"
+"\""
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:392
+msgid ""
+"    assert send_and_recv(socket, \"PUT shopping eggs 3\n"
+"\") ==\n"
+"           \"OK\n"
+"\""
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:395
+msgid ""
+"    # GET returns two lines\n"
+"    assert send_and_recv(socket, \"GET shopping eggs\n"
+"\") == \"3\n"
+"\"\n"
+"    assert send_and_recv(socket, \"\") == \"OK\n"
+"\""
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:399
+msgid ""
+"    assert send_and_recv(socket, \"DELETE shopping eggs\n"
+"\") ==\n"
+"           \"OK\n"
+"\""
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:402
+msgid ""
+"    # GET returns two lines\n"
+"    assert send_and_recv(socket, \"GET shopping eggs\n"
+"\") == \"\n"
+"\"\n"
+"    assert send_and_recv(socket, \"\") == \"OK\n"
+"\"\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:407
+msgid ""
+"  defp send_and_recv(socket, command) do\n"
+"    :ok = :gen_tcp.send(socket, command)\n"
+"    {:ok, data} = :gen_tcp.recv(socket, 0, 1000)\n"
+"    data\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:415
+msgid "Our integration test checks all server interaction, including unknown commands and not found errors. It is worth noting that, as with <abbr title=\"Erlang Term Storage\">ETS</abbr> tables and linked processes, there is no need to close the socket. Once the test process exits, the socket is automatically closed."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:417
+msgid "This time, since our test relies on global data, we have not given `async: true` to `use ExUnit.Case`. Furthermore, in order to guarantee our test is always in a clean state, we stop and start the `:kv` application before each test. In fact, stopping the `:kv` application even prints a warning on the terminal:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:419
+msgid ""
+"```\n"
+"18:12:10.698 [info] Application kv exited: :stopped\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:423
+msgid "To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test case, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:425
+msgid "Between `use ExUnit.Case` and setup, add the following call:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:427
+msgid ""
+"```elixir\n"
+"@moduletag :capture_log\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:431
+msgid "In case the test crashes, you will see a report as follows:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:433
+msgid ""
+"```\n"
+"  1) test server interaction (KVServerTest)\n"
+"     test/kv_server_test.exs:17\n"
+"     ** (RuntimeError) oops\n"
+"     stacktrace:\n"
+"       test/kv_server_test.exs:29"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:440
+msgid "     The following output was logged:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:442
+msgid ""
+"     13:44:10.035 [info]  Application kv exited: :stopped\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:445
+msgid "With this simple integration test, we start to see why integration tests may be slow. Not only this test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:447
+msgid "At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:449
+msgid "In the next chapter we will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration."
+msgstr ""

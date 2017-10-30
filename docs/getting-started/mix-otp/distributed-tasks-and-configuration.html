@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Distributed tasks and configuration - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Distributed tasks and configuration" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Distributed tasks and configuration","url":"/ja/getting-started/mix-otp/distributed-tasks-and-configuration.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="distributed-tasks-and-configuration">Distributed tasks and configuration</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>This chapter is part of the <i>Mix and OTP guide</i> and it depends on previous chapters in this guide.
+For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html">read the introduction guide</a> or check out the chapter index in the sidebar.</p>
+
+<p>In this last chapter, we will go back to the <code class="highlighter-rouge">:kv</code> application and add a routing layer that will allow us to distribute requests between nodes based on the bucket name.</p>
+
+<p>The routing layer will receive a routing table of the following format:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
+ <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
+</code></pre>
+</div>
+
+<p>The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter “a” (<code class="highlighter-rouge">?a</code> represents the Unicode codepoint of the letter “a”) will be dispatched to node <code class="highlighter-rouge">foo@computer-name</code>.</p>
+
+<p>If the matching entry points to the node evaluating the request, then we’ve finished routing, and this node will perform the requested operation. If the matching entry points to a different node, we’ll pass the request to this node, which will look at its own routing table (which may be different from the one in the first node) and act accordingly. If no entry matches, an error will be raised.</p>
+
+<p>You may wonder why we don’t tell the node we found in our routing table to perform the requested operation directly, but instead pass the routing request on to that node to process. While a routing table as simple as the one above might reasonably be shared between all nodes, passing on the routing request in this way makes it much simpler to break the routing table into smaller pieces as our application grows. Perhaps at some point, <code class="highlighter-rouge">foo@computer-name</code> will only be responsible for routing bucket requests, and the buckets it handles will be dispatched to different nodes. In this way, <code class="highlighter-rouge">bar@computer-name</code> does not need to know anything about this change.</p>
+
+<blockquote>
+  <p>Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines in the same network but you need to do some prep work. First of all, you need to ensure all machines have a <code class="highlighter-rouge">~/.erlang.cookie</code> file with exactly the same value. Second, you need to guarantee <a href="http://www.erlang.org/doc/man/epmd.html">epmd</a> is running on a port that is not blocked (you can run <code class="highlighter-rouge">epmd -d</code> for debug info). Third, if you want to learn more about distribution in general, we recommend <a href="http://learnyousomeerlang.com/distribunomicon">this great Distribunomicon chapter from Learn You Some Erlang</a>.</p>
+</blockquote>
+
+<h2 id="our-first-distributed-code">Our first distributed code</h2>
+
+<p>Elixir ships with facilities to connect nodes and exchange information between them. In fact, we use the same concepts of processes, message passing and receiving messages when working in a distributed environment because Elixir processes are <em>location transparent</em>. This means that when sending a message, it doesn’t matter if the recipient process is on the same node or on another node, the <abbr title="Virtual Machine">VM</abbr> will be able to deliver the message in both cases.</p>
+
+<p>In order to run distributed code, we need to start the <abbr title="Virtual Machine">VM</abbr> with a name. The name can be short (when in the same network) or long (requires the full computer address). Let’s start a new IEx session:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname foo
+</code></pre>
+</div>
+
+<p>You can see now the prompt is slightly different and shows the node name followed by the computer name:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+iex(foo@jv)1&gt;
+</code></pre>
+</div>
+
+<p>My computer is named <code class="highlighter-rouge">jv</code>, so I see <code class="highlighter-rouge">foo@jv</code> in the example above, but you will get a different result. We will use <code class="highlighter-rouge">foo@computer-name</code> in the following examples and you should update them accordingly when trying out the code.</p>
+
+<p>Let’s define a module named <code class="highlighter-rouge">Hello</code> in this shell:</p>
+
+<pre><code class="language-iex">iex&gt; defmodule Hello do
+...&gt;   def world, do: IO.puts "hello world"
+...&gt; end
+</code></pre>
+
+<p>If you have another computer on the same network with both Erlang and Elixir installed, you can start another shell on it. If you don’t, you can start another IEx session in another terminal. In either case, give it the short name of <code class="highlighter-rouge">bar</code>:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname bar
+</code></pre>
+</div>
+
+<p>Note that inside this new IEx session, we cannot access <code class="highlighter-rouge">Hello.world/0</code>:</p>
+
+<pre><code class="language-iex">iex&gt; Hello.world
+** (UndefinedFunctionError) undefined function: Hello.world/0
+    Hello.world()
+</code></pre>
+
+<p>However we can spawn a new process on <code class="highlighter-rouge">foo@computer-name</code> from <code class="highlighter-rouge">bar@computer-name</code>! Let’s give it a try (where <code class="highlighter-rouge">@computer-name</code> is the one you see locally):</p>
+
+<pre><code class="language-iex">iex&gt; Node.spawn_link :"foo@computer-name", fn -&gt; Hello.world end
+#PID&lt;9014.59.0&gt;
+hello world
+</code></pre>
+
+<p>Elixir spawned a process on another node and returned its pid. The code then executed on the other node where the <code class="highlighter-rouge">Hello.world/0</code> function exists and invoked that function. Note that the result of “hello world” was printed on the current node <code class="highlighter-rouge">bar</code> and not on <code class="highlighter-rouge">foo</code>. In other words, the message to be printed was sent back from <code class="highlighter-rouge">foo</code> to <code class="highlighter-rouge">bar</code>. This happens because the process spawned on the other node (<code class="highlighter-rouge">foo</code>) still has the group leader of the current node (<code class="highlighter-rouge">bar</code>). We have briefly talked about group leaders in the <a href="/getting-started/io-and-the-file-system.html#processes-and-group-leaders">IO chapter</a>.</p>
+
+<p>We can send and receive message from the pid returned by <code class="highlighter-rouge">Node.spawn_link/2</code> as usual. Let’s try a quick ping-pong example:</p>
+
+<pre><code class="language-iex">iex&gt; pid = Node.spawn_link :"foo@computer-name", fn -&gt;
+...&gt;   receive do
+...&gt;     {:ping, client} -&gt; send client, :pong
+...&gt;   end
+...&gt; end
+#PID&lt;9014.59.0&gt;
+iex&gt; send pid, {:ping, self()}
+{:ping, #PID&lt;0.73.0&gt;}
+iex&gt; flush()
+:pong
+:ok
+</code></pre>
+
+<p>From our quick exploration, we could conclude that we should use <code class="highlighter-rouge">Node.spawn_link/2</code> to spawn processes on a remote node every time we need to do a distributed computation. However we have learned throughout this guide that spawning processes outside of supervision trees should be avoided if possible, so we need to look for other options.</p>
+
+<p>There are three better alternatives to <code class="highlighter-rouge">Node.spawn_link/2</code> that we could use in our implementation:</p>
+
+<ol>
+  <li>
+    <p>We could use Erlang’s <a href="http://www.erlang.org/doc/man/rpc.html">:rpc</a> module to execute functions on a remote node. Inside the <code class="highlighter-rouge">bar@computer-name</code> shell above, you can call <code class="highlighter-rouge">:rpc.call(:"foo@computer-name", Hello, :world, [])</code> and it will print “hello world”</p>
+  </li>
+  <li>
+    <p>We could have a server running on the other node and send requests to that node via the <a href="https://hexdocs.pm/elixir/GenServer.html">GenServer</a> API. For example, you can call a server on a remote node by using <code class="highlighter-rouge">GenServer.call({name, node}, arg)</code> or passing the remote process PID as first argument</p>
+  </li>
+  <li>
+    <p>We could use <a href="https://hexdocs.pm/elixir/Task.html">tasks</a>, which we have learned about in <a href="/getting-started/mix-otp/task-and-gen-tcp.html">a previous chapter</a>, as they can be spawned on both local and remote nodes</p>
+  </li>
+</ol>
+
+<p>The options above have different properties. Both <code class="highlighter-rouge">:rpc</code> and using a GenServer would serialize your requests on a single server, while tasks are effectively running asynchronously on the remote node, with the only serialization point being the spawning done by the supervisor.</p>
+
+<p>For our routing layer, we are going to use tasks, but feel free to explore the other alternatives too.</p>
+
+<h2 id="asyncawait">async/await</h2>
+
+<p>So far we have explored tasks that are started and run in isolation, with no regard for their return value. However, sometimes it is useful to run a task to compute a value and read its result later on. For this, tasks also provide the <code class="highlighter-rouge">async/await</code> pattern:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">task</span> <span class="o">=</span> <span class="no">Task</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="n">compute_something_expensive</span> <span class="k">end</span><span class="p">)</span>
+<span class="n">res</span>  <span class="o">=</span> <span class="n">compute_something_else</span><span class="p">()</span>
+<span class="n">res</span> <span class="o">+</span> <span class="no">Task</span><span class="o">.</span><span class="n">await</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">async/await</code> provides a very simple mechanism to compute values concurrently. Not only that, <code class="highlighter-rouge">async/await</code> can also be used with the same <a href="https://hexdocs.pm/elixir/Task.Supervisor.html"><code class="highlighter-rouge">Task.Supervisor</code></a> we have used in previous chapters. We just need to call <code class="highlighter-rouge">Task.Supervisor.async/2</code> instead of <code class="highlighter-rouge">Task.Supervisor.start_child/2</code> and use <code class="highlighter-rouge">Task.await/2</code> to read the result later on.</p>
+
+<h2 id="distributed-tasks">Distributed tasks</h2>
+
+<p>Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up <code class="highlighter-rouge">lib/kv/supervisor.ex</code> from the <code class="highlighter-rouge">:kv</code> application. Let’s add a task supervisor as the last child of the tree:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="no">Task</span><span class="o">.</span><span class="no">Supervisor</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">RouterTasks</span><span class="p">},</span>
+</code></pre>
+</div>
+
+<p>Now, let’s start two named nodes again, but inside the <code class="highlighter-rouge">:kv</code> application:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname foo -S mix
+<span class="gp">$ </span>iex --sname bar -S mix
+</code></pre>
+</div>
+
+<p>From inside <code class="highlighter-rouge">bar@computer-name</code>, we can now spawn a task directly on the other node via the supervisor:</p>
+
+<pre><code class="language-iex">iex&gt; task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, fn -&gt;
+...&gt;   {:ok, node()}
+...&gt; end
+%Task{owner: #PID&lt;0.122.0&gt;, pid: #PID&lt;12467.88.0&gt;, ref: #Reference&lt;0.0.0.400&gt;}
+iex&gt; Task.await(task)
+{:ok, :"foo@computer-name"}
+</code></pre>
+
+<p>Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to <code class="highlighter-rouge">Task.Supervisor.async/2</code> but, in distributed cases, it is preferable to give the module, function and arguments explicitly:</p>
+
+<pre><code class="language-iex">iex&gt; task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
+%Task{owner: #PID&lt;0.122.0&gt;, pid: #PID&lt;12467.89.0&gt;, ref: #Reference&lt;0.0.0.404&gt;}
+iex&gt; Task.await(task)
+:"foo@computer-name"
+</code></pre>
+
+<p>The difference is that anonymous functions requires the target node to have exactly the same code version as the caller. Using module, function and arguments is more robust because you only need to find a function with matching arity in the given module.</p>
+
+<p>With this knowledge in hand, let’s finally write the routing code.</p>
+
+<h2 id="routing-layer">Routing layer</h2>
+
+<p>Create a file at <code class="highlighter-rouge">lib/kv/router.ex</code> with the following contents:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">Router</span> <span class="k">do</span>
+  <span class="nv">@doc</span> <span class="sd">"""
+  Dispatch the given `mod`, `fun`, `args` request
+  to the appropriate node based on the `bucket`.
+  """</span>
+  <span class="k">def</span> <span class="n">route</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="k">do</span>
+    <span class="c1"># Get the first byte of the binary</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="ss">:binary</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
+
+    <span class="c1"># Try to find an entry in the table() or raise</span>
+    <span class="n">entry</span> <span class="o">=</span>
+      <span class="no">Enum</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">table</span><span class="p">(),</span> <span class="k">fn</span> <span class="p">{</span><span class="n">enum</span><span class="p">,</span> <span class="n">_node</span><span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="n">first</span> <span class="ow">in</span> <span class="n">enum</span>
+      <span class="k">end</span><span class="p">)</span> <span class="o">||</span> <span class="n">no_entry_error</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
+
+    <span class="c1"># If the entry node is the current node</span>
+    <span class="k">if</span> <span class="n">elem</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">node</span><span class="p">()</span> <span class="k">do</span>
+      <span class="n">apply</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="p">{</span><span class="no">KV</span><span class="o">.</span><span class="no">RouterTasks</span><span class="p">,</span> <span class="n">elem</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="m">1</span><span class="p">)}</span>
+      <span class="o">|&gt;</span> <span class="no">Task</span><span class="o">.</span><span class="no">Supervisor</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Router</span><span class="p">,</span> <span class="ss">:route</span><span class="p">,</span> <span class="p">[</span><span class="n">bucket</span><span class="p">,</span> <span class="n">mod</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">])</span>
+      <span class="o">|&gt;</span> <span class="no">Task</span><span class="o">.</span><span class="n">await</span><span class="p">()</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">no_entry_error</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">raise</span> <span class="sd">"</span><span class="s2">could not find entry for </span><span class="si">#{</span><span class="n">inspect</span> <span class="n">bucket</span><span class="si">}</span><span class="s2"> in table </span><span class="si">#{</span><span class="n">inspect</span> <span class="n">table</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+
+  <span class="nv">@doc</span> <span class="sd">"""
+  The routing table.
+  """</span>
+  <span class="k">def</span> <span class="n">table</span> <span class="k">do</span>
+    <span class="c1"># Replace computer-name with your local machine name.</span>
+    <span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
+     <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Let’s write a test to verify our router works. Create a file named <code class="highlighter-rouge">test/kv/router_test.exs</code> containing:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">RouterTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
+
+  <span class="n">test</span> <span class="sd">"</span><span class="s2">route requests across nodes"</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Router</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="sd">"</span><span class="s2">hello"</span><span class="p">,</span> <span class="no">Kernel</span><span class="p">,</span> <span class="ss">:node</span><span class="p">,</span> <span class="p">[])</span> <span class="o">==</span>
+           <span class="ss">:"foo@computer-name"</span>
+    <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Router</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="sd">"</span><span class="s2">world"</span><span class="p">,</span> <span class="no">Kernel</span><span class="p">,</span> <span class="ss">:node</span><span class="p">,</span> <span class="p">[])</span> <span class="o">==</span>
+           <span class="ss">:"bar@computer-name"</span>
+  <span class="k">end</span>
+
+  <span class="n">test</span> <span class="sd">"</span><span class="s2">raises on unknown entries"</span> <span class="k">do</span>
+    <span class="n">assert_raise</span> <span class="no">RuntimeError</span><span class="p">,</span> <span class="sr">~r/could not find entry/</span><span class="p">,</span> <span class="k">fn</span> <span class="o">-&gt;</span>
+      <span class="no">KV</span><span class="o">.</span><span class="no">Router</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="o">&lt;&lt;</span><span class="m">0</span><span class="o">&gt;&gt;</span><span class="p">,</span> <span class="no">Kernel</span><span class="p">,</span> <span class="ss">:node</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>The first test invokes <code class="highlighter-rouge">Kernel.node/0</code>, which returns the name of the current node, based on the bucket names “hello” and “world”. According to our routing table so far, we should get <code class="highlighter-rouge">foo@computer-name</code> and <code class="highlighter-rouge">bar@computer-name</code> as responses, respectively.</p>
+
+<p>The second test checks that the code raises for unknown entries.</p>
+
+<p>In order to run the first test, we need to have two nodes running. Move into <code class="highlighter-rouge">apps/kv</code> and let’s restart the node named <code class="highlighter-rouge">bar</code> which is going to be used by tests.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname bar -S mix
+</code></pre>
+</div>
+
+<p>And now run tests with:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixir --sname foo -S mix <span class="nb">test</span>
+</code></pre>
+</div>
+
+<p>The test should pass.</p>
+
+<h2 id="test-filters-and-tags">Test filters and tags</h2>
+
+<p>Although our tests pass, our testing structure is getting more complex. In particular, running tests with only <code class="highlighter-rouge">mix test</code> causes failures in our suite, since our test requires a connection to another node.</p>
+
+<p>Luckily, ExUnit ships with a facility to tag tests, allowing us to run specific callbacks or even filter tests altogether based on those tags. We have already used the <code class="highlighter-rouge">:capture_log</code> tag in the previous chapter, which has its semantics specified by ExUnit itself.</p>
+
+<p>This time let’s add a <code class="highlighter-rouge">:distributed</code> tag to <code class="highlighter-rouge">test/kv/router_test.exs</code>:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@tag</span> <span class="ss">:distributed</span>
+<span class="n">test</span> <span class="sd">"</span><span class="s2">route requests across nodes"</span> <span class="k">do</span>
+</code></pre>
+</div>
+
+<p>Writing <code class="highlighter-rouge">@tag :distributed</code> is equivalent to writing <code class="highlighter-rouge">@tag distributed: true</code>.</p>
+
+<p>With the test properly tagged, we can now check if the node is alive on the network and, if not, we can exclude all distributed tests. Open up <code class="highlighter-rouge">test/test_helper.exs</code> inside the <code class="highlighter-rouge">:kv</code> application and add the following:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">exclude</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="no">Node</span><span class="o">.</span><span class="n">alive?</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">[],</span> <span class="k">else</span><span class="p">:</span> <span class="p">[</span><span class="ss">distributed:</span> <span class="no">true</span><span class="p">]</span>
+
+<span class="no">ExUnit</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="ss">exclude:</span> <span class="n">exclude</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Now run tests with <code class="highlighter-rouge">mix test</code>:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">test
+</span>Excluding tags: <span class="o">[</span>distributed: <span class="nb">true</span><span class="o">]</span>
+
+.......
+
+Finished <span class="k">in </span>0.1 seconds <span class="o">(</span>0.1s on load, 0.01s on tests<span class="o">)</span>
+7 tests, 0 failures, 1 skipped
+</code></pre>
+</div>
+
+<p>This time all tests passed and ExUnit warned us that distributed tests were being excluded. If you run tests with <code class="highlighter-rouge">$ elixir --sname foo -S mix test</code>, one extra test should run and successfully pass as long as the <code class="highlighter-rouge">bar@computer-name</code> node is available.</p>
+
+<p>The <code class="highlighter-rouge">mix test</code> command also allows us to dynamically include and exclude tags. For example, we can run <code class="highlighter-rouge">$ mix test --include distributed</code> to run distributed tests regardless of the value set in <code class="highlighter-rouge">test/test_helper.exs</code>. We could also pass <code class="highlighter-rouge">--exclude</code> to exclude a particular tag from the command line. Finally, <code class="highlighter-rouge">--only</code> can be used to run only tests with a particular tag:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixir --sname foo -S mix <span class="nb">test</span> --only distributed
+</code></pre>
+</div>
+
+<p>You can read more about filters, tags and the default tags in <a href="https://hexdocs.pm/ex_unit/ExUnit.Case.html"><code class="highlighter-rouge">ExUnit.Case</code> module documentation</a>.</p>
+
+<h2 id="application-environment-and-configuration">Application environment and configuration</h2>
+
+<p>So far we have hardcoded the routing table into the <code class="highlighter-rouge">KV.Router</code> module. However, we would like to make the table dynamic. This allows us not only to configure development/test/production, but also to allow different nodes to run with different entries in the routing table. There is a feature of  <abbr title="Open Telecom Platform">OTP</abbr> that does exactly that: the application environment.</p>
+
+<p>Each application has an environment that stores the application’s specific configuration by key. For example, we could store the routing table in the <code class="highlighter-rouge">:kv</code> application environment, giving it a default value and allowing other applications to change the table as needed.</p>
+
+<p>Open up <code class="highlighter-rouge">apps/kv/mix.exs</code> and change the <code class="highlighter-rouge">application/0</code> function to return the following:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">application</span> <span class="k">do</span>
+  <span class="p">[</span><span class="ss">extra_applications:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">],</span>
+   <span class="ss">env:</span> <span class="p">[</span><span class="ss">routing_table:</span> <span class="p">[]],</span>
+   <span class="ss">mod:</span> <span class="p">{</span><span class="no">KV</span><span class="p">,</span> <span class="p">[]}]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>We have added a new <code class="highlighter-rouge">:env</code> key to the application. It returns the application default environment, which has an entry of key <code class="highlighter-rouge">:routing_table</code> and value of an empty list. It makes sense for the application environment to ship with an empty table, as the specific routing table depends on the testing/deployment structure.</p>
+
+<p>In order to use the application environment in our code, we need to replace <code class="highlighter-rouge">KV.Router.table/0</code> with the definition below:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@doc</span> <span class="sd">"""
+The routing table.
+"""</span>
+<span class="k">def</span> <span class="n">table</span> <span class="k">do</span>
+  <span class="no">Application</span><span class="o">.</span><span class="n">fetch_env!</span><span class="p">(</span><span class="ss">:kv</span><span class="p">,</span> <span class="ss">:routing_table</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>We use <code class="highlighter-rouge">Application.fetch_env!/2</code> to read the entry for <code class="highlighter-rouge">:routing_table</code> in <code class="highlighter-rouge">:kv</code>’s environment. You can find more information and other functions to manipulate the app environment in the <a href="https://hexdocs.pm/elixir/Application.html">Application module</a>.</p>
+
+<p>Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname bar -S mix
+<span class="gp">$ </span>elixir --sname foo -S mix <span class="nb">test</span> --only distributed
+</code></pre>
+</div>
+
+<p>The interesting thing about the application environment is that it can be configured not only for the current application, but for all applications. Such configuration is done by the <code class="highlighter-rouge">config/config.exs</code> file. For example, we can configure IEx default prompt to another value. Just open <code class="highlighter-rouge">apps/kv/config/config.exs</code> and add the following to the end:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">config</span> <span class="ss">:iex</span><span class="p">,</span> <span class="ss">default_prompt:</span> <span class="sd">"</span><span class="s2">&gt;&gt;&gt;"</span>
+</code></pre>
+</div>
+
+<p>Start IEx with <code class="highlighter-rouge">iex -S mix</code> and you can see that the IEx prompt has changed.</p>
+
+<p>This means we can also configure our <code class="highlighter-rouge">:routing_table</code> directly in the <code class="highlighter-rouge">apps/kv/config/config.exs</code> file:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="c1"># Replace computer-name with your local machine nodes.</span>
+<span class="n">config</span> <span class="ss">:kv</span><span class="p">,</span> <span class="ss">:routing_table</span><span class="p">,</span>
+       <span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
+        <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
+</code></pre>
+</div>
+
+<p>Restart the nodes and run distributed tests again. Now they should all pass.</p>
+
+<p>Since Elixir v1.2, all umbrella applications share their configurations, thanks to this line in <code class="highlighter-rouge">config/config.exs</code> in the umbrella root that loads the configuration of all children:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">import_config</span> <span class="sd">"</span><span class="s2">../apps/*/config/config.exs"</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">mix run</code> command also accepts a <code class="highlighter-rouge">--config</code> flag, which allows configuration files to be given on demand. This could be used to start different nodes, each with its own specific configuration (for example, different routing tables).</p>
+
+<p>Overall, the built-in ability to configure applications and the fact that we have built our software as an umbrella application gives us plenty of options when deploying the software. We can:</p>
+
+<ul>
+  <li>
+    <p>deploy the umbrella application to a node that will work as both TCP server and key-value storage</p>
+  </li>
+  <li>
+    <p>deploy the <code class="highlighter-rouge">:kv_server</code> application to work only as a TCP server as long as the routing table points only to other nodes</p>
+  </li>
+  <li>
+    <p>deploy only the <code class="highlighter-rouge">:kv</code> application when we want a node to work only as storage (no TCP access)</p>
+  </li>
+</ul>
+
+<p>As we add more applications in the future, we can continue controlling our deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production.</p>
+
+<p>You can also consider building multiple releases with a tool like <a href="https://github.com/bitwalker/distillery">Distillery</a>, which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so we can deploy the application even if the runtime is not pre-installed on the target system.</p>
+
+<p>Finally, we have learned some new things in this chapter, and they could be applied to the <code class="highlighter-rouge">:kv_server</code> application as well. We are going to leave the next steps as an exercise:</p>
+
+<ul>
+  <li>
+    <p>change the <code class="highlighter-rouge">:kv_server</code> application to read the port from its application environment instead of using the hardcoded value of 4040</p>
+  </li>
+  <li>
+    <p>change and configure the <code class="highlighter-rouge">:kv_server</code> application to use the routing functionality instead of dispatching directly to the local <code class="highlighter-rouge">KV.Registry</code>. For <code class="highlighter-rouge">:kv_server</code> tests, you can make the routing table point to the current node itself</p>
+  </li>
+</ul>
+
+<h2 id="summing-up">Summing up</h2>
+
+<p>In this chapter we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.</p>
+
+<p>Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.</p>
+
+<p>If you are looking for a distributed key-value store to use in production, you should definitely look into <a href="http://basho.com/riak/">Riak</a>, which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use <a href="https://en.wikipedia.org/wiki/Consistent_hashing">consistent hashing</a> to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.</p>
+
+<p>Happy coding!</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/mix-otp/distributed-tasks-and-configuration.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

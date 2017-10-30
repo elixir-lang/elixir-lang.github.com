@@ -1,0 +1,241 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../getting-started/recursion.markdown:1
+msgid ""
+"---\n"
+"layout: getting-started\n"
+"title: Recursion\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:10
+msgid "## Loops through recursion"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:12
+msgid "Due to immutability, loops in Elixir (as in any functional programming language) are written differently from imperative languages. For example, in an imperative language like C, one would write:"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:14
+msgid ""
+"```c\n"
+"for(i = 0; i < sizeof(array); i++) {\n"
+"  array[i] = array[i] * 2;\n"
+"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:20
+msgid "In the example above, we are mutating both the array and the variable `i`. Mutating is not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached that stops the recursive action from continuing. No data is mutated in this process. Consider the example below that prints a string an arbitrary number of times:"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:22
+msgid ""
+"```elixir\n"
+"defmodule Recursion do\n"
+"  def print_multiple_times(msg, n) when n <= 1 do\n"
+"    IO.puts msg\n"
+"  end"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:28
+msgid ""
+"  def print_multiple_times(msg, n) do\n"
+"    IO.puts msg\n"
+"    print_multiple_times(msg, n - 1)\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:34
+msgid ""
+"Recursion.print_multiple_times(\"Hello!\", 3)\n"
+"# Hello!\n"
+"# Hello!\n"
+"# Hello!\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:40
+msgid "Similar to `case`, a function may have many clauses. A particular clause is executed when the arguments passed to the function match the clause's argument patterns and its guard evaluates to `true`."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:42
+msgid "When `print_multiple_times/2` is initially called in the example above, the argument `n` is equal to `3`."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:44
+msgid "The first clause has a guard which says \"use this definition if and only if `n` is less than or equal to `1`\". Since this is not the case, Elixir proceeds to the next clause's definition."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:46
+msgid "The second definition matches the pattern and has no guard so it will be executed. It first prints our `msg` and then calls itself passing `n - 1` (`2`) as the second argument."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:48
+msgid ""
+"Our `msg` is printed and `print_multiple_times/2` is called again, this time with the second argument set to `1`.\n"
+"Because `n` is now set to `1`, the guard in our first definition of `print_multiple_times/2` evaluates to true, and we execute this particular definition. The `msg` is printed, and there is nothing left to execute."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:51
+msgid "We defined `print_multiple_times/2` so that, no matter what number is passed as the second argument, it either triggers our first definition (known as a _base case_) or it triggers our second definition, which will ensure that we get exactly one step closer to our base case."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:53
+msgid "## Reduce and map algorithms"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:55
+msgid "Let's now see how we can use the power of recursion to sum a list of numbers:"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:57
+msgid ""
+"```elixir\n"
+"defmodule Math do\n"
+"  def sum_list([head | tail], accumulator) do\n"
+"    sum_list(tail, head + accumulator)\n"
+"  end"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:63
+msgid ""
+"  def sum_list([], accumulator) do\n"
+"    accumulator\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:68
+msgid ""
+"IO.puts Math.sum_list([1, 2, 3], 0) #=> 6\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:71
+msgid "We invoke `sum_list` with the list `[1, 2, 3]` and the initial value `0` as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list `[1, 2, 3]` matches against `[head | tail]` which binds `head` to `1` and `tail` to `[2, 3]`; `accumulator` is set to `0`."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:73
+msgid "Then, we add the head of the list to the accumulator `head + accumulator` and call `sum_list` again, recursively, passing the tail of the list as its first argument. The tail will once again match `[head | tail]` until the list is empty, as seen below:"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:75
+msgid ""
+"```elixir\n"
+"sum_list [1, 2, 3], 0\n"
+"sum_list [2, 3], 1\n"
+"sum_list [3], 3\n"
+"sum_list [], 6\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:82
+msgid "When the list is empty, it will match the final clause which returns the final result of `6`."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:84
+msgid "The process of taking a list and _reducing_ it down to one value is known as a _reduce algorithm_ and is central to functional programming."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:86
+msgid "What if we instead want to double all of the values in our list?"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:88
+msgid ""
+"```elixir\n"
+"defmodule Math do\n"
+"  def double_each([head | tail]) do\n"
+"    [head * 2 | double_each(tail)]\n"
+"  end"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:94
+msgid ""
+"  def double_each([]) do\n"
+"    []\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:100
+msgid ""
+"```bash\n"
+"iex math.exs\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:104
+msgid ""
+"```iex\n"
+"iex> Math.double_each([1, 2, 3]) #=> [2, 4, 6]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:108
+msgid "Here we have used recursion to traverse a list, doubling each element and returning a new list. The process of taking a list and _mapping_ over it is known as a _map algorithm_."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:110
+msgid "Recursion and [tail call](https://en.wikipedia.org/wiki/Tail_call) optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists."
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:112
+msgid "The [`Enum` module](https://hexdocs.pm/elixir/Enum.html), which we're going to see in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:114
+msgid ""
+"```iex\n"
+"iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)\n"
+"6\n"
+"iex> Enum.map([1, 2, 3], fn(x) -> x * 2 end)\n"
+"[2, 4, 6]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:121
+msgid "Or, using the capture syntax:"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:123
+msgid ""
+"```iex\n"
+"iex> Enum.reduce([1, 2, 3], 0, &+/2)\n"
+"6\n"
+"iex> Enum.map([1, 2, 3], &(&1 * 2))\n"
+"[2, 4, 6]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/recursion.markdown:130
+msgid "Let's take a deeper look at `Enumerable`s and, while we're at it, their lazy counterpart, `Stream`s."
+msgstr ""

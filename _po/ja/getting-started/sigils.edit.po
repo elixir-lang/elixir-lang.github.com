@@ -1,0 +1,330 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../getting-started/sigils.markdown:1
+msgid ""
+"---\n"
+"layout: getting-started\n"
+"title: Sigils\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:10
+msgid "We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms, for example, are mostly created via the `:atom` representation."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:12
+msgid "One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Rather, our best bet is to make the language extensible, so developers, companies, and communities can extend the language to their relevant domains."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:14
+msgid "In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (`~`) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:16
+msgid "## Regular expressions"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:18
+msgid "The most common sigil in Elixir is `~r`, which is used to create [regular expressions](https://en.wikipedia.org/wiki/Regular_Expressions):"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:20
+msgid ""
+"```iex\n"
+"# A regular expression that matches strings which contain \"foo\" or \"bar\":\n"
+"iex> regex = ~r/foo|bar/\n"
+"~r/foo|bar/\n"
+"iex> \"foo\" =~ regex\n"
+"true\n"
+"iex> \"bat\" =~ regex\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:30
+msgid "Elixir provides Perl-compatible regular expressions (regexes), as implemented by the [PCRE](http://www.pcre.org/) library. Regexes also support modifiers. For example, the `i` modifier makes a regular expression case insensitive:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:32
+msgid ""
+"```iex\n"
+"iex> \"HELLO\" =~ ~r/hello/\n"
+"false\n"
+"iex> \"HELLO\" =~ ~r/hello/i\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:39
+msgid "Check out the [`Regex` module](https://hexdocs.pm/elixir/Regex.html) for more information on other modifiers and the supported operations with regular expressions."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:41
+msgid "So far, all examples have used `/` to delimit a regular expression. However sigils support 8 different delimiters:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:43
+msgid ""
+"```\n"
+"~r/hello/\n"
+"~r|hello|\n"
+"~r\"hello\"\n"
+"~r'hello'\n"
+"~r(hello)\n"
+"~r[hello]\n"
+"~r{hello}\n"
+"~r<hello>\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:54
+msgid "The reason behind supporting different delimiters is to provide a way to write literals without escaped delimiters. For example, a regular expression with forward slashes like `~r(^https?://)` reads arguably better than `~r/^https?:\\/\\//`. Similarly, if the regular expression has forward slashes and capturing groups (that use `()`), you may then choose double quotes instead of parentheses."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:56
+msgid "## Strings, char lists, and word lists sigils"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:58
+msgid "Besides regular expressions, Elixir ships with three other sigils."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:60
+msgid "### Strings"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:62
+msgid "The `~s` sigil is used to generate strings, like double quotes are. The `~s` sigil is useful when a string contains double quotes:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:64
+msgid ""
+"```iex\n"
+"iex> ~s(this is a string with \"double\" quotes, not 'single' ones)\n"
+"\"this is a string with \\\"double\\\" quotes, not 'single' ones\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:69
+msgid "### Char lists"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:71
+msgid "The `~c` sigil is useful for generating char lists that contain single quotes:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:73
+msgid ""
+"```iex\n"
+"iex> ~c(this is a char list containing 'single quotes')\n"
+"'this is a char list containing \\'single quotes\\''\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:78
+msgid "### Word lists"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:80
+msgid "The `~w` sigil is used to generate lists of words (*words* are just regular strings). Inside the `~w` sigil, words are separated by whitespace."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:82
+msgid ""
+"```iex\n"
+"iex> ~w(foo bar bat)\n"
+"[\"foo\", \"bar\", \"bat\"]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:87
+msgid "The `~w` sigil also accepts the `c`, `s` and `a` modifiers (for char lists, strings and atoms, respectively), which specify the data type of the elements of the resulting list:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:89
+msgid ""
+"```iex\n"
+"iex> ~w(foo bar bat)a\n"
+"[:foo, :bar, :bat]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:94
+msgid "## Interpolation and escaping in sigils"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:96
+msgid "Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:98
+msgid ""
+"```iex\n"
+"iex> ~s(String with escape codes \\x26 #{\"inter\" <> \"polation\"})\n"
+"\"String with escape codes & interpolation\"\n"
+"iex> ~S(String without escape codes \\x26 without #{interpolation})\n"
+"\"String without escape codes \\\\x26 without \\#{interpolation}\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:105
+msgid "The following escape codes can be used in strings and char lists:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:107
+msgid ""
+"* `\\\\` – single backslash\n"
+"* `\\a` – bell/alert\n"
+"* `\\b` – backspace\n"
+"* `\\d` - delete\n"
+"* `\\e` - escape\n"
+"* `\\f` - form feed\n"
+"* `\n"
+"` – newline\n"
+"* `` – carriage return\n"
+"* `\\s` – space\n"
+"* `\t` – tab\n"
+"* `\\v` – vertical tab\n"
+"* `\\0` - null byte\n"
+"* `\\xDD` - represents a single byte in hexadecimal (such as `\\x13`)\n"
+"* `\\uDDDD` and `\\u{D...}` - represents a Unicode codepoint in hexadecimal (such as `\\u{1F600}`)"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:122
+msgid "In addition to those, a double quote inside a double-quoted string needs to be escaped as `\\\"`, and, analogously, a single quote inside a single-quoted char list needs to be escaped as `\\'`. Nevertheless, it is better style to change delimiters as seen above than to escape them."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:124
+msgid "Sigils also support heredocs, that is, triple double- or single-quotes as separators:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:126
+msgid ""
+"```iex\n"
+"iex> ~s\"\"\"\n"
+"...> this is\n"
+"...> a heredoc string\n"
+"...> \"\"\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:133
+msgid "The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in documentation would soon become error prone because of the need to double-escape some characters:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:135
+msgid ""
+"```elixir\n"
+"@doc \"\"\"\n"
+"Converts double-quotes to single-quotes."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:139 ../../../getting-started/sigils.markdown:154
+msgid "## Examples"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:141
+msgid ""
+"    iex> convert(\"\\\\\\\"foo\\\\\\\"\")\n"
+"    \"'foo'\""
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:144 ../../../getting-started/sigils.markdown:159
+msgid ""
+"\"\"\"\n"
+"def convert(...)\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:148
+msgid "By using `~S`, this problem can be avoided altogether:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:150
+msgid ""
+"```elixir\n"
+"@doc ~S\"\"\"\n"
+"Converts double-quotes to single-quotes."
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:156
+msgid ""
+"    iex> convert(\"\\\"foo\\\"\")\n"
+"    \"'foo'\""
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:163
+msgid "## Custom sigils"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:165
+msgid "As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling `sigil_r` with a binary and a char list as argument:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:167
+msgid ""
+"```iex\n"
+"iex> sigil_r(<<\"foo\">>, 'i')\n"
+"~r\"foo\"i\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:172
+msgid "We can access the documentation for the `~r` sigil via `sigil_r`:"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:174
+msgid ""
+"```iex\n"
+"iex> h sigil_r\n"
+"...\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:179
+msgid "We can also provide our own sigils by implementing functions that follow the `sigil_{identifier}` pattern. For example, let's implement the `~i` sigil that returns an integer (with the optional `n` modifier to make it negative):"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:181
+msgid ""
+"```iex\n"
+"iex> defmodule MySigils do\n"
+"...>   def sigil_i(string, []), do: String.to_integer(string)\n"
+"...>   def sigil_i(string, [?n]), do: -String.to_integer(string)\n"
+"...> end\n"
+"iex> import MySigils\n"
+"iex> ~i(13)\n"
+"13\n"
+"iex> ~i(42)n\n"
+"-42\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/sigils.markdown:193
+msgid "Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled into an efficient representation during compilation of the source code, therefore skipping this step at runtime. If you're interested in the subject, we recommend you learn more about macros and check out how sigils are implemented in the `Kernel` module (where the `sigil_*` functions are defined)."
+msgstr ""

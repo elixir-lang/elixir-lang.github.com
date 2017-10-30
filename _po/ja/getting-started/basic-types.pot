@@ -1,0 +1,610 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/basic-types.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Basic types\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:10
+msgid "In this chapter we will learn more about Elixir basic types: integers, floats, booleans, atoms, strings, lists and tuples. Some basic types are:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:12
+msgid "```iex\n"
+"iex> 1          # integer\n"
+"iex> 0x1F       # integer\n"
+"iex> 1.0        # float\n"
+"iex> true       # boolean\n"
+"iex> :atom      # atom / symbol\n"
+"iex> \"elixir\"   # string\n"
+"iex> [1, 2, 3]  # list\n"
+"iex> {1, 2, 3}  # tuple\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:23
+msgid "## Basic arithmetic"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:25
+msgid "Open up `iex` and type the following expressions:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:27
+msgid "```iex\n"
+"iex> 1 + 2\n"
+"3\n"
+"iex> 5 * 5\n"
+"25\n"
+"iex> 10 / 2\n"
+"5.0\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:36
+msgid "Notice that `10 / 2` returned a float `5.0` instead of an integer `5`. This is expected. In Elixir, the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:38
+msgid "```iex\n"
+"iex> div(10, 2)\n"
+"5\n"
+"iex> div 10, 2\n"
+"5\n"
+"iex> rem 10, 3\n"
+"1\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:47
+msgid "Notice Elixir allows you to drop the parentheses when invoking named functions. Such feature gives a cleaner syntax when writing declarations and control-flow constructs."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:49
+msgid "Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:51
+msgid "```iex\n"
+"iex> 0b1010\n"
+"10\n"
+"iex> 0o777\n"
+"511\n"
+"iex> 0x1F\n"
+"31\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:60
+msgid "Float numbers require a dot followed by at least one digit and also support `e` for the exponent number:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:62
+msgid "```iex\n"
+"iex> 1.0\n"
+"1.0\n"
+"iex> 1.0e-10\n"
+"1.0e-10\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:69
+msgid "Floats in Elixir are 64 bit double precision."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:71
+msgid "You can invoke the `round` function to get the closest integer to a given float, or the `trunc` function to get the integer part of a float."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:73
+msgid "```iex\n"
+"iex> round(3.58)\n"
+"4\n"
+"iex> trunc(3.58)\n"
+"3\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:80
+msgid "## Identifying functions"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:82
+msgid "Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments which the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of `2`."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:84
+msgid "## Booleans"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:86
+msgid "Elixir supports `true` and `false` as booleans:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:88
+msgid "```iex\n"
+"iex> true\n"
+"true\n"
+"iex> true == false\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:95
+msgid "Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean/1` function can be used to check if a value is a boolean or not:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:97
+msgid "```iex\n"
+"iex> is_boolean(true)\n"
+"true\n"
+"iex> is_boolean(1)\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:104
+msgid "You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, a float, or either."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:106
+msgid "> Note: At any moment you can type `h()` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`)."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:108
+msgid "## Atoms"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:110
+msgid "Atoms are constants where their name is their own value. Some other languages call these symbols:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:112
+msgid "```iex\n"
+"iex> :hello\n"
+":hello\n"
+"iex> :hello == :world\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:119
+msgid "The booleans `true` and `false` are, in fact, atoms:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:121
+msgid "```iex\n"
+"iex> true == :true\n"
+"true\n"
+"iex> is_atom(false)\n"
+"true\n"
+"iex> is_boolean(:false)\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:130
+msgid "## Strings"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:132
+msgid "Strings in Elixir are inserted between double quotes, and they are encoded in UTF-8:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:134
+msgid "```iex\n"
+"iex> \"hellö\"\n"
+"\"hellö\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:139
+msgid "> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering IEx."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:141
+msgid "Elixir also supports string interpolation:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:143
+msgid "```iex\n"
+"iex> \"hellö #{:world}\"\n"
+"\"hellö world\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:148
+msgid "Strings can have line breaks in them. You can introduce them using escape sequences:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:150
+msgid "```iex\n"
+"iex> \"hello\n"
+"...> world\"\n"
+"\"hello\\nworld\"\n"
+"iex> \"hello\\nworld\"\n"
+"\"hello\\nworld\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:158
+msgid "You can print a string using the `IO.puts/1` function from the `IO` module:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:160
+msgid "```iex\n"
+"iex> IO.puts \"hello\\nworld\"\n"
+"hello\n"
+"world\n"
+":ok\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:167
+msgid "Notice the `IO.puts/1` function returns the atom `:ok` as result after printing."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:169
+msgid "Strings in Elixir are represented internally by binaries which are sequences of bytes:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:171
+msgid "```iex\n"
+"iex> is_binary(\"hellö\")\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:176
+msgid "We can also get the number of bytes in a string:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:178
+msgid "```iex\n"
+"iex> byte_size(\"hellö\")\n"
+"6\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:183
+msgid "Notice the number of bytes in that string is 6, even though it has 5 characters. That's because the character \"ö\" takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the `String.length/1` function:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:185
+msgid "```iex\n"
+"iex> String.length(\"hellö\")\n"
+"5\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:190
+msgid "The [String module](https://hexdocs.pm/elixir/String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:192
+msgid "```iex\n"
+"iex> String.upcase(\"hellö\")\n"
+"\"HELLÖ\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:197
+msgid "## Anonymous functions"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:199
+msgid "Anonymous functions can be created inline and are delimited by the keywords `fn` and `end`:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:201
+msgid "```iex\n"
+"iex> add = fn a, b -> a + b end\n"
+"#Function<12.71889879/2 in :erl_eval.expr/5>\n"
+"iex> add.(1, 2)\n"
+"3\n"
+"iex> is_function(add)\n"
+"true\n"
+"iex> is_function(add, 2) # check if add is a function that expects exactly 2 arguments\n"
+"true\n"
+"iex> is_function(add, 1) # check if add is a function that expects exactly 1 argument\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:214
+msgid "Functions are \"first class citizens\" in Elixir meaning they can be passed as arguments to other functions in the same way as integers and strings. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:216
+msgid "Note a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling an anonymous function named `add` and a named function `add/2`. In this sense, Elixir makes a clear distinction between anonymous functions and named functions. We will explore those differences in [Chapter 8](/getting-started/modules-and-functions.html)."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:218
+msgid "Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:220
+msgid "```iex\n"
+"iex> double = fn a -> add.(a, a) end\n"
+"#Function<6.71889879/1 in :erl_eval.expr/5>\n"
+"iex> double.(2)\n"
+"4\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:227
+msgid "Keep in mind a variable assigned inside a function does not affect its surrounding environment:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:229
+msgid "```iex\n"
+"iex> x = 42\n"
+"42\n"
+"iex> (fn -> x = 0 end).()\n"
+"0\n"
+"iex> x\n"
+"42\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:238
+msgid "## (Linked) Lists"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:240
+msgid "Elixir uses square brackets to specify a list of values. Values can be of any type:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:242
+msgid "```iex\n"
+"iex> [1, 2, true, 3]\n"
+"[1, 2, true, 3]\n"
+"iex> length [1, 2, 3]\n"
+"3\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:249
+msgid "Two lists can be concatenated or subtracted using the `++/2` and `--/2` operators:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:251
+msgid "```iex\n"
+"iex> [1, 2, 3] ++ [4, 5, 6]\n"
+"[1, 2, 3, 4, 5, 6]\n"
+"iex> [1, true, 2, false, 3, true] -- [true, false]\n"
+"[1, 2, 3, true]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:258
+msgid "Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of the list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:260
+msgid "```iex\n"
+"iex> list = [1, 2, 3]\n"
+"iex> hd(list)\n"
+"1\n"
+"iex> tl(list)\n"
+"[2, 3]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:268
+msgid "Getting the head or the tail of an empty list throws an error:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:270
+msgid "```iex\n"
+"iex> hd []\n"
+"** (ArgumentError) argument error\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:275
+msgid "Sometimes you will create a list and it will return a value in single quotes. For example:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:277
+msgid "```iex\n"
+"iex> [11, 12, 13]\n"
+"'\\v\\f\\r'\n"
+"iex> [104, 101, 108, 108, 111]\n"
+"'hello'\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:284
+msgid "When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the `i/1` to retrieve information about it:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:286
+msgid "```iex\n"
+"iex> i 'hello'\n"
+"Term\n"
+"  'hello'\n"
+"Data type\n"
+"  List\n"
+"Description\n"
+"  ...\n"
+"Raw representation\n"
+"  [104, 101, 108, 108, 111]\n"
+"Reference modules\n"
+"  List\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:300
+msgid "Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:302
+msgid "```iex\n"
+"iex> 'hello' == \"hello\"\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:307
+msgid "Single quotes are char lists, double quotes are strings. We will talk more about them in the [\"Binaries, strings and char lists\"](/getting-started/binaries-strings-and-char-lists.html) chapter."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:309
+msgid "## Tuples"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:311
+msgid "Elixir uses curly brackets to define tuples. Like lists, tuples can hold any value:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:313
+msgid "```iex\n"
+"iex> {:ok, \"hello\"}\n"
+"{:ok, \"hello\"}\n"
+"iex> tuple_size {:ok, \"hello\"}\n"
+"2\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:320
+msgid "Tuples store elements contiguously in memory. This means accessing a tuple element by index or getting the tuple size is a fast operation. Indexes start from zero:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:322
+msgid "```iex\n"
+"iex> tuple = {:ok, \"hello\"}\n"
+"{:ok, \"hello\"}\n"
+"iex> elem(tuple, 1)\n"
+"\"hello\"\n"
+"iex> tuple_size(tuple)\n"
+"2\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:331
+msgid "It is also possible to put an element at a particular index in a tuple with `put_elem/3`:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:333
+msgid "```iex\n"
+"iex> tuple = {:ok, \"hello\"}\n"
+"{:ok, \"hello\"}\n"
+"iex> put_elem(tuple, 1, \"world\")\n"
+"{:ok, \"world\"}\n"
+"iex> tuple\n"
+"{:ok, \"hello\"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:342
+msgid "Notice that `put_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry that any code might be mutating your data structure in place."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:344
+msgid "## Lists or tuples?"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:346
+msgid "What is the difference between lists and tuples?"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:348
+msgid "Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:350
+msgid "Updating a list is fast as long as we are prepending elements:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:352
+msgid "```iex\n"
+"iex> list = [1, 2, 3]"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:355
+msgid "# This is fast as we don't need to traverse `list` to prepend 0\n"
+"iex> [0] ++ list\n"
+"[0, 1, 2, 3]"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:359
+msgid "# This is slow as we need to traverse `list` to append 4\n"
+"iex> list ++ [4]\n"
+"[1, 2, 3, 4]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:364
+msgid "Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:366
+msgid "Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents. It returns tuples:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:368
+msgid "```iex\n"
+"iex> File.read(\"path/to/existing/file\")\n"
+"{:ok, \"... contents ...\"}\n"
+"iex> File.read(\"path/to/unknown/file\")\n"
+"{:error, :enoent}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:375
+msgid "If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as the first element and the file contents as the second. Otherwise, it returns a tuple with `:error` and the error description."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:377
+msgid "Most of the time, Elixir is going to guide you to do the right thing. For example, there is an `elem/2` function to access a tuple item but there is no built-in equivalent for lists:"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:379
+msgid "```iex\n"
+"iex> tuple = {:ok, \"hello\"}\n"
+"{:ok, \"hello\"}\n"
+"iex> elem(tuple, 1)\n"
+"\"hello\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:386
+msgid "When counting the elements in a data structure, Elixir also abides by a simple rule: the function is named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation is linear (i.e. calculating the length gets slower as the input grows). As a mnemonic, both \"length\" and \"linear\" start with \"l\"."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:388
+msgid "For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for tuple size), `length/1` (for list length) and `String.length/1` (for the number of graphemes in a string). We use `byte_size` to get the number of bytes in a string -- a cheap operation. Retrieving the number of unicode characters, on the other hand, uses `String.length`, and may be expensive as it relies on a traversal of the entire string."
+msgstr ""
+
+#: ../../../getting-started/basic-types.markdown:390
+msgid "Elixir also provides `Port`, `Reference`, and `PID` as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operators that go with our basic types."
+msgstr ""
+
