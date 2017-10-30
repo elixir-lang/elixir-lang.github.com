@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","url":"/ja/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="home">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="content">
+  <div class="hfeed">
+  <div class="hentry post no-border">
+    <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
+
+    <div class="entry-summary">
+      <p>Elixirは拡張性と保守性の高いアプリケーションを構築するためにデザインされた、動的で関数型のプログラミング言語です。</p>
+
+      <p>Elixirは、低レイテンシで分散型のフォールトトレラントシステムや、Webや組み込みシステムの領域で成功を収めている、Erlang VMを利用します。</p>
+
+      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a>. Or keep reading to get an overview of the platform, language and tools.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h3>Platform features</h3>
+  </div>
+
+  <div class="hentry post">
+    <h4>Scalability</h4>
+    <div class="entry-summary">
+
+      <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">current_process</span> <span class="o">=</span> <span class="n">self</span><span class="p">()</span>
+
+<span class="c1"># Spawn an Elixir process (not an operating system one!)</span>
+<span class="n">spawn_link</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span>
+  <span class="n">send</span> <span class="n">current_process</span><span class="p">,</span> <span class="p">{</span><span class="ss">:msg</span><span class="p">,</span> <span class="sd">"</span><span class="s2">hello world"</span><span class="p">}</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="c1"># Block until the message is received</span>
+<span class="k">receive</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:msg</span><span class="p">,</span> <span class="n">contents</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="n">contents</span>
+<span class="k">end</span></code></pre></figure>
+
+      <p>Due to their lightweight nature, it is not uncommon to have hundreds of thousands of processes running <i>concurrently</i> in the same machine. Isolation allows processes to be garbage collected independently, reducing system-wide pauses, and using all machine resources as efficiently as possible (vertical scaling).</p>
+
+      <p>Processes are also able to communicate with other processes running on different machines in the same network. This provides the foundation for distribution, allowing developers to coordinate work across multiple nodes (horizontal scaling).</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Fault-tolerance</h4>
+
+    <div class="entry-summary">
+      <p>The unavoidable truth about software running in production is that <i>things will go wrong</i>. Even more when we take network, file systems, and other third-party resources into account.</p>
+
+      <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kn">import</span> <span class="no">Supervisor</span><span class="o">.</span><span class="no">Spec</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">supervisor</span><span class="p">(</span><span class="no">TCP</span><span class="o">.</span><span class="no">Pool</span><span class="p">,</span> <span class="p">[]),</span>
+  <span class="n">worker</span><span class="p">(</span><span class="no">TCP</span><span class="o">.</span><span class="no">Acceptor</span><span class="p">,</span> <span class="p">[</span><span class="m">4040</span><span class="p">])</span>
+<span class="p">]</span>
+
+<span class="no">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">)</span></code></pre></figure>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h3>Language features</h3>
+  </div>
+
+  <div class="hentry post">
+    <h4>Functional programming</h4>
+
+    <div class="entry-summary">
+      <p>Functional programming promotes a coding style that helps developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="p">%</span><span class="no">User</span><span class="p">{</span><span class="ss">name:</span> <span class="n">name</span><span class="p">,</span> <span class="ss">age:</span> <span class="n">age</span><span class="p">}</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sd">"</span><span class="s2">John Doe"</span><span class="p">)</span>
+<span class="n">name</span> <span class="c1">#=&gt; "John Doe"</span></code></pre></figure>
+
+      <p>When mixed with guards, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">def</span> <span class="n">serve_drinks</span><span class="p">(%</span><span class="no">User</span><span class="p">{</span><span class="ss">age:</span> <span class="n">age</span><span class="p">})</span> <span class="ow">when</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="m">21</span> <span class="k">do</span>
+  <span class="c1"># Code that serves drinks!</span>
+<span class="k">end</span>
+
+<span class="n">serve_drinks</span> <span class="no">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sd">"</span><span class="s2">John Doe"</span><span class="p">)</span>
+<span class="c1">#=&gt; Fails if the user is under 21</span></code></pre></figure>
+
+      <p>Elixir relies heavily on those features to ensure your software is working under the expected constraints. And when it is not, don&rsquo;t worry, supervisors have your back!</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Extensibility and DSLs</h4>
+
+    <div class="entry-summary">
+      <p>Elixir has been designed to be extensible, letting developers naturally extend the language to particular domains, in order to increase their productivity.</p>
+
+      <p>As an example, let&rsquo;s write a simple test case using <a href="https://hexdocs.pm/ex_unit/">Elixir&rsquo;s test framework called ExUnit</a>:</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">defmodule</span> <span class="no">MathTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
+
+  <span class="n">test</span> <span class="sd">"</span><span class="s2">can add two numbers"</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="m">1</span> <span class="o">+</span> <span class="m">1</span> <span class="o">==</span> <span class="m">2</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+      <p>The <code>async: true</code> option allows <code>test</code>s to run in parallel, using as many CPU cores as possible, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h3>Tooling features</h3>
+  </div>
+
+  <div class="hentry post">
+    <h4>A growing ecosystem</h4>
+
+    <div class="entry-summary">
+      <p>Elixir ships with a great set of tools to ease development. <a href="https://hexdocs.pm/mix/">Mix is a build tool</a> that allows you to easily create projects, manage tasks, run tests and more:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">$ mix new my_app
+$ cd my_app
+$ mix test
+.
+
+Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
+1 tests, 0 failures</code></pre></figure>
+
+      <p>Mix is also able to manage dependencies and integrates nicely with the <a href="https://hex.pm/">Hex package manager</a>, which provides dependency resolution and the ability to remotely fetch packages.</p>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Interactive development</h4>
+
+    <div class="entry-summary">
+      <p>Tools like <a href="https://hexdocs.pm/iex/">IEx (Elixir&rsquo;s interactive shell)</a> are able to leverage many aspects of the language and platform to provide auto-complete, debugging tools, code reloading, as well as nicely formatted documentation:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">$ iex
+Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+iex&gt; c "my_file.ex"        # Compiles a file
+iex&gt; t Enum                # Prints types defined in the module Enum
+iex&gt; h IEx.pry             # Prints the documentation for IEx pry functionality
+iex&gt; i "Hello, World"      # Prints information about the given data type</code></pre></figure>
+    </div>
+  </div>
+
+  <div class="hentry post">
+    <h4>Erlang compatible</h4>
+
+    <div class="entry-summary">
+      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang&rsquo;s ecosystem, used by companies like <a href="https://www.heroku.com">Heroku</a>, <a href="https://www.whatsapp.com">WhatsApp</a>, <a href="https://klarna.com">Klarna</a>, <a href="http://basho.com">Basho</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+
+<figure class="highlight"><pre><code class="language-iex" data-lang="iex">iex&gt; :crypto.hash(:md5, "Using crypto from Erlang OTP")
+&lt;&lt;192, 223, 75, 115, ...&gt;&gt;</code></pre></figure>
+
+      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a>. We also have <a href="/docs.html">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- #content -->
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div class="widget">
+  <a href="https://elixirconf.com/" target="_blank" style="text-decoration: none;">
+    <img src="https://elixirconf.com/2017/images/resources/2017-elixirconf-logo-wide.png" width="190" title="ElixirConf logo" style="border:0; margin-left:-4px">
+  </a>
+  <br />
+  <a href="https://elixirconf.com/" target="_blank">ElixirConf™ US</a> is being held in Bellevue, WA, September 5-8.
+  <br />
+  The <a href="https://elixirconf.com/#cfp" target="_blank">CFP</a> is now open and <a href="https://elixirconf.com/#registration">discount registration</a> is available.
+</div>
+
+<div class="widget">
+  <h3 class="widget-title">Join the Community</h3>
+  <ul>
+    <li><a class="spec" href="irc://irc.freenode.net/elixir-lang">#elixir-lang on freenode IRC</a></li>
+    <li><a class="spec" href="http://elixirforum.com">Elixir Forum</a></li>
+    <li><a class="spec" href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a></li>
+    <li><a class="spec" href="http://discord.me/elixir-lang">Elixir on Discord</a></li>
+    <li><a class="spec" href="https://twitter.com/elixirlang">@elixirlang on Twitter</a></li>
+    <li><a class="spec" href="http://elixir.meetup.com">Meetups around the world</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir/wiki">Wiki with events, resources and talks organized by the community</a></li>
+  </ul>
+</div>
+
+<div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+<div class="widget">
+  <h3 class="widget-title">Important links</h3>
+  <ul>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir">Source Code</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir/issues">Issue tracker</a></li>
+    <li><a class="spec" href="/crash-course.html">Crash course for Erlang developers</a></li>
+  </ul>
+</div>
+
+<div class="widget">
+  <h3 class="widget-title">Code editor support</h3>
+  <ul>
+    <li><a class="spec" href="https://github.com/elixir-lang/emacs-elixir">Emacs Mode</a></li>
+    <li><a class="spec" href="http://www.alchemist-elixir.org/">Alchemist (Emacs Elixir Tooling)</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir-tmbundle">TextMate / Sublime Text Bundle</a></li>
+    <li><a class="spec" href="https://github.com/vishnevskiy/ElixirSublime">Sublime Plugin</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/vim-elixir">Vim Elixir</a></li>
+    <li><a class="spec" href="https://github.com/slashmili/alchemist.vim">Alchemist.vim (Vim Elixir Tooling)</a></li>
+    <li><a class="spec" href="https://github.com/SteffenBauer/elixir-gtksourceview">GtkSourceView (gedit)</a></li>
+    <li><a class="spec" href="https://github.com/lucasmazza/language-elixir">Atom Package</a></li>
+    <li><a class="spec" href="https://github.com/KronicDeth/intellij-elixir">IntelliJ Elixir</a></li>
+    <li><a class="spec" href="https://marketplace.visualstudio.com/items?itemName=mjmcloug.vscode-elixir">Visual Studio Elixir</a></li>
+  </ul>
+</div>
+
+<div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+
+</div>
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

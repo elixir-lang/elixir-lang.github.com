@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Installing Elixir - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Installing Elixir" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Installing Elixir","url":"/ja/install.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="install">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="content">
+  
+<h1 id="installing-elixir">Installing Elixir</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling it.</p>
+
+<p>Note Elixir requires Erlang 18.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the “Installing Erlang” section below.</p>
+
+<h2 id="distributions">Distributions</h2>
+
+<p>The preferred option for installing Elixir. Choose your operating system and tool.</p>
+
+<p>If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.</p>
+
+<h3 id="mac-os-x">Mac OS X</h3>
+
+<ul>
+  <li>Homebrew
+    <ul>
+      <li>Update your homebrew to latest: <code class="highlighter-rouge">brew update</code></li>
+      <li>Run: <code class="highlighter-rouge">brew install elixir</code></li>
+    </ul>
+  </li>
+  <li>Macports
+    <ul>
+      <li>Run: <code class="highlighter-rouge">sudo port install elixir</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="unix-and-unix-like">Unix (and Unix-like)</h3>
+
+<ul>
+  <li>Arch Linux (Community repo)
+    <ul>
+      <li>Run: <code class="highlighter-rouge">pacman -S elixir</code></li>
+    </ul>
+  </li>
+  <li>openSUSE (and SLES 11 SP3+)
+    <ul>
+      <li>Add Erlang devel repo: <code class="highlighter-rouge">zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang</code></li>
+      <li>Run: <code class="highlighter-rouge">zypper in elixir</code></li>
+    </ul>
+  </li>
+  <li>Gentoo
+    <ul>
+      <li>Run: <code class="highlighter-rouge">emerge --ask dev-lang/elixir</code></li>
+    </ul>
+  </li>
+  <li>GNU Guix
+    <ul>
+      <li>Run: <code class="highlighter-rouge">guix package -i elixir</code></li>
+    </ul>
+  </li>
+  <li>Fedora 21 (and older)
+    <ul>
+      <li>Run: <code class="highlighter-rouge">yum install elixir</code></li>
+    </ul>
+  </li>
+  <li>Fedora 22 (and newer)
+    <ul>
+      <li>Run <code class="highlighter-rouge">dnf install elixir</code></li>
+    </ul>
+  </li>
+  <li>FreeBSD
+    <ul>
+      <li>From ports: <code class="highlighter-rouge">cd /usr/ports/lang/elixir &amp;&amp; make install clean</code></li>
+      <li>From pkg: <code class="highlighter-rouge">pkg install elixir</code></li>
+    </ul>
+  </li>
+  <li>Ubuntu 12.04/14.04/16.04 or Debian 7
+    <ul>
+      <li>Add Erlang Solutions repo: <code class="highlighter-rouge">wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb &amp;&amp; sudo dpkg -i erlang-solutions_1.0_all.deb</code></li>
+      <li>Run: <code class="highlighter-rouge">sudo apt-get update</code></li>
+      <li>Install the Erlang/OTP platform and all of its applications: <code class="highlighter-rouge">sudo apt-get install esl-erlang</code></li>
+      <li>Install Elixir: <code class="highlighter-rouge">sudo apt-get install elixir</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="windows">Windows</h3>
+
+<ul>
+  <li>Web installer
+    <ul>
+      <li><a href="https://repo.hex.pm/elixir-websetup.exe">Download the installer</a></li>
+      <li>Click next, next, …, finish</li>
+    </ul>
+  </li>
+  <li>Chocolatey
+    <ul>
+      <li><code class="highlighter-rouge">cinst elixir</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="raspberry-pi">Raspberry Pi</h3>
+
+<p>If necessary replace “jessie” with the name of your Raspian release.</p>
+
+<ul>
+  <li>
+    <p>The Erlang Solutions repository has a prebuilt package for armhf.<br />
+This saves significant time instead of recompiling natively.</p>
+  </li>
+  <li>
+    <p>Get Erlang key</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list</code></li>
+      <li>Run: <code class="highlighter-rouge">wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc</code></li>
+      <li>Add to keychain: <code class="highlighter-rouge">sudo apt-key add erlang_solutions.asc</code></li>
+    </ul>
+  </li>
+  <li>
+    <p>Install Elixir</p>
+    <ul>
+      <li>Update apt to latest: <code class="highlighter-rouge">sudo apt update</code></li>
+      <li>Run: <code class="highlighter-rouge">sudo apt install elixir</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="docker">Docker</h3>
+
+<p>If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir.</p>
+
+<ul>
+  <li>Enter interactive mode
+    <ul>
+      <li>Run: <code class="highlighter-rouge">docker run -it --rm elixir</code></li>
+    </ul>
+  </li>
+  <li>Enter bash within container with installed <code class="highlighter-rouge">elixir</code>
+    <ul>
+      <li>Run: <code class="highlighter-rouge">docker run -it --rm elixir bash</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Those distributions will likely install Erlang automatically for you too. In case they don’t, check the <a href="/install.html#installing-erlang">Installing Erlang</a> section below.</p>
+
+<h3 id="nanobox">Nanobox</h3>
+
+<p>For developers using <a href="https://nanobox.io">Nanobox</a>, simply specify the <code class="highlighter-rouge">elixir</code> engine in your <code class="highlighter-rouge">boxfile.yml</code> and <code class="highlighter-rouge">nanobox run</code>.</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">run.config</span><span class="pi">:</span>
+  <span class="s">engine</span><span class="pi">:</span> <span class="s">elixir</span>
+</code></pre>
+</div>
+
+<h2 id="precompiled-package">Precompiled package</h2>
+
+<p>Elixir provides a precompiled package for every release. First <a href="/install.html#installing-erlang">install Erlang</a> and then download and unzip the <a href="https://github.com/elixir-lang/elixir/releases/download/v1.5.1/Precompiled.zip">Precompiled.zip file for the latest release</a>.</p>
+
+<p>Once the release is unpacked, you are ready to run the <code class="highlighter-rouge">elixir</code> and <code class="highlighter-rouge">iex</code> commands from the <code class="highlighter-rouge">bin</code> directory, but we recommend you to <a href="#setting-path-environment-variable">add Elixir’s bin path to your PATH environment variable</a> to ease development.</p>
+
+<h2 id="compiling-with-version-managers">Compiling with version managers</h2>
+
+<p>There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you can’t install Erlang or Elixir as mentioned above or if your package manager is simply outdated. Here are some of those tools:</p>
+
+<ul>
+  <li><a href="https://github.com/asdf-vm/asdf">asdf</a> - install and manage different Elixir and Erlang versions</li>
+  <li><a href="https://github.com/mururu/exenv">exenv</a> - install and manage different Elixir versions</li>
+  <li><a href="https://github.com/taylor/kiex">kiex</a> - install and manage different Elixir versions</li>
+  <li><a href="https://github.com/yrashk/kerl">kerl</a> - install and manage different Erlang versions</li>
+</ul>
+
+<p>If you would prefer to compile from source manually, don’t worry, we got your back too!</p>
+
+<h2 id="compiling-from-source-unix-and-mingw">Compiling from source (Unix and MinGW)</h2>
+
+<p>You can download and compile Elixir in few steps. The first one is to <a href="/install.html#installing-erlang">install Erlang</a>.</p>
+
+<p>Next you should download source code (<a href="https://github.com/elixir-lang/elixir/archive/v1.5.1.zip">.zip</a>, <a href="https://github.com/elixir-lang/elixir/archive/v1.5.1.tar.gz">.tar.gz</a>) of the <a href="https://github.com/elixir-lang/elixir/releases/tag/v1.5.1">latest release</a>, unpack it and then run <code class="highlighter-rouge">make</code> inside the unpacked directory (note: if you are running on Windows, <a href="https://github.com/elixir-lang/elixir/wiki/Windows">read this page on setting up your environment for compiling Elixir</a>).</p>
+
+<p>After compiling, you are ready to run the elixir and <code class="highlighter-rouge">iex</code> commands from the bin directory. It is recommended that you <a href="#setting-path-environment-variable">add Elixir’s bin path to your PATH environment variable</a> to ease development.</p>
+
+<p>In case you are feeling a bit more adventurous, you can also compile from master:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git clone https://github.com/elixir-lang/elixir.git
+<span class="gp">$ </span><span class="nb">cd </span>elixir
+<span class="gp">$ </span>make clean <span class="nb">test</span>
+</code></pre>
+</div>
+
+<p>If the tests pass, you are ready to go. Otherwise, feel free to open an issue <a href="https://github.com/elixir-lang/elixir">in the issues tracker on Github</a>.</p>
+
+<h2 id="installing-erlang">Installing Erlang</h2>
+
+<p>The only prerequisite for Elixir is Erlang, version 18.0 or later, which can be easily installed with <a href="https://www.erlang-solutions.com/resources/download.html">Precompiled packages</a>. In case you want to install it directly from source, it can be found on <a href="http://www.erlang.org/download.html">the Erlang website</a> or by following the excellent tutorial available in the <a href="https://docs.basho.com/riak/latest/ops/building/installing/erlang/">Riak documentation</a>.</p>
+
+<p>For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools.</p>
+
+<p>After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing <code class="highlighter-rouge">erl</code>. You will see some information as follows:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Erlang/OTP 18 (erts-7) [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
+</code></pre>
+</div>
+
+<p>Notice that depending on how you installed Erlang, Erlang binaries might not be available in your PATH. Be sure to have Erlang binaries in your <a href="https://en.wikipedia.org/wiki/Environment_variable">PATH</a>, otherwise Elixir won’t work!</p>
+
+<h2 id="setting-path-environment-variable">Setting PATH environment variable</h2>
+
+<p>It is highly recommended to add Elixir’s bin path to your PATH environment variable to ease development.</p>
+
+<p>On <strong>Windows</strong>, there are <a href="http://www.computerhope.com/issues/ch000549.htm">instructions for different versions</a> explaining the process.</p>
+
+<p>On <strong>Unix systems</strong>, you need to <a href="https://unix.stackexchange.com/a/117470/101951">find your shell profile file</a>, and then add to the end of this file the following line reflecting the path to your Elixir installation:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:/path/to/elixir/bin"</span>
+</code></pre>
+</div>
+
+<h2 id="checking-the-installed-version-of-elixir">Checking the installed version of Elixir</h2>
+
+<p>Once you have Elixir installed, you can check its version by running <code class="highlighter-rouge">elixir --version</code>.</p>
+
+</div><!-- #content -->
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div class="widget">
+  <a href="https://elixirconf.com/" target="_blank" style="text-decoration: none;">
+    <img src="https://elixirconf.com/2017/images/resources/2017-elixirconf-logo-wide.png" width="190" title="ElixirConf logo" style="border:0; margin-left:-4px">
+  </a>
+  <br />
+  <a href="https://elixirconf.com/" target="_blank">ElixirConf™ US</a> is being held in Bellevue, WA, September 5-8.
+  <br />
+  The <a href="https://elixirconf.com/#cfp" target="_blank">CFP</a> is now open and <a href="https://elixirconf.com/#registration">discount registration</a> is available.
+</div>
+
+<div class="widget">
+  <h3 class="widget-title">Join the Community</h3>
+  <ul>
+    <li><a class="spec" href="irc://irc.freenode.net/elixir-lang">#elixir-lang on freenode IRC</a></li>
+    <li><a class="spec" href="http://elixirforum.com">Elixir Forum</a></li>
+    <li><a class="spec" href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a></li>
+    <li><a class="spec" href="http://discord.me/elixir-lang">Elixir on Discord</a></li>
+    <li><a class="spec" href="https://twitter.com/elixirlang">@elixirlang on Twitter</a></li>
+    <li><a class="spec" href="http://elixir.meetup.com">Meetups around the world</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir/wiki">Wiki with events, resources and talks organized by the community</a></li>
+  </ul>
+</div>
+
+<div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+<div class="widget">
+  <h3 class="widget-title">Important links</h3>
+  <ul>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir">Source Code</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir/issues">Issue tracker</a></li>
+    <li><a class="spec" href="/crash-course.html">Crash course for Erlang developers</a></li>
+  </ul>
+</div>
+
+<div class="widget">
+  <h3 class="widget-title">Code editor support</h3>
+  <ul>
+    <li><a class="spec" href="https://github.com/elixir-lang/emacs-elixir">Emacs Mode</a></li>
+    <li><a class="spec" href="http://www.alchemist-elixir.org/">Alchemist (Emacs Elixir Tooling)</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir-tmbundle">TextMate / Sublime Text Bundle</a></li>
+    <li><a class="spec" href="https://github.com/vishnevskiy/ElixirSublime">Sublime Plugin</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/vim-elixir">Vim Elixir</a></li>
+    <li><a class="spec" href="https://github.com/slashmili/alchemist.vim">Alchemist.vim (Vim Elixir Tooling)</a></li>
+    <li><a class="spec" href="https://github.com/SteffenBauer/elixir-gtksourceview">GtkSourceView (gedit)</a></li>
+    <li><a class="spec" href="https://github.com/lucasmazza/language-elixir">Atom Package</a></li>
+    <li><a class="spec" href="https://github.com/KronicDeth/intellij-elixir">IntelliJ Elixir</a></li>
+    <li><a class="spec" href="https://marketplace.visualstudio.com/items?itemName=mjmcloug.vscode-elixir">Visual Studio Elixir</a></li>
+  </ul>
+</div>
+
+<div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+
+</div>
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

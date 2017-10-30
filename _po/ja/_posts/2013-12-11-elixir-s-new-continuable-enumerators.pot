@@ -1,0 +1,317 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:1
+msgid "---\n"
+"layout: post\n"
+"title: Elixir's new continuable enumerators\n"
+"author: Peter Minten\n"
+"category: Internals\n"
+"excerpt: In 0.12.0 Elixir's enumerators have gained the ability to suspend value\n"
+"         production and to terminate early.\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:10
+msgid "As you may have heard in the upcoming 0.12.0 release Elixir's enumerators gained\n"
+"some new features. In this blog post I'll explain what's new, what it enables\n"
+"and how it works."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:14
+msgid "For those of you who use the development version of Elixir these changes are\n"
+"already available. For the exact differences in code you can look at the\n"
+"[relevant pull request](https://github.com/elixir-lang/elixir/pull/1922)."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:18
+msgid "## A recap of enumerators, and some terminology"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:20
+msgid "The basic idea of enumerators is that you traverse some data structure or\n"
+"resource (lines from a file) by putting the thing that is traversed in control.\n"
+"That is if you're reading from a file you have a loop that reads lines from a\n"
+"file and for each line calls a function. Just calling a function isn't all that\n"
+"useful for most tasks as there'd be no way to remember previous lines (ugly\n"
+"hacks aside), so some accumulator value is passed to the function and a new\n"
+"accumulator is returned by it."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:28
+msgid "For example here's how you can count the total length of strings in a list."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:30
+msgid "```elixir\n"
+"Enumerable.reduce(l, 0, fn x, acc -> String.length(x) + acc end)\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:34
+msgid "Often the actual call to `Enumerable.reduce/3` is hidden inside another\n"
+"function.  Say that we want to define a `sum` function. The usual way is to\n"
+"write it like this:"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:38
+msgid "```elixir\n"
+"def sum(coll) do\n"
+"  Enumerable.reduce(coll, 0, fn x, acc -> x + acc end)\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:44
+msgid "This could get called as `Enum.map(1..10, &(&1 * &1)) |> sum()` to get the sum of\n"
+"squares. Desugaring this means `sum(Enum.map(1..10, &(&1 * &1)))`."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:47
+msgid "The general pattern is this:"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:49
+msgid "```elixir\n"
+"def outer_function(coll, ...) do\n"
+"  ...\n"
+"  Enumerable.reduce(coll, initial_consumer_acc, consumer)\n"
+"  ...\n"
+"end"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:56
+msgid "something_that_returns_an_enumerable(...) |> outer_function(...)\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:59
+msgid "You'll notice the slightly uncommon terminology of \"outer function\" and\n"
+"\"consumer\" (normally called an \"iteratee\"). That's intentional, naming an\n"
+"iteratee a consumer better reflects that it consumes values."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:63
+msgid "Along the same lines I call the reduce function for a specific enumerable a\n"
+"producer, it produces values which are given to a consumer."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:66
+msgid "The outer function is the function to which the enumerable is passed.\n"
+"Syntactically it looks like this is the consumer, but it's really a function\n"
+"that combines the producer and the consumer. For simple consumers (say `fn x,\n"
+"acc -> length(x) + acc end`) the consumer will often be written directly in the\n"
+"source text of the outer function, but let's try to keep those concepts\n"
+"distinguished."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:73
+msgid "## Two issues with classic Elixir enumerators"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:75
+msgid "Enumerators are great, but they have their limitations. One issue is that it's\n"
+"not possible to define a function that only returns at most 3 elements without\n"
+"traversing all elements or using ugly tricks such as `throw` (with a\n"
+"`try...catch` construct in the outer function). The `throw` trick is used in\n"
+"`Enum` and `Stream` to implement functions such as `Enum.take/2` and\n"
+"`Stream.take_while/2`. It works, but it's not what I'd call stylish."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:82
+msgid "A bigger problem, that doesn't have a workaround, is that there's no way to\n"
+"interleave two enumerables. That is, it's not possible to define a function that\n"
+"for two enumerables `A` and `B` returns a list `[A1, B1, A2, B2, A3, ...]`\n"
+"(where `A1` is the first element of A) without first traversing both lists and\n"
+"then interleaving the collected values. Interleaving is important because it's\n"
+"the basis of a zip function. Without interleaving you cannot implement\n"
+"`Stream.zip/2`."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:90
+msgid "The underlying problem, in both cases, is that the producer is fully in control.\n"
+"The producer simply pushes out as many elements to the consumer as it wants and\n"
+"then says \"I'm done\". There's no way aside from `throw/raise` for a consumer\n"
+"to tell a producer \"stop producing\". There is definitely no way to tell a\n"
+"producer \"stop for now but be prepared to continue where you left off later\"."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:96
+msgid "## Power to the consumer!"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:98
+msgid "At CodeMeshIO José Valim and Jessica Kerr sat down and discussed this problem.\n"
+"They came up with a solution inspired by a [Monad.Reader\n"
+"article](http://themonadreader.files.wordpress.com/2010/05/issue16.pdf) (third\n"
+"article). It's an elegant extension of the old system, based on a simple idea.\n"
+"Instead of returning only an accumulator at every step (for every produced\n"
+"value) the consumer returns a combination of an accumulator and an instruction\n"
+"to the producer. Three instructions are available:"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:106
+msgid "* `:cont` - Keep producing.\n"
+"* `:halt` - Stop producing.\n"
+"* `:suspend` - Temporarily stop producing."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:110
+msgid "A consumer that always returns `:cont` makes the producer behave exactly the\n"
+"same as in the old system. A consumer may return `:halt` to have the producer\n"
+"terminate earlier than it normally would."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:114
+msgid "The real magic is in `:suspend` though. It tells a producer to return the\n"
+"accumulator and a continuation function."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:117
+msgid "```elixir\n"
+"{ :suspended, n_, cont } = Enumerable.reduce(1..5, { :cont, 0 }, fn x, n ->\n"
+"  if x == 3 do\n"
+"    { :suspend, n }\n"
+"  else\n"
+"    { :cont, n + x }\n"
+"  end\n"
+"end)\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:127
+msgid "After running this code `n_` will be `3` (1 + 2) and `cont` will be a\n"
+"function. We'll get back to `cont` in a minute but first take a look at some of\n"
+"the new elements here. The initial accumulator has an instruction as well, so\n"
+"you could suspend or halt a producer immediately, if you really want to. The\n"
+"value passed to the consumer (`n`) does not contain the instruction. The return\n"
+"value of the producer also has a symbol in it. Like with the instructions of\n"
+"consumers there are three possible values:"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:135
+msgid "* `:done` - Completed normally.\n"
+"* `:halted` - Consumer returned a `:halt` instruction.\n"
+"* `:suspended` - Consumer return a `:suspend` instruction."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:139
+msgid "Together with the other values returned the possible return values from a\n"
+"producer are `{ :done, acc } | { :halted, acc } | { :suspended, acc,\n"
+"continuation }`."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:143
+msgid "Back to the continuation. A continuation is a function that given an accumulator\n"
+"returns a new producer result. In other words it's a way to swap out the\n"
+"accumulator but keep the same producer in the same state."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:147
+msgid "## Implementing `interleave`"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:149
+msgid "Using the power of suspension it is now possible to create an interleave\n"
+"function."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:152
+msgid "```elixir\n"
+"defmodule Interleave do\n"
+"  def interleave(a, b) do\n"
+"    step = fn x, acc -> { :suspend, [x | acc] } end\n"
+"    af = &Enumerable.reduce(a, &1, step)\n"
+"    bf = &Enumerable.reduce(b, &1, step)\n"
+"    do_interleave(af, bf, []) |> :lists.reverse()\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:161
+msgid "  defp do_interleave(a, b, acc) do\n"
+"    case a.({ :cont, acc }) do\n"
+"      { :suspended, acc, a } ->\n"
+"        case b.({ :cont, acc }) do\n"
+"          { :suspended, acc, b } ->\n"
+"            do_interleave(a, b, acc)\n"
+"          { :halted, acc } ->\n"
+"            acc\n"
+"          { :done, acc } ->\n"
+"            finish_interleave(a, acc)\n"
+"        end\n"
+"      { :halted, acc } ->\n"
+"        acc\n"
+"      { :done, acc } ->\n"
+"        finish_interleave(b, acc)\n"
+"    end\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:179
+msgid "  defp finish_interleave(a_or_b, acc) do\n"
+"    case a_or_b.({ :cont, acc }) do\n"
+"      { :suspended, acc, a_or_b } ->\n"
+"        finish_interleave(a_or_b, acc)\n"
+"      { _, acc } ->\n"
+"        acc\n"
+"    end\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:189
+msgid "Interleave.interleave([1, 2], [:a, :b, :c, :d])\n"
+"#=> [1, :a, 2, :b, :c, :d]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:193
+msgid "Lets go through this step by step. The main `interleave` function first\n"
+"partially applies `Enumerable.reduce/3` to get function values that work just\n"
+"like the continuations. This makes things easier for `do_interleave`."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:197
+msgid "The `do_interleave` function first calls `a` (`af` from `interleave`) with the\n"
+"`step` function so that the available element of `a` gets added to the\n"
+"accumulator and `a` immediately suspends afterwards. Then the same is done for\n"
+"`b`. If either producer is done all the remaining elements of the other get\n"
+"added to the accumulator list."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:203
+msgid "Note that `acc` is sometimes used to mean a tuple like `{ :cont, x }` and\n"
+"sometimes the accumulator value proper. It's a bit confusing, yes."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:206
+msgid "This example shows that through clever combination of an outer function\n"
+"(`do_interleave`) and an inner function `step` two producers can be interleaved."
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:209
+msgid "## Conclusion"
+msgstr ""
+
+#: ../../../_posts/2013-12-11-elixir-s-new-continuable-enumerators.markdown:211
+msgid "The new system of enumerators certainly makes things a bit more complicated but\n"
+"also adds power. I suspect many interesting and \"interesting\" functions can be\n"
+"built on top of it."
+msgstr ""
+

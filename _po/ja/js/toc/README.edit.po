@@ -1,0 +1,238 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../../js/toc/README.md:1
+msgid "# jekyll-table-of-contents"
+msgstr ""
+
+#: ../../../../js/toc/README.md:3
+msgid "A simple JavaScript table of contents generator. Works well with [jekyll](https://github.com/mojombo/jekyll) static sites."
+msgstr ""
+
+#: ../../../../js/toc/README.md:5
+msgid "## Usage"
+msgstr ""
+
+#: ../../../../js/toc/README.md:7
+msgid "### Basic Usage"
+msgstr ""
+
+#: ../../../../js/toc/README.md:9
+msgid ""
+"The script requires jQuery. First, reference `toc.js` in templates where you would like to add the table of content.\n"
+"Then, create an HTML element wherever you want your table of contents to appear:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:12
+msgid ""
+"```html\n"
+"<div id=\"toc\"></div>\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:16
+msgid "Finally, call the `.toc()` function when the DOM is ready:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:18
+msgid ""
+"```html\n"
+"<script type=\"text/javascript\">\n"
+"$(document).ready(function() {\n"
+"    $('#toc').toc();\n"
+"});\n"
+"</script>\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:26
+msgid ""
+"If you use redcarpet, you need to have the option `with_toc_data` in order to add HTML anchors to each header:\n"
+"```yaml\n"
+"markdown: redcarpet\n"
+"redcarpet:\n"
+"    extensions: [with_toc_data]\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:33
+msgid ""
+"If you use rdiscount, enable the following option in order to generate the TOC:\n"
+"```yaml\n"
+"markdown: rdiscount\n"
+"rdiscount:\n"
+"    extensions:\n"
+"      - generate_toc\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:41
+msgid "### How It Works"
+msgstr ""
+
+#: ../../../../js/toc/README.md:43
+msgid ""
+"The script works by looking for headers (h1, h2, h3, h4, h5, h6) which have an `id`.\n"
+"An id is added automatically if you're using Jekyll and [Markdown](http://daringfireball.net/projects/markdown/syntax#header)."
+msgstr ""
+
+#: ../../../../js/toc/README.md:46
+msgid "The table of contents automatically handles nesting of headers. For example, this Markdown post:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:48
+msgid ""
+"    ## Title\n"
+"    ## Page 1\n"
+"    ### Note on Paragraph 3\n"
+"    ## Page 2\n"
+"    ### Note on Paragraph 2\n"
+"    ### Note on Paragraph 4"
+msgstr ""
+
+#: ../../../../js/toc/README.md:55
+msgid "Will render this table of contents:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:57
+msgid ""
+"    1. Title\n"
+"    2. Page 1\n"
+"      a. Note on Paragraph 3\n"
+"    3. Page 2\n"
+"      a. Note on Paragraph 2\n"
+"      b. Note on Paragraph 4"
+msgstr ""
+
+#: ../../../../js/toc/README.md:64
+msgid "### Configuration"
+msgstr ""
+
+#: ../../../../js/toc/README.md:66
+msgid ""
+"#### List Type\n"
+"By default the table of contents is rendered as an `<ol>`, so you can change the number formatting using CSS.\n"
+"However you can use the `<ul>` tag, using the `listType` option:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:70
+msgid ""
+"```javascript\n"
+"$('#toc').toc({ listType: 'ul' });\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:74
+msgid ""
+"#### Header Styling\n"
+"The script also adds an `<i>` tag next to each header. This uses the class `icon-arrow-up`, which if you're using [Bootstrap](http://twitter.github.io/bootstrap/), will be an arrow pointing to the top of the page.\n"
+"Clicking that arrow will scroll you to the top, while clicking on a header will get a permanent link to that particular header (using `window.location.hash`)."
+msgstr ""
+
+#: ../../../../js/toc/README.md:78
+msgid "If you don't want this feature, add this setting:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:80
+msgid ""
+"```javascript\n"
+"$('#toc').toc({ noBackToTopLinks: true });\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:84
+msgid "Otherwise, you can use the stylesheet below to have the icon and the header aligned nicely:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:86
+msgid ""
+"```css\n"
+".clickable-header {\n"
+"  cursor:pointer;\n"
+"}\n"
+".clickable-header:hover {\n"
+"  text-decoration:underline;\n"
+"}\n"
+".top-level-header {\n"
+"  display:inline;\n"
+"}\n"
+".back-to-top {\n"
+"  margin-left:5px;\n"
+"  cursor:pointer;\n"
+"}\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:102
+msgid ""
+"#### Headers Used\n"
+"By default the table of content is displayed when at least 3 headers are found. \n"
+"You can customize the minimum number of headers required with this setting:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:106
+msgid ""
+"```javascript\n"
+"$('#toc').toc({ minimumHeaders: 2 });\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:110
+msgid "And you can also select which headers you want to link to. By default `h1, h2, h3, h4, h5, h6` are displayed, but changing the `headers` setting lets you tweak it:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:112
+msgid ""
+"```javascript\n"
+"$('#toc').toc({ headers: 'h3, h4, h5, h6' });\n"
+"$('#toc').toc({ headers: '.content h1, .content h2, .content h3, .content h4, .content h5, .content h6' });\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:117
+msgid ""
+"#### Effects\n"
+"Finally, you can also change the way the toc is displayed, choosing a `slideShow` or a `fadeIn` effect instead of `show`:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:120
+msgid ""
+"```javascript\n"
+"$('#toc').toc({ showEffect: 'slideDown' });\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:124
+msgid "Otherwise, to deactivate the effect, set it up like this:"
+msgstr ""
+
+#: ../../../../js/toc/README.md:126
+msgid ""
+"```javascript\n"
+"$('#toc').toc({ showSpeed: 0 });\n"
+"```"
+msgstr ""
+
+#: ../../../../js/toc/README.md:130
+msgid "## Copyright"
+msgstr ""
+
+#: ../../../../js/toc/README.md:132
+msgid "See LICENSE.txt for further details. But basically, do what you like with this."
+msgstr ""

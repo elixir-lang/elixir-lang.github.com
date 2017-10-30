@@ -1,0 +1,320 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../getting-started/pattern-matching.markdown:1
+msgid ""
+"---\n"
+"layout: getting-started\n"
+"title: Pattern matching\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:6
+msgid "# {{ page.title }}<span hidden>.</span>"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:10
+msgid "In this chapter, we will show how the `=` operator in Elixir is actually a match operator and how to use it to pattern match inside data structures. Finally, we will learn about the pin operator `^` used to access previously bound values."
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:12
+msgid "## The match operator"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:14
+msgid "We have used the `=` operator a couple times to assign variables in Elixir:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:16
+msgid ""
+"```iex\n"
+"iex> x = 1\n"
+"1\n"
+"iex> x\n"
+"1\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:23
+msgid "In Elixir, the `=` operator is actually called *the match operator*. Let's see why:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:25
+msgid ""
+"```iex\n"
+"iex> 1 = x\n"
+"1\n"
+"iex> 2 = x\n"
+"** (MatchError) no match of right hand side value: 1\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:32
+msgid "Notice that `1 = x` is a valid expression, and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised."
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:34
+msgid "A variable can only be assigned on the left side of `=`:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:36
+msgid ""
+"```iex\n"
+"iex> 1 = unknown\n"
+"** (CompileError) iex:1: undefined function unknown/0\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:41
+msgid "Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but such a function does not exist."
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:43
+msgid "## Pattern matching"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:45
+msgid "The match operator is not only used to match against simple values, but it is also useful for destructuring more complex data types. For example, we can pattern match on tuples:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:47
+msgid ""
+"```iex\n"
+"iex> {a, b, c} = {:hello, \"world\", 42}\n"
+"{:hello, \"world\", 42}\n"
+"iex> a\n"
+":hello\n"
+"iex> b\n"
+"\"world\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:56
+msgid "A pattern match will error if the sides can't be matched, for example if the tuples have different sizes:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:58
+msgid ""
+"```iex\n"
+"iex> {a, b, c} = {:hello, \"world\"}\n"
+"** (MatchError) no match of right hand side value: {:hello, \"world\"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:63
+msgid "And also when comparing different types:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:65
+msgid ""
+"```iex\n"
+"iex> {a, b, c} = [:hello, \"world\", 42]\n"
+"** (MatchError) no match of right hand side value: [:hello, \"world\", 42]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:70
+msgid "More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side when the right side is a tuple that starts with the atom `:ok`:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:72
+msgid ""
+"```iex\n"
+"iex> {:ok, result} = {:ok, 13}\n"
+"{:ok, 13}\n"
+"iex> result\n"
+"13"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:78
+msgid ""
+"iex> {:ok, result} = {:error, :oops}\n"
+"** (MatchError) no match of right hand side value: {:error, :oops}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:82
+msgid "We can pattern match on lists:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:84
+msgid ""
+"```iex\n"
+"iex> [a, b, c] = [1, 2, 3]\n"
+"[1, 2, 3]\n"
+"iex> a\n"
+"1\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:91
+msgid "A list also supports matching on its own head and tail:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:93
+msgid ""
+"```iex\n"
+"iex> [head | tail] = [1, 2, 3]\n"
+"[1, 2, 3]\n"
+"iex> head\n"
+"1\n"
+"iex> tail\n"
+"[2, 3]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:102
+msgid "Similar to the `hd/1` and `tl/1` functions, we can't match an empty list with a head and tail pattern:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:104
+msgid ""
+"```iex\n"
+"iex> [h | t] = []\n"
+"** (MatchError) no match of right hand side value: []\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:109
+msgid "The `[head | tail]` format is not only used on pattern matching but also for prepending items to a list:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:111
+msgid ""
+"```iex\n"
+"iex> list = [1, 2, 3]\n"
+"[1, 2, 3]\n"
+"iex> [0 | list]\n"
+"[0, 1, 2, 3]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:118
+msgid "Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in the following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries."
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:120
+msgid "## The pin operator"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:122
+msgid "Variables in Elixir can be rebound:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:124
+msgid ""
+"```iex\n"
+"iex> x = 1\n"
+"1\n"
+"iex> x = 2\n"
+"2\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:131
+msgid "Use the pin operator `^` when you want to pattern match against an existing variable's value rather than rebinding the variable:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:133
+msgid ""
+"```iex\n"
+"iex> x = 1\n"
+"1\n"
+"iex> ^x = 2\n"
+"** (MatchError) no match of right hand side value: 2\n"
+"iex> {y, ^x} = {2, 1}\n"
+"{2, 1}\n"
+"iex> y\n"
+"2\n"
+"iex> {y, ^x} = {2, 2}\n"
+"** (MatchError) no match of right hand side value: {2, 2}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:146
+msgid "Because we have assigned the value of 1 to the variable x, this last example could also have been written as:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:148
+msgid ""
+"```\n"
+"iex> {y, 1} = {2, 2}\n"
+"** (MatchError) no match of right hand side value: {2, 2}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:153
+msgid "If a variable is mentioned more than once in a pattern, all references should bind to the same pattern:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:155
+msgid ""
+"```iex\n"
+"iex> {x, x} = {1, 1}\n"
+"{1, 1}\n"
+"iex> {x, x} = {1, 2}\n"
+"** (MatchError) no match of right hand side value: {1, 2}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:162
+msgid "In some cases, you don't care about a particular value in a pattern. It is a common practice to bind those values to the underscore, `_`. For example, if only the head of the list matters to us, we can assign the tail to underscore:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:164
+msgid ""
+"```iex\n"
+"iex> [h | _] = [1, 2, 3]\n"
+"[1, 2, 3]\n"
+"iex> h\n"
+"1\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:171
+msgid "The variable `_` is special in that it can never be read from. Trying to read from it gives an unbound variable error:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:173
+msgid ""
+"```iex\n"
+"iex> _\n"
+"** (CompileError) iex:1: unbound variable _\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:178
+msgid "Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:180
+msgid ""
+"```iex\n"
+"iex> length([1, [2], 3]) = 3\n"
+"** (CompileError) iex:1: illegal pattern\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/pattern-matching.markdown:185
+msgid "This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs."
+msgstr ""

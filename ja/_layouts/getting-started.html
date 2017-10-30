@@ -1,0 +1,68 @@
+---
+section: getting-started
+---
+
+{% include top.html %}
+
+<div id="sidebar-primary" class="sidebar">
+  {% include search.html %}
+  {% include try-elixir.html %}
+
+  {% assign guides = site.data.getting-started  %}
+  {% for guide in site.data.getting-started %}
+    <div class="widget">
+     <h3 class="widget-title">{{guide.title}}</h3>
+      <ol>
+        {% for node in guide.pages %}
+          <li><a class="spec" href="{{guide.dir}}{{node.slug}}.html" title="{{node.title | escape}}">{{node.title}}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  {% endfor %}
+
+  {% include elixir-radar.html %}
+  {% include distilled-by.html %}
+</div>
+
+<div id="content">
+  <article>
+    {{ content }}
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="{{ site.github.repository_url }}/edit/master/{{ page.path }}">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  {% assign url_parts = page.url | split: '/' %}
+  {% assign url_parts_size = url_parts | size %}
+  {% assign file_name = url_parts | last %}
+  {% assign guide_base_url = page.url | replace: file_name %}
+  {% assign page_slug = file_name | replace: '.html' %}
+
+  {% assign guides = site.data.getting-started  %}
+  {% for guide in site.data.getting-started %}
+    {% if guide.dir == guide_base_url %}
+      {% for node in guide.pages %}
+        {% if node.slug == page_slug %}
+          <div class="pagination loop-pagination">
+            {% unless forloop.first %}
+              <a href="{{guide.dir}}{{prev.slug}}.html" class="previous page-numbers spec" title="{{prev.title | escape}}">&larr; Previous</a>
+            {% endunless %}
+              <a class="page-numbers spec" href="#container">Top</a>
+            {% unless forloop.last %}
+              {% assign next = guide.pages[forloop.index] %}
+              <a href="{{guide.dir}}{{next.slug}}.html" class="previous page-numbers spec" title="{{next.title | escape}}">Next &rarr;</a>
+            {% endunless %}
+          </div>
+        {% endif %}
+        {% assign prev = node %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+</div><!-- #content -->
+
+{% include bottom.html %}

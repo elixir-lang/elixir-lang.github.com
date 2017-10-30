@@ -1,0 +1,154 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:1
+msgid ""
+"---\n"
+"layout: post\n"
+"title: Elixir v0.11.0 released\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: Elixir v0.11.0 is out and it focus on improving and optimizing the patterns often used by the community.\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:9
+msgid "After 4 months, Elixir v0.11.0 has been released with 832 commits since the previous minor release, done by more than 40 contributors. Although we have some great features in this release, the major focus in those 4 months was improving the common patterns used by the community and streamlining the existing workflows."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:11
+msgid "## IEx"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:13
+msgid "One of the tools that most received improvements in this release was our interactive shell. Such improvements come as no surprise as Elixir developers spend a good amount of time in the shell, which is great for development, allowing you to quickly try and load code, to production, where IEx can connect to remote nodes to inspect production information."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:15
+msgid "The IEx helper `h`, responsible for showing documentation for existing modules and functions, has now been improved to rely on ANSI codes and nicely format the documentation. let's take a look at the docs for the String module:"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:17
+msgid "![String module docs](/images/contents/string-help.png)"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:19
+msgid "This change goes in line with Elixir's goal of providing first-class documentation, which makes documentation easily accessible at runtime, support to doctests and more."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:21
+msgid "In this new release, IEx also supports a very simple debugging mechanism called `IEx.pry`. Let's see an screenshot of it in action:"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:23
+msgid "![IEx pry example](/images/contents/iex-pry.png)"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:25
+msgid "In Elixir, your code runs in many processes that talk to each other and the Elixir shell is no different. `IEx.pry` allows another process to take over the shell, allowing the developer to inspect the binding and halt the execution of the process being \"pried\" (i.e. the one that invoked `IEx.pry`). We called this feature `pry` as a gentle reminder that you can only inspect existing information, you cannot change the binding over a pried process. For more information, check the docs for [`IEx.pry/1`](https://hexdocs.pm/iex/IEx.html#pry/1)."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:27
+msgid "## ExUnit"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:29
+msgid "[In the previous release](/blog/2013/07/13/elixir-v0-10-0-released/), we introduced great changes to ExUnit, like the support for the `--trace` option. This time we continued pushing improvements, like adding profiling to test cases (times can be seen with the `--trace` option), paving the way for other features like emitting warnings for test cases that are too slow."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:31
+msgid "Another simple but significant change in ExUnit was the change in the default formatter to print changes as they come, instead of waiting until the suite is done running:"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:33
+msgid "![ExUnit Fast Fail](/images/contents/fast-fail.png)"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:35
+msgid "This change allows developer to get faster feedback from their test suites."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:37
+msgid "## Mix"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:39
+msgid "Since the early days, Elixir took ahold of the compilation process in order to provide a seamless compilation experience. [Elixir's ParallelCompiler](/blog/2012/04/24/a-peek-inside-elixir-s-parallel-compiler/) was introduced even before the first official release, allowing developers to harness all the cores in their computer to compile Elixir code. However, once the first release came out, every time you changed any file, the whole project had to be recompiled."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:41
+msgid "In the past releases we have improved this process to only compile files that changed and their dependencies. For v0.11.0, we have improved this process to be faster and less conservative than the previous version."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:43
+msgid "Mix has also improved support for umbrella projects, which are projects that contain multiple OTP applications, essential for building large projects. The current release allows sharing of dependencies between projects and faster and dependency resolution times."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:45
+msgid "## Other changes"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:47
+msgid "This release also introduces the new capture operator, which provides a convenient syntax for retrieving functions so they can be passed as arguments:"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:49
+msgid ""
+"```elixir\n"
+"Enum.all?([:foo, :bar, :baz], &is_atom/1)\n"
+"#=> true\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:54
+msgid "Which can also be used for partially applying functions and macros:"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:56
+msgid ""
+"```elixir\n"
+"fun = &is_record(&1, Range)\n"
+"fun.(1..3)\n"
+"#=> true\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:62
+msgid "You can learn more about the [new capture operator in our docs](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#&/1)."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:64
+msgid "We have also pushed improvements to [the String module](https://hexdocs.pm/elixir/String.html), including new APIs. In particular, in order to know that `String.length(\"josé\")` has length 4 (even though it takes 5 bytes to be represented in UTF-8), we need to use some algorithms defined by the Unicode Standard. These have been implemented as specified in the [extended grapheme cluster algorithm, defined in the version 6.3.0 of the Unicode Standard](http://www.unicode.org/reports/tr29/)."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:66
+msgid "In the optimization front, we have pushed the first iteration of a [feature called Protocol consolidation](https://groups.google.com/forum/#!topic/elixir-lang-core/RoXAUtoyjk4), which speeds up the polymorphic dispatch done by protocols, sometimes reducing the dispatching time to 10% of the original time. We will continue working in upcoming releases to integrate protocol consolidation as a regular part of the developer workflow."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:68
+msgid "And finally, a minor but frequently asked feature has finally arrived into Elixir: variables follow the same rules as other identifiers in the language, which means developers can now name their variables `is_atom?`. For a general overview, [check out the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.11.0/CHANGELOG.md)."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:70
+msgid "Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or check out our sidebar for other learning resources."
+msgstr ""
+
+#: ../../../_posts/2013-11-05-elixir-v0-11-0-released.markdown:72
+msgid "**PS:** We have just released v0.11.1 which addresses a regression in Mix and improves the dependencies update process."
+msgstr ""

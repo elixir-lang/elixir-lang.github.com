@@ -1,0 +1,114 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:1
+msgid ""
+"---\n"
+"layout: post\n"
+"title: Elixir v0.7.2 released\n"
+"author: Yurii Rashkovskii\n"
+"category: Releases\n"
+"excerpt: Elixir v0.7.2 is released, new, improved type specifications syntax and many other improvements."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:8
+msgid "---"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:10
+msgid "Hot out of the oven! We just released Elixir v0.7.2 with a number of delicious improvements."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:12
+msgid ""
+"One of the most important changes in this minor release is a partial rehaul of\n"
+"the type specification syntax."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:15
+msgid "Here's the gist:"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:17
+msgid ""
+"```elixir\n"
+"@spec myfun(integer), do: integer\n"
+"# becomes\n"
+"@spec myfun(integer) :: integer"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:22
+msgid ""
+"@type a :: fun\n"
+"# becomes\n"
+"@type a :: (... -> any) or ((...) -> any) or (fun(...) -> any)"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:26
+msgid ""
+"@type a :: fun(do: integer)\n"
+"# becomes\n"
+"@type a :: (() -> integer) or (fun() -> integer)"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:30
+msgid ""
+"@type a :: fun(integer, do: integer)\n"
+"# becomes\n"
+"@type a :: (integer -> integer) or ((integer) -> integer) or (fun(integer) -> integer)"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:34
+msgid ""
+"@type a :: fun(integer, integer, do: integer)\n"
+"# becomes\n"
+"@type a :: (integer, integer -> integer) or ((integer, integer) -> integer) or (fun(integer, integer) -> integer)\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:39
+msgid ""
+"Another change is that Mix now echoes the output of external tools\n"
+"such as git and rebar, and handles exit status correctly. This have previously\n"
+"led to some less-than-perfect workflows."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:43
+msgid ""
+"We've also added a more compact and visual form of the `function` helper. Now,\n"
+"instead of `function(Enum, :all?, 2)` you can use `function(Enum.all?/2)`."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:46
+msgid ""
+"We've also figured out how to achieve an up to 6x [performance increase](https://github.com/elixir-lang/elixir/blob/v0.7.2/lib/elixir/lib/kernel.ex#L1386-L1417)\n"
+"under some circunstances when using records."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:49
+msgid "...and [many other fixes & improvements](https://github.com/elixir-lang/elixir/blob/v0.7.2/CHANGELOG.md)."
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:51
+msgid "Lastly, but not least importantly, I'd like to mention that we're very excited about how the community around Elixir is building up. Thank you all for being around and supporting us!"
+msgstr ""
+
+#: ../../../_posts/2012-12-04-elixir-v0-7-2-released.markdown:53
+msgid "[Learn more about Elixir](/getting-started/introduction.html)!"
+msgstr ""

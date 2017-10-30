@@ -1,0 +1,287 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:1
+msgid "---\n"
+"layout: post\n"
+"title: Elixir v0.15.0 released\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: \"Elixir v0.15.0 introduces Elixir's Logger, Mix aliases and is the last stop before Elixir v1.0. We are also glad to welcome Alexei into our team!\"\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:9
+msgid "Hello everyone!"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:11
+msgid "We are glad to announce v0.15.0 has been released. We have spent the last 2 months tidying up the existing APIs, ensuring consistency, improving performance and more. As a result, v0.15.0 is the last minor branch before Elixir v1.0!"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:13
+msgid "There are also no more planned deprecations nor backward incompatible changes which means it is extremely likely that code that runs on v0.15.0 will run exactly the same on Elixir v1.0."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:15
+msgid "If you are interested in the specific details for this release, [please check our CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.15.0/CHANGELOG.md). In this post, we will focus on three new features in this release: Logger, Mix aliases, the fresh Elixir Web Installer for Windows, and share some exciting news at the end!"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:17
+msgid "## Logger"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:19
+msgid "Elixir now ships with a new application called logger. This application provides [the Logger module](https://hexdocs.pm/logger/Logger.html), which is the main API developers will use for logging:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:21
+msgid "```elixir\n"
+"require Logger\n"
+"Logger.debug \"hello\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:26
+msgid "By default, the code above will log the following message to your console:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:28
+msgid "```\n"
+"10:27:39.083 [debug] hello\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:32
+msgid "Logger provides multiple backends to where messages are logged. For now Elixir ships only with a console backend but there are developers already working on file (with support to external log rotation) and [syslog](https://en.wikipedia.org/wiki/Syslog) backends."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:34
+msgid "When we started Logger, the main objective was to translate Erlang messages into Elixir, so terms are formatted in Elixir syntax. Before this release, the following code"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:36
+msgid "```elixir\n"
+"Task.async fn -> raise \"oops\" end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:40
+msgid "logged the following report:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:42
+msgid "```\n"
+"=ERROR REPORT==== 7-Aug-2014::10:35:59 ===\n"
+"** Task <0.59.0> terminating\n"
+"** Started from <0.53.0>\n"
+"** When function  == #Fun<erl_eval.20.90072148>\n"
+"**      arguments == []\n"
+"** Reason for termination ==\n"
+"** {#{'__exception__' => true,'__struct__' => 'Elixir.RuntimeError',message => <<\"oops\">>},\n"
+"    [{'Elixir.Task.Supervised',do_apply,2,\n"
+"                               [{file,\"lib/task/supervised.ex\"},{line,70}]},\n"
+"     {'Elixir.Task.Supervised',async,3,\n"
+"                               [{file,\"lib/task/supervised.ex\"},{line,15}]},\n"
+"     {proc_lib,init_p_do_apply,3,[{file,\"proc_lib.erl\"},{line,239}]}]}\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:57
+msgid "Now, with Logger, we get this report:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:59
+msgid "```\n"
+"10:37:22.457 [error] Task #PID<0.72.0> started from #PID<0.60.0> terminating\n"
+"Function: #Function<20.90072148/0 in :erl_eval.expr/5>\n"
+"    Args: []\n"
+"** (exit) an exception was raised:\n"
+"    ** (RuntimeError) oops\n"
+"        (elixir) lib/task/supervised.ex:70: Task.Supervised.do_apply/2\n"
+"        (elixir) lib/task/supervised.ex:15: Task.Supervised.async/3\n"
+"        (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:70
+msgid "As soon as we started working on Logger, we realized we could go further than simply translating Erlang messages and provide a fully featured logger library. At this moment, Logger also supports:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:72
+msgid "  * 4 log levels: debug, info, warn and error\n"
+"  * Custom formatting: you can specify a format string that tells exactly how messages should be logged. The default string is: \"$time $metadata[$level] $message\\n\" but [many attributes are supported](https://hexdocs.pm/logger/Logger.Formatter.html)\n"
+"  * Custom translators: so you can translate log messages coming from any Erlang application into Elixir syntax\n"
+"  * Metadata: metadata allows developers to store information in the current process that will be available to all logged messages. For example, a web application can generate a `request_id`, store it as metadata, and all messages logged during that request will be properly identified with `request_id=...` in the log"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:77
+msgid "We have also relied a lot on the [research and work done by Andrew Thompson and the folks at Basho behind Lager](https://www.youtube.com/watch?v=8BNpOHFvg_Q) to ensure our logger is performant and robust. On this front, Logger"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:79
+msgid "  * alternates between sync and async modes when logging messages to keep it performant when required but also apply back-pressure when under stress\n"
+"  * formats and truncates messages on the client to avoid clogging the backends\n"
+"  * provide a highwater mark around Erlang's error_logger to avoid it from overflowing"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:83
+msgid "We are looking forward to everyone's feedback on using Logger more and more in production."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:85
+msgid "## Mix aliases"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:87
+msgid "Mix is Elixir's build tool. Mix knows how to manage your dependencies, compile & test your projects and much more. We have designed Mix, since day one, to be extensible. Developers were always able to define new tasks by simply defining a module:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:89
+msgid "```elixir\n"
+"defmodule Mix.Tasks.Hello do\n"
+"  use Mix.Task"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:93
+msgid "  def run(_) do\n"
+"    IO.puts \"Hello world\"\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:99
+msgid "The task above can now be invoked as `mix hello`."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:101
+msgid "Defining custom Mix tasks is useful for projects and libraries that want to better integrate with the standard development workflow for Elixir. However, it is a bit verbose for creating one-off tasks or tasks to be used only locally in a given project."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:103
+msgid "Furthermore, so far Mix did not allow developers to extend existing tasks. For example, imagine you want to perform some extra work when `mix clean` is invoked. Up to this release, it was not possible."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:105
+msgid "Mix aliases solve both problems by providing a simple API for defining and overriding aliases. All projects that use Mix contain a `mix.exs` file with the project configuration. In order to define an alias, you just need to add a new key to your project configuration:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:107
+msgid "```elixir\n"
+"defmodule MyProject do\n"
+"  use Mix.Project"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:111
+msgid "  def project do\n"
+"    [app: :my_project,\n"
+"     aliases: aliases]\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:116
+msgid "  defp aliases do\n"
+"    [c: \"compile\",\n"
+"     hello: &print_hello/1,\n"
+"     clean: [\"clean\", &clean_vendor/1]]\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:122
+msgid "  defp print_hello(_),  do: IO.puts \"Hello world\"\n"
+"  defp clean_vendor(_), do: File.rm_rf!(\"vendor\")\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:127
+msgid "In the project above, we have defined three aliases:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:129
+msgid "  1. `mix c` - is now a shortcut to `mix compile`\n"
+"  2. `mix hello` - is equivalent to the `Mix.Tasks.Hello` we have defined earlier, although now it is more easily defined as an alias\n"
+"  3. `mix clean` - extends the existing `clean` task to ensure we invoke `clean_vendor/1` afterwards"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:133
+msgid "In other words, aliases can be three different structures:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:135
+msgid "  1. A string containing the task and arguments to be invoked\n"
+"  2. An anonymous function (that is invoked passing the task arguments)\n"
+"  3. A list containing strings or anonymous functions"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:139
+msgid "You can find more information about aliases by reading the [Mix documentation](https://hexdocs.pm/mix/) (there is a section about Aliases around the middle)."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:141
+msgid "We also would like to thank [Anthony Grimes](https://github.com/raynes) for the support and [Phil Halgelberg](https://github.com/technomancy) for [the work on Lein](https://github.com/technomancy/leiningen) which Mix borrows a lot from."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:143
+msgid "## Elixir Web Installer for Windows"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:145
+msgid "At the beginning of this summer, [Chris Hyndman](https://github.com/chyndman) joined us as a Google Summer of Code student to help us improve the Elixir story on Windows. Chris has been essential in:"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:147
+msgid "  * Guaranteeing our test suite is green on Windows, fixing many bugs in the process;\n"
+"  * [Documenting how to compile Elixir from source on Windows](https://github.com/elixir-lang/elixir/wiki/Windows)\n"
+"  * Ensuring important projects like our [C markdown processor](https://github.com/devinus/markdown/pull/7) compiles on Windows"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:151
+msgid "Chris has also built an [Elixir Web Installer for Windows](https://github.com/elixir-lang/elixir-windows-setup). The web installer checks all available Elixir versions and allows you to pick which one to install. It will also fetch and install Erlang in your machine in case it has not been installed yet."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:153
+msgid "If you want to give Elixir and the Web Installer a try, you can [download the current version here](https://repo.hex.pm/elixir-websetup.exe). And, if [Chocolatey](https://chocolatey.org/) is your thing, remember you can also install Elixir on Windows by running `cinst elixir`."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:155
+msgid "## Welcome Alexei!"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:157
+msgid "With v0.15.0, we also would like to welcome [Alexei](https://github.com/alco) to the team of Elixir Maintainers! Alexei was one of the first to actively participate in the Elixir community and he has done an excellent job in guaranteeing quality throughout it, be it in the code, documentation, wiki or website."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:159
+msgid "Alexei is also interested in how we can extend our tooling to the Erlang ecosystem as a whole, bringing Mix and Hex (our package manager) to more developers as well as adding tasks that are specific to Erlang projects."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:161
+msgid "## What's next?"
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:163
+msgid "We are very close to launch Elixir v1.0! All planned features are already in Elixir's codebase and at the moment there are only [four open issues in our tracker tagged with the v1.0 milestone](https://github.com/elixir-lang/elixir/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.0)."
+msgstr ""
+
+#: ../../../_posts/2014-08-07-elixir-v0-15-0-released.markdown:165
+msgid "Our estimated date for the first release candidate for Elixir v1.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](/getting-started/introduction.html) or by checking one of the many \"Learning Resources\" on the sidebar."
+msgstr ""
+

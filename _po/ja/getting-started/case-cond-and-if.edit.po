@@ -1,0 +1,373 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../getting-started/case-cond-and-if.markdown:1
+msgid ""
+"---\n"
+"layout: getting-started\n"
+"title: case, cond, and if\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:10
+msgid "In this chapter, we will learn about the `case`, `cond`, and `if` control flow structures."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:12
+msgid "## `case`"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:14
+msgid "`case` allows us to compare a value against many patterns until we find a matching one:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:16
+msgid ""
+"```iex\n"
+"iex> case {1, 2, 3} do\n"
+"...>   {4, 5, 6} ->\n"
+"...>     \"This clause won't match\"\n"
+"...>   {1, x, 3} ->\n"
+"...>     \"This clause will match and bind x to 2 in this clause\"\n"
+"...>   _ ->\n"
+"...>     \"This clause would match any value\"\n"
+"...> end\n"
+"\"This clause will match and bind x to 2 in this clause\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:28
+msgid "If you want to pattern match against an existing variable, you need to use the `^` operator:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:30
+msgid ""
+"```iex\n"
+"iex> x = 1\n"
+"1\n"
+"iex> case 10 do\n"
+"...>   ^x -> \"Won't match\"\n"
+"...>   _ -> \"Will match\"\n"
+"...> end\n"
+"\"Will match\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:40
+msgid "Clauses also allow extra conditions to be specified via guards:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:42
+msgid ""
+"```iex\n"
+"iex> case {1, 2, 3} do\n"
+"...>   {1, x, 3} when x > 0 ->\n"
+"...>     \"Will match\"\n"
+"...>   _ ->\n"
+"...>     \"Would match, if guard condition were not satisfied\"\n"
+"...> end\n"
+"\"Will match\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:52
+msgid "The first clause above will only match when `x` is positive."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:54
+msgid "Keep in mind errors in guards do not leak but simply make the guard fail:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:56
+msgid ""
+"```iex\n"
+"iex> hd(1)\n"
+"** (ArgumentError) argument error\n"
+"iex> case 1 do\n"
+"...>   x when hd(x) -> \"Won't match\"\n"
+"...>   x -> \"Got #{x}\"\n"
+"...> end\n"
+"\"Got 1\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:66
+msgid "If none of the clauses match, an error is raised:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:68
+msgid ""
+"```iex\n"
+"iex> case :ok do\n"
+"...>   :error -> \"Won't match\"\n"
+"...> end\n"
+"** (CaseClauseError) no case clause matching: :ok\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:75
+msgid "Consult [the full documentation for guards](/docs/master/elixir/guards.html) for more information about guards, how they are used, and what expressions are allowed in them."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:77
+msgid "Note anonymous functions can also have multiple clauses and guards:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:79
+msgid ""
+"```iex\n"
+"iex> f = fn\n"
+"...>   x, y when x > 0 -> x + y\n"
+"...>   x, y -> x * y\n"
+"...> end\n"
+"#Function<12.71889879/2 in :erl_eval.expr/5>\n"
+"iex> f.(1, 3)\n"
+"4\n"
+"iex> f.(-1, 3)\n"
+"-3\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:91
+msgid "The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:93
+msgid ""
+"```iex\n"
+"iex> f2 = fn\n"
+"...>   x, y when x > 0 -> x + y\n"
+"...>   x, y, z -> x * y + z\n"
+"...> end\n"
+"** (CompileError) iex:1: cannot mix clauses with different arities in function definition\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:101
+msgid "## `cond`"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:103
+msgid "`case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:105
+msgid ""
+"```iex\n"
+"iex> cond do\n"
+"...>   2 + 2 == 5 ->\n"
+"...>     \"This will not be true\"\n"
+"...>   2 * 2 == 3 ->\n"
+"...>     \"Nor this\"\n"
+"...>   1 + 1 == 2 ->\n"
+"...>     \"But this will\"\n"
+"...> end\n"
+"\"But this will\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:117
+msgid "This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here)."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:119
+msgid "If none of the conditions return true, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:121
+msgid ""
+"```iex\n"
+"iex> cond do\n"
+"...>   2 + 2 == 5 ->\n"
+"...>     \"This is never true\"\n"
+"...>   2 * 2 == 3 ->\n"
+"...>     \"Nor this\"\n"
+"...>   true ->\n"
+"...>     \"This is always true (equivalent to else)\"\n"
+"...> end\n"
+"\"This is always true (equivalent to else)\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:133
+msgid "Finally, note `cond` considers any value besides `nil` and `false` to be true:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:135
+msgid ""
+"```iex\n"
+"iex> cond do\n"
+"...>   hd([1, 2, 3]) ->\n"
+"...>     \"1 is considered as true\"\n"
+"...> end\n"
+"\"1 is considered as true\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:143
+msgid "## `if` and `unless`"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:145
+msgid "Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for only one condition:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:147
+msgid ""
+"```iex\n"
+"iex> if true do\n"
+"...>   \"This works!\"\n"
+"...> end\n"
+"\"This works!\"\n"
+"iex> unless true do\n"
+"...>   \"This will never be seen\"\n"
+"...> end\n"
+"nil\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:158
+msgid "If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and instead it returns `nil`. The opposite happens with `unless/2`."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:160
+msgid "They also support `else` blocks:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:162
+msgid ""
+"```iex\n"
+"iex> if nil do\n"
+"...>   \"This won't be seen\"\n"
+"...> else\n"
+"...>   \"This will\"\n"
+"...> end\n"
+"\"This will\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:171
+msgid "> Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](https://hexdocs.pm/elixir/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:173
+msgid "## `do/end` blocks"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:175
+msgid "At this point, we have learned four control structures: `case`, `cond`, `if`, and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:177
+msgid ""
+"```iex\n"
+"iex> if true, do: 1 + 2\n"
+"3\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:182
+msgid "Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by comma. We say this syntax is using *keyword lists*. We can pass `else` using keywords too:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:184
+msgid ""
+"```iex\n"
+"iex> if false, do: :this, else: :that\n"
+":that\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:189
+msgid "`do/end` blocks are a syntactic convenience built on top of the keywords one. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:191
+msgid ""
+"```iex\n"
+"iex> if true do\n"
+"...>   a = 1 + 2\n"
+"...>   a + 10\n"
+"...> end\n"
+"13\n"
+"iex> if true, do: (\n"
+"...>   a = 1 + 2\n"
+"...>   a + 10\n"
+"...> )\n"
+"13\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:204
+msgid "One thing to keep in mind when using `do/end` blocks is they are always bound to the outermost function call. For example, the following expression:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:206
+msgid ""
+"```iex\n"
+"iex> is_number if true do\n"
+"...>  1 + 2\n"
+"...> end\n"
+"** (CompileError) undefined function: is_number/2\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:213
+msgid "Would be parsed as:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:215
+msgid ""
+"```iex\n"
+"iex> is_number(if true) do\n"
+"...>  1 + 2\n"
+"...> end\n"
+"** (CompileError) undefined function: is_number/2\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:222
+msgid "which leads to an undefined function error because that invocation passes two arguments, and `is_number/2` does not exist. The `if true` expression is invalid in itself because it needs the block, but since the arity of `is_number/2` does not match, Elixir does not even reach its evaluation."
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:224
+msgid "Adding explicit parentheses is enough to bind the block to `if`:"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:226
+msgid ""
+"```iex\n"
+"iex> is_number(if true do\n"
+"...>  1 + 2\n"
+"...> end)\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/case-cond-and-if.markdown:233
+msgid "Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about \"Binaries, strings, and char lists\"."
+msgstr ""

@@ -1,0 +1,228 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/structs.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Structs\n"
+"redirect_from: /getting-started/struct.html\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:7
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:9
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:11
+msgid "In [chapter 7](/getting-started/keywords-and-maps.html) we learned about maps:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:13
+msgid "```iex\n"
+"iex> map = %{a: 1, b: 2}\n"
+"%{a: 1, b: 2}\n"
+"iex> map[:a]\n"
+"1\n"
+"iex> %{map | a: 3}\n"
+"%{a: 3, b: 2}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:22
+msgid "Structs are extensions built on top of maps that provide compile-time checks and default values."
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:24
+msgid "## Defining structs"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:26
+msgid "To define a struct, the `defstruct` construct is used:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:28
+msgid "```iex\n"
+"iex> defmodule User do\n"
+"...>   defstruct name: \"John\", age: 27\n"
+"...> end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:34
+msgid "The keyword list used with `defstruct` defines what fields the struct will have along with their default values."
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:36
+msgid "Structs take the name of the module they're defined in. In the example above, we defined a struct named `User`."
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:38
+msgid "We can now create `User` structs by using a syntax similar to the one used to create maps:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:40
+msgid "```iex\n"
+"iex> %User{}\n"
+"%User{age: 27, name: \"John\"}\n"
+"iex> %User{name: \"Meg\"}\n"
+"%User{age: 27, name: \"Meg\"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:47
+msgid "Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:49
+msgid "```iex\n"
+"iex> %User{oops: :field}\n"
+"** (KeyError) key :oops not found in: %User{age: 27, name: \"John\"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:54
+msgid "## Accessing and updating structs"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:56
+msgid "When we discussed maps, we showed how we can access and update the fields of a map. The same techniques (and the same syntax) apply to structs as well:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:58
+msgid "```iex\n"
+"iex> john = %User{}\n"
+"%User{age: 27, name: \"John\"}\n"
+"iex> john.name\n"
+"\"John\"\n"
+"iex> meg = %{john | name: \"Meg\"}\n"
+"%User{age: 27, name: \"Meg\"}\n"
+"iex> %{meg | oops: :field}\n"
+"** (KeyError) key :oops not found in: %User{age: 27, name: \"Meg\"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:69
+msgid "When using the update syntax (`|`), the <abbr title=\"Virtual Machine\">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory."
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:71
+msgid "Structs can also be used in pattern matching, both for matching on the value of specific keys as well as for ensuring that the matching value is a struct of the same type as the matched value."
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:73
+msgid "```iex\n"
+"iex> %User{name: name} = john\n"
+"%User{age: 27, name: \"John\"}\n"
+"iex> name\n"
+"\"John\"\n"
+"iex> %User{} = %{}\n"
+"** (MatchError) no match of right hand side value: %{}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:82
+msgid "## Structs are bare maps underneath"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:84
+msgid "In the example above, pattern matching works because underneath structs are bare maps with a fixed set of fields. As maps, structs store a \"special\" field named `__struct__` that holds the name of the struct:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:86
+msgid "```iex\n"
+"iex> is_map(john)\n"
+"true\n"
+"iex> john.__struct__\n"
+"User\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:93
+msgid "Notice that we referred to structs as **bare** maps because none of the protocols implemented for maps are available for structs. For example, you can neither enumerate nor access a struct:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:95
+msgid "```iex\n"
+"iex> john = %User{}\n"
+"%User{age: 27, name: \"John\"}\n"
+"iex> john[:name]\n"
+"** (UndefinedFunctionError) function User.fetch/2 is undefined (User does not implement the Access behaviour)\n"
+"             User.fetch(%User{age: 27, name: \"John\"}, :name)\n"
+"iex> Enum.each john, fn({field, value}) -> IO.puts(value) end\n"
+"** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: \"John\"}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:105
+msgid "However, since structs are just maps, they work with the functions from the `Map` module:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:107
+msgid "```iex\n"
+"iex> kurt = Map.put(%User{}, :name, \"Kurt\")\n"
+"%User{age: 27, name: \"Kurt\"}\n"
+"iex> Map.merge(kurt, %User{name: \"Takashi\"})\n"
+"%User{age: 27, name: \"Takashi\"}\n"
+"iex> Map.keys(john)\n"
+"[:__struct__, :age, :name]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:116
+msgid "Structs alongside protocols provide one of the most important features for Elixir developers: data polymorphism. That's what we will explore in the next chapter."
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:118
+msgid "## Default values and required keys"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:120
+msgid "If you don't specify a default key value when defining a struct, `nil` will be assumed:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:122
+msgid "```iex\n"
+"iex> defmodule Product do\n"
+"...>   defstruct [:name]\n"
+"...> end\n"
+"iex> %Product{}\n"
+"%Product{name: nil}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:130
+msgid "You can also enforce that certain keys have to be specified when creating the struct:"
+msgstr ""
+
+#: ../../../getting-started/structs.markdown:132
+msgid "```iex\n"
+"iex> defmodule Car do\n"
+"...>   @enforce_keys [:make]\n"
+"...>   defstruct [:model, :make]\n"
+"...> end\n"
+"iex> %Car{}\n"
+"** (ArgumentError) the following keys must also be given when building struct Car: [:make]\n"
+"    expanding struct: Car.__struct__/1\n"
+"```"
+msgstr ""
+

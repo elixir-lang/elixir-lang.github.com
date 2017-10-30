@@ -1,0 +1,273 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../getting-started/comprehensions.markdown:1
+msgid ""
+"---\n"
+"layout: getting-started\n"
+"title: Comprehensions\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:10
+msgid "In Elixir, it is common to loop over an Enumerable, often filtering out some results and mapping values into another list. Comprehensions are syntactic sugar for such constructs: they group those common tasks into the `for` special form."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:12
+msgid "For example, we can map a list of integers into their squared values:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:14
+msgid ""
+"```iex\n"
+"iex> for n <- [1, 2, 3, 4], do: n * n\n"
+"[1, 4, 9, 16]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:19
+msgid "A comprehension is made of three parts: generators, filters and collectables."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:21
+msgid "## Generators and filters"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:23
+msgid "In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:25
+msgid ""
+"```iex\n"
+"iex> for n <- 1..4, do: n * n\n"
+"[1, 4, 9, 16]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:30
+msgid "Generator expressions also support pattern matching on their left-hand side; all non-matching patterns are *ignored*. Imagine that, instead of a range, we have a keyword list where the key is the atom `:good` or `:bad` and we only want to compute the square of the `:good` values:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:32
+msgid ""
+"```iex\n"
+"iex> values = [good: 1, good: 2, bad: 3, good: 4]\n"
+"iex> for {:good, n} <- values, do: n * n\n"
+"[1, 4, 16]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:38
+msgid "Alternatively to pattern matching, filters can be used to select some particular elements. For example, we can select the multiples of 3 and discard all others:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:40
+msgid ""
+"```iex\n"
+"iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end\n"
+"iex> for n <- 0..5, multiple_of_3?.(n), do: n * n\n"
+"[0, 9]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:46
+msgid "Comprehensions discard all elements for which the filter expression returns `false` or `nil`; all other values are selected."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:48
+msgid "Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and gets the size of each file in those directories:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:50
+msgid ""
+"```elixir\n"
+"dirs = ['/home/mikey', '/home/james']\n"
+"for dir  <- dirs,\n"
+"    file <- File.ls!(dir),\n"
+"    path = Path.join(dir, file),\n"
+"    File.regular?(path) do\n"
+"  File.stat!(path).size\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:60
+msgid "Multiple generators can also be used to calculate the cartesian product of two lists:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:62
+msgid ""
+"```iex\n"
+"iex> for i <- [:a, :b, :c], j <- [1, 2], do:  {i, j}\n"
+"[a: 1, a: 2, b: 1, b: 2, c: 1, c: 2]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:67
+msgid "A more advanced example of multiple generators and filters is Pythagorean triples. A Pythagorean triple is a set of positive integers such that `a*a + b*b = c*c`, let's write a comprehension in a file named `triple.exs`:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:69
+msgid ""
+"```elixir\n"
+"defmodule Triple do\n"
+"  def pythagorean(n) when n > 0 do\n"
+"    for a <- 1..n,\n"
+"        b <- 1..n,\n"
+"        c <- 1..n,\n"
+"        a + b + c <= n,\n"
+"        a*a + b*b == c*c,\n"
+"        do: {a, b, c}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:82
+msgid "Now on terminal:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:84
+msgid ""
+"```bash\n"
+"iex triple.exs\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:88
+msgid ""
+"```iex\n"
+"iex> Triple.pythagorean(5)\n"
+"[]\n"
+"iex> Triple.pythagorean(12)\n"
+"[{3, 4, 5}, {4, 3, 5}]\n"
+"iex> Triple.pythagorean(48)\n"
+"[{3, 4, 5}, {4, 3, 5}, {5, 12, 13}, {6, 8, 10}, {8, 6, 10}, {8, 15, 17},\n"
+" {9, 12, 15}, {12, 5, 13}, {12, 9, 15}, {12, 16, 20}, {15, 8, 17}, {16, 12, 20}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:98
+msgid "The code above is quite expensive when the range of search is a large number. Additionally, since the tuple `{b, a, c}` represents the same Pythagorean triple as `{a, b, c}`, our function yields duplicate triples. We can optimize the comprehension and eliminate the duplicate results by referencing the variables from previous generators in the following ones, for example:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:100
+msgid ""
+"```elixir\n"
+"defmodule Triple do\n"
+"  def pythagorean(n) when n > 0 do\n"
+"    for a <- 1..n-2,\n"
+"        b <- a+1..n-1,\n"
+"        c <- b+1..n,\n"
+"        a + b + c <= n,\n"
+"        a*a + b*b == c*c,\n"
+"        do: {a, b, c}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:113
+msgid "Finally, keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:115
+msgid "## Bitstring generators"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:117
+msgid "Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:119
+msgid ""
+"```iex\n"
+"iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>\n"
+"iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}\n"
+"[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:125
+msgid "A bitstring generator can be mixed with \"regular\" enumerable generators, and supports filters as well."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:127
+msgid "## The `:into` option"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:129
+msgid "In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the `:into` option to the comprehension."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:131
+msgid "For example, a bitstring generator can be used with the `:into` option in order to easily remove all spaces in a string:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:133
+msgid ""
+"```iex\n"
+"iex> for <<c <- \" hello world \">>, c != ?\\s, into: \"\", do: <<c>>\n"
+"\"helloworld\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:138
+msgid "Sets, maps and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the `Collectable` protocol."
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:140
+msgid "A common use case of `:into` can be transforming values in a map, without touching the keys:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:142
+msgid ""
+"```iex\n"
+"iex> for {key, val} <- %{\"a\" => 1, \"b\" => 2}, into: %{}, do: {key, val * val}\n"
+"%{\"a\" => 1, \"b\" => 4}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:147
+msgid "Let's make another example using streams. Since the `IO` module provides streams (that are both `Enumerable`s and `Collectable`s), an echo terminal that echoes back the upcased version of whatever is typed can be implemented using comprehensions:"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:149
+msgid ""
+"```iex\n"
+"iex> stream = IO.stream(:stdio, :line)\n"
+"iex> for line <- stream, into: stream do\n"
+"...>   String.upcase(line) <> \"\n"
+"\"\n"
+"...> end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/comprehensions.markdown:156
+msgid "Now type any string into the terminal and you will see that the same value will be printed in upper-case. Unfortunately, this example also got your IEx shell stuck in the comprehension, so you will need to hit `Ctrl+C` twice to get out of it. :)"
+msgstr ""

@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/basic-operators.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Basic operators\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:10
+msgid "In the [previous chapter](/getting-started/basic-types.html), we saw Elixir provides `+`, `-`, `*`, `/` as arithmetic operators, plus the functions `div/2` and `rem/2` for integer division and remainder."
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:12
+msgid "Elixir also provides `++` and `--` to manipulate lists:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:14
+msgid "```iex\n"
+"iex> [1, 2, 3] ++ [4, 5, 6]\n"
+"[1, 2, 3, 4, 5, 6]\n"
+"iex> [1, 2, 3] -- [2]\n"
+"[1, 3]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:21
+msgid "String concatenation is done with `<>`:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:23
+msgid "```iex\n"
+"iex> \"foo\" <> \"bar\"\n"
+"\"foobar\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:28
+msgid "Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect a boolean (`true` or `false`) as their first argument:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:30
+msgid "```iex\n"
+"iex> true and true\n"
+"true\n"
+"iex> false or is_atom(:example)\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:37
+msgid "Providing a non-boolean will raise an exception:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:39
+msgid "```iex\n"
+"iex> 1 and true\n"
+"** (BadBooleanError) expected a boolean on left-side of \"and\", got: 1\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:44
+msgid "`or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:46
+msgid "```iex\n"
+"iex> false and raise(\"This error will never be raised\")\n"
+"false\n"
+"iex> true or raise(\"This error will never be raised\")\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:53
+msgid "> Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang."
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:55
+msgid "Besides these boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:57
+msgid "```iex\n"
+"# or\n"
+"iex> 1 || true\n"
+"1\n"
+"iex> false || 11\n"
+"11"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:64
+msgid "# and\n"
+"iex> nil && 13\n"
+"nil\n"
+"iex> true && 17\n"
+"17"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:70
+msgid "# !\n"
+"iex> !true\n"
+"false\n"
+"iex> !1\n"
+"false\n"
+"iex> !nil\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:79
+msgid "As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`."
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:81
+msgid "Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<`, and `>` as comparison operators:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:83
+msgid "```iex\n"
+"iex> 1 == 1\n"
+"true\n"
+"iex> 1 != 2\n"
+"true\n"
+"iex> 1 < 2\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:92
+msgid "The difference between `==` and `===` is that the latter is more strict when comparing integers and floats:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:94
+msgid "```iex\n"
+"iex> 1 == 1.0\n"
+"true\n"
+"iex> 1 === 1.0\n"
+"false\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:101
+msgid "In Elixir, we can compare two different data types:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:103
+msgid "```iex\n"
+"iex> 1 < :atom\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:108
+msgid "The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:110
+msgid "    number < atom < reference < function < port < pid < tuple < map < list < bitstring"
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:112
+msgid "You don't actually need to memorize this ordering, it's enough to know that this ordering exists."
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:114
+msgid "For reference information about operators (and ordering), check the [reference page on operators](/docs/master/elixir/operators.html)."
+msgstr ""
+
+#: ../../../getting-started/basic-operators.markdown:116
+msgid "In the next chapter, we are going to discuss some basic functions, data type conversions, and a bit of control flow."
+msgstr ""
+

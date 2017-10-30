@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../docs.markdown:1
+msgid "---\n"
+"title: Elixir Documentation\n"
+"section: docs\n"
+"layout: default\n"
+"---"
+msgstr ""
+
+#: ../../docs.markdown:7
+msgid "# Documentation"
+msgstr ""
+
+#: ../../docs.markdown:9
+msgid "Choose which version you want documentation for."
+msgstr ""
+
+#: ../../docs.markdown:11
+msgid "{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}"
+msgstr ""
+
+#: ../../docs.markdown:13
+msgid "<h4 id=\"stable\">Stable\n"
+"  {% if stable.docs_zip == true %}\n"
+"    <small>(<a href=\"https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Docs.zip\">download</a>)</small>\n"
+"  {% endif %}\n"
+"</h4>"
+msgstr ""
+
+#: ../../docs.markdown:19
+msgid "* [Elixir](https://hexdocs.pm/elixir/) - standard library\n"
+"* [EEx](https://hexdocs.pm/eex/) - templating library\n"
+"* [ExUnit](https://hexdocs.pm/ex_unit/) - unit test library\n"
+"* [IEx](https://hexdocs.pm/iex/) - interactive shell\n"
+"* [Logger](https://hexdocs.pm/logger/) - built-in Logger\n"
+"* [Mix](https://hexdocs.pm/mix/) - build tool"
+msgstr ""
+
+#: ../../docs.markdown:26
+msgid "#### Master"
+msgstr ""
+
+#: ../../docs.markdown:28
+msgid "* [Elixir](https://hexdocs.pm/elixir/master/) - standard library\n"
+"* [EEx](https://hexdocs.pm/eex/master/) - templating library\n"
+"* [ExUnit](https://hexdocs.pm/ex_unit/master/) - unit test library\n"
+"* [IEx](https://hexdocs.pm/iex/master/) - interactive shell\n"
+"* [Logger](https://hexdocs.pm/logger/master/) - built-in Logger\n"
+"* [Mix](https://hexdocs.pm/mix/master/) - build tool"
+msgstr ""
+
+#: ../../docs.markdown:35
+msgid "{% for version in site.data.elixir-versions reversed %}\n"
+"  {% if version[0] == 'stable' %}\n"
+"    {% continue %}\n"
+"  {% endif %}"
+msgstr ""
+
+#: ../../docs.markdown:40
+msgid "<h4 id=\"{{ version[1].name }}\">{{ version[1].name }}\n"
+"  {% if version[1].docs_zip == true %}<small>(<a href=\"https://github.com/elixir-lang/elixir/releases/download/v{{ version[1].version }}/Docs.zip\">download</a>)</small>{% endif %}\n"
+"</h4>"
+msgstr ""
+
+#: ../../docs.markdown:44
+msgid "* [Elixir](https://hexdocs.pm/elixir/{{ version[1].version }}/) - standard library\n"
+"* [EEx](https://hexdocs.pm/eex/{{ version[1].version }}/) - templating library\n"
+"* [ExUnit](https://hexdocs.pm/ex_unit/{{ version[1].version }}/) - unit test library\n"
+"* [IEx](https://hexdocs.pm/iex/{{ version[1].version }}/) - interactive shell\n"
+"* [Logger](https://hexdocs.pm/logger/{{ version[1].version }}/) - built-in Logger\n"
+"* [Mix](https://hexdocs.pm/mix/{{ version[1].version }}/) - build tool\n"
+"{% endfor %}"
+msgstr ""
+

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Typespecs and behaviours - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Typespecs and behaviours" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Typespecs and behaviours","url":"/ja/getting-started/typespecs-and-behaviours.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="typespecs-and-behaviours">Typespecs and behaviours</h1>
+
+<div id="toc" class="toc"></div>
+
+<h2 id="types-and-specs">Types and specs</h2>
+
+<p>Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with <strong>typespecs</strong>, which are a notation used for:</p>
+
+<ol>
+  <li>declaring typed function signatures (specifications);</li>
+  <li>declaring custom data types.</li>
+</ol>
+
+<h3 id="function-specifications">Function specifications</h3>
+
+<p>By default, Elixir provides some basic types, such as <code class="highlighter-rouge">integer</code> or <code class="highlighter-rouge">pid</code>, as well as more complex types: for example, the <code class="highlighter-rouge">round/1</code> function, which rounds a float to its nearest integer, takes a <code class="highlighter-rouge">number</code> as an argument (an <code class="highlighter-rouge">integer</code> or a <code class="highlighter-rouge">float</code>) and returns an <code class="highlighter-rouge">integer</code>. As you can see <a href="https://hexdocs.pm/elixir/Kernel.html#round/1">in its documentation</a>, <code class="highlighter-rouge">round/1</code>’s typed signature is written as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>round(number) :: integer
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">::</code> means that the function on the left side <em>returns</em> a value whose type is what’s on the right side. Function specs are written with the <code class="highlighter-rouge">@spec</code> directive, placed right before the function definition. The <code class="highlighter-rouge">round/1</code> function could be written as:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@spec</span> <span class="n">round</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">integer</span>
+<span class="k">def</span> <span class="n">round</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="c1"># implementation...</span>
+</code></pre>
+</div>
+
+<p>Elixir supports compound types as well. For example, a list of integers has type <code class="highlighter-rouge">[integer]</code>. You can see all the built-in types provided by Elixir <a href="https://hexdocs.pm/elixir/typespecs.html">in the typespecs docs</a>.</p>
+
+<h3 id="defining-custom-types">Defining custom types</h3>
+
+<p>While Elixir provides a lot of useful built-in types, it’s convenient to define custom types when appropriate. This can be done when defining modules through the <code class="highlighter-rouge">@type</code> directive.</p>
+
+<p>Say we have a <code class="highlighter-rouge">LousyCalculator</code> module, which performs the usual arithmetic operations (sum, product, and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">LousyCalculator</span> <span class="k">do</span>
+  <span class="nv">@spec</span> <span class="n">add</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">}</span>
+  <span class="k">def</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="sd">"</span><span class="s2">You need a calculator to do that?!"</span><span class="p">}</span>
+
+  <span class="nv">@spec</span> <span class="n">multiply</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">}</span>
+  <span class="k">def</span> <span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="sd">"</span><span class="s2">Jeez, come on!"</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why <code class="highlighter-rouge">String.t</code> is not written as <code class="highlighter-rouge">string</code>, have another look at the <a href="https://hexdocs.pm/elixir/typespecs.html#notes">notes in the typespecs docs</a>.</p>
+
+<p>Defining function specs this way works, but it quickly becomes annoying since we’re repeating the type <code class="highlighter-rouge"><span class="p">{</span><span class="err">number,</span><span class="w"> </span><span class="err">String.t</span><span class="p">}</span></code> over and over. We can use the <code class="highlighter-rouge">@type</code> directive in order to declare our own custom type.</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">LousyCalculator</span> <span class="k">do</span>
+  <span class="nv">@typedoc</span> <span class="sd">"""
+  Just a number followed by a string.
+  """</span>
+  <span class="nv">@type</span> <span class="n">number_with_remark</span> <span class="p">::</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">}</span>
+
+  <span class="nv">@spec</span> <span class="n">add</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">number_with_remark</span>
+  <span class="k">def</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="sd">"</span><span class="s2">You need a calculator to do that?"</span><span class="p">}</span>
+
+  <span class="nv">@spec</span> <span class="n">multiply</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">number_with_remark</span>
+  <span class="k">def</span> <span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="sd">"</span><span class="s2">It is like addition on steroids."</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">@typedoc</code> directive, similarly to the <code class="highlighter-rouge">@doc</code> and <code class="highlighter-rouge">@moduledoc</code> directives, is used to document custom types.</p>
+
+<p>Custom types defined through <code class="highlighter-rouge">@type</code> are exported and available outside the module they’re defined in:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">QuietCalculator</span> <span class="k">do</span>
+  <span class="nv">@spec</span> <span class="n">add</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">number</span>
+  <span class="k">def</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">make_quiet</span><span class="p">(</span><span class="no">LousyCalculator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+  <span class="nv">@spec</span> <span class="n">make_quiet</span><span class="p">(</span><span class="no">LousyCalculator</span><span class="o">.</span><span class="n">number_with_remark</span><span class="p">)</span> <span class="p">::</span> <span class="n">number</span>
+  <span class="k">defp</span> <span class="n">make_quiet</span><span class="p">({</span><span class="n">num</span><span class="p">,</span> <span class="n">_remark</span><span class="p">}),</span> <span class="k">do</span><span class="p">:</span> <span class="n">num</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>If you want to keep a custom type private, you can use the <code class="highlighter-rouge">@typep</code> directive instead of <code class="highlighter-rouge">@type</code>.</p>
+
+<h3 id="static-code-analysis">Static code analysis</h3>
+
+<p>Typespecs are not only useful to developers as additional documentation. The Erlang tool <a href="http://www.erlang.org/doc/man/dialyzer.html">Dialyzer</a>, for example, uses typespecs in order to perform static analysis of code. That’s why, in the <code class="highlighter-rouge">QuietCalculator</code> example, we wrote a spec for the <code class="highlighter-rouge">make_quiet/1</code> function even though it was defined as a private function.</p>
+
+<h2 id="behaviours">Behaviours</h2>
+
+<p>Many modules share the same public API. Take a look at <a href="https://github.com/elixir-lang/plug">Plug</a>, which, as its description states, is a <strong>specification</strong> for composable modules in web applications. Each <em>plug</em> is a module which <strong>has to</strong> implement at least two public functions: <code class="highlighter-rouge">init/1</code> and <code class="highlighter-rouge">call/2</code>.</p>
+
+<p>Behaviours provide a way to:</p>
+
+<ul>
+  <li>define a set of functions that have to be implemented by a module;</li>
+  <li>ensure that a module implements all the functions in that set.</li>
+</ul>
+
+<p>If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.</p>
+
+<h3 id="defining-behaviours">Defining behaviours</h3>
+
+<p>Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will <em>behave</em> the same way: both will provide a <code class="highlighter-rouge">parse/1</code> function and an <code class="highlighter-rouge">extensions/0</code> function. The <code class="highlighter-rouge">parse/1</code> function will return an Elixir representation of the structured data, while the <code class="highlighter-rouge">extensions/0</code> function will return a list of file extensions that can be used for each type of data (e.g., <code class="highlighter-rouge">.json</code> for JSON files).</p>
+
+<p>We can create a <code class="highlighter-rouge">Parser</code> behaviour:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">Parser</span> <span class="k">do</span>
+  <span class="nv">@callback</span> <span class="n">parse</span><span class="p">(</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="p">::</span> <span class="n">any</span>
+  <span class="nv">@callback</span> <span class="n">extensions</span><span class="p">()</span> <span class="p">::</span> <span class="p">[</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Modules adopting the <code class="highlighter-rouge">Parser</code> behaviour will have to implement all the functions defined with the <code class="highlighter-rouge">@callback</code> directive. As you can see, <code class="highlighter-rouge">@callback</code> expects a function name but also a function specification like the ones used with the <code class="highlighter-rouge">@spec</code> directive we saw above.</p>
+
+<h3 id="adopting-behaviours">Adopting behaviours</h3>
+
+<p>Adopting a behaviour is straightforward:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">JSONParser</span> <span class="k">do</span>
+  <span class="nv">@behaviour</span> <span class="no">Parser</span>
+
+  <span class="k">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="c1"># ... parse JSON</span>
+  <span class="k">def</span> <span class="n">extensions</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">[</span><span class="sd">"</span><span class="s2">json"</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">YAMLParser</span> <span class="k">do</span>
+  <span class="nv">@behaviour</span> <span class="no">Parser</span>
+
+  <span class="k">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="c1"># ... parse YAML</span>
+  <span class="k">def</span> <span class="n">extensions</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">[</span><span class="sd">"</span><span class="s2">yml"</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>If a module adopting a given behaviour doesn’t implement one of the callbacks required by that behaviour, a compile-time warning will be generated.</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/typespecs-and-behaviours.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

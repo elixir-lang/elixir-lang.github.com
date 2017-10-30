@@ -1,0 +1,252 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:1
+msgid ""
+"---\n"
+"layout: post\n"
+"title: Elixir v1.4 released\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: Elixir v1.4 brings many improvements to the language, its standard library and the Mix build tool.\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:9
+msgid "Elixir v1.4 brings new features, enhancements and bug fixes. The most notable changes are the addition of the `Registry` module, the `Task.async_stream/3` and `Task.async_stream/5` function which aid developers in writing concurrent software, and the new application inference and commands added to Mix."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:11
+msgid "In this post we will cover the main additions. The complete [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0) are also available."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:13
+msgid "## Registry"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:15
+msgid "The [`Registry`](https://hexdocs.pm/elixir/Registry.html) is a new module in Elixir's standard library that allows Elixir developers to implement patterns such as name lookups, code dispatching or even a pubsub system in a simple and scalable way."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:17
+msgid "Broadly speaking, the Registry is a local, decentralized and scalable key-value process storage. Let's break this in parts:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:19
+msgid ""
+"  * Local because keys and values are only accessible to the current node (opposite to distributed)\n"
+"  * Decentralized because there is no single entity responsible for managing the registry\n"
+"  * Scalable because performance scales linearly with the addition of more cores upon partitioning"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:23
+msgid "A registry may have unique or duplicate keys. Every key-value pair is associated to the process registering the key. Keys are automatically removed once the owner process terminates. Starting, registering and looking up keys is quite straight-forward:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:25
+msgid ""
+"```iex\n"
+"iex> Registry.start_link(:unique, MyRegistry)\n"
+"iex> {:ok, _} = Registry.register(MyRegistry, \"hello\", 1)\n"
+"iex> Registry.lookup(MyRegistry, \"hello\")\n"
+"[{self(), 1}]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:32
+msgid "Finally, huge thanks to [Bram Verburg](https://twitter.com/voltonez) who has performed [extensive benchmarks](https://docs.google.com/spreadsheets/d/1MByRZJMCnZ1wPiLhBEnSRRSuy1QXp8kr27PIOXO3qqg/edit#gid=0) on the registry to show it scales linearly with the number of cores by increasing the number of partitions."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:34
+msgid "## Syntax coloring"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:36
+msgid "Elixir v1.4 introduces the ability to syntax color inspected data structures and IEx automatically relies on this feature to provide syntax coloring for evaluated shell results:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:38
+msgid "![IEx coloring](/images/contents/iex-coloring.png)"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:40
+msgid "This behaviour can be configured via the `:syntax_colors` coloring option:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:42
+msgid ""
+"```elixir\n"
+"IEx.configure [colors: [syntax_colors: [atom: :cyan, string: :green]]]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:46
+msgid "To disable coloring altogether, simply pass an empty list to `:syntax_colors`."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:48
+msgid "## Task.async_stream"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:50
+msgid "When there is a need to traverse a collection of items concurrently, Elixir developers often resort to tasks:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:52
+msgid ""
+"```elixir\n"
+"collection\n"
+"|> Enum.map(&Task.async(SomeMod, :function, [&1]))\n"
+"|> Enum.map(&Task.await/1)\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:58
+msgid "The snippet above will spawn a new task by invoking `SomeMod.function(element)` for every element in the collection and then await for the task results."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:60
+msgid "However, the snippet above will spawn and run concurrently as many tasks as there are items in the collection. While this may be fine in many occasions, including small collections, sometimes it is necessary to restrict amount of tasks running concurrently, specially when shared resources are involved."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:62
+msgid "Elixir v1.4 adds `Task.async_stream/3` and `Task.async_stream/5` which brings some of the lessons we learned from [the GenStage project](/blog/2016/07/14/announcing-genstage/) directly into Elixir:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:64
+msgid ""
+"```elixir\n"
+"collection\n"
+"|> Task.async_stream(SomeMod, :function, [], max_concurrency: 8)\n"
+"|> Enum.to_list()\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:70
+msgid "The code above will also start the same `SomeMod.function(element)` task for every element in the collection except it will also guarantee we have at most 8 tasks being processed at the same time. You can use `System.schedulers_online` to retrieve the number of cores and balance the processing based on the amount of cores available."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:72
+msgid "The `Task.async_stream` functions are also lazy, allowing developers to partially consume the stream until a condition is reached. Furthermore, `Task.Supervisor.async_stream/4` and `Task.Supervisor.async_stream/6` can be used to ensure the concurrent tasks are spawned under a given supervisor."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:74
+msgid "## Application inference"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:76
+msgid "In previous Mix versions, most of your dependencies had to be added both to your dependencies list and applications list. Here is how a `mix.exs` would look like:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:78
+msgid ""
+"```elixir\n"
+"def application do\n"
+"  [applications: [:logger, :plug, :postgrex]]\n"
+"end"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:83 ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:98
+msgid ""
+"def deps do\n"
+"  [{:plug, \"~> 1.2\"},\n"
+"   {:postgrex, \"~> 1.0\"}]\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:89
+msgid "This was a common source of confusion and quite error prone as many developers would not list their dependencies in the applications list."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:91
+msgid "Mix v1.4 now automatically infers your applications list as long as you leave the `:applications` key empty. The `mix.exs` above can be rewritten to:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:93
+msgid ""
+"```elixir\n"
+"def application do\n"
+"  [extra_applications: [:logger]]\n"
+"end"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:104
+msgid "With the above, Mix will automatically build your application list based on your dependencies. Developers now only need to specify which applications shipped as part of Erlang or Elixir that they require, such as `:logger`."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:106
+msgid "Finally, if there is a dependency you don't want to include in the application runtime list, you can do so by specifying the `runtime: false` option:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:108
+msgid "    {:distillery, \"> 0.0.0\", runtime: false}"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:110
+msgid "We hope this feature provides a more streamlined workflow for developers who are building releases for their Elixir projects."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:112
+msgid "## Mix install from SCM"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:114
+msgid "Mix v1.4 can now install escripts and archives from both Git and Hex, providing you with even more options for distributing Elixir code."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:116
+msgid "This makes it possible to distribute CLI applications written in Elixir by publishing a package which builds an escript to Hex. [`ex_doc`](https://hex.pm/packages/ex_doc) has been updated to serve as an example of how to use this new functionality."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:118
+msgid "Simply running:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:120
+msgid "    mix escript.install hex ex_doc"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:122
+msgid "will fetch `ex_doc` and its dependencies, build them, and then install `ex_doc` to `~/.mix/escripts` (by default). After adding `~/.mix/escripts` to your `PATH`, running `ex_doc` is as simple as:"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:124
+msgid "    ex_doc"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:126
+msgid "You can now also install archives from Hex in this way. Since they are fetched and built on the user's machine, they do not have the same limitations as pre-built archives. However, keep in mind archives are loaded on every Mix command and may conflict with modules or dependencies in your projects. For this reason, escripts is the preferred format for sharing executables."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:128
+msgid "It is also possible to install escripts and archives by providing a Git/GitHub repo. See `mix help escript.install` and `mix help archive.install` for more details."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:130
+msgid "## Summing up"
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:132
+msgid "The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more."
+msgstr ""
+
+#: ../../../_posts/2017-01-05-elixir-v1-4-0-released.markdown:134
+msgid "Happy coding!"
+msgstr ""

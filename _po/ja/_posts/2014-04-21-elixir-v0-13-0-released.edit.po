@@ -1,0 +1,505 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:1
+msgid ""
+"---\n"
+"layout: post\n"
+"title: Elixir v0.13.0 released, hex.pm and ElixirConf announced\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: \"Elixir v0.13.0 comes with substantial improvements to the language: maps, structs, comprehensiona and more. It also marks the announcement of the hex.pm package manager and the announcment of ElixirConf!\"\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:9
+msgid "Hello folks!"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:11
+msgid "Elixir v0.13.0 has been released. It contains changes that will effectively shape how developers will write Elixir code from now on, making it an important milestone towards v1.0! On this post we are going to cover some of those changes, the road to Elixir v1.0, as well as the announcement of [hex.pm](https://hex.pm)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:13
+msgid "Before we go into the changes, let's briefly talk about ElixirConf!"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:15
+msgid "## ElixirConf"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:17
+msgid "We are excited to announce [ElixirConf](http://elixirconf.com), the first ever Elixir conference, happening July 25-26, 2014 in Austin, TX. The Call For Proposals is open and we are waiting for your talks!"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:19
+msgid "The registration is also open and we hope you will join us on this exciting event. We welcome Elixir developers and enthusiasts that are looking forward to be part of our thrilling community!"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:21
+msgid "## Summary"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:23
+msgid "In a nutshell, here is what new:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:25
+msgid "* Elixir now runs on and requires Erlang R17;"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:27
+msgid "* With Erlang R17, Elixir also adds support for maps, which are key-value data structures that supports pattern matching. We'll explore maps, their features and limitations in this post;"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:29
+msgid "* Elixir v0.13 also provides structs, an alternative to Elixir records. Structs are more flexible than records, provide faster polymorphic operations, and still provide the same compile-time guarantees many came to love in records;"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:31
+msgid "* The [Getting Started guide](/getting-started/introduction.html) was rewritten from scratch. The previous guide was comprised of 7 chapters and was about to become 2 years old. The new guide features 20 chapters, it explores the new maps and structs (which are part of this release), and it goes deeper into topics like IO and File handling. It also includes an extra guide, still in development, about [Meta-Programming in Elixir](/getting-started/meta/quote-and-unquote.html);"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:33
+msgid "* Elixir v0.13 provides a new comprehension syntax that not only works with lists, but with any [`Enumerable`](https://hexdocs.pm/elixir/Enumerable.html). The output of a comprehension is also extensible via the [`Collectable`](https://hexdocs.pm/elixir/Collectable.html) protocol;"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:35
+msgid "* Mix, Elixir's build tool, has been improved in order to provide better workflows when compiling projects and working with dependencies;"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:37
+msgid "* There are many other changes, like the addition of [StringIO](https://hexdocs.pm/elixir/StringIO.html), support for [tags and filters in ExUnit](https://hexdocs.pm/ex_unit/ExUnit.Case.html) and more. Please check the [CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.13.0/CHANGELOG.md) for the complete list."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:39
+msgid "Even with all those improvements, Elixir v0.13.0 is backwards compatible with Elixir v0.12.5 and upgrading should be a clean process."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:41
+msgid "## Maps"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:43
+msgid "Maps are key-value data structures:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:45
+msgid ""
+"```iex\n"
+"iex> map = %{\"hello\" => :world}\n"
+"%{\"hello\" => :world}\n"
+"iex> map[\"hello\"]\n"
+":world\n"
+"iex> map[:other]\n"
+"nil\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:54
+msgid "Maps do not have a explicit ordering and keys and values can be any term."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:56
+msgid "Maps can be pattern matched on:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:58
+msgid ""
+"```iex\n"
+"iex> %{\"hello\" => world} = map\n"
+"%{\"hello\" => :world}\n"
+"iex> world\n"
+":world\n"
+"iex> %{} = map\n"
+"%{\"hello\" => :world}\n"
+"iex> %{\"other\" => value} = map\n"
+"** (MatchError) no match of right hand side value\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:69
+msgid "A map pattern will match any map that has all the keys specified in the pattern. The values for the matching keys must also match. For example, `%{\"hello\" => world}` will match any map that has the key `\"hello\"` and assign the value to `world`, while `%{\"hello\" => \"world\"}` will match any map that has the key `\"hello\"` with value equals to `\"world\"`. An empty map pattern (`%{}`) will match all maps."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:71
+msgid "Developers can use the functions in the [`Map` module](https://hexdocs.pm/elixir/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](/getting-started/keywords-and-maps.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html))."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:73
+msgid "Maps also provide special syntax for creating, accessing and updating maps with atom keys:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:75
+msgid ""
+"```iex\n"
+"iex> user = %{name: \"john\", age: 27}\n"
+"%{name: \"john\", age: 27}\n"
+"iex> user.name\n"
+"\"john\"\n"
+"iex> user = %{user | name: \"meg\"}\n"
+"%{name: \"meg\", age: 27}\n"
+"iex> user.name\n"
+"\"meg\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:86
+msgid "Both access and update syntax above expect the given keys to exist. Trying to access or update a key that does not exist raises an error:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:88
+msgid ""
+"```iex\n"
+"iex> %{ user | address: [] }\n"
+"** (ArgumentError) argument error\n"
+"     :maps.update(:address, [], %{})\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:94
+msgid "As we will see, this functionality becomes very useful when working with structs."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:96
+msgid "## Structs"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:98
+msgid "Structs are meant to replace Elixir records. Records in Elixir are simply tuples supported by modules which store record metadata:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:100
+msgid ""
+"```elixir\n"
+"defrecord User, name: nil, age: 0\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:104
+msgid "Internally, this record is represented as the following tuple:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:106
+msgid ""
+"```elixir\n"
+"# {tag, name, age}\n"
+"{User, nil, 0}\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:111
+msgid "Records can also be created and pattern matched on:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:113
+msgid ""
+"```iex\n"
+"iex> user = User[name: \"john\"]\n"
+"User[name: \"john\", age: 0]\n"
+"iex> user.name\n"
+"\"john\"\n"
+"iex> User[name: name] = user\n"
+"User[name: \"john\", age: 0]\n"
+"iex> name\n"
+"\"john\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:124
+msgid "Pattern matching works because the record meta-data is stored in the User module which can be accessed when building patterns."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:126
+msgid "However, records came with their own issues. First of all, since records were made of data (the underlying tuple) and a module (functions/behaviour), they were frequently misused as an attempt to bundle data and behaviour together in Elixir, for example:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:128
+msgid ""
+"```elixir\n"
+"defrecord User, name: nil, age: 0 do\n"
+"  def first_name(self) do\n"
+"    self.name |> String.split |> Enum.at(0)\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:135
+msgid ""
+"User[name: \"john doe\"].first_name #=> \"john\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:138
+msgid "Not only that, records were often slow in protocol dispatches because every tuple can potentially be a record, sometimes leading to expensive checks at runtime."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:140
+msgid "Since maps are meant to replace many cases of records in Erlang, we saw with the introduction of maps the perfect opportunity to revisit Elixir records as well. In order to understand the reasoning behind structs, let's list the features we got from Elixir records:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:142
+msgid ""
+"1. A way to organize data by fields\n"
+"2. Efficient in-memory representation and operations\n"
+"3. Compile-time structures with compile-time errors\n"
+"4. The basic foundation for polymorphism in Elixir"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:147
+msgid "Maps naturally solve issues `1.` and `2.` above. In particular, maps that have same keys share the same key-space in memory. That's why the update operation `%{map | ...}` we have seen above is relevant: if we know we are updating an existing key, the new map created as result of the update operation can share the same key space as the old map without extra checks. For more details on why Maps are efficient, I would recommend [reading Joe's blog post on the matter](http://joearms.github.io/2014/02/01/big-changes-to-erlang.html)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:149
+msgid "Structs were added to address features `3.` and `4.`. A struct needs to be explicitly defined via `defstruct`:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:151
+msgid ""
+"```elixir\n"
+"defmodule User do\n"
+"  defstruct name: nil, age: 0\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:157
+msgid "Now a `User` struct can be created without a need to explicitly list all necessary fields:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:159
+msgid ""
+"```iex\n"
+"iex> user = %User{name: \"john\"}\n"
+"%User{name: \"john\", age: 0}\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:164
+msgid "Trying to create a struct with an unknown key raises an error during compilation:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:166
+msgid ""
+"```iex\n"
+"iex> user = %User{address: []}\n"
+"** (CompileError) unknown key :address for struct User\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:171
+msgid "Furthermore, every struct has a `__struct__` field which contains the struct name:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:173
+msgid ""
+"```iex\n"
+"iex> user.__struct__\n"
+"User\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:178
+msgid "The `__struct__` field is also used for polymorphic dispatch in protocols, addressing issue `4.`."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:180
+msgid "It is interesting to note that structs solve both drawbacks we have earlier mentioned regarding records. Structs are purely data and polymorphic dispatch is now faster and more robust as it happens only for explicitly tagged structs."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:182
+msgid "For more information on structs, check out the [Structs chapter in the getting started guide](/getting-started/structs.html) (you may also want to read the new [Protocols chapter](/getting-started/protocols.html) after it)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:184
+msgid "## Maps, structs and the future"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:186
+msgid "With the introduction of maps and structs, some deprecations will arrive on upcoming releases. First of all, the `ListDict` data structure is being deprecated and phased out. Records are also being deprecated from the language, although it is going to be a longer process, as many projects and Elixir itself still use records in diverse occasions."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:188
+msgid "Note though only Elixir records are being deprecated. Erlang records, which are basically syntax sugar around tuples, will remain in the language for the rare cases Elixir developers need to interact with Erlang libraries that provide records. In particular, the [Record](https://hexdocs.pm/elixir/Record.html) has been updated to provide the new Record API (while keeping the old one for backwards compatibility)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:190
+msgid "Finally, structs are still in active development and new features, like `@derive`, should land in upcoming Elixir releases. For those interested, the [original maps and structs proposal is still availble](https://gist.github.com/josevalim/b30c881df36801611d13)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:192
+msgid "## Comprehensions"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:194
+msgid "Erlang R17 also introduced recursion to anonymous functions. This feature, while still not available from Elixir, allows Elixir to provide a more flexible and extensible comprehension syntax."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:196
+msgid "The most common use case of a comprehension are [list comprehensions](https://en.wikipedia.org/wiki/List_comprehension). For example, we can get all the square values of elements in a list as follows:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:198
+msgid ""
+"```iex\n"
+"iex> for n <- [1, 2, 3, 4], do: n * n\n"
+"[1, 4, 9, 16]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:203
+msgid "We say the `n <- [1, 2, 3, 4]` part is a comprehension generator. In previous Elixir versions, Elixir supported only lists in generators. In Elixir v0.13.0, any Enumerable is supported (ranges, maps, etc):"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:205
+msgid ""
+"```iex\n"
+"iex> for n <- 1..4, do: n * n\n"
+"[1, 4, 9, 16]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:210
+msgid "As in previous Elixir versions, there is also support for a bitstring generator. In the example below, we receive a stream of RGB pixels as a binary and break it down into triplets:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:212
+msgid ""
+"```iex\n"
+"iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>\n"
+"iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}\n"
+"[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:218
+msgid "By default, a comprehension returns a list as a result. However the result of a comprehension can be inserted into different data structures by passing the `:into` option. For example, we can use bitstring generators with the `:into` option to easily remove all spaces in a string:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:220
+msgid ""
+"```iex\n"
+"iex> for <<c <- \" hello world \">>, c != ?\\s, into: \"\", do: <<c>>\n"
+"\"helloworld\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:225
+msgid "Sets, maps and other dictionaries can also be given with the `:into` option. In general, the `:into` accepts any structure as long as it implements the [`Collectable` protocol](https://hexdocs.pm/elixir/Collectable.html)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:227
+msgid "For example, the `IO` module provides streams, that are both `Enumerable` and `Collectable`. You can implement an echo terminal that returns whatever is typed into the shell, but in upcase, using comprehensions:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:229
+msgid ""
+"```iex\n"
+"iex> stream = IO.stream(:stdio, :line)\n"
+"iex> for line <- stream, into: stream do\n"
+"...>   String.upcase(line) <> \"\n"
+"\"\n"
+"...> end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:236
+msgid "This makes comprehensions useful not only for working with in-memory collections but also with files, io devices, and other sources. In future releases, we will continue exploring how to make comprehensions more expressive, following in the footsteps of other functional programming research on the topic (like Comprehensive Comprehensions and Parallel Comprehensions)."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:238
+msgid "## Mix workflows"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:240
+msgid "The last big change we want to discuss in this release are the improvements done to Mix, Elixir's build tool. Mix is an essential tool to Elixir developers and helps developers to compile their projects, manage their dependencies, run tests and so on."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:242
+msgid "In previous releases, Mix was used to download and compile dependencies per environment. That meant the usual workflow was less than ideal: every time a dependency was updated, developers had to explicitly fetch and compile the dependencies for each environment. The workflow would be something like:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:244
+msgid ""
+"```bash\n"
+"$ mix deps.get\n"
+"$ mix compile\n"
+"$ MIX_ENV=test mix deps.get\n"
+"$ mix test\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:251
+msgid "In Elixir v0.13, `mix deps.get` only fetches dependencies and it does so accross all environments (unless an `--only` flag is specified). To support this new behaviour, dependencies now support the `:only` option:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:253
+msgid ""
+"```elixir\n"
+"def deps do\n"
+"  [{:ecto, github: \"elixir-lang/ecto\"},\n"
+"   {:hackney, github: \"benoitc/hackney\", only: [:test]}]\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:260
+msgid "Dependencies now are also automatically compiled before you run a command. For example, `mix compile` will automatically compile pending dependencies for the current environment. `mix test` will do the same for test dependencies and so on, interrupting less the developer workflow."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:262
+msgid "## hex.pm"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:264
+msgid "This release also marks the announcement of [hex.pm](https://hex.pm/), a package manager for the Erlang VM. Hex allows you to package and publish your projects while fetching them and performing dependency resolution in your applications."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:266
+msgid "Currently Hex only integrates with Mix and contributions to extend it to other tools and other languages in the Erlang VM are welcome!"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:268
+msgid "## The next steps"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:270
+msgid "As seen in this announcement, this release dictates many of the developments that will happen in Elixir and its community in the following weeks. All projects are recommended to start moving from records to structs, paving the way for the deprecation of records before 1.0."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:272
+msgid "The next months will also focus on integrating Elixir more tightly to OTP. During the keynote at Erlang Factory, [Catalyse Change](https://www.youtube.com/watch?v=Djv4C9H9yz4), Dave Thomas and I argued that there are many useful patterns, re-implemented everyday by developers, that could make development more productive within the Erlang VM if exposed accordingly."
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:274
+msgid "That said, in the next months we plan to:"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:276
+msgid ""
+"* Integrate applications configuration (provided by OTP) right into Mix;\n"
+"* Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces;\n"
+"* Properly expose the functionality provided by Applications, Supervisors, GenServers and GenEvents and study how they can integrate with Elixir. For example, how to consume events from GenEvent as a [stream of data](https://hexdocs.pm/elixir/Stream.html)?\n"
+"* Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://www.erlang.org/doc/man/rpc.html);\n"
+"* Rewrite the Mix and ExUnit guides to focus on applications and OTP as a whole, rebranding it to \"Building Apps with Mix and OTP\";"
+msgstr ""
+
+#: ../../../_posts/2014-04-21-elixir-v0-13-0-released.markdown:282
+msgid "You can learn more about Elixir in our [Getting Started guide](/getting-started/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](http://elixirconf.com/) as well as pushing your packages to [hex.pm](https://hex.pm/)."
+msgstr ""

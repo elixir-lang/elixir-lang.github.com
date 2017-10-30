@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:1
+msgid "---\n"
+"layout: post\n"
+"title: Elixir on Xen\n"
+"author: José Valim\n"
+"category: Announcements\n"
+"excerpt: The Erlang on Xen team has added support for Elixir and we will tell you how you can use it!\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:9
+msgid "Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir project can run on the recently revealed “OS-less” Erlang VM called LING VM. LING VM is the core technology of [Erlang on Xen](http://erlangonxen.org)."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:11
+msgid "## Why Xen?"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:13
+msgid "[Xen](https://en.wikipedia.org/wiki/Xen) is an open-source baremetal hypervisor that allows many operating systems to run on the same hardware. Xen is frequently used for server virtualization, Infrastructure as a Service (IaaS) and security applications."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:15
+msgid "Elixir on Xen runs on top of the Xen Hypervisor (via the LING VM) but with no traditional OS underneath it, taking away numerous administrative, scalability, and performance issues. This  limits options of a malicious attacker, making it an excellent choice for high-security applications, and reduces startup latency, allowing developers to spawn new VMs in less than 100 miliseconds."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:17
+msgid "You can learn more about Xen and the LING VM on the [Erlang on Xen website](http://erlangonxen.org)."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:19
+msgid "## Getting started"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:21
+msgid "In order to run Elixir on the LING VM, you need to produce a Xen image of your Elixir project. This can be done with the help of the [lingex project](https://github.com/maximk/lingex), created by the LING VM team."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:23
+msgid "Producing an Elixir image using the free Erlang on Xen Build Service requires just a few steps:"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:25
+msgid "1. Add a dependency on `lingex` to your `mix.exs` file:"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:27
+msgid "          def deps do\n"
+"            [ { :lingex, github: \"maximk/lingex\" } ]\n"
+"          end"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:31
+msgid "2. Run `mix deps.get` to update your dependencies. This adds a few custom tasks\n"
+"to the mix tool (`lingex.build`, `lingex.image`, and `lingex.build_image`)"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:34
+msgid "3. Set `lingex` options. Add the following lines to your `mix.exs` file:"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:36
+msgid "          def project do\n"
+"            [ lingex_opts: [\n"
+"                build_host: \"build.erlangonxen.org:8080\",\n"
+"          			username: \"test\",\n"
+"          			password: \"test\" ] ]\n"
+"          end"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:43
+msgid "4. Optionally, you may register with the build service [here](http://build.erlangonxen.org/register) and update the credentials accordingly. For the complete list of recognized options see the build service documentation."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:45
+msgid "5. Run `mix lingex.build_image`. This will archive all `*.beam` files of your project and submit them to the build service."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:47
+msgid "6. The build process will complete in about 30s. An image file called 'vmling' will appear in the current directory, ready to boot as a Xen guest. The image file will contain LING VM and your project code."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:49
+msgid "And this is all. Erlang on Xen is going to boot the Erlang VM and the standard Erlang shell. You can access Elixir shell in a couple steps:"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:51
+msgid "1. In the Erlang shell, first start IEx:"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:53
+msgid "          1> application:start(iex).\n"
+"          ok"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:56
+msgid "2. Then hit `Ctrl+G`. This will open up the user switch command interface from the Erlang shell."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:58
+msgid "3. In the user switch interface, type:"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:60
+msgid "          User switch command\n"
+"           --> s 'Elixir.IEx'\n"
+"           --> c"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:64
+msgid "This will bring you to Interactive Elixir and you can execute Elixir expressions as usual!"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:66
+msgid "## Summing up"
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:68
+msgid "Running Elixir on Xen opens up many possibilities to Elixir developers. We are very thankful for the work done by [Erlang on Xen team](http://erlangonxen.org), who added support for Elixir and the `lingex` build tool."
+msgstr ""
+
+#: ../../../_posts/2013-05-02-elixir-on-xen.markdown:70
+msgid "Erlang on Xen (and consequently Elixir on Xen) is still in active development, so don't forget to read more about its concepts, use cases and limitations on [Erlang on Xen website](http://erlangonxen.org/)."
+msgstr ""
+

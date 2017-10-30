@@ -1,0 +1,413 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../../getting-started/mix-otp/ets.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: ETS\n"
+"---"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:10
+msgid "{% include mix-otp-preface.html %}"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:12
+msgid "Every time we need to look up a bucket, we need to send a message to the registry. In case our registry is being accessed concurrently by multiple processes, the registry may become a bottleneck!"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:14
+msgid "In this chapter we will learn about ETS (Erlang Term Storage) and how to use it as a cache mechanism."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:16
+msgid "> Warning! Don't use ETS as a cache prematurely! Log and analyze your application performance and identify which parts are bottlenecks, so you know *whether* you should cache, and *what* you should cache. This chapter is merely an example of how ETS can be used, once you've determined the need."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:18
+msgid "## ETS as a cache"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:20
+msgid "ETS allows us to store any Elixir term in an in-memory table. Working with ETS tables is done via [Erlang's `:ets` module](http://www.erlang.org/doc/man/ets.html):"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:22
+msgid "```iex\n"
+"iex> table = :ets.new(:buckets_registry, [:set, :protected])\n"
+"8207\n"
+"iex> :ets.insert(table, {\"foo\", self()})\n"
+"true\n"
+"iex> :ets.lookup(table, \"foo\")\n"
+"[{\"foo\", #PID<0.41.0>}]\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:31
+msgid "When creating an ETS table, two arguments are required: the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, which means that keys cannot be duplicated. We've also set the table's access to `:protected`, meaning only the process that created the table can write to it, but all processes can read from it. Those are actually the default values, so we will skip them from now on."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:33
+msgid "ETS tables can also be named, allowing us to access them by a given name:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:35
+msgid "```iex\n"
+"iex> :ets.new(:buckets_registry, [:named_table])\n"
+":buckets_registry\n"
+"iex> :ets.insert(:buckets_registry, {\"foo\", self()})\n"
+"true\n"
+"iex> :ets.lookup(:buckets_registry, \"foo\")\n"
+"[{\"foo\", #PID<0.41.0>}]\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:44
+msgid "Let's change the `KV.Registry` to use ETS tables. The first change is to modify our registry to require a name argument, we will use it to name the ETS table and the registry process itself. ETS names and process names are stored in different locations, so there is no chance of conflicts."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:46
+msgid "Open up `lib/kv/registry.ex`, and let's change its implementation. We've added comments to the source code to highlight the changes we've made:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:48
+msgid "```elixir\n"
+"defmodule KV.Registry do\n"
+"  use GenServer"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:52
+msgid "  ## Client API"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:54
+msgid "  @doc \"\"\"\n"
+"  Starts the registry with the given options."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:57
+msgid "  `:name` is always required.\n"
+"  \"\"\"\n"
+"  def start_link(opts) do\n"
+"    # 1. Pass the name to GenServer's init\n"
+"    server = Keyword.fetch!(opts, :name)\n"
+"    GenServer.start_link(__MODULE__, server, opts)\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:65
+msgid "  @doc \"\"\"\n"
+"  Looks up the bucket pid for `name` stored in `server`."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:68
+msgid "  Returns `{:ok, pid}` if the bucket exists, `:error` otherwise.\n"
+"  \"\"\"\n"
+"  def lookup(server, name) do\n"
+"    # 2. Lookup is now done directly in ETS, without accessing the server\n"
+"    case :ets.lookup(server, name) do\n"
+"      [{^name, pid}] -> {:ok, pid}\n"
+"      [] -> :error\n"
+"    end\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:78
+msgid "  @doc \"\"\"\n"
+"  Ensures there is a bucket associated to the given `name` in `server`.\n"
+"  \"\"\"\n"
+"  def create(server, name) do\n"
+"    GenServer.cast(server, {:create, name})\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:85
+msgid "  ## Server callbacks"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:87
+msgid "  def init(table) do\n"
+"    # 3. We have replaced the names map by the ETS table\n"
+"    names = :ets.new(table, [:named_table, read_concurrency: true])\n"
+"    refs  = %{}\n"
+"    {:ok, {names, refs}}\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:94
+msgid "  # 4. The previous handle_call callback for lookup was removed"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:96
+msgid "  def handle_cast({:create, name}, {names, refs}) do\n"
+"    # 5. Read and write to the ETS table instead of the map\n"
+"    case lookup(names, name) do\n"
+"      {:ok, _pid} ->\n"
+"        {:noreply, {names, refs}}\n"
+"      :error ->\n"
+"        {:ok, pid} = KV.BucketSupervisor.start_bucket()\n"
+"        ref = Process.monitor(pid)\n"
+"        refs = Map.put(refs, ref, name)\n"
+"        :ets.insert(names, {name, pid})\n"
+"        {:noreply, {names, refs}}\n"
+"    end\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:110
+msgid "  def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do\n"
+"    # 6. Delete from the ETS table instead of the map\n"
+"    {name, refs} = Map.pop(refs, ref)\n"
+"    :ets.delete(names, name)\n"
+"    {:noreply, {names, refs}}\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:117
+msgid "  def handle_info(_msg, state) do\n"
+"    {:noreply, state}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:123
+msgid "Notice that before our changes `KV.Registry.lookup/2` sent requests to the server, but now it reads directly from the ETS table, which is shared across all processes. That's the main idea behind the cache mechanism we are implementing."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:125
+msgid "In order for the cache mechanism to work, the created ETS table needs to have access `:protected` (the default), so all clients can read from it, while only the `KV.Registry` process writes to it. We have also set `read_concurrency: true` when starting the table, optimizing the table for the common scenario of concurrent read operations."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:127
+msgid "The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:129
+msgid "```elixir\n"
+"  setup context do\n"
+"    {:ok, _} = start_supervised({KV.Registry, name: context.test})\n"
+"    %{registry: context.test}\n"
+"  end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:136
+msgid "Once we change `setup`, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the \"spawns buckets\" test:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:138
+msgid "```elixir\n"
+"test \"spawns buckets\", %{registry: registry} do\n"
+"  assert KV.Registry.lookup(registry, \"shopping\") == :error"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:142
+msgid "  KV.Registry.create(registry, \"shopping\")\n"
+"  assert {:ok, bucket} = KV.Registry.lookup(registry, \"shopping\")"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:145
+msgid "  KV.Bucket.put(bucket, \"milk\", 1)\n"
+"  assert KV.Bucket.get(bucket, \"milk\") == 1\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:150
+msgid "may be failing on this line:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:152
+msgid "```elixir\n"
+"{:ok, bucket} = KV.Registry.lookup(registry, \"shopping\")\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:156
+msgid "How can this line fail if we just created the bucket in the previous line?"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:158
+msgid "The reason those failures are happening is because, for didactic purposes, we have made two mistakes:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:160
+msgid "  1. We are prematurely optimizing (by adding this cache layer)\n"
+"  2. We are using `cast/2` (while we should be using `call/2`)"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:163
+msgid "## Race conditions?"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:165
+msgid "Developing in Elixir does not make your code free of race conditions. However, Elixir's abstractions where nothing is shared by default make it easier to spot a race condition's root cause."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:167
+msgid "What is happening in our tests is that there is a delay in between an operation and the time we can observe this change in the ETS table. Here is what we were expecting to happen:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:169
+msgid "1. We invoke `KV.Registry.create(registry, \"shopping\")`\n"
+"2. The registry creates the bucket and updates the cache table\n"
+"3. We access the information from the table with `KV.Registry.lookup(registry, \"shopping\")`\n"
+"4. The command above returns `{:ok, bucket}`"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:174
+msgid "However, since `KV.Registry.create/2` is a cast operation, the command will return before we actually write to the table! In other words, this is happening:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:176
+msgid "1. We invoke `KV.Registry.create(registry, \"shopping\")`\n"
+"2. We access the information from the table with `KV.Registry.lookup(registry, \"shopping\")`\n"
+"3. The command above returns `:error`\n"
+"4. The registry creates the bucket and updates the cache table"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:181
+msgid "To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:183
+msgid "```elixir\n"
+"def create(server, name) do\n"
+"  GenServer.call(server, {:create, name})\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:188
+msgid "def handle_call({:create, name}, _from, {names, refs}) do\n"
+"  case lookup(names, name) do\n"
+"    {:ok, pid} ->\n"
+"      {:reply, pid, {names, refs}}\n"
+"    :error ->\n"
+"      {:ok, pid} = KV.BucketSupervisor.start_bucket()\n"
+"      ref = Process.monitor(pid)\n"
+"      refs = Map.put(refs, ref, name)\n"
+"      :ets.insert(names, {name, pid})\n"
+"      {:reply, pid, {names, refs}}\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:202
+msgid "We changed the callback from `handle_cast/2` to `handle_call/3` and changed it to reply with the pid of the created bucket. Generally speaking, Elixir developers prefer to use `call/2` instead of `cast/2` as it also provides back-pressure - you block until you get a reply. Using `cast/2` when not necessary can also be considered a premature optimization."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:204
+msgid "Let's run the tests once again. This time though, we will pass the `--trace` option:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:206
+msgid "```bash\n"
+"$ mix test --trace\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:210
+msgid "The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:212
+msgid "```\n"
+"  1) test removes buckets on exit (KV.RegistryTest)\n"
+"     test/kv/registry_test.exs:19\n"
+"     Assertion with == failed\n"
+"     code: KV.Registry.lookup(registry, \"shopping\") == :error\n"
+"     lhs:  {:ok, #PID<0.109.0>}\n"
+"     rhs:  :error\n"
+"     stacktrace:\n"
+"       test/kv/registry_test.exs:23\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:223
+msgid "According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:225
+msgid "Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:227
+msgid "An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed. Let's do so by creating a \"bogus\" bucket, which is a synchronous request, after `Agent.stop` in both tests:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:230
+msgid "```elixir\n"
+"  test \"removes buckets on exit\", %{registry: registry} do\n"
+"    KV.Registry.create(registry, \"shopping\")\n"
+"    {:ok, bucket} = KV.Registry.lookup(registry, \"shopping\")\n"
+"    Agent.stop(bucket)"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:236
+msgid "    # Do a call to ensure the registry processed the DOWN message\n"
+"    _ = KV.Registry.create(registry, \"bogus\")\n"
+"    assert KV.Registry.lookup(registry, \"shopping\") == :error\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:241
+msgid "  test \"removes bucket on crash\", %{registry: registry} do\n"
+"    KV.Registry.create(registry, \"shopping\")\n"
+"    {:ok, bucket} = KV.Registry.lookup(registry, \"shopping\")"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:245
+msgid "    # Stop the bucket with non-normal reason\n"
+"    Agent.stop(bucket, :shutdown)"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:248
+msgid "    # Do a call to ensure the registry processed the DOWN message\n"
+"    _ = KV.Registry.create(registry, \"bogus\")\n"
+"    assert KV.Registry.lookup(registry, \"shopping\") == :error\n"
+"  end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:254
+msgid "Our tests should now (always) pass!"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:256
+msgid "This concludes our optimization chapter. We have used ETS as a cache mechanism where reads can happen from any processes but writes are still serialized through a single process. More importantly, we have also learned that once data can be read asynchronously, we need to be aware of the race conditions it might introduce."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:258
+msgid "In practice, if you find yourself in a position where you need a process registry for dynamic processes, you should use [the `Registry` module](https://hexdocs.pm/elixir/Registry.html) provided as part of Elixir. It provides functionality similar to the one we have built using a GenServer + `:ets` while also being able to perform both writes and reads concurrently. [It has been benchmarked to scale across all cores even on machines with 40 cores](https://elixir-lang.org/blog/2017/01/05/elixir-v1-4-0-released/)."
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/ets.markdown:260
+msgid "Next let's discuss external and internal dependencies and how Mix helps us manage large codebases."
+msgstr ""
+

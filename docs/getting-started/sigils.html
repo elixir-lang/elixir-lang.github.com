@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Sigils - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Sigils" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Sigils","url":"/ja/getting-started/sigils.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="sigils">Sigils</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms, for example, are mostly created via the <code class="highlighter-rouge">:atom</code> representation.</p>
+
+<p>One of Elixir’s goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Rather, our best bet is to make the language extensible, so developers, companies, and communities can extend the language to their relevant domains.</p>
+
+<p>In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (<code class="highlighter-rouge">~</code>) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.</p>
+
+<h2 id="regular-expressions">Regular expressions</h2>
+
+<p>The most common sigil in Elixir is <code class="highlighter-rouge">~r</code>, which is used to create <a href="https://en.wikipedia.org/wiki/Regular_Expressions">regular expressions</a>:</p>
+
+<pre><code class="language-iex"># A regular expression that matches strings which contain "foo" or "bar":
+iex&gt; regex = ~r/foo|bar/
+~r/foo|bar/
+iex&gt; "foo" =~ regex
+true
+iex&gt; "bat" =~ regex
+false
+</code></pre>
+
+<p>Elixir provides Perl-compatible regular expressions (regexes), as implemented by the <a href="http://www.pcre.org/">PCRE</a> library. Regexes also support modifiers. For example, the <code class="highlighter-rouge">i</code> modifier makes a regular expression case insensitive:</p>
+
+<pre><code class="language-iex">iex&gt; "HELLO" =~ ~r/hello/
+false
+iex&gt; "HELLO" =~ ~r/hello/i
+true
+</code></pre>
+
+<p>Check out the <a href="https://hexdocs.pm/elixir/Regex.html"><code class="highlighter-rouge">Regex</code> module</a> for more information on other modifiers and the supported operations with regular expressions.</p>
+
+<p>So far, all examples have used <code class="highlighter-rouge">/</code> to delimit a regular expression. However sigils support 8 different delimiters:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>~r/hello/
+~r|hello|
+~r"hello"
+~r'hello'
+~r(hello)
+~r[hello]
+~r{hello}
+~r&lt;hello&gt;
+</code></pre>
+</div>
+
+<p>The reason behind supporting different delimiters is to provide a way to write literals without escaped delimiters. For example, a regular expression with forward slashes like <code class="highlighter-rouge">~r(^https?://)</code> reads arguably better than <code class="highlighter-rouge">~r/^https?:\/\//</code>. Similarly, if the regular expression has forward slashes and capturing groups (that use <code class="highlighter-rouge">()</code>), you may then choose double quotes instead of parentheses.</p>
+
+<h2 id="strings-char-lists-and-word-lists-sigils">Strings, char lists, and word lists sigils</h2>
+
+<p>Besides regular expressions, Elixir ships with three other sigils.</p>
+
+<h3 id="strings">Strings</h3>
+
+<p>The <code class="highlighter-rouge">~s</code> sigil is used to generate strings, like double quotes are. The <code class="highlighter-rouge">~s</code> sigil is useful when a string contains double quotes:</p>
+
+<pre><code class="language-iex">iex&gt; ~s(this is a string with "double" quotes, not 'single' ones)
+"this is a string with \"double\" quotes, not 'single' ones"
+</code></pre>
+
+<h3 id="char-lists">Char lists</h3>
+
+<p>The <code class="highlighter-rouge">~c</code> sigil is useful for generating char lists that contain single quotes:</p>
+
+<pre><code class="language-iex">iex&gt; ~c(this is a char list containing 'single quotes')
+'this is a char list containing \'single quotes\''
+</code></pre>
+
+<h3 id="word-lists">Word lists</h3>
+
+<p>The <code class="highlighter-rouge">~w</code> sigil is used to generate lists of words (<em>words</em> are just regular strings). Inside the <code class="highlighter-rouge">~w</code> sigil, words are separated by whitespace.</p>
+
+<pre><code class="language-iex">iex&gt; ~w(foo bar bat)
+["foo", "bar", "bat"]
+</code></pre>
+
+<p>The <code class="highlighter-rouge">~w</code> sigil also accepts the <code class="highlighter-rouge">c</code>, <code class="highlighter-rouge">s</code> and <code class="highlighter-rouge">a</code> modifiers (for char lists, strings and atoms, respectively), which specify the data type of the elements of the resulting list:</p>
+
+<pre><code class="language-iex">iex&gt; ~w(foo bar bat)a
+[:foo, :bar, :bat]
+</code></pre>
+
+<h2 id="interpolation-and-escaping-in-sigils">Interpolation and escaping in sigils</h2>
+
+<p>Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both <code class="highlighter-rouge">~s</code> and <code class="highlighter-rouge">~S</code> will return strings, the former allows escape codes and interpolation while the latter does not:</p>
+
+<pre><code class="language-iex">iex&gt; ~s(String with escape codes \x26 #{"inter" &lt;&gt; "polation"})
+"String with escape codes &amp; interpolation"
+iex&gt; ~S(String without escape codes \x26 without #{interpolation})
+"String without escape codes \\x26 without \#{interpolation}"
+</code></pre>
+
+<p>The following escape codes can be used in strings and char lists:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">\\</code> – single backslash</li>
+  <li><code class="highlighter-rouge">\a</code> – bell/alert</li>
+  <li><code class="highlighter-rouge">\b</code> – backspace</li>
+  <li><code class="highlighter-rouge">\d</code> - delete</li>
+  <li><code class="highlighter-rouge">\e</code> - escape</li>
+  <li><code class="highlighter-rouge">\f</code> - form feed</li>
+  <li><code class="highlighter-rouge">\n</code> – newline</li>
+  <li><code class="highlighter-rouge">\r</code> – carriage return</li>
+  <li><code class="highlighter-rouge">\s</code> – space</li>
+  <li><code class="highlighter-rouge">\t</code> – tab</li>
+  <li><code class="highlighter-rouge">\v</code> – vertical tab</li>
+  <li><code class="highlighter-rouge">\0</code> - null byte</li>
+  <li><code class="highlighter-rouge">\xDD</code> - represents a single byte in hexadecimal (such as <code class="highlighter-rouge">\x13</code>)</li>
+  <li><code class="highlighter-rouge">\uDDDD</code> and <code class="highlighter-rouge">\u{D...}</code> - represents a Unicode codepoint in hexadecimal (such as <code class="highlighter-rouge">\u{1F600}</code>)</li>
+</ul>
+
+<p>In addition to those, a double quote inside a double-quoted string needs to be escaped as <code class="highlighter-rouge">\"</code>, and, analogously, a single quote inside a single-quoted char list needs to be escaped as <code class="highlighter-rouge">\'</code>. Nevertheless, it is better style to change delimiters as seen above than to escape them.</p>
+
+<p>Sigils also support heredocs, that is, triple double- or single-quotes as separators:</p>
+
+<pre><code class="language-iex">iex&gt; ~s"""
+...&gt; this is
+...&gt; a heredoc string
+...&gt; """
+</code></pre>
+
+<p>The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in documentation would soon become error prone because of the need to double-escape some characters:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@doc</span> <span class="sd">"""
+Converts double-quotes to single-quotes.
+
+## Examples
+
+    iex&gt; convert("\\\"foo\\\"")
+    "'foo'"
+
+"""</span>
+<span class="k">def</span> <span class="n">convert</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>By using <code class="highlighter-rouge">~S</code>, this problem can be avoided altogether:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="nv">@doc</span> <span class="err">~</span><span class="no">S</span><span class="sd">"""
+Converts double-quotes to single-quotes.
+
+## Examples
+
+    iex&gt; convert("\"foo\"")
+    "'foo'"
+
+"""</span>
+<span class="k">def</span> <span class="n">convert</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="custom-sigils">Custom sigils</h2>
+
+<p>As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil <code class="highlighter-rouge">~r/foo/i</code> is equivalent to calling <code class="highlighter-rouge">sigil_r</code> with a binary and a char list as argument:</p>
+
+<pre><code class="language-iex">iex&gt; sigil_r(&lt;&lt;"foo"&gt;&gt;, 'i')
+~r"foo"i
+</code></pre>
+
+<p>We can access the documentation for the <code class="highlighter-rouge">~r</code> sigil via <code class="highlighter-rouge">sigil_r</code>:</p>
+
+<pre><code class="language-iex">iex&gt; h sigil_r
+...
+</code></pre>
+
+<p>We can also provide our own sigils by implementing functions that follow the <code class="highlighter-rouge">sigil_{identifier}</code> pattern. For example, let’s implement the <code class="highlighter-rouge">~i</code> sigil that returns an integer (with the optional <code class="highlighter-rouge">n</code> modifier to make it negative):</p>
+
+<pre><code class="language-iex">iex&gt; defmodule MySigils do
+...&gt;   def sigil_i(string, []), do: String.to_integer(string)
+...&gt;   def sigil_i(string, [?n]), do: -String.to_integer(string)
+...&gt; end
+iex&gt; import MySigils
+iex&gt; ~i(13)
+13
+iex&gt; ~i(42)n
+-42
+</code></pre>
+
+<p>Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled into an efficient representation during compilation of the source code, therefore skipping this step at runtime. If you’re interested in the subject, we recommend you learn more about macros and check out how sigils are implemented in the <code class="highlighter-rouge">Kernel</code> module (where the <code class="highlighter-rouge">sigil_*</code> functions are defined).</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/sigils.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Typespecs and behaviours\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:10
+msgid "## Types and specs"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:12
+msgid "Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:14
+msgid "1. declaring typed function signatures (specifications);\n"
+"2. declaring custom data types."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:18
+msgid "### Function specifications"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:20
+msgid "By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:22
+msgid "```\n"
+"round(number) :: integer\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:26
+msgid "`::` means that the function on the left side *returns* a value whose type is what's on the right side. Function specs are written with the `@spec` directive, placed right before the function definition. The `round/1` function could be written as:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:28
+msgid "```elixir\n"
+"@spec round(number) :: integer\n"
+"def round(number), do: # implementation...\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:33
+msgid "Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html)."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:35
+msgid "### Defining custom types"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:37
+msgid "While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:39
+msgid "Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product, and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:41
+msgid "```elixir\n"
+"defmodule LousyCalculator do\n"
+"  @spec add(number, number) :: {number, String.t}\n"
+"  def add(x, y), do: {x + y, \"You need a calculator to do that?!\"}"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:46
+msgid "  @spec multiply(number, number) :: {number, String.t}\n"
+"  def multiply(x, y), do: {x * y, \"Jeez, come on!\"}\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:51
+msgid "As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html#notes)."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:53
+msgid "Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:55
+msgid "```elixir\n"
+"defmodule LousyCalculator do\n"
+"  @typedoc \"\"\"\n"
+"  Just a number followed by a string.\n"
+"  \"\"\"\n"
+"  @type number_with_remark :: {number, String.t}"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:62
+msgid "  @spec add(number, number) :: number_with_remark\n"
+"  def add(x, y), do: {x + y, \"You need a calculator to do that?\"}"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:65
+msgid "  @spec multiply(number, number) :: number_with_remark\n"
+"  def multiply(x, y), do: {x * y, \"It is like addition on steroids.\"}\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:70
+msgid "The `@typedoc` directive, similarly to the `@doc` and `@moduledoc` directives, is used to document custom types."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:72
+msgid "Custom types defined through `@type` are exported and available outside the module they're defined in:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:74
+msgid "```elixir\n"
+"defmodule QuietCalculator do\n"
+"  @spec add(number, number) :: number\n"
+"  def add(x, y), do: make_quiet(LousyCalculator.add(x, y))"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:79
+msgid "  @spec make_quiet(LousyCalculator.number_with_remark) :: number\n"
+"  defp make_quiet({num, _remark}), do: num\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:84
+msgid "If you want to keep a custom type private, you can use the `@typep` directive instead of `@type`."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:86
+msgid "### Static code analysis"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:88
+msgid "Typespecs are not only useful to developers as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `QuietCalculator` example, we wrote a spec for the `make_quiet/1` function even though it was defined as a private function."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:90
+msgid "## Behaviours"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:92
+msgid "Many modules share the same public API. Take a look at [Plug](https://github.com/elixir-lang/plug), which, as its description states, is a **specification** for composable modules in web applications. Each *plug* is a module which **has to** implement at least two public functions: `init/1` and `call/2`."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:94
+msgid "Behaviours provide a way to:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:96
+msgid "* define a set of functions that have to be implemented by a module;\n"
+"* ensure that a module implements all the functions in that set."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:99
+msgid "If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:101
+msgid "### Defining behaviours"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:103
+msgid "Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and an `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files)."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:105
+msgid "We can create a `Parser` behaviour:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:107
+msgid "```elixir\n"
+"defmodule Parser do\n"
+"  @callback parse(String.t) :: any\n"
+"  @callback extensions() :: [String.t]\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:114
+msgid "Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` directive. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above."
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:116
+msgid "### Adopting behaviours"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:118
+msgid "Adopting a behaviour is straightforward:"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:120
+msgid "```elixir\n"
+"defmodule JSONParser do\n"
+"  @behaviour Parser"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:124
+msgid "  def parse(str), do: # ... parse JSON\n"
+"  def extensions, do: [\"json\"]\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:129
+msgid "```elixir\n"
+"defmodule YAMLParser do\n"
+"  @behaviour Parser"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:133
+msgid "  def parse(str), do: # ... parse YAML\n"
+"  def extensions, do: [\"yml\"]\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/typespecs-and-behaviours.markdown:138
+msgid "If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated."
+msgstr ""
+

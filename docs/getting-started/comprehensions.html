@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Comprehensions - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+  <link rel="stylesheet" href="/js/icons/style.css">
+  <!--[if lt IE 8]><!-->
+  <link rel="stylesheet" href="/js/icons/ie7/ie7.css">
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="//fonts.googleapis.com/css?family=Bitter:400,700" type="text/css" media="screen" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="search" type="application/opensearchdescription+xml" title="elixir-lang.org" href="/opensearch.xml" />
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-8268430-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<meta property="og:title" content="Comprehensions" />
+<meta property="og:locale" content="en_US" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Comprehensions","url":"/ja/getting-started/comprehensions.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <a id="site-title" href="/" title="Elixir" rel="Home">
+          <img class="logo" src="/images/logo/logo.png" alt="Elixir Logo" />
+        </a>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="/install.html">Install</a></li>
+            <li class="menu-item getting-started"><a class="spec" href="/getting-started/introduction.html">Guides</a></li>
+            <li class="menu-item learning"><a class="spec" href="/learning.html">Learning</a></li>
+            <li class="menu-item docs"><a class="spec" href="/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="/blog/">Blog</a></li>
+            <li class="menu-item packages"><a class="spec" href="https://hex.pm/">Packages</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
+		</div>
+	</form>
+</div>
+
+  <div id="try-elixir" class="widget">
+  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
+      <div class="try-elixir-cta">
+        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
+      </div>
+  </a>
+</div>
+
+
+  
+  
+    <div class="widget">
+     <h3 class="widget-title">Getting Started</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/introduction.html" title="Introduction">Introduction</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-types.html" title="Basic types">Basic types</a></li>
+        
+          <li><a class="spec" href="/getting-started/basic-operators.html" title="Basic operators">Basic operators</a></li>
+        
+          <li><a class="spec" href="/getting-started/pattern-matching.html" title="Pattern matching">Pattern matching</a></li>
+        
+          <li><a class="spec" href="/getting-started/case-cond-and-if.html" title="case, cond and if">case, cond and if</a></li>
+        
+          <li><a class="spec" href="/getting-started/binaries-strings-and-char-lists.html" title="Binaries, strings and char lists">Binaries, strings and char lists</a></li>
+        
+          <li><a class="spec" href="/getting-started/keywords-and-maps.html" title="Keywords and maps">Keywords and maps</a></li>
+        
+          <li><a class="spec" href="/getting-started/modules-and-functions.html" title="Modules and Functions">Modules and Functions</a></li>
+        
+          <li><a class="spec" href="/getting-started/recursion.html" title="Recursion">Recursion</a></li>
+        
+          <li><a class="spec" href="/getting-started/enumerables-and-streams.html" title="Enumerables and streams">Enumerables and streams</a></li>
+        
+          <li><a class="spec" href="/getting-started/processes.html" title="Processes">Processes</a></li>
+        
+          <li><a class="spec" href="/getting-started/io-and-the-file-system.html" title="IO and the file system">IO and the file system</a></li>
+        
+          <li><a class="spec" href="/getting-started/alias-require-and-import.html" title="alias, require and import">alias, require and import</a></li>
+        
+          <li><a class="spec" href="/getting-started/module-attributes.html" title="Module attributes">Module attributes</a></li>
+        
+          <li><a class="spec" href="/getting-started/structs.html" title="Structs">Structs</a></li>
+        
+          <li><a class="spec" href="/getting-started/protocols.html" title="Protocols">Protocols</a></li>
+        
+          <li><a class="spec" href="/getting-started/comprehensions.html" title="Comprehensions">Comprehensions</a></li>
+        
+          <li><a class="spec" href="/getting-started/sigils.html" title="Sigils">Sigils</a></li>
+        
+          <li><a class="spec" href="/getting-started/try-catch-and-rescue.html" title="try, catch and rescue">try, catch and rescue</a></li>
+        
+          <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
+        
+          <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
+        
+          <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Mix and OTP</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/introduction-to-mix.html" title="Introduction to Mix">Introduction to Mix</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/agent.html" title="Agent">Agent</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/genserver.html" title="GenServer">GenServer</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen-tcp">Task and gen-tcp</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/docs-tests-and-with.html" title="Docs, tests and with">Docs, tests and with</a></li>
+        
+          <li><a class="spec" href="/getting-started/mix-otp/distributed-tasks-and-configuration.html" title="Distributed tasks and configuration">Distributed tasks and configuration</a></li>
+        
+      </ol>
+    </div>
+  
+    <div class="widget">
+     <h3 class="widget-title">Meta-programming in Elixir</h3>
+      <ol>
+        
+          <li><a class="spec" href="/getting-started/meta/quote-and-unquote.html" title="Quote and unquote">Quote and unquote</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/macros.html" title="Macros">Macros</a></li>
+        
+          <li><a class="spec" href="/getting-started/meta/domain-specific-languages.html" title="Domain Specific Languages">Domain Specific Languages</a></li>
+        
+      </ol>
+    </div>
+  
+
+  <div id="elixir-radar" class="widget">
+  <h3 class="widget-title">Elixir Radar Newsletter</h3>
+  <p>A weekly Elixir email newsletter with content curated by Plataformatec.</p>
+  <div class="elixir-radar-cta">
+    <div class="cta-copy">
+      <div class="cta-title">
+        Elixir Radar
+      </div>
+      <div class="cta-subtitle">
+        weekly newsletter
+      </div>
+    </div>
+    <div class="cta-button-container">
+      <a href="http://plataformatec.com.br/elixir-radar/weekly-newsletter?utm_campaign=elixir_lang_cta&utm_medium=cta&utm_source=elixir_lang_website" class="cta-button">
+        Subscribe now
+      </a>
+    </div>
+  </div>
+</div>
+
+  <div id="distilled-by" class="widget">
+  <h3 class="widget-title">Created at</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="/images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+
+  <p>
+    <a class="spec" href="http://plataformatec.com.br">Plataformatec</a> offers consulting and development services for companies using Elixir.
+  </p>
+</div>
+
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="comprehensions">Comprehensions</h1>
+
+<div id="toc" class="toc"></div>
+
+<p>In Elixir, it is common to loop over an Enumerable, often filtering out some results and mapping values into another list. Comprehensions are syntactic sugar for such constructs: they group those common tasks into the <code class="highlighter-rouge">for</code> special form.</p>
+
+<p>For example, we can map a list of integers into their squared values:</p>
+
+<pre><code class="language-iex">iex&gt; for n &lt;- [1, 2, 3, 4], do: n * n
+[1, 4, 9, 16]
+</code></pre>
+
+<p>A comprehension is made of three parts: generators, filters and collectables.</p>
+
+<h2 id="generators-and-filters">Generators and filters</h2>
+
+<p>In the expression above, <code class="highlighter-rouge">n &lt;- [1, 2, 3, 4]</code> is the <strong>generator</strong>. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:</p>
+
+<pre><code class="language-iex">iex&gt; for n &lt;- 1..4, do: n * n
+[1, 4, 9, 16]
+</code></pre>
+
+<p>Generator expressions also support pattern matching on their left-hand side; all non-matching patterns are <em>ignored</em>. Imagine that, instead of a range, we have a keyword list where the key is the atom <code class="highlighter-rouge">:good</code> or <code class="highlighter-rouge">:bad</code> and we only want to compute the square of the <code class="highlighter-rouge">:good</code> values:</p>
+
+<pre><code class="language-iex">iex&gt; values = [good: 1, good: 2, bad: 3, good: 4]
+iex&gt; for {:good, n} &lt;- values, do: n * n
+[1, 4, 16]
+</code></pre>
+
+<p>Alternatively to pattern matching, filters can be used to select some particular elements. For example, we can select the multiples of 3 and discard all others:</p>
+
+<pre><code class="language-iex">iex&gt; multiple_of_3? = fn(n) -&gt; rem(n, 3) == 0 end
+iex&gt; for n &lt;- 0..5, multiple_of_3?.(n), do: n * n
+[0, 9]
+</code></pre>
+
+<p>Comprehensions discard all elements for which the filter expression returns <code class="highlighter-rouge">false</code> or <code class="highlighter-rouge">nil</code>; all other values are selected.</p>
+
+<p>Comprehensions generally provide a much more concise representation than using the equivalent functions from the <code class="highlighter-rouge">Enum</code> and <code class="highlighter-rouge">Stream</code> modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and gets the size of each file in those directories:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'/home/mikey'</span><span class="p">,</span> <span class="s1">'/home/james'</span><span class="p">]</span>
+<span class="n">for</span> <span class="n">dir</span>  <span class="o">&lt;-</span> <span class="n">dirs</span><span class="p">,</span>
+    <span class="n">file</span> <span class="o">&lt;-</span> <span class="no">File</span><span class="o">.</span><span class="n">ls!</span><span class="p">(</span><span class="n">dir</span><span class="p">),</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="no">Path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span>
+    <span class="no">File</span><span class="o">.</span><span class="n">regular?</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">do</span>
+  <span class="no">File</span><span class="o">.</span><span class="n">stat!</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Multiple generators can also be used to calculate the cartesian product of two lists:</p>
+
+<pre><code class="language-iex">iex&gt; for i &lt;- [:a, :b, :c], j &lt;- [1, 2], do:  {i, j}
+[a: 1, a: 2, b: 1, b: 2, c: 1, c: 2]
+</code></pre>
+
+<p>A more advanced example of multiple generators and filters is Pythagorean triples. A Pythagorean triple is a set of positive integers such that <code class="highlighter-rouge">a*a + b*b = c*c</code>, let’s write a comprehension in a file named <code class="highlighter-rouge">triple.exs</code>:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">Triple</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">pythagorean</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="ow">when</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="m">0</span> <span class="k">do</span>
+    <span class="n">for</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">b</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">c</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">==</span> <span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">,</span>
+        <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Now on terminal:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>iex triple.exs
+</code></pre>
+</div>
+
+<pre><code class="language-iex">iex&gt; Triple.pythagorean(5)
+[]
+iex&gt; Triple.pythagorean(12)
+[{3, 4, 5}, {4, 3, 5}]
+iex&gt; Triple.pythagorean(48)
+[{3, 4, 5}, {4, 3, 5}, {5, 12, 13}, {6, 8, 10}, {8, 6, 10}, {8, 15, 17},
+ {9, 12, 15}, {12, 5, 13}, {12, 9, 15}, {12, 16, 20}, {15, 8, 17}, {16, 12, 20}]
+</code></pre>
+
+<p>The code above is quite expensive when the range of search is a large number. Additionally, since the tuple <code class="highlighter-rouge"><span class="p">{</span><span class="err">b,</span><span class="w"> </span><span class="err">a,</span><span class="w"> </span><span class="err">c</span><span class="p">}</span></code> represents the same Pythagorean triple as <code class="highlighter-rouge"><span class="p">{</span><span class="err">a,</span><span class="w"> </span><span class="err">b,</span><span class="w"> </span><span class="err">c</span><span class="p">}</span></code>, our function yields duplicate triples. We can optimize the comprehension and eliminate the duplicate results by referencing the variables from previous generators in the following ones, for example:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">Triple</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="n">pythagorean</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="ow">when</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="m">0</span> <span class="k">do</span>
+    <span class="n">for</span> <span class="n">a</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="o">-</span><span class="m">2</span><span class="p">,</span>
+        <span class="n">b</span> <span class="o">&lt;-</span> <span class="n">a</span><span class="o">+</span><span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="o">-</span><span class="m">1</span><span class="p">,</span>
+        <span class="n">c</span> <span class="o">&lt;-</span> <span class="n">b</span><span class="o">+</span><span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="p">,</span>
+        <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span> <span class="o">==</span> <span class="n">c</span><span class="o">*</span><span class="n">c</span><span class="p">,</span>
+        <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Finally, keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.</p>
+
+<h2 id="bitstring-generators">Bitstring generators</h2>
+
+<p>Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:</p>
+
+<pre><code class="language-iex">iex&gt; pixels = &lt;&lt;213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15&gt;&gt;
+iex&gt; for &lt;&lt;r::8, g::8, b::8 &lt;- pixels&gt;&gt;, do: {r, g, b}
+[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
+</code></pre>
+
+<p>A bitstring generator can be mixed with “regular” enumerable generators, and supports filters as well.</p>
+
+<h2 id="the-into-option">The <code class="highlighter-rouge">:into</code> option</h2>
+
+<p>In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the <code class="highlighter-rouge">:into</code> option to the comprehension.</p>
+
+<p>For example, a bitstring generator can be used with the <code class="highlighter-rouge">:into</code> option in order to easily remove all spaces in a string:</p>
+
+<pre><code class="language-iex">iex&gt; for &lt;&lt;c &lt;- " hello world "&gt;&gt;, c != ?\s, into: "", do: &lt;&lt;c&gt;&gt;
+"helloworld"
+</code></pre>
+
+<p>Sets, maps and other dictionaries can also be given to the <code class="highlighter-rouge">:into</code> option. In general, <code class="highlighter-rouge">:into</code> accepts any structure that implements the <code class="highlighter-rouge">Collectable</code> protocol.</p>
+
+<p>A common use case of <code class="highlighter-rouge">:into</code> can be transforming values in a map, without touching the keys:</p>
+
+<pre><code class="language-iex">iex&gt; for {key, val} &lt;- %{"a" =&gt; 1, "b" =&gt; 2}, into: %{}, do: {key, val * val}
+%{"a" =&gt; 1, "b" =&gt; 4}
+</code></pre>
+
+<p>Let’s make another example using streams. Since the <code class="highlighter-rouge">IO</code> module provides streams (that are both <code class="highlighter-rouge">Enumerable</code>s and <code class="highlighter-rouge">Collectable</code>s), an echo terminal that echoes back the upcased version of whatever is typed can be implemented using comprehensions:</p>
+
+<pre><code class="language-iex">iex&gt; stream = IO.stream(:stdio, :line)
+iex&gt; for line &lt;- stream, into: stream do
+...&gt;   String.upcase(line) &lt;&gt; "\n"
+...&gt; end
+</code></pre>
+
+<p>Now type any string into the terminal and you will see that the same value will be printed in upper-case. Unfortunately, this example also got your IEx shell stuck in the comprehension, so you will need to hit <code class="highlighter-rouge">Ctrl+C</code> twice to get out of it. :)</p>
+
+  </article><!-- .hfeed -->
+
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="/edit/master/ja/getting-started/comprehensions.markdown">
+      Edit this page on GitHub.
+    </a>
+  </div>
+
+  
+  
+  
+  
+  
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.toc').toc({
+        title: '',
+        listType: 'ol',
+        minimumHeaders: 2,
+        headers: 'h2, h3, h4, h5, h6',
+        linkHere: true,
+        linkHereTitle: 'Link here',
+        backToTop: true,
+        backToTopId: 'toc',
+        backToTopTitle: 'Back to Table of Contents',
+      });
+      $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
+      $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,253 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:1
+msgid ""
+"---\n"
+"layout: post\n"
+"title: Elixir v0.9.0 released\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: Elixir v0.9.0 is released with support for reducers, umbrella projects, faster compilation times and dropped support for R15 and earlier OTP versions.\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:9
+msgid "While [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir) was being announced, we have been working on Elixir v0.9.0 which is finally out. This release contains new features, important performance optimizations and bug fixes."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:11
+msgid "Elixir v0.9.0 also removes support for Erlang R15 and earlier versions. In case you still need to run Elixir software on R15, we have also released Elixir v0.8.3, which contains many of the enhancements in v0.9.0. Check the [CHANGELOG for more details for both releases](https://github.com/elixir-lang/elixir/blob/v0.9.0/CHANGELOG.md)."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:13
+msgid "All this work was achieved by our very vibrant community! Over the last month, 17 authors have pushed more than 500 commits, where more than 60 pull requests were merged and more than 80 issues were closed."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:15
+msgid "Let's talk about the goodies!"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:17
+msgid "## Compilation time improvements"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:19
+msgid "We have spent some time improving compilation time. The particular scenario we have worked on was the definition of records:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:21
+msgid ""
+"```elixir\n"
+"defrecord User, name: nil, age: nil\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:25
+msgid "Records are a good scenario because they are implemented in Elixir, using Elixir macros, and they also define a module underneath, which exercises the Erlang VM compilation stack."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:27
+msgid "We have used [fprof](http://www.erlang.org/doc/man/fprof.html) to identify the bottlenecks and made the compilation stack 35% faster. We have also identified bottlenecks coming from Erlang and [pushed some patches](https://github.com/erlang/otp/commit/32b194495f353dde014b00008a630eeff2a71056) that should benefit both Elixir and Erlang code."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:29
+msgid "A special thanks to [Yurii Rashkovskii](https://github.com/yrashk) for the data and profiling."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:31
+msgid "## Umbrella projects"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:33
+msgid "In Elixir, an application denotes a component implementing some specific functionality, that can be started and stopped as a unit, and which can be re-used in other systems as well."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:35
+msgid "As a project grows, it is recommended to break it apart into smaller, isolated applications and bundle them together. The issue so far was that Elixir did not provide good support for working with many applications at once, and compiling and managing those applications became rather a tedious work."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:37
+msgid "Elixir v0.9.0 now supports umbrella projects which can work with many applications at the same time. You can create a new umbrella project with:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:39
+msgid ""
+"```bash\n"
+"$ mix new my_project --umbrella\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:43
+msgid "The generated project will have the following structure:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:45
+msgid ""
+"    apps/\n"
+"    mix.exs\n"
+"    README.md"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:49
+msgid "Now, inside the `apps` directory, you can create as many applications as you want and running `mix compile` inside the umbrella project will automatically compile all applications. The [original discussion for this feature](https://github.com/elixir-lang/elixir/issues/667) contains more details about how it all works."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:51
+msgid "A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implementing this feature and to [Yurii](https://github.com/yrashk) for testing it against different edge cases."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:53
+msgid "## Reducers"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:55
+msgid "Elixir v0.9.0 changes its main abstraction for enumeration from iterators to reducers. Before Elixir v0.9.0, when you invoked:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:57
+msgid ""
+"```elixir\n"
+"Enum.map([1, 2, 3], fn(x) -> x * x end)\n"
+"#=> [1, 4, 9]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:62
+msgid "It asked the `Enum.Iterator` protocol for instructions on how to iterate the list `[1, 2, 3]`. This iteration happened by retrieving each item in the list, one by one, until there were no items left."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:64
+msgid "This approach posed many problems:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:66
+msgid ""
+"* Iterators are very hard to compose;\n"
+"* Iterators contain state. You need to know, at each moment, what is the next element you have to iterate next. We use functions and their bindings to pass the iteration state around;\n"
+"* Iterators have the \"dangling open resource\" problem. Consider that you want to iterate a file with `Enum.map/2` as above. If any step during the iteration fails, there is no easy way to notify the resource being iterated  (in this case, the opened file) that iteration failed, so we can't close the file automatically, leaving it to the user."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:70
+msgid "Reducers solve all of those problems by using a more functional approach. Instead of asking a list to spill its elements out one by one and then working on each element, we now generate a recipe of computations and pass it down to the list which applies those computations on itself."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:72
+msgid "Here is how we implement the `Enumerable` protocol for lists:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:74
+msgid ""
+"```elixir\n"
+"defimpl Enumerable, for: List do\n"
+"  def reduce(list, acc, fun) do\n"
+"    do_reduce(list, acc, fun)\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:80
+msgid ""
+"  defp do_reduce([h | t], acc, fun) do\n"
+"    do_reduce(t, fun.(h, acc), fun)\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:84
+msgid ""
+"  defp do_reduce([], acc, fun) do\n"
+"    acc\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:90
+msgid "The implementation above works as a simple `reduce` function (also called `fold`, `inject` or `foldl` in other languages). Here is how it works:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:92
+msgid ""
+"```elixir\n"
+"# Sum all elements in a list\n"
+"Enumerable.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)\n"
+"#=> 6\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:98
+msgid "The `Enum.map/2` we have used above is now implemented in terms of this reducing function:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:100
+msgid ""
+"```elixir\n"
+"defmodule Enum do\n"
+"  def map(collection, fun) do\n"
+"    Enumerable.reduce(collection, [], fn(x, acc) ->\n"
+"      [fun.(x, acc) | acc]\n"
+"    end) |> reverse\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:110
+msgid "This approach solves all the problems above:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:112
+msgid ""
+"* Reducers are composable (notice how we have implemented map on top of reduce by composing functions);\n"
+"* Reducers are self-contained: there is no need keep state around, which also solves the \"dangling open resource\" problem. The data type now knows exactly when the iteration starts and when it finishes;\n"
+"* Reducers do not dictate how a type should be enumerated. This means types like `Range` and `HashDict` can provide a much faster implementation for Reducers;\n"
+"* Furthermore, the end result is a cleaner implementation of most of `Enum` functions (the [reducers pull request](https://github.com/elixir-lang/elixir/pull/1102) removes over 500LOC) and better performance!"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:117
+msgid "Reducers also opens up room for lazy and parallel enumeration, as [the Clojure community has already proven](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html) and something we are looking forward to explore on upcoming releases."
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:119
+msgid "A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implementing this feature!"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:121
+msgid "## Other bits"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:123
+msgid "We have also many other smaller improvements:"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:125
+msgid ""
+"* Our CLI now supports `--hidden` and `--cookie` flags which are useful for distributed modes;\n"
+"* Our test framework, ExUnit, is now able to capture all the communication that happens with a registed IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](https://hexdocs.pm/ex_unit/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts to some inputs and what it prints to the terminal;\n"
+"* `IEx` now allows files to be imported into the shell with `import_file` and also loads `~/.iex` on startup for custom configuration;\n"
+"* The `String`, `Enum` and `Dict` modules got more convenience functions that goes from checking unicode character validity to taking values out of a dictionary;\n"
+"* And many, many more!"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:131
+msgid "A huge thank you to our community for sending bug reports, providing bug fixes and contributing all those amazing features. And when are **you** joining us? :)"
+msgstr ""
+
+#: ../../../_posts/2013-05-23-elixir-v0-9-0-released.markdown:133
+msgid "Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or [check this 30 minute video from PragProg](https://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir)."
+msgstr ""

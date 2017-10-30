@@ -1,0 +1,517 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: 2017-10-30 15:10+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:1
+msgid ""
+"---\n"
+"layout: post\n"
+"title: Elixir v1.3 released\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: Elixir v1.3 brings many improvements to the language, the compiler and its tooling, specially Mix (Elixir's build tool) and ExUnit (Elixir's test framework).\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:9
+msgid "Elixir v1.3 brings many improvements to the language, the compiler and its tooling, specially Mix (Elixir's build tool) and ExUnit (Elixir's test framework). The most notable additions are the new Calendar types, the new cross-reference checker in Mix, and the assertion diffing in ExUnit. We will explore all of them and a couple more enhancements below."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:11
+msgid "With this release, we also welcome [Andrea Leopardi](http://github.com/whatyouhide) to Elixir Core Team. He has contributed greatly to this release and maintains important packages in the community, like [Gettext](https://github.com/elixir-lang/gettext) and [Redix](https://github.com/whatyouhide/redix)."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:13
+msgid "## Language improvements"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:15
+msgid "The language has been improved semantically and includes new types and APIs. Let's see the three major features."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:17
+msgid "### Deprecation of imperative assignment"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:19
+msgid "Elixir will now warn if constructs like `if`, `case` and friends assign to a variable that is accessed in an outer scope. As an example, imagine a function called `format` that receives a message and some options and it must return a path alongside the message:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:21
+msgid ""
+"```elixir\n"
+"def format(message, opts) do\n"
+"  path =\n"
+"    if (file = opts[:file]) && (line = opts[:line]) do\n"
+"      relative = Path.relative_to_cwd(file)\n"
+"      message  = Exception.format_file_line(relative, line) <> \" \" <> message\n"
+"      relative\n"
+"    end"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:30
+msgid ""
+"  {path, message}\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:34
+msgid "The `if` block above is implicitly changing the value in `message`. Now imagine we want to move the `if` block to its own function to clean up the implementation:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:36
+msgid ""
+"```elixir\n"
+"def format(message, opts) do\n"
+"  path = with_file_and_line(message, opts)\n"
+"  {path, message}\n"
+"end"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:42
+msgid ""
+"defp with_file_and_line(message, opts) do\n"
+"  if (file = opts[:file]) && (line = opts[:line]) do\n"
+"    relative = Path.relative_to_cwd(file)\n"
+"    message  = Exception.format_file_line(relative, line) <> \" \" <> message\n"
+"    relative\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:51
+msgid "The refactored version is broken because the `if` block was actually returning two values, the relative path *and* the new message. Elixir v1.3 will warn on such cases, forcing both variables to be explicitly returned from `if`, `case` and other constructs. Furthermore, this change gives us the opportunity to unify the language scoping rules in future releases."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:53
+msgid "### Calendar types and sigils"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:55
+msgid "Elixir v1.3 introduces the `Calendar` module as well as 4 new calendar types:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:57
+msgid ""
+"  * `Date` - used to store dates (year, month, day) in a given calendar\n"
+"  * `Time` - used to store time (hour, minute, second, microseconds)\n"
+"  * `NaiveDateTime` - used to store datetimes without a timezone (year, month, day, hour, minute, second, microseconds) in a given calendar. It is called naïve because without a timezone, the datetime may not actually exist. For example, when there are daylight savings changes, a whole hour may not exist (when the clock moves forward) or a particular instant may happen twice (when the clock moves backwards)\n"
+"  * `DateTime` - used to store datetimes with timezone (year, month, day, hour, minute, second, microsecond and time zone, with abbreviation, UTC and standard offset)"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:62
+msgid "The aim of the current implementation of the Calendar modules and its types is to provide a base for interoperatibility in the ecosystem instead of full-featured datetime API. This release includes basic functionality for building new types and converting them from and back strings."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:64
+msgid "Elixir v1.3 also introduces 3 new sigils related to the types above:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:66
+msgid ""
+"  * `~D[2016-05-29]` - builds a new date\n"
+"  * `~T[08:00:00]` and `~T[08:00:00.285]` - builds a new time (with different precisions)\n"
+"  * `~N[2016-05-29 08:00:00]` - builds a naive date time"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:70
+msgid "### Access selectors"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:72
+msgid "This release introduces new accessors to make it simpler for developers to traverse nested data structures, traversing and updating data in different ways.  For instance, given a user with a list of languages, here is how to deeply traverse the map and convert all language names to uppercase:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:74
+msgid ""
+"```iex\n"
+"iex> user = %{name: \"john\",\n"
+"...>          languages: [%{name: \"elixir\", type: :functional},\n"
+"...>                      %{name: \"c\", type: :procedural}]}\n"
+"iex> update_in user, [:languages, Access.all(), :name], &String.upcase/1\n"
+"%{name: \"john\",\n"
+"  languages: [%{name: \"ELIXIR\", type: :functional},\n"
+"              %{name: \"C\", type: :procedural}]}\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:84
+msgid "You can see the new accessors in the `Access` module."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:86
+msgid "## Mix"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:88
+msgid "Mix includes new tasks to improve your everyday workflow. Some of those tasks relies on many compiler improvements to know more about your code, providing static analysis to find possible bugs in your code and faster compilation cycles."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:90
+msgid "### Compiling n files"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:92
+msgid "Mix no longer announces every file it compiles. Instead it outputs how many files there is to compile per compilers. Here is the output for a project like [`gettext`](https://github.com/elixir-lang/gettext):"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:94
+msgid ""
+"```\n"
+"Compiling 1 file (.yrl)\n"
+"Compiling 1 file (.erl)\n"
+"Compiling 19 files (.ex)\n"
+"Generated gettext app\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:101
+msgid "In case a file is taking too long to compile, Mix will announce such, for example:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:103
+msgid ""
+"```\n"
+"Compiling lib/gettext.ex (it's taking more than 10s)\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:107
+msgid "The goal of these changes is to put an increased focus on the \"warnings\" emitted by the compiler."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:109
+msgid "In any case, the previous behaviour can be brought back with the `--verbose` flag and the compilation threshold for files that are taking long can be set via the `--long-compilation-threshold` option."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:111
+msgid "### mix xref"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:113
+msgid "Speaking about warnings, Mix v1.3 includes a new task called `xref` that performs cross reference checks in your code. One of such checks is the ability to find calls to modules and functions that do not exist. For example, if in your library code you call `ThisModuleDoesNotExist.foo(1, 2, 3)`, `mix xref unreachable` will be able to find such code and let you know about it."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:115
+msgid "Since such checks can discover possible bugs in your codebase, a new compiler called `xref` has been added to `Mix.compilers/0`, so it runs by default every time you compile your code. [PragTob has written an article exploring how this new compiler has found bugs in existing projects](https://pragtob.wordpress.com/2016/06/02/elixir-1-3s-mix-xref-working-its-magic-in-a-real-world-example/)."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:117
+msgid "We have included other modes in `xref`, such as:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:119
+msgid "  * `mix xref callers Foo` - used to find all places in your code that calls a function from the module `Foo`"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:121
+msgid "  * `mix xref graph` - generates a graph with dependencies between source files"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:123
+msgid "You can find documentation for all modes by running `mix help xref`. We hope tools and text editors can leverage such features to provide useful functionality for their users, helping developers understand code complexity and finding bugs early on."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:125
+msgid "### Better dependency tracking"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:127
+msgid "Besides `xref`, Elixir v1.3 provides better module tracking generally. For example, in previous versions, if you changed a `:path` dependency, Elixir would always fully recompile the current project. In this release, we have improved the tracking algorithms such that, if you change a `:path` dependency, only the files that depend on such dependency are recompiled."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:129
+msgid "Such improvements do not only make compilation faster but they also make working with umbrella applications much more productive. Previously, changing a sibling application triggered a full project recompilation, now Elixir can track between sibling applications and recompile only what is needed."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:131
+msgid "### mix app.tree and deps.tree"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:133
+msgid "Mix also includes both `mix app.tree` and `mix deps.tree`. The first will list all applications your current project needs to start in order to boot (i.e. the ones listed in `application/0` in your `mix.exs`) while the second will lists all of your dependencies and so on recursively."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:135
+msgid "Here is a quick example from [Plug](https://github.com/elixir-lang/plug):"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:137
+msgid ""
+"```elixir\n"
+"$ mix app.tree\n"
+"plug\n"
+"├── elixir\n"
+"├── crypto\n"
+"├── logger\n"
+"│   └── elixir\n"
+"└── mime\n"
+"    └── elixir\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:148
+msgid "The `--format dot` option can also be given to generate graph files to be opened by [GraphViz](http://www.graphviz.org). For example, here is the output of running `mix deps.tree --format dot --only prod` in the [Phoenix web framework](http://phoenixframework.org):"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:150
+msgid ""
+"<p style=\"text-align: center\">\n"
+"  <img src=\"/images/contents/deps-tree-phoenix.svg\" alt=\"mix deps.tree for Phoenix in production\">\n"
+"</p>"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:154
+msgid "### mix escript.install"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:156
+msgid "Mix also includes `mix escript.install` and `mix escript.uninstall` tasks for managing escripts. The tasks was designed in a way to mimic the existing `mix archive` functionality except that:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:158
+msgid ""
+"  * Archives must be used sparingly because every new archive installed affects Mix performance, as every new archive is loaded when Mix boots. Escripts solve this by being managed apart from your Elixir/Mix installed\n"
+"  * Archives depends on the current Elixir version. Therefore, updating your Elixir version may break an archive. Fortunately, escripts include Elixir inside themselves, and therefore do not depend on your Elixir system version"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:161
+msgid "Escripts will be installed at `~/.mix/escripts` which must be added to your [`PATH` environment variable](https://en.wikipedia.org/wiki/PATH_(variable))."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:163
+msgid "### Option parser integration"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:165
+msgid "Elixir v1.3 includes improvements to the option parser, including `OptionParser.parse!/2` and `OptionParser.parse_head!/2` functions that will raise in case of invalid or unknown switches. Mix builds on top of this functionality to provide automatic error reporting solving a common complaint where invalid options were not reported by Mix tasks."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:167
+msgid "For example, invoking `mix test --unknown` in earlier Elixir versions would silently discard the `--unknown` option. Now `mix test` correctly reports such errors:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:169
+msgid ""
+"```\n"
+"$ mix test --unknown\n"
+"** (Mix) Could not invoke task \"test\": 1 error found!\n"
+"--unknown : Unknown option\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:175
+msgid "Note not all tasks have been updated to use strict option parsing. Some tasks, like `mix compile`, are actually a front-end to many other tasks, and as such, it cannot effectively assert which options are valid."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:177
+msgid "## ExUnit"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:179
+msgid "ExUnit packs many improvements on the tooling side, better integration with external tools, as well as mechanisms to improve the readability of your tests."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:181
+msgid "### mix test \\-\\-stale"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:183
+msgid "ExUnit builds on top of `mix xref` to provide the `mix test --stale` functionality. When the `--stale` flag is given, `mix` will only run the tests that may have changed since the last time you ran `mix test --stale`. For example:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:185
+msgid ""
+"  * If you saved a test file on disk, Mix will run that file and ignore the ones that have not changed\n"
+"  * If you changed a library file, for example, `lib/foo.ex` that defines `Foo`, any test that invokes a function in `Foo` directly or indirectly will also run\n"
+"  * If you modify your `mix.exs` or your `test/test_helper.exs`, Mix will run the whole test suite"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:189
+msgid "This feature provides a great workflow for developers, allowing them to effortlessly focus on parts of the codebase when developing new features."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:191
+msgid "### Diffing"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:193
+msgid "ExUnit will now include diff-ing output every time a developer asserts `assert left == right` in their tests. For example, the assertion:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:195
+msgid ""
+"```elixir\n"
+"assert \"fox jumps over the lazy dog\" ==\n"
+"       \"brown fox jumps over the dog\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:200
+msgid "will fail with"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:202
+msgid "![ExUnit diff](/images/contents/exunit-diff.png)"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:204
+msgid "such that \"lazy\" in \"lhs\" will be shown in red to denote it has been removed from \"rhs\" while \"brown\" in \"rhs\" will be shown in green to denote it has been added to the \"rhs\"."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:206
+msgid "When working with large or nested data structures, the diffing algorithm makes it fast and convenient to spot the actual differences in the asserted values."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:208
+msgid "### Test types"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:210
+msgid "ExUnit v1.3 includes the ability to register different test types. This means libraries like QuickCheck can now provide functionality such as:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:212
+msgid ""
+"```elixir\n"
+"defmodule StringTest do\n"
+"  use ExUnit.Case, async: true\n"
+"  use PropertyTestingLibrary"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:217
+msgid ""
+"  property \"starts_with?\" do\n"
+"    forall({s1, s2} <- {utf8, utf8}) do\n"
+"      String.starts_with?(s1 <> s2, s1)\n"
+"    end\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:225
+msgid "At the end of the run, ExUnit will also report it as a property, including both the amount of tests and properties:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:227
+msgid ""
+"```\n"
+"1 property, 10 tests, 0 failures\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:231
+msgid "### Named setups and describes"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:233
+msgid "Finally, ExUnit v1.3 includes the ability to organize tests together in describe blocks:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:235
+msgid ""
+"```elixir\n"
+"defmodule StringTest do\n"
+"  use ExUnit.Case, async: true"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:239
+msgid ""
+"  describe \"String.capitalize/2\" do\n"
+"    test \"uppercases the first grapheme\" do\n"
+"      assert \"T\" <> _ = String.capitalize(\"test\")\n"
+"    end"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:244
+msgid ""
+"    test \"lowercases the remaining graphemes\" do\n"
+"      assert \"Test\" = String.capitalize(\"TEST\")\n"
+"    end\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:251
+msgid "Every test inside a describe block will be tagged with the describe block name. This allows developers to run tests that belong to particular blocks, be them in the same file or across many files:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:253
+msgid ""
+"```\n"
+"$ mix test --only describe:\"String.capitalize/2\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:257
+msgid "Note describe blocks cannot be nested. Instead of relying on hierarchy for composition, we want developers to build on top of named setups. For example:"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:259
+msgid ""
+"```elixir\n"
+"defmodule UserManagementTest do\n"
+"  use ExUnit.Case, async: true"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:263
+msgid ""
+"  describe \"when user is logged in and is an admin\" do\n"
+"    setup [:log_user_in, :set_type_to_admin]"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:266 ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:272
+msgid ""
+"    test ...\n"
+"  end"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:269
+msgid ""
+"  describe \"when user is logged in and is a manager\" do\n"
+"    setup [:log_user_in, :set_type_to_manager]"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:275
+msgid ""
+"  defp log_user_in(context) do\n"
+"    # ...\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:281
+msgid "By restricting hierarchies in favor of named setups, it is straight-forward for the developer to glance at each describe block and know exactly the setup steps involved."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:283
+msgid "## Summing up"
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:285
+msgid "The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.3.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more."
+msgstr ""
+
+#: ../../../_posts/2016-06-21-elixir-v1-3-0-released.markdown:287
+msgid "Happy coding!"
+msgstr ""

@@ -1,0 +1,462 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../../getting-started/meta/macros.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: Macros\n"
+"---"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:10
+msgid "## Foreword"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:12
+msgid "Even though Elixir attempts its best to provide a safe environment for macros, the major responsibility of writing clean code with macros falls on developers. Macros are harder to write than ordinary Elixir functions and it's considered to be bad style to use them when they're not necessary. So write macros responsibly."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:14
+msgid "Elixir already provides mechanisms to write your every day code in a simple and readable fashion by using its data structures and functions. Macros should only be used as a last resort. Remember that **explicit is better than implicit**. **Clear code is better than concise code.**"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:16
+msgid "## Our first macro"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:18
+msgid "Macros in Elixir are defined via `defmacro/2`."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:20
+msgid "> For this chapter, we will be using files instead of running code samples in IEx. That's because the code samples will span multiple lines of code and typing them all in IEx can be counter-productive. You should be able to run the code samples by saving them into a `macros.exs` file and running it with `elixir macros.exs` or `iex macros.exs`."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:22
+msgid "In order to better understand how macros work, let's create a new module where we are going to implement `unless`, which does the opposite of `if`, as a macro and as a function:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:24
+msgid "```elixir\n"
+"defmodule Unless do\n"
+"  def fun_unless(clause, do: expression) do\n"
+"    if(!clause, do: expression)\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:30
+msgid "  defmacro macro_unless(clause, do: expression) do\n"
+"    quote do\n"
+"      if(!unquote(clause), do: unquote(expression))\n"
+"    end\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:38
+msgid "The function receives the arguments and passes them to `if`. However, as we learned in the [previous chapter](/getting-started/meta/quote-and-unquote.html), the macro will receive quoted expressions, inject them into the quote, and finally return another quoted expression."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:40
+msgid "Let's start `iex` with the module above:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:42
+msgid "```bash\n"
+"$ iex macros.exs\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:46
+msgid "And play with those definitions:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:48
+msgid "```iex\n"
+"iex> require Unless\n"
+"iex> Unless.macro_unless true, do: IO.puts \"this should never be printed\"\n"
+"nil\n"
+"iex> Unless.fun_unless true, do: IO.puts \"this should never be printed\"\n"
+"\"this should never be printed\"\n"
+"nil\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:57
+msgid "Note that in our macro implementation, the sentence was not printed, although it was printed in our function implementation. That's because the arguments to a function call are evaluated before calling the function. However, macros do not evaluate their arguments. Instead, they receive the arguments as quoted expressions which are then transformed into other quoted expressions. In this case, we have rewritten our `unless` macro to become an `if` behind the scenes."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:59
+msgid "In other words, when invoked as:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:61
+msgid "```elixir\n"
+"Unless.macro_unless true, do: IO.puts \"this should never be printed\"\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:65
+msgid "Our `macro_unless` macro received the following:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:67
+msgid "{% raw %}\n"
+"```elixir\n"
+"macro_unless(true, [do: {{:., [], [{:__aliases__, [alias: false], [:IO]}, :puts]}, [], [\"this should never be printed\"]}])\n"
+"```\n"
+"{% endraw %}"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:73
+msgid "And it then returned a quoted expression as follows:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:75
+msgid "{% raw %}\n"
+"```elixir\n"
+"{:if, [],\n"
+" [{:!, [], [true]},\n"
+"  [do: {{:., [],\n"
+"     [{:__aliases__,\n"
+"       [], [:IO]},\n"
+"      :puts]}, [], [\"this should never be printed\"]}]]}\n"
+"```\n"
+"{% endraw %}"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:86
+msgid "We can actually verify that this is the case by using `Macro.expand_once/2`:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:88
+msgid "```iex\n"
+"iex> expr = quote do: Unless.macro_unless(true, do: IO.puts \"this should never be printed\")\n"
+"iex> res  = Macro.expand_once(expr, __ENV__)\n"
+"iex> IO.puts Macro.to_string(res)\n"
+"if(!true) do\n"
+"  IO.puts(\"this should never be printed\")\n"
+"end\n"
+":ok\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:98
+msgid "`Macro.expand_once/2` receives a quoted expression and expands it according to the current environment. In this case, it expanded/invoked the `Unless.macro_unless/2` macro and returned its result. We then proceeded to convert the returned quoted expression to a string and print it (we will talk about `__ENV__` later in this chapter)."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:100
+msgid "That's what macros are all about. They are about receiving quoted expressions and transforming them into something else. In fact, `unless/2` in Elixir is implemented as a macro:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:102
+msgid "```elixir\n"
+"defmacro unless(clause, do: expression) do\n"
+"  quote do\n"
+"    if(!unquote(clause), do: unquote(expression))\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:110
+msgid "Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many others used throughout this getting started guide are implemented in pure Elixir, often as a macro. This means that the constructs being used to build the language can be used by developers to extend the language to the domains they are working on."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:112
+msgid "We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#summary)."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:114
+msgid "## Macros hygiene"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:116
+msgid "Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:118
+msgid "```elixir\n"
+"defmodule Hygiene do\n"
+"  defmacro no_interference do\n"
+"    quote do: a = 1\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:125
+msgid "defmodule HygieneTest do\n"
+"  def go do\n"
+"    require Hygiene\n"
+"    a = 13\n"
+"    Hygiene.no_interference\n"
+"    a\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:134
+msgid "HygieneTest.go\n"
+"# => 13\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:138
+msgid "In the example above, even though the macro injects `a = 1`, it does not affect the variable `a` defined by the `go` function. If a macro wants to explicitly affect the context, it can use `var!`:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:140
+msgid "```elixir\n"
+"defmodule Hygiene do\n"
+"  defmacro interference do\n"
+"    quote do: var!(a) = 1\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:147
+msgid "defmodule HygieneTest do\n"
+"  def go do\n"
+"    require Hygiene\n"
+"    a = 13\n"
+"    Hygiene.interference\n"
+"    a\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:156
+msgid "HygieneTest.go\n"
+"# => 1\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:160
+msgid "Variable hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined on line 3 of a module would be represented as:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:162
+msgid "```elixir\n"
+"{:x, [line: 3], nil}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:166
+msgid "However, a quoted variable is represented as:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:168
+msgid "```elixir\n"
+"defmodule Sample do\n"
+"  def quoted do\n"
+"    quote do: x\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:175
+msgid "Sample.quoted #=> {:x, [line: 3], Sample}\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:178
+msgid "Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers these two variables as coming from different contexts and handles them accordingly."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:180
+msgid "Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/2`, although one must be careful when using those as they directly change the user environment."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:182
+msgid "Sometimes variable names might be dynamically created. In such cases, `Macro.var/2` can be used to define new variables:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:184
+msgid "```elixir\n"
+"defmodule Sample do\n"
+"  defmacro initialize_to_char_count(variables) do\n"
+"    Enum.map variables, fn(name) ->\n"
+"      var = Macro.var(name, nil)\n"
+"      length = name |> Atom.to_string |> String.length\n"
+"      quote do\n"
+"        unquote(var) = unquote(length)\n"
+"      end\n"
+"    end\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:196
+msgid "  def run do\n"
+"    initialize_to_char_count [:red, :green, :yellow]\n"
+"    [red, green, yellow]\n"
+"  end\n"
+"end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:202
+msgid "> Sample.run #=> [3, 5, 6]\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:205
+msgid "Take note of the second argument to `Macro.var/2`. This is the context being used and will determine hygiene as described in the next section."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:207
+msgid "## The environment"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:209
+msgid "When calling `Macro.expand_once/2` earlier in this chapter, we used the special form `__ENV__`."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:211
+msgid "`__ENV__` returns an instance of the `Macro.Env` struct which contains useful information about the compilation environment, including the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:213
+msgid "```iex\n"
+"iex> __ENV__.module\n"
+"nil\n"
+"iex> __ENV__.file\n"
+"\"iex\"\n"
+"iex> __ENV__.requires\n"
+"[IEx.Helpers, Kernel, Kernel.Typespec]\n"
+"iex> require Integer\n"
+"nil\n"
+"iex> __ENV__.requires\n"
+"[IEx.Helpers, Integer, Kernel, Kernel.Typespec]\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:226
+msgid "Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](https://hexdocs.pm/elixir/Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](https://hexdocs.pm/elixir/Macro.Env.html)."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:228
+msgid "## Private macros"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:230
+msgid "Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:232
+msgid "It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:234
+msgid "```iex\n"
+"iex> defmodule Sample do\n"
+"...>  def four, do: two + two\n"
+"...>  defmacrop two, do: 2\n"
+"...> end\n"
+"** (CompileError) iex:2: function two/0 undefined\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:242
+msgid "## Write macros responsibly"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:244
+msgid "Macros are a powerful construct and Elixir provides many mechanisms to ensure they are used responsibly."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:246
+msgid "* Macros are hygienic: by default, variables defined inside a macro are not going to affect the user code. Furthermore, function calls and aliases available in the macro context are not going to leak into the user context."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:248
+msgid "* Macros are lexical: it is impossible to inject code or macros globally. In order to use a macro, you need to explicitly `require` or `import` the module that defines the macro."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:250
+msgid "* Macros are explicit: it is impossible to run a macro without explicitly invoking it. For example, some languages allow developers to completely rewrite functions behind the scenes, often via parse transforms or via some reflection mechanisms. In Elixir, a macro must be explicitly invoked in the caller during compilation time."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:252
+msgid "* Macros' language is clear: many languages provide syntax shortcuts for `quote` and `unquote`. In Elixir, we preferred to have them explicitly spelled out, in order to clearly delimit the boundaries of a macro definition and its quoted expressions."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:254
+msgid "Even with such guarantees, the developer plays a big role when writing macros responsibly. If you are confident you need to resort to macros, remember that macros are not your API. Keep your macro definitions short, including their quoted contents. For example, instead of writing a macro like this:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:256
+msgid "```elixir\n"
+"defmodule MyModule do\n"
+"  defmacro my_macro(a, b, c) do\n"
+"    quote do\n"
+"      do_this(unquote(a))\n"
+"      ...\n"
+"      do_that(unquote(b))\n"
+"      ...\n"
+"      and_that(unquote(c))\n"
+"    end\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:270
+msgid "write:"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:272
+msgid "```elixir\n"
+"defmodule MyModule do\n"
+"  defmacro my_macro(a, b, c) do\n"
+"    quote do\n"
+"      # Keep what you need to do here to a minimum\n"
+"      # and move everything else to a function\n"
+"      do_this_that_and_that(unquote(a), unquote(b), unquote(c))\n"
+"    end\n"
+"  end"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:282
+msgid "  def do_this_that_and_that(a, b, c) do\n"
+"    do_this(a)\n"
+"    ...\n"
+"    do_that(b)\n"
+"    ...\n"
+"    and_that(c)\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:292
+msgid "This makes your code clearer and easier to test and maintain, as you can invoke and test `do_this_that_and_that/3` directly. It also helps you design an actual API for developers that do not want to rely on macros."
+msgstr ""
+
+#: ../../../../getting-started/meta/macros.markdown:294
+msgid "With those lessons, we finish our introduction to macros. The next chapter is a brief discussion on DSLs that shows how we can mix macros and module attributes to annotate and extend modules and functions."
+msgstr ""
+

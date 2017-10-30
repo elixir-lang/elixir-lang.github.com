@@ -1,0 +1,171 @@
+---
+title: "Learning resources"
+section: learning
+layout: default
+---
+
+# {{ page.title }}
+
+{% include toc.html %}
+
+Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundation and explore how to build projects with [Mix and OTP](getting-started/mix-otp/introduction-to-mix.html).
+
+The Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that follows your pace and interests.
+
+## Books
+
+<h4 class="resource">Programming Elixir 1.3</h4>
+
+<a class="cover" href="https://pragprog.com/book/elixir13/programming-elixir-1-3" title="Programming Elixir 1.3: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
+– by Dave Thomas"><img src="/images/learning/programming-elixir-1-3.jpg" alt="Programming Elixir cover" width="190" /></a>
+
+Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches. Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM.
+
+Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir. This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.3.
+
+<div class="clear"></div>
+
+<h4 class="resource">Elixir in Action</h4>
+
+<a class="cover" href="http://manning.com/juric/" title="Elixir in Action
+– by Saša Jurić"><img src="/images/learning/elixir-in-action.jpg" alt="Elixir in Action cover" width="190" /></a>
+
+Elixir in Action is a tutorial book that aims to bring developers new to Elixir and Erlang to the point where they can develop complex systems on their own. No knowledge about Elixir, Erlang, or functional programming is required, but it is assumed that a reader has a few years of production experience using mainstream OO languages, for example C#, Java, Python, or Ruby.
+
+The book starts with a basic introduction to the Elixir language and functional programming idioms. The central part of the book deals with Erlang VM and OTP, discussing topics such as concurrent programming, fault-tolerance, and distributed systems. Finally, you'll learn how to package your code into components, create a standalone deployable release, and troubleshoot the running system. The theory is demonstrated through a simplistic example that is gradually expanded throughout the book into a fully standalone releasable system.
+
+<div class="clear"></div>
+
+<h4 class="resource">Introducing Elixir</h4>
+
+<a class="cover" href="http://shop.oreilly.com/product/0636920030584.do" title="Introducing Elixir: Getting Started in Functional Programming
+– by Simon St. Laurent, J. David Eisenberg"><img src="/images/learning/introducing-elixir.jpg" alt="Introducing Elixir cover" width="190" /></a>
+
+Elixir is an excellent language if you want to learn about functional programming, and with this hands-on introduction, you’ll discover just how powerful and fun Elixir can be. This language combines the robust functional programming of Erlang with a syntax similar to Ruby, and includes powerful features for metaprogramming.
+
+This book shows you how to write simple Elixir programs by teaching one skill at a time. Once you pick up pattern matching, process-oriented programming, and other concepts, you’ll understand why Elixir makes it easier to build concurrent and resilient programs that scale up and down with ease.
+
+<div class="clear"></div>
+
+<h4 class="resource">The Little Elixir and OTP Guidebook</h4>
+
+<a class="cover" href="http://www.manning.com/tanweihao/" title="The Little Elixir and OTP Guidebook
+– by Benjamin Tan Wei Hao"><img src="/images/learning/the-little-elixir-and-otp-guidebook-meap.jpg" alt="The Little Elixir and OTP Guidebook cover" width="190" /></a>
+
+The Little Elixir & OTP Guidebook gets you started programming applications with Elixir and OTP. You begin with a quick overview of the Elixir language syntax, along with just enough functional programming to use it effectively. Then, you'll dive straight into OTP and learn how it helps you build scalable, fault-tolerant and distributed applications through several fun examples. Come rediscover the joy of programming with Elixir and remember how it feels like to be a beginner again.
+
+<div class="clear"></div>
+
+<h4 class="resource">Elixir Cookbook</h4>
+
+<a class="cover" href="https://www.packtpub.com/application-development/elixir-cookbook" title="Elixir Cookbook
+– by Paulo A Pereira"><img src="/images/learning/elixir-cookbook.jpg" alt="Elixir Cookbook cover" width="190" /></a>
+
+This book is a set of recipes grouped by topic that acts as a reference to get ideas from or to quickly search for a solution to a problem. You will begin by launching an IEx session and using it to test some ideas. Next, you will perform various operations like loading and compiling modules, inspecting your system, generating a supervised app, and so on. Furthermore, you will be introduced to immutability, working with data structures, performing pattern matching, and using stream modules to generate infinite data sequences. You will learn about everything from joining strings to determining the word frequency in text. With respect to modules and functions, you will also discover how to load code from other modules and use guards and pattern matching in functions.
+
+<div class="clear"></div>
+
+<h4 class="resource">Elixir School</h4>
+
+<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
+
+Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
+
+<div class="clear"></div>
+
+## Video/Interactive Resources
+
+<h4 class="resource">Try Elixir with Code School</h4>
+
+<a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
+
+Start learning and programming Elixir in your browser with Code School's interactive Try Elixir course. Learn the basics of functional programming with instructor-led videos before taking on challenges where you’ll code directly in the browser, receiving immediate feedback and code validation.
+
+<div class="clear"></div>
+
+<h4 class="resource">Take Off With Elixir</h4>
+
+<a class="cover" href="https://goo.gl/9w33lp" title="Take Off With Elixir"><img src="/images/learning/take-off-with-elixir.jpg" alt="Red:4" width="190" /></a>
+
+Red:4 is a fictional aerospace startup that needs your help! Through a book, a video, or both you can learn Elixir the fun way by immersing yourself in an on-the-job style set of problems. For instance, you will set up a project to calculate escape velocity for each of the planets in our solar system, learning pattern matching and language basics along the way. You'll move on to orbital mechanics while learning how to debug and refactor your code for clarity and meaning. You'll learn list basics and data storage techniques as you build a solar flare tracking system. Finally, you'll dive into OTP using Ecto and PostgreSQL - all in an effort to overwhelm our internal systems with the power of Elixir!
+
+<div class="clear"></div>
+
+## Other Resources
+
+<h4 class="resource">Elixir Flashcards</h4>
+
+<a class="cover" href="https://elixircards.co.uk/" title="Elixir Flashcards"><img src="/images/learning/flashcards_army.jpg" alt="Elixir Flashcards" width="190" /></a>
+
+Elixir flashcards are a set of beautifully crafted, professionally printed, poker sized flashcards to help you master the Elixir language. 
+
+Flashcards are a great way to highlight knowledge gaps, identify misconceptions or false beliefs, and help you memorise key concepts.
+When used in groups or teams, flashcards can help spark interesting discussions, and help bring people together to learn in a fun way by playing games.
+
+Combined with books, tutorials and screencasts, using flashcards is the killer combination to master Elixir.
+
+<div class="clear"></div>
+
+<h4 class="resource">Elixir Koans</h4>
+
+<a class="cover" href="http://elixirkoans.io/" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
+
+Elixir koans is a fun, easy way to get started with the Elixir programming language. It is an idiomatic tour of the language.
+
+<div class="clear"></div>
+
+## Screencasts
+
+<h4 class="resource">Elixir Sips</h4>
+
+<a class="cover" href="http://elixirsips.com" title="Elixir Sips: Learn Elixir with Two Short Videos Each Week
+– with Josh Adams"><img src="/images/learning/elixir-sips.png" alt="ElixirSips cover" width="190" /></a>
+
+Elixir Sips is a screencast series that provides 2 short videos - typically from 2 to 7 minutes, but occasionally much longer - each week.  The videos consist of various topics, ranging from exploring a module in the standard library to trying out a new project to building a web-based Tetris game from scratch.
+
+The intended audience ranges from someone entirely new to the Elixir language, to experienced developers that want to get a broad range of topics to think about from time to time.
+
+<div class="clear"></div>
+
+<h4 class="resource">LearnElixir.tv</h4>
+
+<a class="cover" href="http://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
+  <img src="/images/learning/learn-elixir-tv.png" alt="LearnElixir.tv cover" width="190" />
+</a>
+
+LearnElixir.tv is a screencast series which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length, and are posted weekly.
+
+It's intended to help beginners get familiar with all of Elixir's features by building their knowledge incrementally. Experienced Elixir developers might also learn a trick or two.
+
+<div class="clear"></div>
+
+<h4 class="resource">ElixirCasts.io</h4>
+
+<a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
+  <img src="/images/learning/elixircasts.png" alt="elixircasts.io cover" width="190" />
+</a>
+
+ElixirCasts is a collection of simple screencasts that cover a wide range of Elixir and Phoenix topics. Each episode tackles a specific problem or explores a new library, demystifying it in a language that's easy to understand.
+
+Episodes range from beginner focused to more moderate and advanced topics. Come build your knowledge of Elixir with us, one episode at a time.
+
+<div class="clear"></div>
+
+## In-depth Resources
+
+<h4 class="resource">Metaprogramming Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done and Have Fun
+– by Chris Mccord"><img src="/images/learning/metaprogramming-elixir.jpg" alt="Metaprogramming Elixir cover" width="190" /></a>
+
+Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you’ll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You’ll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
+
+<div class="clear"></div>
+
+<h4 class="resource">Erlang in Anger</h4>
+
+<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
+
+This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
+
+<div class="clear"></div>

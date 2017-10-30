@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../_layouts/getting-started.html:1
+msgid "---\n"
+"section: getting-started\n"
+"---"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:5
+msgid "{% include top.html %}"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:7
+msgid "<div id=\"sidebar-primary\" class=\"sidebar\">\n"
+"  {% include search.html %}\n"
+"  {% include try-elixir.html %}"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:11
+msgid "  {% assign guides = site.data.getting-started  %}\n"
+"  {% for guide in site.data.getting-started %}\n"
+"    <div class=\"widget\">\n"
+"     <h3 class=\"widget-title\">{{guide.title}}</h3>\n"
+"      <ol>\n"
+"        {% for node in guide.pages %}\n"
+"          <li><a class=\"spec\" href=\"{{guide.dir}}{{node.slug}}.html\" title=\"{{node.title | escape}}\">{{node.title}}</a></li>\n"
+"        {% endfor %}\n"
+"      </ol>\n"
+"    </div>\n"
+"  {% endfor %}"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:23
+msgid "  {% include elixir-radar.html %}\n"
+"  {% include distilled-by.html %}\n"
+"</div>"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:27
+msgid "<div id=\"content\">\n"
+"  <article>\n"
+"    {{ content }}\n"
+"  </article><!-- .hfeed -->"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:32
+msgid "  <div id=\"edit-on-github\">\n"
+"    <span>Is something wrong?</span>\n"
+"    <a href=\"{{ site.github.repository_url }}/edit/master/{{ page.path }}\">\n"
+"      Edit this page on GitHub.\n"
+"    </a>\n"
+"  </div>"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:39
+msgid "  {% assign url_parts = page.url | split: '/' %}\n"
+"  {% assign url_parts_size = url_parts | size %}\n"
+"  {% assign file_name = url_parts | last %}\n"
+"  {% assign guide_base_url = page.url | replace: file_name %}\n"
+"  {% assign page_slug = file_name | replace: '.html' %}"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:45
+msgid "  {% assign guides = site.data.getting-started  %}\n"
+"  {% for guide in site.data.getting-started %}\n"
+"    {% if guide.dir == guide_base_url %}\n"
+"      {% for node in guide.pages %}\n"
+"        {% if node.slug == page_slug %}\n"
+"          <div class=\"pagination loop-pagination\">\n"
+"            {% unless forloop.first %}\n"
+"              <a href=\"{{guide.dir}}{{prev.slug}}.html\" class=\"previous page-numbers spec\" title=\"{{prev.title | escape}}\">&larr; Previous</a>\n"
+"            {% endunless %}\n"
+"              <a class=\"page-numbers spec\" href=\"#container\">Top</a>\n"
+"            {% unless forloop.last %}\n"
+"              {% assign next = guide.pages[forloop.index] %}\n"
+"              <a href=\"{{guide.dir}}{{next.slug}}.html\" class=\"previous page-numbers spec\" title=\"{{next.title | escape}}\">Next &rarr;</a>\n"
+"            {% endunless %}\n"
+"          </div>\n"
+"        {% endif %}\n"
+"        {% assign prev = node %}\n"
+"      {% endfor %}\n"
+"    {% endif %}\n"
+"  {% endfor %}"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:66
+msgid "</div><!-- #content -->"
+msgstr ""
+
+#: ../../../_layouts/getting-started.html:68
+msgid "{% include bottom.html %}"
+msgstr ""
+

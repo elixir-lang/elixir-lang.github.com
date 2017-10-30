@@ -1,0 +1,383 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 15:10+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../getting-started/alias-require-and-import.markdown:1
+msgid "---\n"
+"layout: getting-started\n"
+"title: alias, require, and import\n"
+"---"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:6
+msgid "# {{ page.title }}"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:8
+msgid "{% include toc.html %}"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:10
+msgid "In order to facilitate software reuse, Elixir provides three directives (`alias`, `require` and `import`) plus a macro called `use` summarized below:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:12
+msgid "```elixir\n"
+"# Alias the module so it can be called as Bar instead of Foo.Bar\n"
+"alias Foo.Bar, as: Bar"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:16
+msgid "# Require the module in order to use its macros\n"
+"require Foo"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:19
+msgid "# Import functions from Foo so they can be called without the `Foo.` prefix\n"
+"import Foo"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:22
+msgid "# Invokes the custom code defined in Foo as an extension point\n"
+"use Foo\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:26
+msgid "We are going to explore them in detail now. Keep in mind the first three are called directives because they have **lexical scope**, while `use` is a common extension point."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:28
+msgid "## alias"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:30
+msgid "`alias` allows you to set up aliases for any given module name."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:32
+msgid "Imagine a module uses a specialized list implemented in `Math.List`. The `alias` directive allows referring to `Math.List` just as `List` within the module definition:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:34
+msgid "```elixir\n"
+"defmodule Stats do\n"
+"  alias Math.List, as: List\n"
+"  # In the remaining module definition List expands to Math.List.\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:41
+msgid "The original `List` can still be accessed within `Stats` by the fully-qualified name `Elixir.List`."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:43
+msgid "> Note: All modules defined in Elixir are defined inside a main `Elixir` namespace. However, for convenience, you can omit \"Elixir.\" when referencing them."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:45
+msgid "Aliases are frequently used to define shortcuts. In fact, calling `alias` without an `:as` option sets the alias automatically to the last part of the module name, for example:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:47
+msgid "```elixir\n"
+"alias Math.List\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:51
+msgid "Is the same as:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:53
+msgid "```elixir\n"
+"alias Math.List, as: List\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:57
+msgid "Note that `alias` is **lexically scoped**, which allows you to set aliases inside specific functions:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:59
+msgid "```elixir\n"
+"defmodule Math do\n"
+"  def plus(a, b) do\n"
+"    alias Math.List\n"
+"    # ...\n"
+"  end"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:66
+msgid "  def minus(a, b) do\n"
+"    # ...\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:72
+msgid "In the example above, since we are invoking `alias` inside the function `plus/2`, the alias will be valid only inside the function `plus/2`. `minus/2` won't be affected at all."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:74
+msgid "## require"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:76
+msgid "Elixir provides macros as a mechanism for meta-programming (writing code that generates code). Macros are expanded at compile time."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:78
+msgid "Public functions in modules are globally available, but in order to use macros, you need to opt-in by requiring the module they are defined in."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:80
+msgid "```iex\n"
+"iex> Integer.is_odd(3)\n"
+"** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. However there is a macro with the same name and arity. Be sure to require Integer if you intend to invoke this macro\n"
+"iex> require Integer\n"
+"Integer\n"
+"iex> Integer.is_odd(3)\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:89
+msgid "In Elixir, `Integer.is_odd/1` is defined as a macro so that it can be used as a guard. This means that, in order to invoke `Integer.is_odd/1`, we need to first require the `Integer` module."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:91
+msgid "Note that like the `alias` directive, `require` is also lexically scoped. We will talk more about macros in a later chapter."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:93
+msgid "## import"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:95
+msgid "We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:97
+msgid "```iex\n"
+"iex> import List, only: [duplicate: 2]\n"
+"List\n"
+"iex> duplicate :ok, 3\n"
+"[:ok, :ok, :ok]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:104
+msgid "In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `:only` is optional, its usage is recommended in order to avoid importing all the functions of a given module inside the namespace. `:except` could also be given as an option in order to import everything in a module *except* a list of functions."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:106
+msgid "`import` also supports `:macros` and `:functions` to be given to `:only`. For example, to import all macros, one could write:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:108
+msgid "```elixir\n"
+"import Integer, only: :macros\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:112
+msgid "Or to import all functions, you could write:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:114
+msgid "```elixir\n"
+"import Integer, only: :functions\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:118
+msgid "Note that `import` is **lexically scoped** too. This means that we can import specific macros or functions inside function definitions:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:120
+msgid "```elixir\n"
+"defmodule Math do\n"
+"  def some_function do\n"
+"    import List, only: [duplicate: 2]\n"
+"    duplicate(:ok, 10)\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:129
+msgid "In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter)."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:131
+msgid "Note that `import`ing a module automatically `require`s it."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:133
+msgid "## use"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:135
+msgid "The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:137
+msgid "For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:139
+msgid "```elixir\n"
+"defmodule AssertionTest do\n"
+"  use ExUnit.Case, async: true"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:143
+msgid "  test \"always pass\" do\n"
+"    assert true\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:149
+msgid "Behind the scenes, `use` requires the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context. Generally speaking, the following module:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:151
+msgid "```elixir\n"
+"defmodule Example do\n"
+"  use Feature, option: :value\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:157
+msgid "is compiled into"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:159
+msgid "```elixir\n"
+"defmodule Example do\n"
+"  require Feature\n"
+"  Feature.__using__(option: :value)\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:166
+msgid "## Understanding Aliases"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:168
+msgid "At this point, you may be wondering: what exactly is an Elixir alias and how is it represented?"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:170
+msgid "An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:\"Elixir.String\"`:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:172
+msgid "```iex\n"
+"iex> is_atom(String)\n"
+"true\n"
+"iex> to_string(String)\n"
+"\"Elixir.String\"\n"
+"iex> :\"Elixir.String\" == String\n"
+"true\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:181
+msgid "By using the `alias/2` directive, we are changing the atom the alias expands to."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:183
+msgid "Aliases expand to atoms because in the Erlang <abbr title=\"Virtual Machine\">VM</abbr> (and consequently Elixir) modules are always represented by atoms. For example, that's the mechanism we use to call Erlang modules:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:185
+msgid "```iex\n"
+"iex> :lists.flatten([1, [2], 3])\n"
+"[1, 2, 3]\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:190
+msgid "## Module nesting"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:192
+msgid "Now that we have talked about aliases, we can talk about nesting and how it works in Elixir. Consider the following example:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:194
+msgid "```elixir\n"
+"defmodule Foo do\n"
+"  defmodule Bar do\n"
+"  end\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:201
+msgid "The example above will define two modules: `Foo` and `Foo.Bar`. The second can be accessed as `Bar` inside `Foo` as long as they are in the same lexical scope. The code above is exactly the same as:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:203
+msgid "```elixir\n"
+"defmodule Elixir.Foo do\n"
+"  defmodule Elixir.Foo.Bar do\n"
+"  end\n"
+"  alias Elixir.Foo.Bar, as: Bar\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:211
+msgid "If, later, the `Bar` module is moved outside the `Foo` module definition, it must be referenced by its full name (`Foo.Bar`) or an alias must be set using the `alias` directive discussed above."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:213
+msgid "**Note**: in Elixir, you don't have to define the `Foo` module before being able to define the `Foo.Bar` module, as the language translates all module names to atoms. You can define arbitrarily-nested modules without defining any module in the chain (e.g., `Foo.Bar.Baz` without defining `Foo` or `Foo.Bar` first)."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:215
+msgid "As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic."
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:217
+msgid "## Multi alias/import/require/use"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:219
+msgid "From Elixir v1.2, it is possible to alias, import or require multiple modules at once. This is particularly useful once we start nesting modules, which is very common when building Elixir applications. For example, imagine you have an application where all modules are nested under `MyApp`, you can alias the modules `MyApp.Foo`, `MyApp.Bar` and `MyApp.Baz` at once as follows:"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:221
+msgid "```elixir\n"
+"alias MyApp.{Foo, Bar, Baz}\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/alias-require-and-import.markdown:225
+msgid "With this we have finished our tour of Elixir modules. The last topic to cover is module attributes."
+msgstr ""
+
