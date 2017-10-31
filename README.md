@@ -17,6 +17,7 @@
     - 翻訳の仕方は `_po/ja/index.po` などを参考にしてください
     - `msgid` の部分を、直後の `msgstr` で翻訳します
     - 日本語化で使用しているGemは https://github.com/ruby-gettext/jekyll-task-i18n です
+1. `bundle exec rake`
 1. `./build_ja_pages.sh` を実行して、GitHub Page用の日本語サイトを生成する
 1. プルリクエストを `elixir-lang-jp` の `master` ブランチ向けに作る
 

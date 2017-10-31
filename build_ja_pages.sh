@@ -1,5 +1,6 @@
 #! /usr/bin/env sh
 
+bundle exec rake
 bundle exec jekyll build
 rm -rf docs/*
 cp -R _site/css docs/css/
