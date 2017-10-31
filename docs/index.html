@@ -73,19 +73,19 @@
 
       <p>Elixirは、低レイテンシで分散型のフォールトトレラントシステムや、Webや組み込みシステムの領域で成功を収めている、Erlang VMを利用します。</p>
 
-      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a> and our <a href="/learning.html">learning page for other resources</a>. Or keep reading to get an overview of the platform, language and tools.</p>
+      <p>詳しくは <a href="/getting-started/introduction.html">getting started guide</a> や <a href="/learning.html">learning page for other resources</a>をご覧ください。以下ではElixirのプラットフォームや言語、ツールの概要を説明します。</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h3>Platform features</h3>
+    <h3>プラットフォームの特徴</h3>
   </div>
 
   <div class="hentry post">
-    <h4>Scalability</h4>
+    <h4>スケーラビリティ（拡張性）</h4>
     <div class="entry-summary">
 
-      <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>
+      <p>全てのElixirのコードは、隔離された軽量の実行スレッド（プロセスと呼ばれる）の中で動作し、メッセージを通して情報をやり取りします。</p>
 
 <figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">current_process</span> <span class="o">=</span> <span class="n">self</span><span class="p">()</span>
 
@@ -99,19 +99,19 @@
   <span class="p">{</span><span class="ss">:msg</span><span class="p">,</span> <span class="n">contents</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="n">contents</span>
 <span class="k">end</span></code></pre></figure>
 
-      <p>Due to their lightweight nature, it is not uncommon to have hundreds of thousands of processes running <i>concurrently</i> in the same machine. Isolation allows processes to be garbage collected independently, reducing system-wide pauses, and using all machine resources as efficiently as possible (vertical scaling).</p>
+      <p>その軽量性により、同一のマシン内で数千のプロセスが <i>同時に</i> 起動することも珍しくありません。プロセスの隔離により、各プロセスが個別にガベージコレクションされることを許容し、システムの広範に及ぶポーズを減らし、全てのマシンリソースを可能な限り効率的に使うことが出来ます。（垂直拡張）</p>
 
-      <p>Processes are also able to communicate with other processes running on different machines in the same network. This provides the foundation for distribution, allowing developers to coordinate work across multiple nodes (horizontal scaling).</p>
+      <p>プロセスは、同一のネットワーク内に存在する、他のマシン上で動作しているプロセスとも通信することが出来ます。これは分散型システムの基盤となり、複数のノードにまたがったシステムの構築を可能にします。（水平拡張）</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Fault-tolerance</h4>
+    <h4>フォールトトレランス</h4>
 
     <div class="entry-summary">
-      <p>The unavoidable truth about software running in production is that <i>things will go wrong</i>. Even more when we take network, file systems, and other third-party resources into account.</p>
+      <p>本番環境で動作するソフトウェアに対する避けられない真実は <i>いつかは壊れる</i> ということです。ネットワークやファイルシステム、サードパーティのリソースを考慮するとその確度はさらに高まります。</p>
 
-      <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
+      <p>障害に対処するために、Elixirはスーパーバイザを提供します。スーパーバイザは何かが失敗した時にシステムの構成要素をどのようにリスタートするかや、動作が保証された既知の初期状態に戻す方法を表します。</p>
 
 <figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
   <span class="no">TCP</span><span class="o">.</span><span class="no">Pool</span><span class="p">,</span>
@@ -123,19 +123,19 @@
   </div>
 
   <div class="hentry post">
-    <h3>Language features</h3>
+    <h3>言語の特徴</h3>
   </div>
 
   <div class="hentry post">
-    <h4>Functional programming</h4>
+    <h4>関数型プログラミング</h4>
 
     <div class="entry-summary">
-      <p>Functional programming promotes a coding style that helps developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
+      <p>関数型プログラミングは、保守性が高く、高速に動作し、また少ない記述量でコードを書く、というコーディングスタイルを促進します。例えば、パターンマッチングはデータを容易に分解し、その内容にアクセスすることができます。</p>
 
 <figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="p">%</span><span class="no">User</span><span class="p">{</span><span class="ss">name:</span> <span class="n">name</span><span class="p">,</span> <span class="ss">age:</span> <span class="n">age</span><span class="p">}</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sd">"</span><span class="s2">John Doe"</span><span class="p">)</span>
 <span class="n">name</span> <span class="c1">#=&gt; "John Doe"</span></code></pre></figure>
 
-      <p>When mixed with guards, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>
+      <p>ガードとパターンマッチングをの組み合わせは、あるコードを実行するための特定の条件を、エレガントに match, assert することを可能にします。</p>
 
 <figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">def</span> <span class="n">serve_drinks</span><span class="p">(%</span><span class="no">User</span><span class="p">{</span><span class="ss">age:</span> <span class="n">age</span><span class="p">})</span> <span class="ow">when</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="m">21</span> <span class="k">do</span>
   <span class="c1"># Code that serves drinks!</span>
@@ -144,17 +144,17 @@
 <span class="n">serve_drinks</span> <span class="no">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sd">"</span><span class="s2">John Doe"</span><span class="p">)</span>
 <span class="c1">#=&gt; Fails if the user is under 21</span></code></pre></figure>
 
-      <p>Elixir relies heavily on those features to ensure your software is working under the expected constraints. And when it is not, don&rsquo;t worry, supervisors have your back!</p>
+      <p>予期される様々な制約の下で、ソフトウェアが動作することを確実にするために、Elixirはこれらの特徴に強く依存します。そしてもし動作しなかったとしても心配無用です。その場合はスーパーバイザがサポートします。</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Extensibility and DSLs</h4>
+    <h4>拡張性とDSL</h4>
 
     <div class="entry-summary">
-      <p>Elixir has been designed to be extensible, letting developers naturally extend the language to particular domains, in order to increase their productivity.</p>
+      <p>Elixirは拡張可能なようにデザインされています。開発者は生産性を高めるために、特定のドメイン用に言語を自然に拡張することができます。</p>
 
-      <p>As an example, let&rsquo;s write a simple test case using <a href="https://hexdocs.pm/ex_unit/">Elixir&rsquo;s test framework called ExUnit</a>:</p>
+      <p>例として、 <a href="https://hexdocs.pm/ex_unit/">ExUnitと呼ばれるElixirのテストフレームワーク</a> を使った簡単なテストケースを書いてみましょう。</p>
 
 <figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">defmodule</span> <span class="no">MathTest</span> <span class="k">do</span>
   <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
@@ -164,7 +164,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-      <p>The <code>async: true</code> option allows <code>test</code>s to run in parallel, using as many CPU cores as possible, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>
+      <p><code>async: true</code> オプションは、可能な限り多くのCPUコアを使うことで、各 <code>test</code> を並列に実行することを可能にします。<code>assert</code> はコードを内観でき、テスト失敗時に素晴らしいレポートを提供してくれます。これらの機能はElixirのマクロを利用して実現されており、あたかもそれが言語の一部であるかのように、新しい構文を追加することが可能です。</p>
     </div>
   </div>
 
