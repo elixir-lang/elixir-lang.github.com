@@ -1,3 +1,33 @@
+# elixir-lang.org 日本語サイト elixir-lang.jp リポジトリ
+
+## 翻訳の仕方
+
+### 環境
+
+- Ruby
+- bundler gem
+
+### 手順
+
+1. `git clone https://github.com/elixir-lang-jp/elixir-lang.github.com.git`
+1. `cd elixir-lang.github.com`
+1. `bundle`
+1. `bundle exec rake`
+1. `_po/ja/` 配下にある `*edit.po` ファイル内で任意の箇所を翻訳する
+    - 翻訳の仕方は `_po/ja/index.po` などを参考にしてください
+    - `msgid` の部分を、直後の `msgstr` で翻訳します
+    - 日本語化で使用しているGemは https://github.com/ruby-gettext/jekyll-task-i18n です
+1. `./build_ja_pages.sh` を実行して、GitHub Page用の日本語サイトを生成する
+1. プルリクエストを `elixir-lang-jp` の `master` ブランチ向けに作る
+
+### ローカルでの確認方法
+
+1. `bundle exec jekyll serve`
+1. `http://localhost:4000/ja` で確認できます
+    - GitHub Pageではルート直下でホスティングされるので、リンク周りはうまく動作しません
+        - 手でURLを直打ちして確認してください
+        - `http://localhost:4000/ja/install` など
+
 This projects holds the contents for Elixir website hosted at elixir-lang.org.
 
 It is automatically transformed by [Jekyll](https://github.com/mojombo/jekyll) into a static site.
