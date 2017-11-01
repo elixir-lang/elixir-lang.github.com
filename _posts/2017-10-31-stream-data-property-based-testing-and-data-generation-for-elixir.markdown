@@ -151,7 +151,7 @@ Property-based testing however can also have a more powerful impact on the way y
 
 ### Learning resources
 
-Property-based testing is not something specific to Elixir. While having its roots in Haskell (check out the [original QuickCheck paper] if you're interested), nowadays many languages have stable and usable implementations of it: Clojure has [test.check][], Python has [Hypothesis][], and many more. One of the most famous and complete tools for property-based testing exists for Erlang itself: [QuickCheck][] by Quviq is a complete commercial solution for property-based testing in Erlang of both stateless as well as stateful systems, and Quviq even provides a custom Erlang scheduler to test race conditions in your concurrent programs.
+Property-based testing is not something specific to Elixir. While having its roots in Haskell (check out the [original QuickCheck paper][quickcheck-paper] if you're interested), nowadays many languages have stable and usable implementations of it: Clojure has [test.check][], Python has [Hypothesis][], and many more. One of the most famous and complete tools for property-based testing exists for Erlang itself: [QuickCheck][] by Quviq is a complete commercial solution for property-based testing in Erlang of both stateless as well as stateful systems, and Quviq even provides a custom Erlang scheduler to test race conditions in your concurrent programs.
 
 A young but awesome book about property-based testing written by Fred Hebert is also available at [propertesting.com][]. This book is a *proper* (pun intended) guide to property-based testing and uses an Erlang library called [PropEr][]. However, the concepts and techniques perfectly apply to Elixir and stream_data as well.
 
@@ -174,6 +174,7 @@ The reasons for writing a new property-based testing library from scratch are be
 stream_data and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. We have used the names `StreamData` and `ExUnitProperties` to avoid conflicts when those modules are eventually merged into Elixir. When merged, they will be renamed to the proper `Stream.Data` and `ExUnit.Properties` modules. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
 
 [stream_data]: https://github.com/whatyouhide/stream_data
+[quickcheck-paper]: http://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf
 [test.check]: https://github.com/clojure/test.check
 [Hypothesis]: https://github.com/HypothesisWorks/hypothesis-python
 [QuickCheck]: http://quviq.com
