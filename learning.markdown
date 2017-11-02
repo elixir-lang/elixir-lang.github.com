@@ -73,6 +73,16 @@ Elixir-School is an open and community driven effort inspired by Twitter’s Sca
 
 <div class="clear"></div>
 
+<h4 class="resource">Joy of Elixir</h4>
+
+<a class="cover" href="http://joyofelixir.com" title="Joy of Elixir"><img src="/images/learning/joy-of-elixir.jpg" alt="Joy of Elixir" width="190" /></a>
+
+<a href="https://joyofelixir.com">Joy of Elixir</a> is a gentle introduction to programming, aimed at people who already know some things about computers, but who have little-to-no programming experience.
+
+This book will teach you the core concepts of the Elixir programming language in a fun and enjoyable way. If you're completely new to programming and you want to learn how to make a computer do things using the power of programming and you want to experience some joy while doing it, then read this book!
+
+<div class="clear"></div>
+
 ## Video/Interactive Resources
 
 <h4 class="resource">Try Elixir with Code School</h4>
