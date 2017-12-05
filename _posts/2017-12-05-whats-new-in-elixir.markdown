@@ -6,7 +6,7 @@ category: Announcements
 ---
 
 Today's post marks the first in a new series bringing you the latest changes to the Elixir language.
-We'd love to hear from you about what you'd like to see in future posts so get join the conversation on [the Elixir Forum thread](https://elixirforum.com/t/whats-new-in-elixir-discussion-dec-17/10605).
+We'd love to hear from you about what you'd like to see in future posts so join the conversation on [the Elixir Forum thread](https://elixirforum.com/t/whats-new-in-elixir-discussion-dec-17/10605).
 
 So what's in master?  Let's have a look:
 
