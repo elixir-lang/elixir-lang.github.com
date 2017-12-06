@@ -27,6 +27,6 @@ Jake Becker, one of the features contributors, outlined these benefits in his bl
 These improvements include the new `graph --format stats` command and a new option for all xref commands `--include-siblings`, for umbrella projects.
 For more information on xref changes checkout the CHANGELOG [entry](https://github.com/elixir-lang/elixir/blob/0e72d4839cda97edce75ca0c537555ce4ead7a6a/CHANGELOG.md#mix-xref).
 
-1. Stream data and property testing will be joining Elixir core in a future release. Not only will these be useful to users of Elixir but they'll be used to make Elixir itself better! [See our previous announcement for more information](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/) and give the [stream_data library](github.com/whatyouhide/stream_data) a try.
+1. Stream data and property testing will be joining Elixir core in a future release. Not only will these be useful to users of Elixir but they'll be used to make Elixir itself better! [See our previous announcement for more information](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/) and give the [stream_data library](https://github.com/whatyouhide/stream_data) a try.
 
 Think we missed something? Let us know [at the Elixir Forum](https://elixirforum.com/t/whats-new-in-elixir-discussion-dec-17/10605).
