@@ -127,7 +127,7 @@ iex> is_boolean(:false)
 true
 ```
 
-Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case are also atoms:
+Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case and are also atoms:
 
 ```iex
 iex> is_atom(Hello)
