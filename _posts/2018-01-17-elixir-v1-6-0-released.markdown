@@ -38,8 +38,8 @@ This release also introduces two new attributes associated with function definit
 @doc "Breaks a collection into chunks"
 @since "1.0.0"
 @deprecated "Use chunk_every/2 instead"
-def chunk_every(collection, chunk_size) do
-  ...
+def chunk(collection, chunk_size) do
+  chunk_every(collection, chunk_size)
 end
 ```
 
