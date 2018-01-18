@@ -113,12 +113,13 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
 
 ```erlang
 {application,kv,
-             [{registered,[]},
+             [{applications,[kernel,stdlib,elixir,logger]},
               {description,"kv"},
-              {applications,[kernel,stdlib,elixir,logger]},
-              {vsn,"0.0.1"},
-              {modules,['Elixir.KV','Elixir.KV.Bucket',
-                        'Elixir.KV.Registry','Elixir.KV.Supervisor']}]}.
+              {modules,['Elixir.KV','Elixir.KV.Bucket','Elixir.KV.Registry',
+                        'Elixir.KV.Supervisor']},
+              {registered,[]},
+              {vsn,"0.1.0"},
+              {extra_applications,[logger]}]}.
 ```
 
 This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the `:extra_applications` list in `mix.exs`.

@@ -73,6 +73,16 @@ Elixir-School is an open and community driven effort inspired by Twitter’s Sca
 
 <div class="clear"></div>
 
+<h4 class="resource">Joy of Elixir</h4>
+
+<a class="cover" href="http://joyofelixir.com" title="Joy of Elixir"><img src="/images/learning/joy-of-elixir.jpg" alt="Joy of Elixir" width="190" /></a>
+
+<a href="https://joyofelixir.com">Joy of Elixir</a> is a gentle introduction to programming, aimed at people who already know some things about computers, but who have little-to-no programming experience.
+
+This book will teach you the core concepts of the Elixir programming language in a fun and enjoyable way. If you're completely new to programming and you want to learn how to make a computer do things using the power of programming and you want to experience some joy while doing it, then read this book!
+
+<div class="clear"></div>
+
 ## Video/Interactive Resources
 
 <h4 class="resource">Try Elixir with Code School</h4>
@@ -88,6 +98,18 @@ Start learning and programming Elixir in your browser with Code School's interac
 <a class="cover" href="https://goo.gl/9w33lp" title="Take Off With Elixir"><img src="/images/learning/take-off-with-elixir.jpg" alt="Red:4" width="190" /></a>
 
 Red:4 is a fictional aerospace startup that needs your help! Through a book, a video, or both you can learn Elixir the fun way by immersing yourself in an on-the-job style set of problems. For instance, you will set up a project to calculate escape velocity for each of the planets in our solar system, learning pattern matching and language basics along the way. You'll move on to orbital mechanics while learning how to debug and refactor your code for clarity and meaning. You'll learn list basics and data storage techniques as you build a solar flare tracking system. Finally, you'll dive into OTP using Ecto and PostgreSQL - all in an effort to overwhelm our internal systems with the power of Elixir!
+
+<div class="clear"></div>
+
+<h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
+
+<a class="cover" href="https://pragmaticstudio.com/elixir" title="Pragmatic Studio's Elixir/OTP Course"><img src="/images/learning/pragmaticstudio-elixir.png" alt="Pragmatic Studio's Elixir/OTP Course" width="190" /></a>
+
+Put Elixir and OTP into action as you build a concurrent, fault-tolerant application from scratch in this 6-hour video course from The Pragmatic Studio. By developing a real app with real code, you'll gain practical experience putting all the pieces together to craft applications the Elixir/OTP way. 
+
+The first half of the course focuses on core Elixir facets, principles, and techniques. In the second half, we go beyond the basics and focus on what sets Elixir/OTP apart: concurrent processes, the actor model, OTP behaviors, and fault recovery.
+
+If you're new to Elixir, you'll get step-by-step guidance in an engaging format you won't find anywhere else. If you have experience with Elixir, you'll gain a deeper understanding of things you've been taking for granted and fill in any knowledge gaps.
 
 <div class="clear"></div>
 
