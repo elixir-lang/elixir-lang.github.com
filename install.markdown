@@ -63,7 +63,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### Raspberry Pi
 
-If necessary replace "jessie" with the name of your Raspian release.
+If necessary replace "jessie" with the name of your Raspbian release.
 
   * The Erlang Solutions repository has a prebuilt package for armhf. This saves significant time instead of recompiling natively
   * Get Erlang key
