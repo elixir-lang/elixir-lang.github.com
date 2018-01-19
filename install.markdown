@@ -11,7 +11,7 @@ layout: default
 
 The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling it.
 
-Note Elixir requires Erlang 18.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the "Installing Erlang" section below.
+Note that Elixir requires Erlang 18.0 or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the "Installing Erlang" section below.
 
 ## Distributions
 
@@ -63,9 +63,9 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### Raspberry Pi
 
-If necessary replace "jessie" with the name of your Raspbian release.
+If necessary, replace "jessie" with the name of your Raspbian release.
 
-  * The Erlang Solutions repository has a prebuilt package for armhf. This saves significant time instead of recompiling natively
+  * The Erlang Solutions repository has a prebuilt package for armhf. This saves a significant amount of time in comparison to recompiling natively
   * Get Erlang key
     * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
     * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`
