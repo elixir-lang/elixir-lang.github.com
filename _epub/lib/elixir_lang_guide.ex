@@ -120,7 +120,7 @@ defmodule ElixirLangGuide do
 
     config = %BUPE.Config{
       title: title,
-      creator: "Plataformatec",
+      creator: "elixir-lang.org",
       unique_identifier: title_to_filename(title),
       source: "#{options.homepage}/getting-started/",
       pages: files,
