@@ -29,7 +29,7 @@ test "removes bucket on crash", %{registry: registry} do
 
   # Stop the bucket with non-normal reason
   Agent.stop(bucket, :shutdown)
-  assert KV.Registry.lookup(registry, "shopping") == :error
+  assert KV.Registry.lookup(registry, "shopping") == {:ok, bucket}
 end
 ```
 
@@ -42,7 +42,7 @@ Since the bucket terminated, the registry went away with it, and our test fails 
      test/kv/registry_test.exs:26
      ** (exit) exited in: GenServer.call(#PID<0.148.0>, {:lookup, "shopping"}, 5000)
          ** (EXIT) no process: the process is not alive or there's no process currently associated with the given name, possibly because its application isn't started
-     code: assert KV.Registry.lookup(registry, "shopping") == :error
+     code: assert KV.Registry.lookup(registry, "shopping") == {:ok, bucket}
      stacktrace:
        (elixir) lib/gen_server.ex:770: GenServer.call/3
        test/kv/registry_test.exs:33: (test)
