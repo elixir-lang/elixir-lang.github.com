@@ -58,7 +58,7 @@ defmodule KV.BucketTest do
   use ExUnit.Case, async: true
 
   test "stores values by key" do
-    {:ok, bucket} = start_supervised KV.Bucket
+    {:ok, bucket} = KV.Bucket.start_link([])
     assert KV.Bucket.get(bucket, "milk") == nil
 
     KV.Bucket.put(bucket, "milk", 3)
@@ -67,17 +67,15 @@ defmodule KV.BucketTest do
 end
 ```
 
-Our first test starts a new `KV.Bucket` using the `start_supervised` function and performs some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because we used `start_supervised/2` and that takes care of automatically terminating the processes under test when the test finishes.
+Our first test starts a new `KV.Bucket` by calling the `start_link/1` and passing an empty list of options. Then we performs some `get/2` and `put/3` operations on it, asserting the result.
 
 Also note the `async: true` option passed to `ExUnit.Case`. This option makes the test case run in parallel with other `:async` test cases by using multiple cores in our machine. This is extremely useful to speed up our test suite. However, `:async` must *only* be set if the test case does not rely on or change any global values. For example, if the test requires writing to the filesystem or access a database, keep it synchronous (omit the `:async` option) to avoid race conditions between tests.
 
 Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested:
 
 ```
-** (ArgumentError) The module KV.Bucket was given as a child to a supervisor but it does not implement child_spec/1
+** (UndefinedFunctionError) function Foo.start_link/0 is undefined (module Foo is not available)
 ```
-
-Since the module has not yet been defined, the `child_spec/1` does not yet exist.
 
 In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
 
@@ -108,9 +106,9 @@ defmodule KV.Bucket do
 end
 ```
 
-The first step in our implementation is to call `use Agent`. By doing so, it will define a `child_spec/1` function containing the exact steps to start our process.
+The first step in our implementation is to call `use Agent`.
 
-Then we define a `start_link/1` function, which will effectively start the agent. The `start_link/1` function always receives a list of options, but we don't plan on using it right now. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent initial state.
+Then we define a `start_link/1` function, which will effectively start the agent. It is a convention to define a `start_link/1` function that always accepts a list of options. We don't plan on using any option right now, but we might later on. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent initial state.
 
 We are keeping a map inside the agent to store our keys and values. Getting and putting values on the map is done with the Agent API  and the capture operator `&`, introduced in [the Getting Started guide](/getting-started/modules-and-functions.html#function-capturing).
 
@@ -127,7 +125,7 @@ defmodule KV.BucketTest do
   use ExUnit.Case, async: true
 
   setup do
-    {:ok, bucket} = start_supervised(KV.Bucket)
+    {:ok, bucket} = KV.Bucket.start_link([])
     %{bucket: bucket}
   end
 

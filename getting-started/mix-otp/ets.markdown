@@ -128,10 +128,12 @@ The changes we have performed above have broken our tests because the registry r
 
 ```elixir
   setup context do
-    {:ok, _} = start_supervised({KV.Registry, name: context.test})
+    _ = start_supervised!({KV.Registry, name: context.test})
     %{registry: context.test}
   end
 ```
+
+Since each test has a unique name, we use the test name to name our registries. This way, we no longer need to pass the registry PID around, instead we identify it by the test name. Also note we assigned the result of `start_supervised!` to underscore (`_`). This idiom is often used to signal that we are not interested in the result of `start_supervised!`.
 
 Once we change `setup`, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the "spawns buckets" test:
 

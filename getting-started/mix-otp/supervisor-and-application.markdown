@@ -41,7 +41,7 @@ Our supervisor has a single child so far: `KV.Registry`. After we define a list 
 
 The supervision strategy dictates what happens when one of the children crashes. `:one_for_one` means that if a child dies, it will be the only one restarted. Since we have only one child now, that's all we need. The `Supervisor` behaviour supports many different strategies and we will discuss them in this chapter.
 
-Once the supervisor starts, it will traverse the list of children and it will invoke the `child_spec/1` function on each module. We heard about the `child_spec/1` function in the Agent chapter, when we called `start_supervised(KV.Bucket)` without defining the module.
+Once the supervisor starts, it will traverse the list of children and it will invoke the `child_spec/1` function on each module.
 
 The `child_spec/1` function returns the child specification which describes how to start the process, if the process is a worker or a supervisor, if the process is temporary, transient or permanent and so on. The `child_spec/1` function is automatically defined when we `use Agent`, `use GenServer`, `use Supervisor`, etc. Let's give it a try in the terminal with `iex -S mix`:
 
@@ -59,6 +59,8 @@ iex(1)> KV.Registry.child_spec([])
 We will learn those details as we move forward on this guide. If you would rather peek ahead, check the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) docs.
 
 After the supervisor retrieves all child specifications, it proceeds to start its children one by one, in the order they were defined, using the information in the `:start` key in the child specification. For our current specification, it will call `KV.Registry.start_link([])`.
+
+In the previous chapter, we have used `start_supervised!` to start the registry during our tests. Internally, the `start_supervised!` function starts the registry under a supervisor defined by the ExUnit framework. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise registries in your applications, aligning our production code and tests best practices.
 
 So far `start_link/1` has always received an empty list of options. It is time we change that.
 

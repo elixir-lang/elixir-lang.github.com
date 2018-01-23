@@ -135,7 +135,7 @@ defmodule KV.RegistryTest do
   use ExUnit.Case, async: true
 
   setup do
-    {:ok, registry} = start_supervised KV.Registry
+    registry = start_supervised!(KV.Registry)
     %{registry: registry}
   end
 
@@ -153,7 +153,13 @@ end
 
 Our test should pass right out of the box!
 
-Once again, ExUnit will take care of shutting down the registry after every test since we used `start_supervised` to start it. If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
+There is one important difference between the `setup` block we wrote for `KV.Registry` and the one we wrote for `KV.Bucket`. Instead of starting the registry by hand by calling `KV.Registry.start_link/1`, we instead called [the `start_supervised!/1` function](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2), passing the `KV.Registry` module.
+
+The `start_supervised!` function will do the job of starting the `KV.Registry` process by calling `start_link/1`. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown before the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
+
+When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the previous setup block in `bucket_test.exs` to use `start_supervised!` too.
+
+If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
 ## Client API

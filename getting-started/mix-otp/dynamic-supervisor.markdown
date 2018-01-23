@@ -179,7 +179,7 @@ So far we have been starting one registry per test to ensure they are isolated:
 
 ```elixir
 setup do
-  {:ok, registry} = start_supervised(KV.Registry)
+  registry = start_supervised!(KV.Registry)
   %{registry: registry}
 end
 ```
