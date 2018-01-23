@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Simple one for one supervisors
+title: Dynamic supervisors
 ---
 
 # {{ page.title }}
@@ -48,7 +48,7 @@ Since the bucket terminated, the registry went away with it, and our test fails 
        test/kv/registry_test.exs:33: (test)
 ```
 
-We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization. Instead, a worker is started manually via the `Supervisor.start_child/2` function.
+We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization, instead each works is started manually via `DynamicSupervisor.start_child/2`.
 
 ## The bucket supervisor
 
@@ -56,28 +56,27 @@ Let's define our `KV.BucketSupervisor` in `lib/kv/bucket_supervisor.ex` as follo
 
 ```elixir
 defmodule KV.BucketSupervisor do
-  use Supervisor
+  use DynamicSupervisor
 
   # A simple module attribute that stores the supervisor name
   @name KV.BucketSupervisor
 
   def start_link(_opts) do
-    Supervisor.start_link(__MODULE__, :ok, name: @name)
+    DynamicSupervisor.start_link(__MODULE__, :ok, name: @name)
   end
 
   def start_bucket do
-    Supervisor.start_child(@name, [])
+    Supervisor.start_child(@name, KV.Bucket)
   end
 
   def init(:ok) do
-    Supervisor.init([KV.Bucket], strategy: :simple_one_for_one)
+    # We just init the supervisor without specifying the children
+    DynamicSupervisor.init(strategy: :one_for_one)
   end
 end
 ```
 
-There are two changes in this supervisor compared to the first one.
-
-First of all, we have decided to give the supervisor a local name of `KV.BucketSupervisor`. While we could have passed the `opts` received on `start_link/1` to the supervisor, we chose to hard code the name for simplicity. Note this approach has downsides. For example, you wouldn't be able to start multiple instances of the `KV.BucketSupervisor` during tests, as they would conflict on the name. In this case, we will just allow all registries to use the same bucket supervisor at once, that won't be a problem since children of a simple one for one supervisor don't interfere with one another.
+Note we have decided to give the supervisor a local name of `KV.BucketSupervisor`. While we could have passed the `opts` received on `start_link/1` to the supervisor, we chose to hard code the name for simplicity. Note this approach has downsides. For example, you wouldn't be able to start multiple instances of the `KV.BucketSupervisor` during tests, as they would conflict on the name. In this case, we will just allow all registries to use the same bucket supervisor at once, that won't be a problem since children of a dynamic supervisor don't interfere with one another.
 
 We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.BucketSupervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link/1` directly in the registry.
 
