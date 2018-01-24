@@ -84,7 +84,7 @@ Let's take a brief look at those generated files.
 A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let's take a look at it:
 
 ```elixir
-defmodule KV.Mixfile do
+defmodule KV.MixProject do
   use Mix.Project
 
   def project do
