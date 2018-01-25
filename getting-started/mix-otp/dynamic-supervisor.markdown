@@ -66,7 +66,7 @@ defmodule KV.BucketSupervisor do
   end
 
   def start_bucket do
-    Supervisor.start_child(@name, KV.Bucket)
+    DynamicSupervisor.start_child(@name, KV.Bucket)
   end
 
   def init(:ok) do
