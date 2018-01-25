@@ -237,4 +237,4 @@ When we say "project" you should think about Mix. Mix is the tool that manages y
 
 When we talk about applications, we talk about <abbr title="Open Telecom Platform">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications and how they relate to booting and shutting down of your system as a whole in the [docs for the Application module](https://hexdocs.pm/elixir/Application.html).
 
-Next let's learn about one special type of supervisor that is designed to start and shut down children dynamically, called Dynamic supervisors.
+Next let's learn about one special type of supervisor that is designed to start and shut down children dynamically, called dynamic supervisors.
