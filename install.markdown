@@ -63,12 +63,12 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### Raspberry Pi
 
-If necessary, replace "jessie" with the name of your Raspbian release.
+If necessary, replace "stretch" with the name of your Raspbian release.
 
   * The Erlang Solutions repository has a prebuilt package for armhf. This saves a significant amount of time in comparison to recompiling natively
   * Get Erlang key
-    * `echo "deb http://packages.erlang-solutions.com/debian jessie contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
-    * Run: `wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc`
+    * `echo "deb https://packages.erlang-solutions.com/debian stretch contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
+    * Run: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
     * Add to keychain: `sudo apt-key add erlang_solutions.asc`
   * Install Elixir
     * Update apt to latest: `sudo apt update`
