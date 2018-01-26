@@ -196,7 +196,7 @@ This file will be required by Mix every time before we run our tests. We can run
     ..
 
     Finished in 0.04 seconds
-    2 tests, 0 failures
+    1 doctest, 1 test, 0 failures
 
     Randomized with seed 540224
 
@@ -225,7 +225,7 @@ Now run `mix test` again (notice this time there will be no compilation):
 .
 
 Finished in 0.05 seconds
-2 tests, 1 failure
+1 doctest, 1 test, 1 failure
 ```
 
 For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left side and right side (rhs) of the `==` operator.
