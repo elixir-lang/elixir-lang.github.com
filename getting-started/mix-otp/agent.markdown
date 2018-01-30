@@ -74,7 +74,7 @@ Also note the `async: true` option passed to `ExUnit.Case`. This option makes th
 Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested:
 
 ```
-** (UndefinedFunctionError) function Foo.start_link/0 is undefined (module Foo is not available)
+** (UndefinedFunctionError) function KV.Bucket.start_link/1 is undefined (module KV.Bucket is not available)
 ```
 
 In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
