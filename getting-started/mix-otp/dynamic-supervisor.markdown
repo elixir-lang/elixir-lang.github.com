@@ -52,7 +52,7 @@ We are going to solve this issue by defining a new supervisor that will spawn an
 
 ## The bucket supervisor
 
-Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor` in `lib/kv/application.ex` as follows:
+Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor` in `lib/kv/supervisor.ex` as follows:
 
 
 ```elixir
