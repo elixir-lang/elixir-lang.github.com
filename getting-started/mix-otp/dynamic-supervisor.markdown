@@ -66,6 +66,8 @@ Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor` in 
   end
 ```
 
+Note this time we didn't have to define a separate module that invokes `use DynamicSupervisor`. Instead we directly started it in our supervision tree. This is straight-forward to do with the `DynamicSupervisor` because it doesn't require any child to be given during initialization.
+
 Run `iex -S mix` so we can give our dynamic supervisor a try:
 
 ```iex
