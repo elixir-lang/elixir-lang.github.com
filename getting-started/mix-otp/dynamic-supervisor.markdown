@@ -52,14 +52,28 @@ We are going to solve this issue by defining a new supervisor that will spawn an
 
 ## The bucket supervisor
 
-Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor` in `lib/kv/supervisor.ex` as follows:
+Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor` in `lib/kv/bucket_supervisor.ex` as follows:
 
+```elixir
+defmodule KV.BucketSupervisor do
+  use DynamicSupervisor
+
+  def start_link(opts) do
+    DynamicSupervisor.start_link(__MODULE__, :ok, opts)
+  end
+
+  def init(:ok) do
+    DynamicSupervisor.init(strategy: :one_for_one)
+  end
+end
+```
+Next, add `KV.BucketSupervisor` to `children` in `lib/kv/supervisor.ex`:
 
 ```elixir
   def init(:ok) do
     children = [
       {KV.Registry, name: KV.Registry},
-      {DynamicSupervisor, name: KV.BucketSupervisor, strategy: :one_for_one}
+      {KV.BucketSupervisor, name: KV.BucketSupervisor, strategy: :one_for_one}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
