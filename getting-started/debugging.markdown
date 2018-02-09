@@ -89,7 +89,7 @@ Similar to `IEx.pry/0`, once a breakpoint is reached code execution stops until 
 
 ## Debugger
 
-For those who enjoy breakpoints but are rather interested on a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define some code:
+For those who enjoy breakpoints but are rather interested on a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module:
 
 ```elixir
 defmodule Example do
@@ -119,7 +119,7 @@ iex(3)> :int.break(Example, 3)
 iex(4)> Example.double_sum(1,2)
 ```
 
-When you started the debugger, a Graphical User Interface will open in your machine. We called `:int.ni(Example)` to prepare our module for debugging and then added a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
+When you start the debugger, a Graphical User Interface will open in your machine. We call `:int.ni(Example)` to prepare our module for debugging and then add a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
 
 <img src="/images/contents/debugger-elixir.gif" width="640" alt="Debugger GUI GIF" />
 
