@@ -121,7 +121,7 @@ iex(4)> Example.double_sum(1,2)
 
 When you started the debugger, a Graphical User Interface will open in your machine. We called `:int.ni(Example)` to prepare our module for debugging and then added a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
 
-<img src="/images/contents/debugger-elixir.png" width="640" alt="Debugger GUI video" />
+<img src="/images/contents/debugger-elixir.gif" width="640" alt="Debugger GUI GIF" />
 
 Note: the Debugger snippet above was retrieved from ["Debugging techniques in Elixir" by Plataformatec](http://blog.plataformatec.com.br/2016/04/debugging-techniques-in-elixir-lang/).
 
