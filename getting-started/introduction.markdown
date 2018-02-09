@@ -14,8 +14,8 @@ In this tutorial, we are going to teach you about Elixir fundamentals - the lang
 
 Our requirements are:
 
-  * Elixir - Version 1.4.0 onwards
-  * Erlang - Version 18.0 onwards
+  * Elixir - Version 1.5.0 onwards
+  * Erlang - Version 19.0 onwards
 
 Let's get started!
 
