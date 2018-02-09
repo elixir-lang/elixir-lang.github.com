@@ -89,7 +89,7 @@ Similar to `IEx.pry/0`, once a breakpoint is reached code execution stops until 
 
 ## Debugger
 
-For those who enjoy breakpoints but are rather interested on a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module:
+For those who enjoy breakpoints but are rather interested in a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module:
 
 ```elixir
 defmodule Example do
