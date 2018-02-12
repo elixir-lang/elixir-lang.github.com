@@ -126,7 +126,7 @@ For now, there is a more important bug we need to fix: what happens if our TCP a
 
 We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function, and arguments, allowing us to run a given function as part of a supervision tree.
+[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/1` function that receives an anonymous function and executes it inside a new process that will be of a supervision tree.
 
 Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
@@ -140,6 +140,8 @@ Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change th
     Supervisor.start_link(children, opts)
   end
 ```
+
+As usual, we've passed a two-element tuple as a child specification, which in turn will invoke `Task.start_link/1`.
 
 With this change, we are saying that we want to run `KVServer.accept(4040)` as a task. We are hardcoding the port for now but this could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
 
