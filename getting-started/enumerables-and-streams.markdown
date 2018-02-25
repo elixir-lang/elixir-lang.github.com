@@ -95,7 +95,7 @@ Many functions in the `Stream` module accept any enumerable as an argument and r
 
 ```iex
 iex> stream = Stream.cycle([1, 2, 3])
-#Function<15.16982430/2 in Stream.cycle/1>
+#Function<15.16982430/2 in Stream.unfold/2>
 iex> Enum.take(stream, 10)
 [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
 ```
