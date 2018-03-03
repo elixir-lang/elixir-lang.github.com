@@ -126,6 +126,7 @@ iex> defmodule Product do
 iex> %Product{}
 %Product{name: nil}
 ```
+Providing any default values means that default values have to be given for all keys, since `nil` is assumed only when no defaults are given.
 
 You can also enforce that certain keys have to be specified when creating the struct:
 
