@@ -1,6 +1,7 @@
 ---
 layout: getting-started
 title: Dependencies and umbrella projects
+redirect_from: /getting-started/mix-otp/dependencies-and-umbrella-apps.html
 ---
 
 # {{ page.title }}
@@ -49,7 +50,7 @@ end
 
 This dependency refers to the latest version of Plug in the 1.x.x version series that has been pushed to Hex. This is indicated by the `~>` preceding the version number. For more information on specifying version requirements, see the [documentation for the Version module](https://hexdocs.pm/elixir/Version.html).
 
-Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage git dependencies too:
+Typically, stable releases are pushed to Hex. If you want to depend on an external dependency still in development, Mix is able to manage Git dependencies too:
 
 ```elixir
 def deps do
@@ -78,9 +79,9 @@ The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, de
 
 Internal dependencies are the ones that are specific to your project. They usually don't make sense outside the scope of your project/company/organization. Most of the time, you want to keep them private, whether due to technical, economic or business reasons.
 
-If you have an internal dependency, Mix supports two methods to work with them: git repositories or umbrella projects.
+If you have an internal dependency, Mix supports two methods to work with them: Git repositories or umbrella projects.
 
-For example, if you push the `kv` project to a git repository, you'll need to list it in your deps code in order to use it:
+For example, if you push the `kv` project to a Git repository, you'll need to list it in your deps code in order to use it:
 
 ```elixir
 def deps do
@@ -90,9 +91,9 @@ end
 
 If the repository is private though, you may need to specify the private URL `git@github.com:YOUR_ACCOUNT/kv.git`. In any case, Mix will be able to fetch it for you as long as you have the proper credentials.
 
-Using git dependencies for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provide the concept of applications. As such, we expect you to frequently break your code into applications that can be organized logically, even within a single project.
+Using Git repositories for internal dependencies is somewhat discouraged in Elixir. Remember that the runtime and the Elixir ecosystem already provide the concept of applications. As such, we expect you to frequently break your code into applications that can be organized logically, even within a single project.
 
-However, if you push every application as a separate project to a git repository, your projects may become very hard to maintain as you will spend a lot of time managing those git repositories rather than writing your code.
+However, if you push every application as a separate project to a Git repository, your projects may become very hard to maintain as you will spend a lot of time managing those Git repositories rather than writing your code.
 
 For this reason, Mix supports "umbrella projects". Umbrella projects are used to build applications that run together in a single repository. That is exactly the style we are going to explore in the next sections.
 
@@ -113,8 +114,9 @@ Let's start a new project using `mix new`. This new project will be named `kv_um
 
 ```bash
 $ mix new kv_umbrella --umbrella
-* creating .gitignore
 * creating README.md
+* creating .formatter.exs
+* creating .gitignore
 * creating mix.exs
 * creating apps
 * creating config
@@ -124,13 +126,13 @@ $ mix new kv_umbrella --umbrella
 From the printed information, we can see far fewer files are generated. The generated `mix.exs` file is different too. Let's take a look (comments have been removed):
 
 ```elixir
-defmodule KvUmbrella.Mixfile do
+defmodule KvUmbrella.MixProject do
   use Mix.Project
 
   def project do
     [
       apps_path: "apps",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -153,7 +155,7 @@ $ mix new kv_server --module KVServer --sup
 The generated files are similar to the ones we first generated for `kv`, with a few differences. Let's open up `mix.exs`:
 
 ```elixir
-defmodule KVServer.Mixfile do
+defmodule KVServer.MixProject do
   use Mix.Project
 
   def project do
@@ -164,8 +166,8 @@ defmodule KVServer.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.6-dev",
-      start_permanent: Mix.env == :prod,
+      elixir: "~> 1.7-dev",
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -250,9 +252,9 @@ And it works!
 
 Since we want `kv_server` to eventually use the functionality we defined in `kv`, we need to add `kv` as a dependency to our application.
 
-## In umbrella dependencies
+## Dependencies within an umbrella project
 
-Dependencies between applications in an umbrella project must still be explicitly defined and Mix makes it easy to do so. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
+Dependencies between applications in an umbrella project must still be explicitly defined and Mix makes easy to do so. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
 
 ```elixir
 defp deps do
@@ -269,7 +271,7 @@ Finally, copy the `kv` application we have built so far to the `apps` directory 
         + kv
         + kv_server
 
-We now need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project` function:
+We now need to modify `apps/kv/mix.exs` to contain the umbrella entries we have seen in `apps/kv_server/mix.exs`. Open up `apps/kv/mix.exs` and add to the `project/0` function:
 
 ```elixir
 build_path: "../../_build",
@@ -296,7 +298,7 @@ In this chapter, we have learned more about Mix dependencies and umbrella projec
 
 When using umbrella applications, it is important to have a clear boundary between them. Our upcoming `kv_server` must only access public APIs defined in `kv`. Think of your umbrella apps as any other dependency or even Elixir itself: you can only access what is public and documented. Reaching into private functionality in your dependencies is a poor practice that will eventually cause your code to break when a new version is up.
 
-Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as a separate application in the umbrella, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, the system can be moved to a private repository or a hex.pm package.
+Umbrella applications can also be used as a stepping stone for eventually extracting an application from your codebase. For example, imagine a web application that has to send "push notifications" to its users. The whole "push notifications system" can be developed as a separate application in the umbrella, with its own supervision tree and APIs. If you ever run into a situation where another project needs the push notifications system, the system can be moved to a private repository or a Hex package.
 
 Developers may also use umbrella projects to break large business domains apart. The caution here is to make sure the domains don't depend on each other (also known as cyclic dependencies). If you run into such situations, it means those applications are not as isolated from each other as you originally thought, and you have architectural and design issues to solve.
 
