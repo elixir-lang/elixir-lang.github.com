@@ -125,6 +125,8 @@ IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
 IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 ```
 
+*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#trailing-question-mark-foo).*
+
 Giving an argument that does not match any of the clauses raises an error.
 
 Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#doend-blocks). For example, we can edit `math.exs` to look like this:
