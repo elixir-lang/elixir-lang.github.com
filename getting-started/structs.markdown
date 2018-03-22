@@ -127,6 +127,27 @@ iex> %Product{}
 %Product{name: nil}
 ```
 
+You can mix keys with an explicit default value and keys defaulting to `nil`.
+You can do it explicitly:
+
+```iex
+iex> defmodule Product do
+...>   defstruct name: nil, price: 12
+...> end
+iex> %Product{}
+%Product{name: nil}
+```
+
+You can also let one key be assumed to default to `nil`, but the fields must be enclosed in square brackets, and the `nil` keys must be at the beginning of the list:
+
+```iex
+iex> defmodule Product do
+...>   defstruct [:name, price: 12]
+...> end
+iex> %Product{}
+%Product{name: nil}
+```
+
 You can also enforce that certain keys have to be specified when creating the struct:
 
 ```iex
