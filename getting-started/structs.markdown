@@ -135,7 +135,7 @@ iex> defmodule Product do
 ...>   defstruct name: nil, price: 12
 ...> end
 iex> %Product{}
-%Product{name: nil}
+%Product{name: nil, price: 12}
 ```
 
 You can also let one key be assumed to default to `nil`, but the fields must be enclosed in square brackets, and the `nil` keys must be at the beginning of the list:
@@ -145,7 +145,7 @@ iex> defmodule Product do
 ...>   defstruct [:name, price: 12]
 ...> end
 iex> %Product{}
-%Product{name: nil}
+%Product{name: nil, price: 12}
 ```
 
 You can also enforce that certain keys have to be specified when creating the struct:
