@@ -16,7 +16,7 @@ Elixir's source code is under the [Apache 2 License](https://github.com/elixir-l
 
 The language development is open, both in terms of source code and of collaborations. All features and bug fixes planned for the next releases can be found [in the issues tracker](https://github.com/elixir-lang/elixir/issues). Features that may cause a larger impact on the language are first proposed to the community in [the Elixir mailing list](https://groups.google.com/group/elixir-lang-core) as well as in [the "Elixir News" section in the Elixir Forum](https://elixirforum.com/c/elixir-news).
 
-Elixir v1.0 was released in September 2014 and a new minor version is released every 6 months, around January and July of every year. New Elixir versions are always announced on this website with a summary of the main changes and a link to the complete CHANGELOG.
+Elixir v1.0 was released in September 2014 and a new minor version is released every 6 months, around January and July of every year. New Elixir versions are always announced on this website with a summary of the main changes and a link to the complete CHANGELOG. Our [compatibility and deprecation policies](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#content) are documented.
 
 Since v1.0, the language development has become more focused. We believe there is a limited amount of features a language can provide without hindering its learning and without causing fragmentation in the community. Therefore the Elixir team focuses on language features that:
 
