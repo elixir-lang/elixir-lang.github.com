@@ -85,14 +85,6 @@ This book will teach you the core concepts of the Elixir programming language in
 
 ## Video/Interactive Resources
 
-<h4 class="resource">Try Elixir with Code School</h4>
-
-<a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
-
-Start learning and programming Elixir in your browser with Code School's interactive Try Elixir course. Learn the basics of functional programming with instructor-led videos before taking on challenges where you’ll code directly in the browser, receiving immediate feedback and code validation.
-
-<div class="clear"></div>
-
 <h4 class="resource">Take Off With Elixir</h4>
 
 <a class="cover" href="https://goo.gl/9w33lp" title="Take Off With Elixir"><img src="/images/learning/take-off-with-elixir.jpg" alt="Red:4" width="190" /></a>
