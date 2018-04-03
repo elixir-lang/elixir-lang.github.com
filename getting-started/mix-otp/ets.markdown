@@ -21,7 +21,7 @@ ETS allows us to store any Elixir term in an in-memory table. Working with ETS t
 
 ```iex
 iex> table = :ets.new(:buckets_registry, [:set, :protected])
-8207
+#Reference<0.1885502827.460455937.234656>
 iex> :ets.insert(table, {"foo", self()})
 true
 iex> :ets.lookup(table, "foo")
