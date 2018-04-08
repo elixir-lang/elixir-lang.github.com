@@ -168,11 +168,11 @@ iex> h
 1
 ```
 
-The variable `_` is special in that it can never be read from. Trying to read from it gives an unbound variable error:
+The variable `_` is special in that it can never be read from. Trying to read from it gives a compile error:
 
 ```iex
 iex> _
-** (CompileError) iex:1: unbound variable _
+** (CompileError) iex:1: invalid use of _. "_" represents a value to be ignored in a pattern and cannot be used in expressions
 ```
 
 Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:
