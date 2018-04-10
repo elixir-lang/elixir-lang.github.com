@@ -50,6 +50,13 @@ iex> ?ł
 322
 ```
 
+Note that the code point of an ASCII whitespace can be accessed by `?\s`:
+
+```iex
+iex> ?\s
+32
+```
+
 You can also use the functions in [the `String` module](https://hexdocs.pm/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
 
 ```iex
