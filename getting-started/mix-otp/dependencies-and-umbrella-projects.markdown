@@ -288,7 +288,7 @@ Umbrella projects are a convenience to help you organize and manage multiple app
 
 The pattern of keeping multiple applications in the same repository is known as "mono-repo". Umbrella projects maximize this pattern by providing conveniences to compile, test and run multiple applications at once.
 
-If you find yourself in a position where you want to use different configurations to different applications in the same umbrella or to use different dependency versions, then it is likely your codebase have grown beyond what umbrellas can provide.
+If you find yourself in a position where you want to use different configurations to different applications in the same umbrella or to use different dependency versions, then it is likely your codebase has grown beyond what umbrellas can provide.
 
 The good news is that breaking an umbrella apart is quite straightforward, as you simply need to move applications outside of the umbrella project's `apps/` directory. In the worst case scenario, you can discard the umbrella project and all related configuration (`build_path`, `config_path`, `deps_path` and `lockfile`) and still leverage the "mono-repo" pattern by keeping all applications together in the same repository. Each application will have its own dependencies and configuration. Dependencies between those applications can still be explicitly listed by using the `:path` option (in contrast to `:git`).
 
