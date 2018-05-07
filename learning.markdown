@@ -129,7 +129,6 @@ Elixir koans is a fun, easy way to get started with the Elixir programming langu
 <div class="clear"></div>
 
 ## Screencasts
-
 <h4 class="resource">Elixir Sips</h4>
 
 <a class="cover" href="http://elixirsips.com" title="Elixir Sips: Learn Elixir with Two Short Videos Each Week
@@ -162,6 +161,16 @@ It's intended to help beginners get familiar with all of Elixir's features by bu
 ElixirCasts is a collection of simple screencasts that cover a wide range of Elixir and Phoenix topics. Each episode tackles a specific problem or explores a new library, demystifying it in a language that's easy to understand.
 
 Episodes range from beginner focused to more moderate and advanced topics. Come build your knowledge of Elixir with us, one episode at a time.
+
+<div class="clear"></div>
+
+<h4 class="resource">Alchemist Camp</h4>
+
+<a class="cover" href="http://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
+
+Alchemist Camp is the largest producer of free Elixir screencasts and has dozens of hours of screencasts on YouTube. The videos are often longer-form and focused around projects, such as building a small Phoenix clone, or an OTP worker to regularly collect statistics from multiple APIs. Content is driven by viewer request.
+
+Alchemist Camp is aimed at people who have some web development experience and want to ship real-world projects in Elixir.
 
 <div class="clear"></div>
 
