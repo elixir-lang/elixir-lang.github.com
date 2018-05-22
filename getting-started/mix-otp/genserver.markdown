@@ -211,7 +211,7 @@ Let's reimplement the server callbacks to fix the bug and make the test pass. Fi
 
 def init(:ok) do
   names = %{}
-  refs  = %{}
+  refs = %{}
   {:ok, {names, refs}}
 end
 

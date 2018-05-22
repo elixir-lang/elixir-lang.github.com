@@ -14,8 +14,10 @@ In this last chapter, we will go back to the `:kv` application and add a routing
 The routing layer will receive a routing table of the following format:
 
 ```elixir
-[{?a..?m, :"foo@computer-name"},
- {?n..?z, :"bar@computer-name"}]
+[
+  {?a..?m, :"foo@computer-name"},
+  {?n..?z, :"bar@computer-name"}
+]
 ```
 
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
@@ -195,8 +197,7 @@ defmodule KV.Router do
   """
   def table do
     # Replace computer-name with your local machine name.
-    [{?a..?m, :"foo@computer-name"},
-     {?n..?z, :"bar@computer-name"}]
+    [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
   end
 end
 ```
@@ -296,9 +297,11 @@ Open up `apps/kv/mix.exs` and change the `application/0` function to return the 
 
 ```elixir
 def application do
-  [extra_applications: [:logger],
-   env: [routing_table: []],
-   mod: {KV, []}]
+  [
+    extra_applications: [:logger],
+    env: [routing_table: []],
+    mod: {KV, []}
+  ]
 end
 ```
 
@@ -336,9 +339,7 @@ This means we can also configure our `:routing_table` directly in the `apps/kv/c
 
 ```elixir
 # Replace computer-name with your local machine nodes.
-config :kv, :routing_table,
-       [{?a..?m, :"foo@computer-name"},
-        {?n..?z, :"bar@computer-name"}]
+config :kv, :routing_table, [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
 ```
 
 Restart the nodes and run distributed tests again. Now they should all pass.
