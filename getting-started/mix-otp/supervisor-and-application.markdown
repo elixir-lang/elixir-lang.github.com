@@ -132,7 +132,7 @@ We can also configure the generated `.app` file by customizing the values return
 
 ### Starting applications
 
-When we define a `.app` file, which is the application specification, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
+When we define an `.app` file, which is the application specification, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
 
 1. Mix automatically starts our current application for us
 
