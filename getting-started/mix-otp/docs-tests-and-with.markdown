@@ -47,7 +47,7 @@ defmodule KVServer.Command do
 
   ## Examples
 
-      iex> KVServer.Command.parse "CREATE shopping\r\n"
+      iex> KVServer.Command.parse("CREATE shopping\r\n")
       {:ok, {:create, "shopping"}}
 
   """
@@ -148,19 +148,19 @@ Notice how we were able to elegantly parse the commands without adding a bunch o
 Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:
 
 ```iex
-iex> KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
+iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
 
-iex> KVServer.Command.parse "GET shopping\r\n"
+iex> KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 ```
 
 Without new lines, as seen below, ExUnit compiles it into a single test:
 
 ```iex
-iex> KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
+iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
-iex> KVServer.Command.parse "GET shopping\r\n"
+iex> KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 ```
 
@@ -301,24 +301,24 @@ def run({:create, bucket}) do
 end
 
 def run({:get, bucket, key}) do
-  lookup bucket, fn pid ->
+  lookup(bucket, fn pid ->
     value = KV.Bucket.get(pid, key)
     {:ok, "#{value}\r\nOK\r\n"}
-  end
+  end)
 end
 
 def run({:put, bucket, key, value}) do
-  lookup bucket, fn pid ->
+  lookup(bucket, fn pid ->
     KV.Bucket.put(pid, key, value)
     {:ok, "OK\r\n"}
-  end
+  end)
 end
 
 def run({:delete, bucket, key}) do
-  lookup bucket, fn pid ->
+  lookup(bucket, fn pid ->
     KV.Bucket.delete(pid, key)
     {:ok, "OK\r\n"}
-  end
+  end)
 end
 
 defp lookup(bucket, callback) do

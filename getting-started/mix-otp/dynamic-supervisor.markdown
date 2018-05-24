@@ -179,7 +179,7 @@ In the Applications tab, you will see all applications currently running in your
 Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:
 
 ```iex
-iex> KV.Registry.create KV.Registry, "shopping"
+iex> KV.Registry.create(KV.Registry, "shopping")
 :ok
 ```
 
