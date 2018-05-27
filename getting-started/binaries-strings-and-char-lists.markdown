@@ -193,7 +193,7 @@ iex> to_string 1
 "1"
 ```
 
-Earlier you saw string concatenation with the operator `<>` but charlist uses `++` so remember that:
+String (binary) concatenation uses the `<>` operator but charlists use the lists concatenation operator `++`:
 
 ```iex
 iex> 'this ' <> 'fails'
