@@ -193,6 +193,24 @@ iex> to_string 1
 "1"
 ```
 
+Earlier you saw string concatenation with the operator `<>` but charlist uses `++` so remember that:
+
+```iex
+iex> 'this ' <> 'fails'
+** (CompileError) iex:2: invalid literal 'this ' in <<>>
+    (elixir) src/elixir_bitstring.erl:19: :elixir_bitstring.expand/6
+    (elixir) src/elixir_bitstring.erl:12: :elixir_bitstring.expand/4
+    (elixir) expanding macro: Kernel.<>/2
+    iex:2: (file)
+iex> 'this ' ++ 'works'
+'this works'
+iex> "he" ++ "llo"
+** (ArgumentError) argument error
+    :erlang.++("he", "llo")
+iex> "he" <> "llo"
+"hello"
+```
+
 Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on.
 
 With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures.
