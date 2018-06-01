@@ -83,6 +83,15 @@ This book will teach you the core concepts of the Elixir programming language in
 
 <div class="clear"></div>
 
+<h4 class="resource">Learn Functional Programming With Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/book/cdc-elixir/learn-functional-programming-with-elixir" title="Learn Functional Programming With Elixir: New Foundations for a New World
+– by Ulisses Almeida"><img src="/images/learning/learn-functional-programming-with-elixir.jpg" alt="Learn Functional Programming with Elixir cover" width="190" /></a>
+
+Elixir’s straightforward syntax and this guided tour give you a clean, simple path to learn modern functional programming techniques. No previous functional programming experience required! This book walks you through the right concepts at the right pace, as you explore immutable values and explicit data transformation, functions, modules, recursive functions, pattern matching, high-order functions, polymorphism, and failure handling, all while avoiding side effects. Don’t board the Elixir train with an imperative mindset! To get the most out of functional languages, you need to think functionally. This book will get you there.
+
+<div class="clear"></div>
+
 ## Video/Interactive Resources
 
 <h4 class="resource">Take Off With Elixir</h4>
