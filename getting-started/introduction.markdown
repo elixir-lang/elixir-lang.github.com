@@ -3,6 +3,7 @@ layout: getting-started
 title: Introduction
 redirect_from: /getting_started/1.html
 ---
+{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
 # {{ page.title }}
 
@@ -40,9 +41,9 @@ For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which
 Open up `iex` and type the following expressions:
 
 ```iex
-Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+{{ site.data.elixir-versions.erl_output }}
 
-Interactive Elixir (1.4.0) - press Ctrl+C to exit (type h() ENTER for help)
+Interactive Elixir ({{ stable }}) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)> 40 + 2
 42
 iex(2)> "hello" <> " world"
