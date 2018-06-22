@@ -36,7 +36,7 @@ After the parsing is done, we will update our server to dispatch the parsed comm
 
 On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via `mix help` or by typing `h Enum` or another module in an IEx console.
 
-In this section, we will implement the parsing functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples.
+In this section, we will implement the parsing functionality, document it and make sure our documentation is up to date with doctests. This helps us provide documentation with accurate code samples.
 
 Let's create our command parser at `lib/kv_server/command.ex` and start with the doctest:
 
@@ -145,7 +145,7 @@ end
 
 Notice how we were able to elegantly parse the commands without adding a bunch of `if/else` clauses that check the command name and number of arguments!
 
-Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:
+Finally, you may have observed that each doctest corresponds to a different test in our suite, which now reports a total of 7 doctests. That is because ExUnit considers the following to define two different doctests:
 
 ```iex
 iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
@@ -155,7 +155,7 @@ iex> KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 ```
 
-Without new lines, as seen below, ExUnit compiles it into a single test:
+Without new lines, as seen below, ExUnit compiles it into a single doctest:
 
 ```iex
 iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
@@ -164,7 +164,7 @@ iex> KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 ```
 
-You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html).
+As the name says, doctest is documentation first and a test later. Their goal is not to replace tests but to provide up to date documentation. You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html).
 
 ## with
 
