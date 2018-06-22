@@ -131,7 +131,7 @@ defmodule KV do
 
   ## Examples
 
-      iex> KV.hello
+      iex> KV.hello()
       :world
 
   """
