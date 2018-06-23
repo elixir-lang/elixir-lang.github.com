@@ -33,9 +33,9 @@ In order to build our key-value application, we are going to use three main tool
 
 * ***OTP*** _(Open Telecom Platform)_ is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications. In this chapter we will explore how many aspects from OTP integrate with Elixir, including supervision trees, event managers and more;
 
-* ***Mix*** is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;
+* ***[Mix](https://hexdocs.pm/mix/)*** is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;
 
-* ***ExUnit*** is a test-unit based framework that ships with Elixir;
+* ***[ExUnit](https://hexdocs.pm/ex_unit/)*** is a test-unit based framework that ships with Elixir;
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
@@ -43,7 +43,7 @@ In this chapter, we will create our first project using Mix and explore differen
 >
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
-> The final code for this guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.
+> The final code for this guide is in [this repository](https://github.com/elixir-lang/elixir-lang.github.com) and can be used as a reference.
 
 > The Elixir guides are also available in EPUB format:
 >
@@ -290,7 +290,7 @@ Or on Windows:
 
 ## Exploring
 
-There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/).
+There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/). Read [the Mix source code here](https://github.com/elixir-lang/elixir/tree/master/lib/mix).
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 
