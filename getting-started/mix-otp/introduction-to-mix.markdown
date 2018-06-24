@@ -43,7 +43,8 @@ In this chapter, we will create our first project using Mix and explore differen
 >
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
-> The final code for this guide is in [this repository](https://github.com/elixir-lang/elixir-lang.github.com) and can be used as a reference.
+> The final code for the application built in this
+guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.
 
 > The Elixir guides are also available in EPUB format:
 >
