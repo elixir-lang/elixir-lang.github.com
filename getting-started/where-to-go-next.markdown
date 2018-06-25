@@ -13,7 +13,7 @@ Eager to learn more? Keep reading!
 
 In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by running:
 
-```bash
+```console
 $ mix new path/to/new/project
 ```
 

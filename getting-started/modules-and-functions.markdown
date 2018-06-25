@@ -44,7 +44,7 @@ end
 
 This file can be compiled using `elixirc`:
 
-```bash
+```console
 $ elixirc math.ex
 ```
 
@@ -81,7 +81,7 @@ IO.puts Math.sum(1, 2)
 
 And execute it as:
 
-```bash
+```console
 $ elixir math.exs
 ```
 
@@ -144,7 +144,7 @@ And it will provide the same behaviour. You may use `do:` for one-liners but alw
 
 Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Start `iex`, running the `math.exs` file defined above:
 
-```bash
+```console
 $ iex math.exs
 ```
 
@@ -270,7 +270,7 @@ If we save the code above in a file named "concat.ex" and compile it, Elixir wil
 
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 
-```bash
+```console
 $ iex concat.exs
 ```
 

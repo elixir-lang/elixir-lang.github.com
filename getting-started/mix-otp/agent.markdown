@@ -32,7 +32,7 @@ We will explore most of these abstractions in this guide. Keep in mind that they
 
 [Agents](https://hexdocs.pm/elixir/Agent.html) are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let's start an `iex` session inside the project with:
 
-```bash
+```console
 $ iex -S mix
 ```
 

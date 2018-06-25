@@ -94,7 +94,7 @@ iex> KVServer.accept(4040)
 
 The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](https://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.
@@ -153,7 +153,7 @@ port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environm
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.
@@ -168,7 +168,7 @@ Yes, it works! However, does it *scale*?
 
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.

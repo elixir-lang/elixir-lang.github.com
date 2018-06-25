@@ -205,7 +205,7 @@ We changed the callback from `handle_cast/2` to `handle_call/3` and changed it t
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 
-```bash
+```console
 $ mix test --trace
 ```
 
