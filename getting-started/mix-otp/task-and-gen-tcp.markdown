@@ -192,7 +192,7 @@ defp loop_acceptor(socket) do
 end
 ```
 
-to use `Task.start_link/1`, which is similar to `Task.start_link/3`, but it receives an anonymous function instead of module, function and arguments:
+to also use `Task.start_link/1`:
 
 ```elixir
 defp loop_acceptor(socket) do
