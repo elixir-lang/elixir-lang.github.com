@@ -98,7 +98,7 @@ end
 ```
 
 ```console
-iex math.exs
+$ iex math.exs
 ```
 
 ```iex
