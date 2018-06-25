@@ -65,7 +65,7 @@ IO.puts "Hello world from Elixir"
 
 Save it as `simple.exs` and execute it with `elixir`:
 
-```bash
+```console
 $ elixir simple.exs
 Hello world from Elixir
 ```

@@ -59,7 +59,7 @@ end
 
 Elixir promotes the use of Markdown with heredocs to write readable documentation. Heredocs are multi-line strings, they start and end with triple double-quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:
 
-```bash
+```console
 $ elixirc math.ex
 $ iex
 ```

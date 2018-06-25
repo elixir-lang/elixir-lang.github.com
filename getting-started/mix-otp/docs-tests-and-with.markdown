@@ -250,7 +250,7 @@ end
 
 If we start our server, we can now send commands to it. For now, we will get two different responses: "OK" when the command is known and "UNKNOWN COMMAND" otherwise:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.

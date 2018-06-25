@@ -57,7 +57,7 @@ When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` execu
 
 Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as the argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
 
-```bash
+```console
 $ mix new kv --module KV
 ```
 
@@ -144,7 +144,7 @@ end
 
 This structure is enough to compile our project:
 
-```bash
+```console
 $ cd kv
 $ mix compile
 ```
@@ -158,7 +158,7 @@ The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was ge
 
 Once the project is compiled, you can start an `iex` session inside the project by running:
 
-```bash
+```console
 $ iex -S mix
 ```
 
@@ -232,7 +232,7 @@ For each failure, ExUnit prints a detailed report, containing the test name with
 
 In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in full, including the file and line number, and append it to `mix test`, Mix will load and run just that particular test:
 
-```bash
+```console
 $ mix test test/kv_test.exs:5
 ```
 
@@ -276,7 +276,7 @@ When true, the `:start_permanent` option starts your application in permanent mo
 
 Mix will default to the `:dev` environment, except for the `test` task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
 
-```bash
+```console
 $ MIX_ENV=prod mix compile
 ```
 
@@ -294,7 +294,7 @@ There is much more to Mix, and we will continue to explore it as we build our pr
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 
-```bash
+```console
 $ mix help
 ```
 

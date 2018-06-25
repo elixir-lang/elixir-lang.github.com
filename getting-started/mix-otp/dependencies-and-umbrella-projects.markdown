@@ -62,7 +62,7 @@ You will notice that when you add a dependency to your project, Mix generates a 
 
 Mix provides many tasks for working with dependencies, which can be seen in `mix help`:
 
-```bash
+```console
 $ mix help
 mix deps              # Lists dependencies and their status
 mix deps.clean        # Deletes the given dependencies' files
@@ -112,7 +112,7 @@ So let's get started!
 
 Let's start a new project using `mix new`. This new project will be named `kv_umbrella` and we need to pass the `--umbrella` option when creating it. Do not create this new project inside the existing `kv` project!
 
-```bash
+```console
 $ mix new kv_umbrella --umbrella
 * creating README.md
 * creating .formatter.exs
@@ -147,7 +147,7 @@ What makes this project different from the previous one is the `apps_path: "apps
 
 Let's move inside the apps directory and start building `kv_server`. This time, we are going to pass the `--sup` flag, which will tell Mix to generate a supervision tree automatically for us, instead of building one manually as we did in previous chapters:
 
-```bash
+```console
 $ cd kv_umbrella/apps
 $ mix new kv_server --module KVServer --sup
 ```
@@ -244,7 +244,7 @@ Notice that it defines the application callback function, `start/2`, and instead
 
 We can already try out our first umbrella child. We could run tests inside the `apps/kv_server` directory, but that wouldn't be much fun. Instead, go to the root of the umbrella project and run `mix test`:
 
-```bash
+```console
 $ mix test
 ```
 
