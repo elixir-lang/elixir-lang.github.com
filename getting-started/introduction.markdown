@@ -55,7 +55,7 @@ It seems we are ready to go! We will use the interactive shell quite a lot in th
 
 > Note: if you are on Windows, you can also try `iex.bat --werl` which may provide a better experience depending on which console you are using.
 
-> Note: if you want to run `iex` with the project and dependent modules automatically loaded in interactive mode run `iex -S mix compile`.
+> Note: if you want to run `iex` with the project and dependent modules automatically loaded in interactive mode run `iex -S mix run`.
 
 ## Running scripts
 
