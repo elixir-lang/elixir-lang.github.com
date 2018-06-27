@@ -55,6 +55,8 @@ It seems we are ready to go! We will use the interactive shell quite a lot in th
 
 > Note: if you are on Windows, you can also try `iex.bat --werl` which may provide a better experience depending on which console you are using.
 
+> Note: if you want to find and execute a given script in PATH so it will be loaded in `iex` use: `iex -S SCRIPTNAME`.  Later you'll learn about [Mix](/getting-started/mix-otp/introduction-to-mix.html), Elixir's build tool, and how you can compile and load entire applications with `iex -S mix run`. See [Supervisor and application](/getting-started/mix-otp/supervisor-and-application.html) for more details.
+
 ## Running scripts
 
 After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting the following Elixir code into a file:
