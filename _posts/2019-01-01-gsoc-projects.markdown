@@ -3,16 +3,16 @@ layout: post
 title: Google Summer of Code 2018 projects
 author: Andrea Leopardi
 category: Announcements
-excerpt: Elixir was granted four slots for Google Summer of Code 2018. In this post, we'll have a look at the projects we accepted.
+excerpt: Once again Elixir is participating in Google Summer of Code 2018. In this post, we'll have a look at the active projects.
 ---
 
-Like previous years, the Elixir community is happy to participate in [Google Summer of Code][gsoc] 2018. This year, we are mentoring four students working on four different projects. Let's have a look at those projects.
+Like previous years, the Elixir community is happy to participate in [Google Summer of Code][gsoc] 2018. We are currently working on four different projects. Let's have a look at them.
 
 ## StreamData integration with typespecs
 
 *Student: Nikola Jichev*
 
-[StreamData][stream_data] is a data-generation and property-based testing library for Elixir. The goal of this GSoC project is to integrate StreamData with types and typespecs.
+[StreamData][stream_data] is a data-generation and property-based testing library for Elixir. The goal of this GSoC project is to integrate StreamData with typespecs.
 
 The data-generation side of StreamData provides tools to generate random data through composable generators. For example, you could generate keyword lists like this:
 
@@ -55,13 +55,13 @@ The first part of the project focuses on generating data from types, so we know 
 
 This kind of property-based testing doesn't test for *correctness*. In the snippet above, `has_key?/2` could be implemented to ignore arguments always return `false` and the automatic spec validation would pass since `false` is always a boolean. However, this is a kind of **smoke testing** useful for discovering inconsistencies in the arguments and return values of functions.
 
-## TensorflEx: Tensorflow bindings for the Elixir programming language
+## Tensorflex: Tensorflow bindings for the Elixir programming language
 
 *Student: Anshuman Chhabra*
 
 Currently, there is a lack of machine learning tools and frameworks for Elixir. With the number of programmers learning/using machine learning only set to grow, supporting machine learning capabilities is essential for any programming language. Moreover, there are discussions on [ElixirForum][elixirforum] regarding this and recent talks given at ElixirConf that reflect the need for Elixir to provide machine learning capabilities.
 
-This project's goal is TensorflEx, an Elixir machine learning framework similar to [Keras for Python][keras]. Keras uses Tensorflow as a backend for doing all the machine learning. TensorflEx will use Using Native Implemented Functions (NIFs) and the Tensorflow C API as a backend to provide a low-level API. This low-level API will then be used to write a Keras-like framework in the form of a high-level API. This will allow Elixir developers to write expedient and efficient machine learning code in Elixir.
+This project's goal is Tensorflex, an Elixir machine learning framework similar to [Keras for Python][keras]. Keras uses Tensorflow as a backend for doing all the machine learning. Tensorflex will use Using Native Implemented Functions (NIFs) and the Tensorflow C API as a backend to provide a low-level API. This low-level API will then be used to write a Keras-like framework in the form of a high-level API. This will allow Elixir developers to write expedient and efficient machine learning code in Elixir.
 
 ## Dialyzer task for Elixir
 
@@ -73,10 +73,9 @@ Dialyzer is a discrepancy analyzer that ships as part of Erlang/OTP. Currently, 
 
 *Student: Tallys Martins*
 
-ElixirBench aims to be a service to monitor performance of Elixir projects. The goal of the GSoC project is to bring ElixirBench up and have it run nightly performance monitoring of significant Elixir projects (like Elixir core). The end goal is to have a platform that, given a project from GitHub, will monitor the performance of new releases of that project and look for performance regressions. The benchmarking process will be controlled through a configuration file that will specify the benchmark scripts to run.
+ElixirBench aims to be a service to monitor performance of Elixir projects. The goal of the GSoC project is to bring ElixirBench up and have it run nightly performance monitoring of significant Elixir projects (including Elixir itself). The end goal is to have a platform that, given a project from GitHub, will monitor the performance of new releases of that project and look for performance regressions. The benchmarking process will be controlled through a configuration file that will specify the benchmark scripts to run.
 
 We have high hopes for this tool as we see value in it for the whole community and for core Elixir projects alike.
-
 
 [gsoc]: https://summerofcode.withgoogle.com
 [stream_data]: https://github.com/whatyouhide/stream_data
