@@ -102,19 +102,17 @@ defmodule MyPropertyTest do
   use ExUnit.Case, async: true
   use ExUnitProperties
 
-  test "sum of positive integer is greater than both integers" do
-    check all a <- integer(),
-              b <- integer(),
-              a > 0 and b > 0,
-              sum = a + b do
-      assert sum > a
-      assert sum > b            
+  test "the in/2 operator works with lists" do
+    check all list <- list_of(term()),
+              list != [],
+              elem <- member_of(list) do
+      assert elem in list
     end
   end
 end
 ```
 
-As you can see, we can filter generated data (`a > 0 and b > 0`) directly in the `check all` macro. We can also do simple assignments (`sum = a + b`). The example above uses the `check all` macro inside a regular `test`. If you want that your properties are reported as "property" at the end of an ExUnit test run, you can use the `property` macro instead:
+As you can see, we can filter generated data (`list != []`) directly in the `check all` macro. We can also do simple assignments. The example above uses the `check all` macro inside a regular `test`. If you want that your properties are reported as "property" at the end of an ExUnit test run, you can use the `property` macro instead:
 
 ```elixir
 defmodule MyPropertyTest do
@@ -122,12 +120,10 @@ defmodule MyPropertyTest do
   use ExUnitProperties
 
   property "sum of positive integer is greater than both integers" do
-    check all a <- integer(),
-              b <- integer(),
-              a > 0 and b > 0,
-              sum = a + b do
-      assert sum > a
-      assert sum > b            
+    check all list <- list_of(term()),
+              list != [],
+              elem <- member_of(list) do
+      assert elem in list
     end
   end
 end

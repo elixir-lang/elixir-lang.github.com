@@ -4,17 +4,17 @@ defmodule ElixirLangGuide do
   """
 
   @type config :: %{
-    guide: String.t,
-    homepage: String.t,
-    output: Path.t,
-    root_dir: Path.t,
-    scripts: [Path.t],
-    styles: [Path.t],
-    images: [Path.t]
-  }
+          guide: String.t(),
+          homepage: String.t(),
+          output: Path.t(),
+          root_dir: Path.t(),
+          scripts: [Path.t()],
+          styles: [Path.t()],
+          images: [Path.t()]
+        }
 
   @doc "Generate all guides"
-  @spec run(Path.t) :: :ok
+  @spec run(Path.t()) :: :ok
   def run(source) do
     config = %{
       guide: nil,
@@ -40,10 +40,10 @@ defmodule ElixirLangGuide do
   end
 
   defp log(file) do
-    Mix.shell.info [:green, "Generated guide at #{inspect file}"]
+    Mix.shell().info([:green, "Generated guide at #{inspect(file)}"])
   end
 
-  @spec to_epub(config) :: String.t
+  @spec to_epub(config) :: String.t()
   defp to_epub(options) do
     nav =
       options.root_dir
@@ -66,19 +66,22 @@ defmodule ElixirLangGuide do
         _ -> raise "invalid guide, allowed: `mix_otp`, `meta` or `getting_started`"
       end
 
-    Enum.flat_map(List.wrap(yaml), fn(section) ->
-      Enum.map(section["pages"], fn(%{"slug" => slug, "title" => title}) ->
-        %{id: slug, label: title, content: "#{slug}.xhtml", dir: section["dir"],
-          scripts: List.wrap(options.scripts), styles: List.wrap(options.styles)}
-      end)
-    end)
+    for section <- List.wrap(yaml),
+        %{"slug" => slug, "title" => title} <- section["pages"] do
+      %{
+        id: slug,
+        label: title,
+        content: slug <> ".xhtml",
+        dir: section["dir"],
+        scripts: List.wrap(options.scripts),
+        styles: List.wrap(options.styles)
+      }
+    end
   end
 
   defp convert_markdown_pages(config, options) do
     config
-    |> Enum.map(&Task.async(fn ->
-        to_xhtml(&1, options)
-       end))
+    |> Enum.map(&Task.async(fn -> to_xhtml(&1, options) end))
     |> Enum.map(&Task.await(&1, :infinity))
   end
 
@@ -112,15 +115,25 @@ defmodule ElixirLangGuide do
       end
 
     images =
-      if options.guide == "mix_otp" do
-        [options.root_dir |> Path.join("images/contents/kv-observer.png")]
-      else
-        []
+      case options.guide do
+        "getting_started" ->
+          [
+            Path.join(options.root_dir, "images/contents/kv-observer.png"),
+            Path.join(options.root_dir, "images/contents/debugger-elixir.png")
+          ]
+
+        "mix_otp" ->
+          [
+            Path.join(options.root_dir, "images/contents/kv-observer.png")
+          ]
+
+        "meta" ->
+          []
       end
 
     config = %BUPE.Config{
       title: title,
-      creator: "Plataformatec",
+      creator: "elixir-lang.org",
       unique_identifier: title_to_filename(title),
       source: "#{options.homepage}/getting-started/",
       pages: files,
@@ -152,6 +165,7 @@ defmodule ElixirLangGuide do
     |> remove_frontmatter()
     |> fix_backslashes()
     |> fix_images()
+    |> fix_js()
     |> map_links(options)
   end
 
@@ -176,24 +190,46 @@ defmodule ElixirLangGuide do
   end
 
   defp fix_backslashes(content) do
-    String.replace(content, ~r/backslashes \(`\\`\) on Windows/, ~S"backslashes (`\\\\`) on Windows")
+    String.replace(
+      content,
+      ~r/backslashes \(`\\`\) on Windows/,
+      ~S"backslashes (`\\\\`) on Windows"
+    )
   end
 
   defp fix_images(content) do
-    String.replace(content, ~r{/images/contents/kv-observer.png" width="640}, "assets/kv-observer.png")
+    content
+    |> String.replace(
+      ~s{/images/contents/kv-observer.png" width="640},
+      "assets/kv-observer.png"
+    )
+    |> String.replace(
+      ~s{/images/contents/debugger-elixir.gif" width="640},
+      "assets/debugger-elixir.png"
+    )
+  end
+
+  defp fix_js(content) do
+    content
+    |> String.replace(~r{<script.*</script>}, "")
+    |> String.replace(["<noscript>", "</noscript>"], "")
   end
 
   defp map_links(content, options) do
-    Regex.replace(~r/\[([^\]]+)\]\(([^\)]+)\)/, content, fn(_, text, href) ->
+    Regex.replace(~r/\[([^\]]+)\]\(([^\)]+)\)/, content, fn _, text, href ->
       case URI.parse(href) do
         %URI{scheme: nil, path: "/getting-started/meta/" <> path} ->
           map_meta_links(text, path, options)
+
         %URI{scheme: nil, path: "/getting-started/mix-otp/" <> path} ->
           map_mix_otp_link(text, path, options)
+
         %URI{scheme: nil, path: "/getting-started/" <> path} ->
           map_getting_started_links(text, path, options)
+
         %URI{scheme: nil, path: "/" <> path} ->
           "[#{text}](#{options.homepage}/#{path})"
+
         _ ->
           "[#{text}](#{href})"
       end
@@ -201,18 +237,24 @@ defmodule ElixirLangGuide do
   end
 
   defp map_meta_links(text, path, %{guide: "meta"}), do: map_section_links(text, path)
-  defp map_meta_links(text, path, options), do: "[#{text}](#{options.homepage}/getting-started/meta/#{path})"
+
+  defp map_meta_links(text, path, options),
+    do: "[#{text}](#{options.homepage}/getting-started/meta/#{path})"
 
   defp map_mix_otp_link(text, path, %{guide: "mix_otp"}), do: map_section_links(text, path)
-  defp map_mix_otp_link(text, path, options), do: "[#{text}](#{options.homepage}/getting-started/mix-otp/#{path})"
 
-  defp map_getting_started_links(text, path, %{guide: "getting_started"}), do: map_section_links(text, path)
-  defp map_getting_started_links(text, path, options), do: "[#{text}](#{options.homepage}/getting-started/#{path})"
+  defp map_mix_otp_link(text, path, options),
+    do: "[#{text}](#{options.homepage}/getting-started/mix-otp/#{path})"
+
+  defp map_getting_started_links(text, path, %{guide: "getting_started"}),
+    do: map_section_links(text, path)
+
+  defp map_getting_started_links(text, path, options),
+    do: "[#{text}](#{options.homepage}/getting-started/#{path})"
 
   defp map_section_links(text, path), do: "[#{text}](#{String.replace(path, "html", "xhtml")})"
 
   require EEx
-  EEx.function_from_file(:defp, :wrap_html,
-                         Path.expand("templates/page.eex", __DIR__),
-                         [:content, :config])
+  page = Path.expand("templates/page.eex", __DIR__)
+  EEx.function_from_file(:defp, :wrap_html, page, [:content, :config])
 end

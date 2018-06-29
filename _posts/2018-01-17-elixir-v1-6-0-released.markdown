@@ -145,7 +145,7 @@ mix xref graph --format stats --label compile
 
 Those improvements will help developers better understand the relationship between files and reveal potentially complex parts of their systems.
 
-Other improvements in Mix include [better compiler diagnostics](https://hexdocs.pm/mix/Mix.Task.Compiler.html) for editor integration, support for [the `--slowest N` flag in `mix test`](https://hexdocs.pm/mix/Mix.Tasks.Test.html) that shows the slowest tests in your suite, and a new [`mix profile.eprof` task](https://hexdocs.pm/mix/Mix.Tasks.Eprof.html) that provides time based profiling, complementing the existing [`mix profile.cprof` (count based)](https://hexdocs.pm/mix/Mix.Tasks.Cprof.html) and [`mix profile.fprof` (flame based)](https://hexdocs.pm/mix/Mix.Tasks.Fprof.html).
+Other improvements in Mix include [better compiler diagnostics](https://hexdocs.pm/mix/Mix.Task.Compiler.html) for editor integration, support for [the `--slowest N` flag in `mix test`](https://hexdocs.pm/mix/Mix.Tasks.Test.html) that shows the slowest tests in your suite, and a new [`mix profile.eprof` task](https://hexdocs.pm/mix/Mix.Tasks.Eprof.html) that provides time based profiling, complementing the existing [`mix profile.cprof` (count based)](https://hexdocs.pm/mix/Mix.Tasks.Profile.Cprof.html) and [`mix profile.fprof` (flame based)](https://hexdocs.pm/mix/Mix.Tasks.Profile.Fprof.html).
 
 ## Summing up
 

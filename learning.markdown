@@ -27,7 +27,7 @@ Elixir’s pragmatic syntax and built-in support for metaprogramming will make y
 
 <h4 class="resource">Elixir in Action</h4>
 
-<a class="cover" href="http://manning.com/juric/" title="Elixir in Action
+<a class="cover" href="https://www.manning.com/books/elixir-in-action-second-edition" title="Elixir in Action
 – by Saša Jurić"><img src="/images/learning/elixir-in-action.jpg" alt="Elixir in Action cover" width="190" /></a>
 
 Elixir in Action is a tutorial book that aims to bring developers new to Elixir and Erlang to the point where they can develop complex systems on their own. No knowledge about Elixir, Erlang, or functional programming is required, but it is assumed that a reader has a few years of production experience using mainstream OO languages, for example C#, Java, Python, or Ruby.
@@ -83,15 +83,16 @@ This book will teach you the core concepts of the Elixir programming language in
 
 <div class="clear"></div>
 
-## Video/Interactive Resources
+<h4 class="resource">Learn Functional Programming With Elixir</h4>
 
-<h4 class="resource">Try Elixir with Code School</h4>
+<a class="cover" href="https://pragprog.com/book/cdc-elixir/learn-functional-programming-with-elixir" title="Learn Functional Programming With Elixir: New Foundations for a New World
+– by Ulisses Almeida"><img src="/images/learning/learn-functional-programming-with-elixir.jpg" alt="Learn Functional Programming with Elixir cover" width="190" /></a>
 
-<a class="cover" href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_learning&utm_medium=referral" title="Try Elixir – by Code School"><img src="/images/learning/try-elixir.png" alt="Try Elixir badge" width="190" /></a>
-
-Start learning and programming Elixir in your browser with Code School's interactive Try Elixir course. Learn the basics of functional programming with instructor-led videos before taking on challenges where you’ll code directly in the browser, receiving immediate feedback and code validation.
+Elixir’s straightforward syntax and this guided tour give you a clean, simple path to learn modern functional programming techniques. No previous functional programming experience required! This book walks you through the right concepts at the right pace, as you explore immutable values and explicit data transformation, functions, modules, recursive functions, pattern matching, high-order functions, polymorphism, and failure handling, all while avoiding side effects. Don’t board the Elixir train with an imperative mindset! To get the most out of functional languages, you need to think functionally. This book will get you there.
 
 <div class="clear"></div>
+
+## Video/Interactive Resources
 
 <h4 class="resource">Take Off With Elixir</h4>
 
@@ -137,7 +138,6 @@ Elixir koans is a fun, easy way to get started with the Elixir programming langu
 <div class="clear"></div>
 
 ## Screencasts
-
 <h4 class="resource">Elixir Sips</h4>
 
 <a class="cover" href="http://elixirsips.com" title="Elixir Sips: Learn Elixir with Two Short Videos Each Week
@@ -170,6 +170,16 @@ It's intended to help beginners get familiar with all of Elixir's features by bu
 ElixirCasts is a collection of simple screencasts that cover a wide range of Elixir and Phoenix topics. Each episode tackles a specific problem or explores a new library, demystifying it in a language that's easy to understand.
 
 Episodes range from beginner focused to more moderate and advanced topics. Come build your knowledge of Elixir with us, one episode at a time.
+
+<div class="clear"></div>
+
+<h4 class="resource">Alchemist Camp</h4>
+
+<a class="cover" href="http://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
+
+Alchemist Camp is the largest producer of free Elixir screencasts and has dozens of hours of screencasts on YouTube. The videos are often longer-form and focused around projects, such as building a small Phoenix clone, or an OTP worker to regularly collect statistics from multiple APIs. Content is driven by viewer request.
+
+Alchemist Camp is aimed at people who have some web development experience and want to ship real-world projects in Elixir.
 
 <div class="clear"></div>
 
