@@ -109,7 +109,7 @@ iex> kurt = Map.put(%User{}, :name, "Kurt")
 %User{age: 27, name: "Kurt"}
 iex> Map.merge(kurt, %User{name: "Takashi"})
 %User{age: 27, name: "Takashi"}
-iex> Map.keys(john)
+iex> Map.keys(kurt)
 [:__struct__, :age, :name]
 ```
 
