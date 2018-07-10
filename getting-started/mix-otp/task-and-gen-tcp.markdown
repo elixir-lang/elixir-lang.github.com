@@ -151,7 +151,9 @@ port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environm
 {Task, fn -> KVServer.accept(port) end}
 ```
 
-Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
+Insert these changes in your code and now you may start your application using the following command `PORT=4040 mix run --no-halt`, notice how we are passing the port as a variable.
+
+Now that the server is part of the supervision tree, it should start automatically when we run the application. Start your server, now passing the port, and once again use the `telnet` client to make sure that everything still works:
 
 ```console
 $ telnet 127.0.0.1 4040
@@ -214,9 +216,11 @@ Let's change `start/2` once again, to add a supervisor to our tree:
 
 ```elixir
   def start(_type, _args) do
+    port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
-      {Task, fn -> KVServer.accept(4040) end}
+      {Task, fn -> KVServer.accept(port) end}
     ]
 
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
@@ -293,9 +297,11 @@ We could fix this by defining our own module that calls `use Task, restart: :per
 
 ```elixir
   def start(_type, _args) do
+    port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
-      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end}, restart: :permanent)
+      Supervisor.child_spec({Task, fn -> KVServer.accept(port) end}, restart: :permanent)
     ]
 
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
