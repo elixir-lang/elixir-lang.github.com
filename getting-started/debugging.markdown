@@ -138,7 +138,7 @@ The above will open another Graphical User Interface that provides many panes to
 
 <img src="/images/contents/kv-observer.png" width="640" alt="Observer GUI screenshot" />
 
-We explore the Observer in the context of an actual project [in the Dynamic Supervisor chapter of the Mix & OTP guide](/getting-started/mix-otp/supervisor-and-application.html).
+We explore the Observer in the context of an actual project [in the Dynamic Supervisor chapter of the Mix & OTP guide](/getting-started/mix-otp/dynamic-supervisor.html).
 
 You can also [use Observer to introspect a remote node](http://blog.plataformatec.com.br/2016/05/tracing-and-observing-your-remote-node/). This is one of the debugging techniques [the Phoenix framework used to achieve 2 million connections on a single machine](https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections).
 
