@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="ETS" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/ets.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/ets.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"ETS","url":"/ja/getting-started/mix-otp/ets.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"ETS","url":"https://elixir-lang.org/ja/getting-started/mix-otp/ets.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -241,7 +237,7 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 <p>ETS allows us to store any Elixir term in an in-memory table. Working with ETS tables is done via <a href="http://www.erlang.org/doc/man/ets.html">Erlang’s <code class="highlighter-rouge">:ets</code> module</a>:</p>
 
 <pre><code class="language-iex">iex&gt; table = :ets.new(:buckets_registry, [:set, :protected])
-8207
+#Reference&lt;0.1885502827.460455937.234656&gt;
 iex&gt; :ets.insert(table, {"foo", self()})
 true
 iex&gt; :ets.lookup(table, "foo")
@@ -317,7 +313,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
       <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">_pid</span><span class="p">}</span> <span class="o">-&gt;</span>
         <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
       <span class="ss">:error</span> <span class="o">-&gt;</span>
-        <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="o">.</span><span class="n">start_bucket</span><span class="p">()</span>
+        <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">DynamicSupervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">)</span>
         <span class="n">ref</span> <span class="o">=</span> <span class="no">Process</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
         <span class="n">refs</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="ss">:ets</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span><span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">})</span>
@@ -346,11 +342,13 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
 <p>The changes we have performed above have broken our tests because the registry requires the <code class="highlighter-rouge">:name</code> option when starting up. Furthermore, some registry operations such as <code class="highlighter-rouge">lookup/2</code> require the name to be given as an argument, instead of a PID, so we can do the ETS table lookup. Let’s change the setup function in <code class="highlighter-rouge">test/kv/registry_test.exs</code> to fix both issues:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="n">setup</span> <span class="n">context</span> <span class="k">do</span>
-    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">_</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span><span class="p">({</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="n">context</span><span class="o">.</span><span class="n">test</span><span class="p">})</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">start_supervised!</span><span class="p">({</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="n">context</span><span class="o">.</span><span class="n">test</span><span class="p">})</span>
     <span class="p">%{</span><span class="ss">registry:</span> <span class="n">context</span><span class="o">.</span><span class="n">test</span><span class="p">}</span>
   <span class="k">end</span>
 </code></pre>
 </div>
+
+<p>Since each test has a unique name, we use the test name to name our registries. This way, we no longer need to pass the registry PID around, instead we identify it by the test name. Also note we assigned the result of <code class="highlighter-rouge">start_supervised!</code> to underscore (<code class="highlighter-rouge">_</code>). This idiom is often used to signal that we are not interested in the result of <code class="highlighter-rouge">start_supervised!</code>.</p>
 
 <p>Once we change <code class="highlighter-rouge">setup</code>, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the “spawns buckets” test:</p>
 
@@ -414,7 +412,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">-&gt;</span>
       <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
     <span class="ss">:error</span> <span class="o">-&gt;</span>
-      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="o">.</span><span class="n">start_bucket</span><span class="p">()</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">DynamicSupervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">)</span>
       <span class="n">ref</span> <span class="o">=</span> <span class="no">Process</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
       <span class="n">refs</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
       <span class="ss">:ets</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span><span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">})</span>
@@ -428,8 +426,8 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
 
 <p>Let’s run the tests once again. This time though, we will pass the <code class="highlighter-rouge">--trace</code> option:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">test</span> --trace
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">mix</span><span class="kv"> test --trace
+</span></code></pre>
 </div>
 
 <p>The <code class="highlighter-rouge">--trace</code> option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (<code class="highlighter-rouge">async: true</code> has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:</p>
@@ -514,7 +512,7 @@ iex&gt; :ets.lookup(:buckets_registry, "foo")
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

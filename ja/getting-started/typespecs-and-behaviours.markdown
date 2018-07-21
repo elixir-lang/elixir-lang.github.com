@@ -120,7 +120,7 @@ Adopting a behaviour is straightforward:
 defmodule JSONParser do
   @behaviour Parser
 
-  def parse(str), do: # ... parse JSON
+  def parse(str), do: "" # ... parse JSON
   def extensions, do: ["json"]
 end
 ```
@@ -129,7 +129,7 @@ end
 defmodule YAMLParser do
   @behaviour Parser
 
-  def parse(str), do: # ... parse YAML
+  def parse(str), do: "" # ... parse YAML
   def extensions, do: ["yml"]
 end
 ```

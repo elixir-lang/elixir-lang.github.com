@@ -47,7 +47,7 @@ iex> Enum.filter(1..3, odd?)
 This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
 
 ```iex
-iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
+iex> total_sum = 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
 7500000000
 ```
 
@@ -95,7 +95,7 @@ Many functions in the `Stream` module accept any enumerable as an argument and r
 
 ```iex
 iex> stream = Stream.cycle([1, 2, 3])
-#Function<15.16982430/2 in Stream.cycle/1>
+#Function<15.16982430/2 in Stream.unfold/2>
 iex> Enum.take(stream, 10)
 [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
 ```

@@ -21,7 +21,7 @@ ETS allows us to store any Elixir term in an in-memory table. Working with ETS t
 
 ```iex
 iex> table = :ets.new(:buckets_registry, [:set, :protected])
-8207
+#Reference<0.1885502827.460455937.234656>
 iex> :ets.insert(table, {"foo", self()})
 true
 iex> :ets.lookup(table, "foo")
@@ -99,7 +99,7 @@ defmodule KV.Registry do
       {:ok, _pid} ->
         {:noreply, {names, refs}}
       :error ->
-        {:ok, pid} = KV.BucketSupervisor.start_bucket()
+        {:ok, pid} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
         ref = Process.monitor(pid)
         refs = Map.put(refs, ref, name)
         :ets.insert(names, {name, pid})
@@ -128,10 +128,12 @@ The changes we have performed above have broken our tests because the registry r
 
 ```elixir
   setup context do
-    {:ok, _} = start_supervised({KV.Registry, name: context.test})
+    _ = start_supervised!({KV.Registry, name: context.test})
     %{registry: context.test}
   end
 ```
+
+Since each test has a unique name, we use the test name to name our registries. This way, we no longer need to pass the registry PID around, instead we identify it by the test name. Also note we assigned the result of `start_supervised!` to underscore (`_`). This idiom is often used to signal that we are not interested in the result of `start_supervised!`.
 
 Once we change `setup`, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the "spawns buckets" test:
 
@@ -190,7 +192,7 @@ def handle_call({:create, name}, _from, {names, refs}) do
     {:ok, pid} ->
       {:reply, pid, {names, refs}}
     :error ->
-      {:ok, pid} = KV.BucketSupervisor.start_bucket()
+      {:ok, pid} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       :ets.insert(names, {name, pid})
@@ -203,7 +205,7 @@ We changed the callback from `handle_cast/2` to `handle_call/3` and changed it t
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 
-```bash
+```console
 $ mix test --trace
 ```
 

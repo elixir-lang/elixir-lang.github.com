@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Task and gen_tcp" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/task-and-gen-tcp.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/task-and-gen-tcp.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Task and gen_tcp","url":"/ja/getting-started/mix-otp/task-and-gen-tcp.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Task and gen_tcp","url":"https://elixir-lang.org/ja/getting-started/mix-otp/task-and-gen-tcp.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -255,9 +251,9 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
     <span class="c1"># 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available</span>
     <span class="c1"># 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes</span>
     <span class="c1">#</span>
-    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">socket</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">port</span><span class="p">,</span>
-                      <span class="p">[</span><span class="ss">:binary</span><span class="p">,</span> <span class="ss">packet:</span> <span class="ss">:line</span><span class="p">,</span> <span class="ss">active:</span> <span class="no">false</span><span class="p">,</span> <span class="ss">reuseaddr:</span> <span class="no">true</span><span class="p">])</span>
-    <span class="no">Logger</span><span class="o">.</span><span class="n">info</span> <span class="sd">"</span><span class="s2">Accepting connections on port </span><span class="si">#{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">socket</span><span class="p">}</span> <span class="o">=</span>
+      <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="p">[</span><span class="ss">:binary</span><span class="p">,</span> <span class="ss">packet:</span> <span class="ss">:line</span><span class="p">,</span> <span class="ss">active:</span> <span class="no">false</span><span class="p">,</span> <span class="ss">reuseaddr:</span> <span class="no">true</span><span class="p">])</span>
+    <span class="no">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sd">"</span><span class="s2">Accepting connections on port </span><span class="si">#{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
   <span class="k">end</span>
 
@@ -314,16 +310,16 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p>The server is now running, and you will even notice the console is blocked. Let’s use <a href="https://en.wikipedia.org/wiki/Telnet">a <code class="highlighter-rouge">telnet</code> client</a> to access our server. There are clients available on most operating systems, and their command lines are generally similar:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>telnet 127.0.0.1 4040
-Trying 127.0.0.1...
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">telnet</span><span class="kv"> 127.0.0.1 4040
+</span>Trying 127.0.0.1...
 Connected to localhost.
-Escape character is <span class="s1">'^]'</span>.
+Escape character is '^]'.
 hello
 hello
 is it me
 is it me
-you are looking <span class="k">for</span>?
-you are looking <span class="k">for</span>?
+you are looking for?
+you are looking for?
 </code></pre>
 </div>
 
@@ -348,7 +344,7 @@ you are looking <span class="k">for</span>?
 
 <p>We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?</p>
 
-<p><a href="https://hexdocs.pm/elixir/Task.html">The Task module</a> provides this functionality exactly. For example, it has a <code class="highlighter-rouge">start_link/3</code> function that receives a module, function, and arguments, allowing us to run a given function as part of a supervision tree.</p>
+<p><a href="https://hexdocs.pm/elixir/Task.html">The Task module</a> provides this functionality exactly. For example, it has a <code class="highlighter-rouge">start_link/1</code> function that receives an anonymous function and executes it inside a new process that will be of a supervision tree.</p>
 
 <p>Let’s give it a try. Open up <code class="highlighter-rouge">lib/kv_server/application.ex</code>, and let’s change the supervisor in the <code class="highlighter-rouge">start/2</code> function to the following:</p>
 
@@ -363,6 +359,8 @@ you are looking <span class="k">for</span>?
 </code></pre>
 </div>
 
+<p>As usual, we’ve passed a two-element tuple as a child specification, which in turn will invoke <code class="highlighter-rouge">Task.start_link/1</code>.</p>
+
 <p>With this change, we are saying that we want to run <code class="highlighter-rouge">KVServer.accept(4040)</code> as a task. We are hardcoding the port for now but this could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">port</span> <span class="o">=</span> <span class="no">String</span><span class="o">.</span><span class="n">to_integer</span><span class="p">(</span><span class="no">System</span><span class="o">.</span><span class="n">get_env</span><span class="p">(</span><span class="sd">"</span><span class="s2">PORT"</span><span class="p">)</span> <span class="o">||</span> <span class="k">raise</span> <span class="sd">"</span><span class="s2">missing $PORT environment variable"</span><span class="p">)</span>
@@ -373,10 +371,10 @@ you are looking <span class="k">for</span>?
 
 <p>Now that the server is part of the supervision tree, it should start automatically when we run the application. Type <code class="highlighter-rouge">mix run --no-halt</code> in the terminal, and once again use the <code class="highlighter-rouge">telnet</code> client to make sure that everything still works:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>telnet 127.0.0.1 4040
-Trying 127.0.0.1...
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">telnet</span><span class="kv"> 127.0.0.1 4040
+</span>Trying 127.0.0.1...
 Connected to localhost.
-Escape character is <span class="s1">'^]'</span>.
+Escape character is '^]'.
 say you
 say you
 say me
@@ -388,10 +386,10 @@ say me
 
 <p>Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn’t echo:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>telnet 127.0.0.1 4040
-Trying 127.0.0.1...
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">telnet</span><span class="kv"> 127.0.0.1 4040
+</span>Trying 127.0.0.1...
 Connected to localhost.
-Escape character is <span class="s1">'^]'</span>.
+Escape character is '^]'.
 hello
 hello?
 HELLOOOOOO?
@@ -412,7 +410,7 @@ HELLOOOOOO?
 </code></pre>
 </div>
 
-<p>to use <code class="highlighter-rouge">Task.start_link/1</code>, which is similar to <code class="highlighter-rouge">Task.start_link/3</code>, but it receives an anonymous function instead of module, function and arguments:</p>
+<p>to also use <code class="highlighter-rouge">Task.start_link/1</code>:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defp</span> <span class="n">loop_acceptor</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
   <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">client</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:gen_tcp</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
@@ -558,7 +556,7 @@ HELLOOOOOO?
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

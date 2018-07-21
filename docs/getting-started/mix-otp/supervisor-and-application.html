@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Supervisor and Application" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/supervisor-and-application.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/supervisor-and-application.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Supervisor and Application","url":"/ja/getting-started/mix-otp/supervisor-and-application.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Supervisor and Application","url":"https://elixir-lang.org/ja/getting-started/mix-otp/supervisor-and-application.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -260,7 +256,7 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p>The supervision strategy dictates what happens when one of the children crashes. <code class="highlighter-rouge">:one_for_one</code> means that if a child dies, it will be the only one restarted. Since we have only one child now, that’s all we need. The <code class="highlighter-rouge">Supervisor</code> behaviour supports many different strategies and we will discuss them in this chapter.</p>
 
-<p>Once the supervisor starts, it will traverse the list of children and it will invoke the <code class="highlighter-rouge">child_spec/1</code> function on each module. We heard about the <code class="highlighter-rouge">child_spec/1</code> function in the Agent chapter, when we called <code class="highlighter-rouge">start_supervised(KV.Bucket)</code> without defining the module.</p>
+<p>Once the supervisor starts, it will traverse the list of children and it will invoke the <code class="highlighter-rouge">child_spec/1</code> function on each module.</p>
 
 <p>The <code class="highlighter-rouge">child_spec/1</code> function returns the child specification which describes how to start the process, if the process is a worker or a supervisor, if the process is temporary, transient or permanent and so on. The <code class="highlighter-rouge">child_spec/1</code> function is automatically defined when we <code class="highlighter-rouge">use Agent</code>, <code class="highlighter-rouge">use GenServer</code>, <code class="highlighter-rouge">use Supervisor</code>, etc. Let’s give it a try in the terminal with <code class="highlighter-rouge">iex -S mix</code>:</p>
 
@@ -277,6 +273,8 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 <p>We will learn those details as we move forward on this guide. If you would rather peek ahead, check the <a href="https://hexdocs.pm/elixir/Supervisor.html">Supervisor</a> docs.</p>
 
 <p>After the supervisor retrieves all child specifications, it proceeds to start its children one by one, in the order they were defined, using the information in the <code class="highlighter-rouge">:start</code> key in the child specification. For our current specification, it will call <code class="highlighter-rouge">KV.Registry.start_link([])</code>.</p>
+
+<p>In the previous chapter, we have used <code class="highlighter-rouge">start_supervised!</code> to start the registry during our tests. Internally, the <code class="highlighter-rouge">start_supervised!</code> function starts the registry under a supervisor defined by the ExUnit framework. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise registries in your applications, aligning our production code and tests best practices.</p>
 
 <p>So far <code class="highlighter-rouge">start_link/1</code> has always received an empty list of options. It is time we change that.</p>
 
@@ -329,12 +327,13 @@ iex&gt; KV.Registry.lookup(KV.Registry, "shopping")
 <p>We can find the generated <code class="highlighter-rouge">.app</code> file at <code class="highlighter-rouge">_build/dev/lib/kv/ebin/kv.app</code>. Let’s have a look at its contents:</p>
 
 <div class="language-erlang highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="n">application</span><span class="p">,</span><span class="n">kv</span><span class="p">,</span>
-             <span class="p">[{</span><span class="n">registered</span><span class="p">,[]},</span>
+             <span class="p">[{</span><span class="n">applications</span><span class="p">,[</span><span class="n">kernel</span><span class="p">,</span><span class="n">stdlib</span><span class="p">,</span><span class="n">elixir</span><span class="p">,</span><span class="n">logger</span><span class="p">]},</span>
               <span class="p">{</span><span class="n">description</span><span class="p">,</span><span class="s">"kv"</span><span class="p">},</span>
-              <span class="p">{</span><span class="n">applications</span><span class="p">,[</span><span class="n">kernel</span><span class="p">,</span><span class="n">stdlib</span><span class="p">,</span><span class="n">elixir</span><span class="p">,</span><span class="n">logger</span><span class="p">]},</span>
-              <span class="p">{</span><span class="n">vsn</span><span class="p">,</span><span class="s">"0.0.1"</span><span class="p">},</span>
-              <span class="p">{</span><span class="n">modules</span><span class="p">,[</span><span class="n">'Elixir.KV'</span><span class="p">,</span><span class="n">'Elixir.KV.Bucket'</span><span class="p">,</span>
-                        <span class="n">'Elixir.KV.Registry'</span><span class="p">,</span><span class="n">'Elixir.KV.Supervisor'</span><span class="p">]}]}.</span>
+              <span class="p">{</span><span class="n">modules</span><span class="p">,[</span><span class="n">'Elixir.KV'</span><span class="p">,</span><span class="n">'Elixir.KV.Bucket'</span><span class="p">,</span><span class="n">'Elixir.KV.Registry'</span><span class="p">,</span>
+                        <span class="n">'Elixir.KV.Supervisor'</span><span class="p">]},</span>
+              <span class="p">{</span><span class="n">registered</span><span class="p">,[]},</span>
+              <span class="p">{</span><span class="n">vsn</span><span class="p">,</span><span class="s">"0.1.0"</span><span class="p">},</span>
+              <span class="p">{</span><span class="n">extra_applications</span><span class="p">,[</span><span class="n">logger</span><span class="p">]}]}.</span>
 </code></pre>
 </div>
 
@@ -346,7 +345,7 @@ iex&gt; KV.Registry.lookup(KV.Registry, "shopping")
 
 <h3 id="starting-applications">Starting applications</h3>
 
-<p>When we define a <code class="highlighter-rouge">.app</code> file, which is the application specification, we are able to start and stop the application as a whole. We haven’t worried about this so far for two reasons:</p>
+<p>When we define an <code class="highlighter-rouge">.app</code> file, which is the application specification, we are able to start and stop the application as a whole. We haven’t worried about this so far for two reasons:</p>
 
 <ol>
   <li>
@@ -452,7 +451,7 @@ iex&gt; KV.Registry.lookup(KV.Registry, "shopping")
 
 <p>When we talk about applications, we talk about <abbr title="Open Telecom Platform">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications and how they relate to booting and shutting down of your system as a whole in the <a href="https://hexdocs.pm/elixir/Application.html">docs for the Application module</a>.</p>
 
-<p>Next let’s learn about one special type of supervisor that is designed to start and shut down children dynamically, called simple one for one.</p>
+<p>Next let’s learn about one special type of supervisor that is designed to start and shut down children dynamically, called dynamic supervisors.</p>
 
   </article><!-- .hfeed -->
 
@@ -485,7 +484,7 @@ iex&gt; KV.Registry.lookup(KV.Registry, "shopping")
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

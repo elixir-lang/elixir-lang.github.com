@@ -857,11 +857,10 @@ If you are not using rebar, the easiest approach to use Elixir in your existing 
 
 ## Further reading
 
-Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples.
+Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir.
 
 Elixir also provides a [Getting Started guide][6] and has [documentation available online][7].
 
 [4]: http://www.erlang.org/doc/programming_examples/users_guide.html
-[5]: http://schemecookbook.org/Erlang/TOC
 [6]: /getting-started/introduction.html
 [7]: /docs.html

@@ -39,7 +39,7 @@ The function receives the arguments and passes them to `if`. However, as we lear
 
 Let's start `iex` with the module above:
 
-```bash
+```console
 $ iex macros.exs
 ```
 

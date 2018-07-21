@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 01:24+0900\n"
+"POT-Creation-Date: 2018-07-21 23:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgid "[Agents](https://hexdocs.pm/elixir/Agent.html) are simple wrappers around
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:35
-msgid "```bash\n"
+msgid "```console\n"
 "$ iex -S mix\n"
 "```"
 msgstr ""
@@ -111,7 +111,7 @@ msgid "Let's implement our `KV.Bucket` using agents. But before starting the imp
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:56
-#: ../../../../getting-started/mix-otp/agent.markdown:125
+#: ../../../../getting-started/mix-otp/agent.markdown:123
 msgid "```elixir\n"
 "defmodule KV.BucketTest do\n"
 "  use ExUnit.Case, async: true"
@@ -119,12 +119,12 @@ msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:60
 msgid "  test \"stores values by key\" do\n"
-"    {:ok, bucket} = start_supervised KV.Bucket\n"
+"    {:ok, bucket} = KV.Bucket.start_link([])\n"
 "    assert KV.Bucket.get(bucket, \"milk\") == nil"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:64
-#: ../../../../getting-started/mix-otp/agent.markdown:137
+#: ../../../../getting-started/mix-otp/agent.markdown:135
 msgid "    KV.Bucket.put(bucket, \"milk\", 3)\n"
 "    assert KV.Bucket.get(bucket, \"milk\") == 3\n"
 "  end\n"
@@ -133,7 +133,7 @@ msgid "    KV.Bucket.put(bucket, \"milk\", 3)\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:70
-msgid "Our first test starts a new `KV.Bucket` using the `start_supervised` function and performs some `get/2` and `put/3` operations on it, asserting the result. We don't need to explicitly stop the agent because we used `start_supervised/2` and that takes care of automatically terminating the processes under test when the test finishes."
+msgid "Our first test starts a new `KV.Bucket` by calling the `start_link/1` and passing an empty list of options. Then we perform some `get/2` and `put/3` operations on it, asserting the result."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:72
@@ -146,25 +146,21 @@ msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:76
 msgid "```\n"
-"** (ArgumentError) The module KV.Bucket was given as a child to a supervisor but it does not implement child_spec/1\n"
+"** (UndefinedFunctionError) function KV.Bucket.start_link/1 is undefined (module KV.Bucket is not available)\n"
 "```"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:80
-msgid "Since the module has not yet been defined, the `child_spec/1` does not yet exist."
-msgstr ""
-
-#: ../../../../getting-started/mix-otp/agent.markdown:82
 msgid "In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:84
+#: ../../../../getting-started/mix-otp/agent.markdown:82
 msgid "```elixir\n"
 "defmodule KV.Bucket do\n"
 "  use Agent"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:88
+#: ../../../../getting-started/mix-otp/agent.markdown:86
 msgid "  @doc \"\"\"\n"
 "  Starts a new bucket.\n"
 "  \"\"\"\n"
@@ -173,7 +169,7 @@ msgid "  @doc \"\"\"\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:95
+#: ../../../../getting-started/mix-otp/agent.markdown:93
 msgid "  @doc \"\"\"\n"
 "  Gets a value from the `bucket` by `key`.\n"
 "  \"\"\"\n"
@@ -182,7 +178,7 @@ msgid "  @doc \"\"\"\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:102
+#: ../../../../getting-started/mix-otp/agent.markdown:100
 msgid "  @doc \"\"\"\n"
 "  Puts the `value` for the given `key` in the `bucket`.\n"
 "  \"\"\"\n"
@@ -193,55 +189,55 @@ msgid "  @doc \"\"\"\n"
 "```"
 msgstr ""
 
+#: ../../../../getting-started/mix-otp/agent.markdown:109
+msgid "The first step in our implementation is to call `use Agent`."
+msgstr ""
+
 #: ../../../../getting-started/mix-otp/agent.markdown:111
-msgid "The first step in our implementation is to call `use Agent`. By doing so, it will define a `child_spec/1` function containing the exact steps to start our process."
+msgid "Then we define a `start_link/1` function, which will effectively start the agent. It is a convention to define a `start_link/1` function that always accepts a list of options. We don't plan on using any option right now, but we might later on. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent initial state."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/agent.markdown:113
-msgid "Then we define a `start_link/1` function, which will effectively start the agent. The `start_link/1` function always receives a list of options, but we don't plan on using it right now. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent initial state."
-msgstr ""
-
-#: ../../../../getting-started/mix-otp/agent.markdown:115
 msgid "We are keeping a map inside the agent to store our keys and values. Getting and putting values on the map is done with the Agent API  and the capture operator `&`, introduced in [the Getting Started guide](/getting-started/modules-and-functions.html#function-capturing)."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:117
+#: ../../../../getting-started/mix-otp/agent.markdown:115
 msgid "Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test`."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:119
+#: ../../../../getting-started/mix-otp/agent.markdown:117
 msgid "## Test setup with ExUnit callbacks"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:121
+#: ../../../../getting-started/mix-otp/agent.markdown:119
 msgid "Before moving on and adding more features to `KV.Bucket`, let's talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket agent to be up and running. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:123
+#: ../../../../getting-started/mix-otp/agent.markdown:121
 msgid "Let's rewrite the test case to use callbacks:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:129
+#: ../../../../getting-started/mix-otp/agent.markdown:127
 msgid "  setup do\n"
-"    {:ok, bucket} = start_supervised(KV.Bucket)\n"
+"    {:ok, bucket} = KV.Bucket.start_link([])\n"
 "    %{bucket: bucket}\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:134
+#: ../../../../getting-started/mix-otp/agent.markdown:132
 msgid "  test \"stores values by key\", %{bucket: bucket} do\n"
 "    assert KV.Bucket.get(bucket, \"milk\") == nil"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:143
+#: ../../../../getting-started/mix-otp/agent.markdown:141
 msgid "We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:145
+#: ../../../../getting-started/mix-otp/agent.markdown:143
 msgid "Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `%{bucket: bucket}` from the callback, ExUnit will merge this map into the test context. Since the test context is a map itself, we can pattern match the bucket out of it, providing access to the bucket inside the test:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:147
+#: ../../../../getting-started/mix-otp/agent.markdown:145
 msgid "```elixir\n"
 "test \"stores values by key\", %{bucket: bucket} do\n"
 "  # `bucket` is now the bucket from the setup block\n"
@@ -249,25 +245,25 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:153
+#: ../../../../getting-started/mix-otp/agent.markdown:151
 msgid "You can read more about ExUnit cases in the [`ExUnit.Case` module documentation](https://hexdocs.pm/ex_unit/ExUnit.Case.html) and more about callbacks in [`ExUnit.Callbacks` docs](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html)."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:155
+#: ../../../../getting-started/mix-otp/agent.markdown:153
 msgid "## Other agent actions"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:157
+#: ../../../../getting-started/mix-otp/agent.markdown:155
 msgid "Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one function call via `Agent.get_and_update/2`. Let's implement a `KV.Bucket.delete/2` function that deletes a key from the bucket, returning its current value:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:159
+#: ../../../../getting-started/mix-otp/agent.markdown:157
 msgid "```elixir\n"
 "@doc \"\"\"\n"
 "Deletes `key` from `bucket`."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:163
+#: ../../../../getting-started/mix-otp/agent.markdown:161
 msgid "Returns the current value of `key`, if `key` exists.\n"
 "\"\"\"\n"
 "def delete(bucket, key) do\n"
@@ -276,19 +272,19 @@ msgid "Returns the current value of `key`, if `key` exists.\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:170
+#: ../../../../getting-started/mix-otp/agent.markdown:168
 msgid "Now it is your turn to write a test for the functionality above! Also, be sure to explore [the documentation for the `Agent` module](https://hexdocs.pm/elixir/Agent.html) to learn more about them."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:172
+#: ../../../../getting-started/mix-otp/agent.markdown:170
 msgid "## Client/Server in agents"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:174
+#: ../../../../getting-started/mix-otp/agent.markdown:172
 msgid "Before we move on to the next chapter, let's discuss the client/server dichotomy in agents. Let's expand the `delete/2` function we have just implemented:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:176
+#: ../../../../getting-started/mix-otp/agent.markdown:174
 msgid "```elixir\n"
 "def delete(bucket, key) do\n"
 "  Agent.get_and_update(bucket, fn dict ->\n"
@@ -298,15 +294,15 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:184
+#: ../../../../getting-started/mix-otp/agent.markdown:182
 msgid "Everything that is inside the function we passed to the agent happens in the agent process. In this case, since the agent process is the one receiving and responding to our messages, we say the agent process is the server. Everything outside the function is happening in the client."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:186
+#: ../../../../getting-started/mix-otp/agent.markdown:184
 msgid "This distinction is important. If there are expensive actions to be done, you must consider if it will be better to perform these actions on the client or on the server. For example:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:188
+#: ../../../../getting-started/mix-otp/agent.markdown:186
 msgid "```elixir\n"
 "def delete(bucket, key) do\n"
 "  Process.sleep(1000) # puts client to sleep\n"
@@ -318,11 +314,11 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:198
+#: ../../../../getting-started/mix-otp/agent.markdown:196
 msgid "When a long action is performed on the server, all other requests to that particular server will wait until the action is done, which may cause some clients to timeout."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/agent.markdown:200
+#: ../../../../getting-started/mix-otp/agent.markdown:198
 msgid "In the next chapter, we will explore GenServers, where the segregation between clients and servers is made more apparent."
 msgstr ""
 

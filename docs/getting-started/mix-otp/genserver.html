@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="GenServer" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/genserver.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/genserver.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"GenServer","url":"/ja/getting-started/mix-otp/genserver.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"GenServer","url":"https://elixir-lang.org/ja/getting-started/mix-otp/genserver.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -358,7 +354,7 @@ iex&gt; KV.Bucket.get(:shopping, "milk")
   <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
 
   <span class="n">setup</span> <span class="k">do</span>
-    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">registry</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span>
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">start_supervised!</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">)</span>
     <span class="p">%{</span><span class="ss">registry:</span> <span class="n">registry</span><span class="p">}</span>
   <span class="k">end</span>
 
@@ -377,7 +373,13 @@ iex&gt; KV.Bucket.get(:shopping, "milk")
 
 <p>Our test should pass right out of the box!</p>
 
-<p>Once again, ExUnit will take care of shutting down the registry after every test since we used <code class="highlighter-rouge">start_supervised</code> to start it. If there is a need to stop a <code class="highlighter-rouge">GenServer</code> as part of the application logic, one can use the <code class="highlighter-rouge">GenServer.stop/1</code> function:</p>
+<p>There is one important difference between the <code class="highlighter-rouge">setup</code> block we wrote for <code class="highlighter-rouge">KV.Registry</code> and the one we wrote for <code class="highlighter-rouge">KV.Bucket</code>. Instead of starting the registry by hand by calling <code class="highlighter-rouge">KV.Registry.start_link/1</code>, we instead called <a href="https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2">the <code class="highlighter-rouge">start_supervised!/1</code> function</a>, passing the <code class="highlighter-rouge">KV.Registry</code> module.</p>
+
+<p>The <code class="highlighter-rouge">start_supervised!</code> function will do the job of starting the <code class="highlighter-rouge">KV.Registry</code> process by calling <code class="highlighter-rouge">start_link/1</code>. The advantage of using <code class="highlighter-rouge">start_supervised!</code> is that ExUnit will guarantee that the registry process will be shutdown before the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.</p>
+
+<p>When starting processes during your tests, we should always prefer to use <code class="highlighter-rouge">start_supervised!</code>. We recommend you to change the previous setup block in <code class="highlighter-rouge">bucket_test.exs</code> to use <code class="highlighter-rouge">start_supervised!</code> too.</p>
+
+<p>If there is a need to stop a <code class="highlighter-rouge">GenServer</code> as part of the application logic, one can use the <code class="highlighter-rouge">GenServer.stop/1</code> function:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="c1">## Client API</span>
 
@@ -427,7 +429,7 @@ iex&gt; flush()
 
 <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
   <span class="n">names</span> <span class="o">=</span> <span class="p">%{}</span>
-  <span class="n">refs</span>  <span class="o">=</span> <span class="p">%{}</span>
+  <span class="n">refs</span> <span class="o">=</span> <span class="p">%{}</span>
   <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
 <span class="k">end</span>
 
@@ -529,7 +531,7 @@ iex&gt; flush()
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

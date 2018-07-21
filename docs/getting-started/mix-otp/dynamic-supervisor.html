@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Simple one for one supervisors - Elixir</title>
+  <title>Dynamic supervisors - Elixir</title>
   <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
@@ -25,10 +25,12 @@
   ga('send', 'pageview');
   </script>
   <!-- Begin Jekyll SEO tag v2.2.3 -->
-<meta property="og:title" content="Simple one for one supervisors" />
+<meta property="og:title" content="Dynamic supervisors" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/dynamic-supervisor.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/dynamic-supervisor.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Simple one for one supervisors","url":"/ja/getting-started/mix-otp/dynamic-supervisor.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Dynamic supervisors","url":"https://elixir-lang.org/ja/getting-started/mix-otp/dynamic-supervisor.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -219,7 +215,7 @@
 
 <div id="content">
   <article>
-    <h1 id="simple-one-for-one-supervisors">Simple one for one supervisors</h1>
+    <h1 id="dynamic-supervisors">Dynamic supervisors</h1>
 
 <div id="toc" class="toc"></div>
 
@@ -267,44 +263,28 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 </code></pre>
 </div>
 
-<p>We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called <code class="highlighter-rouge">:simple_one_for_one</code>, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization. Instead, a worker is started manually via the <code class="highlighter-rouge">Supervisor.start_child/2</code> function.</p>
+<p>We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a <code class="highlighter-rouge">DynamicSupervisor</code>. The <code class="highlighter-rouge">DynamicSupervisor</code> does not expect a list of children during initialization, instead each child is started manually via <code class="highlighter-rouge">DynamicSupervisor.start_child/2</code>.</p>
 
 <h2 id="the-bucket-supervisor">The bucket supervisor</h2>
 
-<p>Let’s define our <code class="highlighter-rouge">KV.BucketSupervisor</code> in <code class="highlighter-rouge">lib/kv/bucket_supervisor.ex</code> as follows:</p>
+<p>Let’s define a DynamicSupervisor and give it a name of <code class="highlighter-rouge">KV.BucketSupervisor</code> in <code class="highlighter-rouge">lib/kv/supervisor.ex</code> as follows:</p>
 
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span> <span class="k">do</span>
-  <span class="kn">use</span> <span class="no">Supervisor</span>
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">},</span>
+      <span class="p">{</span><span class="no">DynamicSupervisor</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">}</span>
+    <span class="p">]</span>
 
-  <span class="c1"># A simple module attribute that stores the supervisor name</span>
-  <span class="nv">@name</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span>
-
-  <span class="k">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">_opts</span><span class="p">)</span> <span class="k">do</span>
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="ss">:ok</span><span class="p">,</span> <span class="ss">name:</span> <span class="nv">@name</span><span class="p">)</span>
+    <span class="no">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">)</span>
   <span class="k">end</span>
-
-  <span class="k">def</span> <span class="n">start_bucket</span> <span class="k">do</span>
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="nv">@name</span><span class="p">,</span> <span class="p">[])</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p">([</span><span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">],</span> <span class="ss">strategy:</span> <span class="ss">:simple_one_for_one</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
 </code></pre>
 </div>
 
-<p>There are two changes in this supervisor compared to the first one.</p>
+<p>Note this time we didn’t have to define a separate module that invokes <code class="highlighter-rouge">use DynamicSupervisor</code>. Instead we directly started it in our supervision tree. This is straight-forward to do with the <code class="highlighter-rouge">DynamicSupervisor</code> because it doesn’t require any child to be given during initialization.</p>
 
-<p>First of all, we have decided to give the supervisor a local name of <code class="highlighter-rouge">KV.BucketSupervisor</code>. While we could have passed the <code class="highlighter-rouge">opts</code> received on <code class="highlighter-rouge">start_link/1</code> to the supervisor, we chose to hard code the name for simplicity. Note this approach has downsides. For example, you wouldn’t be able to start multiple instances of the <code class="highlighter-rouge">KV.BucketSupervisor</code> during tests, as they would conflict on the name. In this case, we will just allow all registries to use the same bucket supervisor at once, that won’t be a problem since children of a simple one for one supervisor don’t interfere with one another.</p>
+<p>Run <code class="highlighter-rouge">iex -S mix</code> so we can give our dynamic supervisor a try:</p>
 
-<p>We have also defined a <code class="highlighter-rouge">start_bucket/0</code> function that will start a bucket as a child of our supervisor named <code class="highlighter-rouge">KV.BucketSupervisor</code>. <code class="highlighter-rouge">start_bucket/0</code> is the function we are going to invoke instead of calling <code class="highlighter-rouge">KV.Bucket.start_link/1</code> directly in the registry.</p>
-
-<p>Run <code class="highlighter-rouge">iex -S mix</code> so we can give our new supervisor a try:</p>
-
-<pre><code class="language-iex">iex&gt; {:ok, _} = KV.BucketSupervisor.start_link([])
-{:ok, #PID&lt;0.70.0&gt;}
-iex&gt; {:ok, bucket} = KV.BucketSupervisor.start_bucket
+<pre><code class="language-iex">iex&gt; {:ok, bucket} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
 {:ok, #PID&lt;0.72.0&gt;}
 iex&gt; KV.Bucket.put(bucket, "eggs", 3)
 :ok
@@ -312,31 +292,20 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
 3
 </code></pre>
 
-<p>We are almost ready to use the simple one for one supervisor in our application. The first step is to change the registry to invoke <code class="highlighter-rouge">start_bucket</code>:</p>
+<p><code class="highlighter-rouge">DynamicSupervisor.start_child/2</code> expects the name of the supervisor and the child specification of the child to be started.</p>
+
+<p>The last step is to change the registry to use the dynamic supervisor:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">})</span> <span class="k">do</span>
     <span class="k">if</span> <span class="no">Map</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
       <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
     <span class="k">else</span>
-      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="o">.</span><span class="n">start_bucket</span><span class="p">()</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">DynamicSupervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">)</span>
       <span class="n">ref</span> <span class="o">=</span> <span class="no">Process</span><span class="o">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
       <span class="n">refs</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
       <span class="n">names</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
       <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
     <span class="k">end</span>
-  <span class="k">end</span>
-</code></pre>
-</div>
-
-<p>The second step is to make sure <code class="highlighter-rouge">KV.BucketSupervisor</code> is started when our application boots. We can do this by opening <code class="highlighter-rouge">lib/kv/supervisor.ex</code> and changing <code class="highlighter-rouge">init/1</code> to the following:</p>
-
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="p">{</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">},</span>
-      <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span>
-    <span class="p">]</span>
-
-    <span class="no">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">)</span>
   <span class="k">end</span>
 </code></pre>
 </div>
@@ -378,7 +347,7 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
     <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span>
+      <span class="p">{</span><span class="no">DynamicSupervisor</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">BucketSupervisor</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">},</span>
       <span class="p">{</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">}</span>
     <span class="p">]</span>
 
@@ -387,8 +356,6 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
 </code></pre>
 </div>
 
-<p>To help developers remember how to work with Supervisors and its convenience functions, <a href="http://benjamintan.io/">Benjamin Tan Wei Hao</a> has created a <a href="https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf">Supervisor cheat sheet</a>.</p>
-
 <p>There are two topics left before we move on to the next chapter.</p>
 
 <h2 id="shared-state-in-tests">Shared state in tests</h2>
@@ -396,7 +363,7 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
 <p>So far we have been starting one registry per test to ensure they are isolated:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="n">setup</span> <span class="k">do</span>
-  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">registry</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">)</span>
+  <span class="n">registry</span> <span class="o">=</span> <span class="n">start_supervised!</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Registry</span><span class="p">)</span>
   <span class="p">%{</span><span class="ss">registry:</span> <span class="n">registry</span><span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
@@ -404,7 +371,7 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
 
 <p>Since we have now changed our registry to use <code class="highlighter-rouge">KV.BucketSupervisor</code>, which is registered globally, our tests are now relying on this shared supervisor even though each test has its own registry. The question is: should we?</p>
 
-<p>It depends. It is ok to rely on shared state as long as we depend only on a non-shared partition of this state. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like <code class="highlighter-rouge">Supervisor.count_children(KV.Bucket.Supervisor)</code> which would count all buckets from all registries, potentially giving different results when tests run concurrently.</p>
+<p>It depends. It is ok to rely on shared state as long as we depend only on a non-shared partition of this state. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like <code class="highlighter-rouge">Supervisor.count_children(KV.BucketSupervisor)</code> which would count all buckets from all registries, potentially giving different results when tests run concurrently.</p>
 
 <p>Since we have relied only on a non-shared partition of the bucket supervisor so far, we don’t need to worry about concurrency issues in our test suite. In case it ever becomes a problem, we can start a supervisor per test and pass it as an argument to the registry <code class="highlighter-rouge">start_link</code> function.</p>
 
@@ -423,7 +390,7 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
 
 <p>Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:</p>
 
-<pre><code class="language-iex">iex&gt; KV.Registry.create KV.Registry, "shopping"
+<pre><code class="language-iex">iex&gt; KV.Registry.create(KV.Registry, "shopping")
 :ok
 </code></pre>
 
@@ -464,7 +431,7 @@ iex&gt; KV.Bucket.get(bucket, "eggs")
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

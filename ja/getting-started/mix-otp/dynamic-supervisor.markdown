@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Simple one for one supervisors
+title: Dynamic supervisors
 ---
 
 # {{ page.title }}
@@ -48,45 +48,30 @@ Since the bucket terminated, the registry went away with it, and our test fails 
        test/kv/registry_test.exs:33: (test)
 ```
 
-We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. There is one supervisor strategy, called `:simple_one_for_one`, that is the perfect fit for such situations: it allows us to specify a worker template and supervise many children based on this template. With this strategy, no workers are started during the supervisor initialization. Instead, a worker is started manually via the `Supervisor.start_child/2` function.
+We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization, instead each child is started manually via `DynamicSupervisor.start_child/2`.
 
 ## The bucket supervisor
 
-Let's define our `KV.BucketSupervisor` in `lib/kv/bucket_supervisor.ex` as follows:
+Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor` in `lib/kv/supervisor.ex` as follows:
+
 
 ```elixir
-defmodule KV.BucketSupervisor do
-  use Supervisor
-
-  # A simple module attribute that stores the supervisor name
-  @name KV.BucketSupervisor
-
-  def start_link(_opts) do
-    Supervisor.start_link(__MODULE__, :ok, name: @name)
-  end
-
-  def start_bucket do
-    Supervisor.start_child(@name, [])
-  end
-
   def init(:ok) do
-    Supervisor.init([KV.Bucket], strategy: :simple_one_for_one)
+    children = [
+      {KV.Registry, name: KV.Registry},
+      {DynamicSupervisor, name: KV.BucketSupervisor, strategy: :one_for_one}
+    ]
+
+    Supervisor.init(children, strategy: :one_for_one)
   end
-end
 ```
 
-There are two changes in this supervisor compared to the first one.
+Note this time we didn't have to define a separate module that invokes `use DynamicSupervisor`. Instead we directly started it in our supervision tree. This is straight-forward to do with the `DynamicSupervisor` because it doesn't require any child to be given during initialization.
 
-First of all, we have decided to give the supervisor a local name of `KV.BucketSupervisor`. While we could have passed the `opts` received on `start_link/1` to the supervisor, we chose to hard code the name for simplicity. Note this approach has downsides. For example, you wouldn't be able to start multiple instances of the `KV.BucketSupervisor` during tests, as they would conflict on the name. In this case, we will just allow all registries to use the same bucket supervisor at once, that won't be a problem since children of a simple one for one supervisor don't interfere with one another.
-
-We have also defined a `start_bucket/0` function that will start a bucket as a child of our supervisor named `KV.BucketSupervisor`. `start_bucket/0` is the function we are going to invoke instead of calling `KV.Bucket.start_link/1` directly in the registry.
-
-Run `iex -S mix` so we can give our new supervisor a try:
+Run `iex -S mix` so we can give our dynamic supervisor a try:
 
 ```iex
-iex> {:ok, _} = KV.BucketSupervisor.start_link([])
-{:ok, #PID<0.70.0>}
-iex> {:ok, bucket} = KV.BucketSupervisor.start_bucket
+iex> {:ok, bucket} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
 {:ok, #PID<0.72.0>}
 iex> KV.Bucket.put(bucket, "eggs", 3)
 :ok
@@ -94,32 +79,21 @@ iex> KV.Bucket.get(bucket, "eggs")
 3
 ```
 
-We are almost ready to use the simple one for one supervisor in our application. The first step is to change the registry to invoke `start_bucket`:
+`DynamicSupervisor.start_child/2` expects the name of the supervisor and the child specification of the child to be started.
+
+The last step is to change the registry to use the dynamic supervisor:
 
 ```elixir
   def handle_cast({:create, name}, {names, refs}) do
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
-      {:ok, pid} = KV.BucketSupervisor.start_bucket()
+      {:ok, pid} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       names = Map.put(names, name, pid)
       {:noreply, {names, refs}}
     end
-  end
-```
-
-The second step is to make sure `KV.BucketSupervisor` is started when our application boots. We can do this by opening `lib/kv/supervisor.ex` and changing `init/1` to the following:
-
-```elixir
-  def init(:ok) do
-    children = [
-      {KV.Registry, name: KV.Registry},
-      KV.BucketSupervisor
-    ]
-
-    Supervisor.init(children, strategy: :one_for_one)
   end
 ```
 
@@ -161,15 +135,13 @@ So our last option is to go all in and pick the `:one_for_all` strategy: the sup
 ```elixir
   def init(:ok) do
     children = [
-      KV.BucketSupervisor,
+      {DynamicSupervisor, name: KV.BucketSupervisor, strategy: :one_for_one},
       {KV.Registry, name: KV.Registry}
     ]
 
     Supervisor.init(children, strategy: :one_for_all)
   end
 ```
-
-To help developers remember how to work with Supervisors and its convenience functions, [Benjamin Tan Wei Hao](http://benjamintan.io/) has created a [Supervisor cheat sheet](https://raw.githubusercontent.com/benjamintanweihao/elixir-cheatsheets/master/Supervisor_CheatSheet.pdf).
 
 There are two topics left before we move on to the next chapter.
 
@@ -179,14 +151,14 @@ So far we have been starting one registry per test to ensure they are isolated:
 
 ```elixir
 setup do
-  {:ok, registry} = start_supervised(KV.Registry)
+  registry = start_supervised!(KV.Registry)
   %{registry: registry}
 end
 ```
 
 Since we have now changed our registry to use `KV.BucketSupervisor`, which is registered globally, our tests are now relying on this shared supervisor even though each test has its own registry. The question is: should we?
 
-It depends. It is ok to rely on shared state as long as we depend only on a non-shared partition of this state. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.Bucket.Supervisor)` which would count all buckets from all registries, potentially giving different results when tests run concurrently.
+It depends. It is ok to rely on shared state as long as we depend only on a non-shared partition of this state. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.BucketSupervisor)` which would count all buckets from all registries, potentially giving different results when tests run concurrently.
 
 Since we have relied only on a non-shared partition of the bucket supervisor so far, we don't need to worry about concurrency issues in our test suite. In case it ever becomes a problem, we can start a supervisor per test and pass it as an argument to the registry `start_link` function.
 
@@ -207,7 +179,7 @@ In the Applications tab, you will see all applications currently running in your
 Not only that, as you create new buckets on the terminal, you should see new processes spawned in the supervision tree shown in Observer:
 
 ```iex
-iex> KV.Registry.create KV.Registry, "shopping"
+iex> KV.Registry.create(KV.Registry, "shopping")
 :ok
 ```
 
