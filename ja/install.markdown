@@ -9,89 +9,90 @@ layout: default
 
 {% include toc.html %}
 
-目次の Distributions から好きな環境に合わせて簡単にインストールできます。それ以外には、パッケージをプリプロセスしてコンパイルする方法がありますので、そちらを利用してください。
+目次の Distributions からご自分の環境を選んでください。簡単にインストールできます！それ以外には、パッケージをプリプロセス(プリコンパイル)してコンパイルする方法がありますので、そちらを利用してください。
 
-Note: Elixir {{ stable.name }} の使用には Erlang {{ stable.minimum_otp }} 以降が必要ですが、大抵は自動でインストールされます。もしインストールされないようでしたら、"Installing Erlang" を参照してください。
+Note > Elixir {{ stable.name }} の使用には Erlang {{ stable.minimum_otp }} 以降が必要ですが、大抵は自動でインストールされます。もしインストールされないようでしたら、"Installing Erlang" を参照してください。
 
 ## Distributions
 
-The preferred option for installing Elixir. Choose your operating system and tool.
+お好きなオプションをお選びいただけます。あなたのシステムに Elixir をインストールしましょう！
 
-If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.
+以前に一度 Elixir/Erlang をインストールしたことがあるのでしたら、 "Compiling with version managers" や " Compiling form source (Unix and MinGW) " を参照してください。
 
 ### Mac OS X
 
-  * Homebrew
-    * Update your homebrew to latest: `brew update`
-    * Run: `brew install elixir`
-  * Macports
-    * Run: `sudo port install elixir`
+  * Homebrew をお使いの場合
+    * Homebrew を最新バージョンにアップデート: `brew update`
+    * インストール: `brew install elixir`
+  * Macports をお使いの場合
+    * インストール: `sudo port install elixir`
 
 ### Unix (and Unix-like)
 
-  * Arch Linux (Community repo)
-    * Run: `pacman -S elixir`
-  * openSUSE (and SLES 11 SP3+)
-    * Add Erlang devel repo: `zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang`
-    * Run: `zypper in elixir`
-  * Gentoo
-    * Run: `emerge --ask dev-lang/elixir`
+  * Arch Linux (Community repo) をお使いの場合
+    * インストール: `pacman -S elixir`
+  * openSUSE (and SLES 11 SP3+) をお使いの場合
+    * Erlang devel リポジトリの追加: `zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang`
+    * インストール: `zypper in elixir`
+  * Gentoo をお使いの場合
+    * インストール: `emerge --ask dev-lang/elixir`
   * GNU Guix
-    * Run: `guix package -i elixir`
-  * Fedora 21 (and older)
-    * Run: `yum install elixir`
+    * インストール: `guix package -i elixir`
+  * Fedora 21 (and older) をお使いの場合
+    * インストール: `yum install elixir`
   * Fedora 22 (and newer)
-    * Run `dnf install elixir`
-  * FreeBSD
-    * From ports: `cd /usr/ports/lang/elixir && make install clean`
-    * From pkg: `pkg install elixir`
-  * Solus
-    * Run: `eopkg install elixir`
+    * インストール `dnf install elixir`
+  * FreeBSD をお使いの場合
+    * ports : `cd /usr/ports/lang/elixir && make install clean`
+    * pkg: `pkg install elixir`
+  * Solus をお使いの場合
+    * インストール: `eopkg install elixir`
   * Ubuntu 14.04/16.04/16.10/17.04 or Debian 7/8/9
-    * Add Erlang Solutions repo: `wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb`
-    * Run: `sudo apt-get update`
-    * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
-    * Install Elixir: `sudo apt-get install elixir`
+    * Erlang Solutions リポジトリの追加: `wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb`
+    * リストのアップデート: `sudo apt-get update`
+    * Erlang/OTP プラットフォームとそれら全アプリケーションのインストール: `sudo apt-get install esl-erlang`
+    * Elixir をインストール: `sudo apt-get install elixir`
 
 ### Windows
 
-  * Web installer
-    * [Download the installer](https://repo.hex.pm/elixir-websetup.exe)
-    * Click next, next, ..., finish
+  * インストーラーの利用
+    * [ダウンロード](https://repo.hex.pm/elixir-websetup.exe)
+    * 画面に従って進んでいただくと完了です
   * Chocolatey
-    * `cinst elixir`
+    * インストール: `cinst elixir`
 
 ### Raspberry Pi
 
-If necessary, replace "stretch" with the name of your Raspbian release.
+以下は Stretch の場合ですが、必要であれば "stretch" の部分をあなたの Raspbian に置き換えてください。
 
-  * The Erlang Solutions repository has a prebuilt package for armhf. This saves a significant amount of time in comparison to recompiling natively
-  * Get Erlang key
+  * armhf でパッケージをプリビルドしましょう。再コンパイルに比べると大幅に時間を短縮してくれます。
+  * 公開鍵の取得
     * `echo "deb https://packages.erlang-solutions.com/debian stretch contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
-    * Run: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
-    * Add to keychain: `sudo apt-key add erlang_solutions.asc`
-  * Install Elixir
-    * Update apt to latest: `sudo apt update`
-    * Run: `sudo apt install elixir`
+    * Erlang のインストール: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
+    * 鍵を keychain に追加: `sudo apt-key add erlang_solutions.asc`
+  * Elixir
+    * apt のアップデート: `sudo apt update`
+    * Elixir のインストール: `sudo apt install elixir`
 
 ### Docker
 
-If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir.
+もしあなたが Docker に親しみ慣れているのなら、公式 Docker イメージを使えばとても簡単です。
 
   * Enter interactive mode
     * Run: `docker run -it --rm elixir`
   * Enter bash within container with installed `elixir`
     * Run: `docker run -it --rm elixir bash`
 
-Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
+これらのディストリビューションは、たいてい自動で Erlang もインストールしてくれますが、もしインストールされない場合は [Installing Erlang](/install.html#installing-erlang) を参照してください.
 
-If you need to programmatically fetch the list of Elixir precompiled packages alongside their checksums, access [https://elixir-lang.org/elixir.csv](https://elixir-lang.org/elixir.csv).
+プリコンパイル済みパッケージのリストが必要でしたら、こちらからどうぞ。[https://elixir-lang.org/elixir.csv](https://elixir-lang.org/elixir.csv).
 
 ## Precompiled package
 
-Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Precompiled.zip).
+Elixir はリリースごとにプリコンパイル済みパッケージをご用意しています。まずはじめに [Erlangをインストール](/install.html#installing-erlang) します。次に [最新の Precopiled.zip ファイル](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Precompiled.zip)をダウンロード後、解凍してください。.
 
-Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
+一度ファイルを解凍すると 'bin' ディレクトリから 'elixir' や 'iex' コマンドを使用できますが、Elixir へのパスを環境変数 PATH に追加した方が効率的でしょう。
+詳しくは [環境変数にパスを追加する](#setting-path-environment-variable) を参照してください。
 
 ## Compiling with version managers
 

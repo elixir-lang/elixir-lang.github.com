@@ -72,28 +72,28 @@
 
 <div id="toc" class="toc"></div>
 
-<p>目次の Distributions から好きな環境に合わせて簡単にインストールできます。それ以外には、パッケージをプリプロセスしてコンパイルする方法がありますので、そちらを利用してください。</p>
+<p>目次の Distributions からご自分の環境を選んでください。簡単にインストールできます！それ以外には、パッケージをプリプロセス(プリコンパイル)してコンパイルする方法がありますので、そちらを利用してください。</p>
 
-<p>Note: Elixir v1.6 の使用には Erlang 19.0 以降が必要ですが、大抵は自動でインストールされます。もしインストールされないようでしたら、”Installing Erlang” を参照してください。</p>
+<p>Note &gt; Elixir v1.6 の使用には Erlang 19.0 以降が必要ですが、大抵は自動でインストールされます。もしインストールされないようでしたら、”Installing Erlang” を参照してください。</p>
 
 <h2 id="distributions">Distributions</h2>
 
-<p>The preferred option for installing Elixir. Choose your operating system and tool.</p>
+<p>お好きなオプションをお選びいただけます。あなたのシステムに Elixir をインストールしましょう！</p>
 
-<p>If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.</p>
+<p>以前に一度 Elixir/Erlang をインストールしたことがあるのでしたら、 “Compiling with version managers” や “ Compiling form source (Unix and MinGW) “ を参照してください。</p>
 
 <h3 id="mac-os-x">Mac OS X</h3>
 
 <ul>
-  <li>Homebrew
+  <li>Homebrew をお使いの場合
     <ul>
-      <li>Update your homebrew to latest: <code class="highlighter-rouge">brew update</code></li>
-      <li>Run: <code class="highlighter-rouge">brew install elixir</code></li>
+      <li>Homebrew を最新バージョンにアップデート: <code class="highlighter-rouge">brew update</code></li>
+      <li>インストール: <code class="highlighter-rouge">brew install elixir</code></li>
     </ul>
   </li>
-  <li>Macports
+  <li>Macports をお使いの場合
     <ul>
-      <li>Run: <code class="highlighter-rouge">sudo port install elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">sudo port install elixir</code></li>
     </ul>
   </li>
 </ul>
@@ -101,54 +101,54 @@
 <h3 id="unix-and-unix-like">Unix (and Unix-like)</h3>
 
 <ul>
-  <li>Arch Linux (Community repo)
+  <li>Arch Linux (Community repo) をお使いの場合
     <ul>
-      <li>Run: <code class="highlighter-rouge">pacman -S elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">pacman -S elixir</code></li>
     </ul>
   </li>
-  <li>openSUSE (and SLES 11 SP3+)
+  <li>openSUSE (and SLES 11 SP3+) をお使いの場合
     <ul>
-      <li>Add Erlang devel repo: <code class="highlighter-rouge">zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang</code></li>
-      <li>Run: <code class="highlighter-rouge">zypper in elixir</code></li>
+      <li>Erlang devel リポジトリの追加: <code class="highlighter-rouge">zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang</code></li>
+      <li>インストール: <code class="highlighter-rouge">zypper in elixir</code></li>
     </ul>
   </li>
-  <li>Gentoo
+  <li>Gentoo をお使いの場合
     <ul>
-      <li>Run: <code class="highlighter-rouge">emerge --ask dev-lang/elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">emerge --ask dev-lang/elixir</code></li>
     </ul>
   </li>
   <li>GNU Guix
     <ul>
-      <li>Run: <code class="highlighter-rouge">guix package -i elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">guix package -i elixir</code></li>
     </ul>
   </li>
-  <li>Fedora 21 (and older)
+  <li>Fedora 21 (and older) をお使いの場合
     <ul>
-      <li>Run: <code class="highlighter-rouge">yum install elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">yum install elixir</code></li>
     </ul>
   </li>
   <li>Fedora 22 (and newer)
     <ul>
-      <li>Run <code class="highlighter-rouge">dnf install elixir</code></li>
+      <li>インストール <code class="highlighter-rouge">dnf install elixir</code></li>
     </ul>
   </li>
-  <li>FreeBSD
+  <li>FreeBSD をお使いの場合
     <ul>
-      <li>From ports: <code class="highlighter-rouge">cd /usr/ports/lang/elixir &amp;&amp; make install clean</code></li>
-      <li>From pkg: <code class="highlighter-rouge">pkg install elixir</code></li>
+      <li>ports : <code class="highlighter-rouge">cd /usr/ports/lang/elixir &amp;&amp; make install clean</code></li>
+      <li>pkg: <code class="highlighter-rouge">pkg install elixir</code></li>
     </ul>
   </li>
-  <li>Solus
+  <li>Solus をお使いの場合
     <ul>
-      <li>Run: <code class="highlighter-rouge">eopkg install elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">eopkg install elixir</code></li>
     </ul>
   </li>
   <li>Ubuntu 14.04/16.04/16.10/17.04 or Debian 7/8/9
     <ul>
-      <li>Add Erlang Solutions repo: <code class="highlighter-rouge">wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb &amp;&amp; sudo dpkg -i erlang-solutions_1.0_all.deb</code></li>
-      <li>Run: <code class="highlighter-rouge">sudo apt-get update</code></li>
-      <li>Install the Erlang/OTP platform and all of its applications: <code class="highlighter-rouge">sudo apt-get install esl-erlang</code></li>
-      <li>Install Elixir: <code class="highlighter-rouge">sudo apt-get install elixir</code></li>
+      <li>Erlang Solutions リポジトリの追加: <code class="highlighter-rouge">wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb &amp;&amp; sudo dpkg -i erlang-solutions_1.0_all.deb</code></li>
+      <li>リストのアップデート: <code class="highlighter-rouge">sudo apt-get update</code></li>
+      <li>Erlang/OTP プラットフォームとそれら全アプリケーションのインストール: <code class="highlighter-rouge">sudo apt-get install esl-erlang</code></li>
+      <li>Elixir をインストール: <code class="highlighter-rouge">sudo apt-get install elixir</code></li>
     </ul>
   </li>
 </ul>
@@ -156,43 +156,43 @@
 <h3 id="windows">Windows</h3>
 
 <ul>
-  <li>Web installer
+  <li>インストーラーの利用
     <ul>
-      <li><a href="https://repo.hex.pm/elixir-websetup.exe">Download the installer</a></li>
-      <li>Click next, next, …, finish</li>
+      <li><a href="https://repo.hex.pm/elixir-websetup.exe">ダウンロード</a></li>
+      <li>画面に従って進んでいただくと完了です</li>
     </ul>
   </li>
   <li>Chocolatey
     <ul>
-      <li><code class="highlighter-rouge">cinst elixir</code></li>
+      <li>インストール: <code class="highlighter-rouge">cinst elixir</code></li>
     </ul>
   </li>
 </ul>
 
 <h3 id="raspberry-pi">Raspberry Pi</h3>
 
-<p>If necessary, replace “stretch” with the name of your Raspbian release.</p>
+<p>以下は Stretch の場合ですが、必要であれば “stretch” の部分をあなたの Raspbian に置き換えてください。</p>
 
 <ul>
-  <li>The Erlang Solutions repository has a prebuilt package for armhf. This saves a significant amount of time in comparison to recompiling natively</li>
-  <li>Get Erlang key
+  <li>armhf でパッケージをプリビルドしましょう。再コンパイルに比べると大幅に時間を短縮してくれます。</li>
+  <li>公開鍵の取得
     <ul>
       <li><code class="highlighter-rouge">echo "deb https://packages.erlang-solutions.com/debian stretch contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list</code></li>
-      <li>Run: <code class="highlighter-rouge">wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc</code></li>
-      <li>Add to keychain: <code class="highlighter-rouge">sudo apt-key add erlang_solutions.asc</code></li>
+      <li>Erlang のインストール: <code class="highlighter-rouge">wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc</code></li>
+      <li>鍵を keychain に追加: <code class="highlighter-rouge">sudo apt-key add erlang_solutions.asc</code></li>
     </ul>
   </li>
-  <li>Install Elixir
+  <li>Elixir
     <ul>
-      <li>Update apt to latest: <code class="highlighter-rouge">sudo apt update</code></li>
-      <li>Run: <code class="highlighter-rouge">sudo apt install elixir</code></li>
+      <li>apt のアップデート: <code class="highlighter-rouge">sudo apt update</code></li>
+      <li>Elixir のインストール: <code class="highlighter-rouge">sudo apt install elixir</code></li>
     </ul>
   </li>
 </ul>
 
 <h3 id="docker">Docker</h3>
 
-<p>If you are familiar with Docker you can use the official Docker image to get started quickly with Elixir.</p>
+<p>もしあなたが Docker に親しみ慣れているのなら、公式 Docker イメージを使えばとても簡単です。</p>
 
 <ul>
   <li>Enter interactive mode
@@ -207,15 +207,16 @@
   </li>
 </ul>
 
-<p>Those distributions will likely install Erlang automatically for you too. In case they don’t, check the <a href="/install.html#installing-erlang">Installing Erlang</a> section below.</p>
+<p>これらのディストリビューションは、たいてい自動で Erlang もインストールしてくれますが、もしインストールされない場合は <a href="/install.html#installing-erlang">Installing Erlang</a> を参照してください.</p>
 
-<p>If you need to programmatically fetch the list of Elixir precompiled packages alongside their checksums, access <a href="https://elixir-lang.org/elixir.csv">https://elixir-lang.org/elixir.csv</a>.</p>
+<p>プリコンパイル済みパッケージのリストが必要でしたら、こちらからどうぞ。<a href="https://elixir-lang.org/elixir.csv">https://elixir-lang.org/elixir.csv</a>.</p>
 
 <h2 id="precompiled-package">Precompiled package</h2>
 
-<p>Elixir provides a precompiled package for every release. First <a href="/install.html#installing-erlang">install Erlang</a> and then download and unzip the <a href="https://github.com/elixir-lang/elixir/releases/download/v1.6.6/Precompiled.zip">Precompiled.zip file for the latest release</a>.</p>
+<p>Elixir はリリースごとにプリコンパイル済みパッケージをご用意しています。まずはじめに <a href="/install.html#installing-erlang">Erlangをインストール</a> します。次に <a href="https://github.com/elixir-lang/elixir/releases/download/v1.6.6/Precompiled.zip">最新の Precopiled.zip ファイル</a>をダウンロード後、解凍してください。.</p>
 
-<p>Once the release is unpacked, you are ready to run the <code class="highlighter-rouge">elixir</code> and <code class="highlighter-rouge">iex</code> commands from the <code class="highlighter-rouge">bin</code> directory, but we recommend you to <a href="#setting-path-environment-variable">add Elixir’s bin path to your PATH environment variable</a> to ease development.</p>
+<p>一度ファイルを解凍すると ‘bin’ ディレクトリから ‘elixir’ や ‘iex’ コマンドを使用できますが、Elixir へのパスを環境変数 PATH に追加した方が効率的でしょう。
+詳しくは <a href="#setting-path-environment-variable">環境変数にパスを追加する</a> を参照してください。</p>
 
 <h2 id="compiling-with-version-managers">Compiling with version managers</h2>
 
