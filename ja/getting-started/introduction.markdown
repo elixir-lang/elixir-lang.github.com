@@ -10,12 +10,12 @@ redirect_from: /getting_started/1.html
 
 Welcome!
 
-In this tutorial, we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
+In this tutorial, we are going to teach you about Elixir fundamentals - the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring that Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
 
 Our requirements are:
 
-  * Elixir - Version 1.4.0 onwards
-  * Erlang - Version 18.0 onwards
+  * Elixir - Version 1.5.0 onwards
+  * Erlang - Version 19.0 onwards
 
 Let's get started!
 
@@ -55,6 +55,8 @@ It seems we are ready to go! We will use the interactive shell quite a lot in th
 
 > Note: if you are on Windows, you can also try `iex.bat --werl` which may provide a better experience depending on which console you are using.
 
+> Note: if you want to find and execute a given script in PATH so it will be loaded in `iex` use: `iex -S SCRIPTNAME`.  Later you'll learn about [Mix](/getting-started/mix-otp/introduction-to-mix.html), Elixir's build tool, and how you can compile and load entire applications with `iex -S mix run`. See [Supervisor and application](/getting-started/mix-otp/supervisor-and-application.html) for more details.
+
 ## Running scripts
 
 After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting the following Elixir code into a file:
@@ -65,7 +67,7 @@ IO.puts "Hello world from Elixir"
 
 Save it as `simple.exs` and execute it with `elixir`:
 
-```bash
+```console
 $ elixir simple.exs
 Hello world from Elixir
 ```

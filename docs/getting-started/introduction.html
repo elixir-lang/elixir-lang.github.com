@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Introduction" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/introduction.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/introduction.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Introduction","url":"/ja/getting-started/introduction.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Introduction","url":"https://elixir-lang.org/ja/getting-started/introduction.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -225,13 +221,13 @@
 
 <p>Welcome!</p>
 
-<p>In this tutorial, we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir’s Interactive Shell, called IEx.</p>
+<p>In this tutorial, we are going to teach you about Elixir fundamentals - the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring that Elixir is installed and that you can successfully run Elixir’s Interactive Shell, called IEx.</p>
 
 <p>Our requirements are:</p>
 
 <ul>
-  <li>Elixir - Version 1.4.0 onwards</li>
-  <li>Erlang - Version 18.0 onwards</li>
+  <li>Elixir - Version 1.5.0 onwards</li>
+  <li>Erlang - Version 19.0 onwards</li>
 </ul>
 
 <p>Let’s get started!</p>
@@ -279,6 +275,10 @@ iex(2)&gt; "hello" &lt;&gt; " world"
   <p>Note: if you are on Windows, you can also try <code class="highlighter-rouge">iex.bat --werl</code> which may provide a better experience depending on which console you are using.</p>
 </blockquote>
 
+<blockquote>
+  <p>Note: if you want to find and execute a given script in PATH so it will be loaded in <code class="highlighter-rouge">iex</code> use: <code class="highlighter-rouge">iex -S SCRIPTNAME</code>.  Later you’ll learn about <a href="/getting-started/mix-otp/introduction-to-mix.html">Mix</a>, Elixir’s build tool, and how you can compile and load entire applications with <code class="highlighter-rouge">iex -S mix run</code>. See <a href="/getting-started/mix-otp/supervisor-and-application.html">Supervisor and application</a> for more details.</p>
+</blockquote>
+
 <h2 id="running-scripts">Running scripts</h2>
 
 <p>After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting the following Elixir code into a file:</p>
@@ -289,8 +289,8 @@ iex(2)&gt; "hello" &lt;&gt; " world"
 
 <p>Save it as <code class="highlighter-rouge">simple.exs</code> and execute it with <code class="highlighter-rouge">elixir</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixir simple.exs
-Hello world from Elixir
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">elixir</span><span class="kv"> simple.exs
+</span>Hello world from Elixir
 </code></pre>
 </div>
 
@@ -349,7 +349,7 @@ Hello world from Elixir
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

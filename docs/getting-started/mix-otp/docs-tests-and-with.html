@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Doctests, patterns and with" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/docs-tests-and-with.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/docs-tests-and-with.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Doctests, patterns and with","url":"/ja/getting-started/mix-otp/docs-tests-and-with.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Doctests, patterns and with","url":"https://elixir-lang.org/ja/getting-started/mix-otp/docs-tests-and-with.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -254,7 +250,7 @@ OK
 
 <p>On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via <code class="highlighter-rouge">mix help</code> or by typing <code class="highlighter-rouge">h Enum</code> or another module in an IEx console.</p>
 
-<p>In this section, we will implement the parsing functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples.</p>
+<p>In this section, we will implement the parsing functionality, document it and make sure our documentation is up to date with doctests. This helps us provide documentation with accurate code samples.</p>
 
 <p>Let’s create our command parser at <code class="highlighter-rouge">lib/kv_server/command.ex</code> and start with the doctest:</p>
 
@@ -264,7 +260,7 @@ OK
 
   ## Examples
 
-      iex&gt; KVServer.Command.parse "CREATE shopping\r\n"
+      iex&gt; KVServer.Command.parse("CREATE shopping\r\n")
       {:ok, {:create, "shopping"}}
 
   """</span>
@@ -363,24 +359,24 @@ arguments return an error:
 
 <p>Notice how we were able to elegantly parse the commands without adding a bunch of <code class="highlighter-rouge">if/else</code> clauses that check the command name and number of arguments!</p>
 
-<p>Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:</p>
+<p>Finally, you may have observed that each doctest corresponds to a different test in our suite, which now reports a total of 7 doctests. That is because ExUnit considers the following to define two different doctests:</p>
 
-<pre><code class="language-iex">iex&gt; KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
+<pre><code class="language-iex">iex&gt; KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
 
-iex&gt; KVServer.Command.parse "GET shopping\r\n"
-{:error, :unknown_command}
-</code></pre>
-
-<p>Without new lines, as seen below, ExUnit compiles it into a single test:</p>
-
-<pre><code class="language-iex">iex&gt; KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
-{:error, :unknown_command}
-iex&gt; KVServer.Command.parse "GET shopping\r\n"
+iex&gt; KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 </code></pre>
 
-<p>You can read more about doctests in <a href="https://hexdocs.pm/ex_unit/ExUnit.DocTest.html">the <code class="highlighter-rouge">ExUnit.DocTest</code> docs</a>.</p>
+<p>Without new lines, as seen below, ExUnit compiles it into a single doctest:</p>
+
+<pre><code class="language-iex">iex&gt; KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
+{:error, :unknown_command}
+iex&gt; KVServer.Command.parse("GET shopping\r\n")
+{:error, :unknown_command}
+</code></pre>
+
+<p>As the name says, doctest is documentation first and a test later. Their goal is not to replace tests but to provide up to date documentation. You can read more about doctests in <a href="https://hexdocs.pm/ex_unit/ExUnit.DocTest.html">the <code class="highlighter-rouge">ExUnit.DocTest</code> docs</a>.</p>
 
 <h2 id="with">with</h2>
 
@@ -466,10 +462,10 @@ iex&gt; KVServer.Command.parse "GET shopping\r\n"
 
 <p>If we start our server, we can now send commands to it. For now, we will get two different responses: “OK” when the command is known and “UNKNOWN COMMAND” otherwise:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>telnet 127.0.0.1 4040
-Trying 127.0.0.1...
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">telnet</span><span class="kv"> 127.0.0.1 4040
+</span>Trying 127.0.0.1...
 Connected to localhost.
-Escape character is <span class="s1">'^]'</span>.
+Escape character is '^]'.
 CREATE shopping
 OK
 HELLO
@@ -516,24 +512,24 @@ Runs the given command.
 <span class="k">end</span>
 
 <span class="k">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:get</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">})</span> <span class="k">do</span>
-  <span class="n">lookup</span> <span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="o">-&gt;</span>
+  <span class="n">lookup</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="o">-&gt;</span>
     <span class="n">value</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="sd">"</span><span class="si">#{</span><span class="n">value</span><span class="si">}</span><span class="s2">\r\nOK\r\n"</span><span class="p">}</span>
-  <span class="k">end</span>
+  <span class="k">end</span><span class="p">)</span>
 <span class="k">end</span>
 
 <span class="k">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:put</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">})</span> <span class="k">do</span>
-  <span class="n">lookup</span> <span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="o">-&gt;</span>
+  <span class="n">lookup</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="o">-&gt;</span>
     <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="sd">"</span><span class="s2">OK\r\n"</span><span class="p">}</span>
-  <span class="k">end</span>
+  <span class="k">end</span><span class="p">)</span>
 <span class="k">end</span>
 
 <span class="k">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:delete</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">})</span> <span class="k">do</span>
-  <span class="n">lookup</span> <span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="o">-&gt;</span>
+  <span class="n">lookup</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="o">-&gt;</span>
     <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="sd">"</span><span class="s2">OK\r\n"</span><span class="p">}</span>
-  <span class="k">end</span>
+  <span class="k">end</span><span class="p">)</span>
 <span class="k">end</span>
 
 <span class="k">defp</span> <span class="n">lookup</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span> <span class="k">do</span>
@@ -546,6 +542,8 @@ Runs the given command.
 </div>
 
 <p>Every function clause dispatches the appropriate command to the <code class="highlighter-rouge">KV.Registry</code> server that we registered during the <code class="highlighter-rouge">:kv</code> application startup. Since our <code class="highlighter-rouge">:kv_server</code> depends on the <code class="highlighter-rouge">:kv</code> application, it is completely fine to depend on the services it provides.</p>
+
+<p>You might have noticed we have a function head, <code class="highlighter-rouge">def run(command)</code>, without a body. In the <a href="/getting-started/modules-and-functions#default-arguments">Modules and Functions</a> chapter, we learned that a bodiless function can be used to declare default arguments for a multi-clause function. Here is another use case where we use a function without a body to document what the arguments are.</p>
 
 <p>Note that we have also defined a private function named <code class="highlighter-rouge">lookup/2</code> to help with the common functionality of looking up a bucket and returning its <code class="highlighter-rouge">pid</code> if it exists, <code class="highlighter-rouge"><span class="p">{</span><span class="err">:error,</span><span class="w"> </span><span class="err">:not_found</span><span class="p">}</span></code> otherwise.</p>
 
@@ -695,7 +693,7 @@ Runs the given command.
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

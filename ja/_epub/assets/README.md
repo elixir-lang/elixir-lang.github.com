@@ -10,8 +10,8 @@ To work on these assets you need to install [Node.js] and [npm] first (probably
 as superuser or administrator). After that execute the following commands:
 
 ```bash
-$ npm install -g gulp
-$ npm install
+$ yarn global add gulp
+$ yarn install
 ```
 
 Now many gulp tasks are available via the `gulp` command line.

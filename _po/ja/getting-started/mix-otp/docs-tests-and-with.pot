@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 01:24+0900\n"
+"POT-Creation-Date: 2018-07-21 23:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,7 @@ msgid "On the language homepage, we mention that Elixir makes documentation a fi
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:39
-msgid "In this section, we will implement the parsing functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples."
+msgid "In this section, we will implement the parsing functionality, document it and make sure our documentation is up to date with doctests. This helps us provide documentation with accurate code samples."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:41
@@ -101,7 +101,7 @@ msgid "  ## Examples"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:50
-msgid "      iex> KVServer.Command.parse \"CREATE shopping\\r\\n\"\n"
+msgid "      iex> KVServer.Command.parse(\"CREATE shopping\\r\\n\")\n"
 "      {:ok, {:create, \"shopping\"}}"
 msgstr ""
 
@@ -251,36 +251,36 @@ msgid "Notice how we were able to elegantly parse the commands without adding a 
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:148
-msgid "Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:"
+msgid "Finally, you may have observed that each doctest corresponds to a different test in our suite, which now reports a total of 7 doctests. That is because ExUnit considers the following to define two different doctests:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:150
 msgid "```iex\n"
-"iex> KVServer.Command.parse \"UNKNOWN shopping eggs\\r\\n\"\n"
+"iex> KVServer.Command.parse(\"UNKNOWN shopping eggs\\r\\n\")\n"
 "{:error, :unknown_command}"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:154
-msgid "iex> KVServer.Command.parse \"GET shopping\\r\\n\"\n"
+msgid "iex> KVServer.Command.parse(\"GET shopping\\r\\n\")\n"
 "{:error, :unknown_command}\n"
 "```"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:158
-msgid "Without new lines, as seen below, ExUnit compiles it into a single test:"
+msgid "Without new lines, as seen below, ExUnit compiles it into a single doctest:"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:160
 msgid "```iex\n"
-"iex> KVServer.Command.parse \"UNKNOWN shopping eggs\\r\\n\"\n"
+"iex> KVServer.Command.parse(\"UNKNOWN shopping eggs\\r\\n\")\n"
 "{:error, :unknown_command}\n"
-"iex> KVServer.Command.parse \"GET shopping\\r\\n\"\n"
+"iex> KVServer.Command.parse(\"GET shopping\\r\\n\")\n"
 "{:error, :unknown_command}\n"
 "```"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:167
-msgid "You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html)."
+msgid "As the name says, doctest is documentation first and a test later. Their goal is not to replace tests but to provide up to date documentation. You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html)."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:169
@@ -402,7 +402,7 @@ msgid "If we start our server, we can now send commands to it. For now, we will 
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:253
-msgid "```bash\n"
+msgid "```console\n"
 "$ telnet 127.0.0.1 4040\n"
 "Trying 127.0.0.1...\n"
 "Connected to localhost.\n"
@@ -479,28 +479,28 @@ msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:303
 msgid "def run({:get, bucket, key}) do\n"
-"  lookup bucket, fn pid ->\n"
+"  lookup(bucket, fn pid ->\n"
 "    value = KV.Bucket.get(pid, key)\n"
 "    {:ok, \"#{value}\\r\\nOK\\r\\n\"}\n"
-"  end\n"
+"  end)\n"
 "end"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:310
 msgid "def run({:put, bucket, key, value}) do\n"
-"  lookup bucket, fn pid ->\n"
+"  lookup(bucket, fn pid ->\n"
 "    KV.Bucket.put(pid, key, value)\n"
 "    {:ok, \"OK\\r\\n\"}\n"
-"  end\n"
+"  end)\n"
 "end"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:317
 msgid "def run({:delete, bucket, key}) do\n"
-"  lookup bucket, fn pid ->\n"
+"  lookup(bucket, fn pid ->\n"
 "    KV.Bucket.delete(pid, key)\n"
 "    {:ok, \"OK\\r\\n\"}\n"
-"  end\n"
+"  end)\n"
 "end"
 msgstr ""
 
@@ -519,14 +519,18 @@ msgid "Every function clause dispatches the appropriate command to the `KV.Regis
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:334
-msgid "Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise."
+msgid "You might have noticed we have a function head, `def run(command)`, without a body. In the [Modules and Functions](/getting-started/modules-and-functions#default-arguments) chapter, we learned that a bodiless function can be used to declare default arguments for a multi-clause function. Here is another use case where we use a function without a body to document what the arguments are."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:336
-msgid "By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:"
+msgid "Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:338
+msgid "By the way, since we are now returning `{:error, :not_found}`, we should amend the `write_line/2` function in `KVServer` to print such error as well:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:340
 msgid "```elixir\n"
 "defp write_line(socket, {:error, :not_found}) do\n"
 "  :gen_tcp.send(socket, \"NOT FOUND\\r\\n\")\n"
@@ -534,19 +538,19 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:344
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:346
 msgid "Our server functionality is almost complete. Only tests are missing. This time, we have left tests for last because there are some important considerations to be made."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:346
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:348
 msgid "`KVServer.Command.run/1`'s implementation is sending commands directly to the server named `KV.Registry`, which is registered by the `:kv` application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application's full stack as it is meant to be exercised in production."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:348
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:350
 msgid "So far we have only written unit tests, typically testing a single module directly. However, in order to make `KVServer.Command.run/1` testable as a unit we would need to change its implementation to not send commands directly to the `KV.Registry` process but instead pass a server as an argument. For example, we would need to change `run`'s signature to `def run(command, pid)` and then change all clauses accordingly:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:350
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:352
 msgid "```elixir\n"
 "def run({:create, bucket}, pid) do\n"
 "  KV.Registry.create(pid, bucket)\n"
@@ -554,41 +558,41 @@ msgid "```elixir\n"
 "end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:356
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:358
 msgid "# ... other run clauses ...\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:359
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:361
 msgid "Feel free to go ahead and do the changes above and write some unit tests. The idea is that your tests will start an instance of the `KV.Registry` and pass it as an argument to `run/2` instead of relying on the global `KV.Registry`. This has the advantage of keeping our tests asynchronous as there is no shared state."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:361
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:363
 msgid "But let's also try something different. Let's write integration tests that rely on the global server names to exercise the whole stack from the TCP server to the bucket. Our integration tests will rely on global state and must be synchronous. With integration tests, we get coverage on how the components in our application work together at the cost of test performance. They are typically used to test the main flows in your application. For example, we should avoid using integration tests to test an edge case in our command parsing implementation."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:363
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:365
 msgid "Our integration test will use a TCP client that sends commands to our server and assert we are getting the desired responses."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:365
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:367
 msgid "Let's implement the integration test in `test/kv_server_test.exs` as shown below:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:367
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:369
 msgid "```elixir\n"
 "defmodule KVServerTest do\n"
 "  use ExUnit.Case"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:371
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:373
 msgid "  setup do\n"
 "    Application.stop(:kv)\n"
 "    :ok = Application.start(:kv)\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:376
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:378
 msgid "  setup do\n"
 "    opts = [:binary, packet: :line, active: false]\n"
 "    {:ok, socket} = :gen_tcp.connect('localhost', 4040, opts)\n"
@@ -596,46 +600,46 @@ msgid "  setup do\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:382
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:384
 msgid "  test \"server interaction\", %{socket: socket} do\n"
 "    assert send_and_recv(socket, \"UNKNOWN shopping\\r\\n\") ==\n"
 "           \"UNKNOWN COMMAND\\r\\n\""
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:386
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:388
 msgid "    assert send_and_recv(socket, \"GET shopping eggs\\r\\n\") ==\n"
 "           \"NOT FOUND\\r\\n\""
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:389
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:391
 msgid "    assert send_and_recv(socket, \"CREATE shopping\\r\\n\") ==\n"
 "           \"OK\\r\\n\""
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:392
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:394
 msgid "    assert send_and_recv(socket, \"PUT shopping eggs 3\\r\\n\") ==\n"
 "           \"OK\\r\\n\""
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:395
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:397
 msgid "    # GET returns two lines\n"
 "    assert send_and_recv(socket, \"GET shopping eggs\\r\\n\") == \"3\\r\\n\"\n"
 "    assert send_and_recv(socket, \"\") == \"OK\\r\\n\""
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:399
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:401
 msgid "    assert send_and_recv(socket, \"DELETE shopping eggs\\r\\n\") ==\n"
 "           \"OK\\r\\n\""
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:402
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:404
 msgid "    # GET returns two lines\n"
 "    assert send_and_recv(socket, \"GET shopping eggs\\r\\n\") == \"\\r\\n\"\n"
 "    assert send_and_recv(socket, \"\") == \"OK\\r\\n\"\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:407
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:409
 msgid "  defp send_and_recv(socket, command) do\n"
 "    :ok = :gen_tcp.send(socket, command)\n"
 "    {:ok, data} = :gen_tcp.recv(socket, 0, 1000)\n"
@@ -645,39 +649,39 @@ msgid "  defp send_and_recv(socket, command) do\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:415
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:417
 msgid "Our integration test checks all server interaction, including unknown commands and not found errors. It is worth noting that, as with <abbr title=\"Erlang Term Storage\">ETS</abbr> tables and linked processes, there is no need to close the socket. Once the test process exits, the socket is automatically closed."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:417
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:419
 msgid "This time, since our test relies on global data, we have not given `async: true` to `use ExUnit.Case`. Furthermore, in order to guarantee our test is always in a clean state, we stop and start the `:kv` application before each test. In fact, stopping the `:kv` application even prints a warning on the terminal:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:419
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:421
 msgid "```\n"
 "18:12:10.698 [info] Application kv exited: :stopped\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:423
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:425
 msgid "To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test case, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:425
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:427
 msgid "Between `use ExUnit.Case` and setup, add the following call:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:427
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:429
 msgid "```elixir\n"
 "@moduletag :capture_log\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:431
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:433
 msgid "In case the test crashes, you will see a report as follows:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:433
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:435
 msgid "```\n"
 "  1) test server interaction (KVServerTest)\n"
 "     test/kv_server_test.exs:17\n"
@@ -686,24 +690,24 @@ msgid "```\n"
 "       test/kv_server_test.exs:29"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:440
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:442
 msgid "     The following output was logged:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:442
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:444
 msgid "     13:44:10.035 [info]  Application kv exited: :stopped\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:445
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:447
 msgid "With this simple integration test, we start to see why integration tests may be slow. Not only this test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:447
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:449
 msgid "At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:449
+#: ../../../../getting-started/mix-otp/docs-tests-and-with.markdown:451
 msgid "In the next chapter, we will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration."
 msgstr ""
 

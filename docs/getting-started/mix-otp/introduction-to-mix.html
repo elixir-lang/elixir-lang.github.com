@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Introduction to Mix" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/introduction-to-mix.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/introduction-to-mix.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Introduction to Mix","url":"/ja/getting-started/mix-otp/introduction-to-mix.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Introduction to Mix","url":"https://elixir-lang.org/ja/getting-started/mix-otp/introduction-to-mix.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -252,21 +248,21 @@ OK
     <p><strong><em>OTP</em></strong> <em>(Open Telecom Platform)</em> is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications. In this chapter we will explore how many aspects from OTP integrate with Elixir, including supervision trees, event managers and more;</p>
   </li>
   <li>
-    <p><strong><em>Mix</em></strong> is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;</p>
+    <p><strong><em><a href="https://hexdocs.pm/mix/">Mix</a></em></strong> is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;</p>
   </li>
   <li>
-    <p><strong><em>ExUnit</em></strong> is a test-unit based framework that ships with Elixir;</p>
+    <p><strong><em><a href="https://hexdocs.pm/ex_unit/">ExUnit</a></em></strong> is a test-unit based framework that ships with Elixir;</p>
   </li>
 </ul>
 
 <p>In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.</p>
 
 <blockquote>
-  <p>This guide requires Elixir v1.5.0 or later. You can check your Elixir version with <code class="highlighter-rouge">elixir --version</code> and install a more recent version if required by following the steps described in <a href="/install.html">the first chapter of the Getting Started guide</a>.</p>
+  <p>This guide requires Elixir v1.6.1 or later. You can check your Elixir version with <code class="highlighter-rouge">elixir --version</code> and install a more recent version if required by following the steps described in <a href="/install.html">the first chapter of the Getting Started guide</a>.</p>
 
   <p>If you have any questions or improvements to the guide, please reach discussion channels such as the <a href="https://elixirforum.com">Elixir Forum</a> or the <a href="https://github.com/elixir-lang/elixir-lang.github.com/issues">issues tracker</a>. Your input is really important to help us guarantee the guides are accessible and up to date!</p>
 
-  <p>The final code for this guide is in <a href="https://github.com/josevalim/kv_umbrella">this repository</a> and can be used as a reference.</p>
+  <p>The final code for the application built in this guide is in <a href="https://github.com/josevalim/kv_umbrella">this repository</a> and can be used as a reference.</p>
 </blockquote>
 
 <blockquote>
@@ -285,13 +281,14 @@ OK
 
 <p>Let’s create our first project by invoking <code class="highlighter-rouge">mix new</code> from the command line. We’ll pass the project name as the argument (<code class="highlighter-rouge">kv</code>, in this case), and tell Mix that our main module should be the all-uppercase <code class="highlighter-rouge">KV</code>, instead of the default, which would have been <code class="highlighter-rouge">Kv</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix new kv --module KV
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">mix</span><span class="kv"> new kv --module KV
+</span></code></pre>
 </div>
 
 <p>Mix will create a directory named <code class="highlighter-rouge">kv</code> with a few files in it:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>* creating README.md
+* creating .formatter.exs
 * creating .gitignore
 * creating mix.exs
 * creating config
@@ -314,7 +311,7 @@ OK
 
 <p>A file named <code class="highlighter-rouge">mix.exs</code> was generated inside our new project folder (<code class="highlighter-rouge">kv</code>) and its main responsibility is to configure our project. Let’s take a look at it:</p>
 
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">Mixfile</span> <span class="k">do</span>
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">KV</span><span class="o">.</span><span class="no">MixProject</span> <span class="k">do</span>
   <span class="kn">use</span> <span class="no">Mix</span><span class="o">.</span><span class="no">Project</span>
 
   <span class="k">def</span> <span class="n">project</span> <span class="k">do</span>
@@ -361,7 +358,7 @@ OK
 
   ## Examples
 
-      iex&gt; KV.hello
+      iex&gt; KV.hello()
       :world
 
   """</span>
@@ -375,9 +372,9 @@ OK
 
 <p>This structure is enough to compile our project:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd </span>kv
-<span class="gp">$ </span>mix compile
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">cd</span><span class="kv"> kv
+</span><span class="w">$ </span><span class="nc">mix</span><span class="kv"> compile
+</span></code></pre>
 </div>
 
 <p>Will output:</p>
@@ -391,8 +388,8 @@ Generated kv app
 
 <p>Once the project is compiled, you can start an <code class="highlighter-rouge">iex</code> session inside the project by running:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex -S mix
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> -S mix
+</span></code></pre>
 </div>
 
 <h2 id="running-tests">Running tests</h2>
@@ -434,7 +431,7 @@ Generated kv app
 ..
 
 Finished in 0.04 seconds
-2 tests, 0 failures
+1 doctest, 1 test, 0 failures
 
 Randomized with seed 540224
 </code></pre>
@@ -464,7 +461,7 @@ Randomized with seed 540224
 .
 
 Finished in 0.05 seconds
-2 tests, 1 failure
+1 doctest, 1 test, 1 failure
 </code></pre>
 </div>
 
@@ -472,13 +469,25 @@ Finished in 0.05 seconds
 
 <p>In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in full, including the file and line number, and append it to <code class="highlighter-rouge">mix test</code>, Mix will load and run just that particular test:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">test test</span>/kv_test.exs:5
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">mix</span><span class="kv"> test test/kv_test.exs:5
+</span></code></pre>
 </div>
 
 <p>This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running a single test.</p>
 
 <p>Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.</p>
+
+<h2 id="automatic-code-formatting">Automatic code formatting</h2>
+
+<p>One of the files generated by <code class="highlighter-rouge">mix new</code> is the <code class="highlighter-rouge">.formatter.exs</code>. Elixir ships with a code formatter that is capable of automatically formatting our codebase according to consistent style. The formatter is triggered with the <code class="highlighter-rouge">mix format</code> task. The generated <code class="highlighter-rouge">.formatter.exs</code> file configures which files should be formatted when <code class="highlighter-rouge">mix format</code> runs.</p>
+
+<p>To give the formatter a try, change a file in the <code class="highlighter-rouge">lib</code> or <code class="highlighter-rouge">test</code> directories to include extra spaces or extra newlines, such as <code class="highlighter-rouge">def  hello  do</code>, and then run <code class="highlighter-rouge">mix format</code>.</p>
+
+<p>Most editors provide built-in integration with the formatter, allowing a file to be formatted on save or via a chosen keybinding. If you are learning Elixir, editor integration gives you useful and quick feedback when learning the Elixir syntax.</p>
+
+<p>For companies and teams, we recommend developers to run <code class="highlighter-rouge">mix format --check-formatted</code> on their continuous integration servers, ensuring all current and future code follows the standard.</p>
+
+<p>You can learn more about the code formatter by checking <a href="https://hexdocs.pm/mix/Mix.Tasks.Format.html">the format task documentation</a> or by reading <a href="https://elixir-lang.org/blog/2018/01/17/elixir-v1-6-0-released/">the release announcement for Elixir v1.6</a>, the first version to include the formatter.</p>
 
 <h2 id="environments">Environments</h2>
 
@@ -506,8 +515,8 @@ Finished in 0.05 seconds
 
 <p>Mix will default to the <code class="highlighter-rouge">:dev</code> environment, except for the <code class="highlighter-rouge">test</code> task that will default to the <code class="highlighter-rouge">:test</code> environment. The environment can be changed via the <code class="highlighter-rouge">MIX_ENV</code> environment variable:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nv">MIX_ENV</span><span class="o">=</span>prod mix compile
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">MIX_ENV=prod</span><span class="kv"> mix compile
+</span></code></pre>
 </div>
 
 <p>Or on Windows:</p>
@@ -521,12 +530,12 @@ Finished in 0.05 seconds
 
 <h2 id="exploring">Exploring</h2>
 
-<p>There is much more to Mix, and we will continue to explore it as we build our project. A <a href="https://hexdocs.pm/mix/">general overview is available on the Mix documentation</a>.</p>
+<p>There is much more to Mix, and we will continue to explore it as we build our project. A <a href="https://hexdocs.pm/mix/">general overview is available on the Mix documentation</a>. Read <a href="https://github.com/elixir-lang/elixir/tree/master/lib/mix">the Mix source code here</a>.</p>
 
 <p>Keep in mind that you can always invoke the help task to list all available tasks:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">help</span>
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">mix</span><span class="kv"> help
+</span></code></pre>
 </div>
 
 <p>You can get further information about a particular task by invoking <code class="highlighter-rouge">mix help TASK</code>.</p>
@@ -564,7 +573,7 @@ Finished in 0.05 seconds
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

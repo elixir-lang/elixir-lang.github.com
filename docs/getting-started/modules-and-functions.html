@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Modules and functions" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/modules-and-functions.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/modules-and-functions.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Modules and functions","url":"/ja/getting-started/modules-and-functions.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Modules and functions","url":"https://elixir-lang.org/ja/getting-started/modules-and-functions.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -257,8 +253,8 @@ iex&gt; Math.sum(1, 2)
 
 <p>This file can be compiled using <code class="highlighter-rouge">elixirc</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixirc math.ex
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">elixirc</span><span class="kv"> math.ex
+</span></code></pre>
 </div>
 
 <p>This will generate a file named <code class="highlighter-rouge">Elixir.Math.beam</code> containing the bytecode for the defined module. If we start <code class="highlighter-rouge">iex</code> again, our module definition will be available (provided that <code class="highlighter-rouge">iex</code> is started in the same directory the bytecode file is in):</p>
@@ -295,8 +291,8 @@ iex&gt; Math.sum(1, 2)
 
 <p>And execute it as:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixir math.exs
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">elixir</span><span class="kv"> math.exs
+</span></code></pre>
 </div>
 
 <p>The file will be compiled in memory and executed, printing “3” as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.</p>
@@ -339,6 +335,8 @@ iex&gt; Math.sum(1, 2)
 </code></pre>
 </div>
 
+<p><em>The trailing question mark in <code class="highlighter-rouge">zero?</code> means that this function returns a boolean; see <a href="https://hexdocs.pm/elixir/master/naming-conventions.html#trailing-question-mark-foo">Naming Conventions</a>.</em></p>
+
 <p>Giving an argument that does not match any of the clauses raises an error.</p>
 
 <p>Similar to constructs like <code class="highlighter-rouge">if</code>, named functions support both <code class="highlighter-rouge">do:</code> and <code class="highlighter-rouge">do</code>/<code class="highlighter-rouge">end</code> block syntax, as <a href="/getting-started/case-cond-and-if.html#doend-blocks">we learned <code class="highlighter-rouge">do</code>/<code class="highlighter-rouge">end</code> is a convenient syntax for the keyword list format</a>. For example, we can edit <code class="highlighter-rouge">math.exs</code> to look like this:</p>
@@ -356,8 +354,8 @@ iex&gt; Math.sum(1, 2)
 
 <p>Throughout this tutorial, we have been using the notation <code class="highlighter-rouge">name/arity</code> to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Start <code class="highlighter-rouge">iex</code>, running the <code class="highlighter-rouge">math.exs</code> file defined above:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex math.exs
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> math.exs
+</span></code></pre>
 </div>
 
 <pre><code class="language-iex">iex&gt; Math.zero?(0)
@@ -453,6 +451,8 @@ iex&gt; DefaultTest.dowork
 </code></pre>
 </div>
 
+<p><em>The leading underscore in <code class="highlighter-rouge">_sep</code> means that the variable will be ignored in this function; see <a href="https://hexdocs.pm/elixir/master/naming-conventions.html#underscore-_foo">Naming Conventions</a>.</em></p>
+
 <p>When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">Concat</span> <span class="k">do</span>
@@ -477,8 +477,8 @@ iex&gt; DefaultTest.dowork
 
 <p>The compiler is telling us that invoking the <code class="highlighter-rouge">join</code> function with two arguments will always choose the first definition of <code class="highlighter-rouge">join</code> whereas the second one will only be invoked when three arguments are passed:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex concat.exs
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> concat.exs
+</span></code></pre>
 </div>
 
 <pre><code class="language-iex">iex&gt; Concat.join "Hello", "world"
@@ -524,7 +524,7 @@ iex&gt; DefaultTest.dowork
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

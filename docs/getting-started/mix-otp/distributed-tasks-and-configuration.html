@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Distributed tasks and configuration" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/distributed-tasks-and-configuration.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/distributed-tasks-and-configuration.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Distributed tasks and configuration","url":"/ja/getting-started/mix-otp/distributed-tasks-and-configuration.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Distributed tasks and configuration","url":"https://elixir-lang.org/ja/getting-started/mix-otp/distributed-tasks-and-configuration.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -232,8 +228,10 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p>The routing layer will receive a routing table of the following format:</p>
 
-<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
- <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="p">[</span>
+  <span class="p">{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
+  <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}</span>
+<span class="p">]</span>
 </code></pre>
 </div>
 
@@ -253,8 +251,8 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p>In order to run distributed code, we need to start the <abbr title="Virtual Machine">VM</abbr> with a name. The name can be short (when in the same network) or long (requires the full computer address). Let’s start a new IEx session:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname foo
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> --sname foo
+</span></code></pre>
 </div>
 
 <p>You can see now the prompt is slightly different and shows the node name followed by the computer name:</p>
@@ -275,8 +273,8 @@ iex(foo@jv)1&gt;
 
 <p>If you have another computer on the same network with both Erlang and Elixir installed, you can start another shell on it. If you don’t, you can start another IEx session in another terminal. In either case, give it the short name of <code class="highlighter-rouge">bar</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname bar
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> --sname bar
+</span></code></pre>
 </div>
 
 <p>Note that inside this new IEx session, we cannot access <code class="highlighter-rouge">Hello.world/0</code>:</p>
@@ -352,9 +350,9 @@ iex&gt; flush()
 
 <p>Now, let’s start two named nodes again, but inside the <code class="highlighter-rouge">:kv</code> application:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname foo -S mix
-<span class="gp">$ </span>iex --sname bar -S mix
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> --sname foo -S mix
+</span><span class="w">$ </span><span class="nc">iex</span><span class="kv"> --sname bar -S mix
+</span></code></pre>
 </div>
 
 <p>From inside <code class="highlighter-rouge">bar@computer-name</code>, we can now spawn a task directly on the other node via the supervisor:</p>
@@ -417,8 +415,7 @@ iex&gt; Task.await(task)
   """</span>
   <span class="k">def</span> <span class="n">table</span> <span class="k">do</span>
     <span class="c1"># Replace computer-name with your local machine name.</span>
-    <span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
-     <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
+    <span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span> <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
@@ -451,14 +448,14 @@ iex&gt; Task.await(task)
 
 <p>In order to run the first test, we need to have two nodes running. Move into <code class="highlighter-rouge">apps/kv</code> and let’s restart the node named <code class="highlighter-rouge">bar</code> which is going to be used by tests.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname bar -S mix
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> --sname bar -S mix
+</span></code></pre>
 </div>
 
 <p>And now run tests with:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixir --sname foo -S mix <span class="nb">test</span>
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">elixir</span><span class="kv"> --sname foo -S mix test
+</span></code></pre>
 </div>
 
 <p>The test should pass.</p>
@@ -489,12 +486,12 @@ iex&gt; Task.await(task)
 
 <p>Now run tests with <code class="highlighter-rouge">mix test</code>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mix <span class="nb">test
-</span>Excluding tags: <span class="o">[</span>distributed: <span class="nb">true</span><span class="o">]</span>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">mix</span><span class="kv"> test
+</span>Excluding tags: [distributed: true]
 
 .......
 
-Finished <span class="k">in </span>0.1 seconds <span class="o">(</span>0.1s on load, 0.01s on tests<span class="o">)</span>
+Finished in 0.1 seconds (0.1s on load, 0.01s on tests)
 7 tests, 0 failures, 1 skipped
 </code></pre>
 </div>
@@ -503,8 +500,8 @@ Finished <span class="k">in </span>0.1 seconds <span class="o">(</span>0.1s on l
 
 <p>The <code class="highlighter-rouge">mix test</code> command also allows us to dynamically include and exclude tags. For example, we can run <code class="highlighter-rouge">$ mix test --include distributed</code> to run distributed tests regardless of the value set in <code class="highlighter-rouge">test/test_helper.exs</code>. We could also pass <code class="highlighter-rouge">--exclude</code> to exclude a particular tag from the command line. Finally, <code class="highlighter-rouge">--only</code> can be used to run only tests with a particular tag:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>elixir --sname foo -S mix <span class="nb">test</span> --only distributed
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">elixir</span><span class="kv"> --sname foo -S mix test --only distributed
+</span></code></pre>
 </div>
 
 <p>You can read more about filters, tags and the default tags in <a href="https://hexdocs.pm/ex_unit/ExUnit.Case.html"><code class="highlighter-rouge">ExUnit.Case</code> module documentation</a>.</p>
@@ -518,9 +515,11 @@ Finished <span class="k">in </span>0.1 seconds <span class="o">(</span>0.1s on l
 <p>Open up <code class="highlighter-rouge">apps/kv/mix.exs</code> and change the <code class="highlighter-rouge">application/0</code> function to return the following:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="n">application</span> <span class="k">do</span>
-  <span class="p">[</span><span class="ss">extra_applications:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">],</span>
-   <span class="ss">env:</span> <span class="p">[</span><span class="ss">routing_table:</span> <span class="p">[]],</span>
-   <span class="ss">mod:</span> <span class="p">{</span><span class="no">KV</span><span class="p">,</span> <span class="p">[]}]</span>
+  <span class="p">[</span>
+    <span class="ss">extra_applications:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">],</span>
+    <span class="ss">env:</span> <span class="p">[</span><span class="ss">routing_table:</span> <span class="p">[]],</span>
+    <span class="ss">mod:</span> <span class="p">{</span><span class="no">KV</span><span class="p">,</span> <span class="p">[]}</span>
+  <span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
 </div>
@@ -542,9 +541,9 @@ The routing table.
 
 <p>Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex --sname bar -S mix
-<span class="gp">$ </span>elixir --sname foo -S mix <span class="nb">test</span> --only distributed
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> --sname bar -S mix
+</span><span class="w">$ </span><span class="nc">elixir</span><span class="kv"> --sname foo -S mix test --only distributed
+</span></code></pre>
 </div>
 
 <p>The interesting thing about the application environment is that it can be configured not only for the current application, but for all applications. Such configuration is done by the <code class="highlighter-rouge">config/config.exs</code> file. For example, we can configure IEx default prompt to another value. Just open <code class="highlighter-rouge">apps/kv/config/config.exs</code> and add the following to the end:</p>
@@ -558,9 +557,7 @@ The routing table.
 <p>This means we can also configure our <code class="highlighter-rouge">:routing_table</code> directly in the <code class="highlighter-rouge">apps/kv/config/config.exs</code> file:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="c1"># Replace computer-name with your local machine nodes.</span>
-<span class="n">config</span> <span class="ss">:kv</span><span class="p">,</span> <span class="ss">:routing_table</span><span class="p">,</span>
-       <span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span>
-        <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
+<span class="n">config</span> <span class="ss">:kv</span><span class="p">,</span> <span class="ss">:routing_table</span><span class="p">,</span> <span class="p">[{</span><span class="sx">?a</span><span class="o">..</span><span class="sx">?m</span><span class="p">,</span> <span class="ss">:"foo@computer-name"</span><span class="p">},</span> <span class="p">{</span><span class="sx">?n</span><span class="o">..</span><span class="sx">?z</span><span class="p">,</span> <span class="ss">:"bar@computer-name"</span><span class="p">}]</span>
 </code></pre>
 </div>
 
@@ -644,7 +641,7 @@ The routing table.
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

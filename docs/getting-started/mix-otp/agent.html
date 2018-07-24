@@ -27,8 +27,10 @@
   <!-- Begin Jekyll SEO tag v2.2.3 -->
 <meta property="og:title" content="Agent" />
 <meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://elixir-lang.org/ja/getting-started/mix-otp/agent.html" />
+<meta property="og:url" content="https://elixir-lang.org/ja/getting-started/mix-otp/agent.html" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"WebPage","headline":"Agent","url":"/ja/getting-started/mix-otp/agent.html"}</script>
+{"@context":"http://schema.org","@type":"WebPage","headline":"Agent","url":"https://elixir-lang.org/ja/getting-started/mix-otp/agent.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -67,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/07/25/elixir-v1-5-0-released/">Elixir v1.5 released</a>
+    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
   </h3>
 </div>
 
@@ -79,14 +81,6 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
-</div>
-
-  <div id="try-elixir" class="widget">
-  <a href="https://www.codeschool.com/courses/try-elixir?utm_source=elixir_home&utm_medium=referral">
-      <div class="try-elixir-cta">
-        <div class="try-elixir-copy">Learn Elixir in your browser for free!</div>
-      </div>
-  </a>
 </div>
 
 
@@ -136,6 +130,8 @@
         
           <li><a class="spec" href="/getting-started/typespecs-and-behaviours.html" title="Typespecs and behaviours">Typespecs and behaviours</a></li>
         
+          <li><a class="spec" href="/getting-started/debugging.html" title="Debugging">Debugging</a></li>
+        
           <li><a class="spec" href="/getting-started/erlang-libraries.html" title="Erlang libraries">Erlang libraries</a></li>
         
           <li><a class="spec" href="/getting-started/where-to-go-next.html" title="Where to go next">Where to go next</a></li>
@@ -155,11 +151,11 @@
         
           <li><a class="spec" href="/getting-started/mix-otp/supervisor-and-application.html" title="Supervisor and Application">Supervisor and Application</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="Simple one for one supervisors">Simple one for one supervisors</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dynamic-supervisor.html" title="DynamicSupervisor">DynamicSupervisor</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/ets.html" title="ETS">ETS</a></li>
         
-          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-apps.html" title="Dependencies and umbrella apps">Dependencies and umbrella apps</a></li>
+          <li><a class="spec" href="/getting-started/mix-otp/dependencies-and-umbrella-projects.html" title="Dependencies and umbrella projects">Dependencies and umbrella projects</a></li>
         
           <li><a class="spec" href="/getting-started/mix-otp/task-and-gen-tcp.html" title="Task and gen_tcp">Task and gen_tcp</a></li>
         
@@ -255,8 +251,8 @@ For more information, <a href="/getting-started/mix-otp/introduction-to-mix.html
 
 <p><a href="https://hexdocs.pm/elixir/Agent.html">Agents</a> are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let’s start an <code class="highlighter-rouge">iex</code> session inside the project with:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>iex -S mix
-</code></pre>
+<div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">iex</span><span class="kv"> -S mix
+</span></code></pre>
 </div>
 
 <p>And play a bit with agents:</p>
@@ -279,7 +275,7 @@ iex&gt; Agent.stop(agent)
   <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
 
   <span class="n">test</span> <span class="sd">"</span><span class="s2">stores values by key"</span> <span class="k">do</span>
-    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">start_link</span><span class="p">([])</span>
     <span class="n">assert</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">)</span> <span class="o">==</span> <span class="no">nil</span>
 
     <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="sd">"</span><span class="s2">milk"</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
@@ -289,17 +285,15 @@ iex&gt; Agent.stop(agent)
 </code></pre>
 </div>
 
-<p>Our first test starts a new <code class="highlighter-rouge">KV.Bucket</code> using the <code class="highlighter-rouge">start_supervised</code> function and performs some <code class="highlighter-rouge">get/2</code> and <code class="highlighter-rouge">put/3</code> operations on it, asserting the result. We don’t need to explicitly stop the agent because we used <code class="highlighter-rouge">start_supervised/2</code> and that takes care of automatically terminating the processes under test when the test finishes.</p>
+<p>Our first test starts a new <code class="highlighter-rouge">KV.Bucket</code> by calling the <code class="highlighter-rouge">start_link/1</code> and passing an empty list of options. Then we perform some <code class="highlighter-rouge">get/2</code> and <code class="highlighter-rouge">put/3</code> operations on it, asserting the result.</p>
 
 <p>Also note the <code class="highlighter-rouge">async: true</code> option passed to <code class="highlighter-rouge">ExUnit.Case</code>. This option makes the test case run in parallel with other <code class="highlighter-rouge">:async</code> test cases by using multiple cores in our machine. This is extremely useful to speed up our test suite. However, <code class="highlighter-rouge">:async</code> must <em>only</em> be set if the test case does not rely on or change any global values. For example, if the test requires writing to the filesystem or access a database, keep it synchronous (omit the <code class="highlighter-rouge">:async</code> option) to avoid race conditions between tests.</p>
 
 <p>Async or not, our new test should obviously fail, as none of the functionality is implemented in the module being tested:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>** (ArgumentError) The module KV.Bucket was given as a child to a supervisor but it does not implement child_spec/1
+<div class="highlighter-rouge"><pre class="highlight"><code>** (UndefinedFunctionError) function KV.Bucket.start_link/1 is undefined (module KV.Bucket is not available)
 </code></pre>
 </div>
-
-<p>Since the module has not yet been defined, the <code class="highlighter-rouge">child_spec/1</code> does not yet exist.</p>
 
 <p>In order to fix the failing test, let’s create a file at <code class="highlighter-rouge">lib/kv/bucket.ex</code> with the contents below. Feel free to give a try at implementing the <code class="highlighter-rouge">KV.Bucket</code> module yourself using agents before peeking at the implementation below.</p>
 
@@ -330,9 +324,9 @@ iex&gt; Agent.stop(agent)
 </code></pre>
 </div>
 
-<p>The first step in our implementation is to call <code class="highlighter-rouge">use Agent</code>. By doing so, it will define a <code class="highlighter-rouge">child_spec/1</code> function containing the exact steps to start our process.</p>
+<p>The first step in our implementation is to call <code class="highlighter-rouge">use Agent</code>.</p>
 
-<p>Then we define a <code class="highlighter-rouge">start_link/1</code> function, which will effectively start the agent. The <code class="highlighter-rouge">start_link/1</code> function always receives a list of options, but we don’t plan on using it right now. We then proceed to call <code class="highlighter-rouge">Agent.start_link/1</code>, which receives an anonymous function that returns the Agent initial state.</p>
+<p>Then we define a <code class="highlighter-rouge">start_link/1</code> function, which will effectively start the agent. It is a convention to define a <code class="highlighter-rouge">start_link/1</code> function that always accepts a list of options. We don’t plan on using any option right now, but we might later on. We then proceed to call <code class="highlighter-rouge">Agent.start_link/1</code>, which receives an anonymous function that returns the Agent initial state.</p>
 
 <p>We are keeping a map inside the agent to store our keys and values. Getting and putting values on the map is done with the Agent API  and the capture operator <code class="highlighter-rouge">&amp;</code>, introduced in <a href="/getting-started/modules-and-functions.html#function-capturing">the Getting Started guide</a>.</p>
 
@@ -348,7 +342,7 @@ iex&gt; Agent.stop(agent)
   <span class="kn">use</span> <span class="no">ExUnit</span><span class="o">.</span><span class="no">Case</span><span class="p">,</span> <span class="ss">async:</span> <span class="no">true</span>
 
   <span class="n">setup</span> <span class="k">do</span>
-    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="n">start_supervised</span><span class="p">(</span><span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="o">=</span> <span class="no">KV</span><span class="o">.</span><span class="no">Bucket</span><span class="o">.</span><span class="n">start_link</span><span class="p">([])</span>
     <span class="p">%{</span><span class="ss">bucket:</span> <span class="n">bucket</span><span class="p">}</span>
   <span class="k">end</span>
 
@@ -452,7 +446,7 @@ Returns the current value of `key`, if `key` exists.
       <div class="clear"></div>
 
       <div id="copyright">
-        &copy; 2012–2017 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+        &copy; 2012–2018 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
       </div>
     </div><!-- .wrap -->
   </div><!-- #container -->

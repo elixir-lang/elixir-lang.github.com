@@ -278,13 +278,14 @@ msgstr ""
 
 msgid ""
 "The variable `_` is special in that it can never be read from. Trying to read "
-"from it gives an unbound variable error:"
+"from it gives a compile error:"
 msgstr ""
 
 msgid ""
 "```iex\n"
 "iex> _\n"
-"** (CompileError) iex:1: unbound variable _\n"
+"** (CompileError) iex:1: invalid use of _. \"_\" represents a value to be ignore"
+"d in a pattern and cannot be used in expressions\n"
 "```"
 msgstr ""
 

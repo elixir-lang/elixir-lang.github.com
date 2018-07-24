@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 01:24+0900\n"
+"POT-Creation-Date: 2018-07-21 23:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,7 +91,7 @@ msgid "The supervision strategy dictates what happens when one of the children c
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:44
-msgid "Once the supervisor starts, it will traverse the list of children and it will invoke the `child_spec/1` function on each module. We heard about the `child_spec/1` function in the Agent chapter, when we called `start_supervised(KV.Bucket)` without defining the module."
+msgid "Once the supervisor starts, it will traverse the list of children and it will invoke the `child_spec/1` function on each module."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:46
@@ -120,26 +120,30 @@ msgid "After the supervisor retrieves all child specifications, it proceeds to s
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:63
-msgid "So far `start_link/1` has always received an empty list of options. It is time we change that."
+msgid "In the previous chapter, we have used `start_supervised!` to start the registry during our tests. Internally, the `start_supervised!` function starts the registry under a supervisor defined by the ExUnit framework. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise registries in your applications, aligning our production code and tests best practices."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:65
-msgid "## Naming processes"
+msgid "So far `start_link/1` has always received an empty list of options. It is time we change that."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:67
-msgid "While our application will have many buckets, it will only have a single registry. So instead of always passing the registry PID around, we can give the registry a name, and always reference it by its name."
+msgid "## Naming processes"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:69
-msgid "Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots."
+msgid "While our application will have many buckets, it will only have a single registry. So instead of always passing the registry PID around, we can give the registry a name, and always reference it by its name."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:71
-msgid "So let's do that. Let's slightly change our children definition to be a list of tuples instead of a list of atoms:"
+msgid "Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:73
+msgid "So let's do that. Let's slightly change our children definition to be a list of tuples instead of a list of atoms:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:75
 msgid "```elixir\n"
 "  def init(:ok) do\n"
 "    children = [\n"
@@ -147,17 +151,17 @@ msgid "```elixir\n"
 "    ]"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:79
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:81
 msgid "    Supervisor.init(children, strategy: :one_for_one)\n"
 "  end\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:83
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:85
 msgid "The difference now is that, instead of calling `KV.Registry.start_link([])`, the Supervisor will call `KV.Registry.start_link([name: KV.Registry])`. If you revisit `KV.Registry.start_link/1` implementation, you will remember it simply passes the options to GenServer"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:85
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:87
 msgid "```elixir\n"
 "  def start_link(opts) do\n"
 "    GenServer.start_link(__MODULE__, :ok, opts)\n"
@@ -165,15 +169,15 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:91
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:93
 msgid "which in turn will register the process with the given name."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:93
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:95
 msgid "Let's give this all a try inside `iex -S mix`:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:95
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:97
 msgid "```iex\n"
 "iex> KV.Supervisor.start_link([])\n"
 "{:ok, #PID<0.66.0>}\n"
@@ -184,97 +188,98 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:104
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:106
 msgid "When we started the supervisor, the registry was automatically started with the given name, allowing us to create buckets without the need to manually start it."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:106
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:108
 msgid "In practice, we rarely start the application supervisor manually. Instead, it is started as part of the application callback."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:108
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:110
 msgid "## Understanding applications"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:110
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:112
 msgid "We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:112
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:114
 msgid "We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's have a look at its contents:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:114
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:116
 msgid "```erlang\n"
 "{application,kv,\n"
-"             [{registered,[]},\n"
+"             [{applications,[kernel,stdlib,elixir,logger]},\n"
 "              {description,\"kv\"},\n"
-"              {applications,[kernel,stdlib,elixir,logger]},\n"
-"              {vsn,\"0.0.1\"},\n"
-"              {modules,['Elixir.KV','Elixir.KV.Bucket',\n"
-"                        'Elixir.KV.Registry','Elixir.KV.Supervisor']}]}.\n"
+"              {modules,['Elixir.KV','Elixir.KV.Bucket','Elixir.KV.Registry',\n"
+"                        'Elixir.KV.Supervisor']},\n"
+"              {registered,[]},\n"
+"              {vsn,\"0.1.0\"},\n"
+"              {extra_applications,[logger]}]}.\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:124
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:127
 msgid "This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the `:extra_applications` list in `mix.exs`."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:126
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:129
 msgid "It would be pretty boring to update this file manually every time we add a new module to our application. That's why Mix generates and maintains it for us."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:128
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:131
 msgid "We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file. We are going to do our first customization soon."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:130
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:133
 msgid "### Starting applications"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:132
-msgid "When we define a `.app` file, which is the application specification, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:"
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:135
+msgid "When we define an `.app` file, which is the application specification, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:134
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:137
 msgid "1. Mix automatically starts our current application for us"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:136
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:139
 msgid "2. Even if Mix didn't start our application for us, our application does not yet do anything when it starts"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:138
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:141
 msgid "In any case, let's see how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:140
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:143
 msgid "```iex\n"
 "iex> Application.start(:kv)\n"
 "{:error, {:already_started, :kv}}\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:145
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:148
 msgid "Oops, it's already started. Mix normally starts the whole hierarchy of applications defined in our project's `mix.exs` file and it does the same for all dependencies if they depend on other applications."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:147
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:150
 msgid "We can pass an option to Mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:149
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:152
 msgid "```iex\n"
 "iex> Application.start(:kv)\n"
 ":ok\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:154
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:157
 msgid "We can stop our `:kv` application as well as the `:logger` application, which is started by default with Elixir:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:156
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:159
 msgid "```iex\n"
 "iex> Application.stop(:kv)\n"
 ":ok\n"
@@ -283,53 +288,53 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:163
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:166
 msgid "And let's try to start our application again:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:165
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:168
 msgid "```iex\n"
 "iex> Application.start(:kv)\n"
 "{:error, {:not_started, :logger}}\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:170
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:173
 msgid "Now we get an error because an application that `:kv` depends on (`:logger` in this case) isn't started. We need to either start each application manually in the correct order or call `Application.ensure_all_started` as follows:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:172
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:175
 msgid "```iex\n"
 "iex> Application.ensure_all_started(:kv)\n"
 "{:ok, [:logger, :kv]}\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:177
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:180
 msgid "Nothing really exciting happens but it shows how we can control our application."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:179
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:182
 msgid "> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:181
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:184
 msgid "## The application callback"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:183
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:186
 msgid "Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:185
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:188
 msgid "We can specify an application callback function. This is a function that will be invoked when the application starts. The function must return a result of `{:ok, pid}`, where `pid` is the process identifier of a supervisor process."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:187
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:190
 msgid "We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:189
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:192
 msgid "```elixir\n"
 "  def application do\n"
 "    [\n"
@@ -340,21 +345,21 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:198
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:201
 msgid "The `:mod` option specifies the \"application callback module\", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](https://hexdocs.pm/elixir/Application.html) behaviour."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:200
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:203
 msgid "Now that we have specified `KV` as the module callback, we need to change the `KV` module, defined in `lib/kv.ex`:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:202
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:205
 msgid "```elixir\n"
 "defmodule KV do\n"
 "  use Application"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:206
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:209
 msgid "  def start(_type, _args) do\n"
 "    KV.Supervisor.start_link(name: KV.Supervisor)\n"
 "  end\n"
@@ -362,15 +367,15 @@ msgid "  def start(_type, _args) do\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:212
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:215
 msgid "When we `use Application`, we need to define a couple functions, similar to when we used `Supervisor` or `GenServer`. This time we only need to define a `start/2` function. If we wanted to specify custom behaviour on application stop, we could define a `stop/1` function."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:214
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:217
 msgid "Let's start our project console once again with `iex -S mix`. We will see a process named `KV.Registry` is already running:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:216
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:219
 msgid "```iex\n"
 "iex> KV.Registry.create(KV.Registry, \"shopping\")\n"
 ":ok\n"
@@ -379,35 +384,35 @@ msgid "```iex\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:223
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:226
 msgid "How do we know this is working? After all, we are creating the bucket and then looking it up; of course it should work, right? Well, remember that `KV.Registry.create/2` uses `GenServer.cast/2`, and therefore will return `:ok` regardless of whether the message finds its target or not. At that point, we don't know whether the supervisor and the server are up, and if the bucket was created. However, `KV.Registry.lookup/2` uses `GenServer.call/3`, and will block and wait for a response from the server. We do get a positive response, so we know all is up and running."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:225
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:228
 msgid "For an experiment, try reimplementing `KV.Registry.create/2` to use `GenServer.call/3` instead, and momentarily disable the application callback. Run the code above on the console again, and you will see the creation step fails straight away."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:227
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:230
 msgid "Don't forget to bring the code back to normal before resuming this tutorial!"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:229
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:232
 msgid "## Projects or applications?"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:231
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:234
 msgid "Mix makes a distinction between projects and applications. Based on the contents of our `mix.exs` file, we would say we have a Mix project that defines the `:kv` application. As we will see in later chapters, there are projects that don't define any application."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:233
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:236
 msgid "When we say \"project\" you should think about Mix. Mix is the tool that manages your project. It knows how to compile your project, test your project and more. It also knows how to compile and start the application relevant to your project."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:235
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:238
 msgid "When we talk about applications, we talk about <abbr title=\"Open Telecom Platform\">OTP</abbr>. Applications are the entities that are started and stopped as a whole by the runtime. You can learn more about applications and how they relate to booting and shutting down of your system as a whole in the [docs for the Application module](https://hexdocs.pm/elixir/Application.html)."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:237
-msgid "Next let's learn about one special type of supervisor that is designed to start and shut down children dynamically, called simple one for one."
+#: ../../../../getting-started/mix-otp/supervisor-and-application.markdown:240
+msgid "Next let's learn about one special type of supervisor that is designed to start and shut down children dynamically, called dynamic supervisors."
 msgstr ""
 

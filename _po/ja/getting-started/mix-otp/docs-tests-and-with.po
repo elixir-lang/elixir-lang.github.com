@@ -74,9 +74,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"In this section, we will implement the parsing functionality using doctests, w"
-"hich allows us to write tests directly from our documentation. This helps us p"
-"rovide documentation with accurate code samples."
+"In this section, we will implement the parsing functionality, document it and "
+"make sure our documentation is up to date with doctests. This helps us provide"
+" documentation with accurate code samples."
 msgstr ""
 
 msgid ""
@@ -95,8 +95,8 @@ msgid "  ## Examples"
 msgstr ""
 
 msgid ""
-"      iex> KVServer.Command.parse \"CREATE shopping\n"
-"\"\n"
+"      iex> KVServer.Command.parse(\"CREATE shopping\n"
+"\")\n"
 "      {:ok, {:create, \"shopping\"}}"
 msgstr ""
 
@@ -264,42 +264,44 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Finally, you may have observed that each doctest was considered to be a differ"
-"ent test in our test case, as our test suite now reports a total of 7 tests. T"
-"hat is because ExUnit considers the following to define two different tests:"
+"Finally, you may have observed that each doctest corresponds to a different te"
+"st in our suite, which now reports a total of 7 doctests. That is because ExUn"
+"it considers the following to define two different doctests:"
 msgstr ""
 
 msgid ""
 "```iex\n"
-"iex> KVServer.Command.parse \"UNKNOWN shopping eggs\n"
-"\"\n"
+"iex> KVServer.Command.parse(\"UNKNOWN shopping eggs\n"
+"\")\n"
 "{:error, :unknown_command}"
 msgstr ""
 
 msgid ""
-"iex> KVServer.Command.parse \"GET shopping\n"
-"\"\n"
+"iex> KVServer.Command.parse(\"GET shopping\n"
+"\")\n"
 "{:error, :unknown_command}\n"
 "```"
 msgstr ""
 
-msgid "Without new lines, as seen below, ExUnit compiles it into a single test:"
+msgid "Without new lines, as seen below, ExUnit compiles it into a single doctest:"
 msgstr ""
 
 msgid ""
 "```iex\n"
-"iex> KVServer.Command.parse \"UNKNOWN shopping eggs\n"
-"\"\n"
+"iex> KVServer.Command.parse(\"UNKNOWN shopping eggs\n"
+"\")\n"
 "{:error, :unknown_command}\n"
-"iex> KVServer.Command.parse \"GET shopping\n"
-"\"\n"
+"iex> KVServer.Command.parse(\"GET shopping\n"
+"\")\n"
 "{:error, :unknown_command}\n"
 "```"
 msgstr ""
 
 msgid ""
-"You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdoc"
-"s.pm/ex_unit/ExUnit.DocTest.html)."
+"As the name says, doctest is documentation first and a test later. Their goal "
+"is not to replace tests but to provide up to date documentation. You can read "
+"more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/"
+"ExUnit.DocTest.html)."
 msgstr ""
 
 msgid "## with"
@@ -430,7 +432,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"```bash\n"
+"```console\n"
 "$ telnet 127.0.0.1 4040\n"
 "Trying 127.0.0.1...\n"
 "Connected to localhost.\n"
@@ -519,32 +521,32 @@ msgstr ""
 
 msgid ""
 "def run({:get, bucket, key}) do\n"
-"  lookup bucket, fn pid ->\n"
+"  lookup(bucket, fn pid ->\n"
 "    value = KV.Bucket.get(pid, key)\n"
 "    {:ok, \"#{value}\n"
 "OK\n"
 "\"}\n"
-"  end\n"
+"  end)\n"
 "end"
 msgstr ""
 
 msgid ""
 "def run({:put, bucket, key, value}) do\n"
-"  lookup bucket, fn pid ->\n"
+"  lookup(bucket, fn pid ->\n"
 "    KV.Bucket.put(pid, key, value)\n"
 "    {:ok, \"OK\n"
 "\"}\n"
-"  end\n"
+"  end)\n"
 "end"
 msgstr ""
 
 msgid ""
 "def run({:delete, bucket, key}) do\n"
-"  lookup bucket, fn pid ->\n"
+"  lookup(bucket, fn pid ->\n"
 "    KV.Bucket.delete(pid, key)\n"
 "    {:ok, \"OK\n"
 "\"}\n"
-"  end\n"
+"  end)\n"
 "end"
 msgstr ""
 
@@ -563,6 +565,14 @@ msgid ""
 "server that we registered during the `:kv` application startup. Since our `:kv"
 "_server` depends on the `:kv` application, it is completely fine to depend on "
 "the services it provides."
+msgstr ""
+
+msgid ""
+"You might have noticed we have a function head, `def run(command)`, without a "
+"body. In the [Modules and Functions](/getting-started/modules-and-functions#de"
+"fault-arguments) chapter, we learned that a bodiless function can be used to d"
+"eclare default arguments for a multi-clause function. Here is another use case"
+" where we use a function without a body to document what the arguments are."
 msgstr ""
 
 msgid ""

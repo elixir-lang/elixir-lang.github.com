@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 01:24+0900\n"
+"POT-Creation-Date: 2018-07-21 23:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -309,10 +309,32 @@ msgid "```iex\n"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:196
-msgid "Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on."
+msgid "String (binary) concatenation uses the `<>` operator but charlists use the lists concatenation operator `++`:"
 msgstr ""
 
 #: ../../../getting-started/binaries-strings-and-char-lists.markdown:198
+msgid "```iex\n"
+"iex> 'this ' <> 'fails'\n"
+"** (CompileError) iex:2: invalid literal 'this ' in <<>>\n"
+"    (elixir) src/elixir_bitstring.erl:19: :elixir_bitstring.expand/6\n"
+"    (elixir) src/elixir_bitstring.erl:12: :elixir_bitstring.expand/4\n"
+"    (elixir) expanding macro: Kernel.<>/2\n"
+"    iex:2: (file)\n"
+"iex> 'this ' ++ 'works'\n"
+"'this works'\n"
+"iex> \"he\" ++ \"llo\"\n"
+"** (ArgumentError) argument error\n"
+"    :erlang.++(\"he\", \"llo\")\n"
+"iex> \"he\" <> \"llo\"\n"
+"\"hello\"\n"
+"```"
+msgstr ""
+
+#: ../../../getting-started/binaries-strings-and-char-lists.markdown:214
+msgid "Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on."
+msgstr ""
+
+#: ../../../getting-started/binaries-strings-and-char-lists.markdown:216
 msgid "With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures."
 msgstr ""
 
