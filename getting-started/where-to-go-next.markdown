@@ -21,6 +21,8 @@ We have written a guide that covers how to build an Elixir application, with its
 
 * [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html)
 
+If you are planning to write your first library for other developers to use, don't forget to read our [Library Guidelines](https://hexdocs.pm/elixir/library-guidelines.html).
+
 ## Meta-programming
 
 Elixir is an extensible and very customizable programming language thanks to its meta-programming support. Most meta-programming in Elixir is done through macros, which are very useful in several situations, especially for writing DSLs. We have written a short guide that explains the basic mechanisms behind macros, shows how to write macros, and how to use macros to create DSLs:
