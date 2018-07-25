@@ -49,9 +49,9 @@ Erlang/OTP 21.0 introduces a new way to retrieve the stacktrace that is lexicall
 try do
   ... something that may fail ...
 rescue
-  e ->
-    log(e, System.stacktrace())
-    reraise(e, System.stacktrace())
+  exception ->
+    log(exception, System.stacktrace())
+    reraise(exception, System.stacktrace())
 end
 ```
 
@@ -61,9 +61,9 @@ In Elixir v1.7, this can be written as:
 try do
   ... something that may fail ...
 rescue
-  e ->
-    log(e, __STACKTRACE__)
-    reraise(e, __STACKTRACE__)
+  exception ->
+    log(exception, __STACKTRACE__)
+    reraise(exception, __STACKTRACE__)
 end
 ```
 
@@ -79,13 +79,13 @@ Erlang/OTP 21 includes a new `:logger` module. Elixir v1.7 fully integrates with
 
   * `:initial_call` - the initial call that started the process
 
-  * `:registered_name` - the process registered name as an atom
+  * `:registered_name` - the process' registered name as an atom
 
 We recommend Elixir libraries that previously hooked into Erlang's `:error_logger` to hook into `Logger` instead, in order to support all current and future Erlang/OTP versions.
 
 ## Logger compile-time purging
 
-Previously, Logger macros such as `debug`, `info`, and so on would always evaluate their arguments, even when nothing would be logged. From Elixir v1.7, the arguments are only evaluated when the message is logged.
+Previously, Logger macros such as `debug`, `info`, and so on would always evaluate their arguments, even when nothing would be logged. From Elixir v1.7 the arguments are only evaluated when the message is logged.
 
 The Logger configuration system also accepts a new option called `:compile_time_purge_matching` that allows you to remove log calls with specific compile-time metadata. For example, to remove all logger calls from application `:foo` with level lower than `:info`, as well as remove all logger calls from `Bar.foo/3`, you can use the following configuration:
 
@@ -141,7 +141,7 @@ Percentage | Module
 
 ## Summing up
 
-We are really proud of this release, as it focuses mostly in quality of life improvements, instead of flashy new features. As Elixir continues to mature, expect more releases like this one. The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.7.0).
+We are really proud of this release, as it focuses mostly on quality of life improvements, instead of flashy new features. As Elixir continues to mature, expect more releases like this one. The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.7.0).
 
 We have also seen important developments in other areas not directly related to the Elixir codebase:
 
