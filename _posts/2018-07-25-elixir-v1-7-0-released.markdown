@@ -3,12 +3,12 @@ layout: post
 title: Elixir v1.7 released
 author: José Valim
 category: Releases
-excerpt: Elixir v1.7 includes many quality of life improvements, focusing on documentation, Logger and ExUnit, as well as a new Elixir team member!
+excerpt: Elixir v1.7 includes many quality of life improvements, focusing on documentation, Logger and ExUnit, as well as a new Elixir Core team member!
 ---
 
 A new semester has started, which means it is time for a new Elixir release! This release brings quality of life improvements to the documentation, to error handling and ExUnit.
 
-We are also glad to welcome Michał Muskała to the Elixir team. Prior to joining the team, he was [a member of the Ecto team](https://github.com/elixir-ecto/ecto), he has made [plenty of contributions to Elixir](https://github.com/elixir-lang/elixir/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala), often to improve performance, and [is a frequent to contribute to Erlang/OTP too](https://github.com/erlang/otp/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala)!
+We are also glad to welcome Michał Muskała to the Elixir Core team. Prior to joining the team, he was [a member of the Ecto team](https://github.com/elixir-ecto/ecto), he has made [plenty of contributions to Elixir](https://github.com/elixir-lang/elixir/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala), often to improve performance, and [is a frequent to contribute to Erlang/OTP too](https://github.com/erlang/otp/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala)!
 
 ## Documentation metadata
 
@@ -23,11 +23,11 @@ Furthermore, EEP 48 introduces the ability to annotate documentation with metada
 
 Metadata can be given to `@moduledoc`, `@typedoc` and `@doc`.
 
-We have updated [the ExDoc tool](https://github.com/elixir-lang/ex_doc) to start leveraging metadata in order to provide better documentation for developers. Let's see some examples:
+We have updated [the ExDoc tool](https://github.com/elixir-lang/ex_doc) to start leveraging metadata in order to provide better documentation for developers. Some of the improvements include:
 
   * Deprecated modules, functions, callbacks and types have a warning automatically attached to them. [See the deprecated `Behaviour` module as an example](https://hexdocs.pm/elixir/Behaviour.html)
 
-  * Functions, macros, callbacks and types now include the version they were added. For example, [see the top right corner of the `defguard` docs](https://hexdocs.pm/elixir/Kernel.html#defguard/1)
+  * Functions, macros, callbacks and types now include the version in which they were added. For example, [see the top right corner of the `defguard` docs](https://hexdocs.pm/elixir/Kernel.html#defguard/1)
 
   * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/master/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
 
@@ -69,13 +69,13 @@ end
 
 This change may also yield performance improvements in the future, since the lexical scope allows us to track precisely when a stacktrace is used and we no longer need to keep references to stacktrace entries after the `try` construct finishes.
 
-Other parts of the exception system have been improved. For example, more information is provided in certain occurrences of `ArgumentError`, `ArithmeticError` and `KeyError` messages.
+Other parts of the exception system have also been improved. For example, more information is provided in certain occurrences of `ArgumentError`, `ArithmeticError` and `KeyError` messages.
 
 ## Erlang/OTP logger integration
 
 Erlang/OTP 21 includes a new `:logger` module. Elixir v1.7 fully integrates with the new `:logger` and leverages its metadata system. The `Logger.Translator` mechanism has also been improved to export metadata, allowing custom Logger backends to leverage information such as:
 
-  * `:crash_reason` - a two-element tuple with the throw/error/exit reason as first argument and the stacktrace as second
+  * `:crash_reason` - a two-element tuple with the throw/error/exit reason as the first argument and the stacktrace as the second
 
   * `:initial_call` - the initial call that started the process
 
