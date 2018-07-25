@@ -14,14 +14,14 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 ## Books
 
-<h4 class="resource">Programming Elixir 1.3</h4>
+<h4 class="resource">Programming Elixir 1.6</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir13/programming-elixir-1-3" title="Programming Elixir 1.3: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
-– by Dave Thomas"><img src="/images/learning/programming-elixir-1-3.jpg" alt="Programming Elixir cover" width="190" /></a>
+<a class="cover" href="https://pragprog.com/book/elixir16/programming-elixir-1-6" title="Programming Elixir 1.6: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
+– by Dave Thomas"><img src="/images/learning/programming-elixir-1-6.jpg" alt="Programming Elixir cover" width="190" /></a>
 
-Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches. Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM.
+This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.6 and beyond. Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches.
 
-Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir. This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.3.
+Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM. Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir.
 
 <div class="clear"></div>
 
