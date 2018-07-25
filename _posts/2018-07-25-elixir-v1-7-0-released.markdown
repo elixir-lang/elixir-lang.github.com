@@ -6,7 +6,7 @@ category: Releases
 excerpt: Elixir v1.7 includes many quality of life improvements, focusing on documentation, Logger and ExUnit, as well as a new Elixir Core team member!
 ---
 
-A new semester has started, which means it is time for a new Elixir release! This release brings quality of life improvements to the documentation, to error handling and ExUnit.
+A new semester has started, which means it is time for a new Elixir release! This release brings quality of life improvements to the documentation, to error handling, to logger reporting, and to ExUnit, Elixir's testing library.
 
 We are also glad to welcome Michał Muskała to the Elixir Core team. Prior to joining the team, he was [a member of the Ecto team](https://github.com/elixir-ecto/ecto), he has made [plenty of contributions to Elixir](https://github.com/elixir-lang/elixir/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala), often to improve performance, and [is a frequent to contribute to Erlang/OTP too](https://github.com/erlang/otp/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala)!
 
@@ -37,7 +37,7 @@ Elixir's interactive shell, IEx, has also been updated to print metadata:
 
 While Elixir allows any metadata to be given, those tools currently exhibit only `:deprecated` and `:since`. Other keys may be shown in the future.
 
-Those improvements are not exclusive to Elixir, they are available to every Elixir library. We hope one day they will be available to all applications running on the Erlang VM too.
+Those improvements are not exclusive to the standard library, they are available to every Elixir library and application. We hope one day they will be available to all applications running on the Erlang VM too.
 
 To access the new documentation format, developers should use [`Code.fetch_docs/1`](https://hexdocs.pm/elixir/Code.html#fetch_docs/1). We have always been proud of treating documentation as a first-class citizen and the ability to add structured information to the documentation is a further step in this direction.
 
