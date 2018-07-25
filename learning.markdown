@@ -36,6 +36,17 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <div class="clear"></div>
 
+<h4 class="resource">Adopting Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/book/tvmelixir/adopting-elixir" title="Adopting Elixir: From Concept to Production
+– by Ben Marx, José Valim, Bruce Tate"><img src="/images/learning/adopting-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
+
+Adoption is more than programming. Elixir is an exciting new language, but to successfully get your application from start to finish, you’re going to need to know more than just the language. You need the case studies and strategies in this book.
+
+Learn the best practices for the whole life of your application, from design and team-building, to managing stakeholders, to deployment and monitoring. Go beyond the syntax and the tools to learn the techniques you need to develop your Elixir application from concept to production.
+
+<div class="clear"></div>
+
 <h4 class="resource">Introducing Elixir</h4>
 
 <a class="cover" href="http://shop.oreilly.com/product/0636920030584.do" title="Introducing Elixir: Getting Started in Functional Programming
