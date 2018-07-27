@@ -220,26 +220,26 @@
 
 <h2 id="compiling-with-version-managers">Compiling with version managers</h2>
 
-<p>There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you can’t install Erlang or Elixir as mentioned above or if your package manager is simply outdated. Here are some of those tools:</p>
+<p>それぞれバージョンの異なる Erlang や Elixir をインストールして、それらを管理できるようにするツールというのはいくつかあります。</p>
 
 <ul>
-  <li><a href="https://github.com/asdf-vm/asdf">asdf</a> - install and manage different Elixir and Erlang versions</li>
-  <li><a href="https://github.com/mururu/exenv">exenv</a> - install and manage different Elixir versions</li>
-  <li><a href="https://github.com/taylor/kiex">kiex</a> - install and manage different Elixir versions</li>
-  <li><a href="https://github.com/yrashk/kerl">kerl</a> - install and manage different Erlang versions</li>
+  <li><a href="https://github.com/asdf-vm/asdf">asdf</a> - Erlang と Elixir の複数バージョンをインストールし管理ができます。</li>
+  <li><a href="https://github.com/mururu/exenv">exenv</a> - 〃</li>
+  <li><a href="https://github.com/taylor/kiex">kiex</a> - 〃</li>
+  <li><a href="https://github.com/yrashk/kerl">kerl</a> - 〃</li>
 </ul>
 
-<p>If you would prefer to compile from source manually, don’t worry, we got your back too!</p>
+<p>手動でソースファイルからコンパイルをお望みでしたら、そちらの方法もご用意しています。</p>
 
 <h2 id="compiling-from-source-unix-and-mingw">Compiling from source (Unix and MinGW)</h2>
 
-<p>You can download and compile Elixir in few steps. The first one is to <a href="/install.html#installing-erlang">install Erlang</a>.</p>
+<p>Elixir のダウンロードやコンパイルの前に、まず <a href="/install.html#installing-erlang">Erlang をインストール</a> してください。</p>
 
-<p>Next you should download source code (<a href="https://github.com/elixir-lang/elixir/archive/v1.6.6.zip">.zip</a>, <a href="https://github.com/elixir-lang/elixir/archive/v1.6.6.tar.gz">.tar.gz</a>) of the <a href="https://github.com/elixir-lang/elixir/releases/tag/v1.6.6">latest release</a>, unpack it and then run <code class="highlighter-rouge">make</code> inside the unpacked directory (note: if you are running on Windows, <a href="https://github.com/elixir-lang/elixir/wiki/Windows">read this page on setting up your environment for compiling Elixir</a>).</p>
+<p>そうしましたら次は <a href="https://github.com/elixir-lang/elixir/releases/tag/v1.6.6">最新バージョン</a> の Elixir のソースコード (<a href="https://github.com/elixir-lang/elixir/archive/v1.6.6.zip">.zip</a>, <a href="https://github.com/elixir-lang/elixir/archive/v1.6.6.tar.gz">.tar.gz</a>) をダウンロードしましょう。ファイルを解凍してディレクトリに移動し、 <code class="highlighter-rouge">make</code> コマンドを実行します。(note: Windows をお使いの方は <a href="https://github.com/elixir-lang/elixir/wiki/Windows">Windows 環境に Elixir をコンパイルする方法</a>)を参照してください。)</p>
 
-<p>After compiling, you are ready to run the elixir and <code class="highlighter-rouge">iex</code> commands from the bin directory. It is recommended that you <a href="#setting-path-environment-variable">add Elixir’s bin path to your PATH environment variable</a> to ease development.</p>
+<p>コンパイルが完了すると <code class="highlighter-rouge">bin</code> ディレクトリから <code class="highlighter-rouge">iex</code> コマンドで Elixir の REPL を起動できます。手軽な開発の為にも <a href="#setting-path-environment-variable">Elixir を環境変数 PATH に追加</a> することをおすすめします。</p>
 
-<p>In case you are feeling a bit more adventurous, you can also compile from master:</p>
+<p>好奇心旺盛な方なら master ブランチから開発途中の Elixir もコンパイルしてお試しいただけます！</p>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git clone https://github.com/elixir-lang/elixir.git
 <span class="gp">$ </span><span class="nb">cd </span>elixir
@@ -247,7 +247,8 @@
 </code></pre>
 </div>
 
-<p>If the tests pass, you are ready to go. Otherwise, feel free to open an issue <a href="https://github.com/elixir-lang/elixir">in the issues tracker on Github</a>.</p>
+<p>問題なければいいですが、もし何か気づいたことがありましたら、いつでも気軽に Issue をください！
+<a href="https://github.com/elixir-lang/elixir">in the issues tracker on Github</a></p>
 
 <h2 id="installing-erlang">Installing Erlang</h2>
 
