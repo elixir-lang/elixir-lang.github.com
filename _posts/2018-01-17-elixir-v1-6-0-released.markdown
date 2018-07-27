@@ -52,20 +52,20 @@ Note those attributes are not yet available to tools that generate documentation
 Elixir provides the concepts of guards: expressions used alongside pattern matching to select a matching clause. Let's see an example straight from [Elixir's home page](https://elixir-lang.org):
 
 ```elixir
-def serve_drinks(%User{age: age}) when age >= 21 do
-  # Code that serves drinks!
+def drive(%User{age: age}) when age >= 16 do
+  # Code that drives a car
 end
 ```
 
-`%User{age: age}` is matching on a `User` struct with an age field and `when age >= 21` is the guard.
+`%User{age: age}` is matching on a `User` struct with an age field and `when age >= 16` is the guard.
 
-Since only a handful of constructs are [allowed in guards](https://hexdocs.pm/elixir/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 21 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://hexdocs.pm/elixir/Kernel.html#defguard/1):
+Since only a handful of constructs are [allowed in guards](https://hexdocs.pm/elixir/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 16 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://hexdocs.pm/elixir/Kernel.html#defguard/1):
 
 ```elixir
-defguard is_drinking_age(age) when age >= 21
+defguard is_old_to_drive(age) when age >= 16
 
-def serve_drinks(%User{age: age}) when is_drinking_age(age) do
-  # Code that serves drinks!
+def drive(%User{age: age}) when is_old_to_drive(age) do
+  # Code that drives a car
 end
 ```
 

@@ -102,7 +102,9 @@ There are many tools that allow developers to install and manage multiple Erlang
   * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
   * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
 
-If you would prefer to compile from source manually, don't worry, we got your back too!
+Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Check the compatibility table](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) if you have questions or run into issues.
+
+If you would prefer to compile from source manually, don't worry, we got your back too.
 
 ## Compiling from source (Unix and MinGW)
 

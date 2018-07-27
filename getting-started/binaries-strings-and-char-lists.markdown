@@ -193,6 +193,8 @@ iex> to_string 1
 "1"
 ```
 
+Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on.
+
 String (binary) concatenation uses the `<>` operator but charlists use the lists concatenation operator `++`:
 
 ```iex
@@ -210,7 +212,5 @@ iex> "he" ++ "llo"
 iex> "he" <> "llo"
 "hello"
 ```
-
-Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on.
 
 With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures.
