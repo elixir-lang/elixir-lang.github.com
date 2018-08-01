@@ -304,6 +304,8 @@ Raw representation
   [104, 101, 108, 108, 111]
 Reference modules
   List
+Implemented protocols
+  ...
 ```
 
 Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:
