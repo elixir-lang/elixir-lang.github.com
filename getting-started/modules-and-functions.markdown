@@ -177,9 +177,14 @@ iex> fun = &(&1 + 1)
 #Function<6.71889879/1 in :erl_eval.expr/5>
 iex> fun.(1)
 2
+
+iex> fun2 = &"Good #{&1}"
+#Function<6.127694169/1 in :erl_eval.expr/5>
+iex)> fun2.("morning")
+"Good morning"
 ```
 
-The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
+The `&1` represents the first argument passed into the function. `&(&1 + 1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
 
 If you want to capture a function from a module, you can do `&Module.function()`:
 
