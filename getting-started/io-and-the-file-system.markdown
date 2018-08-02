@@ -150,7 +150,7 @@ The group leader can be configured per process and is used in different situatio
 
 ## `iodata` and `chardata`
 
-In all of the examples above, we used binaries when writing to files. In the chapter ["Binaries, strings and char lists"](/getting-started/binaries-strings-and-char-lists.html), we mentioned how strings are made of bytes while char lists are lists with Unicode codepoints.
+In all of the examples above, we used binaries when writing to files. In the chapter ["Binaries, strings, and charlists"](/getting-started/binaries-strings-and-char-lists.html), we mentioned how strings are made of bytes while charlists are lists with Unicode codepoints.
 
 The functions in `IO` and `File` also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers, and binaries to be given:
 
