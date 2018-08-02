@@ -95,7 +95,7 @@ iex> f2 = fn
 ...>   x, y when x > 0 -> x + y
 ...>   x, y, z -> x * y + z
 ...> end
-** (CompileError) iex:1: cannot mix clauses with different arities in function definition
+** (CompileError) iex:1: cannot mix clauses with different arities in anonymous functions
 ```
 
 ## `cond`
@@ -207,7 +207,7 @@ One thing to keep in mind when using `do/end` blocks is they are always bound to
 iex> is_number if true do
 ...>  1 + 2
 ...> end
-** (CompileError) undefined function: is_number/2
+** (CompileError) iex:1: undefined function is_number/2
 ```
 
 Would be parsed as:
@@ -216,7 +216,7 @@ Would be parsed as:
 iex> is_number(if true) do
 ...>  1 + 2
 ...> end
-** (CompileError) undefined function: is_number/2
+** (CompileError) iex:1: undefined function is_number/2
 ```
 
 which leads to an undefined function error because that invocation passes two arguments, and `is_number/2` does not exist. The `if true` expression is invalid in itself because it needs the block, but since the arity of `is_number/2` does not match, Elixir does not even reach its evaluation.
