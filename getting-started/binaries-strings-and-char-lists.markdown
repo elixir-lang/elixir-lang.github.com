@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Binaries, strings, and charlists
+title: Binaries, strings and charlists
 ---
 
 # {{ page.title }}
