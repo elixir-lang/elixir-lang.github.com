@@ -13,7 +13,7 @@ We had originally sketched this chapter to come much earlier in the getting star
 
 ## The `IO` module
 
-The [`IO`](http://elixir-lang.org/docs/v1.0/elixir/IO.html) module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files, and other IO devices. Usage of the module is pretty straightforward:
+The [`IO`](https://hexdocs.pm/elixir/IO.html) module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files, and other IO devices. Usage of the module is pretty straightforward:
 
 ```iex
 iex> IO.puts "hello world"

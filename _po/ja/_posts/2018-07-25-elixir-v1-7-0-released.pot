@@ -1,0 +1,286 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-08 04:23+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:1
+msgid "---\n"
+"layout: post\n"
+"title: Elixir v1.7 released\n"
+"author: José Valim\n"
+"category: Releases\n"
+"excerpt: Elixir v1.7 includes many quality of life improvements, focusing on documentation, Logger and ExUnit, as well as a new Elixir Core team member!\n"
+"---"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:9
+msgid "A new semester has started, which means it is time for a new Elixir release! This release brings quality of life improvements to the documentation, to error handling, to logger reporting, and to ExUnit, Elixir's testing library."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:11
+msgid "We are also glad to welcome Michał Muskała to the Elixir Core team. Prior to joining the team, he was [a member of the Ecto team](https://github.com/elixir-ecto/ecto), he has made [plenty of contributions to Elixir](https://github.com/elixir-lang/elixir/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala), often to improve performance, and [is a frequent to contribute to Erlang/OTP too](https://github.com/erlang/otp/pulls?utf8=%E2%9C%93&q=is%3Apr+author%3Amichalmuskala)!"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:13
+msgid "## Documentation metadata"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:15
+msgid "Elixir v1.7 implements [EEP 48](http://erlang.org/eep/eeps/eep-0048.html). EEP 48 aims to bring documentation interoperability across all languages running on the Erlang VM."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:17
+msgid "Furthermore, EEP 48 introduces the ability to annotate documentation with metadata, which we have made possible to leverage from Elixir:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:19
+msgid "```elixir\n"
+"@moduledoc \"A brand new module\"\n"
+"@moduledoc authors: [\"Jane\", \"Mary\"], since: \"1.4.0\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:24
+msgid "Metadata can be given to `@moduledoc`, `@typedoc` and `@doc`."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:26
+msgid "We have updated [the ExDoc tool](https://github.com/elixir-lang/ex_doc) to start leveraging metadata in order to provide better documentation for developers. Some of the improvements include:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:28
+msgid "  * Deprecated modules, functions, callbacks and types have a warning automatically attached to them. [See the deprecated `Behaviour` module as an example](https://hexdocs.pm/elixir/Behaviour.html)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:30
+msgid "  * Functions, macros, callbacks and types now include the version in which they were added. For example, [see the top right corner of the `defguard` docs](https://hexdocs.pm/elixir/Kernel.html#defguard/1)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:32
+msgid "  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/master/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:34
+msgid "Elixir's interactive shell, IEx, has also been updated to print metadata:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:36
+msgid "![IEx metadata](/images/contents/iex-metadata.png)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:38
+msgid "While Elixir allows any metadata to be given, those tools currently exhibit only `:deprecated` and `:since`. Other keys may be shown in the future."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:40
+msgid "Those improvements are not exclusive to the standard library, they are available to every Elixir library and application. We hope one day they will be available to all applications running on the Erlang VM too."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:42
+msgid "To access the new documentation format, developers should use [`Code.fetch_docs/1`](https://hexdocs.pm/elixir/Code.html#fetch_docs/1). We have always been proud of treating documentation as a first-class citizen and the ability to add structured information to the documentation is a further step in this direction."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:44
+msgid "## The `__STACKTRACE__` construct"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:46
+msgid "Erlang/OTP 21.0 introduces a new way to retrieve the stacktrace that is lexically scoped and no longer relies on side-effects like `System.stacktrace/0` does. Before one would write:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:48
+msgid "```elixir\n"
+"try do\n"
+"  ... something that may fail ...\n"
+"rescue\n"
+"  exception ->\n"
+"    log(exception, System.stacktrace())\n"
+"    reraise(exception, System.stacktrace())\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:58
+msgid "In Elixir v1.7, this can be written as:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:60
+msgid "```elixir\n"
+"try do\n"
+"  ... something that may fail ...\n"
+"rescue\n"
+"  exception ->\n"
+"    log(exception, __STACKTRACE__)\n"
+"    reraise(exception, __STACKTRACE__)\n"
+"end\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:70
+msgid "This change may also yield performance improvements in the future, since the lexical scope allows us to track precisely when a stacktrace is used and we no longer need to keep references to stacktrace entries after the `try` construct finishes."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:72
+msgid "Other parts of the exception system have also been improved. For example, more information is provided in certain occurrences of `ArgumentError`, `ArithmeticError` and `KeyError` messages."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:74
+msgid "## Erlang/OTP logger integration"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:76
+msgid "Erlang/OTP 21 includes a new `:logger` module. Elixir v1.7 fully integrates with the new `:logger` and leverages its metadata system. The `Logger.Translator` mechanism has also been improved to export metadata, allowing custom Logger backends to leverage information such as:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:78
+msgid "  * `:crash_reason` - a two-element tuple with the throw/error/exit reason as the first argument and the stacktrace as the second"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:80
+msgid "  * `:initial_call` - the initial call that started the process"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:82
+msgid "  * `:registered_name` - the process' registered name as an atom"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:84
+msgid "We recommend Elixir libraries that previously hooked into Erlang's `:error_logger` to hook into `Logger` instead, in order to support all current and future Erlang/OTP versions."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:86
+msgid "## Logger compile-time purging"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:88
+msgid "Previously, Logger macros such as `debug`, `info`, and so on would always evaluate their arguments, even when nothing would be logged. From Elixir v1.7 the arguments are only evaluated when the message is logged."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:90
+msgid "The Logger configuration system also accepts a new option called `:compile_time_purge_matching` that allows you to remove log calls with specific compile-time metadata. For example, to remove all logger calls from application `:foo` with level lower than `:info`, as well as remove all logger calls from `Bar.foo/3`, you can use the following configuration:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:92
+msgid "```elixir\n"
+"config :logger,\n"
+"  compile_time_purge_matching: [\n"
+"    [application: :foo, level_lower_than: :info],\n"
+"    [module: Bar, function: \"foo/3\"]\n"
+"  ]\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:100
+msgid "## ExUnit improvements"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:102
+msgid "[ExUnit](https://hexdocs.pm/ex_unit/) is Elixir's unit testing library. ExUnit has always leveraged Elixir macros to provide excellent error reports when a failure happens. For example, the following code:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:104
+msgid "```elixir\n"
+"assert \"fox jumps over the lazy dog\" == \"brown fox jumps over the dog\"\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:108
+msgid "will fail with the following report:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:110
+msgid "![ExUnit Diff](/images/contents/exunit-diff.png)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:112
+msgid "The `assert` macro is able to look at the code, extract the current file, the line, extract the operands and show a diff between the data structures alongside the stacktrace when the assertion fails."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:114
+msgid "However, sometimes we need to write assertions such as `assert some_function(expr1, var2)`. When such assertion fails, we usually have to re-run the tests, now debugging or printing the values of `expr1` and `var2`. In Elixir v1.7, when a \"bare\" assertion fails, we will print the value of each argument individually. For a simple example such as `assert some_vars(1 + 2, 3 + 4)`, we get this report:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:116
+msgid "![ExUnit Bare Asssertion Diff](/images/contents/exunit-bare-assertion-diff.png)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:118
+msgid "We have also [added coloring and diffing to doctests](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#content)."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:120
+msgid "While ExUnit is our test framework, Mix is our build tool. Developers typically run their tests by calling `mix test`."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:122
+msgid "On the `mix test` side of things, there is a new `--failed` flag that runs all tests that failed the last time they ran. Finally, coverage reports generated with `mix test --cover` include a summary out of the box:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:124
+msgid "```\n"
+"Generating cover results ..."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:127
+msgid "Percentage | Module\n"
+"-----------|--------------------------\n"
+"   100.00% | Plug.Exception.Any\n"
+"   100.00% | Plug.Adapters.Cowboy2.Stream\n"
+"   100.00% | Collectable.Plug.Conn\n"
+"   100.00% | Plug.Crypto.KeyGenerator\n"
+"   100.00% | Plug.Parsers\n"
+"   100.00% | Plug.Head\n"
+"   100.00% | Plug.Router.Utils\n"
+"   100.00% | Plug.RequestId\n"
+"       ... | ...\n"
+"-----------|--------------------------\n"
+"    77.19% | Total\n"
+"```"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:142
+msgid "## Summing up"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:144
+msgid "We are really proud of this release, as it focuses mostly on quality of life improvements, instead of flashy new features. As Elixir continues to mature, expect more releases like this one. The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.7.0)."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:146
+msgid "We have also seen important developments in other areas not directly related to the Elixir codebase:"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:148
+msgid "  * We have added [a \"Development\" section](https://elixir-lang.org/development.html) to the website, that outlines the Elixir team structure and goals"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:150
+msgid "  * [Elixir now has its own mini-documentary](http://doc.honeypot.io/elixir-documentary-2018/), by [Honeypot](https://www.honeypot.io/)"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:152
+msgid "  * We have already highlighted some of the improvements in the ExDoc tool. Another improvement worth mentioning is the syntax highlighting is now done in Elixir itself, via the [Makeup](https://github.com/tmbb/makeup) library. This gives us more control over the grammar, the style, and improves load times. If you would like to add support for other languages, [reach out](https://github.com/tmbb/makeup)!"
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:154
+msgid "Finally, don't forget [ElixirConf US](https://elixirconf.com/) is coming soon, in Bellevue, WA, September 4-7. Last year my keynote focused on the last 5 years with Elixir. This year we are ready to look into the 5 years ahead."
+msgstr ""
+
+#: ../../../_posts/2018-07-25-elixir-v1-7-0-released.markdown:156
+msgid "Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more."
+msgstr ""
+

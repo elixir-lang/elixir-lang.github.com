@@ -76,13 +76,13 @@
 
 <p>Note &gt; Elixir v1.6 の使用には Erlang 19.0 以降が必要ですが、大抵は自動でインストールされます。もしインストールされないようでしたら、”Installing Erlang” を参照してください。</p>
 
-<h2 id="distributions">Distributions</h2>
+<h2 id="ディストリビューション">ディストリビューション</h2>
 
 <p>お好きなオプションをお選びいただけます。あなたのシステムに Elixir をインストールしましょう！</p>
 
 <p>以前に一度 Elixir/Erlang をインストールしたことがあるのでしたら、 “Compiling with version managers” や “ Compiling form source (Unix and MinGW) “ を参照してください。</p>
 
-<h3 id="mac-os-x">Mac OS X</h3>
+<h3 id="macosmac-os-x">macOS(Mac OS X)</h3>
 
 <ul>
   <li>Homebrew をお使いの場合
@@ -98,7 +98,7 @@
   </li>
 </ul>
 
-<h3 id="unix-and-unix-like">Unix (and Unix-like)</h3>
+<h3 id="unix-系">UNIX 系</h3>
 
 <ul>
   <li>Arch Linux (Community repo) をお使いの場合
@@ -195,30 +195,30 @@
 <p>もしあなたが Docker に親しみ慣れているのなら、公式 Docker イメージを使えばとても簡単です。</p>
 
 <ul>
-  <li>Enter interactive mode
+  <li>インタラクティブモード
     <ul>
       <li>Run: <code class="highlighter-rouge">docker run -it --rm elixir</code></li>
     </ul>
   </li>
-  <li>Enter bash within container with installed <code class="highlighter-rouge">elixir</code>
+  <li>イメージからインストールしたコンテナ内で bash シェルを起動
     <ul>
       <li>Run: <code class="highlighter-rouge">docker run -it --rm elixir bash</code></li>
     </ul>
   </li>
 </ul>
 
-<p>これらのディストリビューションは、たいてい自動で Erlang もインストールしてくれますが、もしインストールされない場合は <a href="/install.html#installing-erlang">Installing Erlang</a> を参照してください.</p>
+<p>これらのディストリビューションは、たいてい自動で Erlang もインストールしてくれますが、もしインストールされない場合は <a href="/install.html#installing-erlang">Installing Erlang</a>(英語) を参照してください.</p>
 
 <p>プリコンパイル済みパッケージのリストが必要でしたら、こちらからどうぞ。<a href="https://elixir-lang.org/elixir.csv">https://elixir-lang.org/elixir.csv</a>.</p>
 
-<h2 id="precompiled-package">Precompiled package</h2>
+<h2 id="プリコンパイル済みパッケージ">プリコンパイル済みパッケージ</h2>
 
 <p>Elixir はリリースごとにプリコンパイル済みパッケージをご用意しています。まずはじめに <a href="/install.html#installing-erlang">Erlangをインストール</a> します。次に <a href="https://github.com/elixir-lang/elixir/releases/download/v1.6.6/Precompiled.zip">最新の Precopiled.zip ファイル</a>をダウンロード後、解凍してください。.</p>
 
 <p>一度ファイルを解凍すると ‘bin’ ディレクトリから ‘elixir’ や ‘iex’ コマンドを使用できますが、Elixir へのパスを環境変数 PATH に追加した方が効率的でしょう。
 詳しくは <a href="#setting-path-environment-variable">環境変数にパスを追加する</a> を参照してください。</p>
 
-<h2 id="compiling-with-version-managers">Compiling with version managers</h2>
+<h2 id="バージョン管理ツールを使用する">バージョン管理ツールを使用する</h2>
 
 <p>それぞれバージョンの異なる Erlang や Elixir をインストールして、それらを管理できるようにするツールというのはいくつかあります。</p>
 
@@ -229,9 +229,11 @@
   <li><a href="https://github.com/yrashk/kerl">kerl</a> - 〃</li>
 </ul>
 
-<p>手動でソースファイルからコンパイルをお望みでしたら、そちらの方法もご用意しています。</p>
+<p>Keep in mind that each Elixir version supports specific Erlang/OTP versions. <a href="https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp">Check the compatibility table</a> if you have questions or run into issues.</p>
 
-<h2 id="compiling-from-source-unix-and-mingw">Compiling from source (Unix and MinGW)</h2>
+<p>If you would prefer to compile from source manually, don’t worry, we got your back too.</p>
+
+<h2 id="ソースファイルから直接コンパイルする-unix-系や-mingw">ソースファイルから直接コンパイルする (UNIX 系や MinGW)</h2>
 
 <p>Elixir のダウンロードやコンパイルの前に、まず <a href="/install.html#installing-erlang">Erlang をインストール</a> してください。</p>
 
@@ -247,45 +249,45 @@
 </code></pre>
 </div>
 
-<p>問題なければいいですが、もし何か気づいたことがありましたら、いつでも気軽に Issue をください！
+<p>問題なければいいのですが、もし何か気づいたことがありましたら、いつでも気軽に Issue をください！
 <a href="https://github.com/elixir-lang/elixir">in the issues tracker on Github</a></p>
 
-<h2 id="installing-erlang">Installing Erlang</h2>
+<h2 id="erlang-をインストールする">Erlang をインストールする</h2>
 
-<p>The only prerequisite for Elixir is Erlang, version 19.0 or later, which can be easily installed with <a href="https://www.erlang-solutions.com/resources/download.html">Precompiled packages</a>. In case you want to install it directly from source, it can be found on <a href="http://www.erlang.org/download.html">the Erlang website</a> or by following the excellent tutorial available in the <a href="https://docs.basho.com/riak/latest/ops/building/installing/erlang/">Riak documentation</a>.</p>
+<p>Elixir に必要な要件は、 19.0 以降の Erlang だけです。 <a href="https://www.erlang-solutions.com/resources/download.html">パッケージをプリコンパイル</a>(英語) して簡単にインストールできます。ソースファイルからある特定のディレクトリにインストールしたい場合は、<a href="http://www.erlang.org/download.html">Erlang 公式 Web サイト</a>(英語) をお探しいただくか、 <a href="https://docs.basho.com/riak/latest/ops/building/installing/erlang/">Riak ドキュメント (Installing Erlang)</a>(英語) がとても参考になるはずです。</p>
 
-<p>For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools.</p>
+<p>Windows をご利用されている開発者にはプリコンパイル済みのパッケージをおすすめします。Unix 系ディストリビューションでは、大抵それぞれに用意されたツールを用いて Erlang をインストールできます。</p>
 
-<p>After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing <code class="highlighter-rouge">erl</code>. You will see some information similar to:</p>
+<p>Erlang のインストールが終わりましたら、コマンドラインやコマンドプロンプトを開き、 <code class="highlighter-rouge">erl</code> コマンドでバージョンを確認しましょう。以下のような情報がいくつか表示されるはずです。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>Erlang/OTP 19.0 [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
 </code></pre>
 </div>
 
-<p>Notice that depending on how you installed Erlang, Erlang binaries might not be available in your PATH. Be sure to have Erlang binaries in your <a href="https://en.wikipedia.org/wiki/Environment_variable">PATH</a>, otherwise Elixir won’t work!</p>
+<p>Erlang のインストールの仕方によっては、環境変数 PATH からコマンドを利用できないことがあるかも知れません。その場合は PATH を適切に設定してください。そうでなければ、 Elixir を正常に利用できません。PATH (環境変数) という用語については <a href="https://ja.wikipedia.org/wiki/環境変数">PATH</a> を参照してください。</p>
 
-<h2 id="setting-path-environment-variable">Setting PATH environment variable</h2>
+<h2 id="環境変数を設定する">環境変数を設定する</h2>
 
-<p>It is highly recommended to add Elixir’s bin path to your PATH environment variable to ease development.</p>
+<p>効率的な開発の為にも、Elixir コマンドのパスを環境変数 PATH に設定しておくことを強くおすすめします。</p>
 
-<p>On <strong>Windows</strong>, there are <a href="http://www.computerhope.com/issues/ch000549.htm">instructions for different versions</a> explaining the process.</p>
+<p><strong>Windows をご利用の方</strong> : 環境変数 PATH の設定が OS のバージョンによって異なります。 <a href="http://www.computerhope.com/issues/ch000549.htm">各バージョンごとの取扱</a>(英語) で手順の説明をご用意していますので参考にしてください。</p>
 
-<p>On <strong>Unix systems</strong>, you need to <a href="https://unix.stackexchange.com/a/117470/101951">find your shell profile file</a>, and then add to the end of this file the following line reflecting the path to your Elixir installation:</p>
+<p><strong>Unix 系ご利用の方</strong> : Elixir のインストールを終えましたら、コマンドを探索する為に <a href="https://unix.stackexchange.com/a/117470/101951">ログインプロファイル</a>(英語) を作成し、エディタで開いたのちに以下の一行を入力して保存します。設定ファイルがすでに存在する場合は一番最後の行に書き加えてください。</p>
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:/path/to/elixir/bin"</span>
 </code></pre>
 </div>
 
-<h2 id="checking-the-installed-version-of-elixir">Checking the installed version of Elixir</h2>
+<h2 id="インストール済み-elixir-を確認する">インストール済み Elixir を確認する</h2>
 
-<p>Once you have Elixir installed, you can check its version by running <code class="highlighter-rouge">elixir --version</code>.</p>
+<p>一度 Elixir のインストールを終わらせると、 <code class="highlighter-rouge">elixir --version</code> と入力すればバージョンを確認できます。</p>
 
 </div><!-- #content -->
 
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
+    News: <a href="/blog/2018/07/25/elixir-v1-7-0-released/">Elixir v1.7 released</a>
   </h3>
 </div>
 
@@ -305,9 +307,7 @@
   </a>
   <br />
   <a href="https://elixirconf.com/" target="_blank">ElixirConf™ US</a> is being held in Bellevue, WA, September 4-7, 2018.
-  <br />
-  <a href="http://www.ElixirConf.eu/" target="_blank">ElixirConf EU</a> is being held in Warsaw, Poland, April 16-18, 2018.
-  <a href="http://www.elixirconf.eu/#register" target="_blank">Registration</a> is now open.
+  <a href="https://elixirconf.com/#registration" target="_blank">Registration</a> is now open.
 </div>
 
 <div class="widget">
@@ -323,11 +323,20 @@
   </ul>
 </div>
 
+<div id="mini-docu" class="widget">
+  <a href="http://doc.honeypot.io/elixir-documentary-2018/?utm_source=elixir_home&utm_medium=referral">
+    <div class="mini-docu-cta">
+      <div class="mini-docu-copy">Watch the Elixir<br />mini-documentary!</div>
+    </div>
+  </a>
+</div>
+
+
 <div class="widget">
   <h3 class="widget-title">Important links</h3>
   <ul>
-    <li><a class="spec" href="https://github.com/elixir-lang/elixir">Source Code</a></li>
-    <li><a class="spec" href="https://github.com/elixir-lang/elixir/issues">Issue tracker</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir">Source Code & Contributing</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir/issues">Issues tracker</a></li>
     <li><a class="spec" href="/crash-course.html">Crash course for Erlang developers</a></li>
   </ul>
 </div>

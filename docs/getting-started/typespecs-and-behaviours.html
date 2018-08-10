@@ -69,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
+    News: <a href="/blog/2018/07/25/elixir-v1-7-0-released/">Elixir v1.7 released</a>
   </h3>
 </div>
 
@@ -81,6 +81,14 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
+</div>
+
+  <div id="mini-docu" class="widget">
+  <a href="http://doc.honeypot.io/elixir-documentary-2018/?utm_source=elixir_home&utm_medium=referral">
+    <div class="mini-docu-cta">
+      <div class="mini-docu-copy">Watch the Elixir<br />mini-documentary!</div>
+    </div>
+  </a>
 </div>
 
 
@@ -335,7 +343,7 @@
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">JSONParser</span> <span class="k">do</span>
   <span class="nv">@behaviour</span> <span class="no">Parser</span>
 
-  <span class="k">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="sd">"</span><span class="s2">"</span> <span class="c1"># ... parse JSON</span>
+  <span class="k">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="sd">"</span><span class="s2">some json "</span> <span class="o">&lt;&gt;</span> <span class="n">str</span><span class="p">}</span> <span class="c1"># ... parse JSON</span>
   <span class="k">def</span> <span class="n">extensions</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">[</span><span class="sd">"</span><span class="s2">json"</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
@@ -344,7 +352,7 @@
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="k">defmodule</span> <span class="no">YAMLParser</span> <span class="k">do</span>
   <span class="nv">@behaviour</span> <span class="no">Parser</span>
 
-  <span class="k">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="sd">"</span><span class="s2">"</span> <span class="c1"># ... parse YAML</span>
+  <span class="k">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="sd">"</span><span class="s2">some yaml "</span> <span class="o">&lt;&gt;</span> <span class="n">str</span><span class="p">}</span> <span class="c1"># ... parse YAML</span>
   <span class="k">def</span> <span class="n">extensions</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">[</span><span class="sd">"</span><span class="s2">yml"</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>

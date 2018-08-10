@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-21 23:34+0900\n"
+"POT-Creation-Date: 2018-08-08 04:23+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,28 +112,28 @@ msgstr ""
 
 #: ../../../_posts/2018-01-17-elixir-v1-6-0-released.markdown:54
 msgid "```elixir\n"
-"def serve_drinks(%User{age: age}) when age >= 21 do\n"
-"  # Code that serves drinks!\n"
+"def drive(%User{age: age}) when age >= 16 do\n"
+"  # Code that drives a car\n"
 "end\n"
 "```"
 msgstr ""
 
 #: ../../../_posts/2018-01-17-elixir-v1-6-0-released.markdown:60
-msgid "`%User{age: age}` is matching on a `User` struct with an age field and `when age >= 21` is the guard."
+msgid "`%User{age: age}` is matching on a `User` struct with an age field and `when age >= 16` is the guard."
 msgstr ""
 
 #: ../../../_posts/2018-01-17-elixir-v1-6-0-released.markdown:62
-msgid "Since only a handful of constructs are [allowed in guards](https://hexdocs.pm/elixir/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 21 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://hexdocs.pm/elixir/Kernel.html#defguard/1):"
+msgid "Since only a handful of constructs are [allowed in guards](https://hexdocs.pm/elixir/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 16 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://hexdocs.pm/elixir/Kernel.html#defguard/1):"
 msgstr ""
 
 #: ../../../_posts/2018-01-17-elixir-v1-6-0-released.markdown:64
 msgid "```elixir\n"
-"defguard is_drinking_age(age) when age >= 21"
+"defguard is_old_to_drive(age) when age >= 16"
 msgstr ""
 
 #: ../../../_posts/2018-01-17-elixir-v1-6-0-released.markdown:67
-msgid "def serve_drinks(%User{age: age}) when is_drinking_age(age) do\n"
-"  # Code that serves drinks!\n"
+msgid "def drive(%User{age: age}) when is_old_to_drive(age) do\n"
+"  # Code that drives a car\n"
 "end\n"
 "```"
 msgstr ""

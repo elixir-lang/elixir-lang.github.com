@@ -69,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
+    News: <a href="/blog/2018/07/25/elixir-v1-7-0-released/">Elixir v1.7 released</a>
   </h3>
 </div>
 
@@ -81,6 +81,14 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
+</div>
+
+  <div id="mini-docu" class="widget">
+  <a href="http://doc.honeypot.io/elixir-documentary-2018/?utm_source=elixir_home&utm_medium=referral">
+    <div class="mini-docu-cta">
+      <div class="mini-docu-copy">Watch the Elixir<br />mini-documentary!</div>
+    </div>
+  </a>
 </div>
 
 
@@ -369,7 +377,9 @@ you are looking for?
 </code></pre>
 </div>
 
-<p>Now that the server is part of the supervision tree, it should start automatically when we run the application. Type <code class="highlighter-rouge">mix run --no-halt</code> in the terminal, and once again use the <code class="highlighter-rouge">telnet</code> client to make sure that everything still works:</p>
+<p>Insert these changes in your code and now you may start your application using the following command <code class="highlighter-rouge">PORT=4040 mix run --no-halt</code>, notice how we are passing the port as a variable.</p>
+
+<p>Now that the server is part of the supervision tree, it should start automatically when we run the application. Start your server, now passing the port, and once again use the <code class="highlighter-rouge">telnet</code> client to make sure that everything still works:</p>
 
 <div class="language-console highlighter-rouge"><pre class="highlight"><code><span class="w">$ </span><span class="nc">telnet</span><span class="kv"> 127.0.0.1 4040
 </span>Trying 127.0.0.1...
@@ -431,9 +441,11 @@ HELLOOOOOO?
 <p>Let’s change <code class="highlighter-rouge">start/2</code> once again, to add a supervisor to our tree:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">start</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">_args</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="no">String</span><span class="o">.</span><span class="n">to_integer</span><span class="p">(</span><span class="no">System</span><span class="o">.</span><span class="n">get_env</span><span class="p">(</span><span class="sd">"</span><span class="s2">PORT"</span><span class="p">)</span> <span class="o">||</span> <span class="k">raise</span> <span class="sd">"</span><span class="s2">missing $PORT environment variable"</span><span class="p">)</span>
+
     <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
       <span class="p">{</span><span class="no">Task</span><span class="o">.</span><span class="no">Supervisor</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">TaskSupervisor</span><span class="p">},</span>
-      <span class="p">{</span><span class="no">Task</span><span class="p">,</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">KVServer</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="m">4040</span><span class="p">)</span> <span class="k">end</span><span class="p">}</span>
+      <span class="p">{</span><span class="no">Task</span><span class="p">,</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">KVServer</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">port</span><span class="p">)</span> <span class="k">end</span><span class="p">}</span>
     <span class="p">]</span>
 
     <span class="n">opts</span> <span class="o">=</span> <span class="p">[</span><span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">Supervisor</span><span class="p">]</span>
@@ -510,9 +522,11 @@ HELLOOOOOO?
 <p>We could fix this by defining our own module that calls <code class="highlighter-rouge">use Task, restart: :permanent</code> and invokes a <code class="highlighter-rouge">start_link</code> function responsible for restarting the task, quite similar to <code class="highlighter-rouge">Agent</code> and <code class="highlighter-rouge">GenServer</code>. However, let’s take a different approach here. When integrating with someone else’s library, we won’t be able to change how their agents, tasks, and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using <code class="highlighter-rouge">Supervisor.child_spec/2</code>, a function that we happen to know from previous chapters. Let’s rewrite <code class="highlighter-rouge">start/2</code> in <code class="highlighter-rouge">KVServer.Application</code> once more:</p>
 
 <div class="language-elixir highlighter-rouge"><pre class="highlight"><code>  <span class="k">def</span> <span class="n">start</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">_args</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="no">String</span><span class="o">.</span><span class="n">to_integer</span><span class="p">(</span><span class="no">System</span><span class="o">.</span><span class="n">get_env</span><span class="p">(</span><span class="sd">"</span><span class="s2">PORT"</span><span class="p">)</span> <span class="o">||</span> <span class="k">raise</span> <span class="sd">"</span><span class="s2">missing $PORT environment variable"</span><span class="p">)</span>
+
     <span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
       <span class="p">{</span><span class="no">Task</span><span class="o">.</span><span class="no">Supervisor</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">TaskSupervisor</span><span class="p">},</span>
-      <span class="no">Supervisor</span><span class="o">.</span><span class="n">child_spec</span><span class="p">({</span><span class="no">Task</span><span class="p">,</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">KVServer</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="m">4040</span><span class="p">)</span> <span class="k">end</span><span class="p">},</span> <span class="ss">restart:</span> <span class="ss">:permanent</span><span class="p">)</span>
+      <span class="no">Supervisor</span><span class="o">.</span><span class="n">child_spec</span><span class="p">({</span><span class="no">Task</span><span class="p">,</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">KVServer</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">port</span><span class="p">)</span> <span class="k">end</span><span class="p">},</span> <span class="ss">restart:</span> <span class="ss">:permanent</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="n">opts</span> <span class="o">=</span> <span class="p">[</span><span class="ss">strategy:</span> <span class="ss">:one_for_one</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">KVServer</span><span class="o">.</span><span class="no">Supervisor</span><span class="p">]</span>

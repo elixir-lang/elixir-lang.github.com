@@ -69,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
+    News: <a href="/blog/2018/07/25/elixir-v1-7-0-released/">Elixir v1.7 released</a>
   </h3>
 </div>
 
@@ -81,6 +81,14 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
+</div>
+
+  <div id="mini-docu" class="widget">
+  <a href="http://doc.honeypot.io/elixir-documentary-2018/?utm_source=elixir_home&utm_medium=referral">
+    <div class="mini-docu-cta">
+      <div class="mini-docu-copy">Watch the Elixir<br />mini-documentary!</div>
+    </div>
+  </a>
 </div>
 
 
@@ -506,7 +514,7 @@ mix deps.update       # Updates the given dependencies
 
 <p>The pattern of keeping multiple applications in the same repository is known as “mono-repo”. Umbrella projects maximize this pattern by providing conveniences to compile, test and run multiple applications at once.</p>
 
-<p>If you find yourself in a position where you want to use different configurations to different applications in the same umbrella or to use different dependency versions, then it is likely your codebase has grown beyond what umbrellas can provide.</p>
+<p>If you find yourself in a position where you want to use different configurations in each application for the same dependency or use different dependency versions, then it is likely your codebase has grown beyond what umbrellas can provide.</p>
 
 <p>The good news is that breaking an umbrella apart is quite straightforward, as you simply need to move applications outside of the umbrella project’s <code class="highlighter-rouge">apps/</code> directory. In the worst case scenario, you can discard the umbrella project and all related configuration (<code class="highlighter-rouge">build_path</code>, <code class="highlighter-rouge">config_path</code>, <code class="highlighter-rouge">deps_path</code> and <code class="highlighter-rouge">lockfile</code>) and still leverage the “mono-repo” pattern by keeping all applications together in the same repository. Each application will have its own dependencies and configuration. Dependencies between those applications can still be explicitly listed by using the <code class="highlighter-rouge">:path</code> option (in contrast to <code class="highlighter-rouge">:git</code>).</p>
 

@@ -14,14 +14,14 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 ## Books
 
-<h4 class="resource">Programming Elixir 1.3</h4>
+<h4 class="resource">Programming Elixir 1.6</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir13/programming-elixir-1-3" title="Programming Elixir 1.3: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
-– by Dave Thomas"><img src="/images/learning/programming-elixir-1-3.jpg" alt="Programming Elixir cover" width="190" /></a>
+<a class="cover" href="https://pragprog.com/book/elixir16/programming-elixir-1-6" title="Programming Elixir 1.6: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
+– by Dave Thomas"><img src="/images/learning/programming-elixir-1-6.jpg" alt="Programming Elixir cover" width="190" /></a>
 
-Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches. Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM.
+This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.6 and beyond. Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches.
 
-Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir. This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.3.
+Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM. Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir.
 
 <div class="clear"></div>
 
@@ -33,6 +33,17 @@ Elixir’s pragmatic syntax and built-in support for metaprogramming will make y
 Elixir in Action is a tutorial book that aims to bring developers new to Elixir and Erlang to the point where they can develop complex systems on their own. No knowledge about Elixir, Erlang, or functional programming is required, but it is assumed that a reader has a few years of production experience using mainstream OO languages, for example C#, Java, Python, or Ruby.
 
 The book starts with a basic introduction to the Elixir language and functional programming idioms. The central part of the book deals with Erlang VM and OTP, discussing topics such as concurrent programming, fault-tolerance, and distributed systems. Finally, you'll learn how to package your code into components, create a standalone deployable release, and troubleshoot the running system. The theory is demonstrated through a simplistic example that is gradually expanded throughout the book into a fully standalone releasable system.
+
+<div class="clear"></div>
+
+<h4 class="resource">Adopting Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/book/tvmelixir/adopting-elixir" title="Adopting Elixir: From Concept to Production
+– by Ben Marx, José Valim, Bruce Tate"><img src="/images/learning/adopting-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
+
+Adoption is more than programming. Elixir is an exciting new language, but to successfully get your application from start to finish, you’re going to need to know more than just the language. You need the case studies and strategies in this book.
+
+Learn the best practices for the whole life of your application, from design and team-building, to managing stakeholders, to deployment and monitoring. Go beyond the syntax and the tools to learn the techniques you need to develop your Elixir application from concept to production.
 
 <div class="clear"></div>
 
