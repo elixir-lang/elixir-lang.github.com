@@ -69,7 +69,7 @@
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
+    News: <a href="/blog/2018/07/25/elixir-v1-7-0-released/">Elixir v1.7 released</a>
   </h3>
 </div>
 
@@ -81,6 +81,14 @@
 			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 		</div>
 	</form>
+</div>
+
+  <div id="mini-docu" class="widget">
+  <a href="http://doc.honeypot.io/elixir-documentary-2018/?utm_source=elixir_home&utm_medium=referral">
+    <div class="mini-docu-cta">
+      <div class="mini-docu-copy">Watch the Elixir<br />mini-documentary!</div>
+    </div>
+  </a>
 </div>
 
 
@@ -248,8 +256,8 @@ iex&gt; %{map | a: 3}
 
 <pre><code class="language-iex">iex&gt; %User{}
 %User{age: 27, name: "John"}
-iex&gt; %User{name: "Meg"}
-%User{age: 27, name: "Meg"}
+iex&gt; %User{name: "Jane"}
+%User{age: 27, name: "Jane"}
 </code></pre>
 
 <p>Structs provide <em>compile-time</em> guarantees that only the fields (and <em>all</em> of them) defined through <code class="highlighter-rouge">defstruct</code> will be allowed to exist in a struct:</p>
@@ -266,13 +274,13 @@ iex&gt; %User{name: "Meg"}
 %User{age: 27, name: "John"}
 iex&gt; john.name
 "John"
-iex&gt; meg = %{john | name: "Meg"}
-%User{age: 27, name: "Meg"}
-iex&gt; %{meg | oops: :field}
-** (KeyError) key :oops not found in: %User{age: 27, name: "Meg"}
+iex&gt; jane = %{john | name: "Jane"}
+%User{age: 27, name: "Jane"}
+iex&gt; %{jane | oops: :field}
+** (KeyError) key :oops not found in: %User{age: 27, name: "Jane"}
 </code></pre>
 
-<p>When using the update syntax (<code class="highlighter-rouge">|</code>), the <abbr title="Virtual Machine">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both <code class="highlighter-rouge">john</code> and <code class="highlighter-rouge">meg</code> share the same key structure in memory.</p>
+<p>When using the update syntax (<code class="highlighter-rouge">|</code>), the <abbr title="Virtual Machine">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both <code class="highlighter-rouge">john</code> and <code class="highlighter-rouge">jane</code> share the same key structure in memory.</p>
 
 <p>Structs can also be used in pattern matching, both for matching on the value of specific keys as well as for ensuring that the matching value is a struct of the same type as the matched value.</p>
 
@@ -307,11 +315,11 @@ iex&gt; Enum.each john, fn({field, value}) -&gt; IO.puts(value) end
 
 <p>However, since structs are just maps, they work with the functions from the <code class="highlighter-rouge">Map</code> module:</p>
 
-<pre><code class="language-iex">iex&gt; kurt = Map.put(%User{}, :name, "Kurt")
-%User{age: 27, name: "Kurt"}
-iex&gt; Map.merge(kurt, %User{name: "Takashi"})
-%User{age: 27, name: "Takashi"}
-iex&gt; Map.keys(john)
+<pre><code class="language-iex">iex&gt; jane = Map.put(%User{}, :name, "Jane")
+%User{age: 27, name: "Jane"}
+iex&gt; Map.merge(jane, %User{name: "John"})
+%User{age: 27, name: "John"}
+iex&gt; Map.keys(jane)
 [:__struct__, :age, :name]
 </code></pre>
 

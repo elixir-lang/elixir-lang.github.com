@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 17:55+0900\n"
+"POT-Creation-Date: 2018-08-08 04:23+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,30 +178,34 @@ msgid "  * [asdf](https://github.com/asdf-vm/asdf) - install and manage differen
 msgstr ""
 
 #: ../../install.markdown:105
-msgid "If you would prefer to compile from source manually, don't worry, we got your back too!"
+msgid "Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Check the compatibility table](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) if you have questions or run into issues."
 msgstr ""
 
 #: ../../install.markdown:107
-msgid "## Compiling from source (Unix and MinGW)"
+msgid "If you would prefer to compile from source manually, don't worry, we got your back too."
 msgstr ""
 
 #: ../../install.markdown:109
-msgid "You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#installing-erlang)."
+msgid "## Compiling from source (Unix and MinGW)"
 msgstr ""
 
 #: ../../install.markdown:111
-msgid "Next you should download source code ([.zip](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.zip), [.tar.gz](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.tar.gz)) of the [latest release](https://github.com/elixir-lang/elixir/releases/tag/v{{ stable.version }}), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows))."
+msgid "You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#installing-erlang)."
 msgstr ""
 
 #: ../../install.markdown:113
-msgid "After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development."
+msgid "Next you should download source code ([.zip](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.zip), [.tar.gz](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.tar.gz)) of the [latest release](https://github.com/elixir-lang/elixir/releases/tag/v{{ stable.version }}), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows))."
 msgstr ""
 
 #: ../../install.markdown:115
-msgid "In case you are feeling a bit more adventurous, you can also compile from master:"
+msgid "After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development."
 msgstr ""
 
 #: ../../install.markdown:117
+msgid "In case you are feeling a bit more adventurous, you can also compile from master:"
+msgstr ""
+
+#: ../../install.markdown:119
 msgid "```bash\n"
 "$ git clone https://github.com/elixir-lang/elixir.git\n"
 "$ cd elixir\n"
@@ -209,61 +213,61 @@ msgid "```bash\n"
 "```"
 msgstr ""
 
-#: ../../install.markdown:123
+#: ../../install.markdown:125
 msgid "If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir)."
 msgstr ""
 
-#: ../../install.markdown:125
+#: ../../install.markdown:127
 msgid "## Installing Erlang"
 msgstr ""
 
-#: ../../install.markdown:127
+#: ../../install.markdown:129
 msgid "The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/resources/download.html). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.basho.com/riak/latest/ops/building/installing/erlang/)."
 msgstr ""
 
-#: ../../install.markdown:129
+#: ../../install.markdown:131
 msgid "For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools."
 msgstr ""
 
-#: ../../install.markdown:131
+#: ../../install.markdown:133
 msgid "After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information similar to:"
 msgstr ""
 
-#: ../../install.markdown:133
+#: ../../install.markdown:135
 msgid "    Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]"
 msgstr ""
 
-#: ../../install.markdown:135
+#: ../../install.markdown:137
 msgid "Notice that depending on how you installed Erlang, Erlang binaries might not be available in your PATH. Be sure to have Erlang binaries in your [PATH](https://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!"
 msgstr ""
 
-#: ../../install.markdown:137
+#: ../../install.markdown:139
 msgid "## Setting PATH environment variable"
 msgstr ""
 
-#: ../../install.markdown:139
+#: ../../install.markdown:141
 msgid "It is highly recommended to add Elixir's bin path to your PATH environment variable to ease development."
 msgstr ""
 
-#: ../../install.markdown:141
+#: ../../install.markdown:143
 msgid "On **Windows**, there are [instructions for different versions](http://www.computerhope.com/issues/ch000549.htm) explaining the process."
 msgstr ""
 
-#: ../../install.markdown:143
+#: ../../install.markdown:145
 msgid "On **Unix systems**, you need to [find your shell profile file](https://unix.stackexchange.com/a/117470/101951), and then add to the end of this file the following line reflecting the path to your Elixir installation:"
 msgstr ""
 
-#: ../../install.markdown:145
+#: ../../install.markdown:147
 msgid "```bash\n"
 "export PATH=\"$PATH:/path/to/elixir/bin\"\n"
 "```"
 msgstr ""
 
-#: ../../install.markdown:149
+#: ../../install.markdown:151
 msgid "## Checking the installed version of Elixir"
 msgstr ""
 
-#: ../../install.markdown:151
+#: ../../install.markdown:153
 msgid "Once you have Elixir installed, you can check its version by running `elixir --version`."
 msgstr ""
 

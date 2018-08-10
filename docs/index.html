@@ -139,12 +139,12 @@
 
       <p>ガードとパターンマッチングをの組み合わせは、あるコードを実行するための特定の条件を、エレガントに match, assert することを可能にします。</p>
 
-<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">def</span> <span class="n">serve_drinks</span><span class="p">(%</span><span class="no">User</span><span class="p">{</span><span class="ss">age:</span> <span class="n">age</span><span class="p">})</span> <span class="ow">when</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="m">21</span> <span class="k">do</span>
-  <span class="c1"># Code that serves drinks!</span>
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">def</span> <span class="n">drive</span><span class="p">(%</span><span class="no">User</span><span class="p">{</span><span class="ss">age:</span> <span class="n">age</span><span class="p">})</span> <span class="ow">when</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="m">16</span> <span class="k">do</span>
+  <span class="c1"># Code that drives a car</span>
 <span class="k">end</span>
 
-<span class="n">serve_drinks</span> <span class="no">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sd">"</span><span class="s2">John Doe"</span><span class="p">)</span>
-<span class="c1">#=&gt; Fails if the user is under 21</span></code></pre></figure>
+<span class="n">drive</span><span class="p">(</span><span class="no">User</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sd">"</span><span class="s2">John Doe"</span><span class="p">))</span>
+<span class="c1">#=&gt; Fails if the user is under 16</span></code></pre></figure>
 
       <p>予期される様々な制約の下で、ソフトウェアが動作することを確実にするために、Elixirはこれらの特徴に強く依存します。そしてもし動作しなかったとしても心配無用です。その場合はスーパーバイザがサポートします。</p>
     </div>
@@ -226,7 +226,7 @@ iex&gt; recompile               # Recompiles the current project on the fly</cod
 <div id="sidebar-primary" class="sidebar">
   <div class="widget news">
   <h3>
-    News: <a href="/blog/2018/01/17/elixir-v1-6-0-released/">Elixir v1.6 released</a>
+    News: <a href="/blog/2018/07/25/elixir-v1-7-0-released/">Elixir v1.7 released</a>
   </h3>
 </div>
 
@@ -246,9 +246,7 @@ iex&gt; recompile               # Recompiles the current project on the fly</cod
   </a>
   <br />
   <a href="https://elixirconf.com/" target="_blank">ElixirConf™ US</a> is being held in Bellevue, WA, September 4-7, 2018.
-  <br />
-  <a href="http://www.ElixirConf.eu/" target="_blank">ElixirConf EU</a> is being held in Warsaw, Poland, April 16-18, 2018.
-  <a href="http://www.elixirconf.eu/#register" target="_blank">Registration</a> is now open.
+  <a href="https://elixirconf.com/#registration" target="_blank">Registration</a> is now open.
 </div>
 
 <div class="widget">
@@ -264,11 +262,20 @@ iex&gt; recompile               # Recompiles the current project on the fly</cod
   </ul>
 </div>
 
+<div id="mini-docu" class="widget">
+  <a href="http://doc.honeypot.io/elixir-documentary-2018/?utm_source=elixir_home&utm_medium=referral">
+    <div class="mini-docu-cta">
+      <div class="mini-docu-copy">Watch the Elixir<br />mini-documentary!</div>
+    </div>
+  </a>
+</div>
+
+
 <div class="widget">
   <h3 class="widget-title">Important links</h3>
   <ul>
-    <li><a class="spec" href="https://github.com/elixir-lang/elixir">Source Code</a></li>
-    <li><a class="spec" href="https://github.com/elixir-lang/elixir/issues">Issue tracker</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir">Source Code & Contributing</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir/issues">Issues tracker</a></li>
     <li><a class="spec" href="/crash-course.html">Crash course for Erlang developers</a></li>
   </ul>
 </div>

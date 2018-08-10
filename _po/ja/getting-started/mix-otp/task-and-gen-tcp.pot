@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 17:55+0900\n"
+"POT-Creation-Date: 2018-08-08 04:23+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,7 +93,7 @@ msgid "  defp loop_acceptor(socket) do\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:50
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:267
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:271
 msgid "  defp serve(socket) do\n"
 "    socket\n"
 "    |> read_line()\n"
@@ -101,13 +101,13 @@ msgid "  defp serve(socket) do\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:55
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:272
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:276
 msgid "    serve(socket)\n"
 "  end"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:58
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:275
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:279
 msgid "  defp read_line(socket) do\n"
 "    {:ok, data} = :gen_tcp.recv(socket, 0)\n"
 "    data\n"
@@ -115,7 +115,7 @@ msgid "  defp read_line(socket) do\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:63
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:280
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:284
 msgid "  defp write_line(line, socket) do\n"
 "    :gen_tcp.send(socket, line)\n"
 "  end\n"
@@ -240,8 +240,8 @@ msgid "```elixir\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:139
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:222
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:301
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:226
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:307
 msgid "    opts = [strategy: :one_for_one, name: KVServer.Supervisor]\n"
 "    Supervisor.start_link(children, opts)\n"
 "  end\n"
@@ -265,10 +265,14 @@ msgid "```elixir\n"
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:154
-msgid "Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:"
+msgid "Insert these changes in your code and now you may start your application using the following command `PORT=4040 mix run --no-halt`, notice how we are passing the port as a variable."
 msgstr ""
 
 #: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:156
+msgid "Now that the server is part of the supervision tree, it should start automatically when we run the application. Start your server, now passing the port, and once again use the `telnet` client to make sure that everything still works:"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:158
 msgid "```console\n"
 "$ telnet 127.0.0.1 4040\n"
 "Trying 127.0.0.1...\n"
@@ -281,15 +285,15 @@ msgid "```console\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:167
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:169
 msgid "Yes, it works! However, does it *scale*?"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:169
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:171
 msgid "Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:171
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:173
 msgid "```console\n"
 "$ telnet 127.0.0.1 4040\n"
 "Trying 127.0.0.1...\n"
@@ -301,19 +305,19 @@ msgid "```console\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:181
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:183
 msgid "It doesn't seem to work at all. That's because we are serving requests in the same process that are accepting connections. When one client is connected, we can't accept another client."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:183
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:185
 msgid "## Task supervisor"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:185
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:187
 msgid "In order to make our server handle simultaneous connections, we need to have one process working as an acceptor that spawns other processes to serve requests. One solution would be to change:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:187
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:189
 msgid "```elixir\n"
 "defp loop_acceptor(socket) do\n"
 "  {:ok, client} = :gen_tcp.accept(socket)\n"
@@ -323,11 +327,11 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:195
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:197
 msgid "to also use `Task.start_link/1`:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:197
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:199
 msgid "```elixir\n"
 "defp loop_acceptor(socket) do\n"
 "  {:ok, client} = :gen_tcp.accept(socket)\n"
@@ -337,44 +341,49 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:205
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:207
 msgid "We are starting a linked Task directly from the acceptor process. But we've already made this mistake once. Do you remember?"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:207
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:209
 msgid "This is similar to the mistake we made when we called `KV.Bucket.start_link/1` straight from the registry. That meant a failure in any bucket would bring the whole registry down."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:209
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:211
 msgid "The code above would have the same flaw: if we link the `serve(client)` task to the acceptor, a crash when serving a request would bring the acceptor, and consequently all other connections, down."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:211
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:213
 msgid "We fixed the issue for the registry by using a simple one for one supervisor. We are going to use the same tactic here, except that this pattern is so common with tasks that `Task` already comes with a solution: a simple one for one supervisor that starts temporary tasks as part of our supervision tree."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:213
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:215
 msgid "Let's change `start/2` once again, to add a supervisor to our tree:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:215
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:217
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:298
 msgid "```elixir\n"
 "  def start(_type, _args) do\n"
-"    children = [\n"
+"    port = String.to_integer(System.get_env(\"PORT\") || raise \"missing $PORT environment variable\")"
+msgstr ""
+
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:221
+msgid "    children = [\n"
 "      {Task.Supervisor, name: KVServer.TaskSupervisor},\n"
-"      {Task, fn -> KVServer.accept(4040) end}\n"
+"      {Task, fn -> KVServer.accept(port) end}\n"
 "    ]"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:227
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:231
 msgid "We'll now start a [`Task.Supervisor`](https://hexdocs.pm/elixir/Task.Supervisor.html) process with name `KVServer.TaskSupervisor`. Remember, since the acceptor task depends on this supervisor, the supervisor must be started first."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:229
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:233
 msgid "Now we need to change `loop_acceptor/1` to use `Task.Supervisor` to serve each request:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:231
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:235
 msgid "```elixir\n"
 "defp loop_acceptor(socket) do\n"
 "  {:ok, client} = :gen_tcp.accept(socket)\n"
@@ -385,25 +394,25 @@ msgid "```elixir\n"
 "```"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:240
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:244
 msgid "You might notice that we added a line, `:ok = :gen_tcp.controlling_process(client, pid)`. This makes the child process the \"controlling process\" of the `client` socket. If we didn't do this, the acceptor would bring down all the clients if it crashed because sockets would be tied to the process that accepted them (which is the default behaviour)."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:242
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:246
 msgid "Start a new server with `PORT=4040 mix run --no-halt` and we can now open up many concurrent telnet clients. You will also notice that quitting a client does not bring the acceptor down. Excellent!"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:244
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:248
 msgid "Here is the full echo server implementation:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:246
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:250
 msgid "```elixir\n"
 "defmodule KVServer do\n"
 "  require Logger"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:250
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:254
 msgid "  @doc \"\"\"\n"
 "  Starts accepting connections on the given `port`.\n"
 "  \"\"\"\n"
@@ -415,7 +424,7 @@ msgid "  @doc \"\"\"\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:260
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:264
 msgid "  defp loop_acceptor(socket) do\n"
 "    {:ok, client} = :gen_tcp.accept(socket)\n"
 "    {:ok, pid} = Task.Supervisor.start_child(KVServer.TaskSupervisor, fn -> serve(client) end)\n"
@@ -424,36 +433,34 @@ msgid "  defp loop_acceptor(socket) do\n"
 "  end"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:286
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:290
 msgid "Since we have changed the supervisor specification, we need to ask: is our supervision strategy still correct?"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:288
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:292
 msgid "In this case, the answer is yes: if the acceptor crashes, there is no need to crash the existing connections. On the other hand, if the task supervisor crashes, there is no need to crash the acceptor too."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:290
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:294
 msgid "However, there is still one concern left, which are the restart strategies. Tasks, by default, have the `:restart` value set to `:temporary`, which means they are not restarted. This is an excellent default for the connections started via the `Task.Supervisor`, as it makes no sense to restart a failed connection, but it is a bad choice for the acceptor. If the acceptor crashes, we want to bring the acceptor up and running again."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:292
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:296
 msgid "We could fix this by defining our own module that calls `use Task, restart: :permanent` and invokes a `start_link` function responsible for restarting the task, quite similar to `Agent` and `GenServer`. However, let's take a different approach here. When integrating with someone else's library, we won't be able to change how their agents, tasks, and servers are defined. Instead, we need to be able to customize their child specification dynamically. This can be done by using `Supervisor.child_spec/2`, a function that we happen to know from previous chapters. Let's rewrite `start/2` in `KVServer.Application` once more:"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:294
-msgid "```elixir\n"
-"  def start(_type, _args) do\n"
-"    children = [\n"
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:302
+msgid "    children = [\n"
 "      {Task.Supervisor, name: KVServer.TaskSupervisor},\n"
-"      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end}, restart: :permanent)\n"
+"      Supervisor.child_spec({Task, fn -> KVServer.accept(port) end}, restart: :permanent)\n"
 "    ]"
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:306
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:312
 msgid "`Supervisor.child_spec/2` is capable of building a child specification from a given module and/or tuple, and it also accepts values that override the underlying child specification. Now we have an always running acceptor that starts temporary task processes under an always running task supervisor."
 msgstr ""
 
-#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:308
+#: ../../../../getting-started/mix-otp/task-and-gen-tcp.markdown:314
 msgid "In the next chapter, we will start parsing the client requests and sending responses, finishing our server."
 msgstr ""
 

@@ -111,6 +111,6 @@ The reason we can compare different data types is pragmatism. Sorting algorithms
 
 You don't actually need to memorize this ordering, it's enough to know that this ordering exists.
 
-For reference information about operators (and ordering), check the [reference page on operators](/docs/master/elixir/operators.html).
+For reference information about operators (and ordering), check the [reference page on operators](https://hexdocs.pm/elixir/operators.html).
 
 In the next chapter, we are going to discuss pattern matching through the use of `=`, the match operator.

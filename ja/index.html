@@ -83,12 +83,12 @@ name #=> "John Doe"
       <p>ガードとパターンマッチングをの組み合わせは、あるコードを実行するための特定の条件を、エレガントに match, assert することを可能にします。</p>
 
 {% highlight elixir %}
-def serve_drinks(%User{age: age}) when age >= 21 do
-  # Code that serves drinks!
+def drive(%User{age: age}) when age >= 16 do
+  # Code that drives a car
 end
 
-serve_drinks User.get("John Doe")
-#=> Fails if the user is under 21
+drive(User.get("John Doe"))
+#=> Fails if the user is under 16
 {% endhighlight %}
 
       <p>予期される様々な制約の下で、ソフトウェアが動作することを確実にするために、Elixirはこれらの特徴に強く依存します。そしてもし動作しなかったとしても心配無用です。その場合はスーパーバイザがサポートします。</p>

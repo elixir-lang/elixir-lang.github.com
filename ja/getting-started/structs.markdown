@@ -40,8 +40,8 @@ We can now create `User` structs by using a syntax similar to the one used to cr
 ```iex
 iex> %User{}
 %User{age: 27, name: "John"}
-iex> %User{name: "Meg"}
-%User{age: 27, name: "Meg"}
+iex> %User{name: "Jane"}
+%User{age: 27, name: "Jane"}
 ```
 
 Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:
@@ -60,13 +60,13 @@ iex> john = %User{}
 %User{age: 27, name: "John"}
 iex> john.name
 "John"
-iex> meg = %{john | name: "Meg"}
-%User{age: 27, name: "Meg"}
-iex> %{meg | oops: :field}
-** (KeyError) key :oops not found in: %User{age: 27, name: "Meg"}
+iex> jane = %{john | name: "Jane"}
+%User{age: 27, name: "Jane"}
+iex> %{jane | oops: :field}
+** (KeyError) key :oops not found in: %User{age: 27, name: "Jane"}
 ```
 
-When using the update syntax (`|`), the <abbr title="Virtual Machine">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory.
+When using the update syntax (`|`), the <abbr title="Virtual Machine">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both `john` and `jane` share the same key structure in memory.
 
 Structs can also be used in pattern matching, both for matching on the value of specific keys as well as for ensuring that the matching value is a struct of the same type as the matched value.
 
@@ -105,11 +105,11 @@ iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 However, since structs are just maps, they work with the functions from the `Map` module:
 
 ```iex
-iex> kurt = Map.put(%User{}, :name, "Kurt")
-%User{age: 27, name: "Kurt"}
-iex> Map.merge(kurt, %User{name: "Takashi"})
-%User{age: 27, name: "Takashi"}
-iex> Map.keys(john)
+iex> jane = Map.put(%User{}, :name, "Jane")
+%User{age: 27, name: "Jane"}
+iex> Map.merge(jane, %User{name: "John"})
+%User{age: 27, name: "John"}
+iex> Map.keys(jane)
 [:__struct__, :age, :name]
 ```
 
