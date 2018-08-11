@@ -1,0 +1,25 @@
+---
+section: blog
+layout: blog
+---
+
+<div class="hfeed">
+  <div class="hentry post">
+    <div class="post-content">
+      <div class="sticky-header">
+        <h1>{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <h2>{{ page.subtitle }}</h2>
+        {% endif %}
+        <div class="byline">{{ page.date | date: "%B %d, %Y" }}{% if page.author %} · by {{ page.author}}{% endif %} . in {% for category in page.categories %}<a href="/blog/categories.html#{{category}}" class="category">{{ category }}</a>{% endfor %}</div>
+      </div>
+
+      <div class="entry-content">
+        {{ content }}
+      </div>
+
+      <!-- <div class="entry-meta">
+      </div> -->
+    </div>
+  </div>
+</div>
