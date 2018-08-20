@@ -254,30 +254,22 @@ Let's do so by creating a "bogus" bucket, which is a synchronous request, after 
   end
 ```
 
-Note that the purpose of the test is to check whether the registry processes the bucket's shutdown message correctly. The fact that the `KV.Registry.lookup/2` sends us a valid bucket does not mean that it still exists at the time we receive the bucket's reference or we try to use it ex. get its state. There is never a guarantee that the process you are calling is still alive - it might have crashed for some reason.
-Following test depicts the given situation:
+Our tests should now (always) pass!
+
+Note that the purpose of the test is to check whether the registry processes the bucket's shutdown message correctly. The fact that the `KV.Registry.lookup/2` sends us a valid bucket does not mean that the bucket is still alive by the time you call it. For example, it might have crashed for some reason. The following test depicts this situation:
 
 ```elixir
   test "bucket can crash at any time", %{registry: registry} do
     KV.Registry.create(registry, "shopping")
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # The process may crash somewhere between the moment 
-    # we receive a valid reference and the moment we use it.
-    #
-    # Stop the bucket with non-normal reason
-    #
-    # This function is a synchronous one, which means that
-    # when this process continues its execution, the bucket has already been stopped
+    # Simulate a bucket crash by explicitly and synchronously shutting it down.
     Agent.stop(bucket, :shutdown)
 
-    # Now, since we've stopped bucket, calling its non-existent process causes our process to exit
+    # Now trying to call the dead process causes a :noproc exit
     catch_exit KV.Bucket.put(bucket, "milk", 3)
-
   end
 ```
-
-Our tests should now (always) pass!
 
 This concludes our optimization chapter. We have used ETS as a cache mechanism where reads can happen from any processes but writes are still serialized through a single process. More importantly, we have also learned that once data can be read asynchronously, we need to be aware of the race conditions it might introduce.
 
