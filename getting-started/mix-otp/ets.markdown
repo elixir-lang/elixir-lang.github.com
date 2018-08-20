@@ -226,7 +226,10 @@ According to the failure message, we are expecting that the bucket no longer exi
 
 Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
 
-An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed. Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
+An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed.
+This is only possible as an implication of a fact that `Agent.stop/2` waits until the VM has stopped the bucket and therefore has sent `:DOWN` message to the registry.
+Which means that by the time we can send another request, the `:DOWN` message has already reached registry's inbox and therefore will be processed before our next request.
+Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
 
 ```elixir
   test "removes buckets on exit", %{registry: registry} do
@@ -255,7 +258,7 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
 Note that the purpose of the test is to check whether the registry processes the bucket's shutdown message correctly. The fact that the `KV.Registry.lookup/2` sends us a valid bucket does not mean that it still exists at the time we receive the bucket's reference or we try to use it ex. get its state. There is never a guarantee that the process you are calling is still alive - it might have crashed for some reason.
 Following test depicts the given situation:
 
-```
+```elixir
   test "bucket can crash at any time", %{registry: registry} do
     KV.Registry.create(registry, "shopping")
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
