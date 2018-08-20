@@ -209,7 +209,7 @@ Let's run the tests once again. This time though, we will pass the `--trace` opt
 $ mix test --trace
 ```
 
-The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. You may see one or two intermittent failures:
+The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:
 
 ```
   1) test removes buckets on exit (KV.RegistryTest)
@@ -222,12 +222,11 @@ The `--trace` option is useful when your tests are deadlocking or there are race
        test/kv/registry_test.exs:23
 ```
 
-According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table. Once again, since it is a race condition, you may not see it at all, but it is there.
+According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
 
-Unfortunately there is no synchronous equivalnet to `handle_info/2`, so we cannot simply convert the cleaning of the ETS table to a synchronous operation like before. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
+Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
 
 An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed. Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
-
 
 ```elixir
   test "removes buckets on exit", %{registry: registry} do
@@ -250,6 +249,29 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
     # Do a call to ensure the registry processed the DOWN message
     _ = KV.Registry.create(registry, "bogus")
     assert KV.Registry.lookup(registry, "shopping") == :error
+  end
+```
+
+Note that the purpose of the test is to check whether the registry processes the bucket's shutdown message correctly. The fact that the `KV.Registry.lookup/2` sends us a valid bucket does not mean that it still exists at the time we receive the bucket's reference or we try to use it ex. get its state. There is never a guarantee that the process you are calling is still alive - it might have crashed for some reason.
+Following test depicts the given situation:
+
+```
+  test "bucket can crash at any time", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+
+    # The process may crash somewhere between the moment 
+    # we receive a valid reference and the moment we use it.
+    #
+    # Stop the bucket with non-normal reason
+    #
+    # This function is a synchronous one, which means that
+    # when this process continues its execution, the bucket has already been stopped
+    Agent.stop(bucket, :shutdown)
+
+    # Now, since we've stopped bucket, calling its non-existent process causes our process to exit
+    catch_exit KV.Bucket.put(bucket, "milk", 3)
+
   end
 ```
 
