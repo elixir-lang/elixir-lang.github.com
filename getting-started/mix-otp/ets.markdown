@@ -209,7 +209,7 @@ Let's run the tests once again. This time though, we will pass the `--trace` opt
 $ mix test --trace
 ```
 
-The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:
+The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. You may see one or two intermittent failures:
 
 ```
   1) test removes buckets on exit (KV.RegistryTest)
@@ -222,14 +222,13 @@ The `--trace` option is useful when your tests are deadlocking or there are race
        test/kv/registry_test.exs:23
 ```
 
-According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
+According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table. Since this is a race condition, you may not be able to reproduce it on your machine, but it is there.
 
-Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
+Last time we fixed the race condition by replacing the asynchronous operation, a `cast`, by a `call`, which is synchronous. Unfortunately, the `handle_info/2` callback we are using to receive the `:DOWN` message and delete the entry from the ETS table does not have a synchronous equivalent. This time, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket process terminated.
 
-An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed.
-This is only possible as an implication of a fact that `Agent.stop/2` waits until the VM has stopped the bucket and therefore has sent `:DOWN` message to the registry.
-Which means that by the time we can send another request, the `:DOWN` message has already reached registry's inbox and therefore will be processed before our next request.
-Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
+An easy way to do so is by sending a synchronous request to the registry before we do the bucket lookup. The `Agent.stop/2` operation is synchronous and only returns after the bucket process terminates and all `:DOWN` messages are delivered. Therefore, once `Agent.stop/2` returns, the registry has already received the `:DOWN` message but it may not have processed it yet. In order to guarantee the processing of the `:DOWN` message, we can do a synchronous request. Since messages are processed in order, once the registry replies to the synchronous request, then the `:DOWN` message will definitely have been processed.
+
+Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop/2` in both tests:
 
 ```elixir
   test "removes buckets on exit", %{registry: registry} do
