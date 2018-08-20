@@ -209,7 +209,7 @@ Let's run the tests once again. This time though, we will pass the `--trace` opt
 $ mix test --trace
 ```
 
-The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:
+The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. You may see one or two intermittent failures:
 
 ```
   1) test removes buckets on exit (KV.RegistryTest)
@@ -222,9 +222,9 @@ The `--trace` option is useful when your tests are deadlocking or there are race
        test/kv/registry_test.exs:23
 ```
 
-According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
+According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table. Once again, since it is a race condition, you may not see it at all, but it is there.
 
-Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
+Unfortunately there is no synchronous equivalnet to `handle_info/2`, so we cannot simply convert the cleaning of the ETS table to a synchronous operation like before. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
 
 An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed. Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
 
