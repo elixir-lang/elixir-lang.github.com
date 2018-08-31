@@ -24,9 +24,9 @@ A TCP server, in broad strokes, performs the following steps:
 Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
 
 ```elixir
-require Logger
-
 defmodule KVServer do
+  require Logger
+
   def accept(port) do
     # The options below mean:
     #
