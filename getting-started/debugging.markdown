@@ -7,7 +7,7 @@ title: Debugging
 
 {% include toc.html %}
 
-There are a number of ways one can debug their code in Elixir. In this chapter we will cover some of the more common ways of doing so.
+There are a number of ways to debug code in Elixir. In this chapter we will cover some of the more common ways of doing so.
 
 ## IO.inspect/2
 
