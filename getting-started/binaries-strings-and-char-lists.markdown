@@ -119,7 +119,7 @@ iex> is_binary(<<1 :: size(1)>>)
 false
 iex> is_bitstring(<<1 :: size(1)>>)
 true
-iex> bit_size(<< 1 :: size(1)>>)
+iex> bit_size(<<1 :: size(1)>>)
 1
 ```
 
