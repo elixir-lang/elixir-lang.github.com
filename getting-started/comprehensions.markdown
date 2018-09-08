@@ -89,7 +89,7 @@ iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 "helloworld"
 ```
 
-Sets, maps, and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the `Collectable` protocol.
+Sets, maps, and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the [`Collectable`](https://hexdocs.pm/elixir/Collectable.html) protocol.
 
 A common use case of `:into` can be transforming values in a map, without touching the keys:
 
