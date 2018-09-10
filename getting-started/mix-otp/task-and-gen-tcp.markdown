@@ -146,12 +146,12 @@ As usual, we've passed a two-element tuple as a child specification, which in tu
 With this change, we are saying that we want to run `KVServer.accept(4040)` as a task. We are hardcoding the port for now but this could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
 
 ```elixir
-port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+port = String.to_integer(System.get_env("PORT") || "4040")
 # ...
 {Task, fn -> KVServer.accept(port) end}
 ```
 
-Insert these changes in your code and now you may start your application using the following command `PORT=4040 mix run --no-halt`, notice how we are passing the port as a variable.
+Insert these changes in your code and now you may start your application using the following command `PORT=4321 mix run --no-halt`, notice how we are passing the port as a variable, but still defaults to 4040 if none is given.
 
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Start your server, now passing the port, and once again use the `telnet` client to make sure that everything still works:
 
