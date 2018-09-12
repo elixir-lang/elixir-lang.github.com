@@ -16,7 +16,7 @@ Elixir's source code is under the [Apache 2 License](https://github.com/elixir-l
 
 Elixir v1.0 was released in September 2014 and a new minor version is released every 6 months, around January and July of every year. New releases are announced in the read-only [announcements mailing list](https://groups.google.com/group/elixir-lang-ann) with a link to the complete CHANGELOG. All security releases [will be tagged with "[security]"](https://groups.google.com/forum/#!searchin/elixir-lang-ann/%5Bsecurity%5D%7Csort:date). Security vulnerabilities should be disclosed to [elixir-security@googlegroups.com](mailto:elixir-security@googlegroups.com). Our [compatibility and deprecation policies](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#content) are also documented.
 
-Since v1.0, the language development has become more focused. We believe there is a limited amount of features a language can provide without hindering its learning and without causing fragmentation in the community. Therefore the Elixir team focuses on language features that:
+Since v1.0, the language development has become focused to provide a compact and consistent core. The Elixir team focuses on language features that:
 
   1. are necessary for developing the language itself
   2. bring important concepts/features to the community in a way its effect can only be maximized or leveraged by making it part of the language
@@ -25,7 +25,7 @@ The language development is open, both in terms of source code and of collaborat
 
 Community members are welcome to propose new features for Elixir. Before submitting a proposal, members are encouraged to gather feedback from around the community in whatever venues seem best. However, in order for a proposal to be considered for inclusion by the Elixir Core team, it must go through the Elixir mailing list. This often includes discussion and refinement of the proposal. The Elixir Core team has the final say on whether a proposal is accepted or rejected. While members are encouraged to gain support from the rest of the community, popularity does not mean that a proposal will be accepted.
 
-To remain focused, Elixir trusts its ecosystem to bring diversity and broaden its use cases to a wider audience. Therefore the language was designed to be extensible: the constructs available to build the language are also available for developers to extend the language and bring it to different domains. Projects such as [the Phoenix web framework](http://phoenixframework.org) and [the Nerves embedded framework](http://nerves-project.org) are two of such examples.
+To remain focused, Elixir trusts its ecosystem to bring diversity and broaden its use cases. Therefore the language was designed to be extensible: the constructs available to build the language are also available for developers to extend the language and bring it to different domains. Projects such as [the Phoenix web framework](http://phoenixframework.org) and [the Nerves embedded framework](http://nerves-project.org) are two of such examples.
 
 Elixir also relies on a vibrant community to support its growth. The community is behind the meetups, events, learning resources, open source projects, and more. See the sidebar, the [Learning Resources](/learning.html) and [the Hex Package Manager website](https://hex.pm/) for some examples and more information.
 
