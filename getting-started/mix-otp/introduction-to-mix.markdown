@@ -200,7 +200,7 @@ This file will be required by Mix every time before we run our tests. We can run
 
     Randomized with seed 540224
 
-Notice that by running `mix test`, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will explore in the next section.
+Notice that by running `mix test`, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will discuss later in this chapter.
 
 Furthermore, you can see that ExUnit prints a dot for each successful test and automatically randomizes tests too. Let's make the test fail on purpose and see what happens.
 
@@ -254,21 +254,23 @@ You can learn more about the code formatter by checking [the format task documen
 
 ## Environments
 
-Mix supports the concept of "environments". They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
+Mix provides the concept of "environments". They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
 
 * `:dev` - the one in which Mix tasks (like `compile`) run by default
 * `:test` - used by `mix test`
 * `:prod` - the one you will use to run your project in production
 
-The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
+The environment applies only to the current project. As we will see in future chapters, any dependency you add to your project will by default run in the `:prod` environment.
 
 Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/0) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
 
 ```elixir
 def project do
-  [...,
-   start_permanent: Mix.env == :prod,
-   ...]
+  [
+    ...,
+    start_permanent: Mix.env == :prod,
+    ...
+  ]
 end
 ```
 
