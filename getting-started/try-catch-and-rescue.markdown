@@ -130,7 +130,7 @@ iex> Enum.find -50..50, &(rem(&1, 13) == 0)
 
 ## Exits
 
-All Elixir code runs inside processes that communicate with each other. When a process dies of "natural causes" (e.g., unhandled exceptions), it sends an `exit` signal. A process can also die by explicitly sending an exit signal:
+All Elixir code runs inside processes that communicate with each other. When a process dies of "natural causes" (e.g., unhandled exceptions), it sends an `exit` signal. A process can also die by explicitly sending an `exit` signal:
 
 ```iex
 iex> spawn_link fn -> exit(1) end
@@ -152,7 +152,7 @@ iex> try do
 
 Using `try/catch` is already uncommon and using it to catch exits is even rarer.
 
-`exit` signals are an important part of the fault tolerant system provided by the Erlang <abbr title="Virtual Machine">VM</abbr>. Processes usually run under supervision trees which are themselves processes that listen to `exit` signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
+`exit` signals are an important part of the fault tolerant system provided by the Erlang <abbr title="Virtual Machine">VM</abbr>. Processes usually run under supervision trees which are themselves processes that listen to `exit` signals from the supervised processes. Once an `exit` signal is received, the supervision strategy kicks in and the supervised process is restarted.
 
 It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing an error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
 
