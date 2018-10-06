@@ -148,6 +148,15 @@ Elixir koans is a fun, easy way to get started with the Elixir programming langu
 
 <div class="clear"></div>
 
+<h4 class="resource">Exercism.io</h4>
+
+<a class="cover" href="https://exercism.io/tracks/elixir" title="Elixir Track on Exercism.io"> <img src="https://assets.exercism.io/tracks/elixir-bordered-turquoise.png" alt="Exercism.io Elixir track" width="190" /></a>
+
+Exercism.io provides free code practice and mentoring across a range of languages. This is the Elixir track. 
+The site has a guided series of exercises with varying difficultly that are mentored by volenteers. The exercises range from Hello World to some OTP examples. Once you have completed an exercise you can see other students solutions.
+
+<div class="clear"></div>
+
 ## Screencasts
 <h4 class="resource">Elixir Sips</h4>
 
