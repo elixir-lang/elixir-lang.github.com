@@ -32,7 +32,7 @@ Choose which version you want documentation for.
 * [Logger](https://hexdocs.pm/logger/master/) - built-in Logger
 * [Mix](https://hexdocs.pm/mix/master/) - build tool
 
-{% for version in site.data.elixir-versions reversed %}
+{% for version in site.data.elixir-versions %}
   {% if version[0] == 'stable' %}
     {% continue %}
   {% endif %}
