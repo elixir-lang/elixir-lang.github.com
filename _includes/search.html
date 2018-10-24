@@ -5,11 +5,9 @@
 </div>
 
 <div class="widget search">
-  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
-		<div>
-			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
-			<input type="hidden" name="sitesearch" value="elixir-lang.org">
-			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
-		</div>
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search" onsubmit="document.getElementById('searchq').value = document.getElementById('searchfield').value + ' site:elixir-lang.org | hexdocs.pm/elixir | hexdocs.pm/mix | hexdocs.pm/eex | hexdocs.pm/logger | hexdocs.pm/iex | hexdocs.pm/ex_unit'; return true;">
+		<input type="hidden" id="searchq" name="q" value="">
+    <input class="search-text" type="text" placeholder="Search..." id="searchfield" aria-label="Search box">
+		<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 	</form>
 </div>
