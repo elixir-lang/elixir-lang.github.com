@@ -126,6 +126,7 @@ defmodule HygieneTest do
   def go do
     require Hygiene
     a = 13
+    a
     Hygiene.no_interference
     a
   end
@@ -148,6 +149,7 @@ defmodule HygieneTest do
   def go do
     require Hygiene
     a = 13
+    a
     Hygiene.interference
     a
   end
