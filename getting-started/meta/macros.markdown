@@ -157,7 +157,7 @@ HygieneTest.go
 # => 1
 ```
 
-Notice this code will work but issue a warning: `variable "a" is unused`. The macro is overriding the original value and the original value is never used.
+The code above will work but issue a warning: `variable "a" is unused`. The macro is overriding the original value and the original value is never used.
 
 Variable hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined on line 3 of a module would be represented as:
 
