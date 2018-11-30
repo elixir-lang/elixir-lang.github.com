@@ -50,6 +50,8 @@ iex> ?ł
 322
 ```
 
+These can be used anywhere you want to refer to a characters codepoint.
+
 You can also use the functions in [the `String` module](https://hexdocs.pm/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
 
 ```iex
