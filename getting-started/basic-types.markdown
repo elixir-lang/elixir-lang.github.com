@@ -212,9 +212,11 @@ iex> add.(1, 2)
 3
 iex> is_function(add)
 true
-iex> is_function(add, 2) # check if add is a function that expects exactly 2 arguments
+# check if add is a function that expects exactly 2 arguments
+iex> is_function(add, 2)
 true
-iex> is_function(add, 1) # check if add is a function that expects exactly 1 argument
+# check if add is a function that expects exactly 1 argument
+iex> is_function(add, 1)
 false
 ```
 

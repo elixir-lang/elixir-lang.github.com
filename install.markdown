@@ -132,7 +132,7 @@ For Windows developers, we recommend the precompiled packages. Those on a Unix p
 
 After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information similar to:
 
-    Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
+    Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
 Notice that depending on how you installed Erlang, Erlang binaries might not be available in your PATH. Be sure to have Erlang binaries in your [PATH](https://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
 
