@@ -109,7 +109,7 @@ Elixir’s straightforward syntax and this guided tour give you a clean, simple 
 
 <a class="cover" href="https://pragmaticstudio.com/elixir" title="Pragmatic Studio's Elixir/OTP Course"><img src="/images/learning/pragmaticstudio-elixir.png" alt="Pragmatic Studio's Elixir/OTP Course" width="190" /></a>
 
-Put Elixir and OTP into action as you build a concurrent, fault-tolerant application from scratch in this 6-hour video course from The Pragmatic Studio. By developing a real app with real code, you'll gain practical experience putting all the pieces together to craft applications the Elixir/OTP way. 
+Put Elixir and OTP into action as you build a concurrent, fault-tolerant application from scratch in this 6-hour video course from The Pragmatic Studio. By developing a real app with real code, you'll gain practical experience putting all the pieces together to craft applications the Elixir/OTP way.
 
 The first half of the course focuses on core Elixir facets, principles, and techniques. In the second half, we go beyond the basics and focus on what sets Elixir/OTP apart: concurrent processes, the actor model, OTP behaviors, and fault recovery.
 
@@ -123,7 +123,7 @@ If you're new to Elixir, you'll get step-by-step guidance in an engaging format 
 
 <a class="cover" href="https://elixircards.co.uk/" title="Elixir Flashcards"><img src="/images/learning/flashcards_army.jpg" alt="Elixir Flashcards" width="190" /></a>
 
-Elixir flashcards are a set of beautifully crafted, professionally printed, poker sized flashcards to help you master the Elixir language. 
+Elixir flashcards are a set of beautifully crafted, professionally printed, poker sized flashcards to help you master the Elixir language.
 
 Flashcards are a great way to highlight knowledge gaps, identify misconceptions or false beliefs, and help you memorise key concepts.
 When used in groups or teams, flashcards can help spark interesting discussions, and help bring people together to learn in a fun way by playing games.
@@ -144,8 +144,9 @@ Elixir koans is a fun, easy way to get started with the Elixir programming langu
 
 <a class="cover" href="https://exercism.io/tracks/elixir" title="Elixir Track on Exercism.io"> <img src="https://assets.exercism.io/tracks/elixir-bordered-turquoise.png" alt="Exercism.io Elixir track" width="190" /></a>
 
-Exercism.io provides free code practice and mentoring across a range of languages. This is the Elixir track. 
-The site has a guided series of exercises with varying difficultly that are mentored by volenteers. The exercises range from Hello World to some OTP examples. Once you have completed an exercise you can see other students solutions.
+Exercism.io is an open source platform that provides free practice and mentoring in many languages, including elixir.
+It features exercises of varying difficulty, from string processing to using OTP, that are mentored by volunteers.
+Once you have completed an exercise you can also view other students' solutions.
 
 <div class="clear"></div>
 
