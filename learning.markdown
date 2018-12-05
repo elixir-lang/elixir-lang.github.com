@@ -144,7 +144,7 @@ Elixir koans is a fun, easy way to get started with the Elixir programming langu
 
 <a class="cover" href="https://exercism.io/tracks/elixir" title="Elixir Track on Exercism.io"> <img src="https://assets.exercism.io/tracks/elixir-bordered-turquoise.png" alt="Exercism.io Elixir track" width="190" /></a>
 
-Exercism.io is an open source platform that provides free practice and mentoring in many languages, including elixir.
+Exercism.io is an open source platform that provides free practice and mentoring in many languages, including Elixir.
 It features exercises of varying difficulty, from string processing to using OTP, that are mentored by volunteers.
 Once you have completed an exercise you can also view other students' solutions.
 
