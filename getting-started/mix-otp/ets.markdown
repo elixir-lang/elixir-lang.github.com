@@ -160,7 +160,7 @@ How can this line fail if we just created the bucket in the previous line?
 The reason those failures are happening is because, for didactic purposes, we have made two mistakes:
 
   1. We are prematurely optimizing (by adding this cache layer)
-  2. We are using `cast/2` (while we should be using `call/2`)
+  2. We are using `cast/2` (while we should be using `call/3`)
 
 ## Race conditions?
 
