@@ -135,7 +135,7 @@ Because processes are linked, we now see a message saying the parent process, wh
 
 Linking can also be done manually by calling `Process.link/1`. We recommend that you take a look at [the `Process` module](https://hexdocs.pm/elixir/Process.html) for other functionality provided by processes.
 
-Processes and links play an important role when building fault-tolerant systems. Elixir processes are isolated and don't share anything by default. Therefore, a failure in a process will never crash or corrupt the state of another process. Links, however, allow processes to establish a relationship in case of failures. We often link our processes to supervisors which will detect when a process dies and start a new process in its place.
+Processes and links play an important role when building fault-tolerant systems. Elixir processes are isolated and don't share anything by default. Therefore, a failure in a process will never crash or corrupt the state of another process. Links, however, allow processes to establish a relationship in case of failure. We often link our processes to supervisors which will detect when a process dies and start a new process in its place.
 
 While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting processes fail because we expect supervisors to properly restart our systems. "Failing fast" is a common philosophy when writing Elixir software!
 
