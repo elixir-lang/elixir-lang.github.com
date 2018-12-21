@@ -35,7 +35,7 @@ The keyword list used with `defstruct` defines what fields the struct will have 
 
 Structs take the name of the module they're defined in. In the example above, we defined a struct named `User`.
 
-We can now create `User` structs by using a syntax similar to the one used to create maps:
+We can now create `User` structs by using a syntax similar to the one used to create maps (although do note that you must be within a `defmodule` in a `.ex` or `.exs` file to refer to a struct, otherwise you will get an error saying `the struct was not yet defined`):
 
 ```iex
 iex> %User{}
