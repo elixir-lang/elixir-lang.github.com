@@ -142,7 +142,7 @@ We explore the Observer in the context of an actual project [in the Dynamic Supe
 
 You can also [use Observer to introspect a remote node](http://blog.plataformatec.com.br/2016/05/tracing-and-observing-your-remote-node/). This is one of the debugging techniques [the Phoenix framework used to achieve 2 million connections on a single machine](https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections).
 
-Finally remember you can also get a mini-overview of the runtime info by calling `runtime_info/0` directly in IEx.
+Finally, remember you can also get a mini-overview of the runtime info by calling `runtime_info/0` directly in IEx.
 
 ## Other tools and community
 
