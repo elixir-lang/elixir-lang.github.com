@@ -35,7 +35,7 @@ The keyword list used with `defstruct` defines what fields the struct will have 
 
 Structs take the name of the module they're defined in. In the example above, we defined a struct named `User`.
 
-We can now create `User` structs by using a syntax similar to the one used to create maps (although do note that you must be within a `defmodule` in a `.ex` or `.exs` file to refer to a struct, otherwise you will get an error saying `the struct was not yet defined`):
+We can now create `User` structs by using a syntax similar to the one used to create maps (if you have defined the struct in a separate file, you can compile the file inside IEx before proceeding by running `c "file.exs"`; be aware you may get an error saying `the struct was not yet defined` if you try the below example in a file directly due to when definitions are resolved):
 
 ```iex
 iex> %User{}
