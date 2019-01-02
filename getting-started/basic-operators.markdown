@@ -78,7 +78,7 @@ true
 
 As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`.
 
-Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<`, and `>` as comparison operators:
+Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
 
 ```iex
 iex> 1 == 1
@@ -109,7 +109,7 @@ The reason we can compare different data types is pragmatism. Sorting algorithms
 
     number < atom < reference < function < port < pid < tuple < map < list < bitstring
 
-You don't actually need to memorize this ordering, it's enough to know that this ordering exists.
+You don't actually need to memorize this ordering; it's enough to know that this ordering exists.
 
 For reference information about operators (and ordering), check the [reference page on operators](https://hexdocs.pm/elixir/operators.html).
 
