@@ -77,7 +77,7 @@ end
 [The digraph module](http://erlang.org/doc/man/digraph.html) (as well as
 [digraph_utils](http://erlang.org/doc/man/digraph_utils.html)) contains
 functions for dealing with directed graphs built of vertices and edges.
-After constructing the graph, the algorithms in there will help finding,
+After constructing the graph, the algorithms in there will help find,
 for instance, the shortest path between two vertices, or loops in the graph.
 
 Given three vertices, find the shortest path from the first to the last.
@@ -103,8 +103,9 @@ data structures in memory or on disk respectively.
 
 ETS lets you create a table containing tuples. By default, ETS tables
 are protected, which means only the owner process may write to the table
-but any other process can read. ETS has some functionality to be used as
-a simple database, a key-value store or as a cache mechanism.
+but any other process can read. ETS has some functionality to allow a
+table to be used as a simple database, a key-value store or as a cache
+mechanism.
 
 The functions in the `ets` module will modify the state of the table as a
 side-effect.
