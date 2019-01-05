@@ -169,16 +169,16 @@ defmodule KV.Router do
   to the appropriate node based on the `bucket`.
   """
   def route(bucket, mod, fun, args) do
-    # Get the first byte of the binary
+    # Get the first byte of the binary.
     first = :binary.first(bucket)
 
-    # Try to find an entry in the table() or raise
+    # Try to find an entry in the table() or raise.
     entry =
       Enum.find(table(), fn {enum, _node} ->
         first in enum
       end) || no_entry_error(bucket)
 
-    # If the entry node is the current node
+    # If the entry node is the current node.
     if elem(entry, 1) == node() do
       apply(mod, fun, args)
     else
