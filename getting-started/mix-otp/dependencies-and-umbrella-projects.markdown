@@ -64,13 +64,13 @@ Mix provides many tasks for working with dependencies, which can be seen in `mix
 
 ```console
 $ mix help
-mix deps              # Lists dependencies and their status
-mix deps.clean        # Deletes the given dependencies' files
-mix deps.compile      # Compiles dependencies
-mix deps.get          # Gets all out of date dependencies
-mix deps.tree         # Prints the dependency tree
-mix deps.unlock       # Unlocks the given dependencies
-mix deps.update       # Updates the given dependencies
+mix deps              # Lists dependencies and their status.
+mix deps.clean        # Deletes the given dependencies' files.
+mix deps.compile      # Compiles dependencies.
+mix deps.get          # Gets all out of date dependencies.
+mix deps.tree         # Prints the dependency tree.
+mix deps.unlock       # Unlocks the given dependencies.
+mix deps.update       # Updates the given dependencies.
 ```
 
 The most common tasks are `mix deps.get` and `mix deps.update`. Once fetched, dependencies are automatically compiled for you. You can read more about deps by typing `mix help deps`, and in the [documentation for the Mix.Tasks.Deps module](https://hexdocs.pm/mix/Mix.Tasks.Deps.html).
@@ -220,20 +220,20 @@ In fact, let's open up `lib/kv_server/application.ex`:
 ```elixir
 defmodule KVServer.Application do
   # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
+  # for more information on OTP Applications.
   @moduledoc false
 
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
+    # List all child processes to be supervised.
     children = [
       # Starts a worker by calling: KVServer.Worker.start_link(arg)
       # {KVServer.Worker, arg},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
+    # for other strategies and supported options.
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
     Supervisor.start_link(children, opts)
   end
