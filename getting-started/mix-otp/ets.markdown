@@ -57,7 +57,7 @@ defmodule KV.Registry do
   `:name` is always required.
   """
   def start_link(opts) do
-    # 1. Pass the name to GenServer's init
+    # 1. Pass the name to GenServer's init.
     server = Keyword.fetch!(opts, :name)
     GenServer.start_link(__MODULE__, server, opts)
   end
@@ -68,7 +68,7 @@ defmodule KV.Registry do
   Returns `{:ok, pid}` if the bucket exists, `:error` otherwise.
   """
   def lookup(server, name) do
-    # 2. Lookup is now done directly in ETS, without accessing the server
+    # 2. Lookup is now done directly in ETS, without accessing the server.
     case :ets.lookup(server, name) do
       [{^name, pid}] -> {:ok, pid}
       [] -> :error
@@ -85,16 +85,16 @@ defmodule KV.Registry do
   ## Server callbacks
 
   def init(table) do
-    # 3. We have replaced the names map by the ETS table
+    # 3. We have replaced the names map by the ETS table.
     names = :ets.new(table, [:named_table, read_concurrency: true])
     refs  = %{}
     {:ok, {names, refs}}
   end
 
-  # 4. The previous handle_call callback for lookup was removed
+  # 4. The previous handle_call callback for lookup was removed.
 
   def handle_cast({:create, name}, {names, refs}) do
-    # 5. Read and write to the ETS table instead of the map
+    # 5. Read and write to the ETS table instead of the map.
     case lookup(names, name) do
       {:ok, _pid} ->
         {:noreply, {names, refs}}
@@ -108,7 +108,7 @@ defmodule KV.Registry do
   end
 
   def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
-    # 6. Delete from the ETS table instead of the map
+    # 6. Delete from the ETS table instead of the map.
     {name, refs} = Map.pop(refs, ref)
     :ets.delete(names, name)
     {:noreply, {names, refs}}
@@ -236,7 +236,7 @@ Let's do so by creating a "bogus" bucket, which is a synchronous request, after 
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
     Agent.stop(bucket)
 
-    # Do a call to ensure the registry processed the DOWN message
+    # Do a call to ensure the registry processed the DOWN message.
     _ = KV.Registry.create(registry, "bogus")
     assert KV.Registry.lookup(registry, "shopping") == :error
   end
@@ -245,10 +245,10 @@ Let's do so by creating a "bogus" bucket, which is a synchronous request, after 
     KV.Registry.create(registry, "shopping")
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Stop the bucket with non-normal reason
+    # Stop the bucket with non-normal reason.
     Agent.stop(bucket, :shutdown)
 
-    # Do a call to ensure the registry processed the DOWN message
+    # Do a call to ensure the registry processed the DOWN message.
     _ = KV.Registry.create(registry, "bogus")
     assert KV.Registry.lookup(registry, "shopping") == :error
   end
@@ -266,7 +266,7 @@ Note that the purpose of the test is to check whether the registry processes the
     # Simulate a bucket crash by explicitly and synchronously shutting it down.
     Agent.stop(bucket, :shutdown)
 
-    # Now trying to call the dead process causes a :noproc exit
+    # Now trying to call the dead process causes a :noproc exit.
     catch_exit KV.Bucket.put(bucket, "milk", 3)
   end
 ```
