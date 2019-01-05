@@ -144,7 +144,7 @@ Note that we need a mechanism to pass the `bucket` pid from the callback to the 
 
 ```elixir
 test "stores values by key", %{bucket: bucket} do
-  # `bucket` is now the bucket from the setup block
+  # `bucket` is now the bucket from the setup block.
 end
 ```
 
@@ -185,9 +185,9 @@ This distinction is important. If there are expensive actions to be done, you mu
 
 ```elixir
 def delete(bucket, key) do
-  Process.sleep(1000) # puts client to sleep
+  Process.sleep(1000) # Puts client to sleep.
   Agent.get_and_update(bucket, fn dict ->
-    Process.sleep(1000) # puts server to sleep
+    Process.sleep(1000) # Puts server to sleep.
     Map.pop(dict, key)
   end)
 end
