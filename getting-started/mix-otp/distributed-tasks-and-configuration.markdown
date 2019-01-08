@@ -196,7 +196,7 @@ defmodule KV.Router do
   The routing table.
   """
   def table do
-    # Replace computer-name with your local machine name.
+    # Replace computer-name with your local machine name
     [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
   end
 end
@@ -338,7 +338,7 @@ Start IEx with `iex -S mix` and you can see that the IEx prompt has changed.
 This means we can also configure our `:routing_table` directly in the `apps/kv/config/config.exs` file:
 
 ```elixir
-# Replace computer-name with your local machine nodes.
+# Replace computer-name with your local machine nodes
 config :kv, :routing_table, [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
 ```
 
