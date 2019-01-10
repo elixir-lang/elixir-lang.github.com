@@ -263,7 +263,7 @@ Note that the purpose of the test is to check whether the registry processes the
     KV.Registry.create(registry, "shopping")
     {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
 
-    # Simulate a bucket crash by explicitly and synchronously shutting it down.
+    # Simulate a bucket crash by explicitly and synchronously shutting it down
     Agent.stop(bucket, :shutdown)
 
     # Now trying to call the dead process causes a :noproc exit
