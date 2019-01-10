@@ -232,17 +232,17 @@ defp write_line(socket, {:ok, text}) do
 end
 
 defp write_line(socket, {:error, :unknown_command}) do
-  # Known error. Write to the client.
+  # Known error; write to the client
   :gen_tcp.send(socket, "UNKNOWN COMMAND\r\n")
 end
 
 defp write_line(_socket, {:error, :closed}) do
-  # The connection was closed, exit politely.
+  # The connection was closed, exit politely
   exit(:shutdown)
 end
 
 defp write_line(socket, {:error, error}) do
-  # Unknown error. Write to the client and exit.
+  # Unknown error; write to the client and exit
   :gen_tcp.send(socket, "ERROR\r\n")
   exit(error)
 end
