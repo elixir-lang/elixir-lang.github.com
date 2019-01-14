@@ -35,7 +35,7 @@ You can also pass `@derive {Inspect, except: [...]}` in case you want to keep al
 
 ## Time zone database support
 
-In Elixir v1.3, Elixir added four types, known as Calendar types, to work with dates and times: `Time`, `Date`, `NaiveDateTime` (without time zone) and `DateTime` (with time zone). Over the last versions we have added many enhancements to the Calendar types but the `DateTime` module always evolved at a slower pace since Elixir did not provide an API for time zone databases.
+In Elixir v1.3, Elixir added four types, known as Calendar types, to work with dates and times: `Time`, `Date`, `NaiveDateTime` (without time zone), and `DateTime` (with time zone). Over the last versions we have added many enhancements to the Calendar types but the `DateTime` module always evolved at a slower pace since Elixir did not provide an API for time zone databases.
 
 Elixir v1.8 now defines a `Calendar.TimeZoneDatabase` behaviour, allowing developers to bring in their own time zone databases. By defining an explicit contract for time zone behaviours, Elixir can now extend the `DateTime` API, adding functions such as `DateTime.shift_zone/3`. By default, Elixir ships with a time zone database called `Calendar.UTCOnlyTimeZoneDatabase` that only handles UTC.
 
@@ -67,7 +67,7 @@ which means we store the following relationships:
 
 When a task is spawned directly from your code, without a supervisor, then the process running your code will be listed under both `$ancestors` and `$callers`.
 
-This small feature is very powerful. It allows instrumentation and monitoring tools to better track and relate the events happening in your system. This feature can also be used by tools like the "Ecto Sandbox". The "Ecto Sandbox" allows developers to run tests concurrently against the database, by using transactions and an ownership mechanism where each process explicitly gets a connection assigned to it. Without `$callers`, every time you spawned a task that queries the database, the task would not know its caller, and therefore it would be unable to know which connection was assigned to it. This often meant features that relies on tasks could not be tested concurrently. With `$callers`, figuring out this relationship is trivial and you have more tests using the full power of your machine.
+This small feature is very powerful. It allows instrumentation and monitoring tools to better track and relate the events happening in your system. This feature can also be used by tools like the "Ecto Sandbox". The "Ecto Sandbox" allows developers to run tests concurrently against the database, by using transactions and an ownership mechanism where each process explicitly gets a connection assigned to it. Without `$callers`, every time you spawned a task that queries the database, the task would not know its caller, and therefore it would be unable to know which connection was assigned to it. This often meant features that rely on tasks could not be tested concurrently. With `$callers`, figuring out this relationship is trivial and you have more tests using the full power of your machine.
 
 ## Summing up
 
