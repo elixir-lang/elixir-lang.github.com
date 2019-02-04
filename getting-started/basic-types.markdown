@@ -116,7 +116,9 @@ iex> :hello == :world
 false
 ```
 
-The booleans `true` and `false` are, in fact, atoms:
+Atoms are useful when we have to compare Unicode strings and having to consider different ways of composing identical characters. It's much simpler if we stored identical strings at the same location in memory. Then checking equality become a simple pointer or index comparison regardless where we do it in our code. This become handy for [pattern matching](/getting-started/pattern-matching.html).
+
+In fact, the booleans `true` and `false` are, in fact, atoms:
 
 ```iex
 iex> true == :true
