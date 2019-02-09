@@ -97,8 +97,8 @@ Once the release is unpacked, you are ready to run the `elixir` and `iex` comman
 
 There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you can't install Erlang or Elixir as mentioned above or if your package manager is simply outdated. Here are some of those tools:
 
-  * [asdf](https://github.com/asdf-vm/asdf) - install and manage different Elixir and Erlang versions
-  * [exenv](https://github.com/mururu/exenv) - install and manage different Elixir versions
+  * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
+  * [exenv](https://github.com/exenv/exenv) - install and manage different Elixir versions
   * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
   * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
 
@@ -132,7 +132,7 @@ For Windows developers, we recommend the precompiled packages. Those on a Unix p
 
 After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information similar to:
 
-    Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [async-threads:0] [hipe] [kernel-poll:false]
+    Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
 Notice that depending on how you installed Erlang, Erlang binaries might not be available in your PATH. Be sure to have Erlang binaries in your [PATH](https://en.wikipedia.org/wiki/Environment_variable), otherwise Elixir won't work!
 
