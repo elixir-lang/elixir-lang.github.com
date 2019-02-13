@@ -234,3 +234,10 @@ Those are all protocols that ship with Elixir and they are being consolidated. B
 However, after our project is compiled using a tool like Mix, we know all modules that have been defined, including protocols and their implementations. This way, the protocol can be consolidated into a very simple and fast dispatch module.
 
 From Elixir v1.2, protocol consolidation happens automatically for all projects. We will build our own project in the ***Mix and OTP guide***.
+
+## Module attributes
+
+Inside protocol implementation, there are these module attributes available:
+
+* `@for` - alias of the module, you're implementing the protocol for
+* `@protocol` - alias of the protocol itself
