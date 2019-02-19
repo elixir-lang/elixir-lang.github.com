@@ -52,6 +52,14 @@ defmodule ElixirLangGuide do
       |> YamlElixir.read_from_file()
       |> generate_nav(options)
 
+    elixir_versions =
+      options.root_dir
+      |> Path.expand()
+      |> Path.join("_data/elixir-versions.yml")
+      |> YamlElixir.read_from_file()
+
+    options = Map.put(options, :elixir_versions, elixir_versions)
+
     nav
     |> convert_markdown_pages(options)
     |> to_epub(nav, options)
@@ -160,6 +168,7 @@ defmodule ElixirLangGuide do
   defp clean_markdown(content, options) do
     content
     |> remove_includes()
+    |> remove_variables(options)
     |> remove_span_hidden_hack()
     |> remove_raw_endraw_tags()
     |> remove_frontmatter()
@@ -173,6 +182,16 @@ defmodule ElixirLangGuide do
     content
     |> String.replace("{% include toc.html %}", "")
     |> String.replace("{% include mix-otp-preface.html %}", "")
+  end
+
+  defp remove_variables(content, options) do
+    %{"stable" => current_stable_version} = elixir_versions = Map.get(options, :elixir_versions)
+    stable = elixir_versions[current_stable_version]
+
+    content
+    |> String.replace("{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}", "")
+    |> String.replace("{{ stable.version }}", "#{stable["version"]}")
+    |> String.replace("{{ stable.minimum_otp }}", "#{stable["minimum_otp"]}")
   end
 
   # The <span hidden>.</span> is a hack used in pattern-matching.md
