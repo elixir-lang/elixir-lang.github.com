@@ -189,7 +189,10 @@ defmodule ElixirLangGuide do
     stable = elixir_versions[current_stable_version]
 
     content
-    |> String.replace("{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}", "")
+    |> String.replace(
+      "{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}",
+      ""
+    )
     |> String.replace("{{ stable.version }}", "#{stable["version"]}")
     |> String.replace("{{ stable.minimum_otp }}", "#{stable["minimum_otp"]}")
   end
