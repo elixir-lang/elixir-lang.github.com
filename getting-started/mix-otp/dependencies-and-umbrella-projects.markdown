@@ -254,7 +254,7 @@ Since we want `kv_server` to eventually use the functionality we defined in `kv`
 
 ## Dependencies within an umbrella project
 
-Dependencies between applications in an umbrella project must still be explicitly defined and Mix makes easy to do so. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
+Dependencies between applications in an umbrella project must still be explicitly defined and Mix makes it easy to do so. Open up `apps/kv_server/mix.exs` and change the `deps/0` function to the following:
 
 ```elixir
 defp deps do
