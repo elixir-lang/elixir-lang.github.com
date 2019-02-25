@@ -23,7 +23,7 @@ iex(1)> {:ok, conn} = Mint.HTTP.connect(:http, "httpbin.org", 80)
 iex(2)> {:ok, conn, request_ref} = Mint.HTTP.request(conn, "GET", "/", [], "")
 iex(3)> receive do
 ...(3)>   message ->
-...(3)>     IO.inspect message, label: :message
+...(3)>     IO.inspect(message, label: :message)
 ...(3)>     {:ok, conn, responses} = Mint.HTTP.stream(conn, message)
 ...(3)>     IO.inspect(responses, label: :responses)
 ...(3)> end
