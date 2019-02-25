@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Mint, a new HTTP library for Elixir
+title: Mint, a new HTTP client for Elixir
 author: Eric Meadows-Jönsson
 category: Announcements
-excerpt: Mint is a new low-level HTTP library that aims to provide a small and functional core that others can build on top.
+excerpt: Mint is a new low-level HTTP client that aims to provide a small and functional core that others can build on top.
 ---
 
-[Mint](https://github.com/ericmj/mint) is a new low-level HTTP library that aims to provide a small and functional core that others can build on top. Mint is connection based: each connection is a single struct with an associated socket belonging to the process that started the connection. Since no extra processes are started for the connection, you can choose the process architecture that better fits your application.
+[Mint](https://github.com/ericmj/mint) is a new low-level HTTP client that aims to provide a small and functional core that others can build on top. Mint is connection based: each connection is a single struct with an associated socket belonging to the process that started the connection. Since no extra processes are started for the connection, you can choose the process architecture that better fits your application.
 
 To validate this we built out the library with a common API supporting both HTTP/1 and HTTP/2 with automatic version negotiation. In addition, Mint comes with a [CA certificate store](https://github.com/ericmj/castore) to do safe by default HTTPS connections.
 
