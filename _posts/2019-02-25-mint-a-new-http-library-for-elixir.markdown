@@ -62,7 +62,7 @@ Of course, none of this stops you from building a connection pool on top of Mint
 
 The `Mint.HTTP` module has a single interface for both HTTP1 and HTTP2 connections and performs version negotation on HTTPS connections, HTTP connections default to HTTP1. You can specify which HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version-specific features.
 
-## Safe by default HTTPS
+## Safe-by-default HTTPS
 
 If connecting over HTTPS Mint will perform certificate verification by default. We believe it's crucial that an HTTP library defaults to be secure out-of-the-box.
 
