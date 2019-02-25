@@ -36,7 +36,7 @@ responses: [
 ]
 ```
 
-As we can see all calls to `Mint.HTTP` functions returns an updated `conn` which holds the state for the connection, it is important to carry on the `conn` to the next function call or the state will be corrupted.
+As we can see all calls to `Mint.HTTP` functions return an updated `conn` which holds the state for the connection. It is important to carry on the `conn` to the next function call or the state will be corrupted.
 
 On line 2 we send a request to the server. A reference to the request is returned, this reference is useful when sending concurrent requests, either with HTTP1 pipelining or with HTTP2 multiplexed streams.
 
