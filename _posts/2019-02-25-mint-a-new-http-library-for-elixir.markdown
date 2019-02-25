@@ -8,7 +8,7 @@ excerpt: Mint is a new low-level HTTP library that aims to provide a small and f
 
 [Mint](https://github.com/ericmj/mint) is a new low-level HTTP library that aims to provide a small and functional core that others can build on top. Mint is connection based: each connection is a single struct with an associated socket belonging to the process that started the connection. Since no extra processes are started for the connection, you can choose the process architecture that better fits your application.
 
-To validate this we built out the library with a common API supporting both HTTP1 and HTTP2 with automatic version negotiation. In addition, Mint comes with a [CA certificate store](https://github.com/ericmj/castore) to do safe by default HTTPS connections.
+To validate this we built out the library with a common API supporting both HTTP/1 and HTTP/2 with automatic version negotiation. In addition, Mint comes with a [CA certificate store](https://github.com/ericmj/castore) to do safe by default HTTPS connections.
 
 ## Connections without processes
 
@@ -38,13 +38,13 @@ responses: [
 
 As we can see all calls to `Mint.HTTP` functions return an updated `conn` which holds the state for the connection. It is important to carry on the `conn` to the next function call or the state will be corrupted.
 
-On line 2 we send a request to the server. A reference to the request is returned: this reference is useful when sending concurrent requests, either with HTTP1 pipelining or with HTTP2 multiplexed streams.
+On line 2 we send a request to the server. A reference to the request is returned: this reference is useful when sending concurrent requests, either with HTTP/1 pipelining or with HTTP/2 multiplexed streams.
 
 Next we start a receive block waiting for a TCP active mode message and pass it to `stream/2`. The message is parsed and the response to the request is returned. As you can see the response is split over multiple tuples: `:status`, `:headers`, `:data`, and `:done`. This is because Mint was built from the ground with streaming in mind. The parts of the response will be returned continuously as TCP messages are passed to `stream/2` so that we don't have to wait for the full response to complete before starting to process it.
 
 If the response body is larger than a single packet `stream/2` may return multiple `:data` tuples and if the response includes trailing headers multiple `:headers` will be returned. When the response is complete `:done` will be returned.
 
-Note that if you send concurrent requests on a HTTP2 connection responses can be returned interleaved from the requests using HTTP2's stream multiplexing. Additionally, responses can be spread over multiple messages so we may need to continually receive messages and pass them to `stream/2`.
+Note that if you send concurrent requests on a HTTP/2 connection responses can be returned interleaved from the requests using HTTP/2's stream multiplexing. Additionally, responses can be spread over multiple messages so we may need to continually receive messages and pass them to `stream/2`.
 
 See more examples on how to use Mint in the [documentation](https://hexdocs.pm/mint).
 
@@ -58,9 +58,9 @@ Another good use case for Mint is [GenStage](https://github.com/elixir-lang/gen_
 
 Of course, none of this stops you from building a connection pool on top of Mint. The point is exactly that Mint won't impose an architecture onto you. At the end of the day, we hope Mint will be a useful building block for more complex scenario and use cases.
 
-## HTTP1 and HTTP2
+## HTTP/1 and HTTP/2
 
-The `Mint.HTTP` module has a single interface for both HTTP1 and HTTP2 connections and performs version negotation on HTTPS connections, HTTP connections default to HTTP1. You can specify which HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version-specific features.
+The `Mint.HTTP` module has a single interface for both HTTP/1 and HTTP/2 connections and performs version negotation on HTTPS connections, HTTP connections default to HTTP/1. You can specify which HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version-specific features.
 
 ## Safe-by-default HTTPS
 
