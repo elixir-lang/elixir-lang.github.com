@@ -6,7 +6,7 @@ category: Announcements
 excerpt: Mint is a new low-level HTTP library that aims to provide a small and functional core that others can build on top.
 ---
 
-[Mint](https://github.com/ericmj/mint) is a new low-level HTTP library that aims to provide a small and functional core that others can build on top. Mint is connection based, each connection is a single struct with an associated socket belonging to the process that started the connection. Since no extra processes are started for the connection you can chose your own process architecture that fits your application.
+[Mint](https://github.com/ericmj/mint) is a new low-level HTTP library that aims to provide a small and functional core that others can build on top. Mint is connection based, each connection is a single struct with an associated socket belonging to the process that started the connection. Since no extra processes are started for the connection, you can chose the process architecture that better fits your application.
 
 To validate this we built out the library with a common API supporting both HTTP1 and HTTP2 with automatic version negotiation. In addition, Mint comes with a CA certificate store to do safe by default HTTPS connections.
 
@@ -36,7 +36,7 @@ responses: [
 ]
 ```
 
-As we can all calls to `Mint.HTTP` functions returns an updated `conn` which holds the state for the connection, it is important to carry on the `conn` to the next function call or the state will be corrupted.
+As we can see all calls to `Mint.HTTP` functions returns an updated `conn` which holds the state for the connection, it is important to carry on the `conn` to the next function call or the state will be corrupted.
 
 On line 2 we send a request to the server. A reference to the request is returned, this reference is useful when sending concurrent requests, either with HTTP1 pipelining or with HTTP2 multiplexed streams.
 
