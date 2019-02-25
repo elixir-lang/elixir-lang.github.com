@@ -75,3 +75,5 @@ You can of course tweak specific SSL settings without re-building the safe defau
 The first version of Mint has just been released. It is an experimental library trying a new approach to building HTTP libraries so don't expect a fully stable API yet.
 
 Use Mint to explore new ideas for HTTP connection management and building higher level clients on top of Mint. In the future connection pooling and a higher level API may be added to supplement the current low level API, either directly to Mint or via different libraries.
+
+Mint is being announced in the official Elixir blog because it was originally being considered for inclusion in Elixir itself. However, at some point the Elixir team decided it doesn't make sense to include an HTTP client in Elixir itself, at least as long as Erlang/OTP ships with a client too. Mint is not maintained by the Elixir team, although it is maintained by Eric and Andrea, who are part of the team.
