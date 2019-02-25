@@ -60,7 +60,7 @@ Of course, none of this stops you from building a connection pool on top of Mint
 
 ## HTTP1 and HTTP2
 
-The `Mint.HTTP` module has a single interface for both HTTP1 and HTTP2 connections and performs version negotation on HTTPS connections, HTTP connections default to HTTP1. You can specify which version HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version specific features.
+The `Mint.HTTP` module has a single interface for both HTTP1 and HTTP2 connections and performs version negotation on HTTPS connections, HTTP connections default to HTTP1. You can specify which HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version-specific features.
 
 ## Safe by default HTTPS
 
