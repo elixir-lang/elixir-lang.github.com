@@ -54,7 +54,7 @@ Mint may seem more cumbersome to use than most other HTTP libraries you have use
 
 Many times you do not need a general purpose connection pool and can avoid the additional complexity, single point of failure, and potential performance bottlenecks that it brings. For example, if you are building quick CLI scripts, you most likely don't need a pool and performing a single one-off request with Mint is good enough.
 
-Another good use case for Mint is GenStage. If you write GenStage pipelines, it is most likely that you have a pool of producers that fetch data from external sources via HTTP. If you are using a high-level HTTP library, that comes with its own pool, now you have two pools, one of GenStage producers and another from the HTTP library. With Mint, you can have each GenStage producer manage its own connection, reducing overhead and simplifying the code.
+Another good use case for Mint is [GenStage](https://github.com/elixir-lang/gen_stage). If you write GenStage pipelines, it is most likely that you have a pool of producers that fetch data from external sources via HTTP. If you are using a high-level HTTP library, that comes with its own pool, now you have two pools, one of GenStage producers and another from the HTTP library. With Mint, you can have each GenStage producer manage its own connection, reducing overhead and simplifying the code.
 
 Of course, none of this stops you from building a connection pool on top of Mint. The point is exactly that Mint won't impose an architecture onto you. At the end of the day, we hope Mint will be a useful building block for more complex scenario and use cases
 
