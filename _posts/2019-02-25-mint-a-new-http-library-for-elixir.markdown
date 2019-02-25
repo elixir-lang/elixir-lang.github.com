@@ -38,7 +38,7 @@ responses: [
 
 As we can see all calls to `Mint.HTTP` functions return an updated `conn` which holds the state for the connection. It is important to carry on the `conn` to the next function call or the state will be corrupted.
 
-On line 2 we send a request to the server. A reference to the request is returned, this reference is useful when sending concurrent requests, either with HTTP1 pipelining or with HTTP2 multiplexed streams.
+On line 2 we send a request to the server. A reference to the request is returned: this reference is useful when sending concurrent requests, either with HTTP1 pipelining or with HTTP2 multiplexed streams.
 
 Next we start a receive block waiting for a TCP active mode message and pass it to `stream/2`. The message will be parsed and the responses to the request is returned. As you can see the response is split over multiple tuples: `:status`, `:headers`, `:data`, and `:done`. This is because Mint was built from the ground with streaming in mind. The parts of the response will be returned continuously as TCP messages are passed to `stream/2` so that we don't have to wait for the full response to complete before starting to process it.
 
