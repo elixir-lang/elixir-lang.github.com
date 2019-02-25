@@ -64,7 +64,7 @@ The `Mint.HTTP` module has a single interface for both HTTP1 and HTTP2 connectio
 
 ## Safe-by-default HTTPS
 
-If connecting over HTTPS Mint will perform certificate verification by default. We believe it's crucial that an HTTP library defaults to be secure out-of-the-box.
+When connecting over HTTPS, Mint will perform certificate verification by default. We believe it's crucial that an HTTP library defaults to be secure out of the box.
 
 Mint uses an optional dependency on [castore](https://github.com/ericmj/castore) to provide certificates from [Mozilla's CA Certificate Store](https://www.mozilla.org/en-US/about/governance/policies/security-group/certs/).
 
