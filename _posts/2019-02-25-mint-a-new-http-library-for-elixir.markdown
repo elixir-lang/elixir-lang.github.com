@@ -25,7 +25,7 @@ iex(3)> receive do
 ...(3)>   message ->
 ...(3)>     IO.inspect message, label: :message
 ...(3)>     {:ok, conn, responses} = Mint.HTTP.stream(conn, message)
-...(3)>     IO.inspect responses, label: :responses
+...(3)>     IO.inspect(responses, label: :responses)
 ...(3)> end
 message: {:tcp, #Port<0.8>, "HTTP/1.1 200 OK\r\n" <> ...}
 responses: [
