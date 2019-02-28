@@ -170,7 +170,7 @@ Now that we have defined our supervision tree, it is a great opportunity to intr
 iex> :observer.start
 ```
 
-A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.
+A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications. *Note that if you are on macOS Mojave and above, and have enabled _dark mode_, the GUI looks inconsistent and certain parts become unreadable. Please disable dark mode on macOS.*
 
 In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
 
