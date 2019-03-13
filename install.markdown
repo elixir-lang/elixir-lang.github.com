@@ -31,9 +31,10 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
   * Arch Linux (Community repo)
     * Run: `pacman -S elixir`
-  * openSUSE (and SLES 11 SP3+)
-    * Add Erlang devel repo: `zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang`
+  * openSUSE (and SLES)
+    * add Elixir/Erlang repo: `zypper ar -f obs://devel:languages:erlang/ Elixir-Factory`
     * Run: `zypper in elixir`
+    * optional: if you want to use the latest Erlang, you can use this repo: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
   * Gentoo
     * Run: `emerge --ask dev-lang/elixir`
   * GNU Guix
