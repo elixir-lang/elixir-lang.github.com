@@ -70,7 +70,13 @@ defmodule KVServer.CommandTest do
 end
 ```
 
-Run the test suite and the doctest should fail:
+Now run the test from `kv_umbrella/apps/kv_server` using `mix test`. You might have to provide the default port in kv_server/application.ex as below for the test to start
+
+```
+port = String.to_integer(System.get_env("PORT") || "4040")
+```
+
+At this point, the doctest should fail:
 
 ```
   1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
