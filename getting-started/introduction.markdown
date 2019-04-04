@@ -77,10 +77,9 @@ Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-start
 
 ## Asking questions
 
-When going through this getting started guide, it is common to have questions; after all, that is part of the learning process! There are many places you could ask them to learn more about Elixir:
+When going through this getting started guide, it is common to have questions; after all, that is part of the learning process! There are many places you could ask questions while learning Elixir, here are some of them:
 
   * [#elixir-lang on freenode IRC](irc://irc.freenode.net/elixir-lang)
-  * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
   * [Elixir Forum](http://elixirforum.com)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 
