@@ -111,7 +111,7 @@ Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many 
 
 We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#summary).
 
-## Macros hygiene
+## Macro hygiene
 
 Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
