@@ -170,7 +170,7 @@ Now that we have defined our supervision tree, it is a great opportunity to intr
 iex> :observer.start
 ```
 
-> Note: If you receive an `{:error...` tuple that mentions 'No driver found', ensure that you have installed `erlang` and not the headless `erlang-nox` package from your package manager. You can continue using the headless version, but will have no GUI tools.
+> Note: If you receive an `{:error, ...}` tuple that mentions "No driver found", ensure that you have installed `erlang` and not the headless `erlang-nox` package from your package manager. You can continue using the headless version, but you will have no GUI tools.
 
 A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.
 
