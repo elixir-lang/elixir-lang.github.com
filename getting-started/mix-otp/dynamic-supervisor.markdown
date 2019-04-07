@@ -170,7 +170,7 @@ Now that we have defined our supervision tree, it is a great opportunity to intr
 iex> :observer.start
 ```
 
-> Note: Some distributions and package managers do not install Erlang's complete standard library when you install Erlang. Therefore, if you receive an `{:error, ...}` tuple that mentions "No driver found" or similar, make sure that you have installed the complete version of Erlang or at least include its WX bindings (on ubuntu and some other distributions, the package named `erlang-nox` is headless). If you prefer, you can continue using your current version, but you will have no GUI tools.
+> Note: If you receive an `{:error, ...}` tuple similar to "No driver found" instead of seeing the observer window, here's what's happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support when you install Elixir. If this affects you, you can either replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on debian/ubuntu/arch), or you can continue using your current version without being able to use GUI tools.
 
 A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.
 
