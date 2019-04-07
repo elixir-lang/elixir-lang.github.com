@@ -170,7 +170,7 @@ Now that we have defined our supervision tree, it is a great opportunity to intr
 iex> :observer.start
 ```
 
-> Note: Some distributions and package managers do not install Erlang's complete standard library when you install Erlang. Therefore, if you receive an `{:error, ...}` tuple that mentions "No driver found" or similar, make sure that you have installed the complete version of Erlang or at least include its WX bindings. If you prefer, you can continue using your current version, but you will have no GUI tools.
+> Note: Some distributions and package managers do not install Erlang's complete standard library when you install Erlang. Therefore, if you receive an `{:error, ...}` tuple that mentions "No driver found" or similar, make sure that you have installed the complete version of Erlang or at least include its WX bindings (on ubuntu and some other distributions, the package named `erlang-nox` is headless). If you prefer, you can continue using your current version, but you will have no GUI tools.
 
 A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.
 
