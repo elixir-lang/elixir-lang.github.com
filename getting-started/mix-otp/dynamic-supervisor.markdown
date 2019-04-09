@@ -170,9 +170,9 @@ Now that we have defined our supervision tree, it is a great opportunity to intr
 iex> :observer.start
 ```
 
-> Note: If you receive an `{:error, ...}` tuple similar to "No driver found" instead of seeing the observer window, here's what's happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support when you install Elixir. If this affects you, you can either replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on debian/ubuntu/arch), or you can continue using your current version without being able to use GUI tools.
-
 A GUI should pop-up containing all sorts of information about our system, from general statistics to load charts as well as a list of all running processes and applications.
+
+> Note: If you receive an `{:error, ...}` tuple similar to "No driver found" instead of seeing the Observer window, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package. Alternatively, you can continue using your current version without being able to use GUI tools.
 
 In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
 
