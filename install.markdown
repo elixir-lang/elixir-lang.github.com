@@ -19,7 +19,7 @@ The preferred option for installing Elixir. Choose your operating system and too
 
 If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.
 
-### Mac OS X
+### macOS
 
   * Homebrew
     * Update your homebrew to latest: `brew update`
