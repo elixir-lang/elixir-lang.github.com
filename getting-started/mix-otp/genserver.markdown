@@ -102,13 +102,13 @@ defmodule KV.Registry do
 end
 ```
 
-The first function is `start_link/1`, which starts a new GenServer passing three arguments:
+The first function is `start_link/3`, which starts a new GenServer passing three arguments:
 
 1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
 
 2. The initialization arguments, in this case, the atom `:ok`
 
-3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1`, which defaults to an empty list. We will customize it later on
+3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/3`, which defaults to an empty list. We will customize it later on
 
 There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
