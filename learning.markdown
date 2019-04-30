@@ -217,7 +217,7 @@ This book intends to be a little guide about how to be the Erlang medic in a tim
 
 <h4 class="resource">Designing Elixir Systems with OTP</h4>
 
-<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
+<a class="cover" href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
 – by James Edward Gray, II and Bruce A. Tate"><img src="/images/learning/designing-elixir-systems.jpg" alt="Designing Elixir Systems with OTP cover" width="190" /></a>
 
 You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that’s kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what’s happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
