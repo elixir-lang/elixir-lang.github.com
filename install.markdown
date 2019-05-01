@@ -19,7 +19,7 @@ The preferred option for installing Elixir. Choose your operating system and too
 
 If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.
 
-### Mac OS X
+### macOS
 
   * Homebrew
     * Update your homebrew to latest: `brew update`
@@ -31,9 +31,10 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
   * Arch Linux (Community repo)
     * Run: `pacman -S elixir`
-  * openSUSE (and SLES 11 SP3+)
-    * Add Erlang devel repo: `zypper ar -f http://download.opensuse.org/repositories/devel:/languages:/erlang/openSUSE_Factory/ erlang`
+  * openSUSE (and SLES)
+    * add Elixir/Erlang repo: `zypper ar -f obs://devel:languages:erlang/ Elixir-Factory`
     * Run: `zypper in elixir`
+    * optional: if you want to use the latest Erlang, you can use this repo: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
   * Gentoo
     * Run: `emerge --ask dev-lang/elixir`
   * GNU Guix
@@ -126,7 +127,7 @@ If the tests pass, you are ready to go. Otherwise, feel free to open an issue [i
 
 ## Installing Erlang
 
-The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/resources/download.html). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.basho.com/riak/latest/ops/building/installing/erlang/).
+The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/resources/download.html). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
 
 For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools.
 
