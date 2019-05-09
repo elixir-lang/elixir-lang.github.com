@@ -47,7 +47,7 @@ defmodule LousyCalculator do
 end
 ```
 
-As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [notes in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html#notes).
+As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [typespecs docs](https://hexdocs.pm/elixir/typespecs.html#the-string-type).
 
 Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type.
 
@@ -120,7 +120,10 @@ Adopting a behaviour is straightforward:
 defmodule JSONParser do
   @behaviour Parser
 
-  def parse(str), do: # ... parse JSON
+  @impl Parser
+  def parse(str), do: {:ok, "some json " <> str} # ... parse JSON
+  
+  @impl Parser
   def extensions, do: ["json"]
 end
 ```
@@ -129,12 +132,32 @@ end
 defmodule YAMLParser do
   @behaviour Parser
 
-  def parse(str), do: # ... parse YAML
+  @impl Parser
+  def parse(str), do: {:ok, "some yaml " <> str} # ... parse YAML
+  
+  @impl Parser
   def extensions, do: ["yml"]
 end
 ```
 
 If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
+
+Furthermore, with `@impl` you can also make sure that you are implementing the **correct** callbacks from the given behaviour in an explicit manner. For example, the following parser implements both `parse` and `extensions`, however thanks to a typo, `BADParser` is implementing `parse/0` instead of `parse/1`.
+
+```elixir
+defmodule BADParser do
+  @behaviour Parser
+
+  @impl Parser
+  def parse, do: {:ok, "something bad"}
+  
+  @impl Parser
+  def extensions, do: ["bad"]
+end
+```
+
+This code generates a warning letting you know that you are mistakenly implementing `parse/0` instead of `parse/1`.
+You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/master/Module.html#module-impl).
 
 ### Dynamic dispatch
 

@@ -97,8 +97,8 @@ defmodule Math do
 end
 ```
 
-```bash
-iex math.exs
+```console
+$ iex math.exs
 ```
 
 ```iex

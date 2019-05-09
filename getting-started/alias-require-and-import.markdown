@@ -23,7 +23,7 @@ import Foo
 use Foo
 ```
 
-We are going to explore them in detail now. Keep in mind the first three are called directives because they have **lexical scope**, while `use` is a common extension point.
+We are going to explore them in detail now. Keep in mind the first three are called directives because they have **lexical scope**, while `use` is a common extension point that allows the used module to inject code.
 
 ## alias
 
@@ -132,7 +132,7 @@ Note that `import`ing a module automatically `require`s it.
 
 ## use
 
-The `use` macro is frequently used by developers to bring external functionality into the current lexical scope, often modules.
+The `use` macro is frequently used as an extension point. This means that, when you use a module `FooBar`, you allow that module to inject *any* code in the current module, such as importing itself or other modules, defining new functions, setting a module state, etc.
 
 For example, in order to write tests using the ExUnit framework, a developer should use the `ExUnit.Case` module:
 
@@ -162,6 +162,8 @@ defmodule Example do
   Feature.__using__(option: :value)
 end
 ```
+
+Since `use` allows any code to run, we can't really know the side-effects of using a module without reading its documentation. For this reason, `import` and `alias` are often preferred, as their semantics are defined by the language.
 
 ## Understanding Aliases
 

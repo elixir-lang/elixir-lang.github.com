@@ -268,7 +268,7 @@ is_binary <<"Hello">>    #=> true
 <<"Hello">> === "Hello"  #=> true
 ```
 
-In Elixir, the word **string** means a UTF-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be UTF-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module, that's not UTF-8 aware and works mostly with char lists.
+In Elixir, the word **string** means a UTF-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be UTF-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module that works mostly with both char lists and UTF-8 encoded binaries.
 
 Elixir also supports multiline strings (also called *heredocs*):
 
@@ -857,11 +857,10 @@ If you are not using rebar, the easiest approach to use Elixir in your existing 
 
 ## Further reading
 
-Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples.
+Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir.
 
 Elixir also provides a [Getting Started guide][6] and has [documentation available online][7].
 
 [4]: http://www.erlang.org/doc/programming_examples/users_guide.html
-[5]: http://schemecookbook.org/Erlang/TOC
 [6]: /getting-started/introduction.html
 [7]: /docs.html

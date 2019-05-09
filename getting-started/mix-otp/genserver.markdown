@@ -102,13 +102,13 @@ defmodule KV.Registry do
 end
 ```
 
-The first function is `start_link/1`, which starts a new GenServer passing three arguments:
+The first function is `start_link/1`, which starts a new GenServer passing a list of options. `start_link/1` calls out to `GenServer.start_link/3`, which takes three arguments:
 
-1. The module where the server callbacks are implemented, in this case `__MODULE__`, meaning the current module
+1. The module where the server callbacks are implemented, in this case `__MODULE__` (meaning the current module)
 
-2. The initialization arguments, in this case, the atom `:ok`
+2. The initialization arguments, in this case the atom `:ok`
 
-3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1`, which defaults to an empty list. We will customize it later on
+3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1` to `GenServer.start_link/3`
 
 There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
@@ -135,7 +135,7 @@ defmodule KV.RegistryTest do
   use ExUnit.Case, async: true
 
   setup do
-    {:ok, registry} = start_supervised KV.Registry
+    registry = start_supervised!(KV.Registry)
     %{registry: registry}
   end
 
@@ -153,7 +153,13 @@ end
 
 Our test should pass right out of the box!
 
-Once again, ExUnit will take care of shutting down the registry after every test since we used `start_supervised` to start it. If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
+There is one important difference between the `setup` block we wrote for `KV.Registry` and the one we wrote for `KV.Bucket`. Instead of starting the registry by hand by calling `KV.Registry.start_link/1`, we instead called [the `start_supervised!/1` function](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2), passing the `KV.Registry` module.
+
+The `start_supervised!` function will do the job of starting the `KV.Registry` process by calling `start_link/1`. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown before the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
+
+When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the previous setup block in `bucket_test.exs` to use `start_supervised!` too.
+
+If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
 
 ```elixir
 ## Client API
@@ -196,7 +202,7 @@ iex> flush()
 {:DOWN, #Reference<0.0.0.551>, :process, #PID<0.66.0>, :normal}
 ```
 
-Note `Process.monitor(pid)` returns a unique reference that allows us to match upcoming messages to that monitoring reference. After we stop the agent, we can `flush/0` all messages and notice a `:DOWN` message arrived, with the exact reference returned by monitor, notifying that the bucket process exited with reason `:normal`.
+Note `Process.monitor(pid)` returns a unique reference that allows us to match upcoming messages to that monitoring reference. After we stop the agent, we can `flush/0` all messages and notice a `:DOWN` message arrived, with the exact reference returned by `monitor`, notifying that the bucket process exited with reason `:normal`.
 
 Let's reimplement the server callbacks to fix the bug and make the test pass. First, we will modify the GenServer state to two dictionaries: one that contains `name -> pid` and another that holds `ref -> name`. Then we need to monitor the buckets on `handle_cast/2` as well as implement a `handle_info/2` callback to handle the monitoring messages. The full server callbacks implementation is shown below:
 
@@ -205,11 +211,12 @@ Let's reimplement the server callbacks to fix the bug and make the test pass. Fi
 
 def init(:ok) do
   names = %{}
-  refs  = %{}
+  refs = %{}
   {:ok, {names, refs}}
 end
 
-def handle_call({:lookup, name}, _from, {names, _} = state) do
+def handle_call({:lookup, name}, _from, state) do
+  {names, _} = state
   {:reply, Map.fetch(names, name), state}
 end
 

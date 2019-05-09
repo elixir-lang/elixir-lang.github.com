@@ -33,17 +33,17 @@ In order to build our key-value application, we are going to use three main tool
 
 * ***OTP*** _(Open Telecom Platform)_ is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications. In this chapter we will explore how many aspects from OTP integrate with Elixir, including supervision trees, event managers and more;
 
-* ***Mix*** is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;
+* ***[Mix](https://hexdocs.pm/mix/)*** is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;
 
-* ***ExUnit*** is a test-unit based framework that ships with Elixir;
+* ***[ExUnit](https://hexdocs.pm/ex_unit/)*** is a test-unit based framework that ships with Elixir;
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
-> This guide requires Elixir v1.5.0 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/install.html).
+> This guide requires Elixir v1.6.1 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/install.html).
 >
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
-> The final code for this guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.
+> The final code for the application built in this guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.
 
 > The Elixir guides are also available in EPUB format:
 >
@@ -57,13 +57,14 @@ When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` execu
 
 Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as the argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
 
-```bash
+```console
 $ mix new kv --module KV
 ```
 
 Mix will create a directory named `kv` with a few files in it:
 
     * creating README.md
+    * creating .formatter.exs
     * creating .gitignore
     * creating mix.exs
     * creating config
@@ -83,7 +84,7 @@ Let's take a brief look at those generated files.
 A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let's take a look at it:
 
 ```elixir
-defmodule KV.Mixfile do
+defmodule KV.MixProject do
   use Mix.Project
 
   def project do
@@ -96,14 +97,14 @@ defmodule KV.Mixfile do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
+  # Run "mix help compile.app" to learn about applications
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
+  # Run "mix help deps" to learn about dependencies
   defp deps do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
@@ -130,7 +131,7 @@ defmodule KV do
 
   ## Examples
 
-      iex> KV.hello
+      iex> KV.hello()
       :world
 
   """
@@ -143,7 +144,7 @@ end
 
 This structure is enough to compile our project:
 
-```bash
+```console
 $ cd kv
 $ mix compile
 ```
@@ -157,7 +158,7 @@ The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was ge
 
 Once the project is compiled, you can start an `iex` session inside the project by running:
 
-```bash
+```console
 $ iex -S mix
 ```
 
@@ -195,11 +196,11 @@ This file will be required by Mix every time before we run our tests. We can run
     ..
 
     Finished in 0.04 seconds
-    2 tests, 0 failures
+    1 doctest, 1 test, 0 failures
 
     Randomized with seed 540224
 
-Notice that by running `mix test`, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will explore in the next section.
+Notice that by running `mix test`, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will discuss later in this chapter.
 
 Furthermore, you can see that ExUnit prints a dot for each successful test and automatically randomizes tests too. Let's make the test fail on purpose and see what happens.
 
@@ -224,14 +225,14 @@ Now run `mix test` again (notice this time there will be no compilation):
 .
 
 Finished in 0.05 seconds
-2 tests, 1 failure
+1 doctest, 1 test, 1 failure
 ```
 
 For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left side and right side (rhs) of the `==` operator.
 
 In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in full, including the file and line number, and append it to `mix test`, Mix will load and run just that particular test:
 
-```bash
+```console
 $ mix test test/kv_test.exs:5
 ```
 
@@ -239,23 +240,37 @@ This shortcut will be extremely useful as we build our project, allowing us to q
 
 Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.
 
+## Automatic code formatting
+
+One of the files generated by `mix new` is the `.formatter.exs`. Elixir ships with a code formatter that is capable of automatically formatting our codebase according to consistent style. The formatter is triggered with the `mix format` task. The generated `.formatter.exs` file configures which files should be formatted when `mix format` runs.
+
+To give the formatter a try, change a file in the `lib` or `test` directories to include extra spaces or extra newlines, such as `def  hello  do`, and then run `mix format`.
+
+Most editors provide built-in integration with the formatter, allowing a file to be formatted on save or via a chosen keybinding. If you are learning Elixir, editor integration gives you useful and quick feedback when learning the Elixir syntax.
+
+For companies and teams, we recommend developers to run `mix format --check-formatted` on their continuous integration servers, ensuring all current and future code follows the standard.
+
+You can learn more about the code formatter by checking [the format task documentation](https://hexdocs.pm/mix/Mix.Tasks.Format.html) or by reading [the release announcement for Elixir v1.6](https://elixir-lang.org/blog/2018/01/17/elixir-v1-6-0-released/), the first version to include the formatter.
+
 ## Environments
 
-Mix supports the concept of "environments". They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
+Mix provides the concept of "environments". They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
 
 * `:dev` - the one in which Mix tasks (like `compile`) run by default
 * `:test` - used by `mix test`
 * `:prod` - the one you will use to run your project in production
 
-The environment applies only to the current project. As we will see later on, any dependency you add to your project will by default run in the `:prod` environment.
+The environment applies only to the current project. As we will see in future chapters, any dependency you add to your project will by default run in the `:prod` environment.
 
 Customization per environment can be done by accessing [the `Mix.env` function](https://hexdocs.pm/mix/Mix.html#env/0) in your `mix.exs` file, which returns the current environment as an atom. That's what we have used in the `:start_permanent` options:
 
 ```elixir
 def project do
-  [...,
-   start_permanent: Mix.env == :prod,
-   ...]
+  [
+    ...,
+    start_permanent: Mix.env == :prod,
+    ...
+  ]
 end
 ```
 
@@ -263,7 +278,7 @@ When true, the `:start_permanent` option starts your application in permanent mo
 
 Mix will default to the `:dev` environment, except for the `test` task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
 
-```bash
+```console
 $ MIX_ENV=prod mix compile
 ```
 
@@ -277,11 +292,11 @@ Or on Windows:
 
 ## Exploring
 
-There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/).
+There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/). Read [the Mix source code here](https://github.com/elixir-lang/elixir/tree/master/lib/mix).
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 
-```bash
+```console
 $ mix help
 ```
 

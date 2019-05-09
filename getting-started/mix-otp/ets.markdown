@@ -21,7 +21,7 @@ ETS allows us to store any Elixir term in an in-memory table. Working with ETS t
 
 ```iex
 iex> table = :ets.new(:buckets_registry, [:set, :protected])
-8207
+#Reference<0.1885502827.460455937.234656>
 iex> :ets.insert(table, {"foo", self()})
 true
 iex> :ets.lookup(table, "foo")
@@ -99,7 +99,7 @@ defmodule KV.Registry do
       {:ok, _pid} ->
         {:noreply, {names, refs}}
       :error ->
-        {:ok, pid} = KV.BucketSupervisor.start_bucket()
+        {:ok, pid} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
         ref = Process.monitor(pid)
         refs = Map.put(refs, ref, name)
         :ets.insert(names, {name, pid})
@@ -128,10 +128,12 @@ The changes we have performed above have broken our tests because the registry r
 
 ```elixir
   setup context do
-    {:ok, _} = start_supervised({KV.Registry, name: context.test})
+    _ = start_supervised!({KV.Registry, name: context.test})
     %{registry: context.test}
   end
 ```
+
+Since each test has a unique name, we use the test name to name our registries. This way, we no longer need to pass the registry PID around, instead we identify it by the test name. Also note we assigned the result of `start_supervised!` to underscore (`_`). This idiom is often used to signal that we are not interested in the result of `start_supervised!`.
 
 Once we change `setup`, some tests will continue to fail. You may even notice tests pass and fail inconsistently between runs. For example, the "spawns buckets" test:
 
@@ -158,7 +160,7 @@ How can this line fail if we just created the bucket in the previous line?
 The reason those failures are happening is because, for didactic purposes, we have made two mistakes:
 
   1. We are prematurely optimizing (by adding this cache layer)
-  2. We are using `cast/2` (while we should be using `call/2`)
+  2. We are using `cast/2` (while we should be using `call/3`)
 
 ## Race conditions?
 
@@ -190,7 +192,7 @@ def handle_call({:create, name}, _from, {names, refs}) do
     {:ok, pid} ->
       {:reply, pid, {names, refs}}
     :error ->
-      {:ok, pid} = KV.BucketSupervisor.start_bucket()
+      {:ok, pid} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       :ets.insert(names, {name, pid})
@@ -203,11 +205,11 @@ We changed the callback from `handle_cast/2` to `handle_call/3` and changed it t
 
 Let's run the tests once again. This time though, we will pass the `--trace` option:
 
-```bash
+```console
 $ mix test --trace
 ```
 
-The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. This time we should be down to one or two intermittent failures:
+The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. You may see one or two intermittent failures:
 
 ```
   1) test removes buckets on exit (KV.RegistryTest)
@@ -220,12 +222,13 @@ The `--trace` option is useful when your tests are deadlocking or there are race
        test/kv/registry_test.exs:23
 ```
 
-According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table.
+According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table. Since this is a race condition, you may not be able to reproduce it on your machine, but it is there.
 
-Unfortunately this time we cannot simply change `handle_info/2`, the operation responsible for cleaning the ETS table, to a synchronous operation. Instead, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket crashed.
+Last time we fixed the race condition by replacing the asynchronous operation, a `cast`, by a `call`, which is synchronous. Unfortunately, the `handle_info/2` callback we are using to receive the `:DOWN` message and delete the entry from the ETS table does not have a synchronous equivalent. This time, we need to find a way to guarantee the registry has processed the `:DOWN` notification sent when the bucket process terminated.
 
-An easy way to do so is by sending a synchronous request to the registry: because messages are processed in order, if the registry replies to a request sent after the `Agent.stop` call, it means that the `:DOWN` message has been processed. Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop` in both tests:
+An easy way to do so is by sending a synchronous request to the registry before we do the bucket lookup. The `Agent.stop/2` operation is synchronous and only returns after the bucket process terminates and all `:DOWN` messages are delivered. Therefore, once `Agent.stop/2` returns, the registry has already received the `:DOWN` message but it may not have processed it yet. In order to guarantee the processing of the `:DOWN` message, we can do a synchronous request. Since messages are processed in order, once the registry replies to the synchronous request, then the `:DOWN` message will definitely have been processed.
 
+Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop/2` in both tests:
 
 ```elixir
   test "removes buckets on exit", %{registry: registry} do
@@ -252,6 +255,21 @@ An easy way to do so is by sending a synchronous request to the registry: becaus
 ```
 
 Our tests should now (always) pass!
+
+Note that the purpose of the test is to check whether the registry processes the bucket's shutdown message correctly. The fact that the `KV.Registry.lookup/2` sends us a valid bucket does not mean that the bucket is still alive by the time you call it. For example, it might have crashed for some reason. The following test depicts this situation:
+
+```elixir
+  test "bucket can crash at any time", %{registry: registry} do
+    KV.Registry.create(registry, "shopping")
+    {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+
+    # Simulate a bucket crash by explicitly and synchronously shutting it down
+    Agent.stop(bucket, :shutdown)
+
+    # Now trying to call the dead process causes a :noproc exit
+    catch_exit KV.Bucket.put(bucket, "milk", 3)
+  end
+```
 
 This concludes our optimization chapter. We have used ETS as a cache mechanism where reads can happen from any processes but writes are still serialized through a single process. More importantly, we have also learned that once data can be read asynchronously, we need to be aware of the race conditions it might introduce.
 

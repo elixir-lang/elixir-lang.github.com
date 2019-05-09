@@ -79,7 +79,7 @@ iex> trunc(3.58)
 
 ## Identifying functions
 
-Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments that the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes 1 argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of `2`.
+Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments that the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes `1` argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of `2`.
 
 ## Booleans
 
@@ -127,7 +127,7 @@ iex> is_boolean(:false)
 true
 ```
 
-Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case are also atoms:
+Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case and are also atoms:
 
 ```iex
 iex> is_atom(Hello)
@@ -212,9 +212,11 @@ iex> add.(1, 2)
 3
 iex> is_function(add)
 true
-iex> is_function(add, 2) # check if add is a function that expects exactly 2 arguments
+# check if add is a function that expects exactly 2 arguments
+iex> is_function(add, 2)
 true
-iex> is_function(add, 1) # check if add is a function that expects exactly 1 argument
+# check if add is a function that expects exactly 1 argument
+iex> is_function(add, 1)
 false
 ```
 
@@ -262,7 +264,7 @@ iex> [1, true, 2, false, 3, true] -- [true, false]
 [1, 2, 3, true]
 ```
 
-List operators never modify the existing list. Concatenating to or removing elements from a list returns a new list. We say that Elixir data structures are *immutable*. One advantage of immutability is that it leads to clearer code. You can freely pass the data around with the guarantee no one will change it - only transform it.
+List operators never modify the existing list. Concatenating to or removing elements from a list returns a new list. We say that Elixir data structures are *immutable*. One advantage of immutability is that it leads to clearer code. You can freely pass the data around with the guarantee no one will mutate it in memory - only transform it.
 
 Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of the list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
 
@@ -304,6 +306,8 @@ Raw representation
   [104, 101, 108, 108, 111]
 Reference modules
   List
+Implemented protocols
+  ...
 ```
 
 Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:

@@ -24,9 +24,9 @@ A TCP server, in broad strokes, performs the following steps:
 Let's implement those steps. Move to the `apps/kv_server` application, open up `lib/kv_server.ex`, and add the following functions:
 
 ```elixir
-require Logger
-
 defmodule KVServer do
+  require Logger
+
   def accept(port) do
     # The options below mean:
     #
@@ -35,9 +35,9 @@ defmodule KVServer do
     # 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available
     # 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes
     #
-    {:ok, socket} = :gen_tcp.listen(port,
-                      [:binary, packet: :line, active: false, reuseaddr: true])
-    Logger.info "Accepting connections on port #{port}"
+    {:ok, socket} =
+      :gen_tcp.listen(port, [:binary, packet: :line, active: false, reuseaddr: true])
+    Logger.info("Accepting connections on port #{port}")
     loop_acceptor(socket)
   end
 
@@ -94,7 +94,7 @@ iex> KVServer.accept(4040)
 
 The server is now running, and you will even notice the console is blocked. Let's use [a `telnet` client](https://en.wikipedia.org/wiki/Telnet) to access our server. There are clients available on most operating systems, and their command lines are generally similar:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.
@@ -126,7 +126,7 @@ For now, there is a more important bug we need to fix: what happens if our TCP a
 
 We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/3` function that receives a module, function, and arguments, allowing us to run a given function as part of a supervision tree.
+[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/1` function that receives an anonymous function and executes it inside a new process that will be of a supervision tree.
 
 Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
@@ -141,17 +141,21 @@ Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change th
   end
 ```
 
+As usual, we've passed a two-element tuple as a child specification, which in turn will invoke `Task.start_link/1`.
+
 With this change, we are saying that we want to run `KVServer.accept(4040)` as a task. We are hardcoding the port for now but this could be changed in a few ways, for example, by reading the port out of the system environment when starting the application:
 
 ```elixir
-port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+port = String.to_integer(System.get_env("PORT") || "4040")
 # ...
 {Task, fn -> KVServer.accept(port) end}
 ```
 
-Now that the server is part of the supervision tree, it should start automatically when we run the application. Type `mix run --no-halt` in the terminal, and once again use the `telnet` client to make sure that everything still works:
+Insert these changes in your code and now you may start your application using the following command `PORT=4321 mix run --no-halt`, notice how we are passing the port as a variable, but still defaults to 4040 if none is given.
 
-```bash
+Now that the server is part of the supervision tree, it should start automatically when we run the application. Start your server, now passing the port, and once again use the `telnet` client to make sure that everything still works:
+
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.
@@ -166,7 +170,7 @@ Yes, it works! However, does it *scale*?
 
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.
@@ -190,7 +194,7 @@ defp loop_acceptor(socket) do
 end
 ```
 
-to use `Task.start_link/1`, which is similar to `Task.start_link/3`, but it receives an anonymous function instead of module, function and arguments:
+to also use `Task.start_link/1`:
 
 ```elixir
 defp loop_acceptor(socket) do
@@ -212,9 +216,11 @@ Let's change `start/2` once again, to add a supervisor to our tree:
 
 ```elixir
   def start(_type, _args) do
+    port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
-      {Task, fn -> KVServer.accept(4040) end}
+      {Task, fn -> KVServer.accept(port) end}
     ]
 
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
@@ -291,9 +297,11 @@ We could fix this by defining our own module that calls `use Task, restart: :per
 
 ```elixir
   def start(_type, _args) do
+    port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
-      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end}, restart: :permanent)
+      Supervisor.child_spec({Task, fn -> KVServer.accept(port) end}, restart: :permanent)
     ]
 
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]

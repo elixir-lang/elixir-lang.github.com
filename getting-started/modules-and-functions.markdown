@@ -44,7 +44,7 @@ end
 
 This file can be compiled using `elixirc`:
 
-```bash
+```console
 $ elixirc math.ex
 ```
 
@@ -81,7 +81,7 @@ IO.puts Math.sum(1, 2)
 
 And execute it as:
 
-```bash
+```console
 $ elixir math.exs
 ```
 
@@ -125,6 +125,8 @@ IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
 IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 ```
 
+*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#trailing-question-mark-foo).*
+
 Giving an argument that does not match any of the clauses raises an error.
 
 Similar to constructs like `if`, named functions support both `do:` and `do`/`end` block syntax, as [we learned `do`/`end` is a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#doend-blocks). For example, we can edit `math.exs` to look like this:
@@ -142,7 +144,7 @@ And it will provide the same behaviour. You may use `do:` for one-liners but alw
 
 Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Start `iex`, running the `math.exs` file defined above:
 
-```bash
+```console
 $ iex math.exs
 ```
 
@@ -175,9 +177,14 @@ iex> fun = &(&1 + 1)
 #Function<6.71889879/1 in :erl_eval.expr/5>
 iex> fun.(1)
 2
+
+iex> fun2 = &"Good #{&1}"
+#Function<6.127694169/1 in :erl_eval.expr/5>
+iex)> fun2.("morning")
+"Good morning"
 ```
 
-The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
+The `&1` represents the first argument passed into the function. `&(&1 + 1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
 
 If you want to capture a function from a module, you can do `&Module.function()`:
 
@@ -244,6 +251,8 @@ IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 IO.puts Concat.join("Hello")               #=> Hello
 ```
 
+*The leading underscore in `_sep` means that the variable will be ignored in this function; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#underscore-_foo).*
+
 When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 
 ```elixir
@@ -266,7 +275,7 @@ If we save the code above in a file named "concat.ex" and compile it, Elixir wil
 
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 
-```bash
+```console
 $ iex concat.exs
 ```
 

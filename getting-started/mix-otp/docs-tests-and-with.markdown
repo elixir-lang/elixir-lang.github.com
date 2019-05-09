@@ -36,7 +36,7 @@ After the parsing is done, we will update our server to dispatch the parsed comm
 
 On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via `mix help` or by typing `h Enum` or another module in an IEx console.
 
-In this section, we will implement the parsing functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples.
+In this section, we will implement the parsing functionality, document it and make sure our documentation is up to date with doctests. This helps us provide documentation with accurate code samples.
 
 Let's create our command parser at `lib/kv_server/command.ex` and start with the doctest:
 
@@ -47,7 +47,7 @@ defmodule KVServer.Command do
 
   ## Examples
 
-      iex> KVServer.Command.parse "CREATE shopping\r\n"
+      iex> KVServer.Command.parse("CREATE shopping\r\n")
       {:ok, {:create, "shopping"}}
 
   """
@@ -145,26 +145,26 @@ end
 
 Notice how we were able to elegantly parse the commands without adding a bunch of `if/else` clauses that check the command name and number of arguments!
 
-Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:
+Finally, you may have observed that each doctest corresponds to a different test in our suite, which now reports a total of 7 doctests. That is because ExUnit considers the following to define two different doctests:
 
 ```iex
-iex> KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
+iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
 
-iex> KVServer.Command.parse "GET shopping\r\n"
+iex> KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 ```
 
-Without new lines, as seen below, ExUnit compiles it into a single test:
+Without new lines, as seen below, ExUnit compiles it into a single doctest:
 
 ```iex
-iex> KVServer.Command.parse "UNKNOWN shopping eggs\r\n"
+iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
-iex> KVServer.Command.parse "GET shopping\r\n"
+iex> KVServer.Command.parse("GET shopping\r\n")
 {:error, :unknown_command}
 ```
 
-You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html).
+As the name says, doctest is documentation first and a test later. Their goal is not to replace tests but to provide up to date documentation. You can read more about doctests in [the `ExUnit.DocTest` docs](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html).
 
 ## with
 
@@ -232,17 +232,17 @@ defp write_line(socket, {:ok, text}) do
 end
 
 defp write_line(socket, {:error, :unknown_command}) do
-  # Known error. Write to the client.
+  # Known error; write to the client
   :gen_tcp.send(socket, "UNKNOWN COMMAND\r\n")
 end
 
 defp write_line(_socket, {:error, :closed}) do
-  # The connection was closed, exit politely.
+  # The connection was closed, exit politely
   exit(:shutdown)
 end
 
 defp write_line(socket, {:error, error}) do
-  # Unknown error. Write to the client and exit.
+  # Unknown error; write to the client and exit
   :gen_tcp.send(socket, "ERROR\r\n")
   exit(error)
 end
@@ -250,7 +250,7 @@ end
 
 If we start our server, we can now send commands to it. For now, we will get two different responses: "OK" when the command is known and "UNKNOWN COMMAND" otherwise:
 
-```bash
+```console
 $ telnet 127.0.0.1 4040
 Trying 127.0.0.1...
 Connected to localhost.
@@ -301,24 +301,24 @@ def run({:create, bucket}) do
 end
 
 def run({:get, bucket, key}) do
-  lookup bucket, fn pid ->
+  lookup(bucket, fn pid ->
     value = KV.Bucket.get(pid, key)
     {:ok, "#{value}\r\nOK\r\n"}
-  end
+  end)
 end
 
 def run({:put, bucket, key, value}) do
-  lookup bucket, fn pid ->
+  lookup(bucket, fn pid ->
     KV.Bucket.put(pid, key, value)
     {:ok, "OK\r\n"}
-  end
+  end)
 end
 
 def run({:delete, bucket, key}) do
-  lookup bucket, fn pid ->
+  lookup(bucket, fn pid ->
     KV.Bucket.delete(pid, key)
     {:ok, "OK\r\n"}
-  end
+  end)
 end
 
 defp lookup(bucket, callback) do
@@ -330,6 +330,8 @@ end
 ```
 
 Every function clause dispatches the appropriate command to the `KV.Registry` server that we registered during the `:kv` application startup. Since our `:kv_server` depends on the `:kv` application, it is completely fine to depend on the services it provides.
+
+You might have noticed we have a function head, `def run(command)`, without a body. In the [Modules and Functions](/getting-started/modules-and-functions#default-arguments) chapter, we learned that a bodiless function can be used to declare default arguments for a multi-clause function. Here is another use case where we use a function without a body to document what the arguments are.
 
 Note that we have also defined a private function named `lookup/2` to help with the common functionality of looking up a bucket and returning its `pid` if it exists, `{:error, :not_found}` otherwise.
 
@@ -442,8 +444,8 @@ In case the test crashes, you will see a report as follows:
      13:44:10.035 [info]  Application kv exited: :stopped
 ```
 
-With this simple integration test, we start to see why integration tests may be slow. Not only this test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application.
+With this simple integration test, we start to see why integration tests may be slow. Not only this test cannot run asynchronously, it also requires the expensive setup of stopping and starting the `:kv` application. In fact, your test suite may even fail and run into timeouts. If that's the case, you can tweak the `:gen_tcp.recv(socket, 0)` call to pass a third argument, which is the timeout in milliseconds. In the next chapter we will learn about application configuration, which we could use to make the timeout configurable, if desired.
 
 At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test.
 
-In the next chapter, we will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration.
+Let's move to the last chapter. We will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration.

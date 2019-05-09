@@ -14,8 +14,10 @@ In this last chapter, we will go back to the `:kv` application and add a routing
 The routing layer will receive a routing table of the following format:
 
 ```elixir
-[{?a..?m, :"foo@computer-name"},
- {?n..?z, :"bar@computer-name"}]
+[
+  {?a..?m, :"foo@computer-name"},
+  {?n..?z, :"bar@computer-name"}
+]
 ```
 
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
@@ -32,7 +34,7 @@ Elixir ships with facilities to connect nodes and exchange information between t
 
 In order to run distributed code, we need to start the <abbr title="Virtual Machine">VM</abbr> with a name. The name can be short (when in the same network) or long (requires the full computer address). Let's start a new IEx session:
 
-```bash
+```console
 $ iex --sname foo
 ```
 
@@ -53,7 +55,7 @@ iex> defmodule Hello do
 
 If you have another computer on the same network with both Erlang and Elixir installed, you can start another shell on it. If you don't, you can start another IEx session in another terminal. In either case, give it the short name of `bar`:
 
-```bash
+```console
 $ iex --sname bar
 ```
 
@@ -127,7 +129,7 @@ Distributed tasks are exactly the same as supervised tasks. The only difference 
 
 Now, let's start two named nodes again, but inside the `:kv` application:
 
-```bash
+```console
 $ iex --sname foo -S mix
 $ iex --sname bar -S mix
 ```
@@ -194,9 +196,8 @@ defmodule KV.Router do
   The routing table.
   """
   def table do
-    # Replace computer-name with your local machine name.
-    [{?a..?m, :"foo@computer-name"},
-     {?n..?z, :"bar@computer-name"}]
+    # Replace computer-name with your local machine name
+    [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
   end
 end
 ```
@@ -228,13 +229,13 @@ The second test checks that the code raises for unknown entries.
 
 In order to run the first test, we need to have two nodes running. Move into `apps/kv` and let's restart the node named `bar` which is going to be used by tests.
 
-```bash
+```console
 $ iex --sname bar -S mix
 ```
 
 And now run tests with:
 
-```bash
+```console
 $ elixir --sname foo -S mix test
 ```
 
@@ -266,7 +267,7 @@ ExUnit.start(exclude: exclude)
 
 Now run tests with `mix test`:
 
-```bash
+```console
 $ mix test
 Excluding tags: [distributed: true]
 
@@ -280,7 +281,7 @@ This time all tests passed and ExUnit warned us that distributed tests were bein
 
 The `mix test` command also allows us to dynamically include and exclude tags. For example, we can run `$ mix test --include distributed` to run distributed tests regardless of the value set in `test/test_helper.exs`. We could also pass `--exclude` to exclude a particular tag from the command line. Finally, `--only` can be used to run only tests with a particular tag:
 
-```bash
+```console
 $ elixir --sname foo -S mix test --only distributed
 ```
 
@@ -296,9 +297,11 @@ Open up `apps/kv/mix.exs` and change the `application/0` function to return the 
 
 ```elixir
 def application do
-  [extra_applications: [:logger],
-   env: [routing_table: []],
-   mod: {KV, []}]
+  [
+    extra_applications: [:logger],
+    env: [routing_table: []],
+    mod: {KV, []}
+  ]
 end
 ```
 
@@ -319,7 +322,7 @@ We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv
 
 Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
 
-```bash
+```console
 $ iex --sname bar -S mix
 $ elixir --sname foo -S mix test --only distributed
 ```
@@ -335,10 +338,8 @@ Start IEx with `iex -S mix` and you can see that the IEx prompt has changed.
 This means we can also configure our `:routing_table` directly in the `apps/kv/config/config.exs` file:
 
 ```elixir
-# Replace computer-name with your local machine nodes.
-config :kv, :routing_table,
-       [{?a..?m, :"foo@computer-name"},
-        {?n..?z, :"bar@computer-name"}]
+# Replace computer-name with your local machine nodes
+config :kv, :routing_table, [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
 ```
 
 Restart the nodes and run distributed tests again. Now they should all pass.
@@ -375,6 +376,6 @@ In this chapter, we have built a simple router as a way to explore the distribut
 
 Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.
 
-If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/riak/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
+If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/products/riak-kv/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
 
 Happy coding!

@@ -1,15 +1,13 @@
 <div class="widget news">
   <h3>
-    News: <a href="/blog/2017/12/05/whats-new-in-elixir/">What's new in Elixir</a>
+    News: <a href="/blog/2019/01/14/elixir-v1-8-0-released/">Elixir v1.8 released</a>
   </h3>
 </div>
 
 <div class="widget search">
-  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search">
-		<div>
-			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield" aria-label="Search box">
-			<input type="hidden" name="sitesearch" value="elixir-lang.org">
-			<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
-		</div>
+  <form method="get" id="search-form" class="search-form" action="https://www.google.com/search" onsubmit="document.getElementById('searchq').value = document.getElementById('searchfield').value + ' site:elixir-lang.org | site:hexdocs.pm/elixir | site:hexdocs.pm/mix | site:hexdocs.pm/eex | site:hexdocs.pm/logger | site:hexdocs.pm/iex | site:hexdocs.pm/ex_unit'; return true;">
+		<input type="hidden" id="searchq" name="q" value="">
+    <input class="search-text" type="text" placeholder="Search..." id="searchfield" aria-label="Search box">
+		<input class="search-submit button" name="submit" type="submit" value="Search" aria-label="Search button">
 	</form>
 </div>

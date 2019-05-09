@@ -50,6 +50,8 @@ iex> ?ł
 322
 ```
 
+These can be used anywhere you want to refer to a characters codepoint.
+
 You can also use the functions in [the `String` module](https://hexdocs.pm/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
 
 ```iex
@@ -119,7 +121,7 @@ iex> is_binary(<<1 :: size(1)>>)
 false
 iex> is_bitstring(<<1 :: size(1)>>)
 true
-iex> bit_size(<< 1 :: size(1)>>)
+iex> bit_size(<<1 :: size(1)>>)
 1
 ```
 
@@ -194,5 +196,23 @@ iex> to_string 1
 ```
 
 Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on.
+
+String (binary) concatenation uses the `<>` operator but charlists use the lists concatenation operator `++`:
+
+```iex
+iex> 'this ' <> 'fails'
+** (CompileError) iex:2: invalid literal 'this ' in <<>>
+    (elixir) src/elixir_bitstring.erl:19: :elixir_bitstring.expand/6
+    (elixir) src/elixir_bitstring.erl:12: :elixir_bitstring.expand/4
+    (elixir) expanding macro: Kernel.<>/2
+    iex:2: (file)
+iex> 'this ' ++ 'works'
+'this works'
+iex> "he" ++ "llo"
+** (ArgumentError) argument error
+    :erlang.++("he", "llo")
+iex> "he" <> "llo"
+"hello"
+```
 
 With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures.

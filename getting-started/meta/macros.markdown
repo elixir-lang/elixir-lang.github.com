@@ -39,7 +39,7 @@ The function receives the arguments and passes them to `if`. However, as we lear
 
 Let's start `iex` with the module above:
 
-```bash
+```console
 $ iex macros.exs
 ```
 
@@ -111,7 +111,7 @@ Constructs such as `unless/2`, `defmacro/2`, `def/2`, `defprotocol/2`, and many 
 
 We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, [the full list of special forms is available in `Kernel.SpecialForms`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#summary).
 
-## Macros hygiene
+## Macro hygiene
 
 Elixir macros have late resolution. This guarantees that a variable defined inside a quote won't conflict with a variable defined in the context where that macro is expanded. For example:
 
@@ -157,6 +157,8 @@ HygieneTest.go
 # => 1
 ```
 
+The code above will work but issue a warning: `variable "a" is unused`. The macro is overriding the original value and the original value is never used.
+
 Variable hygiene only works because Elixir annotates variables with their context. For example, a variable `x` defined on line 3 of a module would be represented as:
 
 ```elixir
@@ -177,7 +179,7 @@ Sample.quoted #=> {:x, [line: 3], Sample}
 
 Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers these two variables as coming from different contexts and handles them accordingly.
 
-Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/2`, although one must be careful when using those as they directly change the user environment.
+Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like `var!/2` and `alias!/1`, although one must be careful when using those as they directly change the user environment.
 
 Sometimes variable names might be dynamically created. In such cases, `Macro.var/2` can be used to define new variables:
 
