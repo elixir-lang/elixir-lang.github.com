@@ -25,7 +25,7 @@ iex> "foo" <> "bar"
 "foobar"
 ```
 
-Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect a boolean (`true` or `false`) as their first argument:
+Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect something that evaluates to a boolean (`true` or `false`) as their first argument:
 
 ```iex
 iex> true and true
