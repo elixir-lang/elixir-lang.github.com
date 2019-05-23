@@ -54,7 +54,7 @@ section: getting-started
               <a class="page-numbers spec" href="#container">Top</a>
             {% unless forloop.last %}
               {% assign next = guide.pages[forloop.index] %}
-              <a href="{{guide.dir}}{{next.slug}}.html" class="previous page-numbers spec" title="{{next.title | escape}}">Next &rarr;</a>
+              <a href="{{guide.dir}}{{next.slug}}.html" class="next page-numbers spec" title="{{next.title | escape}}">Next &rarr;</a>
             {% endunless %}
           </div>
         {% endif %}

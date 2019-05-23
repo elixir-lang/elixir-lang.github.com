@@ -12,6 +12,28 @@
   <script src="/js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+      $(document).on('keyup', function(e) {
+        if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+
+        switch(e.which) {
+          case 37: // left arrow
+            goToPage('previous');
+          break;
+          case 39: // right arrow
+            goToPage('next');
+          break;
+        }
+      });
+
+      function goToPage(target) {
+        var href = $('.pagination .' + target).attr('href');
+
+        if (href) document.location = href;
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
       $('.toc').toc({
         title: '',
         listType: 'ol',
