@@ -81,6 +81,7 @@ When going through this getting started guide, it is common to have questions; a
 
   * [Official #elixir-lang on freenode IRC](irc://irc.freenode.net/elixir-lang)
   * [Elixir Forum](http://elixirforum.com)
+  * [Elixir on Reddit](https://www.reddit.com/r/elixir)
   * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
   * [Elixir on Discord](https://discord.gg/elixir)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
