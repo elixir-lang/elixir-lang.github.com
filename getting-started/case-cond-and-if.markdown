@@ -100,7 +100,7 @@ iex> f2 = fn
 
 ## `cond`
 
-`case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:
+`case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that does not evaluate to `nil` or `false`. In such cases, one may use `cond`:
 
 ```iex
 iex> cond do
@@ -116,7 +116,7 @@ iex> cond do
 
 This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
 
-If none of the conditions return true, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
+If all of the conditions return `nil` or `false`, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 
 ```iex
 iex> cond do
