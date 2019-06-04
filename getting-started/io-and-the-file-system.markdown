@@ -49,8 +49,6 @@ iex> File.read("hello")
 
 A file can also be opened with `:utf8` encoding, which tells the `File` module to interpret the bytes read from the file as UTF-8-encoded bytes.
 
-The alert reader noticed that opening a file returns a process id. This is also why the IO module is being introduced after presenting processes and it is handled [later in this guide](#processes_and_group_leaders) as optional material.
-
 Besides functions for opening, reading and writing files, the `File` module has many functions to work with the file system. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` to create directories and all their parent chain. There are even `File.cp_r/2` and `File.rm_rf/1` to respectively copy and remove files and directories recursively (i.e., copying and removing the contents of the directories too).
 
 You will also notice that functions in the `File` module have two variants: one "regular" variant and another variant with a trailing bang (`!`). For example, when we read the `"hello"` file in the example above, we use `File.read/1`. Alternatively, we can use `File.read!/1`:
@@ -104,14 +102,14 @@ With this, we have covered the main modules that Elixir provides for dealing wit
 
 ## Processes and group leaders
 
-You noticed, or we had you notice, that `File.open/2` returns a tuple like `{:ok, pid}`:
+You may have noticed that `File.open/2` returns a tuple like `{:ok, pid}`:
 
 ```iex
 iex> {:ok, file} = File.open("hello", [:write])
 {:ok, #PID<0.47.0>}
 ```
 
-That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). In particular, a file being a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated.
+That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). Given a file is a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated:
 
 ```iex
 iex> File.close(file)
@@ -133,33 +131,9 @@ iex> IO.write(pid, "hello")
 ** (ErlangError) erlang error: :terminated
 ```
 
-After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result that we did not supply.
+After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result, which we did not supply.
 
-The overly inquisitive reader can have a look and check what happens if you send such a message to a legitimate file process, but for the sake of this introduction, we better stop this deep from the surface.
-
-The [`StringIO`](https://hexdocs.pm/elixir/StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
-
-```iex
-iex> {:ok, pid} = StringIO.open("hello")
-{:ok, #PID<0.43.0>}
-iex> IO.read(pid, 2)
-"he"
-```
-
-By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**.
-
-When you write to `:stdio`, you are actually sending a message to the group leader, which writes to the standard-output file descriptor:
-
-```iex
-iex> IO.puts(:stdio, "hello")
-hello
-:ok
-iex> IO.puts(Process.group_leader(), "hello")
-hello
-:ok
-```
-
-The group leader can be configured per process and is used in different situations. For example, when executing code in a remote terminal, it guarantees messages in a remote node are redirected and printed in the terminal that triggered the request.
+By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows I/O messages to be routed between different nodes running Distributed Erlang or even exchange files to perform read/write operations across nodes.
 
 ## `iodata` and `chardata`
 
