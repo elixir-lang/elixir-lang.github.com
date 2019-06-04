@@ -45,16 +45,11 @@ iex> File.close(file)
 :ok
 iex> File.read("hello")
 {:ok, "world"}
-iex> IO.binwrite(file, "świat")
-{:error, :terminated}
 ```
 
 A file can also be opened with `:utf8` encoding, which tells the `File` module to interpret the bytes read from the file as UTF-8-encoded bytes.
 
-Notice how opening a file returns a process id.  This lets you guess why the IO module is being introduced after presenting processes.  It's instructive to see how writing to a "closed" file does not tell you that the file was "closed" but that its process was "terminated".
-
-```iex
-```
+The alert reader noticed that opening a file returns a process id. This is also why the IO module is being introduced after presenting processes and it is handled [later in this guide](#processes_and_group_leaders) as optional material.
 
 Besides functions for opening, reading and writing files, the `File` module has many functions to work with the file system. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` to create directories and all their parent chain. There are even `File.cp_r/2` and `File.rm_rf/1` to respectively copy and remove files and directories recursively (i.e., copying and removing the contents of the directories too).
 
@@ -109,14 +104,23 @@ With this, we have covered the main modules that Elixir provides for dealing wit
 
 ## Processes and group leaders
 
-You may have noticed that `File.open/2` returns a tuple like `{:ok, pid}`:
+You noticed, or we had you notice, that `File.open/2` returns a tuple like `{:ok, pid}`:
 
 ```iex
 iex> {:ok, file} = File.open("hello", [:write])
 {:ok, #PID<0.47.0>}
 ```
 
-That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). When you write `IO.write(pid, binary)`, the `IO` module will send a message to the process identified by `pid` with the desired operation. Let's see what happens if we use our own process:
+That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). In particular, a file being a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated.
+
+```iex
+iex> File.close(file)
+:ok
+iex> IO.write(file, "is anybody out there")
+{:error, :terminated}
+```
+
+Let's see in more detail what happens when you request `IO.write(pid, binary)`. The `IO` module sends a message to the process identified by `pid` with the desired operation. A small ad-hoc process can help us see it:
 
 ```iex
 iex> pid = spawn fn ->
@@ -130,6 +134,8 @@ iex> IO.write(pid, "hello")
 ```
 
 After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result that we did not supply.
+
+The overly inquisitive reader can have a look and check what happens if you send such a message to a legitimate file process, but for the sake of this introduction, we better stop this deep from the surface.
 
 The [`StringIO`](https://hexdocs.pm/elixir/StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
 
