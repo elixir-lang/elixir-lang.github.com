@@ -45,9 +45,16 @@ iex> File.close(file)
 :ok
 iex> File.read("hello")
 {:ok, "world"}
+iex> IO.binwrite(file, "świat")
+{:error, :terminated}
 ```
 
 A file can also be opened with `:utf8` encoding, which tells the `File` module to interpret the bytes read from the file as UTF-8-encoded bytes.
+
+Notice how opening a file returns a process id.  This lets you guess why the IO module is being introduced after presenting processes.  It's instructive to see how writing to a "closed" file does not tell you that the file was "closed" but that its process was "terminated".
+
+```iex
+```
 
 Besides functions for opening, reading and writing files, the `File` module has many functions to work with the file system. Those functions are named after their UNIX equivalents. For example, `File.rm/1` can be used to remove files, `File.mkdir/1` to create directories, `File.mkdir_p/1` to create directories and all their parent chain. There are even `File.cp_r/2` and `File.rm_rf/1` to respectively copy and remove files and directories recursively (i.e., copying and removing the contents of the directories too).
 
