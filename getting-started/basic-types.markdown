@@ -81,6 +81,24 @@ iex> trunc(3.58)
 
 Functions in Elixir are identified by both their name and their arity. The arity of a function describes the number of arguments that the function takes. From this point on we will use both the function name and its arity to describe functions throughout the documentation. `round/1` identifies the function which is named `round` and takes `1` argument, whereas `round/2` identifies a different (nonexistent) function with the same name but with an arity of `2`.
 
+## Getting help
+
+The Elixir shell defines the `h` function, which you can use to access documentation for any function. For example, typing `h round/1` is going to print the documentation for the `round/1` function. It also works with operators and other constructs (try `h +/2`).
+
+Without parameters, it prints information on how to use the shell. 
+
+Here we invoke `h/1` to get help about the shell help function `h/0`:
+
+```iex
+iex> h h/0
+
+                             def h()
+
+Prints the documentation for IEx.Helpers.
+```
+
+Similarly, there's a `i` function, which you can use to print information about a value or about the result of an expression.
+
 ## Booleans
 
 Elixir supports `true` and `false` as booleans:
@@ -102,8 +120,6 @@ false
 ```
 
 You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, a float, or either.
-
-> Note: At any moment you can type `h()` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`).
 
 ## Atoms
 
