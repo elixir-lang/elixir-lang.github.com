@@ -223,7 +223,7 @@ iex> is_function(fn a, b -> a + b end)
 true
 ```
 
-Anonymous functions are "first class citizens" in Elixir, meaning they can be matched to variables, and passed as arguments to other functions in the same way as integers and strings. In the example above, we have passed an anonymous function definition to the `is_function/1` function which correctly returned `true`. In the example below, we match the anonymous function to a variable, evaluate it, and check the arity of the function by calling `is_function/2`.
+Anonymous functions are "first class citizens" in Elixir, meaning they can be assigned to variables, and passed as arguments to other functions in the same way as integers and strings. In the example above, we have passed an anonymous function definition to the `is_function/1` function which correctly returned `true`. Let's assign it to a variable next:
 
 ```iex
 iex> add = fn a, b -> a + b end
