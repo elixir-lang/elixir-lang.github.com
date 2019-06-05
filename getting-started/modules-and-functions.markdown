@@ -89,7 +89,11 @@ The file will be compiled in memory and executed, printing "3" as the result. No
 
 ## Named functions
 
-Inside a module, we can define functions with `def/2` and private functions with `defp/2`. A function defined with `def/2` can be invoked from other modules while a private function can only be invoked locally.
+We briefly mentioned named functions when handling the [anonymous function basic type](/getting-started/basic-types.html#anonymous-functions). Here that we are discussing modules, it is the place for their named counterpart.
+
+Inside a module, we can define public named functions with `def/2` and private named functions with `defp/2`. A public named function, i.e.: one defined with `def/2`, can be invoked from other modules, while a private function can only be invoked locally.
+
+Apart from the syntax regarding their identifiers, there is no difference between named and anonymous functions, so all that we show here, applies anonymous functions as well.
 
 ```elixir
 defmodule Math do
@@ -159,7 +163,7 @@ iex> fun.(0)
 true
 ```
 
-Remember Elixir makes a distinction between anonymous functions and named functions, where the former must be invoked with a dot (`.`) between the variable name and parentheses. The capture operator bridges this gap by allowing named functions to be assigned to variables and passed as arguments in the same way we assign, invoke and pass anonymous functions.
+When introducing anonymous functions, we associated a variable name to an anonymous function definition, and we had to invoke the function with a dot (`.`) between the variable name and parentheses. This has nothing to do with the function being defined anonymous, and all to do with the function being accessed through a variable. The capture operator `&` allows named functions to be assigned to variables and to be passed as arguments in the same way we assign, invoke and pass anonymous functions.
 
 Local or imported functions, like `is_function/1`, can be captured without the module:
 
