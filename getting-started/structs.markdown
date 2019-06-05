@@ -127,7 +127,7 @@ iex> %Product{}
 %Product{name: nil}
 ```
 
-You can define a structure combining both fields with explicit default values, and implicit `nil` values, but in this case you must first specify the fields which implicitly default to nil:
+You can define a structure combining both fields with explicit default values, and implicit `nil` values. In this case you must first specify the fields which implicitly default to nil:
 
 ```iex
 iex> defmodule User do
@@ -135,6 +135,11 @@ iex> defmodule User do
 ...> end
 iex> %User{}
 %User{age: 27, email: nil, name: "John"}
+```
+
+Doing it in reverse order will raise a syntax error:
+
+```
 iex> defmodule User do                          
 ...>   defstruct [name: "John", age: 27, :email]
 ...> end
