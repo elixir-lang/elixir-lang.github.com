@@ -240,9 +240,9 @@ iex> is_function(add, 1)
 false
 ```
 
-Parenthesised arguments after the anonymous function indicate that we want the function to be evaluated, not just its definition returned. By contrast, Elixir attempts evaluation of named functions, even in absence of the trailing explicit `()` function call syntax. Matching an anonymous function to a variable does not promote it to the 'named' function status. We will explore named functions when dealing with [Modules and Functions](/getting-started/modules-and-functions.html), since named functions can only be defined within a module.
+Parenthesised arguments after the anonymous function indicate that we want the function to be evaluated, not just its definition returned.  Note that a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling the anonymous function matched to a variable `add` and a named function `add/2`. In this sense, Elixir makes a clear distinction between anonymous functions and named functions.
 
-Note that a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling the anonymous function matched to a variable `add` and a named function `add/2`. In this sense, Elixir makes a clear distinction between anonymous functions and named functions.
+We will explore named functions when dealing with [Modules and Functions](/getting-started/modules-and-functions.html), since named functions can only be defined within a module.
 
 Anonymous functions are closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
