@@ -340,7 +340,7 @@ import Config
 config :kv_server, :port, System.fetch_env!("PORT")
 ```
 
-`config/releases.exs` files work very similar to a regular `config/config.exs` but it may some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0-rc.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
+`config/releases.exs` files work very similar to a regular `config/config.exs` but it may have some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0-rc.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
 
 ## Summing up
 
@@ -348,6 +348,6 @@ Throughout the guide, we have built a very simple distributed key-value store as
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/products/riak-kv/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new storage nodes are added to your live system.
 
-Of course, Elixir can be used for much more than distributed key-value stores. Embedded systems, data-processing and data-ingestion, web applications, streaming system, and others are many of the different domains Elixir excels at. We hope this guide has prepare you to explore any of those domains or any future domain you may desire to bring Elixir into.
+Of course, Elixir can be used for much more than distributed key-value stores. Embedded systems, data-processing and data-ingestion, web applications, streaming system, and others are many of the different domains Elixir excels at. We hope this guide has prepared you to explore any of those domains or any future domain you may desire to bring Elixir into.
 
 Happy coding!
