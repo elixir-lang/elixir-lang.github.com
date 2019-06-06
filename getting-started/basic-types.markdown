@@ -116,7 +116,7 @@ You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respect
 
 ## Atoms
 
-An atom is a constant whose name is its own value. Some other languages call these symbols:
+An atom is a constant whose value is its own name. Some other languages call these symbols:
 
 ```iex
 iex> :hello
