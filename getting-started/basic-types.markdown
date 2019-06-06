@@ -116,7 +116,7 @@ You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respect
 
 ## Atoms
 
-An atom is a constant whose value is its own name. Some other languages call these symbols:
+An atom is a constant whose value is its own name. Some other languages call these symbols. When you need to enumerate distinct choices, atoms are a very good option: as long as you can write their name, and their names are distinct, they are defined, and distinct:
 
 ```iex
 iex> :hello
@@ -134,15 +134,6 @@ iex> is_atom(false)
 true
 iex> is_boolean(:false)
 true
-```
-
-When you need to enumerate distinct choices, atoms are a very good option: as long as you can write their name, and their names are distinct, they are defined, and distinct.
-
-```iex
-iex> :europe
-:europe
-iex> :germany == :europe
-false
 ```
 
 Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case and are also atoms:
