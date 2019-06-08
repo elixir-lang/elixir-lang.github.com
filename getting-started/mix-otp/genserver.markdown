@@ -52,7 +52,7 @@ Please do follow the [GenServer](https://hexdocs.pm/elixir/GenServer.html) link,
 
 Right, you did **not** check the above link, you expect this docs to be self-contained. Too bad.
 
-Let's start by writing our bucket registering logit, and show how its usage would be, if we do not write a proper API.
+Let's start by writing our bucket registering logic, and show how its usage would be, if we do not write a proper API.
 
 ```elixir
 defmodule KV.Registry do
@@ -80,7 +80,7 @@ defmodule KV.Registry do
 end
 ```
 
-Without an API, in order to create a registry, we need to go through a `GenServer` function, with the right parameters, to create a bucket, again we need a `GenServer` function, as well as for retrieving one. All obviously quite error-prone:
+Without an API, in order to create a registry, we need to go through a `GenServer` function, with the right parameters; to create a bucket, again we need a `GenServer` function; again the same for retrieving one, like this:
 
 ```
 {:ok, reg} = GenServer.start(KV.Registry, :ok)
@@ -88,14 +88,11 @@ GenServer.cast(reg, {:create, "shopping"})
 {:ok, bk} = GenServer.call(reg, {:lookup, "shopping"})
 ```
 
-We all do agree that the following would be more readable, don't we?
+Our `KV.Registry` process would receive the two messages `{:create, "shopping"}` and `{:lookup, "shopping"}`, in this sequence. It would handle them in the same order, in the callbacks we defined above. Notice how our call to `GenServer.cast` would immediately return, possibly even before the message was delivered to the `reg` process. The `GenServer.call` on the other hand, is where we would be waiting for an answer, provided by the `KV.Registry.handle_call` callback.
 
-```
-KV.Registry.create(reg, "shopping")
-{:ok, bk} = KV.Registry.lookup(reg, "shopping")
-```
+> Oh, and the role of those fancy `@impl true`? It's a safety net, it informs the compiler that our intention for the subsequent function definition is to override a callback. If by any chance we make a mistake in arity, like we define a `handle_call/2`, the compile would warn us there isn't any `handle_call/2` to override, and would give us the complete list of known callbacks for the `GenServer` module.
 
-The initialization, and connection of our `KV.Registry` to a supervisor, we do that further in the text.
+This is all good and well, but we still want to offer our users an API that allows us to hide our implementation details.
 
 ## First things first
 
