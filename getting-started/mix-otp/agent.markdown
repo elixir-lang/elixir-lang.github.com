@@ -9,7 +9,9 @@ title: Agent
 
 {% include mix-otp-preface.html %}
 
-In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
+In this chapter, we will learn about variables in the aethernally invariability of the Erlang VM ecosystem.
+
+create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
 
 If you have skipped the Getting Started guide or read it long ago, be sure to re-read the [Processes](/getting-started/processes.html) chapter. We will use it as a starting point.
 
