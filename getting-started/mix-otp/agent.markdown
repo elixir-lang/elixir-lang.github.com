@@ -71,7 +71,9 @@ iex> Agent.get(agent, fn content -> content end)
 iex>
 ```
 
-It is completely up to us, to use `Agent` in a sensible way, and the proper way to go is by writing modules that enforce a behaviour, by exposing a well defined API. Let's do precisely that, let's implement our `KV.Bucket` using agents and let's start by first writing some tests, to define the API exposed by our module. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
+What does the above mess show? The sensible use of agents is completely in our hands, and the proper way to go is by writing modules that implement a behaviour, by exposing a well defined API. Let's do precisely that, let's implement our `KV.Bucket` using `Agent` and let's start by first writing some tests, to define the API exposed by our module.
+
+Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
 defmodule KV.BucketTest do
