@@ -146,7 +146,7 @@ defmodule AssertionTest do
 end
 ```
 
-Behind the scenes, `use` requires the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context. Some modules (e.g., the above `ExUnit.Case`, but also `Supervisor` and `GenServer`) use this mechanism to populate your module with some basic behaviour, which your module is intended to override or complete. 
+Behind the scenes, `use` requires the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context. Some modules (for example, the above `ExUnit.Case`, but also `Supervisor` and `GenServer`) use this mechanism to populate your module with some basic behaviour, which your module is intended to override or complete. 
 
 Whether you can `use` a module, it depends on that module defining a `__using__/1` function. To `use` a module only makes sense within an other module.
 
