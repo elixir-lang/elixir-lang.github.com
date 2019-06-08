@@ -9,7 +9,7 @@ title: GenServer
 
 {% include mix-otp-preface.html %}
 
-In the [previous chapter](/getting-started/mix-otp/agent.html), we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:
+In the [previous chapter](/getting-started/mix-otp/agent.html), we used agents to represent our buckets. In the [introduction to mix](/getting-started/mix-otp/introduction-to-mix.html), we specified we would like to name each bucket so we can do the following:
 
 ```elixir
 CREATE shopping
@@ -40,13 +40,63 @@ However, naming dynamic processes with atoms is a terrible idea! If we use atoms
 
 In practice, it is more likely you will reach the Erlang <abbr title="Virtual Machine">VM</abbr> limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.
 
-Instead of abusing the built-in name facility, we will create our own *process registry* that associates the bucket name to the bucket process.
+Instead of abusing the built-in name facility, we will create our own *process registry* that associates the bucket name to the bucket process. Is this an other use for `Agent`?
 
-The registry needs to guarantee that it is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must notice this change and avoid serving stale entries. In Elixir, we say the registry needs to *monitor* each bucket.
+The registry needs to guarantee that it is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must notice this change and avoid serving stale entries. In Elixir, we say the registry needs to *monitor* each bucket. Not something an `Agent` can do.
 
 We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a registry process that can monitor the bucket processes. GenServer provides industrial strength functionality for building servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
-## Our first GenServer
+Please do follow the [GenServer](https://hexdocs.pm/elixir/GenServer.html) link, we are going to assume you have read the first few sections of the page.
+
+## First things first
+
+First things first: let's here too start by defining the behaviour we intend to implement.
+
+Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
+
+```elixir
+defmodule KV.RegistryTest do
+  use ExUnit.Case, async: true
+
+  setup do
+    registry = start_supervised!(KV.Registry)
+    %{registry: registry}
+  end
+
+  test "spawns buckets", %{registry: registry} do
+    assert KV.Registry.lookup(registry, "shopping") == :error
+
+    KV.Registry.create(registry, "shopping")
+    assert {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
+
+    KV.Bucket.put(bucket, "milk", 1)
+    assert KV.Bucket.get(bucket, "milk") == 1
+  end
+end
+```
+
+Our test case first asserts there's no buckets in our registry, creates a named bucket, looks it up, and asserts it behaves as a bucket.
+
+There is one important difference between the `setup` block we wrote for `KV.Registry` and the one we wrote for `KV.Bucket`. Instead of starting the registry by hand by calling `KV.Registry.start_link/1`, we instead called [the `start_supervised!/2` function](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2), passing the `KV.Registry` module.
+
+The `start_supervised!` function will do the job of starting the `KV.Registry` process by calling `start_link/1`. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown **before** the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
+
+When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the previous setup block in `bucket_test.exs` to use `start_supervised!` too.
+
+If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function: (**where does this piece of code belong to?**)
+
+```elixir
+## Client API
+
+@doc """
+Stops the registry.
+"""
+def stop(server) do
+  GenServer.stop(server)
+end
+```
+
+## Implementing it
 
 A GenServer is implemented in two parts: the client API and the server callbacks. You can either combine both parts into a single module or you can separate them into a client module and a server module. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we'll use a single module for both the server callbacks and the client API.
 
@@ -125,52 +175,6 @@ For `cast/2` requests, we implement a `handle_cast/2` callback that receives the
 There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `terminate/2` and `code_change/3` that we could implement. You are welcome to explore the [full GenServer documentation](https://hexdocs.pm/elixir/GenServer.html) to learn more about those.
 
 For now, let's write some tests to guarantee our GenServer works as expected.
-
-## Testing a GenServer
-
-Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
-
-```elixir
-defmodule KV.RegistryTest do
-  use ExUnit.Case, async: true
-
-  setup do
-    registry = start_supervised!(KV.Registry)
-    %{registry: registry}
-  end
-
-  test "spawns buckets", %{registry: registry} do
-    assert KV.Registry.lookup(registry, "shopping") == :error
-
-    KV.Registry.create(registry, "shopping")
-    assert {:ok, bucket} = KV.Registry.lookup(registry, "shopping")
-
-    KV.Bucket.put(bucket, "milk", 1)
-    assert KV.Bucket.get(bucket, "milk") == 1
-  end
-end
-```
-
-Our test should pass right out of the box!
-
-There is one important difference between the `setup` block we wrote for `KV.Registry` and the one we wrote for `KV.Bucket`. Instead of starting the registry by hand by calling `KV.Registry.start_link/1`, we instead called [the `start_supervised!/1` function](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2), passing the `KV.Registry` module.
-
-The `start_supervised!` function will do the job of starting the `KV.Registry` process by calling `start_link/1`. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown before the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
-
-When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the previous setup block in `bucket_test.exs` to use `start_supervised!` too.
-
-If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
-
-```elixir
-## Client API
-
-@doc """
-Stops the registry.
-"""
-def stop(server) do
-  GenServer.stop(server)
-end
-```
 
 ## The need for monitoring
 
