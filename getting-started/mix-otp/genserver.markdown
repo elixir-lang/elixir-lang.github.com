@@ -48,9 +48,58 @@ We will use a [GenServer](https://hexdocs.pm/elixir/GenServer.html) to create a 
 
 Please do follow the [GenServer](https://hexdocs.pm/elixir/GenServer.html) link, we are going to assume you have read the first few sections of the page.
 
+## By brute force
+
+Right, you did **not** check the above link, you expect this docs to be self-contained. Too bad.
+
+Let's start by writing our bucket registering logit, and show how its usage would be, if we do not write a proper API.
+
+```elixir
+defmodule KV.Registry do
+  use GenServer
+
+  @impl true
+  def init(:ok) do
+    {:ok, %{}}
+  end
+
+  @impl true
+  def handle_call({:lookup, name}, _from, names) do
+    {:reply, Map.fetch(names, name), names}
+  end
+
+  @impl true
+  def handle_cast({:create, name}, names) do
+    if Map.has_key?(names, name) do
+      {:noreply, names}
+    else
+      {:ok, bucket} = KV.Bucket.start_link([])
+      {:noreply, Map.put(names, name, bucket)}
+    end
+  end
+end
+```
+
+Without an API, in order to create a registry, we need to go through a `GenServer` function, with the right parameters, to create a bucket, again we need a `GenServer` function, as well as for retrieving one. All obviously quite error-prone:
+
+```
+{:ok, reg} = GenServer.start(KV.Registry, :ok)
+GenServer.cast(reg, {:create, "shopping"})
+{:ok, bk} = GenServer.call(reg, {:lookup, "shopping"})
+```
+
+We all do agree that the following would be more readable, don't we?
+
+```
+KV.Registry.create(reg, "shopping")
+{:ok, bk} = KV.Registry.lookup(reg, "shopping")
+```
+
+The initialization, and connection of our `KV.Registry` to a supervisor, we do that further in the text.
+
 ## First things first
 
-First things first: let's here too start by defining the behaviour we intend to implement.
+Let's start by defining tests, describing the behaviour we intend to implement.
 
 Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
 
