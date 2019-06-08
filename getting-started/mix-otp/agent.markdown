@@ -68,10 +68,10 @@ iex> Agent.update(agent, fn list -> [:nop | list] end)
 :ok
 iex> Agent.get(agent, fn content -> content end)
 [:nop, 12, %{a: 123}]
-iex> 
+iex>
 ```
 
-It is completely up to us, to use `Agent` in a sensible way, and the proper way to go is by writing modules that enforce a behaviour, by exposing a well defined API. Let's do precisely that, let's implement our `KV.Bucket` using agents and let's start start by first writing some tests, to define the API exposed by our module. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
+It is completely up to us, to use `Agent` in a sensible way, and the proper way to go is by writing modules that enforce a behaviour, by exposing a well defined API. Let's do precisely that, let's implement our `KV.Bucket` using agents and let's start by first writing some tests, to define the API exposed by our module. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
 defmodule KV.BucketTest do
