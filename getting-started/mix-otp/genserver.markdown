@@ -54,9 +54,15 @@ Right, you did **not** check the above link, you expect this docs to be self-con
 
 Let's start by writing our bucket registering logic, and show how its usage would be, if we do not write a proper API.
 
+Create a new file at `lib/kv/registry.ex` with the following contents:
+
 ```elixir
 defmodule KV.Registry do
   use GenServer
+
+  ## Missing Client API - will add this later
+
+  ## Overriding GenServer Callbacks
 
   @impl true
   def init(:ok) do
@@ -80,15 +86,20 @@ defmodule KV.Registry do
 end
 ```
 
-Without an API, in order to create a registry, we need to go through a `GenServer` function, with the right parameters; to create a bucket, again we need a `GenServer` function; again the same for retrieving one, like this:
+There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back. Both requests are messages sent to the server, and will be handled in sequence. In the above implementation, we pattern-match on the `:create` messages, to be handled as cast, and on the `:lookup` messages, to be handled as call.
 
-```
-{:ok, reg} = GenServer.start(KV.Registry, :ok)
-GenServer.cast(reg, {:create, "shopping"})
-{:ok, bk} = GenServer.call(reg, {:lookup, "shopping"})
+As long as we don't define a client API, in order to activate our code, we need to go through the corresponding `GenServer` functions; to create our registry, to create a named bucket, and to look one up.
+
+```elixir
+iex> {:ok, reg} = GenServer.start(KV.Registry, :ok)
+{:ok, #PID<0.136.0>}
+iex> GenServer.cast(reg, {:create, "shopping"})
+:ok
+iex> {:ok, bk} = GenServer.call(reg, {:lookup, "shopping"})
+{:ok, #PID<0.174.0>}
 ```
 
-Our `KV.Registry` process would receive the two messages `{:create, "shopping"}` and `{:lookup, "shopping"}`, in this sequence. It would handle them in the same order, in the callbacks we defined above. Notice how our call to `GenServer.cast` would immediately return, possibly even before the message was delivered to the `reg` process. The `GenServer.call` on the other hand, is where we would be waiting for an answer, provided by the `KV.Registry.handle_call` callback.
+Our `KV.Registry` process would receive the two messages `{:create, "shopping"}` and `{:lookup, "shopping"}`, in this sequence. It would handle them in the same order, in the callbacks we defined above. Notice how our call to `GenServer.cast` would immediately return, possibly even before the message was delivered to the `reg` process. The `GenServer.call` on the other hand, is where we would be waiting for an answer, provided by the above `KV.Registry.handle_call` callback.
 
 > Oh, and the role of those fancy `@impl true`? It's a safety net, it informs the compiler that our intention for the subsequent function definition is to override a callback. If by any chance we make a mistake in arity, like we define a `handle_call/2`, the compile would warn us there isn't any `handle_call/2` to override, and would give us the complete list of known callbacks for the `GenServer` module.
 
@@ -96,7 +107,7 @@ This is all good and well, but we still want to offer our users an API that allo
 
 ## First things first
 
-Let's start by defining tests, describing the behaviour we intend to implement.
+Let's start by defining tests, describing the API we intend to implement.
 
 Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
 
@@ -125,33 +136,17 @@ Our test case first asserts there's no buckets in our registry, creates a named 
 
 There is one important difference between the `setup` block we wrote for `KV.Registry` and the one we wrote for `KV.Bucket`. Instead of starting the registry by hand by calling `KV.Registry.start_link/1`, we instead called [the `start_supervised!/2` function](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2), passing the `KV.Registry` module.
 
-The `start_supervised!` function will do the job of starting the `KV.Registry` process by calling `start_link/1`. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown **before** the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
+The `start_supervised!` function was injected into our test module by `use ExUnit.Case`. It does the job of starting the `KV.Registry` process, by calling its `start_link/1` function. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown **before** the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
 
-When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the previous setup block in `bucket_test.exs` to use `start_supervised!` too.
-
-If there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function: (**where does this piece of code belong to?**)
-
-```elixir
-## Client API
-
-@doc """
-Stops the registry.
-"""
-def stop(server) do
-  GenServer.stop(server)
-end
-```
+When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the `setup` block in `bucket_test.exs` to use `start_supervised!` too.
 
 ## Implementing it
 
 A GenServer is implemented in two parts: the client API and the server callbacks. You can either combine both parts into a single module or you can separate them into a client module and a server module. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we'll use a single module for both the server callbacks and the client API.
 
-Create a new file at `lib/kv/registry.ex` with the following contents:
+Edit the file at `lib/kv/registry.ex`, filling in the blanks for the client API:
 
 ```elixir
-defmodule KV.Registry do
-  use GenServer
-
   ## Client API
 
   @doc """
@@ -176,26 +171,6 @@ defmodule KV.Registry do
   def create(server, name) do
     GenServer.cast(server, {:create, name})
   end
-
-  ## Server Callbacks
-
-  def init(:ok) do
-    {:ok, %{}}
-  end
-
-  def handle_call({:lookup, name}, _from, names) do
-    {:reply, Map.fetch(names, name), names}
-  end
-
-  def handle_cast({:create, name}, names) do
-    if Map.has_key?(names, name) do
-      {:noreply, names}
-    else
-      {:ok, bucket} = KV.Bucket.start_link([])
-      {:noreply, Map.put(names, name, bucket)}
-    end
-  end
-end
 ```
 
 The first function is `start_link/1`, which starts a new GenServer passing a list of options. `start_link/1` calls out to `GenServer.start_link/3`, which takes three arguments:
@@ -205,8 +180,6 @@ The first function is `start_link/1`, which starts a new GenServer passing a lis
 2. The initialization arguments, in this case the atom `:ok`
 
 3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1` to `GenServer.start_link/3`
-
-There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server **must** send a response back to such requests. Casts are asynchronous and the server won't send a response back.
 
 The next two functions, `lookup/2` and `create/2` are responsible for sending these requests to the server.  In this case, we have used `{:lookup, name}` and `{:create, name}` respectively.  Requests are often specified as tuples, like this, in order to provide more than one "argument" in that first argument slot. It's common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements. Note that the requests must match the first argument to `handle_call/3` or `handle_cast/2`.
 
@@ -220,11 +193,28 @@ For `cast/2` requests, we implement a `handle_cast/2` callback that receives the
 
 There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks may return. There are also other callbacks like `terminate/2` and `code_change/3` that we could implement. You are welcome to explore the [full GenServer documentation](https://hexdocs.pm/elixir/GenServer.html) to learn more about those.
 
-For now, let's write some tests to guarantee our GenServer works as expected.
+The API we just added should satisfy the tests we defined before.
+
+In addition, if there is a need to stop a `GenServer` as part of the application logic, one can use the `GenServer.stop/1` function:
+
+```elixir
+## Client API
+
+@doc """
+Stops the registry.
+"""
+def stop(server) do
+  GenServer.stop(server)
+end
+```
+
+You can write the tests for this functionality as well.
 
 ## The need for monitoring
 
-Our registry is almost complete. The only remaining issue is that the registry may become stale if a bucket stops or crashes. Let's add a test to `KV.RegistryTest` that exposes this bug:
+We could have written the above code, based on `Agent`. Here we show the extra power offered by `GenServer`, as compared to a plain `Agent`.
+
+Let's program a test, describing the desired behaviour of our registry, if a bucket stops or crashes:
 
 ```elixir
 test "removes buckets on exit", %{registry: registry} do
@@ -274,10 +264,10 @@ def handle_cast({:create, name}, {names, refs}) do
   if Map.has_key?(names, name) do
     {:noreply, {names, refs}}
   else
-    {:ok, pid} = KV.Bucket.start_link([])
-    ref = Process.monitor(pid)
+    {:ok, bucket} = KV.Bucket.start_link([])
+    ref = Process.monitor(bucket)
     refs = Map.put(refs, ref, name)
-    names = Map.put(names, name, pid)
+    names = Map.put(names, name, bucket)
     {:noreply, {names, refs}}
   end
 end
