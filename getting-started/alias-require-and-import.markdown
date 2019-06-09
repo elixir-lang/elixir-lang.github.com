@@ -165,7 +165,7 @@ defmodule Example do
 end
 ```
 
-While for `import` and `alias`, their semantics are defined by the language, given a module Foo, `use Foo` gives Foo the keys to inject code into your code. What side-effects this has depends entirely on `Foo.__using__/1`, so please do not `use` a module without reading its documentation.
+Since `use` allows any code to run, we can't really know the side-effects of using a module without reading its documentation. For this reason, `import` and `alias` are often preferred, as their semantics are defined by the language.
 
 ## Understanding Aliases
 
