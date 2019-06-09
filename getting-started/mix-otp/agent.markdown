@@ -9,13 +9,13 @@ title: Agent
 
 {% include mix-otp-preface.html %}
 
-In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
+In this chapter we will learn how to keep a dynamic status within the Elixir ecosystem of immutable values. If you have previous programming experience outside functional programming, you may think of globally shared variables. The next chapters will generalize the concepts introduced here.
 
 If you have skipped the Getting Started guide or read it long ago, be sure to re-read the [Processes](/getting-started/processes.html) chapter. We will use it as a starting point.
 
 ## The trouble with state
 
-Elixir is an immutable language where nothing is shared by default. If we want to provide buckets, which can be read and modified from multiple places, we have two main options in Elixir:
+Elixir is an immutable language where nothing is shared by default. If we want to provide "variables", which can be read and modified from multiple places, we have two main options in Elixir:
 
 * Processes
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
@@ -27,6 +27,8 @@ We covered processes in the Getting Started guide. <abbr title="Erlang Term Stor
 * [Task](https://hexdocs.pm/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.
 
 We will explore most of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
+
+Here we will use Agents, and create a module named `KV.Bucket`, responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
 
 ## Agents
 
@@ -51,7 +53,25 @@ iex> Agent.stop(agent)
 
 We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](https://hexdocs.pm/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) itself will return. Once we are done with the agent, we can call [`Agent.stop/3`](https://hexdocs.pm/elixir/Agent.html#stop/3) to terminate the agent process.
 
-Let's implement our `KV.Bucket` using agents. But before starting the implementation, let's first write some tests. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
+The `Agent.update/3` function accepts just any function-value as second argument, as long as it accepts a value and returns a value. Semantic nonsense like the following being perfectly legal:
+
+```iex
+iex> {:ok, agent} = Agent.start_link fn -> [] end
+{:ok, #PID<0.338.0>}
+iex> Agent.update(agent, fn _list -> 123 end)
+:ok
+iex> Agent.update(agent, fn content -> %{a: content} end)
+:ok
+iex> Agent.update(agent, fn content -> [12 | [content]] end)
+:ok
+iex> Agent.update(agent, fn list -> [:nop | list] end)
+:ok
+iex> Agent.get(agent, fn content -> content end)
+[:nop, 12, %{a: 123}]
+iex>
+```
+
+It is completely up to us, to use `Agent` in a sensible way, and the proper way to go is by writing modules that enforce a behaviour, by exposing a well defined API. Let's do precisely that, let's implement our `KV.Bucket` using agents and let's start start by first writing some tests, to define the API exposed by our module. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
 defmodule KV.BucketTest do
@@ -66,6 +86,8 @@ defmodule KV.BucketTest do
   end
 end
 ```
+
+The leading `use` line injects several macros in our module. Among these: `test` helps us define test functions.
 
 Our first test starts a new `KV.Bucket` by calling the `start_link/1` and passing an empty list of options. Then we perform some `get/2` and `put/3` operations on it, asserting the result.
 
@@ -138,7 +160,7 @@ defmodule KV.BucketTest do
 end
 ```
 
-We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself.
+We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` macro defines a callback that is run before every test, in the same process as the test itself.
 
 Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `%{bucket: bucket}` from the callback, ExUnit will merge this map into the test context. Since the test context is a map itself, we can pattern match the bucket out of it, providing access to the bucket inside the test:
 
