@@ -9,15 +9,15 @@ title: Agent
 
 {% include mix-otp-preface.html %}
 
-In this chapter we will learn how to keep a dynamic status within the Elixir ecosystem of immutable values. If you have previous programming experience outside functional programming, you may think of globally shared variables. The next chapters will generalize the concepts introduced here.
+In this chapter, we will learn how to keep and share state between multiple entities. If you have previous programming experience, you may think of globally shared variables, but the model we will learn here is quite different. The next chapters will generalize the concepts introduced here.
 
 If you have skipped the Getting Started guide or read it long ago, be sure to re-read the [Processes](/getting-started/processes.html) chapter. We will use it as a starting point.
 
 ## The trouble with state
 
-Elixir is an immutable language where nothing is shared by default. If we want to provide "variables", which can be read and modified from multiple places, we have two main options in Elixir:
+Elixir is an immutable language where nothing is shared by default. If we want to share information, which can be read and modified from multiple places, we have two main options in Elixir:
 
-* Processes
+* Using Processes and message passing
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
 
 We covered processes in the Getting Started guide. <abbr title="Erlang Term Storage">ETS</abbr> is a new topic that we will explore in later chapters. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
@@ -53,7 +53,7 @@ iex> Agent.stop(agent)
 
 We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](https://hexdocs.pm/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) itself will return. Once we are done with the agent, we can call [`Agent.stop/3`](https://hexdocs.pm/elixir/Agent.html#stop/3) to terminate the agent process.
 
-The `Agent.update/3` function accepts just any function-value as second argument, as long as it accepts a value and returns a value. Semantic nonsense like the following being perfectly legal:
+The `Agent.update/3` function accepts as second argument any function that receives one argument and returns a value:
 
 ```iex
 iex> {:ok, agent} = Agent.start_link fn -> [] end
@@ -71,7 +71,7 @@ iex> Agent.get(agent, fn content -> content end)
 iex>
 ```
 
-What does the above mess show? The sensible use of agents is completely in our hands, and the proper way to go is by writing modules that implement a behaviour, by exposing a well defined API. Let's do precisely that, let's implement our `KV.Bucket` using `Agent` and let's start by first writing some tests, to define the API exposed by our module.
+As you can see, we can modify the agent state in any way we want. Therefore, we most likely don't want to access the Agent API throughout many different places in our code. Instead, we want to encapsulate all Agent-related functionality in a single module, which we will call `KV.Bucket`. Before we implement it, let's write some tests which will outline the API exposed by our module.
 
 Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
@@ -89,7 +89,7 @@ defmodule KV.BucketTest do
 end
 ```
 
-The leading `use` line injects several macros in our module. Among these: `test` helps us define test functions.
+`use ExUnit.Case` is responsible for setting up our module for testing and imports many test-related functionality, such as the `test/2` macro.
 
 Our first test starts a new `KV.Bucket` by calling the `start_link/1` and passing an empty list of options. Then we perform some `get/2` and `put/3` operations on it, asserting the result.
 
