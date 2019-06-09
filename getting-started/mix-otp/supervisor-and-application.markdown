@@ -47,13 +47,7 @@ The `child_spec/1` function returns the child specification which describes how 
 
 ```iex
 iex(1)> KV.Registry.child_spec([])
-%{
-  id: KV.Registry,
-  restart: :permanent,
-  shutdown: 5000,
-  start: {KV.Registry, :start_link, [[]]},
-  type: :worker
-}
+%{id: KV.Registry, start: {KV.Registry, :start_link, [[]]}}
 ```
 
 We will learn those details as we move forward on this guide. If you would rather peek ahead, check the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) docs.
