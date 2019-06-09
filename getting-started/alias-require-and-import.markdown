@@ -148,8 +148,6 @@ end
 
 Behind the scenes, `use` requires the given module and then calls the `__using__/1` callback on it allowing the module to inject some code into the current context. Some modules (for example, the above `ExUnit.Case`, but also `Supervisor` and `GenServer`) use this mechanism to populate your module with some basic behaviour, which your module is intended to override or complete. 
 
-Whether you can `use` a module, it depends on that module defining a `__using__/1` function. To `use` a module only makes sense within an other module.
-
 Generally speaking, the following module:
 
 ```elixir
@@ -167,7 +165,7 @@ defmodule Example do
 end
 ```
 
-Since `use` allows any code to run, we can't really know the side-effects of using a module without reading its documentation. For `import` and `alias`, their semantics are defined by the language. `use` serves quite a different purpose.
+While for `import` and `alias`, their semantics are defined by the language, given a module Foo, `use Foo` gives Foo the keys to inject code into your code. What side-effects this has depends entirely on `Foo.__using__/1`, so please do not `use` a module without reading its documentation.
 
 ## Understanding Aliases
 
