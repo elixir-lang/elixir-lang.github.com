@@ -9,6 +9,8 @@ title: Supervisor and Application
 
 {% include mix-otp-preface.html %}
 
+**TODO**: Please state what is the use of reading this page, what we're going to learn, how we're going to use it, what problem it solves.
+
 So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug-free, and failures are definitely going to happen.
 
 When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
@@ -16,6 +18,8 @@ When things fail, your first reaction may be: "let's rescue those errors". But i
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
 
 ## Our first supervisor
+
+**TODO**: state the role of this first supervisor, possibly relating it to the role of the second supervisor, which was also not mentioned.
 
 Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) behaviour, inside the `lib/kv/supervisor.ex` file:
 
@@ -64,19 +68,18 @@ While our application will have many buckets, it will only have a single registr
 
 Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots.
 
-So let's do that. Let's slightly change our children definition to be a list of tuples instead of a list of atoms:
+So let's do that. Let's slightly change our children definition (in `KV.Supervisor.init/1`) to be a list of tuples instead of a list of atoms:
 
 ```elixir
   def init(:ok) do
     children = [
       {KV.Registry, name: KV.Registry}
     ]
-
-    Supervisor.init(children, strategy: :one_for_one)
-  end
 ```
 
-The difference now is that, instead of calling `KV.Registry.start_link([])`, the Supervisor will call `KV.Registry.start_link([name: KV.Registry])`. If you revisit `KV.Registry.start_link/1` implementation, you will remember it simply passes the options to GenServer
+With this in place, a supervisor supervising our `KV.Registry` and needing to start it, will add the keyword list `[name: KV.Registry]` as parameter to the `KV.Registry.start_link`.
+
+If you revisit the `KV.Registry.start_link/1` implementation, you will remember it simply passes the options to GenServer:
 
 ```elixir
   def start_link(opts) do
@@ -86,7 +89,7 @@ The difference now is that, instead of calling `KV.Registry.start_link([])`, the
 
 which in turn will register the process with the given name.
 
-Let's give this all a try inside `iex -S mix`:
+Let's compile the changes by invoking `mix` , then give this all a try inside `iex -S mix`:
 
 ```iex
 iex> KV.Supervisor.start_link([])
