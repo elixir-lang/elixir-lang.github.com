@@ -19,7 +19,7 @@
 \tikz{
   \node[inner sep=2em] (A) {#1};  % Draw the text of the node
   \begin{pgfonlayer}{background}  % Draw the shape behind
-  \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed] 
+  \filldraw[normal border,rounded corners=2em,color=blue!10!yellow!5,draw=blue!25!yellow,dashed] 
         (A.south east) -- (A.south west) -- 
         (A.north west) -- (A.north east);
   \end{pgfonlayer}}}
@@ -69,6 +69,8 @@
   \noindent\tikz\node[rounded corners, inner sep=2ex, draw=blue!25!yellow, fill=white, dashed, anchor=west, overlay] at (0em, 2em) {\sffamily#1};\par}%
 {\endMakeFramed}
 
+\setlength\parindent{0pt}
+
 % Main document, example of usage
 \pagestyle{empty}
 \begin{document}
@@ -80,7 +82,7 @@
 
 % Define a few styles and constants
 \tikzstyle{left-title}=[draw, fill=blue!20, text width=1em, minimum height=5em]
-\tikzstyle{naveqs} = [left-title, text width=28em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
+\tikzstyle{main-block} = [left-title, text width=30em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
 \tikzstyle{immediate} = [left-title, text width=16em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
 
 \begin{comment}
@@ -90,7 +92,7 @@
 \end{comment}
 \begin{parchment}[initialization]
 \begin{tikzpicture}
-  \node (client) [naveqs] {%
+  \node (client) [main-block] {%
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def start_link(opts \\ []) do
@@ -108,7 +110,7 @@ end
 };
   \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
 
-\path (client.south west)+(0,-1em) node (callback) [naveqs,anchor=north west] {
+\path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def init(:ok) do
@@ -119,7 +121,7 @@ end
 };
   \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
 
-  \path (callback.south west)+(0,-1em) node (return-value) [naveqs,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (return-value) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:ok, state}
@@ -135,7 +137,7 @@ end
 
 \begin{parchment}[termination]
 \begin{tikzpicture}
-  \node (client) [naveqs] {%
+  \node (client) [main-block] {%
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def stop(pid, reason \\ :normal, 
@@ -154,7 +156,7 @@ end
 };
 \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
 
-\path (client.south west)+(0,-1em) node (callback) [naveqs,anchor=north west] {
+\path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def terminate(reason, state) do
@@ -181,7 +183,7 @@ term
 
 \begin{parchment}[synchronous operation]
 \begin{tikzpicture}
-  \node (client) [naveqs] {
+  \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def sync_op(pid, args) do
@@ -196,7 +198,7 @@ end
 };
   \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
 
-  \path (client.south west)+(0,-1em) node (callback) [naveqs,anchor=north west] {
+  \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_call({:sync_op, args}, from, state) do
@@ -207,7 +209,7 @@ end
 };
   \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
 
-  \path (callback.south west)+(0,-1em) node (returns) [naveqs,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (returns) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:reply, reply, new_state}
@@ -229,7 +231,7 @@ end
 
 \begin{parchment}[asynchronous operation]
 \begin{tikzpicture}
-  \node (client) [naveqs] {
+  \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def sync_op(pid, args) do
@@ -247,7 +249,7 @@ end
 };
   \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
 
-  \path (client.south west)+(0,-1em) node (callback) [naveqs,anchor=north west] {
+  \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_cast({:sync_op, args}, state) do
@@ -258,7 +260,7 @@ end
 };
   \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
 
-  \path (callback.south west)+(0,-1em) node (returns) [naveqs,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (returns) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, new_state}
