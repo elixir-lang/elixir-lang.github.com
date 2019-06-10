@@ -209,7 +209,7 @@ defmodule KV do
 end
 ```
 
-> Please note that by doing this, we are breaking the boilerplate test case which defined our Application as a hello world greeter. We could simply remove that test case.
+> Please note that by doing this, we are breaking the boilerplate test case which defined our Application as a hello world greeter. You can simply remove that test case.
 
 When we `use Application`, we need to define a couple functions, similar to when we used `Supervisor` or `GenServer`. This time we only need to define a `start/2` function. If we wanted to specify custom behaviour on application stop, we could define a `stop/1` function.
 
