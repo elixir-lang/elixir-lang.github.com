@@ -9,13 +9,11 @@ title: Supervisor and Application
 
 {% include mix-otp-preface.html %}
 
-**TODO**: Please state what is the use of reading this page, what we're going to learn, how we're going to use it, what problem it solves.
-
 So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug-free, and failures are definitely going to happen.
 
-When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
+When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing errors. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about. We are going to learn how to use a special type of process, called Supervisor, which will start a fresh copy of the registry whenever there is a failure.
 
-In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
+At the end of the chapter, we will also talk about Applications. As we will see, Mix has been packaging all of our code into an application, and we will learn how to customize it to control exactly what happens when our system starts.
 
 ## Our first supervisor
 
@@ -77,7 +75,7 @@ So let's do that. Let's slightly change our children definition (in `KV.Supervis
     ]
 ```
 
-With this in place, a supervisor supervising our `KV.Registry` and needing to start it, will add the keyword list `[name: KV.Registry]` as parameter to the `KV.Registry.start_link`.
+With this in place, the supervisor will now start `KV.Registry` by calling `KV.Registry.start_link(name: KV.Registry)`.
 
 If you revisit the `KV.Registry.start_link/1` implementation, you will remember it simply passes the options to GenServer:
 
@@ -102,7 +100,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 
 When we started the supervisor, the registry was automatically started with the given name, allowing us to create buckets without the need to manually start it.
 
-In practice, we rarely start the application supervisor manually. Instead, it is started as part of the application callback.
+In practice, we rarely start the supervisors manually. Instead, they are started as part of the application callback.
 
 ## Understanding applications
 
@@ -129,7 +127,7 @@ We can also configure the generated `.app` file by customizing the values return
 
 ### Starting applications
 
-When we define an `.app` file, which is the application specification, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
+Each application in our system can be started and stopped. The rules for starting and stopping an application are defined precisely in the `.app` file. We haven't done this so far for two reasons:
 
 1. Mix automatically starts our current application for us
 
