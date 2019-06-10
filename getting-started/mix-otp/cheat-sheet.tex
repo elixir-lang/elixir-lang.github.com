@@ -21,7 +21,7 @@
   \begin{pgfonlayer}{background}  % Draw the shape behind
   \filldraw[normal border,rounded corners=2em,color=blue!10!yellow!5,draw=blue!25!yellow,dashed] 
         (A.south east) -- (A.south west) -- 
-        (A.north west) -- (A.north east);
+        (A.north west) -- (A.north east) -- cycle;
   \end{pgfonlayer}}}
 
 % Macro to draw the shape, when the text will continue in next page
@@ -31,7 +31,7 @@
   \begin{pgfonlayer}{background}    
   \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed] 
         (A.south east) -- (A.south west) -- 
-        (A.north west) -- (A.north east);
+        (A.north west) -- (A.north east) -- cycle;
   \end{pgfonlayer}}}
 
 % Macro to draw the shape, when the text continues from previous page
@@ -41,7 +41,7 @@
   \begin{pgfonlayer}{background}   
   \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed] 
         (A.south east) -- (A.south west) -- 
-        (A.north west) -- (A.north east);
+        (A.north west) -- (A.north east) -- cycle;
   \end{pgfonlayer}}}
 
 % Macro to draw the shape, when both the text continues from previous page
@@ -52,7 +52,7 @@
   \begin{pgfonlayer}{background}   
   \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed] 
         (A.south east) -- (A.south west) -- 
-        (A.north west) -- (A.north east);
+        (A.north west) -- (A.north east) -- cycle;
   \end{pgfonlayer}}}
 
 % Define the environment which puts the frame
@@ -66,7 +66,7 @@
   \def\MidFrameCommand{\parchmentframemiddle}%
   \vskip\baselineskip
   \MakeFramed {\FrameRestore}
-  \noindent\tikz\node[rounded corners, inner sep=2ex, draw=blue!25!yellow, fill=white, dashed, anchor=west, overlay] at (0em, 2em) {\sffamily#1};\par}%
+  \noindent\tikz\node[rounded corners=2ex, inner sep=2ex, draw=blue!25!yellow, fill=white, dashed, anchor=west, overlay] at (0em, 2em) {\sffamily#1};\par}%
 {\endMakeFramed}
 
 \setlength\parindent{0pt}
@@ -127,11 +127,24 @@ end
 {:ok, state}
 {:ok, state, 5_000}
 {:ok, state, :hibernate}
-{:stop, reason * }
+{:stop, reason }
 :ignore!
 \end{verbatim}
 };
 \path (return-value.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value = }};
+
+\path (return-value.south east)+(3em,0) node (reason) [immediate,anchor=south west] {
+  This applies to all callback replies when \texttt{return\_value} matches \texttt{\{:stop, reason\}}, and to \texttt{reason} argument in \texttt{stop} message.
+
+\begin{verbatim}
+:normal
+:shutdown
+{:shutdown, term}
+term
+\end{verbatim}
+};
+\path (reason.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}reason = }};
+
 \end{tikzpicture}
 \end{parchment}
 
@@ -166,17 +179,6 @@ end
 \end{verbatim}
 };
   \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
-
-  \path (callback.north east)+(3em,0) node (reason) [immediate,anchor=north west] {
-    \vspace*{-\baselineskip}
-\begin{verbatim}
-:normal
-:shutdown
-{:shutdown, term}
-term
-\end{verbatim}
-};
-\path (reason.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}reason = }};
 
 \end{tikzpicture} 
 \end{parchment}
@@ -220,11 +222,12 @@ end
 {:noreply, new_state, 5_000}
 {:noreply, new_state, :hibernate}
 
-{:stop, reason * , reply, new_state}
-{:stop, reason * , new_state}
+{:stop, reason , reply, new_state}
+{:stop, reason , new_state}
 \end{verbatim}
 };
   \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value =}};
+  
 \end{tikzpicture}
 
 \end{parchment}
@@ -267,10 +270,11 @@ end
 {:noreply, new_state, 5_000}
 {:noreply, new_state, :hibernate}
 
-{:stop, reason * , new_state}
+{:stop, reason , new_state}
 \end{verbatim}
 };
   \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value =}};
+  
 \end{tikzpicture}
 \end{parchment}
 
@@ -284,7 +288,7 @@ end
 {:noreply, new_state}
 {:noreply, new_state, 5_000}
 {:noreply, new_state, :hibernate}
-{:stop, reason * , new_state}
+{:stop, reason , new_state}
 \end{verbatim}
 \end{parchment}
 \end{document}
