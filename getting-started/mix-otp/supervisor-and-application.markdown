@@ -87,7 +87,7 @@ If you revisit the `KV.Registry.start_link/1` implementation, you will remember 
 
 which in turn will register the process with the given name.
 
-Let's compile the changes by invoking `mix` , then give this all a try inside `iex -S mix`:
+Let's give it a try inside `iex -S mix`:
 
 ```iex
 iex> KV.Supervisor.start_link([])
