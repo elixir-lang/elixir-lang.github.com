@@ -11,13 +11,15 @@ title: Supervisor and Application
 
 So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug-free, and failures are definitely going to happen.
 
-When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing exceptions. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
+When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing errors. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about. We are going to learn how to use a special type of process, called Supervisor, which will start a fresh copy of the registry whenever there is a failure.
 
-In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
+At the end of the chapter, we will also talk about Applications. As we will see, Mix has been packaging all of our code into an application, and we will learn how to customize it to control exactly what happens when our system starts.
 
 ## Our first supervisor
 
-Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) behaviour, inside the `lib/kv/supervisor.ex` file:
+A supervisor is a process which supervises other processes, which we refer to as child processes. The act of supervising a process includes three distinct responsibilities. The first one is to start child processes. Once a child process is running, the supervisor may restart a child process, either because it terminated abnormally or because a certain condition has reached. For example, a supervisor may restart all children if any child dies. Finally, a supervisor is also responsible for shutting down the child processes on the system is shutting down. Please see the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) module for a more in-depth discussion.
+
+Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the Supervisor behaviour, inside the `lib/kv/supervisor.ex` file:
 
 ```elixir
 defmodule KV.Supervisor do
@@ -47,13 +49,7 @@ The `child_spec/1` function returns the child specification which describes how 
 
 ```iex
 iex(1)> KV.Registry.child_spec([])
-%{
-  id: KV.Registry,
-  restart: :permanent,
-  shutdown: 5000,
-  start: {KV.Registry, :start_link, [[]]},
-  type: :worker
-}
+%{id: KV.Registry, start: {KV.Registry, :start_link, [[]]}}
 ```
 
 We will learn those details as we move forward on this guide. If you would rather peek ahead, check the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) docs.
@@ -70,19 +66,18 @@ While our application will have many buckets, it will only have a single registr
 
 Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots.
 
-So let's do that. Let's slightly change our children definition to be a list of tuples instead of a list of atoms:
+So let's do that. Let's slightly change our children definition (in `KV.Supervisor.init/1`) to be a list of tuples instead of a list of atoms:
 
 ```elixir
   def init(:ok) do
     children = [
       {KV.Registry, name: KV.Registry}
     ]
-
-    Supervisor.init(children, strategy: :one_for_one)
-  end
 ```
 
-The difference now is that, instead of calling `KV.Registry.start_link([])`, the Supervisor will call `KV.Registry.start_link([name: KV.Registry])`. If you revisit `KV.Registry.start_link/1` implementation, you will remember it simply passes the options to GenServer
+With this in place, the supervisor will now start `KV.Registry` by calling `KV.Registry.start_link(name: KV.Registry)`.
+
+If you revisit the `KV.Registry.start_link/1` implementation, you will remember it simply passes the options to GenServer:
 
 ```elixir
   def start_link(opts) do
@@ -92,7 +87,7 @@ The difference now is that, instead of calling `KV.Registry.start_link([])`, the
 
 which in turn will register the process with the given name.
 
-Let's give this all a try inside `iex -S mix`:
+Let's give it a try inside `iex -S mix`:
 
 ```iex
 iex> KV.Supervisor.start_link([])
@@ -105,7 +100,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 
 When we started the supervisor, the registry was automatically started with the given name, allowing us to create buckets without the need to manually start it.
 
-In practice, we rarely start the application supervisor manually. Instead, it is started as part of the application callback.
+In practice, we rarely start the supervisors manually. Instead, they are started as part of the application callback.
 
 ## Understanding applications
 
@@ -132,7 +127,7 @@ We can also configure the generated `.app` file by customizing the values return
 
 ### Starting applications
 
-When we define an `.app` file, which is the application specification, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
+Each application in our system can be started and stopped. The rules for starting and stopping an application are defined precisely in the `.app` file. We haven't done this so far for two reasons:
 
 1. Mix automatically starts our current application for us
 
@@ -211,6 +206,8 @@ defmodule KV do
   end
 end
 ```
+
+> Please note that by doing this, we are breaking the boilerplate test case which defined our Application as a hello world greeter. You can simply remove that test case.
 
 When we `use Application`, we need to define a couple functions, similar to when we used `Supervisor` or `GenServer`. This time we only need to define a `start/2` function. If we wanted to specify custom behaviour on application stop, we could define a `stop/1` function.
 
