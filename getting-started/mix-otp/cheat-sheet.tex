@@ -13,8 +13,8 @@
 
 \tikzset{normal border/.style={orange!30!black!10}}
 
-% Macro to draw the shape behind the text, when it fits completly in the
-% page
+% Macro to draw the shape behind the text, when it fits 
+% completly in the page
 \def\parchmentframe#1{
 \tikz{
   \node[inner sep=2em] (A) {#1};  % Draw the text of the node
@@ -80,12 +80,17 @@
 
 % Define a few styles and constants
 \tikzstyle{left-title}=[draw, fill=blue!20, text width=1em, minimum height=5em]
-\tikzstyle{naveqs} = [left-title, text width=28em, inner sep=8pt, fill=red!10, 
-  minimum height=5em, rounded corners]
+\tikzstyle{naveqs} = [left-title, text width=28em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
+\tikzstyle{immediate} = [left-title, text width=16em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
 
+\begin{comment}
+\begin{parchment}[initialization]
+  Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur. Hi omnes lingua, institutis, legibus inter se differunt. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit. Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt, minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important, proximique sunt Germanis, qui trans Rhenum incolunt, quibuscum continenter bellum gerunt. Qua de causa Helvetii quoque reliquos Gallos virtute praecedunt, quod fere cotidianis proeliis cum Germanis contendunt, cum aut suis finibus eos prohibent aut ipsi in eorum finibus bellum gerunt. Eorum una pars, quam Gallos obtinere dictum est, initium capit a flumine Rhodano, continetur Garumna flumine, Oceano, finibus Belgarum, attingit etiam ab Sequanis et Helvetiis flumen Rhenum, vergit ad septentriones. Belgae ab extremis Galliae finibus oriuntur, pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et orientem solem. Aquitania a Garumna flumine ad Pyrenaeos montes et eam partem Oceani quae est ad Hispaniam pertinet; spectat inter occasum solis et septentriones.
+\end{parchment}
+\end{comment}
 \begin{parchment}[initialization]
 \begin{tikzpicture}
-  \node (client) [naveqs] {
+  \node (client) [naveqs] {%
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def start_link(opts \\ []) do
@@ -95,7 +100,7 @@ end
 };
 \path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [naveqs,anchor=north west] {
+\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:ok, pid}
@@ -128,6 +133,52 @@ end
 \end{tikzpicture}
 \end{parchment}
 
+\begin{parchment}[termination]
+\begin{tikzpicture}
+  \node (client) [naveqs] {%
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def stop(pid, reason \\ :normal, 
+                        timeout \\ :infinity) do
+  GenServer.stop(pid, reason, timeout)
+end
+\end{verbatim}
+};
+\path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
+
+\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+:ok
+\end{verbatim}
+};
+\path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
+
+\path (client.south west)+(0,-1em) node (callback) [naveqs,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def terminate(reason, state) do
+# Perform cleanup here
+# ...
+end
+\end{verbatim}
+};
+  \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
+
+  \path (callback.north east)+(3em,0) node (reason) [immediate,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+:normal
+:shutdown
+{:shutdown, term}
+term
+\end{verbatim}
+};
+\path (reason.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}reason = }};
+
+\end{tikzpicture} 
+\end{parchment}
+
 \begin{parchment}[synchronous operation]
 \begin{tikzpicture}
   \node (client) [naveqs] {
@@ -140,7 +191,7 @@ end
 };
   \path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [naveqs,anchor=north west] {
+\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
   waits for callback and returns \texttt{reply} if returned value from callback matches \texttt{\{:reply, reply, \_\}}
 };
   \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
@@ -188,7 +239,7 @@ end
 };
   \path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [naveqs,anchor=north west] {
+\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 :ok
@@ -233,23 +284,5 @@ end
 {:noreply, new_state, :hibernate}
 {:stop, reason * , new_state}
 \end{verbatim}
-\end{parchment}
-
-\begin{parchment}[termination]
-\begin{verbatim}
-def stop(pid, reason \\ :normal, timeout \\ :infinity) do
-GenServer.stop(pid, reason, timeout)
-end
-def terminate(reason, state) do
-# Perform cleanup here
-# ...
-end
-
-:normal
-:shutdown
-{:shutdown, term}
-term
-\end{verbatim}
-  
 \end{parchment}
 \end{document}
