@@ -3,7 +3,7 @@
 \usepackage{tikz}
 \usepackage{bm,times}
 \usepackage{verbatim}
-\usepackage[margin=1cm]{geometry}% for screen preview
+\usepackage[margin=0.8cm]{geometry}% for screen preview
 \usetikzlibrary{shapes,arrows,calc,backgrounds,shapes.geometric}
 % Define a background layer, in which the parchment shape is drawn
 \pgfdeclarelayer{background}
@@ -53,10 +53,10 @@
         (A.north west) -- (A.north east) -- cycle;
   \end{pgfonlayer}}}
 
-% Define the environment which puts the frame
-% In this case, the environment also accepts an argument with an optional
-% title (which defaults to ``Example'', which is typeset in a box overlaid
-% on the top border
+% Define the environment which puts the frame.  In this case,
+% the environment also accepts an argument with an optional
+% title (which defaults to ``Example'', which is typeset in a
+% box overlaid on the top border
 \newenvironment{parchment}[1][Example]{%
   \def\FrameCommand{\parchmentframe}%
   \def\FirstFrameCommand{\parchmentframetop}%
@@ -94,30 +94,30 @@
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def start_link(opts \\ []) do
-  GenServer.start_link(__MODULE__, :ok, opts)
+  GenServer.start_link(__MODULE__, match_this, opts)
 end
 \end{verbatim}
 };
-\path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
+\path (client.180)+(-1em,0) node [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
+\path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:ok, pid}
 \end{verbatim}
 };
-  \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
+  \path (immediate.180)+(-1em,0) node [left-title] {\rotatebox{90}{immediate}};
 
 \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def init(:ok) do
-  # initialize state, or fail to do so
-  return_value
+def init(match_this) do
+  # compute state or fail; with or without reason
+  result
 end
 \end{verbatim}
 };
-  \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
+  \path (callback.180)+(-1em,0) node [left-title] {\rotatebox{90}{callback}};
 
   \path (callback.south west)+(0,-1em) node (return-value) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -125,14 +125,18 @@ end
 {:ok, state}
 {:ok, state, 5_000}
 {:ok, state, :hibernate}
+
 {:stop, reason}
 :ignore!
 \end{verbatim}
 };
-\path (return-value.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value = }};
+\path (return-value.180)+(-1em,0) node [left-title] {\rotatebox{90}{\^{}result = }};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (return-value.north west)+(0,-50pt) -- ($ (return-value.north east)+(0,-50pt) $);
 
 \path (return-value.south east)+(3em,0) node (reason) [immediate,anchor=south west] {
-  This applies to all callback replies when \verb|return_value| matches \verb|{:stop, reason}|, and to \verb|reason| argument in \verb|stop| message.
+  This applies to all callback replies when \verb|result| matches \verb|{:stop, reason}|, and to \verb|reason| argument in \verb|stop| message.
 
 \begin{verbatim}
 :normal
@@ -141,7 +145,7 @@ end
 term
 \end{verbatim}
 };
-\path (reason.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}reason = }};
+\path (reason.180)+(-1em,0) node [left-title] {\rotatebox{90}{\^{}reason = }};
 
 \end{tikzpicture}
 \end{parchment}
@@ -157,59 +161,59 @@ def stop(pid, reason \\ :normal,
 end
 \end{verbatim}
 };
-\path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
+\path (client.180)+(-1em,0) node [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
+\path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 :ok
 \end{verbatim}
 };
-\path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
+\path (immediate.180)+(-1em,0) node [left-title] {\rotatebox{90}{immediate}};
 
 \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def terminate(reason, state) do
   # Perform cleanup
-  # no return value expected
+  # result will not be used
 end
 \end{verbatim}
 };
-  \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
+  \path (callback.180)+(-1em,0) node [left-title] {\rotatebox{90}{callback}};
 
 \end{tikzpicture}
 \end{parchment}
 
-\begin{parchment}[synchronous operation]
+\begin{parchment}[synchronous operation - \bf\texttt{call}]
 \begin{tikzpicture}
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def sync_op(pid, args) do
-  GenServer.call(pid, {:sync_op, args})
+  GenServer.call(pid, match_this)
 end
 \end{verbatim}
 };
-  \path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
+  \path (client.180)+(-1em,0) node [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
+\path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
   waits for callback and returns \verb|reply| if returned value from callback matches \verb|{:reply, reply, _}|
 };
-  \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
+  \path (immediate.180)+(-1em,0) node [left-title] {\rotatebox{90}{immediate}};
 
   \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def handle_call({:sync_op, args}, from, state) do
-  new_state = f(state, args)
-  return_value
+def handle_call(match_this, from, state) do
+  # compute reply, state or fail; with or without reason
+  result
 end
 \end{verbatim}
 };
-  \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
+  \path (callback.180)+(-1em,0) node [left-title] {\rotatebox{90}{callback}};
 
-  \path (callback.south west)+(0,-1em) node (returns) [main-block,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (return-value) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:reply, reply, new_state}
@@ -217,93 +221,105 @@ end
 {:reply, reply, new_state, :hibernate}
 \end{verbatim}
 
-\rule{\linewidth}{0.4pt}
-
 \begin{verbatim}
 {:noreply, new_state}
 {:noreply, new_state, 5_000}
 {:noreply, new_state, :hibernate}
-{:stop, reason , reply, new_state}
-{:stop, reason , new_state}
+
+{:stop, reason}
 \end{verbatim}
 };
 
-  \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value =}};
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (return-value.north west)+(0,-96pt) -- ($ (return-value.north east)+(0,-96pt) $);
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (return-value.north west)+(0,-50pt) -- ($ (return-value.north east)+(0,-50pt) $);
+
+  \path (return-value.180)+(-1em,0) node [left-title] {\rotatebox{90}{\^{}result =}};
 
 \end{tikzpicture}
 
 \end{parchment}
 
-\begin{parchment}[asynchronous operation]
+\begin{parchment}[asynchronous operation - \bf\texttt{cast}]
 \begin{tikzpicture}
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def sync_op(pid, args) do
-  GenServer.cast(pid, {:async_op, args})
+  GenServer.cast(pid, match_this)
 end
 \end{verbatim}
 };
-  \path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
+  \path (client.180)+(-1em,0) node [left-title] {\rotatebox{90}{client}};
 
-\path (client.north east)+(3em,0) node (returns) [immediate,anchor=north west] {
+\path (client.north east)+(3em,0) node (return-value) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 :ok
 \end{verbatim}
 };
-  \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{immediate}};
+  \path (return-value.180)+(-1em,0) node [left-title] {\rotatebox{90}{immediate}};
 
   \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def handle_cast({:async_op, args}, state) do
+def handle_cast(match_this, state) do
   # compute new state or fail to do so
-  return_value
+  result
 end
 \end{verbatim}
 };
-  \path (callback.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{callback}};
+  \path (callback.180)+(-1em,0) node [left-title] {\rotatebox{90}{callback}};
 
-  \path (callback.south west)+(0,-1em) node (returns) [main-block,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (return-value) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, new_state}
 {:noreply, new_state, 5_000}
 {:noreply, new_state, :hibernate}
 
-{:stop, reason , new_state}
+{:stop, reason}
 \end{verbatim}
 };
-  \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value =}};
+
+  \path (return-value.180)+(-1em,0) node [left-title] {\rotatebox{90}{\^{}result =}};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (return-value.north west)+(0,-50pt) -- ($ (return-value.north east)+(0,-50pt) $);
 
 \end{tikzpicture}
 \end{parchment}
 
-\begin{parchment}[handling information messages]
+\begin{parchment}[handling messages - \bf\texttt{info}]
 \begin{tikzpicture}
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_info(msg, state) do
   # compute new state or fail to do so
-  return_value
+  result
 end
 \end{verbatim}
 };
-  \path (client.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{client}};
+  \path (client.180)+(-1em,0) node [left-title] {\rotatebox{90}{client}};
 
-  \path (client.south west)+(0,-1em) node (returns) [main-block,anchor=north west] {
+  \path (client.south west)+(0,-1em) node (return-value) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, new_state}
 {:noreply, new_state, 5_000}
 {:noreply, new_state, :hibernate}
 
-{:stop, reason , new_state}
+{:stop, reason}
 \end{verbatim}
 };
-  \path (returns.180)+(-1em,0) node (gyros) [left-title] {\rotatebox{90}{\^{}return\_value =}};
+
+  \path (return-value.180)+(-1em,0) node [left-title] {\rotatebox{90}{\^{}result =}};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (return-value.north west)+(0,-50pt) -- ($ (return-value.north east)+(0,-50pt) $);
+  
 \end{tikzpicture}
 \end{parchment}
 
