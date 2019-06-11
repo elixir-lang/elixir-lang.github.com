@@ -9,9 +9,11 @@ title: Supervisor and Application
 
 {% include mix-otp-preface.html %}
 
-So far our application has a registry that may monitor dozens, if not hundreds, of buckets. While we think our implementation so far is quite good, no software is bug-free, and failures are definitely going to happen.
+In this chapter, we are going to learn about supervisors. We are going to create not one, but two supervisors, and use them to supervise our processes. (TODO: the impatient reader (forcing themselves to read the docs this time) sees 'first supervisor' and I can assure you their first urge is to search for the word 'second', and there's none here.)
 
-When things fail, your first reaction may be: "let's rescue those errors". But in Elixir we avoid the defensive programming habit of rescuing errors. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about. We are going to learn how to use a special type of process, called Supervisor, which will start a fresh copy of the registry whenever there is a failure.
+We closed the previous chapter about GenServer, with our `KV.Registry` managing buckets, and able to take action whenever a monitored `KV.Bucket` crashed. Not a particularly pro-active reaction, just removing the reference, why not restart the crashed process? In our buckets case it's probably not worth the effort, but there's a more compelling reason: Elixir offers a module designed precisely to do this, supervise that every vital element of our application is up and running at any given moment.
+
+When things fail, your first reaction may be: "let's rescue those errors". In Elixir we avoid the defensive programming habit of rescuing exceptions. Instead, we say "let it crash". If there is a bug that leads our registry to crash, we have nothing to worry about because we are going to set up a supervisor that will start a fresh copy of the registry.
 
 At the end of the chapter, we will also talk about Applications. As we will see, Mix has been packaging all of our code into an application, and we will learn how to customize it to control exactly what happens when our system starts.
 
