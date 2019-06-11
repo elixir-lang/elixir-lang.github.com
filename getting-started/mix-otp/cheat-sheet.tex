@@ -138,9 +138,9 @@ end
 \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result = }};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
-        (result.north west)+(0,-50pt) -- ($ (result.north east)+(0,-50pt) $);
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
-\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=yellow!35] {
+\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=green!25] {
   This applies when \verb|result| matches \verb|{:stop, reason}|, and to \verb|reason| argument in \verb|stop| message.
 
 \begin{verbatim}
@@ -233,7 +233,7 @@ end
 };
   \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
 
-  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=yellow!35] {
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!25] {
     This applies when \verb|result| matches \verb|{_, state, then_what}|
 
 \begin{verbatim}
@@ -245,7 +245,7 @@ milliseconds
   \path (then-what.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}then\_what =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
-        (result.north west)+(0,-50pt) -- ($ (result.north east)+(0,-50pt) $);
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
 \end{tikzpicture}
 \end{parchment}
@@ -297,9 +297,9 @@ end
   \path (reply.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}reply =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
-        (result.north west)+(0,-96pt) -- ($ (result.north east)+(0,-96pt) $);
+        (result.north west)+(0,-72pt) -- ($ (result.north east)+(0,-72pt) $);
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
-        (result.north west)+(0,-50pt) -- ($ (result.north east)+(0,-50pt) $);
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
 \end{tikzpicture}
 
@@ -331,7 +331,7 @@ end
   \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
-        (result.north west)+(0,-50pt) -- ($ (result.north east)+(0,-50pt) $);
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
 \end{tikzpicture}
 \end{parchment}
@@ -362,31 +362,24 @@ end
   \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
-        (result.north west)+(0,-50pt) -- ($ (result.north east)+(0,-50pt) $);
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
+
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!25] {
+Functions where \verb|@impl true| applies.
+\begin{verbatim}
+init/1
+terminate/2
+handle_call/3
+handle_cast/2
+handle_info/2
+handle_continue/2
+code_change/3
+format_status/2
+\end{verbatim}
+};
+  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{@impl true}};
 
 \end{tikzpicture}
 \end{parchment}
-
-\begin{comment}
-\begin{parchment}[other]
-  I defined a module with one  \verb|abc| function, preceded by the \verb|@impl true| directive, as to force the compiler to give me the list of callback functions I could correctly define.
-
-  This first block we have handled.
-\begin{verbatim}
-  * GenServer.init/1 (function)
-  * GenServer.terminate/2 (function)
-  * GenServer.handle_call/3 (function)
-  * GenServer.handle_cast/2 (function)
-  * GenServer.handle_info/2 (function)
-\end{verbatim}
-
-Who can fill in the blanks for the following three functions?
-\begin{verbatim}
-  * GenServer.code_change/3 (function)
-  * GenServer.format_status/2 (function)
-  * GenServer.handle_continue/2 (function)
-\end{verbatim}
-\end{parchment}
-\end{comment}
 
 \end{document}
