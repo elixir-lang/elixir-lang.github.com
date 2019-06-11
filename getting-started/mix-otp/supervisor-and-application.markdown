@@ -9,11 +9,21 @@ title: Supervisor and Application
 
 {% include mix-otp-preface.html %}
 
-We closed the previous chapter about `GenServer`, with our `KV.Registry` managing buckets, and being notified and able to take action whenever a monitored `KV.Bucket` crashed. We did not program a particularly pro-active reaction, just removing the reference, why not restart the crashed process? In our buckets case it's probably not worth the effort, but there's a more compelling reason: Elixir offers a module designed precisely to do this, supervise that every vital element of our application is up and running at any given moment.
+In the previous chapter about `GenServer`, we implemented `KV.Registry` to manage buckets. At some point, we started monitoring buckets so we were able to take action whenever a `KV.Bucket` crashed. Although the change was relatively small, it introduced a question which is frequently asked by Elixir developers: what happens when something fail?
 
-Let's back up a few steps: when things fail, your first reaction may be: "let's rescue those errors". In Elixir most modules run as separate processes, and this lets us avoid the defensive programming habit of rescuing exceptions. Instead, we say "let it crash" and, for vital elements of our application, "let's start it afresh". 
+Before we added monitoring, if a bucket crashed, the registry would forever point to a bucket that no longer exists. If a user tried to read or write to the crahed bucket, it would fail. Any attempt at creating a new bucket with the same name would just return the PID of the crashed bucket. In other words, that registry entry for that bucket would forever be in a bad state. Once we added monitoring, the registry automatically removes the entry for the crashed bucket. Trying to lookup the crashed bucket now (correctly) says a bucket does not exist and a user of the system can successfully create a new one if desired.
 
-In this chapter, we will consider our registry as the "vital" element of our application, and we will define a `KV.Supervisor` module that guarantees that our `KV.Registry` is up and running at any given moment.
+In practice, we are not expecting the processes working as buckets to fail. But, if it does happen, for whatever reason, we can rest assured that our system will continue to work as intended.
+
+If you have prior programming experience, you may be wondering: "could we just guarantee the bucket does not crash in the first place?". As we will see, Elixir developers tend to refer to those practices as "defensive programming". That's because a live production system has dozens of different reasons why something can wrong. The disk can fail, memory can be corrupted, bugs, the network may stop working for a second, etc. If we were to write a software that attempted to protect or circumvent all of those errors, we would spend more time handling failures than writing our own software!
+
+Therefore, an Elixir developer prefers to "let it crash" or "fail fast". And one of the most common ways we can recover from a failure is by restarting whatever part of the system that crashed.
+
+For example, when your computer, router, printer, or whatever device is not working properly. How do you often fix it? By restarting it. Once we restart the device, we reset the device back to its initial state, which is well-tested aand guaranteed to work. In Elixir, we apply this same approach to software: whenever a process crashes, we start a new process to perform the same job as the crashed process.
+
+In Elixir, this is done by a Supervisor. A Supervisor is a process that supervises other processes and restarts them whenever they crash. To do so, Supervisors manage the whole life-cycle of any supervised processes, including startup and shutdown.
+
+In this chapter, we will learn how to put those concepts into practice by supervising the `KV.Registry` process. After all, if something goes wrong with the registry, the whole registry is lost and no bucket could ever be found! To address this, we will define a `KV.Supervisor` module that guarantees that our `KV.Registry` is up and running at any given moment.
 
 At the end of the chapter, we will also talk about Applications. As we will see, Mix has been packaging all of our code into an application, and we will learn how to customize it to control exactly what happens when our system starts.
 
