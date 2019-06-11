@@ -337,4 +337,4 @@ Returning to our `handle_cast/2` implementation, you can see the registry is bot
 ref = Process.monitor(pid)
 ```
 
-This is a bad idea, as we don't want the registry to crash when a bucket crashes! We typically avoid creating new processes directly, instead, we delegate this responsibility to supervisors. As we'll see in the next chapter, supervisors rely on links and that explains why link-based APIs (`spawn_link`, `start_link`, etc) are so prevalent in Elixir and <abbr title="Open Telecom Platform">OTP</abbr>.
+This is a bad idea, as we don't want the registry to crash when a bucket crashes. A reasonable fix here, once we have settled for our `KV.Registry` to monitor its buckets via references, is replace `KV.Bucket.start_link` for a plain `start`. A more radical solution is explored in the next chapter, where we introduce "supervisors".
