@@ -58,13 +58,15 @@ We will learn those details as we move forward on this guide. If you would rathe
 
 After the supervisor retrieves all child specifications, it proceeds to start its children one by one, in the order they were defined, using the information in the `:start` key in the child specification. For our current specification, it will call `KV.Registry.start_link([])`.
 
-In the previous chapter, we have used `start_supervised!` to start the registry during our tests. Internally, the `start_supervised!` function starts the registry under a supervisor defined by the ExUnit framework. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise registries in your applications, aligning our production code and tests best practices.
+TODO: at this point we have a supervisor, on top of our registry, on top of our buckets. I miss some summarizing this. Like, in the previous chapter we `stop` a bucket and we saw the bucket disappears from the list. Here I would like to stop the registry (how do I do that?) and see that a new registry was started by the supervisor.
 
-So far `start_link/1` has always received an empty list of options. It is time we change that.
+In the previous chapter, we have used `start_supervised!` to start the registry during our tests. Internally, the `start_supervised!` function starts the registry under a supervisor defined by the ExUnit framework. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise registries in your applications, aligning our production code and tests best practices.
 
 ## Naming processes
 
-While our application will have many buckets, it will only have a single registry. So instead of always passing the registry PID around, we can give the registry a name, and always reference it by its name.
+TODO: split the amount of goals we are stating. Is it naming our Registry? Also, What's the point in giving it a name, if it's only one process? After talking of naming the only Registry in the play, we move back to the goal stated above, which makes a lot more sense: make sure we `start_supervised` our registry. Can we focus on this one first, and then talk about naming processes?
+
+While our application will have many buckets, it will only have a single registry. So instead of always passing the registry PID around, we can give the registry a name, and always reference it by its name. We do this by changing the `KV.Registry.start_link/1`.
 
 Also, remember buckets were started dynamically based on user input, and that meant we should not use atom names for managing our buckets. But the registry is in the opposite situation, we want to start a single registry, preferably under a supervisor, when our application boots.
 
