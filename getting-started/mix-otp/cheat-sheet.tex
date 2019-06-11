@@ -81,8 +81,8 @@
 
 % Define a few styles and constants
 \tikzstyle{left-title}=[draw, fill=blue!20, text width=1em, minimum height=5em]
-\tikzstyle{main-block} = [left-title, text width=30em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
-\tikzstyle{immediate} = [left-title, text width=17em, inner sep=8pt, fill=red!10, minimum height=5em, rounded corners]
+\tikzstyle{main-block} = [left-title, text width=30em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
+\tikzstyle{immediate} = [left-title, text width=17em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
 
 \begin{comment}
 \begin{parchment}[commentarii de bello gallico]
@@ -135,13 +135,13 @@ end
 :ignore!
 \end{verbatim}
 };
-\path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result = }};
+\path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result = }};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
-\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=green!25] {
-  This applies when \verb|result| matches \verb|{:stop, reason}|, and to \verb|reason| argument in \verb|stop| message.
+\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=yellow!30] {
+  This applies wherever \verb|result| matches \verb|{:stop, reason}|, and to \verb|reason| argument in \verb|stop| message.
 
 \begin{verbatim}
 :normal
@@ -150,7 +150,7 @@ end
 any
 \end{verbatim}
 };
-\path (reason.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}reason = }};
+\path (reason.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}reason = }};
 
 \end{tikzpicture}
 \end{parchment}
@@ -195,7 +195,7 @@ end
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def sync_op(pid, args) do
+def your_api_async_op(pid, args) do
   GenServer.cast(pid, match_this)
 end
 \end{verbatim}
@@ -231,10 +231,10 @@ end
 {:stop, reason, state}
 \end{verbatim}
 };
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
-  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!25] {
-    This applies when \verb|result| matches \verb|{_, state, then_what}|
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=yellow!30] {
+    This applies wherever \verb|result| matches \verb|{_, state, then_what}|
 
 \begin{verbatim}
 milliseconds
@@ -242,7 +242,7 @@ milliseconds
 {:continue, value}
 \end{verbatim}
 };
-  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}then\_what =}};
+  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
@@ -255,7 +255,7 @@ milliseconds
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def sync_op(pid, args) do
+def your_api_sync_op(pid, args) do
   GenServer.call(pid, match_this)
 end
 \end{verbatim}
@@ -291,10 +291,10 @@ end
 {:stop, reason, reply, state}
 \end{verbatim}
 };
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
-\path (result.north east)+(3em,0) node (reply) [immediate,anchor=north west] {user defined};
-  \path (reply.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}reply =}};
+\path (result.south east)+(3em,0) node (reply) [immediate,anchor=south west] {user defined};
+  \path (reply.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}reply =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-72pt) -- ($ (result.north east)+(0,-72pt) $);
@@ -310,7 +310,7 @@ end
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def handle_info(msg, state) do
+def handle_info(match_this, state) do
   # process input and compute result
   result
 end
@@ -328,7 +328,7 @@ end
 \end{verbatim}
 };
 
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
@@ -336,12 +336,12 @@ end
 \end{tikzpicture}
 \end{parchment}
 
-\begin{parchment}[\bf\texttt{\{:continue, value\}} $\rightarrow$ \bf\texttt{handle\_continue/2}]
+\begin{parchment}[\bf\texttt{\{:continue, match\_this\}} $\rightarrow$ \bf\texttt{handle\_continue/2}]
 \begin{tikzpicture}
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
-def handle_continue(value, state) do
+def handle_continue(match_this, state) do
   # process input and compute result
   result
 end
@@ -359,12 +359,12 @@ end
 \end{verbatim}
 };
 
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
-  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!25] {
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=black!5] {
 Functions where \verb|@impl true| applies.
 \begin{verbatim}
 init/1
@@ -377,7 +377,7 @@ code_change/3
 format_status/2
 \end{verbatim}
 };
-  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{@impl true}};
+  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north,fill=white] {\rotatebox{90}{@impl true}};
 
 \end{tikzpicture}
 \end{parchment}
