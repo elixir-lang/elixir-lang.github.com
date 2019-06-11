@@ -89,6 +89,10 @@
   Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur. Hi omnes lingua, institutis, legibus inter se differunt. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit. Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt, minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important, proximique sunt Germanis, qui trans Rhenum incolunt, quibuscum continenter bellum gerunt. Qua de causa Helvetii quoque reliquos Gallos virtute praecedunt, quod fere cotidianis proeliis cum Germanis contendunt, cum aut suis finibus eos prohibent aut ipsi in eorum finibus bellum gerunt. Eorum una pars, quam Gallos obtinere dictum est, initium capit a flumine Rhodano, continetur Garumna flumine, Oceano, finibus Belgarum, attingit etiam ab Sequanis et Helvetiis flumen Rhenum, vergit ad septentriones. Belgae ab extremis Galliae finibus oriuntur, pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et orientem solem. Aquitania a Garumna flumine ad Pyrenaeos montes et eam partem Oceani quae est ad Hispaniam pertinet; spectat inter occasum solis et septentriones.
 \end{parchment}
 \end{comment}
+\section*{GenServer - a cheat sheet}
+last version: \verb|https://elixir-lang.org/getting-started/mix-otp/cheat-sheet.pdf|\\
+reference: \verb|https://hexdocs.pm/elixir/GenServer.html|
+
 \begin{parchment}[initialization: .start $\rightarrow$ \bf\texttt{init/1}]
   \begin{tikzpicture}
     \node (client) [main-block] {%
@@ -113,7 +117,7 @@ end
       \vspace*{-\baselineskip}
 \begin{verbatim}
 def init(match_this) do
-  # compute state or fail; with or without reason
+  # process input and compute result
   result
 end
 \end{verbatim}
@@ -125,7 +129,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:ok, state}
-{:ok, state, 5_000}
+{:ok, state, timeout}
 {:ok, state, :hibernate}
 
 {:stop, reason}
@@ -177,7 +181,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def terminate(reason, state) do
-  # Perform cleanup
+  # perform cleanup
   # result will not be used
 end
 \end{verbatim}
@@ -211,7 +215,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_cast(match_this, state) do
-  # compute new state or fail to do so
+  # process input and compute result
   result
 end
 \end{verbatim}
@@ -223,7 +227,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, state}
-{:noreply, state, 5_000}
+{:noreply, state, timeout}
 {:noreply, state, :hibernate}
 
 {:stop, reason, state}
@@ -257,7 +261,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_call(match_this, from, state) do
-  # compute reply, state or fail; with or without reason
+  # process input and compute result
   result
 end
 \end{verbatim}
@@ -269,13 +273,13 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:reply, reply, state}
-{:reply, reply, state, 5_000}
+{:reply, reply, state, timeout}
 {:reply, reply, state, :hibernate}
 \end{verbatim}
 
 \begin{verbatim}
 {:noreply, state}
-{:noreply, state, 5_000}
+{:noreply, state, timeout}
 {:noreply, state, :hibernate}
 
 {:stop, reason, reply, state}
@@ -301,7 +305,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_info(msg, state) do
-  # compute new state or fail to do so
+  # process input and compute result
   result
 end
 \end{verbatim}
@@ -312,7 +316,7 @@ end
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, state}
-{:noreply, state, 5_000}
+{:noreply, state, timeout}
 {:noreply, state, :hibernate}
 
 {:stop, reason, state}
