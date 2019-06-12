@@ -133,7 +133,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 {:ok, #PID<0.70.0>}
 ```
 
-This time the supervisor started a named registry, allowing us to create buckets without having to explicitly fetch the PID from the supervisor.
+This time the supervisor started a named registry, allowing us to create buckets without having to explicitly fetch the PID from the supervisor. You should also know how to make the registry crash again, without looking up its PID: give it a try.
 
 > At this point, you may be wondering: should you also locally name bucket processes? Remember buckets are started dynamically based on user input. Since local names MUST be atoms, we would have to dynamically create atoms, which is a bad idea since once an atom is defined, it is never erased nor garbage collected. This means that, if we create atoms dynamically based on user input, we will eventually run out of memory (or to be more precise, the VM will crash because it imposes a hard limit on the number of atoms). This limitation is precisely why we created our own registry (or why one would use the `Registry` as part of Elixir).
 
