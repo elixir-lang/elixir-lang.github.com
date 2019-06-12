@@ -1,10 +1,12 @@
 \documentclass[a4paper]{article}
 \usepackage{framed}
 \usepackage{tikz}
-\usepackage{bm,times}
+\usepackage{times,charter}
 \usepackage{amssymb}
 \usepackage{verbatim}
-\usepackage[margin=0.8cm]{geometry}% for screen preview
+\usepackage[bindingoffset=0in,%
+            left=1.3cm,right=1.3cm,top=1.5cm,bottom=0.8cm,%
+            footskip=0in]{geometry}
 \usetikzlibrary{shapes,arrows,calc,backgrounds,shapes.geometric}
 % Define a background layer, in which the parchment shape is drawn
 \pgfdeclarelayer{background}
@@ -72,7 +74,11 @@
 
 % Main document, example of usage
 \pagestyle{empty}
+
+\usepackage{enumitem}
 \begin{document}
+\fontsize{9.5}{11}\selectfont
+\setlist[itemize]{leftmargin=0em}
 
 % We need layers to draw the block diagram
 \pgfdeclarelayer{background}
@@ -80,8 +86,8 @@
 \pgfsetlayers{background,main,foreground}
 
 % Define a few styles and constants
-\tikzstyle{left-title}=[draw, fill=blue!20, minimum width=1em, minimum height=5em,anchor=north east]
-\tikzstyle{top-title}=[draw, fill=blue!20, minimum width=5em, minimum height=1em]
+\tikzstyle{left-title}=[draw, fill=blue!20, minimum width=1.6em, minimum height=5em,anchor=north east]
+\tikzstyle{top-title}=[draw, fill=blue!20, minimum width=5em, minimum height=1.6em]
 \tikzstyle{main-block} = [left-title, text width=30em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
 \tikzstyle{immediate} = [left-title, text width=17em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
 \tikzstyle{explain} = [left-title, text width=17em, inner sep=8pt, fill=black!5, minimum height=5em, rounded corners,anchor=south west]
@@ -92,9 +98,11 @@
 \end{parchment}
 \end{comment}
 \section*{GenServer - a cheat sheet}
-last version: \verb|https://elixir-lang.org/getting-started/mix-otp/cheat-sheet.pdf|\\
-source: \verb|https://github.com/elixir-lang/elixir-lang.github.com|; license: CC:BY-SA; Copyright: check the source.\\
-reference: \verb|https://hexdocs.pm/elixir/GenServer.html|
+\begin{itemize}
+  \setlength\itemsep{0em}
+\item[---] last version: \verb|https://elixir-lang.org/getting-started/mix-otp/cheat-sheet.pdf|
+\item[---] reference: \verb|https://hexdocs.pm/elixir/GenServer.html|
+\end{itemize}
 \begin{comment}
   copyright 2019 by Mario Frasca et al.
 
@@ -168,7 +176,7 @@ $\bullet$ \texttt{:normal} doesn't log, doesn't break links $\bullet$ \texttt{:s
 };
   \path (explain.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{stop reasons}};
 
-  \draw[->,draw=blue!50!black,dashed,thick,anchor=north west] (-7.3em,-3.3em) .. controls (-7em,-7em) and (-22.4em,-1em) .. (-22.4em,-6.9em);
+  \draw[->,draw=blue!50!black,dashed,thick,anchor=north west] (-7.3em,-3.3em) .. controls (-7em,-7em) and (-22.45em,-1em) .. (-22.45em,-5.5em) -- (-22.45em,-6.9em);
 
 \end{tikzpicture}
 \end{parchment}
@@ -244,7 +252,7 @@ def handle_cast(match_this, state) do
 end
 \end{verbatim}
 };
-  \draw[->,draw=blue!50!black,dashed,thick] (-15em,-3.3em) .. controls (-15em,-6.4em) and (-18em,-2em) .. (-18em,-6.8em);
+  \draw[->,draw=blue!50!black,dashed,thick] (-15.1em,-3.3em) .. controls (-15.1em,-5.4em) and (-18.2em,-3em) .. (-18.2em,-5.8em) -- (-18.2em,-6.8em);
   \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
   \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
@@ -258,16 +266,16 @@ end
 };
   \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
-  \path (result.north east)+(3em,0) node (then-what) [immediate,anchor=north west,fill=green!30!yellow!18!white] {
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 timeout_milliseconds
 :hibernate
-{:continue, value}
+{:continue, match_this}
 \end{verbatim}
 };
 \path (then-what.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
-  \path (then-what.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
+  \path (then-what.south west)+(-2pt,0) node [left-title,anchor=south east,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
@@ -299,7 +307,7 @@ def handle_call(match_this, from, state) do
 end
 \end{verbatim}
 };
-  \draw[->,draw=blue!50!black,dashed,thick] (-15em,-3.3em) .. controls (-15em,-6.4em) and (-18em,-2em) .. (-18em,-6.8em);
+  \draw[->,draw=blue!50!black,dashed,thick] (-15.1em,-3.3em) .. controls (-15.1em,-5.4em) and (-18.2em,-3em) .. (-18.2em,-5.8em) -- (-18.2em,-6.8em);
   \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
   \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
@@ -361,7 +369,7 @@ end
 \end{tikzpicture}
 \end{parchment}
 
-\begin{parchment}[\bf\texttt{\{:continue, match\_this\}} $\rightarrow$ \bf\texttt{handle\_continue/2}]
+\begin{parchment}[\bf\texttt{then\_what} $\rightarrow$ \bf\texttt{\{:continue, match\_this\}} $\rightarrow$ \bf\texttt{handle\_continue/2}]
 \begin{tikzpicture}
   \node (client) [main-block] {
     \vspace*{-\baselineskip}
@@ -392,11 +400,13 @@ end
 \end{tikzpicture}
 \end{parchment}
 \begin{parchment}[footnotes]
-    \vspace*{-\baselineskip}
-      \begin{itemize}
-      \setlength\itemsep{0em}
-    \item[---] Use \verb|@impl true| before each definition to guarantee it matches the equivalent GenServer callback.
-\item[---] Callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
+  \vspace*{-\baselineskip}
+  \begin{itemize}
+    \setlength\itemsep{0em}
+  \item[---] use \verb|@impl true| before each definition to guarantee it matches the equivalent \verb|GenServer| callback.
+  \item[---] callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
+  \item[---] source: \verb|https://github.com/elixir-lang/elixir-lang.github.com|
+  \item[---] copyright: by its authors, listed in the source --- license: CC:BY-SA%
   \end{itemize}
 \end{parchment}
 
