@@ -389,17 +389,15 @@ end
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
-  \path (result.south east)+(3em,0) node (then-what) [explain] {
+\end{tikzpicture}
+\end{parchment}
+\begin{parchment}[footnotes]
     \vspace*{-\baselineskip}
       \begin{itemize}
       \setlength\itemsep{0em}
     \item[---] Use \verb|@impl true| before each definition to guarantee it matches the equivalent GenServer callback.
 \item[---] Callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
   \end{itemize}
-};
-  \path (then-what.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{footnotes}};
-
-\end{tikzpicture}
 \end{parchment}
 
 \end{document}
