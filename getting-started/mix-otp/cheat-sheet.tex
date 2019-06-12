@@ -80,9 +80,11 @@
 \pgfsetlayers{background,main,foreground}
 
 % Define a few styles and constants
-\tikzstyle{left-title}=[draw, fill=blue!20, text width=1em, minimum height=5em]
+\tikzstyle{left-title}=[draw, fill=blue!20, minimum width=1em, minimum height=5em,anchor=north east]
+\tikzstyle{top-title}=[draw, fill=blue!20, minimum width=5em, minimum height=1em]
 \tikzstyle{main-block} = [left-title, text width=30em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
 \tikzstyle{immediate} = [left-title, text width=17em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
+\tikzstyle{explain} = [left-title, text width=17em, inner sep=8pt, fill=black!5, minimum height=5em, rounded corners,anchor=south west]
 
 \begin{comment}
 \begin{parchment}[commentarii de bello gallico]
@@ -91,7 +93,17 @@
 \end{comment}
 \section*{GenServer - a cheat sheet}
 last version: \verb|https://elixir-lang.org/getting-started/mix-otp/cheat-sheet.pdf|\\
+source: \verb|https://github.com/elixir-lang/elixir-lang.github.com|; license: CC:BY-SA; Copyright: check the source.\\
 reference: \verb|https://hexdocs.pm/elixir/GenServer.html|
+\begin{comment}
+  copyright 2019 by Mario Frasca et al.
+
+  based on a work by Benjamin Tan Wei Hao,
+  rewritten as a tex/tikz document by Mario Frasca,
+  with José Valim validating the content.
+
+  TODO: add yourself to the authors if you think so.
+\end{comment}
 
 \begin{parchment}[initialization: .start $\rightarrow$ \bf\texttt{init/1}]
   \begin{tikzpicture}
@@ -103,7 +115,7 @@ def start_link(opts \\ []) do
 end
 \end{verbatim}
     };
-    \path (client.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{client}};
+    \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
 
     \path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
       \vspace*{-\baselineskip}
@@ -111,7 +123,7 @@ end
 {:ok, pid}
 \end{verbatim}
 };
-    \path (immediate.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{returns}};
+    \path (immediate.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
 
     \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
       \vspace*{-\baselineskip}
@@ -122,8 +134,7 @@ def init(match_this) do
 end
 \end{verbatim}
 };
-  \draw[->,draw=blue!50!black,dashed,thick] (8em,-0.8em) .. controls (9em,-4em) and (-7em,1.1em) .. (-7em,-4.3em);
-  \path (callback.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{callback}};
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
   \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -132,17 +143,16 @@ end
 {:ok, state, then_what}
 
 {:stop, reason}
-:ignore!
+:ignore
 \end{verbatim}
 };
-\path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result = }};
+\path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result = }};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
-\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=yellow!30] {
-  This applies wherever \verb|result| matches \verb|{:stop, reason}|, and to \verb|reason| argument in \verb|stop| message.
-
+\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
+    \vspace*{-\baselineskip}
 \begin{verbatim}
 :normal
 :shutdown
@@ -150,7 +160,10 @@ end
 any
 \end{verbatim}
 };
-\path (reason.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}reason = }};
+\path (reason.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}reason = }};
+\path (reason.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
+
+  \draw[->,draw=blue!50!black,dashed,thick,anchor=north west] (-7.3em,-3.3em) .. controls (-7em,-7em) and (-22.4em,-1em) .. (-22.4em,-6.9em);
 
 \end{tikzpicture}
 \end{parchment}
@@ -166,7 +179,7 @@ def stop(pid, reason \\ :normal,
 end
 \end{verbatim}
 };
-\path (client.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{client}};
+\path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
 
 \path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -174,7 +187,7 @@ end
 :ok
 \end{verbatim}
 };
-\path (immediate.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{returns}};
+\path (immediate.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
 
 \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -185,7 +198,14 @@ def terminate(reason, state) do
 end
 \end{verbatim}
 };
-  \path (callback.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{callback}};
+
+\path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
+
+\path (callback.south east)+(3em,0) node (then-what) [explain] {
+  \verb|terminate/2| is also called when \verb|:stop| is returned and in case of errors, when \verb|Process.flag(:trap_exit)| is true.
+};
+  \path (then-what.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{:stop}};
+
 
 \end{tikzpicture}
 \end{parchment}
@@ -200,7 +220,7 @@ def your_api_async_op(pid, args) do
 end
 \end{verbatim}
 };
-  \path (client.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{client}};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
 
 \path (client.north east)+(3em,0) node (result) [immediate,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -208,7 +228,7 @@ end
 :ok
 \end{verbatim}
 };
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{returns}};
+  \path (result.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
 
   \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -219,8 +239,8 @@ def handle_cast(match_this, state) do
 end
 \end{verbatim}
 };
-  \draw[->,draw=blue!50!black,dashed,thick] (0pt,-0.8em) .. controls (0,-4em) and (-3em,-1.3em) .. (-3em,-4.3em);
-  \path (callback.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{callback}};
+  \draw[->,draw=blue!50!black,dashed,thick] (-15em,-3.3em) .. controls (-15em,-6.4em) and (-18em,-2em) .. (-18em,-6.8em);
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
   \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -231,18 +251,18 @@ end
 {:stop, reason, state}
 \end{verbatim}
 };
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
-  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=yellow!30] {
-    This applies wherever \verb|result| matches \verb|{_, state, then_what}|
-
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
+    \vspace*{-\baselineskip}
 \begin{verbatim}
-milliseconds
+timeout_milliseconds
 :hibernate
 {:continue, value}
 \end{verbatim}
 };
-  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
+\path (reason.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
+  \path (then-what.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
@@ -260,10 +280,10 @@ def your_api_sync_op(pid, args) do
 end
 \end{verbatim}
 };
-  \path (client.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{client}};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
 
     \path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {waits for callback, receives \verb|reply| if result matches \verb|{:reply, reply, ...}| or \verb|{:stop, _, reply, _}|.};
-    \path (immediate.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{returns}};
+    \path (immediate.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
 
   \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -274,8 +294,8 @@ def handle_call(match_this, from, state) do
 end
 \end{verbatim}
 };
-  \draw[->,draw=blue!50!black,dashed,thick] (0pt,-0.8em) .. controls (0,-4em) and (-3em,-1.3em) .. (-3em,-4.3em);
-  \path (callback.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{callback}};
+  \draw[->,draw=blue!50!black,dashed,thick] (-15em,-3.3em) .. controls (-15em,-6.4em) and (-18em,-2em) .. (-18em,-6.8em);
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
   \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -291,10 +311,10 @@ end
 {:stop, reason, reply, state}
 \end{verbatim}
 };
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
 \path (result.south east)+(3em,0) node (reply) [immediate,anchor=south west] {user defined};
-  \path (reply.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}reply =}};
+  \path (reply.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}reply =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-72pt) -- ($ (result.north east)+(0,-72pt) $);
@@ -316,7 +336,7 @@ def handle_info(match_this, state) do
 end
 \end{verbatim}
 };
-  \path (client.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{client}};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
 
   \path (client.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -328,7 +348,7 @@ end
 \end{verbatim}
 };
 
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
@@ -347,7 +367,7 @@ def handle_continue(match_this, state) do
 end
 \end{verbatim}
 };
-  \path (client.north west)+(-1em,0) node [left-title,anchor=north] {\rotatebox{90}{client}};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
 
   \path (client.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
@@ -359,25 +379,20 @@ end
 \end{verbatim}
 };
 
-  \path (result.north west)+(-1em,0) node [left-title,anchor=north,fill=green!25] {\rotatebox{90}{\^{}result =}};
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
-  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=black!5] {
-Functions where \verb|@impl true| applies.
-\begin{verbatim}
-init/1
-terminate/2
-handle_call/3
-handle_cast/2
-handle_info/2
-handle_continue/2
-code_change/3
-format_status/2
-\end{verbatim}
+  \path (result.south east)+(3em,0) node (then-what) [explain] {
+    \vspace*{-\baselineskip}
+    \begin{itemize}
+      \setlength\itemsep{0em}
+    \item[---] Use \verb|@impl true| before each definition to guarantee it matches the equivalent GenServer callback.
+\item[---] Callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
+    \end{itemize}
 };
-  \path (then-what.north west)+(-1em,0) node [left-title,anchor=north,fill=white] {\rotatebox{90}{@impl true}};
+  \path (then-what.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{@impl true}};
 
 \end{tikzpicture}
 \end{parchment}
