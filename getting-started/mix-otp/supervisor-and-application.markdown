@@ -120,7 +120,7 @@ If you revisit the `KV.Registry.start_link/1` implementation, you will remember 
   end
 ```
 
-which in turn will register the process with the given name. The `:name` option expects an atom for locally named processes (locally named means it is available to this machine - there are other options, which we won't discuss here). We often name a process after the module that implements it, which helps when debugging and introspecting the system.
+which in turn will register the process with the given name. The `:name` option expects an atom for locally named processes (locally named means it is available to this machine - there are other options, which we won't discuss here). Since module identifiers are atoms (try `i(KV.Registry)` in IEx), we can name a process after the module that implements it, provided there is only one process for that name. This helps when debugging and introspecting the system.
 
 Let's give the updated supervisor a try inside `iex -S mix`:
 
