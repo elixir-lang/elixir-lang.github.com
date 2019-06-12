@@ -156,12 +156,17 @@ end
 \begin{verbatim}
 :normal
 :shutdown
-{:shutdown, any}
-any
+{:shutdown, _}
+_
 \end{verbatim}
 };
 \path (reason.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}reason = }};
 \path (reason.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
+
+\path (reason.north west)+(0,2em) node (explain) [explain,anchor=south west] {
+$\bullet$ \texttt{:normal} doesn't log, doesn't break links $\bullet$ \texttt{:shutdown}, \texttt{\{:shutdown, \_\}} doesn't log, breaks links $\bullet$  anything else logs, breaks links.
+};
+  \path (explain.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{stop reasons}};
 
   \draw[->,draw=blue!50!black,dashed,thick,anchor=north west] (-7.3em,-3.3em) .. controls (-7em,-7em) and (-22.4em,-1em) .. (-22.4em,-6.9em);
 
@@ -253,7 +258,7 @@ end
 };
   \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
-  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
+  \path (result.north east)+(3em,0) node (then-what) [immediate,anchor=north west,fill=green!30!yellow!18!white] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 timeout_milliseconds
@@ -261,7 +266,7 @@ timeout_milliseconds
 {:continue, value}
 \end{verbatim}
 };
-\path (reason.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
+\path (then-what.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
   \path (then-what.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
 
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
@@ -386,11 +391,11 @@ end
 
   \path (result.south east)+(3em,0) node (then-what) [explain] {
     \vspace*{-\baselineskip}
-    \begin{itemize}
+      \begin{itemize}
       \setlength\itemsep{0em}
     \item[---] Use \verb|@impl true| before each definition to guarantee it matches the equivalent GenServer callback.
 \item[---] Callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
-    \end{itemize}
+  \end{itemize}
 };
   \path (then-what.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{footnotes}};
 
