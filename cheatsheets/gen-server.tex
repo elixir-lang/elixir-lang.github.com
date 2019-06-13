@@ -396,6 +396,12 @@ end
 
   \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
+  \path (result.south east)+(3em,0) node (explain) [explain,anchor=south west] {
+the reasons (\verb|:normal|, \verb|:shutdown|, \verb|{:shutdown, _}|) expected from a well behaved \verb|GenServer| are not defined by \verb|GenServer|, but by either Erlang (\verb|:normal|) or the \verb|Supervisor| module.    
+};
+
+  \path (explain.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{explain reason}};
+
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
