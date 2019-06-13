@@ -145,7 +145,7 @@ We have been working inside an application this entire time. In case you counted
 
 Thank you for asking. Well, you can say 'application', but you can write either `Application`, or `application/0`. The first is a module, implementing the Elixir idioms for packaging software, the second is a function that `mix new` put in our `mix.exs` project file. There's also an Erlang application definition file, let's start from there.
 
-Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.  
+Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.
 
 We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's have a look at its contents:
 
