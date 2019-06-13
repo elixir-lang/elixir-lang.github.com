@@ -160,7 +160,7 @@ This file contains Erlang terms (written using Erlang syntax). Even though we ar
 
 In a nutshell, an application consists of all of the modules defined in the `.app` file, including the `.app` file itself. An application has generally only two directories: `ebin`, for Elixir artefacts, such as `.beam` and `.app` files, and `priv`, with any other artefact or asset you may need in your application.
 
-Although Mix generates and maintains the `.app` file for us, we can customize its contents by adding new entriies to the `application/0` function inside the `mix.exs` project file. We are going to do our first customization soon.
+Although Mix generates and maintains the `.app` file for us, we can customize its contents by adding new entries to the `application/0` function inside the `mix.exs` project file. We are going to do our first customization soon.
 
 ### Starting applications
 
