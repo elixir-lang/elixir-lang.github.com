@@ -158,9 +158,9 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
 
 This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the `:extra_applications` list in `mix.exs`.
 
-It would be pretty boring to update this file manually every time we add a new module to our application. That's why Mix generates and maintains it for us.
+In a nutshell, an application consists of all of the modules defined in the `.app` file, including the `.app` file itself. An application has generally only two directories: `ebin`, for Elixir artefacts, such as `.beam` and `.app` files, and `priv`, with any other artefact or asset you may need in your application.
 
-We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file. We are going to do our first customization soon.
+Although Mix generates and maintains the `.app` file for us, we can customize its contents by adding new entries to the `application/0` function inside the `mix.exs` project file. We are going to do our first customization soon.
 
 ### Starting applications
 
@@ -215,8 +215,10 @@ Nothing really exciting happens but it shows how we can control our application.
 
 ## The application callback
 
-Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!
+TODO: what do you think of reducing amount of words, distill content, only repeat when expanding the concepts.
 
+We spent all this time talking about how applications are started and stopped, but we are yet to show how to take control of what should happen at crucial moments of an application lifecycle.
+ 
 We can specify an application callback function. This is a function that will be invoked when the application starts. The function must return a result of `{:ok, pid}`, where `pid` is the process identifier of a supervisor process.
 
 We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
