@@ -141,11 +141,7 @@ We are getting closer and closer to a fully working system. The supervisor autom
 
 ## Understanding applications
 
-We have been working inside an application this entire time. In case you counted, we mentioned the term no less than 10 times in this page, up to this point, and we haven't yet defined it, so please ask the question "What is an application, anyway?"
-
-Thank you for asking. Well, you can say 'application', but you can write either `Application`, or `application/0`. The first is a module, implementing the Elixir idioms for packaging software, the second is a function that `mix new` put in our `mix.exs` project file. There's also an Erlang application definition file, let's start from there.
-
-Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.
+We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.
 
 We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's have a look at its contents:
 
@@ -162,9 +158,9 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
 
 This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the `:extra_applications` list in `mix.exs`.
 
-It would be pretty boring to update this file manually every time we add a new module to our application. That's why Mix generates and maintains it for us.
+In a nutshell, an application consists of all of the modules defined in the `.app` file, including the `.app` file itself. An application has generally only two directories: `ebin`, for Elixir artefacts, such as `.beam` and `.app` files, and `priv`, with any other artefact or asset you may need in your application.
 
-We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file. We are going to do our first customization soon.
+Although Mix generates and maintains the `.app` file for us, we can customize its contents by adding new entriies to the `application/0` function inside the `mix.exs` project file. We are going to do our first customization soon.
 
 ### Starting applications
 
