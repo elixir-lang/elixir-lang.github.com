@@ -100,7 +100,7 @@
 \section*{GenServer - a cheat sheet}
 \begin{itemize}
   \setlength\itemsep{0em}
-\item[---] last version: \verb|https://elixir-lang.org/getting-started/mix-otp/cheat-sheet.pdf|
+\item[---] last version: \verb|https://elixir-lang.org/cheatsheets/gen-server.pdf|
 \item[---] reference: \verb|https://hexdocs.pm/elixir/GenServer.html|
 \end{itemize}
 \begin{comment}
@@ -109,8 +109,6 @@
   based on a work by Benjamin Tan Wei Hao,
   rewritten as a tex/tikz document by Mario Frasca,
   with José Valim validating the content.
-
-  TODO: add yourself to the authors if you think so.
 \end{comment}
 
 \begin{parchment}[initialization: .start $\rightarrow$ \bf\texttt{init/1}]
@@ -162,21 +160,10 @@ end
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
 \path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
-    \vspace*{-\baselineskip}
-\begin{verbatim}
-:normal
-:shutdown
-{:shutdown, _}
-_
-\end{verbatim}
+One of \verb|:normal|, \verb|:shutdown|, \verb|{:shutdown, _}|, or any other value. See the footnote for a link to the complete reference.
 };
 \path (reason.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}reason = }};
 \path (reason.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
-
-\path (reason.north west)+(0,2em) node (explain) [explain,anchor=south west] {
-$\bullet$ \texttt{:normal} doesn't log, doesn't break links $\bullet$ \texttt{:shutdown}, \texttt{\{:shutdown, \_\}} doesn't log, breaks links $\bullet$  anything else logs, breaks links.
-};
-  \path (explain.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{stop reasons}};
 
   \draw[->,draw=blue!50!black,dashed,thick,anchor=north west] (-7.3em,-3.3em) .. controls (-7em,-7em) and (-22.45em,-1em) .. (-22.45em,-5.5em) -- (-22.45em,-6.9em);
 
@@ -396,12 +383,6 @@ end
 
   \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
 
-  \path (result.south east)+(3em,0) node (explain) [explain,anchor=south west] {
-the reasons (\verb|:normal|, \verb|:shutdown|, \verb|{:shutdown, _}|) expected from a well behaved \verb|GenServer| are not defined by \verb|GenServer|, but by either Erlang (\verb|:normal|) or the \verb|Supervisor| module.    
-};
-
-  \path (explain.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{explain reason}};
-
   \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
         (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
 
@@ -411,6 +392,7 @@ the reasons (\verb|:normal|, \verb|:shutdown|, \verb|{:shutdown, _}|) expected f
   \vspace*{-\baselineskip}
   \begin{itemize}
     \setlength\itemsep{0em}
+  \item[---] More on exit reasons: \verb|https://hexdocs.pm/elixir/Supervisor.html#module-exit-reasons-and-restarts|
   \item[---] use \verb|@impl true| before each definition to guarantee it matches the equivalent \verb|GenServer| callback.
   \item[---] callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
   \item[---] source: \verb|https://github.com/elixir-lang/elixir-lang.github.com|

@@ -4,11 +4,11 @@ references, also called cheat sheets.
 
 To produce a .pdf starting from the .tex source, you need `tex`,
 and more specifically [LaTeX](https://www.latex-project.org/get/).
-The BasicTex variant is enough for the purpose of these sheets.
 
-If you do not manage to compile the source into a pdf, or if you
-manage only after taking additional steps, not mentioned here,
-please add the steps in this description.
+The BasicTex variant can be used as long as the following packages
+are available:
+
+    $ tlmgr install courier framed charter enumitem ec helvetica
 
 To compile a tex file EQUIS.tex into its corresponding EQUIS.pdf:
 
