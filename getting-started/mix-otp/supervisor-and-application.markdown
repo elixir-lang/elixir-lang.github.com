@@ -141,7 +141,11 @@ We are getting closer and closer to a fully working system. The supervisor autom
 
 ## Understanding applications
 
-We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.
+We have been working inside an application this entire time. In case you counted, we mentioned the term no less than 10 times in this page, up to this point, and we haven't yet defined it, so please ask the question "What is an application, anyway?"
+
+Thank you for asking. Well, you can say 'application', but you can write either `Application`, or `application/0`. The first is a module, implementing the Elixir idioms for packaging software, the second is a function that `mix new` put in our `mix.exs` project file. There's also an Erlang application definition file, let's start from there.
+
+Every time we changed a file and ran `mix compile`, we could see a `Generated kv app` message in the compilation output.  
 
 We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's have a look at its contents:
 
@@ -215,8 +219,10 @@ Nothing really exciting happens but it shows how we can control our application.
 
 ## The application callback
 
-Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!
+TODO: what do you think of reducing amount of words, distill content, only repeat when expanding the concepts.
 
+We spent all this time talking about how applications are started and stopped, but we are yet to show how to take control of what should happen at crucial moments of an application lifecycle.
+ 
 We can specify an application callback function. This is a function that will be invoked when the application starts. The function must return a result of `{:ok, pid}`, where `pid` is the process identifier of a supervisor process.
 
 We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
