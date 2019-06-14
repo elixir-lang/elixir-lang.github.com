@@ -162,6 +162,18 @@ Once the project is compiled, you can start an `iex` session inside the project 
 $ iex -S mix
 ```
 
+We are going to work at this `KV` project, making changes and trying out the latest changes from a `iex` session. Obviously we are not going to stop the session and reload it just to compile and reload changes, we do this from the same session. Provided you started the `iex` session inside a project, any time you change anything in the sources, you recompile the project this way:
+
+```iex
+iex> IEx.Helpers.recompile()
+Compiling 1 file (.ex)
+:ok
+iex> IEx.Helpers.recompile()
+:noop
+```
+
+If anything had to be compiled, you see some informative text, and get a `:ok` atom back, otherwise the function is silent, and returns a `:noop` atom.
+
 ## Running tests
 
 Mix also generated the appropriate structure for running our project tests. Mix projects usually follow the convention of having a `<filename>_test.exs` file in the `test` directory for each file in the `lib` directory. For this reason, we can already find a `test/kv_test.exs` corresponding to our `lib/kv.ex` file. It doesn't do much at this point:
