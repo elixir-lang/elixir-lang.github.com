@@ -158,7 +158,7 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
 
 This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger`. 
 
-> The `logger` application is started by default with Elixir. We stated that our application needs it by specifying it in the `:extra_applications` list in `mix.exs`.
+> The `logger` application ships as part of Elixir. We stated that our application needs it by specifying it in the `:extra_applications` list in `mix.exs`. See the [official docs](https://hexdocs.pm/logger) for more information.
 
 In a nutshell, an application consists of all of the modules defined in the `.app` file, including the `.app` file itself. An application has generally only two directories: `ebin`, for Elixir artefacts, such as `.beam` and `.app` files, and `priv`, with any other artefact or asset you may need in your application.
 
