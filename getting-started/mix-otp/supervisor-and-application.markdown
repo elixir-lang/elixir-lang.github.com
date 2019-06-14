@@ -156,7 +156,9 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
               {extra_applications,[logger]}]}.
 ```
 
-This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the `:extra_applications` list in `mix.exs`.
+This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger`. 
+
+> The `logger` application is started by default with Elixir. We stated that our application needs it by specifying it in the `:extra_applications` list in `mix.exs`.
 
 In a nutshell, an application consists of all of the modules defined in the `.app` file, including the `.app` file itself. An application has generally only two directories: `ebin`, for Elixir artefacts, such as `.beam` and `.app` files, and `priv`, with any other artefact or asset you may need in your application.
 
@@ -215,7 +217,7 @@ Nothing really exciting happens but it shows how we can control our application.
 
 ## The application callback
 
-TODO: what do you think of reducing amount of words, distill content, only repeat when expanding the concepts.
+TODO: sorry, here I'm understanding less than beans from here on. I think that before we start modifying things, we should explain how things work in the first place. Like, how is it that the `Application.start(:kv)` tells us that `:kv` is `:already_started`? Where is that written in the code, or how is it assumed by the system? Is there anything we can change in `mix.exs`, or wherever else, that influences this? But I wish to see it in a single sentence, like "change this, and try it out". Oh, by the way, either I missed it, or we do not yet know how to reload modules, that is: compile and reload, from iex.
 
 We spent all this time talking about how applications are started and stopped, but we are yet to show how to take control of what should happen at crucial moments of an application lifecycle.
  
