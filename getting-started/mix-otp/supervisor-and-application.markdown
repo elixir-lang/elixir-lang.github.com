@@ -166,13 +166,9 @@ Although Mix generates and maintains the `.app` file for us, we can customize it
 
 ### Starting applications
 
-Each application in our system can be started and stopped. The rules for starting and stopping an application are defined precisely in the `.app` file. We haven't done this so far for two reasons:
+Each application in our system can be started and stopped. The rules for starting and stopping an application are also defined in the `.app` file. When we invoke `iex -S mix`, Mix compiles our application and then starts it.
 
-1. Mix automatically starts our current application for us
-
-2. Even if Mix didn't start our application for us, our application does not yet do anything when it starts
-
-In any case, let's see how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:
+Let's see this in practice. Start a console with `iex -S mix` and try:
 
 ```iex
 iex> Application.start(:kv)
@@ -213,7 +209,7 @@ iex> Application.ensure_all_started(:kv)
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information by running `mix help run` in your shell.
 
 ## The application callback
 
