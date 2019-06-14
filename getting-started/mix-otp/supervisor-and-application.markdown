@@ -156,7 +156,9 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
               {extra_applications,[logger]}]}.
 ```
 
-This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger` which is specified in the `:extra_applications` list in `mix.exs`.
+This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger`. 
+
+> The `logger` application ships as part of Elixir. We stated that our application needs it by specifying it in the `:extra_applications` list in `mix.exs`. See the [official docs](https://hexdocs.pm/logger) for more information.
 
 In a nutshell, an application consists of all of the modules defined in the `.app` file, including the `.app` file itself. An application has generally only two directories: `ebin`, for Elixir artefacts, such as `.beam` and `.app` files, and `priv`, with any other artefact or asset you may need in your application.
 
@@ -164,13 +166,9 @@ Although Mix generates and maintains the `.app` file for us, we can customize it
 
 ### Starting applications
 
-Each application in our system can be started and stopped. The rules for starting and stopping an application are defined precisely in the `.app` file. We haven't done this so far for two reasons:
+Each application in our system can be started and stopped. The rules for starting and stopping an application are also defined in the `.app` file. When we invoke `iex -S mix`, Mix compiles our application and then starts it.
 
-1. Mix automatically starts our current application for us
-
-2. Even if Mix didn't start our application for us, our application does not yet do anything when it starts
-
-In any case, let's see how Mix starts the application for us. Let's start a project console with `iex -S mix` and try:
+Let's see this in practice. Start a console with `iex -S mix` and try:
 
 ```iex
 iex> Application.start(:kv)
@@ -211,17 +209,13 @@ iex> Application.ensure_all_started(:kv)
 
 Nothing really exciting happens but it shows how we can control our application.
 
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
+> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information by running `mix help run` in your shell.
 
 ## The application callback
 
-TODO: what do you think of reducing amount of words, distill content, only repeat when expanding the concepts.
+Whenever we invoke `iex -S mix`, Mix automatically starts our application by calling `Application.start(:kv)`. But can we customize what happens when our application starts? As a matter of fact, we can! To do so, we define an application callback.
 
-We spent all this time talking about how applications are started and stopped, but we are yet to show how to take control of what should happen at crucial moments of an application lifecycle.
- 
-We can specify an application callback function. This is a function that will be invoked when the application starts. The function must return a result of `{:ok, pid}`, where `pid` is the process identifier of a supervisor process.
-
-We can configure the application callback in two steps. First, open up the `mix.exs` file and change `def application` to the following:
+The first step is to tell our application definition (i.e. our `.app` file) which module is going to implement the application callback. Let's do so by opening  `mix.exs` and changing `def application` to the following:
 
 ```elixir
   def application do
@@ -234,13 +228,17 @@ We can configure the application callback in two steps. First, open up the `mix.
 
 The `:mod` option specifies the "application callback module", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](https://hexdocs.pm/elixir/Application.html) behaviour.
 
-Now that we have specified `KV` as the module callback, we need to change the `KV` module, defined in `lib/kv.ex`:
+To implement the `Application` behaviour, we have to `use Application` and define a `start/2` function. The goal of `start/2` is to start a supervisor, which will then start amy child services or execute any other code our application may need. Let's use this opportunity to start the `KV.Supervisor` we have implemented earlier in this chapter.
+
+Since we have specified `KV` as the module callback, let's change the `KV` module defined in `lib/kv.ex` to implement a `start/2` function:
 
 ```elixir
 defmodule KV do
   use Application
 
   def start(_type, _args) do
+    # Although we don't use the supervisor name below directly,
+    # it can be useful when debugging or introspecting the system.
     KV.Supervisor.start_link(name: KV.Supervisor)
   end
 end
@@ -248,9 +246,9 @@ end
 
 > Please note that by doing this, we are breaking the boilerplate test case which tested the `hello` function in `KV`. You can simply remove that test case.
 
-When we `use Application`, we need to define a couple functions, similar to when we used `Supervisor` or `GenServer`. This time we only need to define a `start/2` function. The `start/2` function starts the supervisor, also giving it a name. We don't plan to use said name, but we name the process anyway to help when debugging or introspecting the system. There is also a `stop/1` callback which we could implement to provide custom behavour when the application shuts down, but we don't have a use for it right now (and we rarely do in practice).
+When we `use Application`, we may define a couple functions, similar to when we used `Supervisor` or `GenServer`. This time we only had to define a `start/2` function. The `Application` behaviour also has a `stop/1` callback, but it is rarely used in practice, you can check the documentation for more information.
 
-Let's start our project console once again with `iex -S mix` and check that `KV.Registry` is already up and running:
+Now that you have defined an application callback which starts our supervisor, we expect the `KV.Registry` process to be up and running as soon we start `iex -S mix`. Let's give it another try:
 
 ```iex
 iex(1)> KV.Registry.create(KV.Registry, "shopping")
@@ -259,7 +257,7 @@ iex(2)> KV.Registry.lookup(KV.Registry, "shopping")
 {:ok, #PID<0.88.0>}
 ```
 
-Here is what is happening. Whenever we start our application by invoking Mix, it invokes the application callback. The application callback job is to start a **supervision tree**. Right now, we only have a single supervisor, but sometimes a supervisor is also supervised, giving it a shape of a tree. So far, our supervisor has a single child, a `KV.Registry`, which is started with name `KV.Registry`.
+Let's recap what is happening. Whenever we invoke `iex -S mix`, it automatically starts our application by calling `Application.start(:kv)`, which then invokes the application callback. The application callback job is to start a **supervision tree**. Right now, we only have a single supervisor, but sometimes a supervisor is also supervised, giving it a shape of a tree. So far, our supervisor has a single child, a `KV.Registry`, which is started with name `KV.Registry`.
 
 ## Projects or applications?
 
