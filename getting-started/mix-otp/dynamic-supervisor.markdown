@@ -66,7 +66,7 @@ Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. Th
   end
 ```
 
-Note this time we didn't have to define a separate module that invokes `use DynamicSupervisor`. Instead we directly started it in our supervision tree. This is straight-forward to do with the `DynamicSupervisor` because it doesn't require any child to be given during initialization.
+The line we just added hides a few tricky points. We do not need to define any special behaviour in our `KV.BucketSupervisor` that isn't already implemented in the `DynamicSupervisor`, so we don't define a separate module that invokes `use DynamicSupervisor`. On the other hand, we do use the name `KV.BucketSupervisor` which may suggest the existence of a source file `kv/bucket_supervisor.ex`. What happens here is that by mentioning `KV.BucketSupervisor`, we are creating it as an atom, and using it as the name for the process we are starting. Read the line again: supervise a `DynamicSupervisor` process, named `KV.BucketSupervisor`, with its strategy, and initially with no child processes, precisely what we need.
 
 Run `iex -S mix` so we can give our dynamic supervisor a try:
 
