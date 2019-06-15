@@ -35,7 +35,7 @@ end
 
 The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. If a process terminates with a reason different than `:normal`, all linked processes receive an EXIT signal, causing the linked process to also terminate unless they are trapping exits.
 
-Since the bucket terminated, the registry went away with it, and our test fails when trying to `GenServer.call/3` it:
+Since the bucket terminated, the registry also stopped, and our test fails when trying to `GenServer.call/3` it:
 
 ```
   1) test removes bucket on crash (KV.RegistryTest)
