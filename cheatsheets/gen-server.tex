@@ -1,0 +1,403 @@
+\documentclass[a4paper]{article}
+\usepackage{framed}
+\usepackage{tikz}
+\usepackage{times,charter}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage[bindingoffset=0in,%
+            left=1.3cm,right=1.3cm,top=1.5cm,bottom=0.8cm,%
+            footskip=0in]{geometry}
+\usetikzlibrary{shapes,arrows,calc,backgrounds,shapes.geometric}
+% Define a background layer, in which the parchment shape is drawn
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\tikzset{normal border/.style={orange!30!black!10}}
+
+% Macro to draw the shape behind the text, when it fits
+% completly in the page
+\def\parchmentframe#1{
+\tikz{
+  \node[inner sep=2em] (A) {#1};  % Draw the text of the node
+  \begin{pgfonlayer}{background}  % Draw the shape behind
+  \filldraw[normal border,rounded corners=2em,color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (A.south east) -- (A.south west) --
+        (A.north west) -- (A.north east) -- cycle;
+  \end{pgfonlayer}}}
+
+% Macro to draw the shape, when the text will continue in next page
+\def\parchmentframetop#1{
+\tikz{
+  \node[inner sep=2em] (A) {#1};    % Draw the text of the node
+  \begin{pgfonlayer}{background}
+  \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (A.south east) -- (A.south west) --
+        (A.north west) -- (A.north east) -- cycle;
+  \end{pgfonlayer}}}
+
+% Macro to draw the shape, when the text continues from previous page
+\def\parchmentframebottom#1{
+\tikz{
+  \node[inner sep=2em] (A) {#1};   % Draw the text of the node
+  \begin{pgfonlayer}{background}
+  \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (A.south east) -- (A.south west) --
+        (A.north west) -- (A.north east) -- cycle;
+  \end{pgfonlayer}}}
+
+% Macro to draw the shape, when both the text continues from previous page
+% and it will continue in next page
+\def\parchmentframemiddle#1{
+\tikz{
+  \node[inner sep=2em] (A) {#1};   % Draw the text of the node
+  \begin{pgfonlayer}{background}
+  \filldraw[normal border,rounded corners,color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (A.south east) -- (A.south west) --
+        (A.north west) -- (A.north east) -- cycle;
+  \end{pgfonlayer}}}
+
+% Define the environment which puts the frame.  In this case,
+% the environment also accepts an argument with an optional
+% title (which defaults to ``Example'', which is typeset in a
+% box overlaid on the top border
+\newenvironment{parchment}[1][Example]{%
+  \def\FrameCommand{\parchmentframe}%
+  \def\FirstFrameCommand{\parchmentframetop}%
+  \def\LastFrameCommand{\parchmentframebottom}%
+  \def\MidFrameCommand{\parchmentframemiddle}%
+  \vskip\baselineskip
+  \MakeFramed {\FrameRestore}
+  \noindent\tikz\node[rounded corners=2ex, inner sep=2ex, draw=blue!25!yellow, fill=white, dashed, anchor=west, overlay] at (0em, 2em) {\sffamily#1};\par}%
+{\endMakeFramed}
+
+\setlength\parindent{0pt}
+
+% Main document, example of usage
+\pagestyle{empty}
+
+\usepackage{enumitem}
+\begin{document}
+\fontsize{9.5}{11}\selectfont
+\setlist[itemize]{leftmargin=0em}
+
+% We need layers to draw the block diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+% Define a few styles and constants
+\tikzstyle{left-title}=[draw, fill=blue!20, minimum width=1.6em, minimum height=5em,anchor=north east]
+\tikzstyle{top-title}=[draw, fill=blue!20, minimum width=5em, minimum height=1.6em]
+\tikzstyle{main-block} = [left-title, text width=30em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
+\tikzstyle{immediate} = [left-title, text width=17em, inner sep=8pt, fill=red!15!yellow!40, minimum height=5em, rounded corners]
+\tikzstyle{explain} = [left-title, text width=17em, inner sep=8pt, fill=black!5, minimum height=5em, rounded corners,anchor=south west]
+
+\begin{comment}
+\begin{parchment}[commentarii de bello gallico]
+  Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur. Hi omnes lingua, institutis, legibus inter se differunt. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit. Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt, minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important, proximique sunt Germanis, qui trans Rhenum incolunt, quibuscum continenter bellum gerunt. Qua de causa Helvetii quoque reliquos Gallos virtute praecedunt, quod fere cotidianis proeliis cum Germanis contendunt, cum aut suis finibus eos prohibent aut ipsi in eorum finibus bellum gerunt. Eorum una pars, quam Gallos obtinere dictum est, initium capit a flumine Rhodano, continetur Garumna flumine, Oceano, finibus Belgarum, attingit etiam ab Sequanis et Helvetiis flumen Rhenum, vergit ad septentriones. Belgae ab extremis Galliae finibus oriuntur, pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et orientem solem. Aquitania a Garumna flumine ad Pyrenaeos montes et eam partem Oceani quae est ad Hispaniam pertinet; spectat inter occasum solis et septentriones.
+\end{parchment}
+\end{comment}
+\section*{GenServer - a cheat sheet}
+\begin{itemize}
+  \setlength\itemsep{0em}
+\item[---] last version: \verb|https://elixir-lang.org/cheatsheets/gen-server.pdf|
+\item[---] reference: \verb|https://hexdocs.pm/elixir/GenServer.html|
+\end{itemize}
+\begin{comment}
+  copyright 2019 by Mario Frasca et al.
+
+  based on a work by Benjamin Tan Wei Hao,
+  rewritten as a tex/tikz document by Mario Frasca,
+  with José Valim validating the content.
+\end{comment}
+
+\begin{parchment}[initialization: .start $\rightarrow$ \bf\texttt{init/1}]
+  \begin{tikzpicture}
+    \node (client) [main-block] {%
+      \vspace*{-\baselineskip}
+\begin{verbatim}
+def start_link(opts \\ []) do
+  GenServer.start_link(__MODULE__, match_this, opts)
+end
+\end{verbatim}
+    };
+    \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+
+    \path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
+      \vspace*{-\baselineskip}
+\begin{verbatim}
+{:ok, pid}
+:ignore
+{:error, term}
+\end{verbatim}
+};
+    \path (immediate.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
+
+    \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
+      \vspace*{-\baselineskip}
+\begin{verbatim}
+def init(match_this) do
+  # process input and compute result
+  result
+end
+\end{verbatim}
+};
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
+
+  \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+{:ok, state}
+{:ok, state, then_what}
+
+{:stop, reason}
+:ignore
+\end{verbatim}
+};
+\path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result = }};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
+
+\path (result.south east)+(3em,0) node (reason) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
+One of \verb|:normal|, \verb|:shutdown|, \verb|{:shutdown, _}|, or any other value. See the footnote for a link to the complete reference.
+};
+\path (reason.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}reason = }};
+\path (reason.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
+
+  \draw[->,draw=blue!50!black,dashed,thick,anchor=north west] (-7.3em,-3.3em) .. controls (-7em,-7em) and (-22.45em,-1em) .. (-22.45em,-5.5em) -- (-22.45em,-6.9em);
+
+\end{tikzpicture}
+\end{parchment}
+
+\begin{parchment}[termination: .stop $\rightarrow$ \bf\texttt{terminate/2}]
+\begin{tikzpicture}
+  \node (client) [main-block] {%
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def stop(pid, reason \\ :normal,
+                        timeout \\ :infinity) do
+  GenServer.stop(pid, reason, timeout)
+end
+\end{verbatim}
+};
+\path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+
+\path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+:ok
+\end{verbatim}
+};
+\path (immediate.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
+
+\path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def terminate(reason, state) do
+  # perform cleanup
+  # result will not be used
+end
+\end{verbatim}
+};
+
+\path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
+
+\path (callback.south east)+(3em,0) node (then-what) [explain] {
+  \verb|terminate/2| is also called when \verb|:stop| is returned and in case of errors, when \verb|Process.flag(:trap_exit)| is true.
+};
+  \path (then-what.north west)+(-2pt,0) node [left-title,fill=white] {\rotatebox{90}{:stop}};
+
+
+\end{tikzpicture}
+\end{parchment}
+
+\begin{parchment}[asynchronous operation: .cast $\rightarrow$ \bf\texttt{handle\_cast/2}]
+\begin{tikzpicture}
+  \node (client) [main-block] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def your_api_async_op(pid, args) do
+  GenServer.cast(pid, match_this)
+end
+\end{verbatim}
+};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+
+\path (client.north east)+(3em,0) node (result) [immediate,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+:ok
+\end{verbatim}
+};
+  \path (result.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
+
+  \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def handle_cast(match_this, state) do
+  # process input and compute result
+  result
+end
+\end{verbatim}
+};
+  \draw[->,draw=blue!50!black,dashed,thick] (-15.1em,-3.3em) .. controls (-15.1em,-5.4em) and (-18.2em,-3em) .. (-18.2em,-5.8em) -- (-18.2em,-6.8em);
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
+
+  \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+{:noreply, state}
+{:noreply, state, then_what}
+
+{:stop, reason, state}
+\end{verbatim}
+};
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
+
+  \path (result.south east)+(3em,0) node (then-what) [immediate,anchor=south west,fill=green!30!yellow!18!white] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+timeout_milliseconds
+:hibernate
+{:continue, match_this}
+\end{verbatim}
+};
+\path (then-what.north west)+(0,2pt) node [top-title,anchor=south west,fill=green!25] {applies globally};
+  \path (then-what.south west)+(-2pt,0) node [left-title,anchor=south east,fill=green!25] {\rotatebox{90}{\^{}then\_what =}};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
+
+\end{tikzpicture}
+\end{parchment}
+
+\begin{parchment}[synchronous operation: .call $\rightarrow$ \bf\texttt{handle\_call/3}]
+\begin{tikzpicture}
+  \node (client) [main-block] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def your_api_sync_op(pid, args) do
+  GenServer.call(pid, match_this)
+end
+\end{verbatim}
+};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+
+    \path (client.north east)+(3em,0) node (immediate) [immediate,anchor=north west] {waits for callback, receives \verb|reply| if result matches \verb|{:reply, reply, ...}| or \verb|{:stop, _, reply, _}|.};
+    \path (immediate.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{returns}};
+
+  \path (client.south west)+(0,-1em) node (callback) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def handle_call(match_this, from, state) do
+  # process input and compute result
+  result
+end
+\end{verbatim}
+};
+  \draw[->,draw=blue!50!black,dashed,thick] (-15.1em,-3.3em) .. controls (-15.1em,-5.4em) and (-18.2em,-3em) .. (-18.2em,-5.8em) -- (-18.2em,-6.8em);
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
+
+  \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+{:reply, reply, state}
+{:reply, reply, state, then_what}
+\end{verbatim}
+
+\begin{verbatim}
+{:noreply, state}
+{:noreply, state, then_what}
+
+{:stop, reason, reply, state}
+\end{verbatim}
+};
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
+
+\path (result.south east)+(3em,0) node (reply) [immediate,anchor=south west] {user defined};
+  \path (reply.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}reply =}};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (result.north west)+(0,-72pt) -- ($ (result.north east)+(0,-72pt) $);
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
+
+\end{tikzpicture}
+
+\end{parchment}
+
+\begin{parchment}[handling messages: $\rightarrow$ \bf\texttt{handle\_info/2}]
+\begin{tikzpicture}
+  \node (client) [main-block] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def handle_info(match_this, state) do
+  # process input and compute result
+  result
+end
+\end{verbatim}
+};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+
+  \path (client.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+{:noreply, state}
+{:noreply, state, then_what}
+
+{:stop, reason, state}
+\end{verbatim}
+};
+
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
+
+\end{tikzpicture}
+\end{parchment}
+
+\begin{parchment}[\bf\texttt{\^{}then\_what = \{:continue, match\_this\}} $\rightarrow$ \bf\texttt{handle\_continue/2}]
+\begin{tikzpicture}
+  \node (client) [main-block] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+def handle_continue(match_this, state) do
+  # process input and compute result
+  result
+end
+\end{verbatim}
+};
+  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+
+  \path (client.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+    \vspace*{-\baselineskip}
+\begin{verbatim}
+{:noreply, state}
+{:noreply, state, then_what}
+
+{:stop, reason, state}
+\end{verbatim}
+};
+
+  \path (result.north west)+(-2pt,0) node [left-title,fill=green!25] {\rotatebox{90}{\^{}result =}};
+
+  \draw[color=blue!10!yellow!5,draw=blue!25!yellow,dashed]
+        (result.north west)+(0,-38pt) -- ($ (result.north east)+(0,-38pt) $);
+
+\end{tikzpicture}
+\end{parchment}
+\begin{parchment}[footnotes]
+  \vspace*{-\baselineskip}
+  \begin{itemize}
+    \setlength\itemsep{0em}
+  \item[---] More on exit reasons: \verb|https://hexdocs.pm/elixir/Supervisor.html#module-exit-reasons-and-restarts|
+  \item[---] use \verb|@impl true| before each definition to guarantee it matches the equivalent \verb|GenServer| callback.
+  \item[---] callbacks not listed here are: \verb|code_change/3| and \verb|format_status/2|.
+  \item[---] source: \verb|https://github.com/elixir-lang/elixir-lang.github.com|
+  \item[---] copyright: by its authors, listed in the source --- license: CC:BY-SA%
+  \end{itemize}
+\end{parchment}
+
+\end{document}

@@ -109,7 +109,16 @@ iex> {:ok, file} = File.open("hello", [:write])
 {:ok, #PID<0.47.0>}
 ```
 
-That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). When you write `IO.write(pid, binary)`, the `IO` module will send a message to the process identified by `pid` with the desired operation. Let's see what happens if we use our own process:
+That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). Given a file is a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated:
+
+```iex
+iex> File.close(file)
+:ok
+iex> IO.write(file, "is anybody out there")
+{:error, :terminated}
+```
+
+Let's see in more detail what happens when you request `IO.write(pid, binary)`. The `IO` module sends a message to the process identified by `pid` with the desired operation. A small ad-hoc process can help us see it:
 
 ```iex
 iex> pid = spawn fn ->
@@ -122,31 +131,9 @@ iex> IO.write(pid, "hello")
 ** (ErlangError) erlang error: :terminated
 ```
 
-After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result that we did not supply.
+After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result, which we did not supply.
 
-The [`StringIO`](https://hexdocs.pm/elixir/StringIO.html) module provides an implementation of the `IO` device messages on top of strings:
-
-```iex
-iex> {:ok, pid} = StringIO.open("hello")
-{:ok, #PID<0.43.0>}
-iex> IO.read(pid, 2)
-"he"
-```
-
-By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the **group leader**.
-
-When you write to `:stdio`, you are actually sending a message to the group leader, which writes to the standard-output file descriptor:
-
-```iex
-iex> IO.puts(:stdio, "hello")
-hello
-:ok
-iex> IO.puts(Process.group_leader(), "hello")
-hello
-:ok
-```
-
-The group leader can be configured per process and is used in different situations. For example, when executing code in a remote terminal, it guarantees messages in a remote node are redirected and printed in the terminal that triggered the request.
+By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows I/O messages to be routed between different nodes running Distributed Erlang or even exchange files to perform read/write operations across nodes.
 
 ## `iodata` and `chardata`
 
