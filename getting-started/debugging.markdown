@@ -106,6 +106,8 @@ defmodule Example do
 end
 ```
 
+> If you are using an Erlang distribution splitting it into components, as is the case for Debian-based GNU/Linux installations, you may need to install the debugger explicitly.
+
 Now we can start our debugger:
 
 ```iex
