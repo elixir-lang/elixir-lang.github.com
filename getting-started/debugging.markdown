@@ -106,6 +106,8 @@ defmodule Example do
 end
 ```
 
+> If the `debugger` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
+
 Now we can start our debugger:
 
 ```iex
@@ -133,6 +135,8 @@ For debugging complex systems, jumping at the code is not enough. It is necessar
 $ iex -S mix
 iex(1)> :observer.start()
 ```
+
+> Similar to the `debugger` note above, your package manager may require a separate installation in order to run Observer.
 
 The above will open another Graphical User Interface that provides many panes to fully understand and navigate the runtime and your project:
 
