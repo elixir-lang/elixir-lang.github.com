@@ -52,7 +52,9 @@ We are going to solve this issue by defining a new supervisor that will spawn an
 
 ## The bucket supervisor
 
-Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. This dynamic supervisor will be listed as a  child in our application supervisor. Replace the `init` function in `lib/kv/supervisor.ex` as follows:
+Since a `DynamicSupervisor` does not define any children during initialization, the `DynamicSupervisor` also allows us to skip the work of defining a whole separate module with the usual `start_link` function and the `init` callback. Instead, we can define a `DynamicSupervisor` directly in the supervision tree, by giving it a name and a strategy.
+
+Open up `lib/kv/supervisor.ex` and add the dynamic supervisor as a child as follows:
 
 
 ```elixir
@@ -66,7 +68,9 @@ Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. Th
   end
 ```
 
-The line we just added hides a few tricky points. We do not need to define any special behaviour in our `KV.BucketSupervisor` that isn't already implemented in the `DynamicSupervisor`, so we don't define a separate module that invokes `use DynamicSupervisor`. On the other hand, we do use the name `KV.BucketSupervisor` which may suggest the existence of a source file `kv/bucket_supervisor.ex`. What happens here is that by mentioning `KV.BucketSupervisor`, we are creating it as an atom, and using it as the name for the process we are starting. Read the line again: supervise a `DynamicSupervisor` process, named `KV.BucketSupervisor`, with its strategy, and initially with no child processes, precisely what we need.
+Remember that the name of a process can be any atom. So far, we have named processes with the same name as the modules that define their implementation. For example, the process defined by `KV.Registry` was given a process name of `KV.Registry`. This is simply a convention: If later there is an error in your system that says, "process named KV.Registry crashed with reason", we know exactly where to investigate.
+
+In this case, there is no module, so we picked the name `KV.BucketSupervisor`. It could have been any other name. We also chose the `:one_for_one` strategy, which is currently the only available strategy for dynamic supervisors.
 
 Run `iex -S mix` so we can give our dynamic supervisor a try:
 
