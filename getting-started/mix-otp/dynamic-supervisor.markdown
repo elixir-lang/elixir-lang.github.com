@@ -52,7 +52,9 @@ We are going to solve this issue by defining a new supervisor that will spawn an
 
 ## The bucket supervisor
 
-Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. This dynamic supervisor will be listed as a  child in our application supervisor. Replace the `init` function in `lib/kv/supervisor.ex` as follows:
+Since a `DynamicSupervisor` does not define any children during initialization, the `DynamicSupervisor` also allows us to skip the work of defining a whole separate module with the usual `start_link` function and the `init` callback. Instead, we can define a `DynamicSupervisor` directly in the supervision tree, by giving it a name and a strategy.
+
+Open up `lib/kv/supervisor.ex` and add the dynamic supervisor as a child as follows:
 
 
 ```elixir
@@ -66,7 +68,9 @@ Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. Th
   end
 ```
 
-Note this time we didn't have to define a separate module that invokes `use DynamicSupervisor`. Instead we directly started it in our supervision tree. This is straight-forward to do with the `DynamicSupervisor` because it doesn't require any child to be given during initialization.
+Remember that the name of a process can be any atom. So far, we have named processes with the same name as the modules that define their implementation. For example, the process defined by `KV.Registry` was given a process name of `KV.Registry`. This is simply a convention: If later there is an error in your system that says, "process named KV.Registry crashed with reason", we know exactly where to investigate.
+
+In this case, there is no module, so we picked the name `KV.BucketSupervisor`. It could have been any other name. We also chose the `:one_for_one` strategy, which is currently the only available strategy for dynamic supervisors.
 
 Run `iex -S mix` so we can give our dynamic supervisor a try:
 
