@@ -195,7 +195,7 @@ It is important to note a couple of things:
 
 2. we define a test module named `KVTest`, in which we [`use ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API;
 
-3. we use one of the injected macros, `doctest` (TODO: for this I do not find documentation), to indicate that the `KV` module contains doctests (we are not going to discuss these further for the moment);
+3. we use one of the injected macros, [`doctest/1`](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#doctest/2), to indicate that the `KV` module contains doctests (we will discuss those in a later chapter);
 
 4. we use the [`test/2`](https://hexdocs.pm/ex_unit/ExUnit.Case.html#test/3) macro to define a simple test;
 
