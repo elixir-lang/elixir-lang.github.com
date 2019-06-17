@@ -197,7 +197,7 @@ It is important to note a couple of things:
 
 3. we use one of the injected macros, `doctest` (TODO: for this I do not find documentation), to indicate that the `KV` module contains doctests (we are not going to discuss these further for the moment);
 
-4. we use the `text/2` macro to define a simple test;
+4. we use the [`test/2`](https://hexdocs.pm/ex_unit/ExUnit.Case.html#test/3) macro to define a simple test;
 
 Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework:
 
