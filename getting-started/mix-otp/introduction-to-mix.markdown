@@ -189,11 +189,15 @@ defmodule KVTest do
 end
 ```
 
-It is important to note a couple things:
+It is important to note a couple of things:
 
 1. the test file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
-2. we define a test module named `KVTest`, use [`ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API and define a simple test using the `test/2` macro;
+2. we define a test module named `KVTest`, in which we [`use ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API;
+
+3. we use one of the injected macros, `doctest` (TODO: for this I do not find documentation), to indicate that the `KV` module contains doctests (we are not going to discuss these further for the moment);
+
+4. we use the `text/2` macro to define a simple test;
 
 Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework:
 
