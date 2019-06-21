@@ -228,7 +228,7 @@ The first step is to tell our application definition (i.e. our `.app` file) whic
 
 The `:mod` option specifies the "application callback module", followed by the arguments to be passed on application start. The application callback module can be any module that implements the [Application](https://hexdocs.pm/elixir/Application.html) behaviour.
 
-To implement the `Application` behaviour, we have to `use Application` and define a `start/2` function. The goal of `start/2` is to start a supervisor, which will then start amy child services or execute any other code our application may need. Let's use this opportunity to start the `KV.Supervisor` we have implemented earlier in this chapter.
+To implement the `Application` behaviour, we have to `use Application` and define a `start/2` function. The goal of `start/2` is to start a supervisor, which will then start any child services or execute any other code our application may need. Let's use this opportunity to start the `KV.Supervisor` we have implemented earlier in this chapter.
 
 Since we have specified `KV` as the module callback, let's change the `KV` module defined in `lib/kv.ex` to implement a `start/2` function:
 
