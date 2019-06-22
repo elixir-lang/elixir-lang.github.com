@@ -53,7 +53,7 @@ iex> b
 "world"
 ```
 
-A pattern match will error if the sides can't be matched, for example if the tuples have different sizes:
+A pattern match error will occur if the sides can't be matched, for example if the tuples have different sizes:
 
 ```iex
 iex> {a, b, c} = {:hello, "world"}
