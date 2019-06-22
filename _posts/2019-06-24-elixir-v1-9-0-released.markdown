@@ -6,7 +6,11 @@ category: Releases
 excerpt: Elixir v1.9 is out with releases support, improved configuration and more.
 ---
 
-Elixir v1.9 is out with releases support, improved configuration and more. Let's take a look at those.
+Elixir v1.9 is out with releases support, improved configuration, and more.
+
+We are also glad to announce [Fernando Tapia Rico](https://github.com/fertapric) has joined the Elixir Core Team. Fernando has been extremely helpful in keeping the issues tracker tidy, by fixing bugs and improving the Elixir in many different areas, such as the code formatter, IEx, the compiler, and others.
+
+Now let's take a look at what's new in this new version.
 
 ## Releases
 
