@@ -137,7 +137,7 @@ defmodule MyPlug do
   end
 
   def send_ok(conn, _opts) do
-    send(conn, 200, "ok")
+    send_resp(conn, 200, "ok")
   end
 end
 
