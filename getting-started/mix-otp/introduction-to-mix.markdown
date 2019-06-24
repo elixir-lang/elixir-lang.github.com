@@ -39,7 +39,7 @@ In order to build our key-value application, we are going to use three main tool
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
-> This guide requires Elixir v1.6.1 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/install.html).
+> This guide requires Elixir v1.9.0 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/install.html).
 >
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
@@ -67,8 +67,6 @@ Mix will create a directory named `kv` with a few files in it:
     * creating .formatter.exs
     * creating .gitignore
     * creating mix.exs
-    * creating config
-    * creating config/config.exs
     * creating lib
     * creating lib/kv.ex
     * creating test
@@ -304,7 +302,7 @@ Or on Windows:
 > set "MIX_ENV=prod" && mix compile
 ```
 
-> Mix is a build tool and, as such, it is not always expected to be available in production, especially if your team uses explicit build steps. Therefore, it is recommended to access `Mix.env` only in configuration files and inside `mix.exs`, never in your application code (`lib`).
+> Mix is a build tool and, as such, it is not expected to be available in production. Therefore, it is recommended to access `Mix.env` only in configuration files and inside `mix.exs`, never in your application code (`lib`).
 
 ## Exploring
 
