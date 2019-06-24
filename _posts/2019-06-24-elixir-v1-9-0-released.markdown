@@ -86,7 +86,7 @@ There are many other enhancements in Elixir v1.9. The Elixir CLI got a handful o
 
 As mentioned earlier, releases was the last planned feature for Elixir. We don't have any major user-facing feature in the works nor planned. I know for certain some will consider this fact the most excing part of this announcement!
 
-Of course, it does not mean that v1.9 is the last Elixir version. We will continue releasing shipping new releases every 6 months with enhancements, bug fixes and improvements. You can see the [Issues Tracker](http://github.com/elixir-lang/elixir/issues) for more details.
+Of course, it does not mean that v1.9 is the last Elixir version. We will continue shipping new releases every 6 months with enhancements, bug fixes and improvements. You can see the [Issues Tracker](http://github.com/elixir-lang/elixir/issues) for more details.
 
 We also are working on some structural changes. One of them is move the `mix xref` pass straight into the compiler, which would allow us to emit undefined function and deprecation warnings in more places. We are also considering a move to [Cirrus-CI](https://cirrus-ci.org/), so we can test Elixir on Windows, Unix, and FreeBSD through a single service.
 
