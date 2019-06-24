@@ -8,7 +8,7 @@ excerpt: Elixir v1.9 is out with releases support, improved configuration and mo
 
 Elixir v1.9 is out with releases support, improved configuration, and more.
 
-We are also glad to announce [Fernando Tapia Rico](https://github.com/fertapric) has joined the Elixir Core Team. Fernando has been extremely helpful in keeping the issues tracker tidy, by fixing bugs and improving the Elixir in many different areas, such as the code formatter, IEx, the compiler, and others.
+We are also glad to announce [Fernando Tapia Rico](https://github.com/fertapric) has joined the Elixir Core Team. Fernando has been extremely helpful in keeping the issues tracker tidy, by fixing bugs and improving Elixir in many different areas, such as the code formatter, IEx, the compiler, and others.
 
 Now let's take a look at what's new in this new version.
 
@@ -16,7 +16,7 @@ Now let's take a look at what's new in this new version.
 
 The main feature in Elixir v1.9 is the addition of releases. A release is a self-contained directory that consists of your application code, all of its dependencies, plus the whole Erlang Virtual Machine (VM) and runtime. Once a release is assembled, it can be packaged and deployed to a target as long as the target runs on the same operating system (OS) distribution and version as the machine running the [`mix release`](https://hexdocs.pm/mix/Mix.Tasks.Release.html) command.
 
-Releases have always been part of the Elixir community thanks to Paul Schoenfelder's work on [Distillery](https://github.com/bitwalker/distillery) (and EXRM before that). Distillery was announced in July 2016. Then in 2017, [DockYard](https://dockyard.com/) hired Paul to work on improving deployments, an effort that would lead to [Distillery 2.0](https://dockyard.com/blog/2018/08/23/announcing-distillery-2-0). Distillery 2.0 provided important answers in areas the community was struggling to establish conventions and best practices, such as configuration.
+Releases have always been part of the Elixir community thanks to Paul Schoenfelder's work on [Distillery](https://github.com/bitwalker/distillery) (and EXRM before that). Distillery was announced in July 2016. Then in 2017, [DockYard](https://dockyard.com/) hired Paul to work on improving deployments, an effort that would lead to [Distillery 2.0](https://dockyard.com/blog/2018/08/23/announcing-distillery-2-0). Distillery 2.0 provided important answers in areas where the community was struggling to establish conventions and best practices, such as configuration.
 
 At the beginning of this year, thanks to [Plataformatec](http://plataformatec.com.br/), I was able to prioritize the work on bringing releases directly into Elixir. Paul was aware that we wanted to have releases in Elixir itself and during [ElixirConf 2018](https://elixirconf.com) I announced that releases was the last planned feature for Elixir.
 
@@ -74,7 +74,7 @@ We have written [extensive documentation on releases](https://hexdocs.pm/mix/Mix
 
 ## Configuration
 
-We also use the work on releases to streamline Elixir's configuration API. A new `Config` module has been added to Elixir. The previous configuration API, `Mix.Config`, was part of the Mix build tool. But since releases provide runtime configuration and Mix is not included in releases, we ported the `Mix.Config` API to Elixir. In other words, `use Mix.Config` has been soft-deprecated in favor of `import Config`.
+We also use the work on releases to streamline Elixir's configuration API. A new `Config` module has been added to Elixir. The previous configuration API, `Mix.Config`, was part of the Mix build tool. However, since releases provide runtime configuration and Mix is not included in releases, we ported the `Mix.Config` API to Elixir. In other words, `use Mix.Config` has been soft-deprecated in favor of `import Config`.
 
 Another important change related to configuration is that `mix new` will no longer generate a `config/config.exs` file. [Relying on configuration is undesired for most libraries](https://hexdocs.pm/elixir/library-guidelines.html#avoid-application-configuration) and the generated config files pushed library authors in the wrong direction. Furthermore, `mix new --umbrella` will no longer generate a configuration for each child app, instead all configuration should be declared in the umbrella root. That's how it has always behaved, we are now making it explicit.
 
