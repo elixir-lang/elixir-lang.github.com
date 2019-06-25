@@ -287,7 +287,7 @@ You can read more about filters, tags and the default tags in [`ExUnit.Case` mod
 
 ## Wiring it all up
 
-Now with our routing system in place, let's change the `KV.Server` to use the router. Replace the `lookup/2` function in `KVServer.Command` by the following one:
+Now with our routing system in place, let's change `KVServer` to use the router. Replace the `lookup/2` function in `KVServer.Command` by the following one:
 
 ```elixir
 defp lookup(bucket, callback) do
@@ -298,22 +298,17 @@ defp lookup(bucket, callback) do
 end
 ```
 
-Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. One option to address this failure is to tag the test as distributed too. Another option is for us to change the routing table during that particular test. Each approach has its benefits and downsides.
-
-  1. By making the test distributed, we are getting better coverage, but the test will run less often (perhaps only in our Continuous Integration server)
-
-  2. By changing the routing table, we can run the test more frequently, but we won't be testing the distributed feature at an integration level
-
-Since we have already explored the first option, let's give the second route a try. Open up `apps/kv_server/test/kv_server_test.exs` and add this `setup` block:
+Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, add `@tag :distributed` to this test too:
 
 ```elixir
-setup do
-  current = Application.get_env(:kv, :routing_table)
-  Application.put_env(:kv, :routing_table, [{?a..?z, node()}])
-  on_exit fn -> Application.put_env(:kv, :routing_table, current) end
-end
+@tag :distributed
+test "server interaction", %{socket: socket} do
 ```
 
-This setup block reads the routing table, changes it to a routing table that points to the current node, and then reverts the routing table to the original value at the end. Since the application environment is a global storage, tests that modify it cannot run concurrently and cannot set the `async: true` flag, which is already the case here.
+However, keep in mind that by making the test distributed, we will likely run it less frequently, since we may not do the distributed setup on every test run.
+
+There are a couple other options here. One option is to spawn the distributed node programmatically at the beginning of `test/test_helper.exs`. Erlang/OTP does provide APIs for doing so, but they are non-trivial and therefore we won't cover them here.
+
+Another option is to make the routing table configurable. This means we can change the routing table on specific tests to assert for specific behaviour. As we will learn in the next chapter, changing the routing table this way has the downside that those particular tests can no longer run asynchronously, so it is a technique that should be used sparingly.
 
 With the routing table integrated, we have made a lot of progress in building our distributed key-value store but, up to this point, the routing table is still hard-coded. In the next chapter, we will learn how to make the routing table configurable and how to package our application for production.

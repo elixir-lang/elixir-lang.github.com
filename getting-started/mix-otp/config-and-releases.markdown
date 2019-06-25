@@ -13,7 +13,7 @@ In this last chapter, we will make the routing table for our distributed key-val
 
 Let's do this.
 
-## Application environment and configuration
+## Application environment
 
 So far we have hardcoded the routing table into the `KV.Router` module. However, we would like to make the table dynamic. This allows us not only to configure development/test/production, but also to allow different nodes to run with different entries in the routing table. There is a feature of <abbr title="Open Telecom Platform">OTP</abbr> that does exactly that: the application environment.
 
@@ -46,16 +46,20 @@ end
 
 We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](https://hexdocs.pm/elixir/Application.html).
 
-Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
+Since our routing table is now empty, our distributed tests should fail. Restart the apps and re-run tests to see the failure:
 
 ```console
 $ iex --sname bar -S mix
 $ elixir --sname foo -S mix test --only distributed
 ```
 
-The interesting thing about the application environment is that it can be configured not only for the current application, but for all applications. Such configuration is done by the `config/config.exs` file.
+We need a way to configure the application environment. That's when we use configuration files.
 
-For example, we can configure IEx default prompt to another value. Just open `apps/kv/config/config.exs` and add the following to the end:
+## Configuration
+
+Configuration files provide a mechanism for us to configure the environment of any application. Such configuration is done by the `config/config.exs` file.
+
+For example, we can configure IEx default prompt to another value. Just open `config/config.exs` and add the following to the end:
 
 ```elixir
 config :iex, default_prompt: ">>>"
@@ -63,14 +67,44 @@ config :iex, default_prompt: ">>>"
 
 Start IEx with `iex -S mix` and you can see that the IEx prompt has changed.
 
-This means we can also configure our `:routing_table` directly in the `config/config.exs` file:
+This means we can also configure our `:routing_table` directly in the `config/config.exs` file. However, which configuration value should we use?
+
+Currently we have two tests tagged with `@tag :distributed`. The "server interaction" test in `KVServerTest`, and the "route requests across nodes" in `KV.RouterTest`. Both tests are failing since they require a routing table, which is currently empty.
+
+The `KV.RouterTest` truly has to be distributed, as its purpose is to test the distribution. However, the test in `KVServerTest` was only made distributed because we had a hardcoded distributed routing table, which we couldn't configure, but now we can!
+
+Therefore, in order to minimize the distributed tests, let's pick a routing table that does not require distribution. Then, for the distributed tests, we will programatically change the routing table. Back in `config/config.exs`, add this line:
 
 ```elixir
-# Replace computer-name with your local machine nodes
-config :kv, :routing_table, [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
+config :kv, :routing_table, [{?a..?z, node()}]
 ```
 
-Restart the nodes and run distributed tests again. Now they should all pass.
+This configures a routing table that always points to the current node. Now remove `@tag :distributed` from the test in `test/kv_server_test.exs` and run the suite, the test should now pass.
+
+Now we only need to make `KV.RouterTest` pass once again. To do so, we will write a setup block that runs before all tests in that file. The setup block will change the application environment and revert it back once we are done, like this:
+
+```elixir
+defmodule KV.RouterTest do
+  use ExUnit.Case
+
+  setup_all do
+    current = Application.get_env(:kv, :routing_table)
+
+    Application.put_env(:kv, :routing_table, [
+      {?a..?m, :"foo@computer-name"},
+      {?n..?z, :"bar@computer-name"}
+    ])
+
+    on_exit fn -> Application.put_env(:kv, :routing_table, current) end
+  end
+
+  @tag :distributed
+  test "route requests across nodes" do
+```
+
+Note we removed `async: true` from `use ExUnit.Case`. Since the application environment is a global storage, tests that modify it cannot run concurrently. With all changes in place, all tests should pass, including the distributed one.
+
+## Custom configuration
 
 At this point, you may be wondering, how can we make two nodes start with two different routing tables? One option is to use the `--config` flag in `mix run`. For example, you could write two extra configuration files, `config/foo.exs` and `config/bar.exs`, with two distinct routing tables and then:
 
@@ -79,13 +113,13 @@ At this point, you may be wondering, how can we make two nodes start with two di
 
 There are two concerns in this approach.
 
-First, if the routing tables are the opposite of each other, such as `[{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]` in one node and `[{?a..?m, :"bar@computer-name"}, {?n..?z, :"foo@computer-name"}]` in the other, you can have a routing request that will run recursively in the cluster infinitely. This can be tackled at the application level by making sure you pass a list of seen nodes when we route, such as `KV.Router.route(bucket, mod, fun, args, seen_nodes)`. Then by checking if the node being dispatched to was already visited, we can avoid the cycle. Implement and testing this functionality will be left as an exercise.
+First, if the routing tables are the opposite of each other, such as `[{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]` in one node and `[{?a..?m, :"bar@computer-name"}, {?n..?z, :"foo@computer-name"}]` in the other, you can have a routing request that will run recursively in the cluster infinitely. This can be tackled at the application level by making sure you pass a list of seen nodes when we route, such as `KV.Router.route(bucket, mod, fun, args, seen_nodes)`. Then by checking if the node being dispatched to was already visited, we can avoid the cycle. Implementing and testing this functionality will be left as an exercise.
 
 The second concern is that, while using `mix run` is completely fine to run our software in production, the command we use to start our services is getting increasingly more complex. For example, imagine we also want to `--preload-modules`, to all code is loaded upfront, as well as set the `MIX_ENV=prod` environment variable:
 
     $ MIX_ENV=prod elixir --sname foo -S mix run --preload-modules --config config/foo.exs
 
-Luckily, Elixir comes with the ability to package all of the code we have written so far into a single directory, that also includes Elixir and the Erlang Virtual Machine, that has a simple and straight-forward entry point. This feature is called releases and it provides many other benefits, which we will see next.
+Luckily, Elixir comes with the ability to package all of the code we have written so far into a single directory, that also includes Elixir and the Erlang Virtual Machine, that has a simple entry point and supports custom configuration. This feature is called releases and it provides many other benefits, which we will see next.
 
 ## Releases
 
