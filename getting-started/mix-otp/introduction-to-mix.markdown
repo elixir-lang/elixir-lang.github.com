@@ -9,6 +9,11 @@ title: Introduction to Mix
 
 In this guide, we will learn how to build a complete Elixir application, with its own supervision tree, configuration, tests and more.
 
+The requirements for this guide are (see `elixir -v`):
+
+  * Elixir 1.9.0 onwards
+  * Erlang/OTP 20 onwards
+
 The application works as a distributed key-value store. We are going to organize key-value pairs into buckets and distribute those buckets across multiple nodes. We will also build a simple client that allows us to connect to any of those nodes and send requests such as:
 
 ```
@@ -39,8 +44,6 @@ In order to build our key-value application, we are going to use three main tool
 
 In this chapter, we will create our first project using Mix and explore different features in  <abbr title="Open Telecom Platform">OTP</abbr>, Mix and ExUnit as we go.
 
-> This guide requires Elixir v1.9.0 or later. You can check your Elixir version with `elixir --version` and install a more recent version if required by following the steps described in [the first chapter of the Getting Started guide](/install.html).
->
 > If you have any questions or improvements to the guide, please reach discussion channels such as the [Elixir Forum](https://elixirforum.com) or the [issues tracker](https://github.com/elixir-lang/elixir-lang.github.com/issues). Your input is really important to help us guarantee the guides are accessible and up to date!
 >
 > The final code for the application built in this guide is in [this repository](https://github.com/josevalim/kv_umbrella) and can be used as a reference.

@@ -13,10 +13,10 @@ Welcome!
 
 In this tutorial, we are going to teach you about Elixir fundamentals - the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring that Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
 
-Our requirements are:
+Our requirements are (see `elixir -v`):
 
-  * Elixir - Version 1.5.0 onwards
-  * Erlang - Version 19.0 onwards
+  * Elixir 1.5.0 onwards
+  * Erlang/OTP 19 onwards
 
 Let's get started!
 
