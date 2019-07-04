@@ -14,8 +14,8 @@ We have now successfully defined our supervisor which is automatically started (
 Remember however that our `KV.Registry` is both linking (via `start_link`) and monitoring (via `monitor`) bucket processes in the `handle_cast/2` callback:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link([])
-ref = Process.monitor(pid)
+{:ok, bucket} = KV.Bucket.start_link([])
+ref = Process.monitor(bucket)
 ```
 
 Links are bidirectional, which implies that a crash in a bucket will crash the registry. Although we now have the supervisor, which guarantees the registry will be back up and running, crashing the registry still means we lose all data associating bucket names to their respective processes.
