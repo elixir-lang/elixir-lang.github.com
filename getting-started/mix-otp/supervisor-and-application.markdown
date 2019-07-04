@@ -9,7 +9,7 @@ title: Supervisor and Application
 
 {% include mix-otp-preface.html %}
 
-In the previous chapter about `GenServer`, we implemented `KV.Registry` to manage buckets. At some point, we started monitoring buckets so we were able to take action whenever a `KV.Bucket` crashed. Although the change was relatively small, it introduced a question which is frequently asked by Elixir developers: what happens when something fail?
+In the previous chapter about `GenServer`, we implemented `KV.Registry` to manage buckets. At some point, we started monitoring buckets so we were able to take action whenever a `KV.Bucket` crashed. Although the change was relatively small, it introduced a question which is frequently asked by Elixir developers: what happens when something fails?
 
 Before we added monitoring, if a bucket crashed, the registry would forever point to a bucket that no longer exists. If a user tried to read or write to the crashed bucket, it would fail. Any attempt at creating a new bucket with the same name would just return the PID of the crashed bucket. In other words, that registry entry for that bucket would forever be in a bad state. Once we added monitoring, the registry automatically removes the entry for the crashed bucket. Trying to lookup the crashed bucket now (correctly) says a bucket does not exist and a user of the system can successfully create a new one if desired.
 
@@ -29,7 +29,7 @@ At the end of the chapter, we will also talk about Applications. As we will see,
 
 ## Our first supervisor
 
-A supervisor is a process which supervises other processes, which we refer to as child processes. The act of supervising a process includes three distinct responsibilities. The first one is to start child processes. Once a child process is running, the supervisor may restart a child process, either because it terminated abnormally or because a certain condition has reached. For example, a supervisor may restart all children if any child dies. Finally, a supervisor is also responsible for shutting down the child processes on the system is shutting down. Please see the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) module for a more in-depth discussion.
+A supervisor is a process which supervises other processes, which we refer to as child processes. The act of supervising a process includes three distinct responsibilities. The first one is to start child processes. Once a child process is running, the supervisor may restart a child process, either because it terminated abnormally or because a certain condition was reached. For example, a supervisor may restart all children if any child dies. Finally, a supervisor is also responsible for shutting down the child processes on the system is shutting down. Please see the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) module for a more in-depth discussion.
 
 Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the Supervisor behaviour, inside the `lib/kv/supervisor.ex` file:
 
@@ -137,7 +137,7 @@ This time the supervisor started a named registry, allowing us to create buckets
 
 > At this point, you may be wondering: should you also locally name bucket processes? Remember buckets are started dynamically based on user input. Since local names MUST be atoms, we would have to dynamically create atoms, which is a bad idea since once an atom is defined, it is never erased nor garbage collected. This means that, if we create atoms dynamically based on user input, we will eventually run out of memory (or to be more precise, the VM will crash because it imposes a hard limit on the number of atoms). This limitation is precisely why we created our own registry (or why one would use the `Registry` as part of Elixir).
 
-We are getting closer and closer to a fully working system. The supervisor automatically starts the registry. But how we can automatically start the supervisor whenever our system starts? To answer this question, let's talk about applications.
+We are getting closer and closer to a fully working system. The supervisor automatically starts the registry. But how can we automatically start the supervisor whenever our system starts? To answer this question, let's talk about applications.
 
 ## Understanding applications
 
@@ -152,8 +152,7 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
               {modules,['Elixir.KV','Elixir.KV.Bucket','Elixir.KV.Registry',
                         'Elixir.KV.Supervisor']},
               {registered,[]},
-              {vsn,"0.1.0"},
-              {extra_applications,[logger]}]}.
+              {vsn,"0.1.0"}]}.
 ```
 
 This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger`. 

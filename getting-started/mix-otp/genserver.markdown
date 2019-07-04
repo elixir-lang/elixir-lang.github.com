@@ -333,8 +333,8 @@ Links are bi-directional. If you link two processes and one of them crashes, the
 Returning to our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link([])
-ref = Process.monitor(pid)
+{:ok, bucket} = KV.Bucket.start_link([])
+ref = Process.monitor(bucket)
 ```
 
 This is a bad idea, as we don't want the registry to crash when a bucket crashes. The proper fix is to actually not link the bucket to the registry. Instead, we will link each bucket to a special type of process called Supervisors, which are explicitly designed to handle failures and crashes. We will learn more about them in the next chapter.
