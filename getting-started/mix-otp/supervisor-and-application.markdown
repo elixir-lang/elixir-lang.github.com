@@ -152,8 +152,7 @@ We can find the generated `.app` file at `_build/dev/lib/kv/ebin/kv.app`. Let's 
               {modules,['Elixir.KV','Elixir.KV.Bucket','Elixir.KV.Registry',
                         'Elixir.KV.Supervisor']},
               {registered,[]},
-              {vsn,"0.1.0"},
-              {extra_applications,[logger]}]}.
+              {vsn,"0.1.0"}]}.
 ```
 
 This file contains Erlang terms (written using Erlang syntax). Even though we are not familiar with Erlang, it is easy to guess this file holds our application definition. It contains our application `version`, all the modules defined by it, as well as a list of applications we depend on, like Erlang's `kernel`, `elixir` itself, and `logger`. 
