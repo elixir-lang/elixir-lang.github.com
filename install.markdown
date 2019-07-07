@@ -57,6 +57,8 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Using [`sbopkg`](https://sbopkg.org/): `sbopkg -ki "erlang-otp elixir"`  
       **Or**  
       Manually download/build/install from SlackBuilds.org: [`erlang-otp`](https://slackbuilds.org/repository/14.2/development/erlang-otp/), [`elixir`](https://slackbuilds.org/repository/14.2/development/elixir)
+  * OpenBSD
+    * Run: `pkg_add elixir`
 
 ### Windows
 
