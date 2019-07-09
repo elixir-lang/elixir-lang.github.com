@@ -300,7 +300,7 @@ If you connect to localhost once again and perform another request, now everythi
 
 With releases, we were able to "cut different slices" of our project and prepared them to run in production, all packaged into a single directory.
 
-## Configuring releasess
+## Configuring releases
 
 Releases also provide built-in hooks for configuring almost every need of the production system:
 
