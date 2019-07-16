@@ -27,6 +27,7 @@ defmodule ElixirLangGuide.Mixfile do
       {:yaml_elixir, "~> 1.3"},
       {:earmark, "~> 1.0"},
       {:bupe, "~> 0.3.0"},
+      {:makeup, "~> 1.0", override: true},
       {:makeup_elixir, ">= 0.0.0"}
     ]
   end

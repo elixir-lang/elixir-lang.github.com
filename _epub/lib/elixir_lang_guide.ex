@@ -282,18 +282,20 @@ defmodule ElixirLangGuide do
 
   defp apply_makeup(page) do
     Regex.replace(
-      ~r/<pre><code class="elixir">([^<]*)<\/code><\/pre>/,
+      ~r/<pre><code class="(elixir|iex)">([^<]*)<\/code><\/pre>/,
       page,
-      &highlight_code_block/2
+      &highlight_code_block/3
     )
   end
 
-  defp highlight_code_block(_, code) do
+  @makeup_options [lexer: Makeup.Lexers.ElixirLexer, formatter_options: [highlight_tag: "samp"]]
+
+  defp highlight_code_block(_html, _tag, code) do
     highlighted =
       code
       |> unescape_html()
       |> IO.iodata_to_binary()
-      |> Makeup.highlight_inner_html(lexer: Makeup.Lexers.ElixirLexer)
+      |> Makeup.highlight_inner_html(@makeup_options)
 
     ~s(<pre><code class="makeup elixir">#{highlighted}</code></pre>)
   end
