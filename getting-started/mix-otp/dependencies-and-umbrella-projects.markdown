@@ -200,7 +200,7 @@ deps_path: "../../deps",
 lockfile: "../../mix.lock",
 ```
 
-Those options mean all dependencies will be checked out to `kv_umbrella/deps`, and they will share the same build, config and lock files. This ensures dependencies will be fetched and compiled once for the whole umbrella structure, instead of once per umbrella application.
+Those options mean all dependencies will be checked out to `kv_umbrella/deps`, and they will share the same build, config and lock files. We haven't talked about configuration yet, but from here we can build the intuition that all configuration and dependencies are shared across all projects in an umbrella, and it is not per application. 
 
 The second change is in the `application` function inside `mix.exs`:
 
@@ -284,7 +284,7 @@ Now you can run tests for both projects from the umbrella root with `mix test`. 
 
 ## Don't drink the kool aid
 
-Umbrella projects are a convenience to help you organize and manage multiple applications. While it provides a degree of separation between applications, those applications are not fully decoupled, as they are assumed to share the same configuration and the same dependencies.
+Umbrella projects are a convenience to help you organize and manage multiple applications. While it provides a degree of separation between applications, those applications are not fully decoupled, as they share the same configuration and the same dependencies.
 
 The pattern of keeping multiple applications in the same repository is known as "mono-repo". Umbrella projects maximize this pattern by providing conveniences to compile, test and run multiple applications at once.
 

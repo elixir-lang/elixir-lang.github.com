@@ -139,7 +139,7 @@ iex> {:ok, bk} = GenServer.call(registry, {:lookup, "shopping"})
 
 Our `KV.Registry` process received a cast with `{:create, "shopping"}` and a call with `{:lookup, "shopping"}`, in this sequence. `GenServer.cast` will immediately return, as soon as the message is sent to the `registry`. The `GenServer.call` on the other hand, is where we would be waiting for an answer, provided by the above `KV.Registry.handle_call` callback.
 
-You may also have noticed that we have added `@impl true` before each callback. The `@impl true` informs the compiler that our intention for the subsequent function definition is to define a callback. If by any chance we make a mistake in the function name or in the number of arguments, like we define a `handle_call/2`, the compile would warn us there isn't any `handle_call/2` to define, and would give us the complete list of known callbacks for the `GenServer` module.
+You may also have noticed that we have added `@impl true` before each callback. The `@impl true` informs the compiler that our intention for the subsequent function definition is to define a callback. If by any chance we make a mistake in the function name or in the number of arguments, like we define a `handle_call/2`, the compiler would warn us there isn't any `handle_call/2` to define, and would give us the complete list of known callbacks for the `GenServer` module.
 
 This is all good and well, but we still want to offer our users an API that allows us to hide our implementation details.
 
@@ -184,13 +184,13 @@ The first function is `start_link/1`, which starts a new GenServer passing a lis
 
 3. A list of options which can be used to specify things like the name of the server. For now, we forward the list of options that we receive on `start_link/1` to `GenServer.start_link/3`
 
-The next two functions, `lookup/2` and `create/2` are responsible for sending these requests to the server.  In this case, we have used `{:lookup, name}` and `{:create, name}` respectively.  Requests are often specified as tuples, like this, in order to provide more than one "argument" in that first argument slot. It's common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements. Note that the requests must match the first argument to `handle_call/3` or `handle_cast/2`.
+The next two functions, `lookup/2` and `create/2`, are responsible for sending these requests to the server.  In this case, we have used `{:lookup, name}` and `{:create, name}` respectively.  Requests are often specified as tuples, like this, in order to provide more than one "argument" in that first argument slot. It's common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements. Note that the requests must match the first argument to `handle_call/3` or `handle_cast/2`.
 
 That's it for the client API. On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination, and handling of requests. Those callbacks are optional and for now, we have only implemented the ones we care about. Let's recap.
 
 The first is the `init/1` callback, that receives the second argument given to `GenServer.start_link/3` and returns `{:ok, state}`, where state is a new map. We can already notice how the `GenServer` API makes the client/server segregation more apparent. `start_link/3` happens in the client, while `init/1` is the respective callback that runs on the server.
 
-For `call/2` requests, we  implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`. The first element of the tuple, `:reply`,  indicates that server should send a reply back to the client. The second element, `reply`, is what will be sent to the client while the third, `new_state` is the new server state.
+For `call/2` requests, we  implement a `handle_call/3` callback that receives the `request`, the process from which we received the request (`_from`), and the current server state (`names`). The `handle_call/3` callback returns a tuple in the format `{:reply, reply, new_state}`. The first element of the tuple, `:reply`,  indicates that the server should send a reply back to the client. The second element, `reply`, is what will be sent to the client while the third, `new_state` is the new server state.
 
 For `cast/2` requests, we implement a `handle_cast/2` callback that receives the `request` and the current server state (`names`). The `handle_cast/2` callback returns a tuple in the format `{:noreply, new_state}`. Note that in a real application we would have probably implemented the callback for `:create` with a synchronous call instead of an asynchronous cast. We are doing it this way to illustrate how to implement a cast callback.
 
@@ -227,7 +227,7 @@ Our test case first asserts there's no buckets in our registry, creates a named 
 
 There is one important difference between the `setup` block we wrote for `KV.Registry` and the one we wrote for `KV.Bucket`. Instead of starting the registry by hand by calling `KV.Registry.start_link/1`, we instead called [the `start_supervised!/2` function](https://hexdocs.pm/ex_unit/ExUnit.Callbacks.html#start_supervised/2), passing the `KV.Registry` module.
 
-The `start_supervised!` function was injected into our test module by `use ExUnit.Case`. It does the job of starting the `KV.Registry` process, by calling its `start_link/1` function. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown **before** the next test starts. In other words, it helps guarantee the state of one test is not going to interfere with the next one in case they depend on shared resources.
+The `start_supervised!` function was injected into our test module by `use ExUnit.Case`. It does the job of starting the `KV.Registry` process, by calling its `start_link/1` function. The advantage of using `start_supervised!` is that ExUnit will guarantee that the registry process will be shutdown **before** the next test starts. In other words, it helps guarantee that the state of one test is not going to interfere with the next one in case they depend on shared resources.
 
 When starting processes during your tests, we should always prefer to use `start_supervised!`. We recommend you to change the `setup` block in `bucket_test.exs` to use `start_supervised!` too.
 
@@ -318,7 +318,7 @@ So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handl
 
 2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. A cast does not even guarantee the server has received the message and, for this reason, should be used sparingly. For example, the `create/2` function we have defined in this chapter should have used `call/2`. We have used `cast/2` for didactic purposes.
 
-3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are such an example of this.
+3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are an example of this.
 
 Since any message, including the ones sent via `send/2`, go to `handle_info/2`, there is a chance unexpected messages will arrive to the server. Therefore, if we don't define the catch-all clause, those messages could cause our registry to crash, because no clause would match. We don't need to worry about such cases for `handle_call/3` and `handle_cast/2` though. Calls and casts are only done via the `GenServer` API, so an unknown message is quite likely a developer mistake.
 
@@ -333,8 +333,8 @@ Links are bi-directional. If you link two processes and one of them crashes, the
 Returning to our `handle_cast/2` implementation, you can see the registry is both linking and monitoring the buckets:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link([])
-ref = Process.monitor(pid)
+{:ok, bucket} = KV.Bucket.start_link([])
+ref = Process.monitor(bucket)
 ```
 
 This is a bad idea, as we don't want the registry to crash when a bucket crashes. The proper fix is to actually not link the bucket to the registry. Instead, we will link each bucket to a special type of process called Supervisors, which are explicitly designed to handle failures and crashes. We will learn more about them in the next chapter.
