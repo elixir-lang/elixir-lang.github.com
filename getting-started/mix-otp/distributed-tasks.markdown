@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Distributed tasks and configuration
+title: Distributed tasks and tags
 ---
 
 # {{ page.title }}
@@ -9,7 +9,7 @@ title: Distributed tasks and configuration
 
 {% include mix-otp-preface.html %}
 
-In this last chapter, we will go back to the `:kv` application and add a routing layer that will allow us to distribute requests between nodes based on the bucket name.
+In this chapter, we will go back to the `:kv` application and add a routing layer that will allow us to distribute requests between nodes based on the bucket name.
 
 The routing layer will receive a routing table of the following format:
 
@@ -23,8 +23,6 @@ The routing layer will receive a routing table of the following format:
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
 
 If the matching entry points to the node evaluating the request, then we've finished routing, and this node will perform the requested operation. If the matching entry points to a different node, we'll pass the request to this node, which will look at its own routing table (which may be different from the one in the first node) and act accordingly. If no entry matches, an error will be raised.
-
-You may wonder why we don't tell the node we found in our routing table to perform the requested operation directly, but instead pass the routing request on to that node to process. While a routing table as simple as the one above might reasonably be shared between all nodes, passing on the routing request in this way makes it much simpler to break the routing table into smaller pieces as our application grows. Perhaps at some point, `foo@computer-name` will only be responsible for routing bucket requests, and the buckets it handles will be dispatched to different nodes. In this way, `bar@computer-name` does not need to know anything about this change.
 
 > Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines on the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Second, you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info). Third, if you want to learn more about distribution in general, we recommend [this great Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon).
 
@@ -112,7 +110,7 @@ For our routing layer, we are going to use tasks, but feel free to explore the o
 So far we have explored tasks that are started and run in isolation, with no regard for their return value. However, sometimes it is useful to run a task to compute a value and read its result later on. For this, tasks also provide the `async/await` pattern:
 
 ```elixir
-task = Task.async(fn -> compute_something_expensive end)
+task = Task.async(fn -> compute_something_expensive() end)
 res  = compute_something_else()
 res + Task.await(task)
 ```
@@ -287,95 +285,30 @@ $ elixir --sname foo -S mix test --only distributed
 
 You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](https://hexdocs.pm/ex_unit/ExUnit.Case.html).
 
-## Application environment and configuration
+## Wiring it all up
 
-So far we have hardcoded the routing table into the `KV.Router` module. However, we would like to make the table dynamic. This allows us not only to configure development/test/production, but also to allow different nodes to run with different entries in the routing table. There is a feature of  <abbr title="Open Telecom Platform">OTP</abbr> that does exactly that: the application environment.
-
-Each application has an environment that stores the application's specific configuration by key. For example, we could store the routing table in the `:kv` application environment, giving it a default value and allowing other applications to change the table as needed.
-
-Open up `apps/kv/mix.exs` and change the `application/0` function to return the following:
+Now with our routing system in place, let's change `KVServer` to use the router. Replace the `lookup/2` function in `KVServer.Command` by the following one:
 
 ```elixir
-def application do
-  [
-    extra_applications: [:logger],
-    env: [routing_table: []],
-    mod: {KV, []}
-  ]
+defp lookup(bucket, callback) do
+  case KV.Router.route(bucket, KV.Registry, :lookup, [KV.Registry, bucket]) do
+    {:ok, pid} -> callback.(pid)
+    :error -> {:error, :not_found}
+  end
 end
 ```
 
-We have added a new `:env` key to the application. It returns the application default environment, which has an entry of key `:routing_table` and value of an empty list. It makes sense for the application environment to ship with an empty table, as the specific routing table depends on the testing/deployment structure.
-
-In order to use the application environment in our code, we need to replace `KV.Router.table/0` with the definition below:
+Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, add `@tag :distributed` to this test too:
 
 ```elixir
-@doc """
-The routing table.
-"""
-def table do
-  Application.fetch_env!(:kv, :routing_table)
-end
+@tag :distributed
+test "server interaction", %{socket: socket} do
 ```
 
-We use `Application.fetch_env!/2` to read the entry for `:routing_table` in `:kv`'s environment. You can find more information and other functions to manipulate the app environment in the [Application module](https://hexdocs.pm/elixir/Application.html).
+However, keep in mind that by making the test distributed, we will likely run it less frequently, since we may not do the distributed setup on every test run.
 
-Since our routing table is now empty, our distributed test should fail. Restart the apps and re-run tests to see the failure:
+There are a couple other options here. One option is to spawn the distributed node programmatically at the beginning of `test/test_helper.exs`. Erlang/OTP does provide APIs for doing so, but they are non-trivial and therefore we won't cover them here.
 
-```console
-$ iex --sname bar -S mix
-$ elixir --sname foo -S mix test --only distributed
-```
+Another option is to make the routing table configurable. This means we can change the routing table on specific tests to assert for specific behaviour. As we will learn in the next chapter, changing the routing table this way has the downside that those particular tests can no longer run asynchronously, so it is a technique that should be used sparingly.
 
-The interesting thing about the application environment is that it can be configured not only for the current application, but for all applications. Such configuration is done by the `config/config.exs` file. For example, we can configure IEx default prompt to another value. Just open `apps/kv/config/config.exs` and add the following to the end:
-
-```elixir
-config :iex, default_prompt: ">>>"
-```
-
-Start IEx with `iex -S mix` and you can see that the IEx prompt has changed.
-
-This means we can also configure our `:routing_table` directly in the `apps/kv/config/config.exs` file:
-
-```elixir
-# Replace computer-name with your local machine nodes
-config :kv, :routing_table, [{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]
-```
-
-Restart the nodes and run distributed tests again. Now they should all pass.
-
-Since Elixir v1.2, all umbrella applications share their configurations, thanks to this line in `config/config.exs` in the umbrella root that loads the configuration of all children:
-
-```elixir
-import_config "../apps/*/config/config.exs"
-```
-
-The `mix run` command also accepts a `--config` flag, which allows configuration files to be given on demand. This could be used to start different nodes, each with its own specific configuration (for example, different routing tables).
-
-Overall, the built-in ability to configure applications and the fact that we have built our software as an umbrella application gives us plenty of options when deploying the software. We can:
-
-* deploy the umbrella application to a node that will work as both TCP server and key-value storage
-
-* deploy the `:kv_server` application to work only as a TCP server as long as the routing table points only to other nodes
-
-* deploy only the `:kv` application when we want a node to work only as storage (no TCP access)
-
-As we add more applications in the future, we can continue controlling our deploy with the same level of granularity, cherry-picking which applications with which configuration are going to production.
-
-You can also consider building multiple releases with a tool like [Distillery](https://github.com/bitwalker/distillery), which will package the chosen applications and configuration, including the current Erlang and Elixir installations, so we can deploy the application even if the runtime is not pre-installed on the target system.
-
-Finally, we have learned some new things in this chapter, and they could be applied to the `:kv_server` application as well. We are going to leave the next steps as an exercise:
-
-* change the `:kv_server` application to read the port from its application environment instead of using the hardcoded value of 4040
-
-* change and configure the `:kv_server` application to use the routing functionality instead of dispatching directly to the local `KV.Registry`. For `:kv_server` tests, you can make the routing table point to the current node itself
-
-## Summing up
-
-In this chapter, we have built a simple router as a way to explore the distributed features of Elixir and the Erlang <abbr title="Virtual Machine">VM</abbr>, and learned how to configure its routing table. This is the last chapter in our Mix and  <abbr title="Open Telecom Platform">OTP</abbr> guide.
-
-Throughout the guide, we have built a very simple distributed key-value store as an opportunity to explore many constructs like generic servers, supervisors, tasks, agents, applications and more. Not only that, we have written tests for the whole application, got familiar with ExUnit, and learned how to use the Mix build tool to accomplish a wide range of tasks.
-
-If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/products/riak-kv/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new nodes to store buckets are added to your infrastructure.
-
-Happy coding!
+With the routing table integrated, we have made a lot of progress in building our distributed key-value store but, up to this point, the routing table is still hard-coded. In the next chapter, we will learn how to make the routing table configurable and how to package our application for production.

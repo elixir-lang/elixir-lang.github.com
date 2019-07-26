@@ -21,7 +21,7 @@ defmodule ElixirLangGuide do
       homepage: "http://elixir-lang.org",
       output: ".",
       root_dir: source,
-      scripts: assets("priv/app-*.js"),
+      scripts: [],
       styles: assets("priv/app-*.css"),
       images: []
     }
@@ -98,11 +98,12 @@ defmodule ElixirLangGuide do
       options.root_dir
       |> Path.expand()
       |> Path.join("#{dir}#{path}")
-      |> String.replace(~r/(.*)\.xhtml/, "\\1.markdown")
+      |> String.replace(".xhtml", ".markdown")
       |> File.read!()
       |> clean_markdown(options)
       |> Earmark.to_html()
-      |> wrap_html(nav)
+      |> apply_makeup()
+      |> to_page(nav)
 
     unless File.exists?(Path.join(options.output, dir)) do
       File.mkdir_p(Path.join(options.output, dir))
@@ -233,7 +234,7 @@ defmodule ElixirLangGuide do
 
   defp fix_js(content) do
     content
-    |> String.replace(~r{<script.*</script>}, "")
+    |> String.replace(~r{<script[^<]*</script>}, "")
     |> String.replace(["<noscript>", "</noscript>"], "")
   end
 
@@ -258,12 +259,14 @@ defmodule ElixirLangGuide do
     end)
   end
 
-  defp map_meta_links(text, path, %{guide: "meta"}), do: map_section_links(text, path)
+  defp map_meta_links(text, path, %{guide: "meta"}),
+    do: map_section_links(text, path)
 
   defp map_meta_links(text, path, options),
     do: "[#{text}](#{options.homepage}/getting-started/meta/#{path})"
 
-  defp map_mix_otp_link(text, path, %{guide: "mix_otp"}), do: map_section_links(text, path)
+  defp map_mix_otp_link(text, path, %{guide: "mix_otp"}),
+    do: map_section_links(text, path)
 
   defp map_mix_otp_link(text, path, options),
     do: "[#{text}](#{options.homepage}/getting-started/mix-otp/#{path})"
@@ -274,9 +277,46 @@ defmodule ElixirLangGuide do
   defp map_getting_started_links(text, path, options),
     do: "[#{text}](#{options.homepage}/getting-started/#{path})"
 
-  defp map_section_links(text, path), do: "[#{text}](#{String.replace(path, "html", "xhtml")})"
+  defp map_section_links(text, path),
+    do: "[#{text}](#{String.replace(path, ".html", ".xhtml")})"
+
+  defp apply_makeup(page) do
+    Regex.replace(
+      ~r/<pre><code class="(elixir|iex)">([^<]*)<\/code><\/pre>/,
+      page,
+      &highlight_code_block/3
+    )
+  end
+
+  @makeup_options [lexer: Makeup.Lexers.ElixirLexer, formatter_options: [highlight_tag: "samp"]]
+
+  defp highlight_code_block(_html, _tag, code) do
+    highlighted =
+      code
+      |> unescape_html()
+      |> IO.iodata_to_binary()
+      |> Makeup.highlight_inner_html(@makeup_options)
+
+    ~s(<pre><code class="makeup elixir">#{highlighted}</code></pre>)
+  end
+
+  entities = [{"&amp;", ?&}, {"&lt;", ?<}, {"&gt;", ?>}, {"&quot;", ?"}, {"&#39;", ?'}]
+
+  for {encoded, decoded} <- entities do
+    defp unescape_html(unquote(encoded) <> rest) do
+      [unquote(decoded) | unescape_html(rest)]
+    end
+  end
+
+  defp unescape_html(<<c, rest::binary>>) do
+    [c | unescape_html(rest)]
+  end
+
+  defp unescape_html(<<>>) do
+    []
+  end
 
   require EEx
   page = Path.expand("templates/page.eex", __DIR__)
-  EEx.function_from_file(:defp, :wrap_html, page, [:content, :config])
+  EEx.function_from_file(:defp, :to_page, page, [:content, :config])
 end

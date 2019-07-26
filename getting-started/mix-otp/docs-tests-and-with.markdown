@@ -448,4 +448,4 @@ With this simple integration test, we start to see why integration tests may be 
 
 At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don't have the weight of an integration test.
 
-Let's move to the last chapter. We will finally make our system distributed by adding a bucket routing mechanism. We'll also learn about application configuration.
+Let's move to the next chapter. We will finally make our system distributed by adding a bucket routing mechanism. We will use this opportunity to also improve our testing chops.

@@ -4,7 +4,7 @@ layout: default
 ---
 
 <div class="hfeed">
-  <div class="hentry post no-border">
+  <div class="hentry post">
     <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
 
     <div class="entry-summary">
@@ -62,6 +62,8 @@ children = [
 
 Supervisor.start_link(children, strategy: :one_for_one)
 {% endhighlight %}
+
+      <p>The combination of scalability, fault-tolerance, and event-driven programming via message passing makes Elixir an excellent choice for Reactive Programming and Architectures.</p>
     </div>
   </div>
 
@@ -73,7 +75,7 @@ Supervisor.start_link(children, strategy: :one_for_one)
     <h4>Functional programming</h4>
 
     <div class="entry-summary">
-      <p>Functional programming promotes a coding style that helps developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
+      <p>Functional programming promotes a coding style that helps developers write code that is short, concise, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
 
 {% highlight elixir %}
 %User{name: name, age: age} = User.get("John Doe")
@@ -137,7 +139,7 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 1 tests, 0 failures
 {% endhighlight %}
 
-      <p>Mix is also able to manage dependencies and integrates nicely with the <a href="https://hex.pm/">Hex package manager</a>, which provides dependency resolution and the ability to remotely fetch packages.</p>
+      <p>Mix is also able to manage dependencies and integrates with the <a href="https://hex.pm/">Hex package manager</a>, which performs dependency resolution, fetches remote packages, and <a href="https://hexdocs.pm/">hosts documentation</a> for the whole ecosystem.</p>
     </div>
   </div>
 

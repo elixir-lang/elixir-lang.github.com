@@ -14,8 +14,8 @@ We have now successfully defined our supervisor which is automatically started (
 Remember however that our `KV.Registry` is both linking (via `start_link`) and monitoring (via `monitor`) bucket processes in the `handle_cast/2` callback:
 
 ```elixir
-{:ok, pid} = KV.Bucket.start_link([])
-ref = Process.monitor(pid)
+{:ok, bucket} = KV.Bucket.start_link([])
+ref = Process.monitor(bucket)
 ```
 
 Links are bidirectional, which implies that a crash in a bucket will crash the registry. Although we now have the supervisor, which guarantees the registry will be back up and running, crashing the registry still means we lose all data associating bucket names to their respective processes.
@@ -33,7 +33,7 @@ test "removes bucket on crash", %{registry: registry} do
 end
 ```
 
-The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. If a process terminates with a reason different than `:normal`, all linked processes receive an EXIT signal, causing the linked process to also terminate unless they are trapping exits.
+The test is similar to "removes bucket on exit" except that we are being a bit more harsh by sending `:shutdown` as the exit reason instead of `:normal`. If a process terminates with a reason different than `:normal`, all linked processes receive an EXIT signal, causing the linked process to also terminate unless it is trapping exits.
 
 Since the bucket terminated, the registry also stopped, and our test fails when trying to `GenServer.call/3` it:
 
@@ -48,11 +48,13 @@ Since the bucket terminated, the registry also stopped, and our test fails when 
        test/kv/registry_test.exs:33: (test)
 ```
 
-We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization, instead each child is started manually via `DynamicSupervisor.start_child/2`.
+We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization; instead each child is started manually via `DynamicSupervisor.start_child/2`.
 
 ## The bucket supervisor
 
-Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. This dynamic supervisor will be listed as a  child in our application supervisor. Replace the `init` function in `lib/kv/supervisor.ex` as follows:
+Since a `DynamicSupervisor` does not define any children during initialization, the `DynamicSupervisor` also allows us to skip the work of defining a whole separate module with the usual `start_link` function and the `init` callback. Instead, we can define a `DynamicSupervisor` directly in the supervision tree, by giving it a name and a strategy.
+
+Open up `lib/kv/supervisor.ex` and add the dynamic supervisor as a child as follows:
 
 
 ```elixir
@@ -66,7 +68,9 @@ Let's define a DynamicSupervisor and give it a name of `KV.BucketSupervisor`. Th
   end
 ```
 
-Note this time we didn't have to define a separate module that invokes `use DynamicSupervisor`. Instead we directly started it in our supervision tree. This is straight-forward to do with the `DynamicSupervisor` because it doesn't require any child to be given during initialization.
+Remember that the name of a process can be any atom. So far, we have named processes with the same name as the modules that define their implementation. For example, the process defined by `KV.Registry` was given a process name of `KV.Registry`. This is simply a convention: If later there is an error in your system that says, "process named KV.Registry crashed with reason", we know exactly where to investigate.
+
+In this case, there is no module, so we picked the name `KV.BucketSupervisor`. It could have been any other name. We also chose the `:one_for_one` strategy, which is currently the only available strategy for dynamic supervisors.
 
 Run `iex -S mix` so we can give our dynamic supervisor a try:
 
@@ -116,7 +120,7 @@ Let's also add a test to `test/kv/bucket_test.exs` that guarantees the bucket is
   end
 ```
 
-Our test uses the `Supervisor.child_spec/2` function to retrieve the child specification out of a module and then assert its restart value is `:temporary`. At this point, you may be wondering why use a supervisor if it never restarts its children. It happens that supervisors provide more than restarts, they are also responsible to guarantee proper startup and shutdown, especially in case of crashes in a supervision tree.
+Our test uses the `Supervisor.child_spec/2` function to retrieve the child specification out of a module and then assert its restart value is `:temporary`. At this point, you may be wondering why use a supervisor if it never restarts its children. It happens that supervisors provide more than restarts, they are also responsible for guaranteeing proper startup and shutdown, especially in case of crashes in a supervision tree.
 
 ## Supervision trees
 
@@ -128,7 +132,7 @@ One flaw that shows up right away is the ordering issue. Since `KV.Registry` inv
 
 The second flaw is related to the supervision strategy. If `KV.Registry` dies, all information linking `KV.Bucket` names to bucket processes is lost. Therefore the `KV.BucketSupervisor` and all children must terminate too - otherwise we will have orphan processes.
 
-In light of this observation, we should consider moving to another supervision strategy. The two other candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:rest_for_one` will kill and restart child processes which were started *after* the crashed child. In this case, we would want `KV.BucketSupervisor` to terminate if `KV.Registry` terminates. This would require the bucket supervisor to be placed after the registry which violates the ordering constraints we have established two paragraphs above.
+In light of this observation, we should consider moving to another supervision strategy. The two other candidates are `:one_for_all` and `:rest_for_one`. A supervisor using the `:rest_for_one` strategy will kill and restart child processes which were started *after* the crashed child. In this case, we would want `KV.BucketSupervisor` to terminate if `KV.Registry` terminates. This would require the bucket supervisor to be placed after the registry which violates the ordering constraints we have established two paragraphs above.
 
 So our last option is to go all in and pick the `:one_for_all` strategy: the supervisor will kill and restart all of its children processes whenever any one of them dies. This is a completely reasonable approach for our application, since the registry can't work without the bucket supervisor, and the bucket supervisor should terminate without the registry. Let's reimplement `init/1` in `KV.Supervisor` to encode those properties:
 
@@ -174,7 +178,7 @@ A GUI should pop-up containing all sorts of information about our system, from g
 
 > Note: If `observer` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package. Alternatively, you can skip this section and continue the guide.
 
-In the Applications tab, you will see all applications currently running in your system along side their supervision tree. You can select the `kv` application to explore it further:
+In the Applications tab, you will see all applications currently running in your system alongside their supervision tree. You can select the `kv` application to explore it further:
 
 <img src="/images/contents/kv-observer.png" width="640" alt="Observer GUI screenshot" />
 
@@ -187,6 +191,6 @@ iex> KV.Registry.create(KV.Registry, "shopping")
 
 We will leave it up to you to further explore what Observer provides. Note you can double click any process in the supervision tree to retrieve more information about it, as well as right-click a process to send "a kill signal", a perfect way to emulate failures and see if your supervisor reacts as expected.
 
-At the end of the day, tools like Observer is one of the reasons you want to always start processes inside supervision trees, even if they are temporary, to ensure they are always reachable and introspectable.
+At the end of the day, tools like Observer are one of the reasons you want to always start processes inside supervision trees, even if they are temporary, to ensure they are always reachable and introspectable.
 
 Now that our buckets are properly linked and supervised, let's see how we can speed things up.
