@@ -13,10 +13,10 @@ Welcome!
 
 In this tutorial, we are going to teach you about Elixir fundamentals - the language syntax, how to define modules, how to manipulate the characteristics of common data structures, and more. This chapter will focus on ensuring that Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
 
-Our requirements are:
+Our requirements are (see `elixir -v`):
 
-  * Elixir - Version 1.5.0 onwards
-  * Erlang - Version 19.0 onwards
+  * Elixir 1.5.0 onwards
+  * Erlang/OTP 19 onwards
 
 Let's get started!
 
@@ -77,11 +77,12 @@ Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-start
 
 ## Asking questions
 
-When going through this getting started guide, it is common to have questions; after all, that is part of the learning process! There are many places you could ask them to learn more about Elixir:
+When going through this getting started guide, it is common to have questions; after all, that is part of the learning process! There are many places maintained by the community where you can ask questions, here are some of them:
 
-  * [#elixir-lang on freenode IRC](irc://irc.freenode.net/elixir-lang)
-  * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
+  * [Official #elixir-lang on freenode IRC](irc://irc.freenode.net/elixir-lang)
   * [Elixir Forum](http://elixirforum.com)
+  * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
+  * [Elixir on Discord](https://discord.gg/elixir)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 
 When asking questions, remember these two tips:

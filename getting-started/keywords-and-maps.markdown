@@ -63,7 +63,7 @@ iex> if false, do: :this, else: :that
 :that
 ```
 
-The `do:` and `else:` pairs are keyword lists! In fact, the call above is equivalent to:
+The `do:` and `else:` pairs form a keyword list! In fact, the call above is equivalent to:
 
 ```iex
 iex> if(false, [do: :this, else: :that])

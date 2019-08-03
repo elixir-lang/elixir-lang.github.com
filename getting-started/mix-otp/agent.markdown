@@ -9,15 +9,15 @@ title: Agent
 
 {% include mix-otp-preface.html %}
 
-In this chapter, we will create a module named `KV.Bucket`. This module will be responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
+In this chapter, we will learn how to keep and share state between multiple entities. If you have previous programming experience, you may think of globally shared variables, but the model we will learn here is quite different. The next chapters will generalize the concepts introduced here.
 
 If you have skipped the Getting Started guide or read it long ago, be sure to re-read the [Processes](/getting-started/processes.html) chapter. We will use it as a starting point.
 
 ## The trouble with state
 
-Elixir is an immutable language where nothing is shared by default. If we want to provide buckets, which can be read and modified from multiple places, we have two main options in Elixir:
+Elixir is an immutable language where nothing is shared by default. If we want to share information, which can be read and modified from multiple places, we have two main options in Elixir:
 
-* Processes
+* Using Processes and message passing
 * [ETS (Erlang Term Storage)](http://www.erlang.org/doc/man/ets.html)
 
 We covered processes in the Getting Started guide. <abbr title="Erlang Term Storage">ETS</abbr> is a new topic that we will explore in later chapters. When it comes to processes though, we rarely hand-roll our own, instead we use the abstractions available in Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>:
@@ -27,6 +27,8 @@ We covered processes in the Getting Started guide. <abbr title="Erlang Term Stor
 * [Task](https://hexdocs.pm/elixir/Task.html) - Asynchronous units of computation that allow spawning a process and potentially retrieving its result at a later time.
 
 We will explore most of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the <abbr title="Virtual Machine">VM</abbr>, like `send`, `receive`, `spawn` and `link`.
+
+Here we will use Agents, and create a module named `KV.Bucket`, responsible for storing our key-value entries in a way that allows them to be read and modified by other processes.
 
 ## Agents
 
@@ -51,7 +53,27 @@ iex> Agent.stop(agent)
 
 We started an agent with an initial state of an empty list. We updated the agent's state, adding our new item to the head of the list. The second argument of [`Agent.update/3`](https://hexdocs.pm/elixir/Agent.html#update/3) is a function that takes the agent's current state as input and returns its desired new state. Finally, we retrieved the whole list. The second argument of [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) is a function that takes the state as input and returns the value that [`Agent.get/3`](https://hexdocs.pm/elixir/Agent.html#get/3) itself will return. Once we are done with the agent, we can call [`Agent.stop/3`](https://hexdocs.pm/elixir/Agent.html#stop/3) to terminate the agent process.
 
-Let's implement our `KV.Bucket` using agents. But before starting the implementation, let's first write some tests. Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
+The `Agent.update/3` function accepts as second argument any function that receives one argument and returns a value:
+
+```iex
+iex> {:ok, agent} = Agent.start_link fn -> [] end
+{:ok, #PID<0.338.0>}
+iex> Agent.update(agent, fn _list -> 123 end)
+:ok
+iex> Agent.update(agent, fn content -> %{a: content} end)
+:ok
+iex> Agent.update(agent, fn content -> [12 | [content]] end)
+:ok
+iex> Agent.update(agent, fn list -> [:nop | list] end)
+:ok
+iex> Agent.get(agent, fn content -> content end)
+[:nop, 12, %{a: 123}]
+iex>
+```
+
+As you can see, we can modify the agent state in any way we want. Therefore, we most likely don't want to access the Agent API throughout many different places in our code. Instead, we want to encapsulate all Agent-related functionality in a single module, which we will call `KV.Bucket`. Before we implement it, let's write some tests which will outline the API exposed by our module.
+
+Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
 defmodule KV.BucketTest do
@@ -66,6 +88,8 @@ defmodule KV.BucketTest do
   end
 end
 ```
+
+`use ExUnit.Case` is responsible for setting up our module for testing and imports many test-related functionality, such as the `test/2` macro.
 
 Our first test starts a new `KV.Bucket` by calling the `start_link/1` and passing an empty list of options. Then we perform some `get/2` and `put/3` operations on it, asserting the result.
 
@@ -108,7 +132,7 @@ end
 
 The first step in our implementation is to call `use Agent`.
 
-Then we define a `start_link/1` function, which will effectively start the agent. It is a convention to define a `start_link/1` function that always accepts a list of options. We don't plan on using any option right now, but we might later on. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent initial state.
+Then we define a `start_link/1` function, which will effectively start the agent. It is a convention to define a `start_link/1` function that always accepts a list of options. We don't plan on using any options right now, but we might later on. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent's initial state.
 
 We are keeping a map inside the agent to store our keys and values. Getting and putting values on the map is done with the Agent API  and the capture operator `&`, introduced in [the Getting Started guide](/getting-started/modules-and-functions.html#function-capturing).
 
@@ -138,7 +162,7 @@ defmodule KV.BucketTest do
 end
 ```
 
-We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` callback runs before every test, in the same process as the test itself.
+We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` macro defines a callback that is run before every test, in the same process as the test itself.
 
 Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the *test context*. When we return `%{bucket: bucket}` from the callback, ExUnit will merge this map into the test context. Since the test context is a map itself, we can pattern match the bucket out of it, providing access to the bucket inside the test:
 
