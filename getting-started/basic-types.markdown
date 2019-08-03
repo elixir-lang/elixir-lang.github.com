@@ -280,6 +280,19 @@ iex> x
 42
 ```
 
+It is also possible to have a multi-headed anonymous function:
+
+```
+iex> a = fn
+  true -> 'THIS IS TRUE'
+  false -> 'THIS IS FALSE'
+end
+
+iex> a.(:true)
+'THIS IS TRUE'
+
+```
+
 ## (Linked) Lists
 
 Elixir uses square brackets to specify a list of values. Values can be of any type:
