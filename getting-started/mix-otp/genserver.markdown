@@ -272,17 +272,20 @@ Let's reimplement the server callbacks to fix the bug and make the test pass. Fi
 ```elixir
 ## Server callbacks
 
+@impl true
 def init(:ok) do
   names = %{}
   refs = %{}
   {:ok, {names, refs}}
 end
 
+@impl true
 def handle_call({:lookup, name}, _from, state) do
   {names, _} = state
   {:reply, Map.fetch(names, name), state}
 end
 
+@impl true
 def handle_cast({:create, name}, {names, refs}) do
   if Map.has_key?(names, name) do
     {:noreply, {names, refs}}
@@ -295,6 +298,7 @@ def handle_cast({:create, name}, {names, refs}) do
   end
 end
 
+@impl true
 def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
   {name, refs} = Map.pop(refs, ref)
   names = Map.delete(names, name)
