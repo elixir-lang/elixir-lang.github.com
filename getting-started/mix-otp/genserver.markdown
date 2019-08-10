@@ -305,7 +305,6 @@ def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
   {:noreply, {names, refs}}
 end
 
-@impl true
 def handle_info(_msg, state) do
   {:noreply, state}
 end
