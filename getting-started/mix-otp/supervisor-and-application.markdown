@@ -41,6 +41,7 @@ defmodule KV.Supervisor do
     Supervisor.start_link(__MODULE__, :ok, opts)
   end
 
+  @impl true
   def init(:ok) do
     children = [
       KV.Registry
