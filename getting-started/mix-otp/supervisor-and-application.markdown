@@ -41,6 +41,7 @@ defmodule KV.Supervisor do
     Supervisor.start_link(__MODULE__, :ok, opts)
   end
 
+  @impl true
   def init(:ok) do
     children = [
       KV.Registry
@@ -235,6 +236,7 @@ Since we have specified `KV` as the module callback, let's change the `KV` modul
 defmodule KV do
   use Application
 
+  @impl true
   def start(_type, _args) do
     # Although we don't use the supervisor name below directly,
     # it can be useful when debugging or introspecting the system.
