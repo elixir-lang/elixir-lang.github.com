@@ -113,7 +113,12 @@ Another interesting function is `Stream.resource/3` which can be used to wrap ar
 
 ```iex
 iex> stream = File.stream!("path/to/file")
-#Function<18.16982430/2 in Stream.resource/3>
+%File.Stream{
+  line_or_bytes: :line,
+  modes: [:raw, :read_ahead, :binary],
+  path: "path/to/file",
+  raw: true
+}
 iex> Enum.take(stream, 10)
 ```
 
