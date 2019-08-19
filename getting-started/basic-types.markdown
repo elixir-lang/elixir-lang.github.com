@@ -228,7 +228,7 @@ iex> String.upcase("hellö")
 
 ## Anonymous functions
 
-Elixir also provides anonymous functions. Anonymous functions allows us to store and pass executable code around as if it was an integer or a string. They are delimited by the keywords `fn` and `end`:
+Elixir also provides anonymous functions. Anonymous functions allow us to store and pass executable code around as if it was an integer or a string. They are delimited by the keywords `fn` and `end`:
 
 ```iex
 iex> add = fn a, b -> a + b end
