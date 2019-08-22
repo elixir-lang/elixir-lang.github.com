@@ -59,9 +59,10 @@ We need a way to configure the application environment. That's when we use confi
 
 Configuration files provide a mechanism for us to configure the environment of any application. Such configuration is done by the `config/config.exs` file.
 
-For example, we can configure IEx default prompt to another value. Just open `config/config.exs` and add the following to the end:
+For example, we can configure IEx default prompt to another value. Let's create the `config/config.exs` file with the following content:
 
 ```elixir
+import Config
 config :iex, default_prompt: ">>>"
 ```
 
