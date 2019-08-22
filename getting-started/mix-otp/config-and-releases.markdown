@@ -112,11 +112,11 @@ At this point, you may be wondering, how can we make two nodes start with two di
     $ elixir --sname foo -S mix run --config config/foo.exs
     $ elixir --sname bar -S mix run --config config/bar.exs
 
-There are two concerns in this approach.
+There are two concerns with this approach.
 
 First, if the routing tables are the opposite of each other, such as `[{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]` in one node and `[{?a..?m, :"bar@computer-name"}, {?n..?z, :"foo@computer-name"}]` in the other, you can have a routing request that will run recursively in the cluster infinitely. This can be tackled at the application level by making sure you pass a list of seen nodes when we route, such as `KV.Router.route(bucket, mod, fun, args, seen_nodes)`. Then by checking if the node being dispatched to was already visited, we can avoid the cycle. Implementing and testing this functionality will be left as an exercise.
 
-The second concern is that, while using `mix run` is completely fine to run our software in production, the command we use to start our services is getting increasingly more complex. For example, imagine we also want to `--preload-modules`, to all code is loaded upfront, as well as set the `MIX_ENV=prod` environment variable:
+The second concern is that, while using `mix run` is completely fine to run our software in production, the command we use to start our services is getting increasingly more complex. For example, imagine we also want to `--preload-modules`, so all code is loaded upfront, as well as set the `MIX_ENV=prod` environment variable:
 
     $ MIX_ENV=prod elixir --sname foo -S mix run --preload-modules --config config/foo.exs
 
@@ -159,7 +159,7 @@ As a starting point, let's define a release that includes both `:kv_server` and 
       ]
     ]
 
-That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system. With the configuration in place, let's give another try at assembling the release:
+That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system. With the configuration in place, let's give assembling the release another try:
 
     $ MIX_ENV=prod mix release foo
     * assembling foo-0.0.1 on MIX_ENV=prod
@@ -204,7 +204,7 @@ Releases allow developers to precompile and package all of their code and the ru
 
   * Configuration and customization. Releases give developers fine grained control over system configuration and the VM flags used to start the system.
 
-  * Self-contained. A release does not require the source code to be included in your production artifacts. All of the code is precompiled and packaged. Releases do not even require Erlang or Elixir in your servers, as they include the Erlang VM and its runtime by default. Furthermore, both Erlang and Elixir standard libraries are stripped to bring only the parts you are actually using.
+  * Self-contained. A release does not require the source code to be included in your production artifacts. All of the code is precompiled and packaged. Releases do not even require Erlang or Elixir on your servers, as they include the Erlang VM and its runtime by default. Furthermore, both Erlang and Elixir standard libraries are stripped to bring only the parts you are actually using.
 
   * Multiple releases. You can assemble different releases with different configuration per application or even with different applications altogether.
 
@@ -375,7 +375,7 @@ import Config
 config :kv_server, :port, System.fetch_env!("PORT")
 ```
 
-`config/releases.exs` files work very similar to a regular `config/config.exs` but it may have some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0-rc.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
+`config/releases.exs` files work very similar to regular `config/config.exs` files, but they may have some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0-rc.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
 
 ## Summing up
 
@@ -383,6 +383,6 @@ Throughout the guide, we have built a very simple distributed key-value store as
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/products/riak-kv/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new storage nodes are added to your live system.
 
-Of course, Elixir can be used for much more than distributed key-value stores. Embedded systems, data-processing and data-ingestion, web applications, streaming system, and others are many of the different domains Elixir excels at. We hope this guide has prepared you to explore any of those domains or any future domain you may desire to bring Elixir into.
+Of course, Elixir can be used for much more than distributed key-value stores. Embedded systems, data-processing and data-ingestion, web applications, streaming systems, and others are many of the different domains Elixir excels at. We hope this guide has prepared you to explore any of those domains or any future domain you may desire to bring Elixir into.
 
 Happy coding!
