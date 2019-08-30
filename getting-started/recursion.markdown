@@ -127,4 +127,4 @@ iex> Enum.map([1, 2, 3], &(&1 * 2))
 [2, 4, 6]
 ```
 
-Let's take a deeper look at `Enumerable`s and, while we're at it, their lazy counterpart, `Stream`s.
+Let's take a deeper look at `Enumerable` and, while we're at it, its lazy counterpart, `Stream`.
