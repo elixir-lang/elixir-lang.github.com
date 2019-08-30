@@ -38,7 +38,7 @@ iex> 1 = unknown
 ** (CompileError) iex:1: undefined function unknown/0
 ```
 
-Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but such a function does not exist.
+Since there is no variable `unknown` previously defined, Elixir assumed you were trying to call a function named `unknown/0`, but such a function does not exist.
 
 ## Pattern matching
 
