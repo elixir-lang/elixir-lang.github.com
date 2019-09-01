@@ -103,6 +103,16 @@ Elixir’s straightforward syntax and this guided tour give you a clean, simple 
 
 <div class="clear"></div>
 
+<h4 class="resource">The Toy Robot Walkthrough</h4>
+
+<a class="cover" href="http://leanpub.com/elixir-toyrobot" title="The Toy Robot Walkthrough - Elixir Version"><img src="/images/learning/toy-robot.png" alt="Toy Robot" width="190" /></a>
+
+<a href="http://leanpub.com/elixir-toyrobot">The Toy Robot</a> is a common interview exercise for new programmers. This short book will take you through how to implement it in Elixir in a BDD-style, with some great explanations and imagery along the way.
+
+If you're a new Elixir developer who's gone through some basic Elixir tutorials and you're looking for the next thing to build your skills, this book is a great start. It covers the Toy Robot exercise from start to finish, testing with Elixir features such as ExUnit and Doctests along the way.
+
+<div class="clear"></div>
+
 ## Video/Interactive Resources
 
 <h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
