@@ -79,7 +79,8 @@ Public functions in modules are globally available, but in order to use macros, 
 
 ```iex
 iex> Integer.is_odd(3)
-** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. However there is a macro with the same name and arity. Be sure to require Integer if you intend to invoke this macro
+** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
+    (elixir) src/elixir_dispatch.erl:97: :elixir_dispatch.dispatch_require/6
 iex> require Integer
 Integer
 iex> Integer.is_odd(3)
