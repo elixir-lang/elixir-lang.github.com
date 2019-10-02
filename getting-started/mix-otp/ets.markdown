@@ -41,6 +41,27 @@ iex> :ets.lookup(:buckets_registry, "foo")
 [{"foo", #PID<0.41.0>}]
 ```
 
+If you want to use an existing ETS table from a process other than the one which created it, set it's access to `:public`. Otherwise, you will get an `ArgumentError` which does not indicate the accessibility issue. Let's create a new table called `:books` to illustrate this behavior:
+
+```iex
+iex> :ets.new(:books, [:named_table])
+:books
+iex> spawn fn -> :ets.insert(:books, { "foo", "bar" }) end
+#PID<0.107.0>
+iex> 
+11:20:52.143 [error] Process #PID<0.107.0> raised an exception
+** (ArgumentError) argument error
+    (stdlib) :ets.insert(:books, {"foo", "bar"}) 
+iex> :ets.delete(:books)
+true
+iex> :ets.new(:books, [:public, :named_table])
+:books
+iex> spawn fn -> :ets.insert(:books, { "foo", "bar" }) end
+#PID<0.113.0>
+iex> :ets.lookup(:books, "foo")
+[{"foo", "bar"}]
+```
+
 Let's change the `KV.Registry` to use ETS tables. The first change is to modify our registry to require a name argument, we will use it to name the ETS table and the registry process itself. ETS names and process names are stored in different locations, so there is no chance of conflicts.
 
 Open up `lib/kv/registry.ex`, and let's change its implementation. We've added comments to the source code to highlight the changes we've made:
