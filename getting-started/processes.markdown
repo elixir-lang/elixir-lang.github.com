@@ -55,7 +55,7 @@ iex> send self(), {:hello, "world"}
 {:hello, "world"}
 iex> receive do
 ...>   {:hello, msg} -> msg
-...>   {:world, msg} -> "won't match"
+...>   {:world, _msg} -> "won't match"
 ...> end
 "world"
 ```
