@@ -28,7 +28,13 @@ iex> :ets.lookup(table, "foo")
 [{"foo", #PID<0.41.0>}]
 ```
 
-When creating an ETS table, two arguments are required: the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, which means that keys cannot be duplicated. We've also set the table's access to `:protected`, meaning only the process that created the table can write to it, but all processes can read from it. Those are actually the default values, so we will skip them from now on.
+When creating an ETS table, two arguments are required: the table name and a set of options. From the available options, we passed the table type and its access rules. We have chosen the `:set` type, which means that keys cannot be duplicated. We've also set the table's access to `:protected`, meaning only the process that created the table can write to it, but all processes can read from it. Those are actually the default values, so we will skip them from now on, but just take a look at the possible access controls:
+
+`:public` — Read/Write available to all processes.
+`:protected` — Read available to all processes. Only writable by owner process. This is the default.
+`:private` — Read/Write limited to owner process.
+
+Be aware that if your Read/Write call is against the mentioned access controls, the calling process will raise an `ArgumentError` which is generic and does not indicate the accessibility issue.
 
 ETS tables can also be named, allowing us to access them by a given name:
 
@@ -39,27 +45,6 @@ iex> :ets.insert(:buckets_registry, {"foo", self()})
 true
 iex> :ets.lookup(:buckets_registry, "foo")
 [{"foo", #PID<0.41.0>}]
-```
-
-If you want to use an existing ETS table from a process other than the one which created it, set it's access to `:public`. Otherwise, you will get an `ArgumentError` which does not indicate the accessibility issue. Let's create a new table called `:books` to illustrate this behavior:
-
-```iex
-iex> :ets.new(:books, [:named_table])
-:books
-iex> spawn fn -> :ets.insert(:books, { "foo", "bar" }) end
-#PID<0.107.0>
-iex> 
-11:20:52.143 [error] Process #PID<0.107.0> raised an exception
-** (ArgumentError) argument error
-    (stdlib) :ets.insert(:books, {"foo", "bar"}) 
-iex> :ets.delete(:books)
-true
-iex> :ets.new(:books, [:public, :named_table])
-:books
-iex> spawn fn -> :ets.insert(:books, { "foo", "bar" }) end
-#PID<0.113.0>
-iex> :ets.lookup(:books, "foo")
-[{"foo", "bar"}]
 ```
 
 Let's change the `KV.Registry` to use ETS tables. The first change is to modify our registry to require a name argument, we will use it to name the ETS table and the registry process itself. ETS names and process names are stored in different locations, so there is no chance of conflicts.
