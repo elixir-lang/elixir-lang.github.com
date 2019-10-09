@@ -206,16 +206,19 @@ Mix also generated a file named `test/test_helper.exs` which is responsible for 
 ExUnit.start()
 ```
 
-This file will be required by Mix every time before we run our tests. We can run tests with `mix test`:
+This file will be required by Mix every time before we run our tests. We can run tests with:
 
-    Compiled lib/kv.ex
-    Generated kv app
-    ..
+```console
+$ mix test
+Compiled lib/kv.ex
+Generated kv app
+..
 
-    Finished in 0.04 seconds
-    1 doctest, 1 test, 0 failures
+Finished in 0.04 seconds
+1 doctest, 1 test, 0 failures
 
-    Randomized with seed 540224
+Randomized with seed 540224
+```
 
 Notice that by running `mix test`, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will discuss later in this chapter.
 
