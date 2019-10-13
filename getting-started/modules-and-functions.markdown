@@ -276,7 +276,7 @@ If we save the code above in a file named "concat.ex" and compile it, Elixir wil
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 
 ```console
-$ iex concat.exs
+$ iex concat.ex
 ```
 
 ```iex
