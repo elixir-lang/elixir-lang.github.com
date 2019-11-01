@@ -23,6 +23,8 @@ iex> x
 In Elixir, the `=` operator is actually called *the match operator*. Let's see why:
 
 ```iex
+iex> x = 1
+1
 iex> 1 = x
 1
 iex> 2 = x
