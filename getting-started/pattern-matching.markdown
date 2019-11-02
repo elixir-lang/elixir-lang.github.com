@@ -104,7 +104,7 @@ iex> tail
 Similar to the `hd/1` and `tl/1` functions, we can't match an empty list with a head and tail pattern:
 
 ```iex
-iex> [h | t] = []
+iex> [head | tail] = []
 ** (MatchError) no match of right hand side value: []
 ```
 
@@ -164,9 +164,9 @@ iex> {x, x} = {1, 2}
 In some cases, you don't care about a particular value in a pattern. It is a common practice to bind those values to the underscore, `_`. For example, if only the head of the list matters to us, we can assign the tail to underscore:
 
 ```iex
-iex> [h | _] = [1, 2, 3]
+iex> [head | _] = [1, 2, 3]
 [1, 2, 3]
-iex> h
+iex> head
 1
 ```
 
