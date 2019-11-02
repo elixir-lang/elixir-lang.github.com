@@ -6,7 +6,7 @@ category: Announcements
 excerpt: The Erlang on Xen team has added support for Elixir and we will tell you how you can use it!
 ---
 
-Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir project can run on the recently revealed “OS-less” Erlang VM called LING VM. LING VM is the core technology of [Erlang on Xen](http://erlangonxen.org).
+Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir project can run on the recently revealed "OS-less" Erlang VM called LING VM. LING VM is the core technology of [Erlang on Xen](http://erlangonxen.org).
 
 ## Why Xen?
 

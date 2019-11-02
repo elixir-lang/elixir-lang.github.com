@@ -21,7 +21,7 @@ The Elixir Community has also produced plenty of resources to explore Elixir fro
 
 This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.6 and beyond. Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches.
 
-Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM. Elixir’s pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it’s Elixir.
+Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM. Elixir's pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it's Elixir.
 
 <div class="clear"></div>
 
@@ -41,7 +41,7 @@ The book starts with a basic introduction to the Elixir language and functional 
 <a class="cover" href="https://pragprog.com/book/tvmelixir/adopting-elixir" title="Adopting Elixir: From Concept to Production
 – by Ben Marx, José Valim, Bruce Tate"><img src="/images/learning/adopting-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
 
-Adoption is more than programming. Elixir is an exciting new language, but to successfully get your application from start to finish, you’re going to need to know more than just the language. You need the case studies and strategies in this book.
+Adoption is more than programming. Elixir is an exciting new language, but to successfully get your application from start to finish, you're going to need to know more than just the language. You need the case studies and strategies in this book.
 
 Learn the best practices for the whole life of your application, from design and team-building, to managing stakeholders, to deployment and monitoring. Go beyond the syntax and the tools to learn the techniques you need to develop your Elixir application from concept to production.
 
@@ -52,9 +52,9 @@ Learn the best practices for the whole life of your application, from design and
 <a class="cover" href="http://shop.oreilly.com/product/0636920030584.do" title="Introducing Elixir: Getting Started in Functional Programming
 – by Simon St. Laurent, J. David Eisenberg"><img src="/images/learning/introducing-elixir.jpg" alt="Introducing Elixir cover" width="190" /></a>
 
-Elixir is an excellent language if you want to learn about functional programming, and with this hands-on introduction, you’ll discover just how powerful and fun Elixir can be. This language combines the robust functional programming of Erlang with a syntax similar to Ruby, and includes powerful features for metaprogramming.
+Elixir is an excellent language if you want to learn about functional programming, and with this hands-on introduction, you'll discover just how powerful and fun Elixir can be. This language combines the robust functional programming of Erlang with a syntax similar to Ruby, and includes powerful features for metaprogramming.
 
-This book shows you how to write simple Elixir programs by teaching one skill at a time. Once you pick up pattern matching, process-oriented programming, and other concepts, you’ll understand why Elixir makes it easier to build concurrent and resilient programs that scale up and down with ease.
+This book shows you how to write simple Elixir programs by teaching one skill at a time. Once you pick up pattern matching, process-oriented programming, and other concepts, you'll understand why Elixir makes it easier to build concurrent and resilient programs that scale up and down with ease.
 
 <div class="clear"></div>
 
@@ -80,7 +80,7 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
 
-Elixir-School is an open and community driven effort inspired by Twitter’s Scala School. The site’s content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
+Elixir-School is an open and community driven effort inspired by Twitter's Scala School. The site's content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
 
 <div class="clear"></div>
 
@@ -99,7 +99,7 @@ This book will teach you the core concepts of the Elixir programming language in
 <a class="cover" href="https://pragprog.com/book/cdc-elixir/learn-functional-programming-with-elixir" title="Learn Functional Programming With Elixir: New Foundations for a New World
 – by Ulisses Almeida"><img src="/images/learning/learn-functional-programming-with-elixir.jpg" alt="Learn Functional Programming with Elixir cover" width="190" /></a>
 
-Elixir’s straightforward syntax and this guided tour give you a clean, simple path to learn modern functional programming techniques. No previous functional programming experience required! This book walks you through the right concepts at the right pace, as you explore immutable values and explicit data transformation, functions, modules, recursive functions, pattern matching, high-order functions, polymorphism, and failure handling, all while avoiding side effects. Don’t board the Elixir train with an imperative mindset! To get the most out of functional languages, you need to think functionally. This book will get you there.
+Elixir's straightforward syntax and this guided tour give you a clean, simple path to learn modern functional programming techniques. No previous functional programming experience required! This book walks you through the right concepts at the right pace, as you explore immutable values and explicit data transformation, functions, modules, recursive functions, pattern matching, high-order functions, polymorphism, and failure handling, all while avoiding side effects. Don't board the Elixir train with an imperative mindset! To get the most out of functional languages, you need to think functionally. This book will get you there.
 
 <div class="clear"></div>
 
@@ -213,7 +213,7 @@ Alchemist Camp is aimed at people who have some web development experience and w
 <a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done and Have Fun
 – by Chris Mccord"><img src="/images/learning/metaprogramming-elixir.jpg" alt="Metaprogramming Elixir cover" width="190" /></a>
 
-Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you’ll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You’ll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
+Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you'll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You'll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
 
 <div class="clear"></div>
 
@@ -230,6 +230,6 @@ This book intends to be a little guide about how to be the Erlang medic in a tim
 <a class="cover" href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
 – by James Edward Gray, II and Bruce A. Tate"><img src="/images/learning/designing-elixir-systems.jpg" alt="Designing Elixir Systems with OTP cover" width="190" /></a>
 
-You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that’s kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what’s happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
+You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that's kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what's happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
 
 <div class="clear"></div>
