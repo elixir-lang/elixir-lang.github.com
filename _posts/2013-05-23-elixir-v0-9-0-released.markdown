@@ -77,8 +77,8 @@ defimpl Enumerable, for: List do
     do_reduce(list, acc, fun)
   end
 
-  defp do_reduce([h | t], acc, fun) do
-    do_reduce(t, fun.(h, acc), fun)
+  defp do_reduce([head | tail], acc, fun) do
+    do_reduce(tail, fun.(head, acc), fun)
   end
 
   defp do_reduce([], acc, fun) do
