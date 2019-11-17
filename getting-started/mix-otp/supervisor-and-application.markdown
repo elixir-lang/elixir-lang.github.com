@@ -247,7 +247,7 @@ end
 
 > Please note that by doing this, we are breaking the boilerplate test case which tested the `hello` function in `KV`. You can simply remove that test case.
 
-When we `use Application`, we may define a couple functions, similar to when we used `Supervisor` or `GenServer`. This time we only had to define a `start/2` function. The `Application` behaviour also has a `stop/1` callback, but it is rarely used in practice, you can check the documentation for more information.
+When we `use Application`, we may define a couple of functions, similar to when we used `Supervisor` or `GenServer`. This time we only had to define a `start/2` function. The `Application` behaviour also has a `stop/1` callback, but it is rarely used in practice, you can check the documentation for more information.
 
 Now that you have defined an application callback which starts our supervisor, we expect the `KV.Registry` process to be up and running as soon we start `iex -S mix`. Let's give it another try:
 
@@ -258,7 +258,7 @@ iex(2)> KV.Registry.lookup(KV.Registry, "shopping")
 {:ok, #PID<0.88.0>}
 ```
 
-Let's recap what is happening. Whenever we invoke `iex -S mix`, it automatically starts our application by calling `Application.start(:kv)`, which then invokes the application callback. The application callback job is to start a **supervision tree**. Right now, we only have a single supervisor, but sometimes a supervisor is also supervised, giving it a shape of a tree. So far, our supervisor has a single child, a `KV.Registry`, which is started with name `KV.Registry`.
+Let's recap what is happening. Whenever we invoke `iex -S mix`, it automatically starts our application by calling `Application.start(:kv)`, which then invokes the application callback. The application callback's job is to start a **supervision tree**. Right now, we only have a single supervisor, but sometimes a supervisor is also supervised, giving it a shape of a tree. So far, our supervisor has a single child, a `KV.Registry`, which is started with name `KV.Registry`.
 
 ## Projects or applications?
 
