@@ -100,7 +100,7 @@ Using functions from the `Path` module as opposed to directly manipulating strin
 
 With this, we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.
 
-## Processes and group leaders
+## Processes
 
 You may have noticed that `File.open/2` returns a tuple like `{:ok, pid}`:
 
