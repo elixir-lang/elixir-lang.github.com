@@ -115,7 +115,7 @@ MyServer.second_data #=> 13
 
 Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful to be used as storage during module compilation.
 
-Any functions may be called when defining a module attribute. However, please note that functions you define in the same module as the attribute itself cannot be called, as they are not yet compiled at the time that the attribute is evaluated.
+Any functions may be called when defining a module attribute. However, please note that functions you define in the same module as the attribute itself cannot be called, as they are not yet compiled at the time that the attribute is defined.
 
 When defining an attribute, do not leave a line break between the attribute name and its value.
 
