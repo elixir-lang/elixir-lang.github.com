@@ -9,36 +9,28 @@ title: Typespecs and behaviours
 
 ## Types and specs
 
-Elixir is a dynamically typed language, so all types in Elixir are inferred at the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
+Elixir is a dynamically typed language, so all types in Elixir are checked at runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
-1. declaring typed function signatures (i.e. specifications);
-2. declaring custom data types.
+1. declaring typed function signatures (also called specifications);
+2. declaring custom types.
 
 ### Function specifications
 
-Elixir provides a lot of useful [built-in types](https://hexdocs.pm/elixir/typespecs.html#built-in-types), such as `integer` or `pid`, that can be used to document function signatures.  For example, the `round/1` function, which rounds a float to its nearest integer, takes a `float` as input and returns an `integer`. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
+Elixir provides many [built-in types](https://hexdocs.pm/elixir/typespecs.html#built-in-types), such as `integer` or `pid`, that can be used to document function signatures.  For example, the `round/1` function, which rounds a number to its nearest integer. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
 
 ```elixir
-round(float()) :: integer
-```
-The syntax is to put the function and its input on the left side of the `::` and the return value's type on the right side.
-
-Be aware that types *may* omit parentheses: any Elixir function that takes no arguments may omit the parentheses, so you may see types like `float` or `float()` used interchangeably.
-
-In code, function specs are written with the `@spec` directive, placed immediately before the function definition. Specs can describe both public and private functions. We could take advantage of the `number` type (which indicates an `integer` or a `float`), and we could write the `round/1` function like the following:
-
-```elixir
-@spec round(number) :: integer
-def round(number), do: # implementation...
+round(number()) :: integer()
 ```
 
-The function name and the number of arguments used in the `@spec` directive must match the function it describes.
+The syntax is to put the function and its input on the left side of the `::` and the return value's type on the right side. Be aware that types *may* omit parentheses.
+
+In code, function specs are written with the `@spec` attribute, typically placed immediately before the function definition. Specs can describe both public and private functions. The function name and the number of arguments used in the `@spec` attribute must match the function it describes.
 
 Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the built-in types provided by Elixir [in the typespecs docs](https://hexdocs.pm/elixir/typespecs.html).
 
 ### Defining custom types
 
-Defining custom types can help communicate the intention of your code and increase its readability. Custom types can be defined within modules via the `@type` directive. 
+Defining custom types can help communicate the intention of your code and increase its readability. Custom types can be defined within modules via the `@type` attribute. 
 
 A simple example of a custom type implementation is to provide a more descriptive alias of an existing type. For example, defining `year` as a type makes your function specs more descriptive than if they had simply used `integer`:
 
@@ -53,7 +45,8 @@ defmodule
    def current_age(year_of_birth), do: # implementation
 end
 ```
-The `@typedoc` directive, similar to the `@doc` and `@moduledoc` directives, is used to document custom types.
+
+The `@typedoc` attribute, similar to the `@doc` and `@moduledoc` attributes, is used to document custom types.
 
 Let's look at another example to understand how to define more complex types. Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product, and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
 
@@ -69,7 +62,7 @@ end
 
 Tuples are a compound type and each tuple is identified by the types inside it (in this case, a number and a string). To understand why `String.t` is not written as `string`, have another look at the [typespecs docs](https://hexdocs.pm/elixir/typespecs.html#the-string-type).
 
-Defining function specs this way works, but we end up repeating the type `{number, String.t}` over and over. We can use the `@type` directive to declare our own custom type and cut down on the repetition.
+Defining function specs this way works, but we end up repeating the type `{number, String.t}` over and over. We can use the `@type` attribute to declare our own custom type and cut down on the repetition.
 
 ```elixir
 defmodule LousyCalculator do
@@ -98,7 +91,7 @@ defmodule QuietCalculator do
 end
 ```
 
-If you want to keep a custom type private, you can use the `@typep` directive instead of `@type`. The visibility also affects whether or not documentation will be generated via [ExDoc](https://hexdocs.pm/ex_doc/readme.html), Elixir's documentation generator.
+If you want to keep a custom type private, you can use the `@typep` attribute instead of `@type`. The visibility also affects whether or not documentation will be generated by toolks like [ExDoc](https://hexdocs.pm/ex_doc/readme.html), Elixir's documentation generator.
 
 ### Static code analysis
 
@@ -128,7 +121,7 @@ defmodule Parser do
 end
 ```
 
-Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` directive. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
+Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` attribute. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` attribute we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
 
 ### Adopting behaviours
 
