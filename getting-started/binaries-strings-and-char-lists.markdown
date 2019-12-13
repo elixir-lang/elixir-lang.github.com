@@ -95,6 +95,13 @@ iex> "hełło" <> <<0>>
 <<104, 101, 197, 130, 197, 130, 111, 0>>
 ```
 
+Alternatively, you can view a string's binary representation without modififcation by using [IO.inspect/2](https://hexdocs.pm/elixir/IO.html#inspect/2):
+
+```iex
+iex(15)> IO.inspect("hełło", binaries: :as_binaries)
+<<104, 101, 197, 130, 197, 130, 111>>
+```
+
 Each number given to a binary is meant to represent a byte and therefore must go up to 255. Binaries allow modifiers to be given to store numbers bigger than 255 or to convert a code point to its UTF-8 representation:
 
 ```iex
