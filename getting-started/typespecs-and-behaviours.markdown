@@ -24,7 +24,7 @@ round(number()) :: integer()
 
 The syntax is to put the function and its input on the left side of the `::` and the return value's type on the right side. Be aware that types *may* omit parentheses.
 
-In code, function specs are written with the `@spec` attribute, typically placed immediately before the function definition. If you have multiple functions of the same arity that rely on pattern matching or guard clauses, then they will share a single `@spec`.  Specs can describe both public and private functions. The function name and the number of arguments used in the `@spec` attribute must match the function it describes.
+In code, function specs are written with the `@spec` attribute, typically placed immediately before the function definition. Specs can describe both public and private functions. The function name and the number of arguments used in the `@spec` attribute must match the function it describes.
 
 Elixir supports compound types as well. For example, a list of integers has type `[integer]`, or maps that define keys and types (see the example below).
 
