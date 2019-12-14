@@ -79,7 +79,7 @@ This section covers built-in attributes. However, attributes can also be used by
 
 ## As "constants"
 
-Elixir developers will often use module attributes as constants:
+Elixir developers often use module attributes when they wish to make a value more visible or reusable:
 
 ```elixir
 defmodule MyServer do
@@ -99,7 +99,7 @@ end
 warning: undefined module attribute @unknown, please remove access to @unknown or explicitly set it before access
 ```
 
-Finally, attributes can also be read inside functions:
+Attributes can also be read inside functions:
 
 ```elixir
 defmodule MyServer do
@@ -113,9 +113,33 @@ MyServer.first_data #=> 14
 MyServer.second_data #=> 13
 ```
 
-Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful to be used as storage during module compilation.
+This is exactly how [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.Case.html#module-tags) uses the `@tag` attribute to annotate tests (see the "temporary storage" section below for an example).
 
-Any functions may be called when defining a module attribute. However, please note that functions you define in the same module as the attribute itself cannot be called, as they are not yet compiled at the time that the attribute is defined.
+Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful as storage during module compilation.
+
+Normally, repeating a module attribute will cause its value to be reassigned, but there are circumstances where you may want to [configure the module attribute](https://hexdocs.pm/elixir/Module.html#register_attribute/3) so that its values are accumulated:
+
+```elixir
+defmodule Foo do
+  Module.register_attribute __MODULE__, :param, accumulate: true
+
+  @param :foo
+  @param :bar     
+  # here @param == [:foo, :bar]
+end
+```
+
+Functions may be called when defining a module attribute, e.g.
+
+```elixir
+defmodule MyApp.Notification do
+  @service Application.get_env(:my_app, :email_service)
+  @message Application.get_env(:my_app, :welcome_email)
+  def welcome(email), do: @service.send_welcome_message(email, @message)
+end
+```
+
+Be careful, however: *functions defined in the same module as the attribute itself cannot be called* because they have not yet been compiled when the attribute is being defined.
 
 When defining an attribute, do not leave a line break between the attribute name and its value.
 
@@ -123,7 +147,7 @@ When defining an attribute, do not leave a line break between the attribute name
 
 One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
 
-The Plug library also allows developers to define their own plugs which can be run in a web server:
+The Plug library allows developers to define their own plugs which can be run in a web server:
 
 ```elixir
 defmodule MyPlug do
