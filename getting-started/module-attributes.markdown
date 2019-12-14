@@ -79,7 +79,7 @@ This section covers built-in attributes. However, attributes can also be used by
 
 ## As "constants"
 
-Module attributes are *not* constants because they can be reassigned, but Elixir developers will often use module attributes when they wish to make a value more visible or reusable:
+Elixir developers often use module attributes when they wish to make a value more visible or reusable:
 
 ```elixir
 defmodule MyServer do
@@ -118,6 +118,7 @@ This is exactly how [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.Case.html#module-
 Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful as storage during module compilation.
 
 Normally, repeating a module attribute will cause its value to be reassigned, but there are circumstances where you may want to [configure the module attribute](https://hexdocs.pm/elixir/Module.html#register_attribute/3) so that its values are accumulated:
+
 ```elixir
 defmodule Foo do
   Module.register_attribute __MODULE__, :param, accumulate: true
