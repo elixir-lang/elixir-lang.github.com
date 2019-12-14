@@ -95,7 +95,7 @@ iex> "hełło" <> <<0>>
 <<104, 101, 197, 130, 197, 130, 111, 0>>
 ```
 
-Alternatively, you can view a string's binary representation without modififcation by using [IO.inspect/2](https://hexdocs.pm/elixir/IO.html#inspect/2):
+Alternatively, you can view a string's binary representation by using [IO.inspect/2](https://hexdocs.pm/elixir/IO.html#inspect/2):
 
 ```iex
 iex> IO.inspect("hełło", binaries: :as_binaries)
