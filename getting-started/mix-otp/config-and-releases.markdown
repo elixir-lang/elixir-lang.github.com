@@ -107,10 +107,18 @@ Note we removed `async: true` from `use ExUnit.Case`. Since the application envi
 
 ## Custom configuration
 
-At this point, you may be wondering, how can we make two nodes start with two different routing tables? One option is to use the `--config` flag in `mix run`. For example, you could write two extra configuration files, `config/foo.exs` and `config/bar.exs`, with two distinct routing tables and then:
+At this point, you may be wondering, how can we make two nodes start with two different routing tables? We can introduce a change in our `config/confix.exs` file in order to accept a environment variable called `CFG_NAME` which determines the configuration file that should be used.
 
-    $ elixir --sname foo -S mix run --config config/foo.exs
-    $ elixir --sname bar -S mix run --config config/bar.exs
+```elixir
+import Config
+
+import_config "#{Mix.Project.config[:target]}" <> System.get_env("CFG_NAME") <> ".exs"
+```
+
+For example, you could write two extra configuration files, `config/foo.exs` and `config/bar.exs`, with two distinct routing tables and then:
+
+    $ CFG_NAME=foo elixir --sname foo -S mix run
+    $ CFG_NAME=bar elixir --sname bar -S mix run
 
 There are two concerns with this approach.
 
@@ -118,8 +126,8 @@ First, if the routing tables are the opposite of each other, such as `[{?a..?m, 
 
 The second concern is that, while using `mix run` is completely fine to run our software in production, the command we use to start our services is getting increasingly more complex. For example, imagine we also want to `--preload-modules`, so all code is loaded upfront, as well as set the `MIX_ENV=prod` environment variable:
 
-    $ MIX_ENV=prod elixir --sname foo -S mix run --preload-modules --config config/foo.exs
-
+    $ CFG_NAME=foo MIX_ENV=prod elixir --sname foo -S mix run --preload-modules
+    
 Luckily, Elixir comes with the ability to package all of the code we have written so far into a single directory, that also includes Elixir and the Erlang Virtual Machine, that has a simple entry point and supports custom configuration. This feature is called releases and it provides many other benefits, which we will see next.
 
 ## Releases
@@ -241,17 +249,19 @@ Since the "shopping" bucket would be stored on `bar`, the request fails as `bar`
     Function: #Function<0.128611034/0 in KVServer.loop_acceptor/1>
         Args: []
 
-Let's now define a release for `:bar`. One first step could be to define a release exactly like `foo` inside `mix.exs`:
+Let's now define a release for `:bar`. One first step could be to define a release exactly like `foo` inside `mix.exs`. Additionally we will set the `cookie` option on both releases to `weknoweachother` in order for them to allow connections from each other. See the [Distributed Erlang Documentation](http://erlang.org/doc/reference_manual/distributed.html) for further information on this topic:
 
 ```elixir
 releases: [
   foo: [
     version: "0.0.1",
-    applications: [kv_server: :permanent, kv: :permanent]
+    applications: [kv_server: :permanent, kv: :permanent],
+    cookie: "weknoweachother"
   ],
   bar: [
     version: "0.0.1",
-    applications: [kv_server: :permanent, kv: :permanent]
+    applications: [kv_server: :permanent, kv: :permanent],
+    cookie: "weknoweachother"
   ]
 ]
 ```
