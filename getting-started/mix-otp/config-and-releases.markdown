@@ -105,24 +105,9 @@ defmodule KV.RouterTest do
 
 Note we removed `async: true` from `use ExUnit.Case`. Since the application environment is a global storage, tests that modify it cannot run concurrently. With all changes in place, all tests should pass, including the distributed one.
 
-## Custom configuration
-
-At this point, you may be wondering, how can we make two nodes start with two different routing tables? One option is to use the `--config` flag in `mix run`. For example, you could write two extra configuration files, `config/foo.exs` and `config/bar.exs`, with two distinct routing tables and then:
-
-    $ elixir --sname foo -S mix run --config config/foo.exs
-    $ elixir --sname bar -S mix run --config config/bar.exs
-
-There are two concerns with this approach.
-
-First, if the routing tables are the opposite of each other, such as `[{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]` in one node and `[{?a..?m, :"bar@computer-name"}, {?n..?z, :"foo@computer-name"}]` in the other, you can have a routing request that will run recursively in the cluster infinitely. This can be tackled at the application level by making sure you pass a list of seen nodes when we route, such as `KV.Router.route(bucket, mod, fun, args, seen_nodes)`. Then by checking if the node being dispatched to was already visited, we can avoid the cycle. Implementing and testing this functionality will be left as an exercise.
-
-The second concern is that, while using `mix run` is completely fine to run our software in production, the command we use to start our services is getting increasingly more complex. For example, imagine we also want to `--preload-modules`, so all code is loaded upfront, as well as set the `MIX_ENV=prod` environment variable:
-
-    $ MIX_ENV=prod elixir --sname foo -S mix run --preload-modules --config config/foo.exs
-
-Luckily, Elixir comes with the ability to package all of the code we have written so far into a single directory, that also includes Elixir and the Erlang Virtual Machine, that has a simple entry point and supports custom configuration. This feature is called releases and it provides many other benefits, which we will see next.
-
 ## Releases
+
+Now that our application runs distributed, you may wondering how can we package our application to run in production. After all, all of our code so far depends on Erlang and Elixir versions that are installed in your current system. To achieve this goal, Elixir provides releases.
 
 A release is a self-contained directory that consists of your application code, all of its dependencies, plus the whole Erlang Virtual Machine (VM) and runtime. Once a release is assembled, it can be packaged and deployed to a target as long as the target runs on the same operating system (OS) distribution and version as the machine that assembled the release.
 
@@ -241,17 +226,19 @@ Since the "shopping" bucket would be stored on `bar`, the request fails as `bar`
     Function: #Function<0.128611034/0 in KVServer.loop_acceptor/1>
         Args: []
 
-Let's now define a release for `:bar`. One first step could be to define a release exactly like `foo` inside `mix.exs`:
+Let's now define a release for `:bar`. One first step could be to define a release exactly like `foo` inside `mix.exs`. Additionally we will set the `cookie` option on both releases to `weknoweachother` in order for them to allow connections from each other. See the [Distributed Erlang Documentation](http://erlang.org/doc/reference_manual/distributed.html) for further information on this topic:
 
 ```elixir
 releases: [
   foo: [
     version: "0.0.1",
-    applications: [kv_server: :permanent, kv: :permanent]
+    applications: [kv_server: :permanent, kv: :permanent],
+    cookie: "weknoweachother"
   ],
   bar: [
     version: "0.0.1",
-    applications: [kv_server: :permanent, kv: :permanent]
+    applications: [kv_server: :permanent, kv: :permanent],
+    cookie: "weknoweachother"
   ]
 ]
 ```
