@@ -105,32 +105,9 @@ defmodule KV.RouterTest do
 
 Note we removed `async: true` from `use ExUnit.Case`. Since the application environment is a global storage, tests that modify it cannot run concurrently. With all changes in place, all tests should pass, including the distributed one.
 
-## Custom configuration
-
-At this point, you may be wondering, how can we make two nodes start with two different routing tables? We can introduce a change in our `config/confix.exs` file in order to accept a environment variable called `CFG_NAME` which determines the configuration file that should be used.
-
-```elixir
-import Config
-
-import_config "#{Mix.Project.config[:target]}" <> System.get_env("CFG_NAME") <> ".exs"
-```
-
-For example, you could write two extra configuration files, `config/foo.exs` and `config/bar.exs`, with two distinct routing tables and then:
-
-    $ CFG_NAME=foo elixir --sname foo -S mix run
-    $ CFG_NAME=bar elixir --sname bar -S mix run
-
-There are two concerns with this approach.
-
-First, if the routing tables are the opposite of each other, such as `[{?a..?m, :"foo@computer-name"}, {?n..?z, :"bar@computer-name"}]` in one node and `[{?a..?m, :"bar@computer-name"}, {?n..?z, :"foo@computer-name"}]` in the other, you can have a routing request that will run recursively in the cluster infinitely. This can be tackled at the application level by making sure you pass a list of seen nodes when we route, such as `KV.Router.route(bucket, mod, fun, args, seen_nodes)`. Then by checking if the node being dispatched to was already visited, we can avoid the cycle. Implementing and testing this functionality will be left as an exercise.
-
-The second concern is that, while using `mix run` is completely fine to run our software in production, the command we use to start our services is getting increasingly more complex. For example, imagine we also want to `--preload-modules`, so all code is loaded upfront, as well as set the `MIX_ENV=prod` environment variable:
-
-    $ CFG_NAME=foo MIX_ENV=prod elixir --sname foo -S mix run --preload-modules
-    
-Luckily, Elixir comes with the ability to package all of the code we have written so far into a single directory, that also includes Elixir and the Erlang Virtual Machine, that has a simple entry point and supports custom configuration. This feature is called releases and it provides many other benefits, which we will see next.
-
 ## Releases
+
+Now that our application runs distributed, you may wondering how can we package our application to run in production. After all, all of our code so far depends on Erlang and Elixir versions that are installed in your current system. To achieve this goal, Elixir provides releases.
 
 A release is a self-contained directory that consists of your application code, all of its dependencies, plus the whole Erlang Virtual Machine (VM) and runtime. Once a release is assembled, it can be packaged and deployed to a target as long as the target runs on the same operating system (OS) distribution and version as the machine that assembled the release.
 
