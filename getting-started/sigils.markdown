@@ -9,7 +9,7 @@ title: Sigils
 
 We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms, for example, are mostly created via the `:atom` representation.
 
-One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Rather, our best bet is to make the language extensible, so developers, companies, and communities can extend the language to their relevant domains.
+One of Elixir's goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle all aspects of it as part of its core. Instead, Elixir aims to make itself extensible so developers, companies, and communities can extend the language to their relevant domains.
 
 In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (`~`) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.
 
@@ -91,9 +91,9 @@ iex> ~w(foo bar bat)a
 [:foo, :bar, :bat]
 ```
 
-## Interpolation and escaping in sigils
+## Interpolation and escaping in string sigils
 
-Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
+Elixir supports some sigil variants to deal with escaping characters and interpolation. By convention, uppercase letters are used for sigls which do not perform interpolation. For example, although both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
 
 ```iex
 iex> ~s(String with escape codes \x26 #{"inter" <> "polation"})
@@ -159,6 +159,57 @@ Converts double-quotes to single-quotes.
 """
 def convert(...)
 ```
+
+## Date sigils
+
+Elixir offers several sigils to deal with various flavors of times and dates.
+
+### Date 
+
+A [%Date{}](https://hexdocs.pm/elixir/Date.html) struct contains the fields year, month, day and calendar. You can create one using the `~D` sigil:
+
+```iex
+iex> d = ~D[2019-10-31]
+~D[2019-10-31]
+iex> d.day
+31
+```
+
+### DateTime
+
+A UTC [%DateTime{}](https://hexdocs.pm/elixir/DateTime.html) struct contains the fields year, month, day, hour, minute, second, microsecond, time_zone, zone_abbr, utc_offset, std_offset, and calendar. You can create one using the `~U` sigil (U for UTC):
+
+```iex
+iex> dt = ~U[2019-10-31 19:59:03Z]
+~U[2019-10-31 19:59:03Z]
+iex> %DateTime{minute: minute} = dt
+~U[2019-10-31 19:59:03Z]
+iex> minute
+59
+```
+
+### NaiveDateTime
+
+The [%NaiveDateTime{}](https://hexdocs.pm/elixir/NaiveDateTime.html) struct contains the fields year, month, day, hour,
+  minute, second, microsecond and calendar. You can create one using the `~N` sigil:
+
+```iex
+iex> ndt = ~N[2019-10-31 23:00:07]
+~N[2019-10-31 23:00:07]
+```
+Why is it called naive? Because it does not contain timezone information.
+
+### Time
+
+The [%Time{}](https://hexdocs.pm/elixir/Time.html) struct contains the fields hour, minute, second, microsecond and calendar. You can create one using the `~T` sigil:
+
+```iex
+iex> t = ~T[23:00:07.0]
+~T[23:00:07.0]
+iex> Map.keys(t)
+[:__struct__, :calendar, :hour, :microsecond, :minute, :second]
+```
+
 
 ## Custom sigils
 
