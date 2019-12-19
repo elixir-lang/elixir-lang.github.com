@@ -93,7 +93,7 @@ Note that like the `alias` directive, `require` is also lexically scoped. We wil
 
 ## import
 
-We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
+We use `import` whenever we want to easily access public functions or macros from other modules without using the fully-qualified name (private functions are in-lined by the compiler, so they cannot be imported). For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
 ```iex
 iex> import List, only: [duplicate: 2]
