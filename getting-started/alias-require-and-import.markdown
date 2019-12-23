@@ -93,7 +93,9 @@ Note that like the `alias` directive, `require` is also lexically scoped. We wil
 
 ## import
 
-We use `import` whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
+We use `import` whenever we want to access functions or macros from other modules without using the fully-qualified name. Note we can only import public functions, as private functions are never accessible externally.
+
+For example, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
 ```iex
 iex> import List, only: [duplicate: 2]
@@ -102,19 +104,7 @@ iex> duplicate :ok, 3
 [:ok, :ok, :ok]
 ```
 
-In this case, we are importing only the function `duplicate` (with arity 2) from `List`. Although `:only` is optional, its usage is recommended in order to avoid importing all the functions of a given module inside the namespace. `:except` could also be given as an option in order to import everything in a module *except* a list of functions.
-
-`import` also supports `:macros` and `:functions` to be given to `:only`. For example, to import all macros, one could write:
-
-```elixir
-import Integer, only: :macros
-```
-
-Or to import all functions, you could write:
-
-```elixir
-import Integer, only: :functions
-```
+We imported only the function `duplicate` (with arity 2) from `List`. Although `:only` is optional, its usage is recommended in order to avoid importing all the functions of a given module inside the current scope. `:except` could also be given as an option in order to import everything in a module *except* a list of functions.
 
 Note that `import` is **lexically scoped** too. This means that we can import specific macros or functions inside function definitions:
 
