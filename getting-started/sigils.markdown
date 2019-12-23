@@ -93,7 +93,7 @@ iex> ~w(foo bar bat)a
 
 ## Interpolation and escaping in string sigils
 
-Elixir supports some sigil variants to deal with escaping characters and interpolation. By convention, uppercase letters are used for sigls which do not perform interpolation. For example, although both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
+Elixir supports some sigil variants to deal with escaping characters and interpolation. In particular, uppercase letters sigils do not perform interpolation nor escaping. For example, although both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
 
 ```iex
 iex> ~s(String with escape codes \x26 #{"inter" <> "polation"})
@@ -160,13 +160,13 @@ Converts double-quotes to single-quotes.
 def convert(...)
 ```
 
-## Date sigils
+## Calendar sigils
 
 Elixir offers several sigils to deal with various flavors of times and dates.
 
 ### Date 
 
-A [%Date{}](https://hexdocs.pm/elixir/Date.html) struct contains the fields year, month, day and calendar. You can create one using the `~D` sigil:
+A [%Date{}](https://hexdocs.pm/elixir/Date.html) struct contains the fields `year`, `month`, `day`, and `calendar`. You can create one using the `~D` sigil:
 
 ```iex
 iex> d = ~D[2019-10-31]
@@ -175,41 +175,42 @@ iex> d.day
 31
 ```
 
-### DateTime
+### Time
 
-A UTC [%DateTime{}](https://hexdocs.pm/elixir/DateTime.html) struct contains the fields year, month, day, hour, minute, second, microsecond, time_zone, zone_abbr, utc_offset, std_offset, and calendar. You can create one using the `~U` sigil (U for UTC):
+The [%Time{}](https://hexdocs.pm/elixir/Time.html) struct contains the fields `hour`, `minute`, `second`, `microsecond`, and `calendar`. You can create one using the `~T` sigil:
 
 ```iex
-iex> dt = ~U[2019-10-31 19:59:03Z]
-~U[2019-10-31 19:59:03Z]
-iex> %DateTime{minute: minute} = dt
-~U[2019-10-31 19:59:03Z]
-iex> minute
-59
+iex> t = ~T[23:00:07.0]
+~T[23:00:07.0]
+iex> t.second
+7
 ```
 
 ### NaiveDateTime
 
-The [%NaiveDateTime{}](https://hexdocs.pm/elixir/NaiveDateTime.html) struct contains the fields year, month, day, hour,
-  minute, second, microsecond and calendar. You can create one using the `~N` sigil:
+The [%NaiveDateTime{}](https://hexdocs.pm/elixir/NaiveDateTime.html) struct contains fields from both `Date` and `Time`. You can create one using the `~N` sigil:
 
 ```iex
 iex> ndt = ~N[2019-10-31 23:00:07]
 ~N[2019-10-31 23:00:07]
 ```
-Why is it called naive? Because it does not contain timezone information.
 
-### Time
+Why is it called naive? Because it does not contain timezone information. Therefore, the given datetime may not exist at all or it may exist twice in certain timezones - for example, when we move the clock back and forward for daylight saving time.
 
-The [%Time{}](https://hexdocs.pm/elixir/Time.html) struct contains the fields hour, minute, second, microsecond and calendar. You can create one using the `~T` sigil:
+### DateTime
+
+A [%DateTime{}](https://hexdocs.pm/elixir/DateTime.html) struct contains the same fields as a `NaiveDateTime` with the addition of fields to track timezones. The `~U` sigil allows developers to create a DateTime in the UTC timezone:
 
 ```iex
-iex> t = ~T[23:00:07.0]
-~T[23:00:07.0]
-iex> Map.keys(t)
-[:__struct__, :calendar, :hour, :microsecond, :minute, :second]
+iex> dt = ~U[2019-10-31 19:59:03Z]
+~U[2019-10-31 19:59:03Z]
+iex> %DateTime{minute: minute, time_zone: time_zone} = dt
+~U[2019-10-31 19:59:03Z]
+iex> minute
+59
+iex> time_zone
+"Etc/UTC"
 ```
-
 
 ## Custom sigils
 
