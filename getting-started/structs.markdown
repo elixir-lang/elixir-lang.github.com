@@ -105,7 +105,7 @@ iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 However, since structs are just maps, they work with the functions from the `Map` module:
 
 ```iex
-iex> jane = Map.put(%User{}, :name, "Jane")
+iex> jane = Map.put(%User{age: 27}, :name, "Jane")
 %User{age: 27, name: "Jane"}
 iex> Map.merge(jane, %User{name: "John"})
 %User{age: 27, name: "John"}
