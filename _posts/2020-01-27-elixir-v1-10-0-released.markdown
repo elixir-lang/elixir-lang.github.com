@@ -128,7 +128,7 @@ Elixir v1.10 aims to solve these two scenarios by introducing a `Application.com
 
 By using `compile_env/3`, Elixir will store the values used during compilation and compare them with the runtime values whenever your system starts, raising an error in case they differ. This helps developers ensure they are running their production systems with the configuration they intend to.
 
-In future versions, we will deprecate the use `Application.get_env` at compile-time with a clear message pointing users to configuration best practices, effectively addressing the scenario where users read from the application environment at compile time unaware of its pitfalls.
+In future versions, we will deprecate the use `Application.get_env/3` at compile-time with a clear message pointing users to configuration best practices, effectively addressing the scenario where users read from the application environment at compile time unaware of its pitfalls.
 
 ### Compiler tracing
 
@@ -151,7 +151,7 @@ Previously, this information had to be added to the overall project configuratio
 
 Elixir's calendar data types got many improvements, such as sigil support for third-party calendars, as well as the additions of [`DateTime.now!/2`](https://hexdocs.pm/elixir/DateTime.html#now!/2), [`DateTime.shift_zone!/3`](https://hexdocs.pm/elixir/DateTime.html#shift_zone!/3), and [`NaiveDateTime.local_now/0`](https://hexdocs.pm/elixir/NaiveDateTime.html#local_now/0).
 
-There are many improvements related to Elixir's AST in this release too. First of all, [`Code.string_to_quoted/2`](https://hexdocs.pm/elixir/Code.html#string_to_quoted/2) has two new options, `:token_metadata` and `:literal_encoder`, that give more control over Elixir's parser. This information was already available to the Elixir code formatter and has now been made public. These changes alongside compiler tracing means tools like [Credo](https://github.com/rrrene/credo), [Boundary](https://github.com/sasa1977/boundary), and IDE integrations now have an even better foundation to analyze the source code.
+There are many improvements related to Elixir's AST in this release too. [`Code.string_to_quoted/2`](https://hexdocs.pm/elixir/Code.html#string_to_quoted/2) has two new options, `:token_metadata` and `:literal_encoder`, that give more control over Elixir's parser. This information was already available to the Elixir code formatter and has now been made public. These changes alongside compiler tracing means tools like [Credo](https://github.com/rrrene/credo), [Boundary](https://github.com/sasa1977/boundary), and IDE integrations have an even better foundation to analyze the source code.
 
 [ExUnit](https://hexdocs.pm/ex_unit), our test framework, ships two small but important improvements: `ExUnit.CaptureIO` can now be used by tests that run concurrently and we have added "pattern-matching diffing". To understand the last feature, take this code:
 
