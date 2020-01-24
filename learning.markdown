@@ -113,7 +113,7 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <div class="clear"></div>
 
-## Video/Interactive Resources
+## Courses
 
 <h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
 
