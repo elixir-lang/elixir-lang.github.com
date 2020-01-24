@@ -160,6 +160,17 @@ Once you have completed an exercise you can also view other students' solutions.
 
 <div class="clear"></div>
 
+<h4 class="resource">Running in Production Podcast</h4>
+
+<a class="cover" href="https://runninginproduction.com/tags/elixir" title="Running in Production Podcast"><img src="/images/learning/running-in-production-logo.jpg" alt="Running in Production Podcast" width="190" /></a>
+
+Running in Production is a podcast where developers and engineers talk about
+running small and large Elixir / Phoenix web apps in production.
+
+Topics include tech stacks, success stories, lessons learned and deployment tips.
+
+<div class="clear"></div>
+
 ## Screencasts
 <h4 class="resource">Elixir Sips</h4>
 
