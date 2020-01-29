@@ -7,9 +7,50 @@ title: Protocols
 
 {% include toc.html %}
 
-Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
+Protocols are a mechanism to achieve polymorphism in Elixir; by implementing the functions specified by a protocol, data types can define functionality appropriate to certain situations. Dispatching on a protocol is available to any data type that has implemented the protocol. One common example that you are probably familiar with is the seemingly innocuous "magic" that handles converting variables to binaries during string interpolation:
 
-In Elixir, we have two idioms for checking how many items there are in a data structure: `length` and `size`. `length` means the information must be computed. For example, `length(list)` needs to traverse the whole list to calculate its length. On the other hand, `tuple_size(tuple)` and `byte_size(binary)` do not depend on the tuple and binary size as the size information is pre-computed in the data structure.
+```iex
+iex> n = 0
+0
+iex> "I got #{n} problems."
+"I got 0 problems."
+```
+
+We can interpolate a variable containing an integer into a string because Elixir includes a built-in implementation of the `String.Chars` protocol which calls the `Integer.to_string/1` function behind the scenes:
+
+```elixir
+defimpl String.Chars, for: Integer do
+  def to_string(term) do
+    Integer.to_string(term)
+  end
+end
+```
+We can infer that the `String.Chars` protocol is responsible for converting a structure to a binary (when applicable), but what does the protocol definition actually look like? A protocol definition makes use of the special `defprotocol` keyword, and it uses function specs and stubs in a way that may look similar to how other languages define interfaces or abstract base classes:
+
+```elixir
+defprotocol String.Chars do
+  @spec to_string(t) :: String.t()
+  def to_string(term)
+end
+```
+
+Implementing the `String.Chars` protocol requires that you implement a single function: `to_string/1`. 
+
+What if you need to represent some other data type as a string? For example, if you are working with Mongo, you might have `%BSON.ObjectId{}` structs that you wish to represent in a binary string. To unlock the ability to convert `%BSON.ObjectId{}` to strings, you would implement the `String.Chars` protocol and implement its single `to_string/1`:
+
+```elixir
+defimpl String.Chars, for: BSON.ObjectId do
+  def to_string(term) do
+    term
+    |> BSON.encode()
+    |> Base.encode16(case: :lower)
+  end
+end
+```
+
+This implementation would let us print the `BSON.ObjectId` in human-readable form.
+
+Now that we have seen some examples of working with a built-in protocol, let's explore something more complex. In Elixir, we have two idioms for checking how many items there are in a data structure: `length` and `size`. `length` means the information must be computed. For example, `length(list)` needs to traverse the whole list to calculate its length. On the other hand, `tuple_size(tuple)` and `byte_size(binary)` do not depend on the tuple and binary size as the size information is pre-computed in the data structure.
 
 Even if we have type-specific functions for getting the size built into Elixir (such as `tuple_size/1`), we could implement a generic `Size` protocol that all data structures for which size is pre-computed would implement.
 
@@ -168,7 +209,7 @@ iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
 iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 6
 ```
-Another useful example is the `String.Chars` protocol, which specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
+Another useful example is the `String.Chars` protocol (as we saw above), which specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
 
 ```iex
 iex> to_string :hello
