@@ -7,7 +7,55 @@ title: Protocols
 
 {% include toc.html %}
 
-Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
+## Overview
+
+Protocols are a mechanism to achieve polymorphism in Elixir when you want behavior to vary depending on the data type. We are already familiar with one way of solving this type of problem: via pattern matching and guard clauses. Consider a simple utility module that would tell us the type of input variable:
+
+```elixir
+defmodule Utility do
+  def type(value) when is_binary(value), do: "string"
+  def type(value) when is_integer(value), do: "integer"
+  # ... other implementations ...
+end
+```
+
+If the use of this module were confined to your own project, you would be able to keep defining new `type/1` functions for each new data type, but this code could be problematic if it were shared as a dependency by multiple apps because there would be no easy way to extend its functionality.
+
+This is where protocols can help us: protocols allow us to extend the original behavior for as many data types as we need to support because **dispatching on a protocol is available to any data type that has implemented the protocol**.
+
+Here's how we could write the same `Utility.type/1` functionality as a protocol:
+
+```elixir
+defprotocol Utilty do
+  @spec type(t) :: String.t()
+  def type(value)
+end
+
+defimpl Utility, for: BitString do
+  def type(_value), do: "string"
+end
+
+defimpl Utility, for: Integer do
+  def mask(_value), do: "integer"
+end
+```
+
+We define the protocol using `defprotocol` -- its functions and specs may look similar to interfaces or abstract base classes in other languages. We can add as many implementations as we like using `defimpl`. The output is exactly the same as if we had a single module with multiple functions:
+
+```iex
+iex> Utility.type("foo")
+"string"
+iex> Utility.type(123)
+"integer"
+```
+
+With protocols, however, we are no longer stuck having to continuously modify the same module to support more and more data types because Elixir will dispatch the execution to the appriate implementation based on the data type. Functions defined in a protocol may have more than one input, but the **dispatching will always be based on the data type of the first input**.
+
+One of the most common protocols you may encounter is the [`String.Chars`](https://hexdocs.pm/elixir/String.Chars.html) protocol: implementing its `to_string/1` function for your custom structs will tell the Elixir kernel how to represent them as strings.
+
+## Example
+
+Now that you have seen an example of the type of problem protocols help solve and how they solve them, let's look at a more in-depth example.
 
 In Elixir, we have two idioms for checking how many items there are in a data structure: `length` and `size`. `length` means the information must be computed. For example, `length(list)` needs to traverse the whole list to calculate its length. On the other hand, `tuple_size(tuple)` and `byte_size(binary)` do not depend on the tuple and binary size as the size information is pre-computed in the data structure.
 
