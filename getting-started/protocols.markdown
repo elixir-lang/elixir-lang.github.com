@@ -34,7 +34,7 @@ defimpl Utility, for: BitString do
 end
 
 defimpl Utility, for: Integer do
-  def mask(_value), do: "integer"
+  def type(_value), do: "integer"
 end
 ```
 
