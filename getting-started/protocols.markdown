@@ -7,8 +7,6 @@ title: Protocols
 
 {% include toc.html %}
 
-## Overview
-
 Protocols are a mechanism to achieve polymorphism in Elixir when you want behavior to vary depending on the data type. We are already familiar with one way of solving this type of problem: via pattern matching and guard clauses. Consider a simple utility module that would tell us the type of input variable:
 
 ```elixir
@@ -19,9 +17,9 @@ defmodule Utility do
 end
 ```
 
-If the use of this module were confined to your own project, you would be able to keep defining new `type/1` functions for each new data type, but this code could be problematic if it were shared as a dependency by multiple apps because there would be no easy way to extend its functionality.
+If the use of this module were confined to your own project, you would be able to keep defining new `type/1` functions for each new data type. However, this code could be problematic if it were shared as a dependency by multiple apps because there would be no easy way to extend its functionality.
 
-This is where protocols can help us: protocols allow us to extend the original behavior for as many data types as we need to support because **dispatching on a protocol is available to any data type that has implemented the protocol**.
+This is where protocols can help us: protocols allow us to extend the original behavior for as many data types as we need. That's because **dispatching on a protocol is available to any data type that has implemented the protocol** and a protocol can be implemented by anyone, at any time.
 
 Here's how we could write the same `Utility.type/1` functionality as a protocol:
 
@@ -40,7 +38,7 @@ defimpl Utility, for: Integer do
 end
 ```
 
-We define the protocol using `defprotocol` -- its functions and specs may look similar to interfaces or abstract base classes in other languages. We can add as many implementations as we like using `defimpl`. The output is exactly the same as if we had a single module with multiple functions:
+We define the protocol using `defprotocol` - its functions and specs may look similar to interfaces or abstract base classes in other languages. We can add as many implementations as we like using `defimpl`. The output is exactly the same as if we had a single module with multiple functions:
 
 ```iex
 iex> Utility.type("foo")
@@ -49,9 +47,9 @@ iex> Utility.type(123)
 "integer"
 ```
 
-With protocols, however, we are no longer stuck having to continuously modify the same module to support more and more data types because Elixir will dispatch the execution to the appriate implementation based on the data type. Functions defined in a protocol may have more than one input, but the **dispatching will always be based on the data type of the first input**.
+With protocols, however, we are no longer stuck having to continuously modify the same module to support more and more data types. For example, we could get the `defimpl` calls above and spread them over multiple files and Elixir will dispatch the execution to the appropriate implementation based on the data type. Functions defined in a protocol may have more than one input, but the **dispatching will always be based on the data type of the first input**.
 
-One of the most common protocols you may encounter is the [`String.Chars`](https://hexdocs.pm/elixir/String.Chars.html) protocol: implementing its `to_string/1` function for your custom structs will tell the Elixir kernel how to represent them as strings.
+One of the most common protocols you may encounter is the [`String.Chars`](https://hexdocs.pm/elixir/String.Chars.html) protocol: implementing its `to_string/1` function for your custom structs will tell the Elixir kernel how to represent them as strings. We will explore all built-in protocols later. For now, let's implement our own.
 
 ## Example
 
@@ -119,7 +117,6 @@ It's possible to implement protocols for all Elixir data types:
 * `Port`
 * `Reference`
 * `Tuple`
-
 
 ## Protocols and structs
 
@@ -216,6 +213,7 @@ iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
 iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 6
 ```
+
 Another useful example is the `String.Chars` protocol, which specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
 
 ```iex
@@ -262,25 +260,4 @@ iex> inspect &(&1+2)
 "#Function<6.71889879/1 in :erl_eval.expr/5>"
 ```
 
-There are other protocols in Elixir but this covers the most common ones.
-
-## Protocol consolidation
-
-When working with Elixir projects, using the Mix build tool, you may see the output as follows:
-
-```
-Consolidated String.Chars
-Consolidated Collectable
-Consolidated List.Chars
-Consolidated IEx.Info
-Consolidated Enumerable
-Consolidated Inspect
-```
-
-Those are all protocols that ship with Elixir and they are being consolidated. Because a protocol can dispatch to any data type, the protocol must check on every call if an implementation for the given type exists. This may be expensive.
-
-However, after our project is compiled using a tool like Mix, we know all modules that have been defined, including protocols and their implementations. This way, the protocol can be consolidated into a very simple and fast dispatch module.
-
-From Elixir v1.2, protocol consolidation happens automatically for all projects. We will build our own project in the ***Mix and OTP guide***.
-
-You can learn more about protocols and implementations in the [`Protocol`](https://hexdocs.pm/elixir/Protocol.html) module.
+There are other protocols in Elixir but this covers the most common ones. You can learn more about protocols and implementations in the [`Protocol`](https://hexdocs.pm/elixir/Protocol.html) module.
