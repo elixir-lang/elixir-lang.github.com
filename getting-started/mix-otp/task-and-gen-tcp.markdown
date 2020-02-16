@@ -297,7 +297,7 @@ We could fix this by defining our own module that calls `use Task, restart: :per
 
 ```elixir
   def start(_type, _args) do
-    port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+    port = String.to_integer(System.get_env("PORT") || "4040")
 
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
