@@ -24,7 +24,7 @@ This is where protocols can help us: protocols allow us to extend the original b
 Here's how we could write the same `Utility.type/1` functionality as a protocol:
 
 ```elixir
-defprotocol Utilty do
+defprotocol Utility do
   @spec type(t) :: String.t()
   def type(value)
 end
