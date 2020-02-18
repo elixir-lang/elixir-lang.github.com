@@ -347,22 +347,14 @@ Once again, uncomment the last two lines by removing the leading `rem ` to enabl
 
 Another common need in releases is to compute configuration when the release runs, not when the release is assembled. The `config/config.exs` file we defined at the beginning of this chapter runs on every Mix command, when we build, test and run our application. This is great, because it provides a unified configuration for dev, test, and prod.
 
-However, your production environments may have specific needs. For example, right now we are hardcoding the routing table, but in production, you may need to read the routing table from disk, from another service, or even reach out to your orchestration tool, like Kubernetes. This can be done by adding a `config/releases.exs`. As the name says, this file runs every time the release starts. For instance, you could do:
-
-```elixir
-import Config
-{table, _} = Code.eval_file("routing_table_from_disk.exs")
-config :kv, :routing_table, table
-```
-
-Or perhaps you want to make the `KVServer` port configurable, and the value for the port is only given at runtime:
+However, your production environments may have specific needs. For example, right now we are hardcoding the routing table, but in production, you may need to read the routing table from disk, from another service, or even reach out to your orchestration tool, like Kubernetes. This can be done by adding a `config/releases.exs`. As the name says, this file runs every time the release starts. For instance, you could make the `KVServer` port configurable, and the value for the port is only given at runtime:
 
 ```elixir
 import Config
 config :kv_server, :port, System.fetch_env!("PORT")
 ```
 
-`config/releases.exs` files work very similar to regular `config/config.exs` files, but they may have some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0-rc.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
+`config/releases.exs` files work very similar to regular `config/config.exs` files, but they may have some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
 
 ## Summing up
 
