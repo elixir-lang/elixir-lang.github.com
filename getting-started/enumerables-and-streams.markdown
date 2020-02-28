@@ -109,7 +109,7 @@ iex> Enum.take(stream, 3)
 ["h", "e", "ł"]
 ```
 
-Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in the case of failures. For example, we can use it to stream a file:
+Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in the case of failures. For example, `File.stream!/1` builds on top of `Stream.resource/3` to stream files:
 
 ```iex
 iex> stream = File.stream!("path/to/file")
