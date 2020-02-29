@@ -90,7 +90,7 @@ If you are familiar with Docker you can use the official Docker image to get sta
   * Enter bash within container with installed `elixir`
     * Run: `docker run -it --rm elixir bash`
 
-Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](/install.html#installing-erlang) section below.
+Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](#installing-erlang) section below.
 
 If you need to programmatically fetch the list of Elixir precompiled packages alongside their checksums, access [https://elixir-lang.org/elixir.csv](https://elixir-lang.org/elixir.csv).
 
@@ -133,9 +133,11 @@ If the tests pass, you are ready to go. Otherwise, feel free to open an issue [i
 
 ## Installing Erlang
 
-The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later, which can be easily installed with [Precompiled packages](https://www.erlang-solutions.com/resources/download.html). In case you want to install it directly from source, it can be found on [the Erlang website](http://www.erlang.org/download.html) or by following the excellent tutorial available in the [Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
+The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later. When installing Elixir, Erlang is generally installed automatically for you. However, if you want to install Erlang manually, you might check:
 
-For Windows developers, we recommend the precompiled packages. Those on a Unix platform can probably get Erlang installed via one of the many package distribution tools.
+  * [Source code distribution and Windows installers from Erlang's official website](http://www.erlang.org/download.html)
+  * [Precompiled packages for some Unix-like installations](https://www.erlang-solutions.com/resources/download.html)
+  * [A general list of installatino methods from the Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
 
 After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information similar to:
 
