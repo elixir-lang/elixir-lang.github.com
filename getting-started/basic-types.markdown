@@ -198,7 +198,7 @@ world
 
 Notice that the `IO.puts/1` function returns the atom `:ok` after printing.
 
-Strings in Elixir are represented internally by binaries which are sequences of bytes:
+Strings in Elixir are represented internally by contiguous sequences of bytes known as binaries:
 
 ```iex
 iex> is_binary("hellö")
