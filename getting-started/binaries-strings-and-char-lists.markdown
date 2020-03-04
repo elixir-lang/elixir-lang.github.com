@@ -44,15 +44,11 @@ The hex representation will also help you look up information about a code point
 
 ## UTF-8 and Encodings
 
-Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it.  This is when we have to consider the size of numbers in memory, just as we would when defining a database column or working with a statically-typed language.
+Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it. For example, a single byte would allow us to represent 256 different codepoints. However, Unicode has many more code points than 256, so we need a mechanism to convert the code point into bytes so they can be stored in memory, written to disk, etc.
 
-A simple way of solving this problem is to ask how many bits are required to store the largest code point number, then use that many bits to store each code point. We are omitting some details here for simplicity, but our line of reasoning would lead us to a "fixed-length" encoding, such as UTF-32, which uses 32 bits to store each code point number (where 1 byte = 8 bits).
+Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of bytes. UTF-8 is a **variable width** character encoding capable of encoding all valid Unicode code points using one to four bytes. 
 
-Although a fixed-length encoding might be easier to understand, it is space-inefficient because _lots of its bits will practically always be zero_, e.g. most latin characters are covered by the ASCII character set, which only uses 7 bits.
-
-So instead of a fixed-length encoding, we reach for a "variable width" encoding that doesn't require so much space and bandwidth, and far and away the most popular encoding of any kind is UTF-8.  UTF-8 is a **variable width** character encoding capable of encoding all valid Unicode code points using one to four bytes. Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit numbers.
-
-Because UTF-8 is a variable width encoding, the number of characters (i.e. code points) and the number of bytes in a string may not be 1:1.  Consider the following:
+Because UTF-8 is a variable width encoding, the number of characters (i.e. code points) and the number of bytes in a string may not be 1:1. Consider the following:
 
 ```iex
 iex> string = "hełło"
