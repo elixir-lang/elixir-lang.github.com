@@ -35,7 +35,7 @@ iex> ?ł
 
 It's like a DNS lookup for characters to find their Unicode code point!
 
-Note that most Unicode code charts will refer to a code point by its hexadecimal representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\\u` notation and the hex representation of its code point number:
+Note that most Unicode code charts will refer to a code point by its hexadecimal representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\u` notation and the hex representation of its code point number:
 
 ```iex
 iex> "\\u0061" === "a"
