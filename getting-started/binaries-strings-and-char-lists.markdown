@@ -7,7 +7,7 @@ title: Binaries, strings, and charlists
 
 {% include toc.html %}
 
-In "Basic types", we learned about strings and used the `is_binary/1` function for checks:
+In "Basic types", we learned a little bit about strings and we used the `is_binary/1` function for checks:
 
 ```iex
 iex> string = "hello"
@@ -16,32 +16,15 @@ iex> is_binary(string)
 true
 ```
 
-In this chapter, we will understand what binaries are, how they associate with strings, and what a single-quoted value, `'like this'`, means in Elixir.
+In this chapter, we will gain clarity on what exactly binaries are, how they relate to strings, and what single-quoted values, `'like this'`, mean in Elixir. Although strings are one of the most common data types in computer languages, they are subtly complex and are often misunderstood. To understand strings in Elixir, we have to educate ourselves about [Unicode](https://en.wikipedia.org/wiki/Unicode) and character encodings, specifically the [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoding.
 
-## UTF-8 and Unicode
+## Unicode and Code Points
 
-A string is a UTF-8 encoded binary. In order to understand exactly what we mean by that, we need to understand the difference between bytes and code points.
+In order to facilitate meaningful communication between computers across multiple languages, a standard is required so that the ones and zeros on one machine mean the same thing when they are transmitted to another. The [Unicode Standard](https://unicode.org/standard/standard.html) acts as an official registry of virtually all the characters we know: this includes characters from classical and historical texts, emoji, and formatting and control characters as well.
 
-The Unicode standard assigns code points to many of the characters we know. For example, the letter `a` has code point `97` while the letter `ł` has code point `322`. When writing the string `"hełło"` to disk, we need to convert this sequence of characters to bytes. If we adopted a rule that said one byte represents one code point, we wouldn't be able to write `"hełło"`, because it uses the code point `322` for `ł`, and one byte can only represent a number from `0` to `255`. But of course, given you can actually read `"hełło"` on your screen, it must be represented *somehow*. That's where encodings come in.
+Unicode organizes all of the characters in its repertoire into code charts, and each character is given a unique numerical index. This numerical index is known as a [Code Point](https://en.wikipedia.org/wiki/Code_point).
 
-When representing code points in bytes, we need to encode them somehow. Elixir chose the UTF-8 encoding as its main and default encoding. When we say a string is a UTF-8 encoded binary, we mean a string is a bunch of bytes organized in a way to represent certain code points, as specified by the UTF-8 encoding.
-
-Since we have characters like `ł` assigned to the code point `322`, we actually need more than one byte to represent them. That's why we see a difference when we calculate the `byte_size/1` of a string compared to its `String.length/1`:
-
-```iex
-iex> string = "hełło"
-"hełło"
-iex> byte_size(string)
-7
-iex> String.length(string)
-5
-```
-
-There, `byte_size/1` counts the underlying raw bytes, and `String.length/1` counts characters.
-
-> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
-
-UTF-8 requires one byte to represent the characters `h`, `e`, and `o`, but two bytes to represent `ł`. In Elixir, you can get a character's code point by using `?`:
+In Elixir you can use a `?` in front of a character to reveal its code point:
 
 ```iex
 iex> ?a
@@ -50,45 +33,37 @@ iex> ?ł
 322
 ```
 
-These can be used anywhere you want to refer to a characters codepoint.
-
-You can also use the functions in [the `String` module](https://hexdocs.pm/elixir/String.html) to split a string in its individual characters, each one as a string of length 1:
+Note that most Unicode code charts will refer to a code point by its hexadecimal representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\u` notation and the hex representation of its code point number:
 
 ```iex
-iex> String.codepoints("hełło")
-["h", "e", "ł", "ł", "o"]
+iex> "\u0061" === "a"
+true
 ```
 
-You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
+The hex representation will also help you look up information about a code point, e.g. [https://codepoints.net/U+0061](https://codepoints.net/U+0061) has a data sheet all about the lower case `a`, a.k.a. code point 97.
 
-However, strings are just part of the story. If a string is a binary, and we have used the `is_binary/1` function, Elixir must have an underlying type empowering strings. And it does! Let's talk about binaries.
+## UTF-8 and Encodings
 
-## Binaries (and bitstrings)
+Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it. For example, a single byte would allow us to represent 256 different codepoints. However, Unicode has many more code points than 256, so we need a mechanism to convert the code point into bytes so they can be stored in memory, written to disk, etc.
 
-In Elixir, you can define a binary using `<<>>`:
+Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of bytes. UTF-8 is a **variable width** character encoding capable of encoding all valid Unicode code points using one to four bytes. 
+
+Because UTF-8 is a variable width encoding, the number of characters (i.e. code points) and the number of bytes in a string may not be 1:1. Consider the following:
 
 ```iex
-iex> <<0, 1, 2, 3>>
-<<0, 1, 2, 3>>
-iex> byte_size(<<0, 1, 2, 3>>)
-4
+iex> string = "hełło"
+"hełło"
+iex> String.length(string)
+5
+iex> byte_size(string)
+7
 ```
 
-A binary is a sequence of bytes. Those bytes can be organized in any way, even in a sequence that does not make them a valid string:
+`String.length/1` counts characters, but `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, and `o`, but two bytes to represent `ł`. Some of the genius of UTF-8 is how it reserves certain bits to declare how many bytes are needed to represent a code point.
 
-```iex
-iex> String.valid?(<<239, 191, 19>>)
-false
-```
+> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
-The string concatenation operation is actually a binary concatenation operator:
-
-```iex
-iex> <<0, 1>> <> <<2, 3>>
-<<0, 1, 2, 3>>
-```
-
-A common trick in Elixir is to concatenate the null byte `<<0>>` to a string to see its inner binary representation:
+A common trick in Elixir when you want to see the inner binary representation of a string is to concatenate the null byte `<<0>>` to it:
 
 ```iex
 iex> "hełło" <> <<0>>
@@ -102,46 +77,81 @@ iex> IO.inspect("hełło", binaries: :as_binaries)
 <<104, 101, 197, 130, 197, 130, 111>>
 ```
 
-Each number given to a binary is meant to represent a byte and therefore must go up to 255. Binaries allow modifiers to be given to store numbers bigger than 255 or to convert a code point to its UTF-8 representation:
+We are getting a little bit ahead of ourselves. Let's talk about bitstrings to learn about what exactly the `<<>>` constructor means.
+
+## Bitstrings
+
+Although we have covered code points and UTF-8 encoding, we still need to go a bit deeper into how exactly we store the encoded bytes, and this is where we introduce the **bitstring**. A bitstring is a fundamental data type in Elixir, denoted with the `<<>>` syntax. **A bitstring is a contiguous sequence of bits in memory.**
+
+A complete reference about the binary / bitstring constructor `<<>>` can be found [in the Elixir documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#%3C%3C%3E%3E/1).
+
+By default, 8 bits (i.e. 1 byte) is used to store each number in a bitstring, but you can manually specify the number of bits via a `::n` modifier to denote the size in `n` bits, or you can use the more verbose declaration `::size(n)`:
 
 ```iex
-iex> <<255>>
-<<255>>
-iex> <<256>> # truncated
-<<0>>
-iex> <<256 :: size(16)>> # use 16 bits (2 bytes) to store the number
-<<1, 0>>
-iex> <<256 :: utf8>> # the number is a code point
-"Ā"
-iex> <<256 :: utf8, 0>>
-<<196, 128, 0>>
-```
-
-If a byte has 8 bits, what happens if we pass a size of 1 bit?
-
-```iex
-iex> <<1 :: size(1)>>
-<<1::size(1)>>
-iex> <<2 :: size(1)>> # truncated
-<<0::size(1)>>
-iex> is_binary(<<1 :: size(1)>>)
-false
-iex> is_bitstring(<<1 :: size(1)>>)
+iex> <<42>> === <<42::8>>
 true
-iex> bit_size(<<1 :: size(1)>>)
-1
+iex> <<3::4>>
+<<3::size(4)>>
 ```
 
-The value is no longer a binary, but a bitstring -- a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8.
+For example, the decimal number `3` when represented with 4 bits in base 2 would be `0011`, which is equivalent to the values `0`, `0`, `1`, `1`, each stored using 1 bit:
 
 ```iex
-iex>  is_binary(<<1 :: size(16)>>)
+iex> <<0::1, 0::1, 1::1, 1::1>> == <<3::4>>
 true
-iex>  is_binary(<<1 :: size(15)>>)
+```
+
+Any value that exceeds what can be stored by the number of bits provisioned is truncated:
+
+```iex
+iex> <<1>> === <<257>>
+true
+```
+Here, 257 in base 2 would be represented as `100000001`, but since we have reserved only 8 bits for its representation (by default), the left-most bit is ignored and the value becomes truncated to `00000001`, or simply `1` in decimal.
+
+## Binaries
+
+**A binary is a bitstring where the number of bits is divisible by 8.** That means that every binary is a bitstring, but not every bitstring is a binary. We can use the `is_bitstring/1` and `is_binary/1` functions to demonstrate this.
+
+```iex
+iex> is_bitstring(<<3::4>>)
+true
+iex> is_binary(<<3::4>>)
+false
+iex> is_bitstring(<<0, 255, 42>>)
+true
+iex> is_binary(<<0, 255, 42>>)
+true
+iex> is_binary(<<42::16>>)
+true
+```
+
+**A string is a UTF-8 encoded binary**, where the code point for each character is encoded using 1 to 4 bytes. Thus every string is a binary, but due to the rules in the UTF-8 encoding standard, not every binary is a valid string.
+
+```iex
+iex> is_binary(<<239, 191, 19>>)
+true
+iex> String.valid?(<<239, 191, 19>>)
 false
 ```
 
-We can also pattern match on binaries / bitstrings:
+When you use double-quotes, you are telling Elixir to store the UTF-8 encoded code points in a binary.
+
+```iex
+iex> <<99, 97, 116>> === "cat"
+true
+```
+
+The string concatenation operator `<>` is actually a binary concatenation operator:
+
+```iex
+iex> <<0, 1>> <> <<2, 3>>
+<<0, 1, 2, 3>>
+iex> "a" <> "ha"
+"aha"
+```
+
+We can pattern match on binaries / bitstrings:
 
 ```iex
 iex> <<0, 1, x>> = <<0, 1, 2>>
@@ -152,7 +162,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 ** (MatchError) no match of right hand side value: <<0, 1, 2, 3>>
 ```
 
-Note each entry in the binary pattern is expected to match exactly 8 bits. If we want to match on a binary of unknown size, it is possible by using the binary modifier at the end of the pattern:
+Note that each entry in the binary pattern is expected to match exactly 8 bits. If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
 
 ```iex
 iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
@@ -161,20 +171,40 @@ iex> x
 <<2, 3>>
 ```
 
-Similar results can be achieved with the string concatenation operator `<>`:
+There are a couple other modifiers that can be useful when doing pattern matches on binaries. The `binary-size(n)` modifier will match `n` characters in a binary:
 
 ```iex
-iex> "he" <> rest = "hello"
-"hello"
+iex> <<x::binary-size(2), rest::binary>> = "banana"
+"banana"
+iex> x
+"ba"
 iex> rest
-"llo"
+"nana"
 ```
 
-A complete reference about the binary / bitstring constructor `<<>>` can be found [in the Elixir documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#%3C%3C%3E%3E/1). This concludes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
+You can use the `utf8` modifier to match on a character's integer code point:
+
+```iex
+iex> <<x::utf8, rest::binary>> = "über"
+"über"
+iex> x
+252
+iex> rest
+"ber"
+```
+
+You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
+
+Although Elixir provides a lot of flexibility for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
+
 
 ## Charlists
 
-A charlist is nothing more than a list of code points. Char lists may be created with single-quoted literals:
+Our tour of our bitstrings, binaries, and strings is nearly complete, but we have one more data type to explain: the charlist.
+
+**A charlist is a list of integers where all the integers are valid code points.** In practice, you will not come across them often, except perhaps when interfacing with Erlang, in particular when using older libraries that do not accept binaries as arguments.
+
+Whereas strings (i.e. binaries) are created using double-quotes, charlists are created with single-quoted literals:
 
 ```iex
 iex> 'hełło'
@@ -187,9 +217,31 @@ iex> List.first('hello')
 104
 ```
 
-You can see that, instead of containing bytes, a charlist contains the code points of the characters between single-quotes (note that by default IEx will only output code points if any of the integers is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represent a charlist (i.e. a list).
+You can see that instead of containing bytes, a charlist contains integer code points. By default, IEx will only output code points if any of the integers falls outside the ASCII range of 0 to 127.
 
-In practice, charlists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:
+```iex
+iex> 'hello'
+'hello'
+iex> 'hełło'
+[104, 101, 322, 322, 111]
+```
+
+If you wish to inspect the code points in a single-quoted literal, you can force this by passing the `charlists` option to `IO.inspect/2`:
+
+```iex
+iex> IO.inspect('hello', charlists: :as_lists)
+[104, 101, 108, 108, 111]
+'hello'
+```
+
+Interpreting integers as codepoints may lead to some surprising behavior. For example, if you are storing a list of integers that happen to range between 0 and 127, by default IEx will interpret this as a charlist and it will display the corresponding ASCII characters.
+
+```iex
+iex> heartbeats_per_minute = [99, 97, 116]
+'cat'
+```
+
+You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:
 
 ```iex
 iex> to_charlist "hełło"
@@ -202,9 +254,9 @@ iex> to_string 1
 "1"
 ```
 
-Note that those functions are polymorphic. They not only convert charlists to strings, but also integers to strings, atoms to strings, and so on.
+Note that those functions are polymorphic: not only do they convert charlists to strings, they also operate on integers, atoms, and so on.
 
-String (binary) concatenation uses the `<>` operator but charlists use the lists concatenation operator `++`:
+String (binary) concatenation uses the `<>` operator but charlists, being lists, use the list concatenation operator `++`:
 
 ```iex
 iex> 'this ' <> 'fails'
@@ -221,5 +273,11 @@ iex> "he" ++ "llo"
 iex> "he" <> "llo"
 "hello"
 ```
+
+## Where did the name "binaries" come from?
+
+When your average computer-savvy person hears the word "binary", they think of ones and zeros, so why does Elixir refer to its strings as "binaries"?
+
+The short answer is that Elixir inherited the name "binaries" from Erlang. A more meaningful answer requires that we understand how Erlang historically stored its strings: not as contiguous bits in memory, but as _lists_ (see "Charlists" above), where each element contained a value and a pointer to the next item in the list. When a new data type was introduced, the bitstring, developers had to distinguish between variables stored as character lists and those stored as contiguous sequences of bits. Even though a computer always ends up storing data as ones and zeroes eventually, the name "binaries" was used to refer to strings stored as these contiguous sequence of bits, presumably because storing data in a way that exposes the underlying bits and their ones and zeros reminds one of "binary" in its original sense.
 
 With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures.
