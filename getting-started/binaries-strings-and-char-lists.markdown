@@ -126,31 +126,6 @@ iex> is_binary(<<42::16>>)
 true
 ```
 
-**A string is a UTF-8 encoded binary**, where the code point for each character is encoded using 1 to 4 bytes. Thus every string is a binary, but due to the rules in the UTF-8 encoding standard, not every binary is a valid string.
-
-```iex
-iex> is_binary(<<239, 191, 19>>)
-true
-iex> String.valid?(<<239, 191, 19>>)
-false
-```
-
-When you use double-quotes, you are telling Elixir to store the UTF-8 encoded code points in a binary.
-
-```iex
-iex> <<99, 97, 116>> === "cat"
-true
-```
-
-The string concatenation operator `<>` is actually a binary concatenation operator:
-
-```iex
-iex> <<0, 1>> <> <<2, 3>>
-<<0, 1, 2, 3>>
-iex> "a" <> "ha"
-"aha"
-```
-
 We can pattern match on binaries / bitstrings:
 
 ```iex
@@ -162,7 +137,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 ** (MatchError) no match of right hand side value: <<0, 1, 2, 3>>
 ```
 
-Note that each entry in the binary pattern is expected to match exactly 8 bits. If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
+Note that each entry in the binary pattern is expected to match a single byte (exactly 8 bits). If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
 
 ```iex
 iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
@@ -171,32 +146,71 @@ iex> x
 <<2, 3>>
 ```
 
-There are a couple other modifiers that can be useful when doing pattern matches on binaries. The `binary-size(n)` modifier will match `n` characters in a binary:
+There are a couple other modifiers that can be useful when doing pattern matches on binaries. The `binary-size(n)` modifier will match `n` bytes in a binary:
 
 ```iex
-iex> <<x::binary-size(2), rest::binary>> = "banana"
-"banana"
-iex> x
-"ba"
+iex> <<head::binary-size(2), rest::binary>> = <<0, 1, 2, 3>>
+<<0, 1, 2, 3>>
+iex> head
+<<0, 1>>
 iex> rest
-"nana"
+<<2, 3>>
 ```
 
-You can use the `utf8` modifier to match on a character's integer code point:
+**A string is a UTF-8 encoded binary**, where the code point for each character is encoded using 1 to 4 bytes. Thus every string is a binary, but due to the rules in the UTF-8 encoding standard, not every binary is a valid string.
+
+```iex
+iex> is_binary("hello")
+true
+iex> is_binary(<<239, 191, 19>>)
+true
+iex> String.valid?(<<239, 191, 19>>)
+false
+```
+
+The string concatenation operator `<>` is actually a binary concatenation operator:
+
+```iex
+iex> "a" <> "ha"
+"aha"
+iex> <<0, 1>> <> <<2, 3>>
+<<0, 1, 2, 3>>
+```
+
+Given strings are binaries, we can also pattern match on strings:
+
+```iex
+iex> <<head, rest::binary>> = "banana"
+"banana"
+iex> head == ?b
+true
+iex> rest
+"anana"
+```
+
+However, remember binary pattern matching works on *bytes*, so matching on the string "über" won't return "ü":
+
+```iex
+iex> <<x, rest::binary>> = "über"
+"über"
+iex> x == ?u
+false
+iex> rest
+<<188, 98, 101, 114>>
+```
+
+Therefore, when pattern matching on strings, it is important to use the `utf8` modifier:
 
 ```iex
 iex> <<x::utf8, rest::binary>> = "über"
 "über"
-iex> x
-252
+iex> x == ?ü
+true
 iex> rest
 "ber"
 ```
 
 You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
-
-Although Elixir provides a lot of flexibility for working with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
-
 
 ## Charlists
 
@@ -273,11 +287,5 @@ iex> "he" ++ "llo"
 iex> "he" <> "llo"
 "hello"
 ```
-
-## Where did the name "binaries" come from?
-
-When your average computer-savvy person hears the word "binary", they think of ones and zeros, so why does Elixir refer to its strings as "binaries"?
-
-The short answer is that Elixir inherited the name "binaries" from Erlang. A more meaningful answer requires that we understand how Erlang historically stored its strings: not as contiguous bits in memory, but as _lists_ (see "Charlists" above), where each element contained a value and a pointer to the next item in the list. When a new data type was introduced, the bitstring, developers had to distinguish between variables stored as character lists and those stored as contiguous sequences of bits. Even though a computer always ends up storing data as ones and zeroes eventually, the name "binaries" was used to refer to strings stored as these contiguous sequence of bits, presumably because storing data in a way that exposes the underlying bits and their ones and zeros reminds one of "binary" in its original sense.
 
 With binaries, strings, and charlists out of the way, it is time to talk about key-value data structures.
