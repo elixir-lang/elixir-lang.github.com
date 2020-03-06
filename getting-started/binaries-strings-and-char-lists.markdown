@@ -24,7 +24,7 @@ In order to facilitate meaningful communication between computers across multipl
 
 Unicode organizes all of the characters in its repertoire into code charts, and each character is given a unique numerical index. This numerical index is known as a [Code Point](https://en.wikipedia.org/wiki/Code_point).
 
-In Elixir you can use a `?` in front of a character to reveal its code point:
+In Elixir you can use a `?` in front of a character literal to reveal its code point:
 
 ```iex
 iex> ?a
@@ -38,15 +38,17 @@ Note that most Unicode code charts will refer to a code point by its hexadecimal
 ```iex
 iex> "\u0061" === "a"
 true
+iex> 0x0061 = 97 = ?a
+97
 ```
 
 The hex representation will also help you look up information about a code point, e.g. [https://codepoints.net/U+0061](https://codepoints.net/U+0061) has a data sheet all about the lower case `a`, a.k.a. code point 97.
 
 ## UTF-8 and Encodings
 
-Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it. For example, a single byte would allow us to represent 256 different codepoints. However, Unicode has many more code points than 256, so we need a mechanism to convert the code point into bytes so they can be stored in memory, written to disk, etc.
+Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it: encoding is an implementation. In other words, we need a mechanism to convert the code point numbers into bytes so they can be stored in memory, written to disk, etc.
 
-Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of bytes. UTF-8 is a **variable width** character encoding capable of encoding all valid Unicode code points using one to four bytes. 
+Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit bytes. UTF-8 is a **variable width** character encoding that uses one to four bytes to store each code point; it is capable of encoding all valid Unicode code points.
 
 Because UTF-8 is a variable width encoding, the number of characters (i.e. code points) and the number of bytes in a string may not be 1:1. Consider the following:
 
@@ -137,7 +139,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 ** (MatchError) no match of right hand side value: <<0, 1, 2, 3>>
 ```
 
-Note that each entry in the binary pattern is expected to match a single byte (exactly 8 bits). If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
+Note that unless you explicitly use `::` modifiers, each entry in the binary pattern is expected to match a single byte (exactly 8 bits). If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
 
 ```iex
 iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
@@ -157,7 +159,7 @@ iex> rest
 <<2, 3>>
 ```
 
-**A string is a UTF-8 encoded binary**, where the code point for each character is encoded using 1 to 4 bytes. Thus every string is a binary, but due to the rules in the UTF-8 encoding standard, not every binary is a valid string.
+**A string is a UTF-8 encoded binary**, where the code point for each character is encoded using 1 to 4 bytes. Thus every string is a binary, but due to the UTF-8 standard encoding rules, not every binary is a valid string.
 
 ```iex
 iex> is_binary("hello")
@@ -188,16 +190,20 @@ iex> rest
 "anana"
 ```
 
-However, remember binary pattern matching works on *bytes*, so matching on the string "über" won't return "ü":
+However, remember binary pattern matching works on *bytes*, so matching on the string like "über" with multibyte characters won't match on the _character_, it will match on the _first byte of that character_:
 
 ```iex
+iex> "ü" <> <<0>>
+<<195, 188, 0>>
 iex> <<x, rest::binary>> = "über"
 "über"
-iex> x == ?u
+iex> x == ?ü
 false
 iex> rest
 <<188, 98, 101, 114>>
 ```
+Above, `x` matched on only the first byte of the multibyte `ü` character.
+
 
 Therefore, when pattern matching on strings, it is important to use the `utf8` modifier:
 
