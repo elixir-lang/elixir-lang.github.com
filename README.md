@@ -68,5 +68,3 @@ guide](https://github.com/elixir-lang/elixir/#contributing).
 * The Social Icons are copyrighted to [Xeloader](http://xeloader.deviantart.com/art/Socialis-2-Freebie-213292616).
 
 * The written textual contents available in the guides and blog are licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
-* The available docs are licensed under the same license as their projects.
