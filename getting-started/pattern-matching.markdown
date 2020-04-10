@@ -129,14 +129,30 @@ iex> x = 1
 iex> x = 2
 2
 ```
+However, there are times when we don't want variables to be rebound.
 
-Use the pin operator `^` when you want to pattern match against an existing variable's value rather than rebinding the variable:
+**Use the pin operator `^` when you want to pattern match against a variable's _existing value_ rather than rebinding the variable.**
 
 ```iex
 iex> x = 1
 1
 iex> ^x = 2
 ** (MatchError) no match of right hand side value: 2
+```
+Because we have pinned `x` when it was bound to the value of `1`, it is equivalent to the following:
+
+```iex
+iex> 1 = 2
+** (MatchError) no match of right hand side value: 2
+```
+Notice that we even see the exact same error message.
+
+We can use the pin operator inside other pattern matches, such as tuples or lists:
+```
+iex> x = 1
+1
+iex> [^x, 2, 3] = [1, 2, 3]
+[1, 2, 3]
 iex> {y, ^x} = {2, 1}
 {2, 1}
 iex> y
@@ -145,11 +161,24 @@ iex> {y, ^x} = {2, 2}
 ** (MatchError) no match of right hand side value: {2, 2}
 ```
 
-Because we have assigned the value of 1 to the variable x, this last example could also have been written as:
+Because `x` was bound to the value of `1` when it was pinned, this last example could have been written as:
 
 ```
 iex> {y, 1} = {2, 2}
 ** (MatchError) no match of right hand side value: {2, 2}
+```
+
+There is one caveat when using the pin operator in maps: you must use the `=>` syntax when pinning a map's key, even when the value being pinned is an atom:
+
+```iex
+iex> k = :foo
+:foo
+iex> %{^k: v} = %{foo: "bar"}
+** (SyntaxError) iex:11: syntax error before: k
+iex> %{^k => v} = %{foo: "bar"}
+%{foo: "bar"}
+iex> v
+"bar"
 ```
 
 If a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
