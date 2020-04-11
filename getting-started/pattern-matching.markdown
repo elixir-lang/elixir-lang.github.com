@@ -148,7 +148,8 @@ iex> 1 = 2
 Notice that we even see the exact same error message.
 
 We can use the pin operator inside other pattern matches, such as tuples or lists:
-```
+
+```iex
 iex> x = 1
 1
 iex> [^x, 2, 3] = [1, 2, 3]
