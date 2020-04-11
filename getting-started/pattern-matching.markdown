@@ -139,12 +139,14 @@ iex> x = 1
 iex> ^x = 2
 ** (MatchError) no match of right hand side value: 2
 ```
+
 Because we have pinned `x` when it was bound to the value of `1`, it is equivalent to the following:
 
 ```iex
 iex> 1 = 2
 ** (MatchError) no match of right hand side value: 2
 ```
+
 Notice that we even see the exact same error message.
 
 We can use the pin operator inside other pattern matches, such as tuples or lists:
@@ -164,7 +166,7 @@ iex> {y, ^x} = {2, 2}
 
 Because `x` was bound to the value of `1` when it was pinned, this last example could have been written as:
 
-```
+```iex
 iex> {y, 1} = {2, 2}
 ** (MatchError) no match of right hand side value: {2, 2}
 ```
