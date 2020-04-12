@@ -155,7 +155,7 @@ Will output:
     Compiling 1 file (.ex)
     Generated kv app
 
-The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated and [all protocols were consolidated](https://hexdocs.pm/elixir/Protocol.html#module-consolidation). All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
+The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated. All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
 
 Once the project is compiled, you can start an `iex` session inside the project by running:
 
