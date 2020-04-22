@@ -47,7 +47,7 @@ iex> Enum.filter(1..3, odd?)
 This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
 
 ```iex
-iex> total_sum = 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
+iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
 7500000000
 ```
 
