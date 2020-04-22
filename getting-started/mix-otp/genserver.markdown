@@ -83,8 +83,8 @@ end
 
 # Server callback
 
-def handle_call({:put, key, value}, from, state) do
-  {:noreply, Map.put(state, key, value)}
+def handle_call({:put, key, value}, _from, state) do
+  {:reply, %{key => value}, Map.put(state, key, value)}
 end
 ```
 
