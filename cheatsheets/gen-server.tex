@@ -329,7 +329,7 @@ end
 
 \begin{parchment}[handling messages: $\rightarrow$ \bf\texttt{handle\_info/2}]
 \begin{tikzpicture}
-  \node (client) [main-block] {
+  \node (callback) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_info(match_this, state) do
@@ -338,9 +338,9 @@ def handle_info(match_this, state) do
 end
 \end{verbatim}
 };
-  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
-  \path (client.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, state}
@@ -360,7 +360,7 @@ end
 
 \begin{parchment}[\bf\texttt{\^{}then\_what = \{:continue, match\_this\}} $\rightarrow$ \bf\texttt{handle\_continue/2}]
 \begin{tikzpicture}
-  \node (client) [main-block] {
+  \node (callback) [main-block] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 def handle_continue(match_this, state) do
@@ -369,9 +369,9 @@ def handle_continue(match_this, state) do
 end
 \end{verbatim}
 };
-  \path (client.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{client}};
+  \path (callback.north west)+(-2pt,0) node [left-title] {\rotatebox{90}{callback}};
 
-  \path (client.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
+  \path (callback.south west)+(0,-1em) node (result) [main-block,anchor=north west] {
     \vspace*{-\baselineskip}
 \begin{verbatim}
 {:noreply, state}
