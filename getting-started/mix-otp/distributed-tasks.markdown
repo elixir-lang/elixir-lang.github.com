@@ -298,6 +298,17 @@ defp lookup(bucket, callback) do
 end
 ```
 
+Good! Now `GET`, `PUT` and `DELETE` requests are all routed to the approriate node. Let's also make sure that when a new bucket is created it ends up on the correct node. Replace the `run/1` function in `KVServer.Command`, the one that matches the `:create` command, with the following:
+
+```elixir
+def run({:create, bucket}) do
+  case KV.Router.route(bucket, KV.Registry, :create, [KV.Registry, bucket]) do
+    pid when is_pid(pid) -> {:ok, "OK\r\n"}
+    _ -> {:error, "FAILED TO CREATE BUCKET"}
+  end
+end
+```
+
 Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, add `@tag :distributed` to this test too:
 
 ```elixir
