@@ -126,7 +126,7 @@ For now, there is a more important bug we need to fix: what happens if our TCP a
 
 We have learned about agents, generic servers, and supervisors. They are all meant to work with multiple messages or manage state. But what do we use when we only need to execute some task and that is it?
 
-[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/1` function that receives an anonymous function and executes it inside a new process that will be of a supervision tree.
+[The Task module](https://hexdocs.pm/elixir/Task.html) provides this functionality exactly. For example, it has a `start_link/1` function that receives an anonymous function and executes it inside a new process that will be part of a supervision tree.
 
 Let's give it a try. Open up `lib/kv_server/application.ex`, and let's change the supervisor in the `start/2` function to the following:
 
