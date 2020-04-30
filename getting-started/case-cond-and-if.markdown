@@ -44,7 +44,7 @@ iex> case {1, 2, 3} do
 ...>   {1, x, 3} when x > 0 ->
 ...>     "Will match"
 ...>   _ ->
-...>     "Would match, if guard condition were not satisfied"
+...>     "Would match, if guard condition were satisfied"
 ...> end
 "Will match"
 ```
