@@ -216,7 +216,7 @@ Let's change `start/2` once again, to add a supervisor to our tree:
 
 ```elixir
   def start(_type, _args) do
-    port = String.to_integer(System.get_env("PORT") || raise "missing $PORT environment variable")
+    port = String.to_integer(System.get_env("PORT") || "4040")
 
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
