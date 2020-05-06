@@ -144,7 +144,20 @@ As a starting point, let's define a release that includes both `:kv_server` and 
       ]
     ]
 
-That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system. With the configuration in place, let's give assembling the release another try:
+That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system.
+
+There is one thing we need to pay attention to. Since we put our routing table config `config :kv, :routing_table, [{?a..?z, node()}]` in `config/config.exs`, which is a build-time configuration and will be evaluated when we compile our code, our release will get the wrong value because the `node()` function evaluated in compile time will return `:nonode@nohost`.
+
+To fix this problem, we need to configure our routing table in `config/releases.exs` which is a runtime configuration. See [details](#runtime-configuration) about this topic below. Open up `config/releases.exs` and add content:
+
+    import Config
+
+    config :kv, :routing_table, [
+      {?a..?m, :"foo@computer-name"},
+      {?n..?z, :"bar@computer-name"}
+    ]
+
+With the configuration in place, let's give assembling the release another try:
 
     $ MIX_ENV=prod mix release foo
     * assembling foo-0.0.1 on MIX_ENV=prod
