@@ -57,7 +57,7 @@ We need a way to configure the application environment. That's when we use confi
 
 ## Configuration
 
-Configuration files provide a mechanism for us to configure the environment of any application. Such configuration is done by the `config/config.exs` file.
+Configuration files provide a mechanism for us to configure the environment of any application. Such configuration is done by the `config/config.exs` file. This config file is read at build time, when we compile our application.
 
 For example, we can configure IEx default prompt to another value. Let's create the `config/config.exs` file with the following content:
 
@@ -144,7 +144,17 @@ As a starting point, let's define a release that includes both `:kv_server` and 
       ]
     ]
 
-That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system. With the configuration in place, let's give assembling the release another try:
+That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system.
+
+There is one thing we need to pay attention to. Our routing table config `config :kv, :routing_table, [{?a..?z, node()}]` in `config/config.exs` evaluates the `node()` to `:nonode@nohost`. However, releases start in distributed mode by default. A release named `foo` will use the name `:"foo@computer_name"`. Therefore we have to adjust the routing table to use the proper node name. For now, let's hardcode the node name under `config/config.exs` if the environment is production:
+
+    if Mix.env() == :prod do
+      config :kv, :routing_table, [{?a..?z, :"foo@computer-name"}]
+    end
+
+While this will suffice for now, the computer name is usually not known upfront when deploying to production. For this purpose, we will later introduce [`config/releases.exs`](#runtime-configuration), which is a configuration file that is executed in the production machine before the system starts, giving you an opportunity to set the proper node name at the right time.
+
+With the configuration in place, let's give assembling the release another try:
 
     $ MIX_ENV=prod mix release foo
     * assembling foo-0.0.1 on MIX_ENV=prod
