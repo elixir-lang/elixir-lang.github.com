@@ -171,20 +171,7 @@ iex> {y, 1} = {2, 2}
 ** (MatchError) no match of right hand side value: {2, 2}
 ```
 
-When using the pin operator in maps you must use the `=>` syntax when pinning a map's key (a map is created using the %{} syntax), even when the value being pinned is an atom:
-
-```iex
-iex> k = :foo
-:foo
-iex> %{^k: v} = %{foo: "bar"}
-** (SyntaxError) iex:11: syntax error before: k
-iex> %{^k => v} = %{foo: "bar"}
-%{foo: "bar"}
-iex> v
-"bar"
-```
-
-If a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
+If a variable is mentioned more than once in a pattern, all references should bind to the same value:
 
 ```iex
 iex> {x, x} = {1, 1}
