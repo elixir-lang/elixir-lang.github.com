@@ -171,7 +171,7 @@ iex> {y, 1} = {2, 2}
 ** (MatchError) no match of right hand side value: {2, 2}
 ```
 
-When using the pin operator in maps you must use the `=>` syntax when pinning a map's key, even when the value being pinned is an atom:
+When using the pin operator in maps you must use the `=>` syntax when pinning a map's key (a map is created using the %{} syntax), even when the value being pinned is an atom:
 
 ```iex
 iex> k = :foo
