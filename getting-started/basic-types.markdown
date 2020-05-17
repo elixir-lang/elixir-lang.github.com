@@ -243,6 +243,19 @@ In the example above, we defined an anonymous function that receives two argumen
 
 Parenthesised arguments after the anonymous function indicate that we want the function to be evaluated, not just its definition returned.  Note that a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling the anonymous function matched to a variable `add` and a named function `add/2`. We will explore named functions when dealing with [Modules and Functions](/getting-started/modules-and-functions.html), since named functions can only be defined within a module. For now, just remember that Elixir makes a clear distinction between anonymous functions and named functions.
 
+It's possible to specify [multiple clauses](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#fn/1-examples) in anonymous functions, allowing for different code paths depending on the arguments (note that all clauses should expect the same number of arguments):
+
+```iex
+iex> negate = fn
+...>   true -> false
+...>   false -> true
+...> end
+iex> negate.(true)
+false
+iex> negate.(false)
+true
+```
+
 Anonymous functions in Elixir are also identified by the number of arguments they receive. We can check if a function is of any given arity by using `is_function/2`:
 
 ```iex
