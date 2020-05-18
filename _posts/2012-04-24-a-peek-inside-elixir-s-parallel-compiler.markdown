@@ -156,7 +156,7 @@ Notice we added an extra clause to `spawn_compilers` so we can properly handle t
           :erlang.raise(:error, reason, where)
       after
         10_000 ->
-          raise "dependency on unexesting module or possible deadlock"
+          raise "dependency on nonexistent module or possible deadlock"
       end
     end
 
