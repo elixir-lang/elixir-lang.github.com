@@ -36,7 +36,7 @@ If you haven't yet installed Elixir, visit our [installation page](/install.html
 
 When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
-For now, let's start by running `iex` (or `iex.bat` if you are on Windows PowerShell; `iex` is aliased for `Invoke-Expression`) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions.
+For now, let's start by running `iex` (or `iex.bat` if you are on Windows PowerShell, where `iex` is a PowerShell command) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions.
 
 Open up `iex` and type the following expressions:
 
