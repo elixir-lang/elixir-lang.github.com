@@ -36,7 +36,7 @@ If you haven't yet installed Elixir, visit our [installation page](/install.html
 
 When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
 
-For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions.
+For now, let's start by running `iex` (or `iex.bat` if you are on Windows PowerShell, where `iex` is a PowerShell command) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions.
 
 Open up `iex` and type the following expressions:
 
@@ -54,7 +54,7 @@ Please note that some details like version numbers may differ a bit in your sess
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
-> Note: if you are on Windows, you can also try `iex.bat --werl` which may provide a better experience depending on which console you are using.
+> Note: if you are on Windows, you can also try `iex --werl` (`iex.bat --werl` on PowerShell) which may provide a better experience depending on which console you are using.
 
 > Note: if you want to find and execute a given script in PATH so it will be loaded in `iex` use: `iex -S SCRIPTNAME`.  Later you'll learn about [Mix](/getting-started/mix-otp/introduction-to-mix.html), Elixir's build tool, and how you can compile and load entire applications with `iex -S mix run`. See [Supervisor and application](/getting-started/mix-otp/supervisor-and-application.html) for more details.
 
