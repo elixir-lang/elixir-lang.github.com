@@ -125,7 +125,7 @@ defmodule Foo do
 
   @param :foo
   @param :bar     
-  # here @param == [:foo, :bar]
+  # here @param == [:bar, :foo]
 end
 ```
 
