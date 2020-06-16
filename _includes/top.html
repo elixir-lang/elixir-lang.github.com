@@ -23,6 +23,17 @@
     There is a survey. Some info about the survey. You can <a href="/" target="_blank">click here to take the survey</a>.
     <div class="close">&times;</div>
   </div>
+  <script type="text/javascript">
+    var bannerDisabledCookie = document.cookie.split(';').some(function(item) {
+      return item.indexOf('topBannerDisabled=true') >= 0;
+    });
+
+    if (bannerDisabledCookie) {
+      var topBanner = document.getElementById('top-banner');
+      topBanner.parentNode.removeChild(topBanner);
+    }
+  </script>
+
   <div id="container">
     <div class="wrap">
     <div id="header">
