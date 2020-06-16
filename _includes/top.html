@@ -19,6 +19,21 @@
 </head>
 
 <body class="{{ page.section }}">
+  <div id="top-banner">
+    Please participate in the <a href="https://elixirsurvey.typeform.com/to/yYmJv1" target="_blank">2020 Elixir Ecosystem Survey</a>!
+    <div class="close">&times;</div>
+  </div>
+  <script type="text/javascript">
+    var bannerDisabledCookie = document.cookie.split(';').some(function(item) {
+      return item.indexOf('topBannerDisabled=true') >= 0;
+    });
+
+    if (bannerDisabledCookie) {
+      var topBanner = document.getElementById('top-banner');
+      topBanner.parentNode.removeChild(topBanner);
+    }
+  </script>
+
   <div id="container">
     <div class="wrap">
     <div id="header">
