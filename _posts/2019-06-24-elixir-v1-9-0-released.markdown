@@ -20,7 +20,7 @@ Releases have always been part of the Elixir community thanks to Paul Schoenfeld
 
 At the beginning of this year, thanks to [Plataformatec](http://plataformatec.com.br/), I was able to prioritize the work on bringing releases directly into Elixir. Paul was aware that we wanted to have releases in Elixir itself and during [ElixirConf 2018](https://elixirconf.com) I announced that releases was the last planned feature for Elixir.
 
-The goal of Elixir releases was to double down on the most important concepts provided by Distillery and provide extensions points for the other bits the community may find important. [Paul](http://github.com/bitwalker/) and [Tristan](https://github.com/tsloughter) (who maintains [Erlang's relx](https://github.com/erlware/relx)) provided excellent feedback on Elixir's implementation, which we are very thankful for. [The Hex package manager is already using releases in production](http://blog.plataformatec.com.br/2019/05/updating-hex-pm-to-use-elixir-releases/) and we also got feedback from other companies doing the same.
+The goal of Elixir releases was to double down on the most important concepts provided by Distillery and provide extensions points for the other bits the community may find important. [Paul](http://github.com/bitwalker/) and [Tristan](https://github.com/tsloughter) (who maintains [Erlang's relx](https://github.com/erlware/relx)) provided excellent feedback on Elixir's implementation, which we are very thankful for. [The Hex package manager is already using releases in production](https://dashbit.co/blog/updating-hex-pm-to-use-elixir-releases) and we also got feedback from other companies doing the same.
 
 Enough background, let's see why you would want to use releases and how to assemble one.
 

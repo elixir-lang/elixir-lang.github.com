@@ -125,8 +125,6 @@ When you start the debugger, a Graphical User Interface will open in your machin
 
 <img src="/images/contents/debugger-elixir.gif" width="640" alt="Debugger GUI GIF" />
 
-Note: the Debugger snippet above was retrieved from ["Debugging techniques in Elixir" by Plataformatec](http://blog.plataformatec.com.br/2016/04/debugging-techniques-in-elixir-lang/).
-
 ## Observer
 
 For debugging complex systems, jumping at the code is not enough. It is necessary to have an understanding of the whole virtual machine, processes, applications, as well as set up tracing mechanisms. Luckily this can be achieved in Erlang with `:observer`. In your application:
@@ -142,9 +140,7 @@ The above will open another Graphical User Interface that provides many panes to
 
 <img src="/images/contents/kv-observer.png" width="640" alt="Observer GUI screenshot" />
 
-We explore the Observer in the context of an actual project [in the Dynamic Supervisor chapter of the Mix & OTP guide](/getting-started/mix-otp/dynamic-supervisor.html).
-
-You can also [use Observer to introspect a remote node](http://blog.plataformatec.com.br/2016/05/tracing-and-observing-your-remote-node/). This is one of the debugging techniques [the Phoenix framework used to achieve 2 million connections on a single machine](https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections).
+We explore the Observer in the context of an actual project [in the Dynamic Supervisor chapter of the Mix & OTP guide](/getting-started/mix-otp/dynamic-supervisor.html). This is one of the debugging techniques [the Phoenix framework used to achieve 2 million connections on a single machine](https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections).
 
 Finally, remember you can also get a mini-overview of the runtime info by calling `runtime_info/0` directly in IEx.
 

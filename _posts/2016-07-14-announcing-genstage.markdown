@@ -45,7 +45,7 @@ File.stream!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](https://hexdocs.pm/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happens when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](http://blog.plataformatec.com.br/2015/05/introducing-reducees/) in another article.
+By using `File.stream!` and `Stream.flat_map`, we build a lazy computation that will emit a single line, break that line into words, and emit such words one by one without building huge lists in memory when enumerated. The functions in the [Stream module](https://hexdocs.pm/elixir/Stream.html) just express the computation we want to perform. The computation itself, like traversing the file or breaking into words in `flat_map`, only happens when we call a function in the `Enum` module. We have covered [the foundation for Enum and Streams](https://dashbit.co/blog/introducing-reducees) in another article.
 
 The solution above allows us to work with large datasets without loading them all into memory. For large files, it is going to provide much better performance than the eager version. However, the solution above still does not leverage concurrency. For a machine with more than one core, which is the huge majority of machines we have available today, it is a suboptimal solution.
 

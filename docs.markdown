@@ -23,7 +23,7 @@ Choose which version you want documentation for.
 * [Logger](https://hexdocs.pm/logger/) - built-in Logger
 * [Mix](https://hexdocs.pm/mix/) - build tool
 
-#### Master
+#### Development
 
 * [Elixir](https://hexdocs.pm/elixir/master/) - standard library
 * [EEx](https://hexdocs.pm/eex/master/) - templating library

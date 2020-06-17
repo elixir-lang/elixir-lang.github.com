@@ -186,9 +186,7 @@ iex> map.c
 ** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
 
-Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post](http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
-
-> Note: Maps were recently introduced into the Erlang <abbr title="Virtual Machine">VM</abbr> and only from Elixir v1.2 are they capable of holding millions of keys efficiently. Therefore, if you are working with previous Elixir versions (v1.0 or v1.1) and you need to support at least hundreds of keys, you may consider using [the `HashDict` module](https://hexdocs.pm/elixir/HashDict.html).
+Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post by José Valim](https://dashbit.co/blog/writing-assertive-code-with-elixir) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
 ## Nested data structures
 

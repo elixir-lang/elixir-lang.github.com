@@ -8,9 +8,9 @@ layout: default
 
 {% include toc.html %}
 
-Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundation and explore how to build projects with [Mix and OTP](getting-started/mix-otp/introduction-to-mix.html).
+Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations and explore how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html). If you already know Erlang and you want to know Elixir (or vice-versa), check out our [Crash Course for Erlang developers](/crash-course.html).
 
-The Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that follows your pace and interests.
+Outside of our website, the Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that suits your pace and goals.
 
 ## Books
 
@@ -47,32 +47,12 @@ Learn the best practices for the whole life of your application, from design and
 
 <div class="clear"></div>
 
-<h4 class="resource">Introducing Elixir</h4>
-
-<a class="cover" href="http://shop.oreilly.com/product/0636920030584.do" title="Introducing Elixir: Getting Started in Functional Programming
-– by Simon St. Laurent, J. David Eisenberg"><img src="/images/learning/introducing-elixir.jpg" alt="Introducing Elixir cover" width="190" /></a>
-
-Elixir is an excellent language if you want to learn about functional programming, and with this hands-on introduction, you'll discover just how powerful and fun Elixir can be. This language combines the robust functional programming of Erlang with a syntax similar to Ruby, and includes powerful features for metaprogramming.
-
-This book shows you how to write simple Elixir programs by teaching one skill at a time. Once you pick up pattern matching, process-oriented programming, and other concepts, you'll understand why Elixir makes it easier to build concurrent and resilient programs that scale up and down with ease.
-
-<div class="clear"></div>
-
 <h4 class="resource">The Little Elixir and OTP Guidebook</h4>
 
 <a class="cover" href="http://www.manning.com/tanweihao/" title="The Little Elixir and OTP Guidebook
 – by Benjamin Tan Wei Hao"><img src="/images/learning/the-little-elixir-and-otp-guidebook-meap.jpg" alt="The Little Elixir and OTP Guidebook cover" width="190" /></a>
 
 The Little Elixir & OTP Guidebook gets you started programming applications with Elixir and OTP. You begin with a quick overview of the Elixir language syntax, along with just enough functional programming to use it effectively. Then, you'll dive straight into OTP and learn how it helps you build scalable, fault-tolerant and distributed applications through several fun examples. Come rediscover the joy of programming with Elixir and remember how it feels like to be a beginner again.
-
-<div class="clear"></div>
-
-<h4 class="resource">Elixir Cookbook</h4>
-
-<a class="cover" href="https://www.packtpub.com/application-development/elixir-cookbook" title="Elixir Cookbook
-– by Paulo A Pereira"><img src="/images/learning/elixir-cookbook.jpg" alt="Elixir Cookbook cover" width="190" /></a>
-
-This book is a set of recipes grouped by topic that acts as a reference to get ideas from or to quickly search for a solution to a problem. You will begin by launching an IEx session and using it to test some ideas. Next, you will perform various operations like loading and compiling modules, inspecting your system, generating a supervised app, and so on. Furthermore, you will be introduced to immutability, working with data structures, performing pattern matching, and using stream modules to generate infinite data sequences. You will learn about everything from joining strings to determining the word frequency in text. With respect to modules and functions, you will also discover how to load code from other modules and use guards and pattern matching in functions.
 
 <div class="clear"></div>
 
@@ -172,16 +152,6 @@ Topics include tech stacks, success stories, lessons learned and deployment tips
 <div class="clear"></div>
 
 ## Screencasts
-<h4 class="resource">Elixir Sips</h4>
-
-<a class="cover" href="http://elixirsips.com" title="Elixir Sips: Learn Elixir with Two Short Videos Each Week
-– with Josh Adams"><img src="/images/learning/elixir-sips.png" alt="ElixirSips cover" width="190" /></a>
-
-Elixir Sips is a screencast series that provides 2 short videos - typically from 2 to 7 minutes, but occasionally much longer - each week.  The videos consist of various topics, ranging from exploring a module in the standard library to trying out a new project to building a web-based Tetris game from scratch.
-
-The intended audience ranges from someone entirely new to the Elixir language, to experienced developers that want to get a broad range of topics to think about from time to time.
-
-<div class="clear"></div>
 
 <h4 class="resource">LearnElixir.tv</h4>
 
