@@ -60,7 +60,7 @@ Once the supervisor starts, it will traverse the list of children and it will in
 
 The `child_spec/1` function returns the child specification which describes how to start the process, if the process is a worker or a supervisor, if the process is temporary, transient or permanent and so on. The `child_spec/1` function is automatically defined when we `use Agent`, `use GenServer`, `use Supervisor`, etc. Let's give it a try in the terminal with `iex -S mix`:
 
-```iex
+```elixir
 iex(1)> KV.Registry.child_spec([])
 %{id: KV.Registry, start: {KV.Registry, :start_link, [[]]}}
 ```
@@ -71,7 +71,7 @@ After the supervisor retrieves all child specifications, it proceeds to start it
 
 Let's take the supervisor for a spin:
 
-```iex
+```elixir
 iex(1)> {:ok, sup} = KV.Supervisor.start_link([])
 {:ok, #PID<0.148.0>}
 iex(2)> Supervisor.which_children(sup)
@@ -82,7 +82,7 @@ So far we have started the supervisor and listed its children. Once the supervis
 
 What happens if we intentionally crash the registry started by the supervisor? Let's do so by sending it a bad input on `call`:
 
-```iex
+```elixir
 iex(3)> [{_, registry, _, _}] = Supervisor.which_children(sup)
 [{KV.Registry, #PID<0.150.0>, :worker, [KV.Registry]}]
 iex(4) GenServer.call(registry, :bad_input)
@@ -125,7 +125,7 @@ which in turn will register the process with the given name. The `:name` option 
 
 Let's give the updated supervisor a try inside `iex -S mix`:
 
-```iex
+```elixir
 iex> KV.Supervisor.start_link([])
 {:ok, #PID<0.66.0>}
 iex> KV.Registry.create(KV.Registry, "shopping")
@@ -170,7 +170,7 @@ Each application in our system can be started and stopped. The rules for startin
 
 Let's see this in practice. Start a console with `iex -S mix` and try:
 
-```iex
+```elixir
 iex> Application.start(:kv)
 {:error, {:already_started, :kv}}
 ```
@@ -179,14 +179,14 @@ Oops, it's already started. Mix normally starts the whole hierarchy of applicati
 
 We can pass an option to Mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
 
-```iex
+```elixir
 iex> Application.start(:kv)
 :ok
 ```
 
 We can stop our `:kv` application as well as the `:logger` application, which is started by default with Elixir:
 
-```iex
+```elixir
 iex> Application.stop(:kv)
 :ok
 iex> Application.stop(:logger)
@@ -195,14 +195,14 @@ iex> Application.stop(:logger)
 
 And let's try to start our application again:
 
-```iex
+```elixir
 iex> Application.start(:kv)
 {:error, {:not_started, :logger}}
 ```
 
 Now we get an error because an application that `:kv` depends on (`:logger` in this case) isn't started. We need to either start each application manually in the correct order or call `Application.ensure_all_started` as follows:
 
-```iex
+```elixir
 iex> Application.ensure_all_started(:kv)
 {:ok, [:logger, :kv]}
 ```
@@ -251,7 +251,7 @@ When we `use Application`, we may define a couple of functions, similar to when 
 
 Now that you have defined an application callback which starts our supervisor, we expect the `KV.Registry` process to be up and running as soon we start `iex -S mix`. Let's give it another try:
 
-```iex
+```elixir
 iex(1)> KV.Registry.create(KV.Registry, "shopping")
 :ok
 iex(2)> KV.Registry.lookup(KV.Registry, "shopping")

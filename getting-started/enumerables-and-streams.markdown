@@ -11,7 +11,7 @@ title: Enumerables and Streams
 
 Elixir provides the concept of enumerables and [the `Enum` module](https://hexdocs.pm/elixir/Enum.html) to work with them. We have already learned two enumerables: lists and maps.
 
-```iex
+```elixir
 iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
 [2, 4, 6]
 iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)
@@ -22,7 +22,7 @@ The `Enum` module provides a huge range of functions to transform, sort, group, 
 
 Elixir also provides ranges:
 
-```iex
+```elixir
 iex> Enum.map(1..3, fn x -> x * 2 end)
 [2, 4, 6]
 iex> Enum.reduce(1..3, 0, &+/2)
@@ -37,7 +37,7 @@ We say the functions in the `Enum` module are polymorphic because they can work 
 
 All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
 
-```iex
+```elixir
 iex> odd? = &(rem(&1, 2) != 0)
 #Function<6.80484245/1 in :erl_eval.expr/5>
 iex> Enum.filter(1..3, odd?)
@@ -46,7 +46,7 @@ iex> Enum.filter(1..3, odd?)
 
 This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
 
-```iex
+```elixir
 iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
 7500000000
 ```
@@ -57,7 +57,7 @@ The example above has a pipeline of operations. We start with a range and then m
 
 The `|>` symbol used in the snippet above is the **pipe operator**: it takes the output from the expression on its left side and passes it as the first argument to the function call on its right side. It's similar to the Unix `|` operator.  Its purpose is to highlight the data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the `|>` operator:
 
-```iex
+```elixir
 iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))
 7500000000
 ```
@@ -68,7 +68,7 @@ Find more about the pipe operator [by reading its documentation](https://hexdocs
 
 As an alternative to `Enum`, Elixir provides [the `Stream` module](https://hexdocs.pm/elixir/Stream.html) which supports lazy operations:
 
-```iex
+```elixir
 iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum
 7500000000
 ```
@@ -77,14 +77,14 @@ Streams are lazy, composable enumerables.
 
 In the example above, `1..100_000 |> Stream.map(&(&1 * 3))` returns a data type, an actual stream, that represents the `map` computation over the range `1..100_000`:
 
-```iex
+```elixir
 iex> 1..100_000 |> Stream.map(&(&1 * 3))
 #Stream<[enum: 1..100000, funs: [#Function<34.16982430/1 in Stream.map/2>]]>
 ```
 
 Furthermore, they are composable because we can pipe many stream operations:
 
-```iex
+```elixir
 iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?)
 #Stream<[enum: 1..100000, funs: [...]]>
 ```
@@ -93,7 +93,7 @@ Instead of generating intermediate lists, streams build a series of computations
 
 Many functions in the `Stream` module accept any enumerable as an argument and return a stream as a result. It also provides functions for creating streams. For example, `Stream.cycle/1` can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like `Enum.map/2` on such streams, as they would cycle forever:
 
-```iex
+```elixir
 iex> stream = Stream.cycle([1, 2, 3])
 #Function<15.16982430/2 in Stream.unfold/2>
 iex> Enum.take(stream, 10)
@@ -102,7 +102,7 @@ iex> Enum.take(stream, 10)
 
 On the other hand, `Stream.unfold/2` can be used to generate values from a given initial value:
 
-```iex
+```elixir
 iex> stream = Stream.unfold("hełło", &String.next_codepoint/1)
 #Function<39.75994740/2 in Stream.unfold/2>
 iex> Enum.take(stream, 3)
@@ -111,7 +111,7 @@ iex> Enum.take(stream, 3)
 
 Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in the case of failures. For example, `File.stream!/1` builds on top of `Stream.resource/3` to stream files:
 
-```iex
+```elixir
 iex> stream = File.stream!("path/to/file")
 %File.Stream{
   line_or_bytes: :line,

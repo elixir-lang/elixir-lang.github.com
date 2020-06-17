@@ -42,7 +42,7 @@ Even with all those improvements, Elixir v0.13.0 is backwards compatible with El
 
 Maps are key-value data structures:
 
-```iex
+```elixir
 iex> map = %{"hello" => :world}
 %{"hello" => :world}
 iex> map["hello"]
@@ -55,7 +55,7 @@ Maps do not have a explicit ordering and keys and values can be any term.
 
 Maps can be pattern matched on:
 
-```iex
+```elixir
 iex> %{"hello" => world} = map
 %{"hello" => :world}
 iex> world
@@ -72,7 +72,7 @@ Developers can use the functions in the [`Map` module](https://hexdocs.pm/elixir
 
 Maps also provide special syntax for creating, accessing and updating maps with atom keys:
 
-```iex
+```elixir
 iex> user = %{name: "john", age: 27}
 %{name: "john", age: 27}
 iex> user.name
@@ -85,7 +85,7 @@ iex> user.name
 
 Both access and update syntax above expect the given keys to exist. Trying to access or update a key that does not exist raises an error:
 
-```iex
+```elixir
 iex> %{ user | address: [] }
 ** (ArgumentError) argument error
      :maps.update(:address, [], %{})
@@ -110,7 +110,7 @@ Internally, this record is represented as the following tuple:
 
 Records can also be created and pattern matched on:
 
-```iex
+```elixir
 iex> user = User[name: "john"]
 User[name: "john", age: 0]
 iex> user.name
@@ -156,21 +156,21 @@ end
 
 Now a `User` struct can be created without a need to explicitly list all necessary fields:
 
-```iex
+```elixir
 iex> user = %User{name: "john"}
 %User{name: "john", age: 0}
 ```
 
 Trying to create a struct with an unknown key raises an error during compilation:
 
-```iex
+```elixir
 iex> user = %User{address: []}
 ** (CompileError) unknown key :address for struct User
 ```
 
 Furthermore, every struct has a `__struct__` field which contains the struct name:
 
-```iex
+```elixir
 iex> user.__struct__
 User
 ```
@@ -195,21 +195,21 @@ Erlang R17 also introduced recursion to anonymous functions. This feature, while
 
 The most common use case of a comprehension are [list comprehensions](https://en.wikipedia.org/wiki/List_comprehension). For example, we can get all the square values of elements in a list as follows:
 
-```iex
+```elixir
 iex> for n <- [1, 2, 3, 4], do: n * n
 [1, 4, 9, 16]
 ```
 
 We say the `n <- [1, 2, 3, 4]` part is a comprehension generator. In previous Elixir versions, Elixir supported only lists in generators. In Elixir v0.13.0, any Enumerable is supported (ranges, maps, etc):
 
-```iex
+```elixir
 iex> for n <- 1..4, do: n * n
 [1, 4, 9, 16]
 ```
 
 As in previous Elixir versions, there is also support for a bitstring generator. In the example below, we receive a stream of RGB pixels as a binary and break it down into triplets:
 
-```iex
+```elixir
 iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>
 iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 [{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
@@ -217,7 +217,7 @@ iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 
 By default, a comprehension returns a list as a result. However the result of a comprehension can be inserted into different data structures by passing the `:into` option. For example, we can use bitstring generators with the `:into` option to easily remove all spaces in a string:
 
-```iex
+```elixir
 iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 "helloworld"
 ```
@@ -226,7 +226,7 @@ Sets, maps and other dictionaries can also be given with the `:into` option. In 
 
 For example, the `IO` module provides streams, that are both `Enumerable` and `Collectable`. You can implement an echo terminal that returns whatever is typed into the shell, but in upcase, using comprehensions:
 
-```iex
+```elixir
 iex> stream = IO.stream(:stdio, :line)
 iex> for line <- stream, into: stream do
 ...>   String.upcase(line) <> "\n"

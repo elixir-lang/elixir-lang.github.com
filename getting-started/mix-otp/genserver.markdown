@@ -27,7 +27,7 @@ In the session above we interacted with the "shopping" bucket.
 
 Since agents are processes, each bucket has a process identifier (pid), but buckets do not have a name. Back [in the Process chapter](/getting-started/processes.html), we have learned that we can register processes in Elixir by giving them atom names:
 
-```iex
+```elixir
 iex> Agent.start_link(fn -> %{} end, name: :shopping)
 {:ok, #PID<0.43.0>}
 iex> KV.Bucket.put(:shopping, "milk", 1)
@@ -254,7 +254,7 @@ In order to fix this bug, we need the registry to monitor every bucket it spawns
 
 Let's first play with monitors by starting a new console with `iex -S mix`:
 
-```iex
+```elixir
 iex> {:ok, pid} = KV.Bucket.start_link([])
 {:ok, #PID<0.66.0>}
 iex> Process.monitor(pid)

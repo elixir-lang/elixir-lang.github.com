@@ -45,7 +45,7 @@ $ iex macros.exs
 
 And play with those definitions:
 
-```iex
+```elixir
 iex> require Unless
 iex> Unless.macro_unless true, do: IO.puts "this should never be printed"
 nil
@@ -85,7 +85,7 @@ And it then returned a quoted expression as follows:
 
 We can actually verify that this is the case by using `Macro.expand_once/2`:
 
-```iex
+```elixir
 iex> expr = quote do: Unless.macro_unless(true, do: IO.puts "this should never be printed")
 iex> res  = Macro.expand_once(expr, __ENV__)
 iex> IO.puts Macro.to_string(res)
@@ -212,7 +212,7 @@ When calling `Macro.expand_once/2` earlier in this chapter, we used the special 
 
 `__ENV__` returns an instance of the `Macro.Env` struct which contains useful information about the compilation environment, including the current module, file, and line, all variables defined in the current scope, as well as imports, requires and so on:
 
-```iex
+```elixir
 iex> __ENV__.module
 nil
 iex> __ENV__.file
@@ -233,7 +233,7 @@ Elixir also supports private macros via `defmacrop`. As private functions, these
 
 It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won't be expanded and will be translated to a function call:
 
-```iex
+```elixir
 iex> defmodule Sample do
 ...>  def four, do: two + two
 ...>  defmacrop two, do: 2

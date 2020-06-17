@@ -53,7 +53,7 @@ end
 
 And compiled from `iex`:
 
-```iex
+```elixir
 Interactive Elixir
 iex> c("module_name.ex")
 [ModuleName]
@@ -141,7 +141,7 @@ ok
 
 **Elixir**
 
-```iex
+```elixir
 iex> a = 1
 1
 iex> a = 2

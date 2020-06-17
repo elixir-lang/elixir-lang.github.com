@@ -38,7 +38,7 @@ alias MyApp.{Foo, Bar, Baz}
 
 We have also added support for variables in map keys. Now you can write:
 
-```iex
+```elixir
 iex> key = :hello
 iex> value = "world"
 iex> %{key => value}

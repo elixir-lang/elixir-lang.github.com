@@ -11,7 +11,7 @@ In Elixir, it is common to loop over an Enumerable, often filtering out some res
 
 For example, we can map a list of integers into their squared values:
 
-```iex
+```elixir
 iex> for n <- [1, 2, 3, 4], do: n * n
 [1, 4, 9, 16]
 ```
@@ -22,14 +22,14 @@ A comprehension is made of three parts: generators, filters, and collectables.
 
 In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed on the right-hand side of the generator expression:
 
-```iex
+```elixir
 iex> for n <- 1..4, do: n * n
 [1, 4, 9, 16]
 ```
 
 Generator expressions also support pattern matching on their left-hand side; all non-matching patterns are *ignored*. Imagine that, instead of a range, we have a keyword list where the key is the atom `:good` or `:bad` and we only want to compute the square of the `:good` values:
 
-```iex
+```elixir
 iex> values = [good: 1, good: 2, bad: 3, good: 4]
 iex> for {:good, n} <- values, do: n * n
 [1, 4, 16]
@@ -37,7 +37,7 @@ iex> for {:good, n} <- values, do: n * n
 
 Alternatively to pattern matching, filters can be used to select some particular elements. For example, we can select the multiples of 3 and discard all others:
 
-```iex
+```elixir
 iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end
 iex> for n <- 0..5, multiple_of_3?.(n), do: n * n
 [0, 9]
@@ -59,7 +59,7 @@ end
 
 Multiple generators can also be used to calculate the cartesian product of two lists:
 
-```iex
+```elixir
 iex> for i <- [:a, :b, :c], j <- [1, 2], do:  {i, j}
 [a: 1, a: 2, b: 1, b: 2, c: 1, c: 2]
 ```
@@ -70,7 +70,7 @@ Finally, keep in mind that variable assignments inside the comprehension, be it 
 
 Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:
 
-```iex
+```elixir
 iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>
 iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 [{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
@@ -84,7 +84,7 @@ In the examples above, all the comprehensions returned lists as their result. Ho
 
 For example, a bitstring generator can be used with the `:into` option in order to easily remove all spaces in a string:
 
-```iex
+```elixir
 iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 "helloworld"
 ```
@@ -93,14 +93,14 @@ Sets, maps, and other dictionaries can also be given to the `:into` option. In g
 
 A common use case of `:into` can be transforming values in a map, without touching the keys:
 
-```iex
+```elixir
 iex> for {key, val} <- %{"a" => 1, "b" => 2}, into: %{}, do: {key, val * val}
 %{"a" => 1, "b" => 4}
 ```
 
 Let's make another example using streams. Since the `IO` module provides streams (that are both `Enumerable`s and `Collectable`s), an echo terminal that echoes back the upcased version of whatever is typed can be implemented using comprehensions:
 
-```iex
+```elixir
 iex> stream = IO.stream(:stdio, :line)
 iex> for line <- stream, into: stream do
 ...>   String.upcase(line) <> "\n"

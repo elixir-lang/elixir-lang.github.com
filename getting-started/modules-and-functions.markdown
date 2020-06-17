@@ -10,14 +10,14 @@ redirect_from: /getting-started/modules.html
 
 In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](https://hexdocs.pm/elixir/String.html):
 
-```iex
+```elixir
 iex> String.length("hello")
 5
 ```
 
 In order to create our own modules in Elixir, we use the `defmodule` macro. We use the `def` macro to define functions in that module:
 
-```iex
+```elixir
 iex> defmodule Math do
 ...>   def sum(a, b) do
 ...>     a + b
@@ -50,7 +50,7 @@ $ elixirc math.ex
 
 This will generate a file named `Elixir.Math.beam` containing the bytecode for the defined module. If we start `iex` again, our module definition will be available (provided that `iex` is started in the same directory the bytecode file is in):
 
-```iex
+```elixir
 iex> Math.sum(1, 2)
 3
 ```
@@ -148,7 +148,7 @@ Throughout this tutorial, we have been using the notation `name/arity` to refer 
 $ iex math.exs
 ```
 
-```iex
+```elixir
 iex> Math.zero?(0)
 true
 iex> fun = &Math.zero?/1
@@ -163,7 +163,7 @@ Remember Elixir makes a distinction between anonymous functions and named functi
 
 Local or imported functions, like `is_function/1`, can be captured without the module:
 
-```iex
+```elixir
 iex> &is_function/1
 &:erlang.is_function/1
 iex> (&is_function/1).(fun)
@@ -172,7 +172,7 @@ true
 
 Note the capture syntax can also be used as a shortcut for creating functions:
 
-```iex
+```elixir
 iex> fun = &(&1 + 1)
 #Function<6.71889879/1 in :erl_eval.expr/5>
 iex> fun.(1)
@@ -188,7 +188,7 @@ The `&1` represents the first argument passed into the function. `&(&1 + 1)` abo
 
 If you want to capture a function from a module, you can do `&Module.function()`:
 
-```iex
+```elixir
 iex> fun = &List.flatten(&1, &2)
 &List.flatten/2
 iex> fun.([1, [[2], 3]], [4, 5])
@@ -222,7 +222,7 @@ defmodule DefaultTest do
 end
 ```
 
-```iex
+```elixir
 iex> DefaultTest.dowork
 "hello"
 iex> DefaultTest.dowork 123
@@ -279,13 +279,13 @@ The compiler is telling us that invoking the `join` function with two arguments 
 $ iex concat.ex
 ```
 
-```iex
+```elixir
 iex> Concat.join "Hello", "world"
 ***First join
 "Helloworld"
 ```
 
-```iex
+```elixir
 iex> Concat.join "Hello", "world", "_"
 ***Second join
 "Hello_world"

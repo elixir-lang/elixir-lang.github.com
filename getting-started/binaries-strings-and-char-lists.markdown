@@ -9,7 +9,7 @@ title: Binaries, strings, and charlists
 
 In "Basic types", we learned a little bit about strings and we used the `is_binary/1` function for checks:
 
-```iex
+```elixir
 iex> string = "hello"
 "hello"
 iex> is_binary(string)
@@ -26,7 +26,7 @@ Unicode organizes all of the characters in its repertoire into code charts, and 
 
 In Elixir you can use a `?` in front of a character literal to reveal its code point:
 
-```iex
+```elixir
 iex> ?a
 97
 iex> ?ł
@@ -35,7 +35,7 @@ iex> ?ł
 
 Note that most Unicode code charts will refer to a code point by its hexadecimal representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\u` notation and the hex representation of its code point number:
 
-```iex
+```elixir
 iex> "\u0061" === "a"
 true
 iex> 0x0061 = 97 = ?a
@@ -52,7 +52,7 @@ Elixir uses UTF-8 to encode its strings, which means that code points are encode
 
 Because UTF-8 is a variable width encoding, the number of characters (i.e. code points) and the number of bytes in a string may not be 1:1. Consider the following:
 
-```iex
+```elixir
 iex> string = "hełło"
 "hełło"
 iex> String.length(string)
@@ -67,14 +67,14 @@ iex> byte_size(string)
 
 A common trick in Elixir when you want to see the inner binary representation of a string is to concatenate the null byte `<<0>>` to it:
 
-```iex
+```elixir
 iex> "hełło" <> <<0>>
 <<104, 101, 197, 130, 197, 130, 111, 0>>
 ```
 
 Alternatively, you can view a string's binary representation by using [IO.inspect/2](https://hexdocs.pm/elixir/IO.html#inspect/2):
 
-```iex
+```elixir
 iex> IO.inspect("hełło", binaries: :as_binaries)
 <<104, 101, 197, 130, 197, 130, 111>>
 ```
@@ -89,7 +89,7 @@ A complete reference about the binary / bitstring constructor `<<>>` can be foun
 
 By default, 8 bits (i.e. 1 byte) is used to store each number in a bitstring, but you can manually specify the number of bits via a `::n` modifier to denote the size in `n` bits, or you can use the more verbose declaration `::size(n)`:
 
-```iex
+```elixir
 iex> <<42>> === <<42::8>>
 true
 iex> <<3::4>>
@@ -98,14 +98,14 @@ iex> <<3::4>>
 
 For example, the decimal number `3` when represented with 4 bits in base 2 would be `0011`, which is equivalent to the values `0`, `0`, `1`, `1`, each stored using 1 bit:
 
-```iex
+```elixir
 iex> <<0::1, 0::1, 1::1, 1::1>> == <<3::4>>
 true
 ```
 
 Any value that exceeds what can be stored by the number of bits provisioned is truncated:
 
-```iex
+```elixir
 iex> <<1>> === <<257>>
 true
 ```
@@ -115,7 +115,7 @@ Here, 257 in base 2 would be represented as `100000001`, but since we have reser
 
 **A binary is a bitstring where the number of bits is divisible by 8.** That means that every binary is a bitstring, but not every bitstring is a binary. We can use the `is_bitstring/1` and `is_binary/1` functions to demonstrate this.
 
-```iex
+```elixir
 iex> is_bitstring(<<3::4>>)
 true
 iex> is_binary(<<3::4>>)
@@ -130,7 +130,7 @@ true
 
 We can pattern match on binaries / bitstrings:
 
-```iex
+```elixir
 iex> <<0, 1, x>> = <<0, 1, 2>>
 <<0, 1, 2>>
 iex> x
@@ -141,7 +141,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 
 Note that unless you explicitly use `::` modifiers, each entry in the binary pattern is expected to match a single byte (exactly 8 bits). If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
 
-```iex
+```elixir
 iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
 <<0, 1, 2, 3>>
 iex> x
@@ -150,7 +150,7 @@ iex> x
 
 There are a couple other modifiers that can be useful when doing pattern matches on binaries. The `binary-size(n)` modifier will match `n` bytes in a binary:
 
-```iex
+```elixir
 iex> <<head::binary-size(2), rest::binary>> = <<0, 1, 2, 3>>
 <<0, 1, 2, 3>>
 iex> head
@@ -161,7 +161,7 @@ iex> rest
 
 **A string is a UTF-8 encoded binary**, where the code point for each character is encoded using 1 to 4 bytes. Thus every string is a binary, but due to the UTF-8 standard encoding rules, not every binary is a valid string.
 
-```iex
+```elixir
 iex> is_binary("hello")
 true
 iex> is_binary(<<239, 191, 19>>)
@@ -172,7 +172,7 @@ false
 
 The string concatenation operator `<>` is actually a binary concatenation operator:
 
-```iex
+```elixir
 iex> "a" <> "ha"
 "aha"
 iex> <<0, 1>> <> <<2, 3>>
@@ -181,7 +181,7 @@ iex> <<0, 1>> <> <<2, 3>>
 
 Given strings are binaries, we can also pattern match on strings:
 
-```iex
+```elixir
 iex> <<head, rest::binary>> = "banana"
 "banana"
 iex> head == ?b
@@ -192,7 +192,7 @@ iex> rest
 
 However, remember binary pattern matching works on *bytes*, so matching on the string like "über" with multibyte characters won't match on the _character_, it will match on the _first byte of that character_:
 
-```iex
+```elixir
 iex> "ü" <> <<0>>
 <<195, 188, 0>>
 iex> <<x, rest::binary>> = "über"
@@ -207,7 +207,7 @@ Above, `x` matched on only the first byte of the multibyte `ü` character.
 
 Therefore, when pattern matching on strings, it is important to use the `utf8` modifier:
 
-```iex
+```elixir
 iex> <<x::utf8, rest::binary>> = "über"
 "über"
 iex> x == ?ü
@@ -226,7 +226,7 @@ Our tour of our bitstrings, binaries, and strings is nearly complete, but we hav
 
 Whereas strings (i.e. binaries) are created using double-quotes, charlists are created with single-quoted literals:
 
-```iex
+```elixir
 iex> 'hełło'
 [104, 101, 322, 322, 111]
 iex> is_list 'hełło'
@@ -239,7 +239,7 @@ iex> List.first('hello')
 
 You can see that instead of containing bytes, a charlist contains integer code points. By default, IEx will only output code points if any of the integers falls outside the ASCII range of 0 to 127.
 
-```iex
+```elixir
 iex> 'hello'
 'hello'
 iex> 'hełło'
@@ -248,7 +248,7 @@ iex> 'hełło'
 
 If you wish to inspect the code points in a single-quoted literal, you can force this by passing the `charlists` option to `IO.inspect/2`:
 
-```iex
+```elixir
 iex> IO.inspect('hello', charlists: :as_lists)
 [104, 101, 108, 108, 111]
 'hello'
@@ -256,14 +256,14 @@ iex> IO.inspect('hello', charlists: :as_lists)
 
 Interpreting integers as codepoints may lead to some surprising behavior. For example, if you are storing a list of integers that happen to range between 0 and 127, by default IEx will interpret this as a charlist and it will display the corresponding ASCII characters.
 
-```iex
+```elixir
 iex> heartbeats_per_minute = [99, 97, 116]
 'cat'
 ```
 
 You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:
 
-```iex
+```elixir
 iex> to_charlist "hełło"
 [104, 101, 322, 322, 111]
 iex> to_string 'hełło'
@@ -278,7 +278,7 @@ Note that those functions are polymorphic: not only do they convert charlists to
 
 String (binary) concatenation uses the `<>` operator but charlists, being lists, use the list concatenation operator `++`:
 
-```iex
+```elixir
 iex> 'this ' <> 'fails'
 ** (CompileError) iex:2: invalid literal 'this ' in <<>>
     (elixir) src/elixir_bitstring.erl:19: :elixir_bitstring.expand/6

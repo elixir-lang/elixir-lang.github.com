@@ -77,7 +77,7 @@ Elixir provides macros as a mechanism for meta-programming (writing code that ge
 
 Public functions in modules are globally available, but in order to use macros, you need to opt-in by requiring the module they are defined in.
 
-```iex
+```elixir
 iex> Integer.is_odd(3)
 ** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
     (elixir) src/elixir_dispatch.erl:97: :elixir_dispatch.dispatch_require/6
@@ -97,7 +97,7 @@ We use `import` whenever we want to access functions or macros from other module
 
 For example, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
-```iex
+```elixir
 iex> import List, only: [duplicate: 2]
 List
 iex> duplicate :ok, 3
@@ -164,7 +164,7 @@ At this point, you may be wondering: what exactly is an Elixir alias and how is 
 
 An alias in Elixir is a capitalized identifier (like `String`, `Keyword`, etc) which is converted to an atom during compilation. For instance, the `String` alias translates by default to the atom `:"Elixir.String"`:
 
-```iex
+```elixir
 iex> is_atom(String)
 true
 iex> to_string(String)
@@ -177,7 +177,7 @@ By using the `alias/2` directive, we are changing the atom the alias expands to.
 
 Aliases expand to atoms because in the Erlang <abbr title="Virtual Machine">VM</abbr> (and consequently Elixir) modules are always represented by atoms. For example, that's the mechanism we use to call Erlang modules:
 
-```iex
+```elixir
 iex> :lists.flatten([1, [2], 3])
 [1, 2, 3]
 ```

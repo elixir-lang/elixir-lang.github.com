@@ -19,7 +19,7 @@ In this chapter, we will learn about ETS (Erlang Term Storage) and how to use it
 
 ETS allows us to store any Elixir term in an in-memory table. Working with ETS tables is done via [Erlang's `:ets` module](http://www.erlang.org/doc/man/ets.html):
 
-```iex
+```elixir
 iex> table = :ets.new(:buckets_registry, [:set, :protected])
 #Reference<0.1885502827.460455937.234656>
 iex> :ets.insert(table, {"foo", self()})
@@ -38,7 +38,7 @@ Be aware that if your Read/Write call violates the access control, the operation
 
 ETS tables can also be named, allowing us to access them by a given name:
 
-```iex
+```elixir
 iex> :ets.new(:buckets_registry, [:named_table])
 :buckets_registry
 iex> :ets.insert(:buckets_registry, {"foo", self()})

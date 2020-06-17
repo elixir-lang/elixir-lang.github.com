@@ -109,7 +109,7 @@ end
 
 Assuming we defined `TestCase` in a file named `tests.exs`, we can open it up by running `iex tests.exs` and define our first tests:
 
-```iex
+```elixir
 iex> defmodule MyTest do
 ...>   use TestCase
 ...>
@@ -121,7 +121,7 @@ iex> defmodule MyTest do
 
 For now, we don't have a mechanism to run tests, but we know that a function named "test hello" was defined behind the scenes. When we invoke it, it should fail:
 
-```iex
+```elixir
 iex> MyTest."test hello"()
 ** (MatchError) no match of right hand side value: "world"
 ```
@@ -188,7 +188,7 @@ end
 
 By starting a new IEx session, we can now define our tests and run them:
 
-```iex
+```elixir
 iex> defmodule MyTest do
 ...>   use TestCase
 ...>

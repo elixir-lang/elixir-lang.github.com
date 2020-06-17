@@ -40,7 +40,7 @@ $ iex -S mix
 
 And play a bit with agents:
 
-```iex
+```elixir
 iex> {:ok, agent} = Agent.start_link fn -> [] end
 {:ok, #PID<0.57.0>}
 iex> Agent.update(agent, fn list -> ["eggs" | list] end)
@@ -55,7 +55,7 @@ We started an agent with an initial state of an empty list. We updated the agent
 
 The `Agent.update/3` function accepts as a second argument any function that receives one argument and returns a value:
 
-```iex
+```elixir
 iex> {:ok, agent} = Agent.start_link fn -> [] end
 {:ok, #PID<0.338.0>}
 iex> Agent.update(agent, fn _list -> 123 end)

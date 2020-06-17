@@ -22,7 +22,7 @@ Broadly speaking, the Registry is a local, decentralized and scalable key-value 
 
 A registry may have unique or duplicate keys. Every key-value pair is associated to the process registering the key. Keys are automatically removed once the owner process terminates. Starting, registering and looking up keys is quite straight-forward:
 
-```iex
+```elixir
 iex> Registry.start_link(:unique, MyRegistry)
 iex> {:ok, _} = Registry.register(MyRegistry, "hello", 1)
 iex> Registry.lookup(MyRegistry, "hello")

@@ -71,7 +71,7 @@ Elixir v1.3 also introduces 3 new sigils related to the types above:
 
 This release introduces new accessors to make it simpler for developers to traverse nested data structures, traversing and updating data in different ways.  For instance, given a user with a list of languages, here is how to deeply traverse the map and convert all language names to uppercase:
 
-```iex
+```elixir
 iex> user = %{name: "john",
 ...>          languages: [%{name: "elixir", type: :functional},
 ...>                      %{name: "c", type: :procedural}]}

@@ -13,7 +13,7 @@ In this chapter, we will learn about the `case`, `cond`, and `if` control flow s
 
 `case` allows us to compare a value against many patterns until we find a matching one:
 
-```iex
+```elixir
 iex> case {1, 2, 3} do
 ...>   {4, 5, 6} ->
 ...>     "This clause won't match"
@@ -27,7 +27,7 @@ iex> case {1, 2, 3} do
 
 If you want to pattern match against an existing variable, you need to use the `^` operator:
 
-```iex
+```elixir
 iex> x = 1
 1
 iex> case 10 do
@@ -39,7 +39,7 @@ iex> case 10 do
 
 Clauses also allow extra conditions to be specified via guards:
 
-```iex
+```elixir
 iex> case {1, 2, 3} do
 ...>   {1, x, 3} when x > 0 ->
 ...>     "Will match"
@@ -53,7 +53,7 @@ The first clause above will only match when `x` is positive.
 
 Keep in mind errors in guards do not leak but simply make the guard fail:
 
-```iex
+```elixir
 iex> hd(1)
 ** (ArgumentError) argument error
 iex> case 1 do
@@ -65,7 +65,7 @@ iex> case 1 do
 
 If none of the clauses match, an error is raised:
 
-```iex
+```elixir
 iex> case :ok do
 ...>   :error -> "Won't match"
 ...> end
@@ -76,7 +76,7 @@ Consult [the full documentation for guards](https://hexdocs.pm/elixir/guards.htm
 
 Note anonymous functions can also have multiple clauses and guards:
 
-```iex
+```elixir
 iex> f = fn
 ...>   x, y when x > 0 -> x + y
 ...>   x, y -> x * y
@@ -90,7 +90,7 @@ iex> f.(-1, 3)
 
 The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised.
 
-```iex
+```elixir
 iex> f2 = fn
 ...>   x, y when x > 0 -> x + y
 ...>   x, y, z -> x * y + z
@@ -102,7 +102,7 @@ iex> f2 = fn
 
 `case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that does not evaluate to `nil` or `false`. In such cases, one may use `cond`:
 
-```iex
+```elixir
 iex> cond do
 ...>   2 + 2 == 5 ->
 ...>     "This will not be true"
@@ -118,7 +118,7 @@ This is equivalent to `else if` clauses in many imperative languages (although u
 
 If all of the conditions return `nil` or `false`, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 
-```iex
+```elixir
 iex> cond do
 ...>   2 + 2 == 5 ->
 ...>     "This is never true"
@@ -132,7 +132,7 @@ iex> cond do
 
 Finally, note `cond` considers any value besides `nil` and `false` to be true:
 
-```iex
+```elixir
 iex> cond do
 ...>   hd([1, 2, 3]) ->
 ...>     "1 is considered as true"
@@ -144,7 +144,7 @@ iex> cond do
 
 Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for only one condition:
 
-```iex
+```elixir
 iex> if true do
 ...>   "This works!"
 ...> end
@@ -159,7 +159,7 @@ If the condition given to `if/2` returns `false` or `nil`, the body given betwee
 
 They also support `else` blocks:
 
-```iex
+```elixir
 iex> if nil do
 ...>   "This won't be seen"
 ...> else
@@ -174,21 +174,21 @@ iex> if nil do
 
 At this point, we have learned four control structures: `case`, `cond`, `if`, and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:
 
-```iex
+```elixir
 iex> if true, do: 1 + 2
 3
 ```
 
 Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by a comma. We say this syntax is using *keyword lists*. We can pass `else` using keywords too:
 
-```iex
+```elixir
 iex> if false, do: :this, else: :that
 :that
 ```
 
 `do/end` blocks are a syntactic convenience built on top of the keywords one. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
 
-```iex
+```elixir
 iex> if true do
 ...>   a = 1 + 2
 ...>   a + 10
@@ -203,7 +203,7 @@ iex> if true, do: (
 
 One thing to keep in mind when using `do/end` blocks is they are always bound to the outermost function call. For example, the following expression:
 
-```iex
+```elixir
 iex> is_number if true do
 ...>  1 + 2
 ...> end
@@ -212,7 +212,7 @@ iex> is_number if true do
 
 Would be parsed as:
 
-```iex
+```elixir
 iex> is_number(if true) do
 ...>  1 + 2
 ...> end
@@ -223,7 +223,7 @@ which leads to an undefined function error because that invocation passes two ar
 
 Adding explicit parentheses is enough to bind the block to `if`:
 
-```iex
+```elixir
 iex> is_number(if true do
 ...>  1 + 2
 ...> end)

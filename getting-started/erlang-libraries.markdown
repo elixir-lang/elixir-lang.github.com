@@ -22,7 +22,7 @@ The built-in Elixir String module handles binaries that are UTF-8 encoded.
 [The binary module](http://erlang.org/doc/man/binary.html) is useful when
 you are dealing with binary data that is not necessarily UTF-8 encoded.
 
-```iex
+```elixir
 iex> String.to_charlist "Ø"
 [216]
 iex> :binary.bin_to_list "Ø"
@@ -40,7 +40,7 @@ languages. Luckily, the Erlang standard library functions `:io.format/2` and
 the second formats to an iolist. The format specifiers differ from `printf`,
 [refer to the Erlang documentation for details](http://erlang.org/doc/man/io.html#format-1).
 
-```iex
+```elixir
 iex> :io.format("Pi is approximately given by:~10.3f~n", [:math.pi])
 Pi is approximately given by:     3.142
 :ok
@@ -56,7 +56,7 @@ Unicode handling.
 [The crypto module](http://erlang.org/doc/man/crypto.html) contains hashing
 functions, digital signatures, encryption and more:
 
-```iex
+```elixir
 iex> Base.encode16(:crypto.hash(:sha256, "Elixir"))
 "3315715A7A3AD57428298676C5AE465DADA38D951BDFAC9348A8A31E9C7401CB"
 ```
@@ -82,7 +82,7 @@ for instance, the shortest path between two vertices, or loops in the graph.
 
 Given three vertices, find the shortest path from the first to the last.
 
-```iex
+```elixir
 iex> digraph = :digraph.new()
 iex> coords = [{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}]
 iex> [v0, v1, v2] = (for c <- coords, do: :digraph.add_vertex(digraph, c))
@@ -110,7 +110,7 @@ mechanism.
 The functions in the `ets` module will modify the state of the table as a
 side-effect.
 
-```iex
+```elixir
 iex> table = :ets.new(:ets_test, [])
 # Store as tuples with {name, population}
 iex> :ets.insert(table, {"China", 1_374_000_000})
@@ -128,7 +128,7 @@ iex> :ets.i(table)
 mathematical operations covering trigonometry, exponential, and logarithmic
 functions.
 
-```iex
+```elixir
 iex> angle_45_deg = :math.pi() * 45.0 / 180.0
 iex> :math.sin(angle_45_deg)
 0.7071067811865475
@@ -143,7 +143,7 @@ iex> :math.log(7.694785265142018e23)
 The [`queue` is a data structure](http://erlang.org/doc/man/queue.html)
 that implements (double-ended) FIFO (first-in first-out) queues efficiently:
 
-```iex
+```elixir
 iex> q = :queue.new
 iex> q = :queue.in("A", q)
 iex> q = :queue.in("B", q)
@@ -163,7 +163,7 @@ iex> value
 [`rand` has functions](http://erlang.org/doc/man/rand.html) for returning
 random values and setting the random seed.
 
-```iex
+```elixir
 iex> :rand.uniform()
 0.8175669086010815
 iex> _ = :rand.seed(:exs1024, {123, 123534, 345345})
@@ -180,7 +180,7 @@ ZIP files to and from disk or memory, as well as extracting file information.
 
 This code counts the number of files in a ZIP file:
 
-```iex
+```elixir
 iex> :zip.foldl(fn _, _, _, acc -> acc + 1 end, 0, :binary.bin_to_list("file.zip"))
 {:ok, 633}
 ```
@@ -188,7 +188,7 @@ iex> :zip.foldl(fn _, _, _, acc -> acc + 1 end, 0, :binary.bin_to_list("file.zip
 [The `zlib` module](http://erlang.org/doc/man/zlib.html) deals with data compression in zlib format, as found in the
 `gzip` command.
 
-```iex
+```elixir
 iex> song = "
 ...> Mary had a little lamb,
 ...> His fleece was white as snow,

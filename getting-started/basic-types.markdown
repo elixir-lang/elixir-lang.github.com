@@ -9,7 +9,7 @@ title: Basic types
 
 In this chapter we will learn more about Elixir basic types: integers, floats, booleans, atoms, strings, lists and tuples. Some basic types are:
 
-```iex
+```elixir
 iex> 1          # integer
 iex> 0x1F       # integer
 iex> 1.0        # float
@@ -24,7 +24,7 @@ iex> {1, 2, 3}  # tuple
 
 Open up `iex` and type the following expressions:
 
-```iex
+```elixir
 iex> 1 + 2
 3
 iex> 5 * 5
@@ -35,7 +35,7 @@ iex> 10 / 2
 
 Notice that `10 / 2` returned a float `5.0` instead of an integer `5`. This is expected. In Elixir, the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
 
-```iex
+```elixir
 iex> div(10, 2)
 5
 iex> div 10, 2
@@ -48,7 +48,7 @@ Notice that Elixir allows you to drop the parentheses when invoking named functi
 
 Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:
 
-```iex
+```elixir
 iex> 0b1010
 10
 iex> 0o777
@@ -59,7 +59,7 @@ iex> 0x1F
 
 Float numbers require a dot followed by at least one digit and also support `e` for scientific notation:
 
-```iex
+```elixir
 iex> 1.0
 1.0
 iex> 1.0e-10
@@ -70,7 +70,7 @@ Floats in Elixir are 64-bit double precision.
 
 You can invoke the `round` function to get the closest integer to a given float, or the `trunc` function to get the integer part of a float.
 
-```iex
+```elixir
 iex> round(3.58)
 4
 iex> trunc(3.58)
@@ -83,7 +83,7 @@ Functions in Elixir are identified by both their name and their arity. The arity
 
 We can also use this syntax to access documentation. The Elixir shell defines the `h` function, which you can use to access documentation for any function. For example, typing `h round/1` is going to print the documentation for the `round/1` function:
 
-```iex
+```elixir
 iex> h round/1
                              def round()
                              
@@ -96,7 +96,7 @@ It also works with operators and other constructs (try `h +/2`). Invoking `h` wi
 
 Elixir supports `true` and `false` as booleans:
 
-```iex
+```elixir
 iex> true
 true
 iex> true == false
@@ -105,7 +105,7 @@ false
 
 Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean/1` function can be used to check if a value is a boolean or not:
 
-```iex
+```elixir
 iex> is_boolean(true)
 true
 iex> is_boolean(1)
@@ -118,7 +118,7 @@ You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respect
 
 An atom is a constant whose value is its own name. Some other languages call these symbols. They are often useful to enumerate over distinct values, such as:
 
-```iex
+```elixir
 iex> :apple
 :apple
 iex> :orange
@@ -129,7 +129,7 @@ iex> :watermelon
 
 Atoms are equal if their names are equal.
 
-```iex
+```elixir
 iex> :apple == :apple
 true
 iex> :apple == :orange
@@ -140,7 +140,7 @@ Often they are used to express the state of an operation, by using values such a
 
 The booleans `true` and `false` are also atoms:
 
-```iex
+```elixir
 iex> true == :true
 true
 iex> is_atom(false)
@@ -154,7 +154,7 @@ Elixir allows you to skip the leading `:` for the atoms `false`, `true` and `nil
 
 Finally, Elixir has a construct called aliases which we will explore later. Aliases start in upper case and are also atoms:
 
-```iex
+```elixir
 iex> is_atom(Hello)
 true
 ```
@@ -163,7 +163,7 @@ true
 
 Strings in Elixir are delimited by double quotes, and they are encoded in UTF-8:
 
-```iex
+```elixir
 iex> "hellö"
 "hellö"
 ```
@@ -172,14 +172,14 @@ iex> "hellö"
 
 Elixir also supports string interpolation:
 
-```iex
+```elixir
 iex> "hellö #{:world}"
 "hellö world"
 ```
 
 Strings can have line breaks in them. You can introduce them using escape sequences:
 
-```iex
+```elixir
 iex> "hello
 ...> world"
 "hello\nworld"
@@ -189,7 +189,7 @@ iex> "hello\nworld"
 
 You can print a string using the `IO.puts/1` function from the `IO` module:
 
-```iex
+```elixir
 iex> IO.puts "hello\nworld"
 hello
 world
@@ -200,28 +200,28 @@ Notice that the `IO.puts/1` function returns the atom `:ok` after printing.
 
 Strings in Elixir are represented internally by contiguous sequences of bytes known as binaries:
 
-```iex
+```elixir
 iex> is_binary("hellö")
 true
 ```
 
 We can also get the number of bytes in a string:
 
-```iex
+```elixir
 iex> byte_size("hellö")
 6
 ```
 
 Notice that the number of bytes in that string is 6, even though it has 5 characters. That's because the character "ö" takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the `String.length/1` function:
 
-```iex
+```elixir
 iex> String.length("hellö")
 5
 ```
 
 The [String module](https://hexdocs.pm/elixir/String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:
 
-```iex
+```elixir
 iex> String.upcase("hellö")
 "HELLÖ"
 ```
@@ -230,7 +230,7 @@ iex> String.upcase("hellö")
 
 Elixir also provides anonymous functions. Anonymous functions allow us to store and pass executable code around as if it was an integer or a string. They are delimited by the keywords `fn` and `end`:
 
-```iex
+```elixir
 iex> add = fn a, b -> a + b end
 #Function<12.71889879/2 in :erl_eval.expr/5>
 iex> add.(1, 2)
@@ -245,7 +245,7 @@ Parenthesised arguments after the anonymous function indicate that we want the f
 
 Anonymous functions in Elixir are also identified by the number of arguments they receive. We can check if a function is of any given arity by using `is_function/2`:
 
-```iex
+```elixir
 # check if add is a function that expects exactly 2 arguments
 iex> is_function(add, 2)
 true
@@ -256,7 +256,7 @@ false
 
 Finally, anonymous functions are also closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
-```iex
+```elixir
 iex> double = fn a -> add.(a, a) end
 #Function<6.71889879/1 in :erl_eval.expr/5>
 iex> double.(2)
@@ -265,7 +265,7 @@ iex> double.(2)
 
 A variable assigned inside a function does not affect its surrounding environment:
 
-```iex
+```elixir
 iex> x = 42
 42
 iex> (fn -> x = 0 end).()
@@ -278,7 +278,7 @@ iex> x
 
 Elixir uses square brackets to specify a list of values. Values can be of any type:
 
-```iex
+```elixir
 iex> [1, 2, true, 3]
 [1, 2, true, 3]
 iex> length [1, 2, 3]
@@ -287,7 +287,7 @@ iex> length [1, 2, 3]
 
 Two lists can be concatenated or subtracted using the `++/2` and `--/2` operators respectively:
 
-```iex
+```elixir
 iex> [1, 2, 3] ++ [4, 5, 6]
 [1, 2, 3, 4, 5, 6]
 iex> [1, true, 2, false, 3, true] -- [true, false]
@@ -298,7 +298,7 @@ List operators never modify the existing list. Concatenating to or removing elem
 
 Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of the list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
 
-```iex
+```elixir
 iex> list = [1, 2, 3]
 iex> hd(list)
 1
@@ -308,14 +308,14 @@ iex> tl(list)
 
 Getting the head or the tail of an empty list throws an error:
 
-```iex
+```elixir
 iex> hd []
 ** (ArgumentError) argument error
 ```
 
 Sometimes you will create a list and it will return a value in single quotes. For example:
 
-```iex
+```elixir
 iex> [11, 12, 13]
 '\v\f\r'
 iex> [104, 101, 108, 108, 111]
@@ -324,7 +324,7 @@ iex> [104, 101, 108, 108, 111]
 
 When Elixir sees a list of printable ASCII numbers, Elixir will print that as a charlist (literally a list of characters). Charlists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the `i/1` to retrieve information about it:
 
-```iex
+```elixir
 iex> i 'hello'
 Term
   'hello'
@@ -342,7 +342,7 @@ Implemented protocols
 
 Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:
 
-```iex
+```elixir
 iex> 'hello' == "hello"
 false
 ```
@@ -353,7 +353,7 @@ Single quotes are charlists, double quotes are strings. We will talk more about 
 
 Elixir uses curly brackets to define tuples. Like lists, tuples can hold any value:
 
-```iex
+```elixir
 iex> {:ok, "hello"}
 {:ok, "hello"}
 iex> tuple_size {:ok, "hello"}
@@ -362,7 +362,7 @@ iex> tuple_size {:ok, "hello"}
 
 Tuples store elements contiguously in memory. This means accessing a tuple element by index or getting the tuple size is a fast operation. Indexes start from zero:
 
-```iex
+```elixir
 iex> tuple = {:ok, "hello"}
 {:ok, "hello"}
 iex> elem(tuple, 1)
@@ -373,7 +373,7 @@ iex> tuple_size(tuple)
 
 It is also possible to put an element at a particular index in a tuple with `put_elem/3`:
 
-```iex
+```elixir
 iex> tuple = {:ok, "hello"}
 {:ok, "hello"}
 iex> put_elem(tuple, 1, "world")
@@ -392,7 +392,7 @@ Lists are stored in memory as linked lists, meaning that each element in a list 
 
 Similarly, the performance of list concatenation depends on the length of the left-hand list:
 
-```iex
+```elixir
 iex> list = [1, 2, 3]
 
 # This is fast as we only need to traverse `[0]` to prepend to `list`
@@ -406,7 +406,7 @@ iex> list ++ [4]
 
 Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires creating a new tuple in memory:
 
-```iex
+```elixir
 iex> tuple = {:a, :b, :c, :d}
 iex> put_elem(tuple, 2, :e)
 {:a, :b, :e, :d}
@@ -416,7 +416,7 @@ Note that this applies only to the tuple itself, not its contents. For instance,
 
 Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents. It returns a tuple:
 
-```iex
+```elixir
 iex> File.read("path/to/existing/file")
 {:ok, "... contents ..."}
 iex> File.read("path/to/unknown/file")
@@ -427,7 +427,7 @@ If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok
 
 Most of the time, Elixir is going to guide you to do the right thing. For example, there is an `elem/2` function to access a tuple item but there is no built-in equivalent for lists:
 
-```iex
+```elixir
 iex> tuple = {:ok, "hello"}
 {:ok, "hello"}
 iex> elem(tuple, 1)

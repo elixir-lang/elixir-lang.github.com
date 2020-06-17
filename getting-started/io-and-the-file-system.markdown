@@ -15,7 +15,7 @@ We had originally sketched this chapter to come much earlier in the getting star
 
 The [`IO`](https://hexdocs.pm/elixir/IO.html) module is the main mechanism in Elixir for reading and writing to standard input/output (`:stdio`), standard error (`:stderr`), files, and other IO devices. Usage of the module is pretty straightforward:
 
-```iex
+```elixir
 iex> IO.puts("hello world")
 hello world
 :ok
@@ -26,7 +26,7 @@ yes or no? yes
 
 By default, functions in the `IO` module read from the standard input and write to the standard output. We can change that by passing, for example, `:stderr` as an argument (in order to write to the standard error device):
 
-```iex
+```elixir
 iex> IO.puts(:stderr, "hello world")
 hello world
 :ok
@@ -36,7 +36,7 @@ hello world
 
 The [`File`](https://hexdocs.pm/elixir/File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
-```iex
+```elixir
 iex> {:ok, file} = File.open("hello", [:write])
 {:ok, #PID<0.47.0>}
 iex> IO.binwrite(file, "world")
@@ -53,7 +53,7 @@ Besides functions for opening, reading and writing files, the `File` module has 
 
 You will also notice that functions in the `File` module have two variants: one "regular" variant and another variant with a trailing bang (`!`). For example, when we read the `"hello"` file in the example above, we use `File.read/1`. Alternatively, we can use `File.read!/1`:
 
-```iex
+```elixir
 iex> File.read("hello")
 {:ok, "world"}
 iex> File.read!("hello")
@@ -89,7 +89,7 @@ Therefore, if you don't want to handle the error outcomes, prefer using `File.re
 
 The majority of the functions in the `File` module expect paths as arguments. Most commonly, those paths will be regular binaries. The [`Path`](https://hexdocs.pm/elixir/Path.html) module provides facilities for working with such paths:
 
-```iex
+```elixir
 iex> Path.join("foo", "bar")
 "foo/bar"
 iex> Path.expand("~/hello")
@@ -104,14 +104,14 @@ With this, we have covered the main modules that Elixir provides for dealing wit
 
 You may have noticed that `File.open/2` returns a tuple like `{:ok, pid}`:
 
-```iex
+```elixir
 iex> {:ok, file} = File.open("hello", [:write])
 {:ok, #PID<0.47.0>}
 ```
 
 That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). Given a file is a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated:
 
-```iex
+```elixir
 iex> File.close(file)
 :ok
 iex> IO.write(file, "is anybody out there")
@@ -120,7 +120,7 @@ iex> IO.write(file, "is anybody out there")
 
 Let's see in more detail what happens when you request `IO.write(pid, binary)`. The `IO` module sends a message to the process identified by `pid` with the desired operation. A small ad-hoc process can help us see it:
 
-```iex
+```elixir
 iex> pid = spawn fn ->
 ...>  receive do: (msg -> IO.inspect msg)
 ...> end
@@ -141,7 +141,7 @@ In all of the examples above, we used binaries when writing to files. In the cha
 
 The functions in `IO` and `File` also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers, and binaries to be given:
 
-```iex
+```elixir
 iex> IO.puts('hello world')
 hello world
 :ok

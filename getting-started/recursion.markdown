@@ -101,7 +101,7 @@ end
 $ iex math.exs
 ```
 
-```iex
+```elixir
 iex> Math.double_each([1, 2, 3]) #=> [2, 4, 6]
 ```
 
@@ -111,7 +111,7 @@ Recursion and [tail call](https://en.wikipedia.org/wiki/Tail_call) optimization 
 
 The [`Enum` module](https://hexdocs.pm/elixir/Enum.html), which we're going to see in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:
 
-```iex
+```elixir
 iex> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
 6
 iex> Enum.map([1, 2, 3], fn(x) -> x * 2 end)
@@ -120,7 +120,7 @@ iex> Enum.map([1, 2, 3], fn(x) -> x * 2 end)
 
 Or, using the capture syntax:
 
-```iex
+```elixir
 iex> Enum.reduce([1, 2, 3], 0, &+/2)
 6
 iex> Enum.map([1, 2, 3], &(&1 * 2))

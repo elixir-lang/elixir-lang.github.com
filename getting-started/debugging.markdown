@@ -110,7 +110,7 @@ end
 
 Now we can start our debugger:
 
-```iex
+```elixir
 $ iex -S mix
 iex(1)> :debugger.start()
 {:ok, #PID<0.87.0>}
@@ -129,7 +129,7 @@ When you start the debugger, a Graphical User Interface will open in your machin
 
 For debugging complex systems, jumping at the code is not enough. It is necessary to have an understanding of the whole virtual machine, processes, applications, as well as set up tracing mechanisms. Luckily this can be achieved in Erlang with `:observer`. In your application:
 
-```iex
+```elixir
 $ iex -S mix
 iex(1)> :observer.start()
 ```

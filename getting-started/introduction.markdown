@@ -40,7 +40,7 @@ For now, let's start by running `iex` (or `iex.bat` if you are on Windows PowerS
 
 Open up `iex` and type the following expressions:
 
-```iex
+```elixir
 Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
 Interactive Elixir ({{ stable.version }}) - press Ctrl+C to exit

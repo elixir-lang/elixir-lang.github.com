@@ -165,7 +165,7 @@ $ iex -S mix
 
 We are going to work on this `kv` project, making modifications and trying out the latest changes from an `iex` session. While you may start a new session whenever there are changes to the project source code, you can also recompile the project from within `iex` with the `recompile` helper, like this:
 
-```iex
+```elixir
 iex> recompile()
 Compiling 1 file (.ex)
 :ok

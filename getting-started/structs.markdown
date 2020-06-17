@@ -10,7 +10,7 @@ redirect_from: /getting-started/struct.html
 
 In [chapter 7](/getting-started/keywords-and-maps.html) we learned about maps:
 
-```iex
+```elixir
 iex> map = %{a: 1, b: 2}
 %{a: 1, b: 2}
 iex> map[:a]
@@ -25,7 +25,7 @@ Structs are extensions built on top of maps that provide compile-time checks and
 
 To define a struct, the `defstruct` construct is used:
 
-```iex
+```elixir
 iex> defmodule User do
 ...>   defstruct name: "John", age: 27
 ...> end
@@ -37,7 +37,7 @@ Structs take the name of the module they're defined in. In the example above, we
 
 We can now create `User` structs by using a syntax similar to the one used to create maps (if you have defined the struct in a separate file, you can compile the file inside IEx before proceeding by running `c "file.exs"`; be aware you may get an error saying `the struct was not yet defined` if you try the below example in a file directly due to when definitions are resolved):
 
-```iex
+```elixir
 iex> %User{}
 %User{age: 27, name: "John"}
 iex> %User{name: "Jane"}
@@ -46,7 +46,7 @@ iex> %User{name: "Jane"}
 
 Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:
 
-```iex
+```elixir
 iex> %User{oops: :field}
 ** (KeyError) key :oops not found in: %User{age: 27, name: "John"}
 ```
@@ -55,7 +55,7 @@ iex> %User{oops: :field}
 
 When we discussed maps, we showed how we can access and update the fields of a map. The same techniques (and the same syntax) apply to structs as well:
 
-```iex
+```elixir
 iex> john = %User{}
 %User{age: 27, name: "John"}
 iex> john.name
@@ -70,7 +70,7 @@ When using the update syntax (`|`), the <abbr title="Virtual Machine">VM</abbr> 
 
 Structs can also be used in pattern matching, both for matching on the value of specific keys as well as for ensuring that the matching value is a struct of the same type as the matched value.
 
-```iex
+```elixir
 iex> %User{name: name} = john
 %User{age: 27, name: "John"}
 iex> name
@@ -83,7 +83,7 @@ iex> %User{} = %{}
 
 In the example above, pattern matching works because underneath structs are bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
 
-```iex
+```elixir
 iex> is_map(john)
 true
 iex> john.__struct__
@@ -92,7 +92,7 @@ User
 
 Notice that we referred to structs as **bare** maps because none of the protocols implemented for maps are available for structs. For example, you can neither enumerate nor access a struct:
 
-```iex
+```elixir
 iex> john = %User{}
 %User{age: 27, name: "John"}
 iex> john[:name]
@@ -104,7 +104,7 @@ iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 
 However, since structs are just maps, they work with the functions from the `Map` module:
 
-```iex
+```elixir
 iex> jane = Map.put(%User{}, :name, "Jane")
 %User{age: 27, name: "Jane"}
 iex> Map.merge(jane, %User{name: "John"})
@@ -119,7 +119,7 @@ Structs alongside protocols provide one of the most important features for Elixi
 
 If you don't specify a default key value when defining a struct, `nil` will be assumed:
 
-```iex
+```elixir
 iex> defmodule Product do
 ...>   defstruct [:name]
 ...> end
@@ -129,7 +129,7 @@ iex> %Product{}
 
 You can define a structure combining both fields with explicit default values, and implicit `nil` values. In this case you must first specify the fields which implicitly default to nil:
 
-```iex
+```elixir
 iex> defmodule User do
 ...>   defstruct [:email, name: "John", age: 27]
 ...> end
@@ -148,7 +148,7 @@ iex> defmodule User do
 
 You can also enforce that certain keys have to be specified when creating the struct:
 
-```iex
+```elixir
 iex> defmodule Car do
 ...>   @enforce_keys [:make]
 ...>   defstruct [:model, :make]

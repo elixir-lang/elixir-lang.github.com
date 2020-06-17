@@ -17,7 +17,7 @@ In this chapter, we are going to explore sigils, which are one of the mechanisms
 
 The most common sigil in Elixir is `~r`, which is used to create [regular expressions](https://en.wikipedia.org/wiki/Regular_Expressions):
 
-```iex
+```elixir
 # A regular expression that matches strings which contain "foo" or "bar":
 iex> regex = ~r/foo|bar/
 ~r/foo|bar/
@@ -29,7 +29,7 @@ false
 
 Elixir provides Perl-compatible regular expressions (regexes), as implemented by the [PCRE](http://www.pcre.org/) library. Regexes also support modifiers. For example, the `i` modifier makes a regular expression case insensitive:
 
-```iex
+```elixir
 iex> "HELLO" =~ ~r/hello/
 false
 iex> "HELLO" =~ ~r/hello/i
@@ -61,7 +61,7 @@ Besides regular expressions, Elixir ships with three other sigils.
 
 The `~s` sigil is used to generate strings, like double quotes are. The `~s` sigil is useful when a string contains double quotes:
 
-```iex
+```elixir
 iex> ~s(this is a string with "double" quotes, not 'single' ones)
 "this is a string with \"double\" quotes, not 'single' ones"
 ```
@@ -70,7 +70,7 @@ iex> ~s(this is a string with "double" quotes, not 'single' ones)
 
 The `~c` sigil is useful for generating char lists that contain single quotes:
 
-```iex
+```elixir
 iex> ~c(this is a char list containing 'single quotes')
 'this is a char list containing \'single quotes\''
 ```
@@ -79,14 +79,14 @@ iex> ~c(this is a char list containing 'single quotes')
 
 The `~w` sigil is used to generate lists of words (*words* are just regular strings). Inside the `~w` sigil, words are separated by whitespace.
 
-```iex
+```elixir
 iex> ~w(foo bar bat)
 ["foo", "bar", "bat"]
 ```
 
 The `~w` sigil also accepts the `c`, `s` and `a` modifiers (for char lists, strings, and atoms, respectively), which specify the data type of the elements of the resulting list:
 
-```iex
+```elixir
 iex> ~w(foo bar bat)a
 [:foo, :bar, :bat]
 ```
@@ -95,7 +95,7 @@ iex> ~w(foo bar bat)a
 
 Elixir supports some sigil variants to deal with escaping characters and interpolation. In particular, uppercase letters sigils do not perform interpolation nor escaping. For example, although both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
 
-```iex
+```elixir
 iex> ~s(String with escape codes \x26 #{"inter" <> "polation"})
 "String with escape codes & interpolation"
 iex> ~S(String without escape codes \x26 without #{interpolation})
@@ -123,7 +123,7 @@ In addition to those, a double quote inside a double-quoted string needs to be e
 
 Sigils also support heredocs, that is, triple double- or single-quotes as separators:
 
-```iex
+```elixir
 iex> ~s"""
 ...> this is
 ...> a heredoc string
@@ -168,7 +168,7 @@ Elixir offers several sigils to deal with various flavors of times and dates.
 
 A [%Date{}](https://hexdocs.pm/elixir/Date.html) struct contains the fields `year`, `month`, `day`, and `calendar`. You can create one using the `~D` sigil:
 
-```iex
+```elixir
 iex> d = ~D[2019-10-31]
 ~D[2019-10-31]
 iex> d.day
@@ -179,7 +179,7 @@ iex> d.day
 
 The [%Time{}](https://hexdocs.pm/elixir/Time.html) struct contains the fields `hour`, `minute`, `second`, `microsecond`, and `calendar`. You can create one using the `~T` sigil:
 
-```iex
+```elixir
 iex> t = ~T[23:00:07.0]
 ~T[23:00:07.0]
 iex> t.second
@@ -190,7 +190,7 @@ iex> t.second
 
 The [%NaiveDateTime{}](https://hexdocs.pm/elixir/NaiveDateTime.html) struct contains fields from both `Date` and `Time`. You can create one using the `~N` sigil:
 
-```iex
+```elixir
 iex> ndt = ~N[2019-10-31 23:00:07]
 ~N[2019-10-31 23:00:07]
 ```
@@ -201,7 +201,7 @@ Why is it called naive? Because it does not contain timezone information. Theref
 
 A [%DateTime{}](https://hexdocs.pm/elixir/DateTime.html) struct contains the same fields as a `NaiveDateTime` with the addition of fields to track timezones. The `~U` sigil allows developers to create a DateTime in the UTC timezone:
 
-```iex
+```elixir
 iex> dt = ~U[2019-10-31 19:59:03Z]
 ~U[2019-10-31 19:59:03Z]
 iex> %DateTime{minute: minute, time_zone: time_zone} = dt
@@ -216,21 +216,21 @@ iex> time_zone
 
 As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling `sigil_r` with a binary and a char list as the argument:
 
-```iex
+```elixir
 iex> sigil_r(<<"foo">>, 'i')
 ~r"foo"i
 ```
 
 We can access the documentation for the `~r` sigil via `sigil_r`:
 
-```iex
+```elixir
 iex> h sigil_r
 ...
 ```
 
 We can also provide our own sigils by implementing functions that follow the `sigil_{identifier}` pattern. For example, let's implement the `~i` sigil that returns an integer (with the optional `n` modifier to make it negative):
 
-```iex
+```elixir
 iex> defmodule MySigils do
 ...>   def sigil_i(string, []), do: String.to_integer(string)
 ...>   def sigil_i(string, [?n]), do: -String.to_integer(string)

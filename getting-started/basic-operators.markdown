@@ -11,7 +11,7 @@ In the [previous chapter](/getting-started/basic-types.html), we saw Elixir prov
 
 Elixir also provides `++` and `--` to manipulate lists:
 
-```iex
+```elixir
 iex> [1, 2, 3] ++ [4, 5, 6]
 [1, 2, 3, 4, 5, 6]
 iex> [1, 2, 3] -- [2]
@@ -20,14 +20,14 @@ iex> [1, 2, 3] -- [2]
 
 String concatenation is done with `<>`:
 
-```iex
+```elixir
 iex> "foo" <> "bar"
 "foobar"
 ```
 
 Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect something that evaluates to a boolean (`true` or `false`) as their first argument:
 
-```iex
+```elixir
 iex> true and true
 true
 iex> false or is_atom(:example)
@@ -36,14 +36,14 @@ true
 
 Providing a non-boolean will raise an exception:
 
-```iex
+```elixir
 iex> 1 and true
 ** (BadBooleanError) expected a boolean on left-side of "and", got: 1
 ```
 
 `or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
 
-```iex
+```elixir
 iex> false and raise("This error will never be raised")
 false
 iex> true or raise("This error will never be raised")
@@ -54,7 +54,7 @@ true
 
 Besides these boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
 
-```iex
+```elixir
 # or
 iex> 1 || true
 1
@@ -80,7 +80,7 @@ As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. I
 
 Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
 
-```iex
+```elixir
 iex> 1 == 1
 true
 iex> 1 != 2
@@ -91,7 +91,7 @@ true
 
 The difference between `==` and `===` is that the latter is more strict when comparing integers and floats:
 
-```iex
+```elixir
 iex> 1 == 1.0
 true
 iex> 1 === 1.0
@@ -100,7 +100,7 @@ false
 
 In Elixir, we can compare two different data types:
 
-```iex
+```elixir
 iex> 1 < :atom
 true
 ```

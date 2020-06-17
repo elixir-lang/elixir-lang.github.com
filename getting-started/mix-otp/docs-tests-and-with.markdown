@@ -147,7 +147,7 @@ Notice how we were able to elegantly parse the commands without adding a bunch o
 
 Finally, you may have observed that each doctest corresponds to a different test in our suite, which now reports a total of 7 doctests. That is because ExUnit considers the following to define two different doctests:
 
-```iex
+```elixir
 iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
 
@@ -157,7 +157,7 @@ iex> KVServer.Command.parse("GET shopping\r\n")
 
 Without new lines, as seen below, ExUnit compiles it into a single doctest:
 
-```iex
+```elixir
 iex> KVServer.Command.parse("UNKNOWN shopping eggs\r\n")
 {:error, :unknown_command}
 iex> KVServer.Command.parse("GET shopping\r\n")

@@ -45,7 +45,7 @@ My computer is named `jv`, so I see `foo@jv` in the example above, but you will 
 
 Let's define a module named `Hello` in this shell:
 
-```iex
+```elixir
 iex> defmodule Hello do
 ...>   def world, do: IO.puts "hello world"
 ...> end
@@ -59,7 +59,7 @@ $ iex --sname bar
 
 Note that inside this new IEx session, we cannot access `Hello.world/0`:
 
-```iex
+```elixir
 iex> Hello.world
 ** (UndefinedFunctionError) undefined function: Hello.world/0
     Hello.world()
@@ -67,7 +67,7 @@ iex> Hello.world
 
 However, we can spawn a new process on `foo@computer-name` from `bar@computer-name`! Let's give it a try (where `@computer-name` is the one you see locally):
 
-```iex
+```elixir
 iex> Node.spawn_link :"foo@computer-name", fn -> Hello.world end
 #PID<9014.59.0>
 hello world
@@ -77,7 +77,7 @@ Elixir spawned a process on another node and returned its pid. The code then exe
 
 We can send and receive messages from the pid returned by `Node.spawn_link/2` as usual. Let's try a quick ping-pong example:
 
-```iex
+```elixir
 iex> pid = Node.spawn_link :"foo@computer-name", fn ->
 ...>   receive do
 ...>     {:ping, client} -> send client, :pong
@@ -134,7 +134,7 @@ $ iex --sname bar -S mix
 
 From inside `bar@computer-name`, we can now spawn a task directly on the other node via the supervisor:
 
-```iex
+```elixir
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, fn ->
 ...>   {:ok, node()}
 ...> end
@@ -145,7 +145,7 @@ iex> Task.await(task)
 
 Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function, and arguments explicitly:
 
-```iex
+```elixir
 iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
 %Task{owner: #PID<0.122.0>, pid: #PID<12467.89.0>, ref: #Reference<0.0.0.404>}
 iex> Task.await(task)

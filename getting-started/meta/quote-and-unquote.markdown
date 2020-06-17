@@ -25,7 +25,7 @@ The building block of an Elixir program is a tuple with three elements. For exam
 
 You can get the representation of any expression by using the `quote` macro:
 
-```iex
+```elixir
 iex> quote do: sum(1, 2, 3)
 {:sum, [], [1, 2, 3]}
 ```
@@ -34,35 +34,35 @@ The first element is the function name, the second is a keyword list containing 
 
 Operators are also represented as such tuples:
 
-```iex
+```elixir
 iex> quote do: 1 + 2
 {:+, [context: Elixir, import: Kernel], [1, 2]}
 ```
 
 Even a map is represented as a call to `%{}`:
 
-```iex
+```elixir
 iex> quote do: %{1 => 2}
 {:%{}, [], [{1, 2}]}
 ```
 
 Variables are also represented using such triplets, except the last element is an atom, instead of a list:
 
-```iex
+```elixir
 iex> quote do: x
 {:x, [], Elixir}
 ```
 
 When quoting more complex expressions, we can see that the code is represented in such tuples, which are often nested inside each other in a structure resembling a tree. Many languages would call such representations an Abstract Syntax Tree (AST). Elixir calls them quoted expressions:
 
-```iex
+```elixir
 iex> quote do: sum(1, 2 + 3, 4)
 {:sum, [], [1, {:+, [context: Elixir, import: Kernel], [2, 3]}, 4]}
 ```
 
 Sometimes when working with quoted expressions, it may be useful to get the textual code representation back. This can be done with `Macro.to_string/1`:
 
-```iex
+```elixir
 iex> Macro.to_string(quote do: sum(1, 2 + 3, 4))
 "sum(1, 2 + 3, 4)"
 ```
@@ -95,7 +95,7 @@ Quote is about retrieving the inner representation of some particular chunk of c
 
 For example, imagine you have a variable `number` which contains the number you want to inject inside a quoted expression.
 
-```iex
+```elixir
 iex> number = 13
 iex> Macro.to_string(quote do: 11 + number)
 "11 + number"
@@ -103,7 +103,7 @@ iex> Macro.to_string(quote do: 11 + number)
 
 That's not what we wanted, since the value of the `number` variable has not been injected and `number` has been quoted in the expression. In order to inject the *value* of the `number` variable, `unquote` has to be used inside the quoted representation:
 
-```iex
+```elixir
 iex> number = 13
 iex> Macro.to_string(quote do: 11 + unquote(number))
 "11 + 13"
@@ -111,7 +111,7 @@ iex> Macro.to_string(quote do: 11 + unquote(number))
 
 `unquote` can even be used to inject function names:
 
-```iex
+```elixir
 iex> fun = :hello
 iex> Macro.to_string(quote do: unquote(fun)(:world))
 "hello(:world)"
@@ -119,7 +119,7 @@ iex> Macro.to_string(quote do: unquote(fun)(:world))
 
 In some cases, it may be necessary to inject many values inside a list. For example, imagine you have a list containing `[1, 2, 6]` and we want to inject `[3, 4, 5]` into it. Using `unquote` won't yield the desired result:
 
-```iex
+```elixir
 iex> inner = [3, 4, 5]
 iex> Macro.to_string(quote do: [1, 2, unquote(inner), 6])
 "[1, 2, [3, 4, 5], 6]"
@@ -127,7 +127,7 @@ iex> Macro.to_string(quote do: [1, 2, unquote(inner), 6])
 
 That's when `unquote_splicing` becomes handy:
 
-```iex
+```elixir
 iex> inner = [3, 4, 5]
 iex> Macro.to_string(quote do: [1, 2, unquote_splicing(inner), 6])
 "[1, 2, 3, 4, 5, 6]"
@@ -139,14 +139,14 @@ Unquoting is very useful when working with macros. When writing macros, develope
 
 As we saw at the beginning of this chapter, only some values are valid quoted expressions in Elixir. For example, a map is not a valid quoted expression. Neither is a tuple with four elements. However, such values *can* be expressed as a quoted expression:
 
-```iex
+```elixir
 iex> quote do: %{1 => 2}
 {:%{}, [], [{1, 2}]}
 ```
 
 In some cases, you may need to inject such *values* into *quoted expressions*. To do that, we need to first escape those values into quoted expressions with the help of `Macro.escape/1`:
 
-```iex
+```elixir
 iex> map = %{hello: :world}
 iex> Macro.escape(map)
 {:%{}, [], [hello: :world]}

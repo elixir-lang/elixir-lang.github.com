@@ -40,7 +40,7 @@ end
 
 We define the protocol using `defprotocol` - its functions and specs may look similar to interfaces or abstract base classes in other languages. We can add as many implementations as we like using `defimpl`. The output is exactly the same as if we had a single module with multiple functions:
 
-```iex
+```elixir
 iex> Utility.type("foo")
 "string"
 iex> Utility.type(123)
@@ -88,7 +88,7 @@ We didn't implement the `Size` protocol for lists as there is no "size" informat
 
 Now with the protocol defined and implementations in hand, we can start using it:
 
-```iex
+```elixir
 iex> Size.size("foo")
 3
 iex> Size.size({:ok, "hello"})
@@ -99,7 +99,7 @@ iex> Size.size(%{label: "some label"})
 
 Passing a data type that doesn't implement the protocol raises an error:
 
-```iex
+```elixir
 iex> Size.size([1, 2, 3])
 ** (Protocol.UndefinedError) protocol Size not implemented for [1, 2, 3]
 ```
@@ -124,7 +124,7 @@ The power of Elixir's extensibility comes when protocols and structs are used to
 
 In the [previous chapter](/getting-started/structs.html), we have learned that although structs are maps, they do not share protocol implementations with maps. For example, [`MapSet`](https://hexdocs.pm/elixir/MapSet.html)s (sets based on maps) are implemented as structs. Let's try to use the `Size` protocol with a `MapSet`:
 
-```iex
+```elixir
 iex> Size.size(%{})
 0
 iex> set = %MapSet{} = MapSet.new
@@ -207,7 +207,7 @@ Which technique is best between deriving and falling back to any depends on the 
 
 Elixir ships with some built-in protocols. In previous chapters, we have discussed the `Enum` module which provides many functions that work with any data structure that implements the `Enumerable` protocol:
 
-```iex
+```elixir
 iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
 [2, 4, 6]
 iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
@@ -216,21 +216,21 @@ iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 
 Another useful example is the `String.Chars` protocol, which specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
 
-```iex
+```elixir
 iex> to_string :hello
 "hello"
 ```
 
 Notice that string interpolation in Elixir calls the `to_string` function:
 
-```iex
+```elixir
 iex> "age: #{25}"
 "age: 25"
 ```
 
 The snippet above only works because numbers implement the `String.Chars` protocol. Passing a tuple, for example, will lead to an error:
 
-```iex
+```elixir
 iex> tuple = {1, 2, 3}
 {1, 2, 3}
 iex> "tuple: #{tuple}"
@@ -239,14 +239,14 @@ iex> "tuple: #{tuple}"
 
 When there is a need to "print" a more complex data structure, one can use the `inspect` function, based on the `Inspect` protocol:
 
-```iex
+```elixir
 iex> "tuple: #{inspect tuple}"
 "tuple: {1, 2, 3}"
 ```
 
 The `Inspect` protocol is the protocol used to transform any data structure into a readable textual representation. This is what tools like IEx use to print results:
 
-```iex
+```elixir
 iex> {1, 2, 3}
 {1, 2, 3}
 iex> %User{}
@@ -255,7 +255,7 @@ iex> %User{}
 
 Keep in mind that, by convention, whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. This means the inspect protocol is not reversible as information may be lost along the way:
 
-```iex
+```elixir
 iex> inspect &(&1+2)
 "#Function<6.71889879/1 in :erl_eval.expr/5>"
 ```

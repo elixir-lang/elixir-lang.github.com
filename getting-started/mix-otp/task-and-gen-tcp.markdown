@@ -88,7 +88,7 @@ This is pretty much all we need to implement our echo server. Let's give it a tr
 
 Start an IEx session inside the `kv_server` application with `iex -S mix`. Inside IEx, run:
 
-```iex
+```elixir
 iex> KVServer.accept(4040)
 ```
 
