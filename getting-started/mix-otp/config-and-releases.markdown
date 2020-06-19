@@ -277,11 +277,13 @@ That's happening because the release `foo` is already listening on port `4040` a
 releases: [
   foo: [
     version: "0.0.1",
-    applications: [kv_server: :permanent, kv: :permanent]
+    applications: [kv_server: :permanent, kv: :permanent],
+    cookie: "weknoweachother"
   ],
   bar: [
     version: "0.0.1",
-    applications: [kv: :permanent]
+    applications: [kv: :permanent],
+    cookie: "weknoweachother"
   ]
 ]
 ```
