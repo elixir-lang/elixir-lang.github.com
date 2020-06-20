@@ -126,7 +126,7 @@ defmodule HygieneTest do
   def go do
     require Hygiene
     a = 13
-    Hygiene.no_interference
+    Hygiene.no_interference()
     a
   end
 end
@@ -148,7 +148,7 @@ defmodule HygieneTest do
   def go do
     require Hygiene
     a = 13
-    Hygiene.interference
+    Hygiene.interference()
     a
   end
 end
@@ -174,7 +174,7 @@ defmodule Sample do
   end
 end
 
-Sample.quoted #=> {:x, [line: 3], Sample}
+Sample.quoted() #=> {:x, [line: 3], Sample}
 ```
 
 Notice that the third element in the quoted variable is the atom `Sample`, instead of `nil`, which marks the variable as coming from the `Sample` module. Therefore, Elixir considers these two variables as coming from different contexts and handles them accordingly.
