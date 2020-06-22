@@ -26,25 +26,25 @@ Synchronous communication is done via gRPC, and Apache Kafka is used for async m
 
 One of their early lessons relates to the applicability of Erlang's RPC infrastructure. Although Erlang does provide RPC out-of-the-box, Erlang's built-in clustering establishes a full mesh cluster. This setup is well suited for running homogenous instances, where all nodes run the same code, but it is a bad fit when building isolated microservices. The Brex team also wanted to plan for a future where they may communicate between services implemented in different languages. These requirements led them to explore more widely adopted RPC mechanisms, eventually settling on gRPC.
 
-Brex was also one of the early adopters of gRPC in the ecosystem—which meant they had to tread through uncharted waters here and there. Nowadays, they have a well-defined set of guidelines and practices that go hand in hand with how they were able to scale the company and their Elixir teams.
+Brex was also one of the early adopters of gRPC in the ecosystem, which meant they had to tread through uncharted waters here and there. Nowadays, they have a well-defined set of guidelines and practices that go hand in hand with how they were able to scale the company and their Elixir teams.
 
 ## Growing the team
 
-When Thomas joined the team, back in April 2018, there were only three backend engineers in their San Francisco office. Now, two years later, Brex has more than 100 engineers —most of them programming in Elixir - with additional offices in New York, Vancouver, and Salt Lake City.
+When Thomas joined the team, back in April 2018, there were only three backend engineers in their San Francisco office. Now, two years later, Brex has more than 100 engineers —most of them programming in Elixir— with additional offices in New York, Vancouver, and Salt Lake City.
 
 <blockquote style="font-size: 24px; color: #444">
 <p>Despite the fact that Elixir is a relatively niche language, new hires that never had contact with Elixir before are productive within three weeks</p>
-<p>- Pedro Franceschi, Brex's co-founder</p>
+<p>– Pedro Franceschi, Brex's co-founder</p>
 </blockquote>
 
 Pedro Franceschi, Brex's co-founder, [wrote about their experience when onboarding new engineers](https://medium.com/brexeng/why-brex-chose-elixir-fe1a4f313195): "Despite the fact that Elixir is a relatively niche language, new hires that never had contact with Elixir before are productive within three weeks. There are a decent amount of books/documentation available on the language that accelerate the ramp-up process."
 
 Thomas echoed similar tones: "Getting started with Elixir is quick, but mastering Erlang/OTP takes a while." At the same time, he recognizes many frameworks available in the community, and the ones they have built internally, abstract away the concurrency and fault-tolerance concerns, allowing developers to ship reliable services rapidly.
 
-Such quick growth comes with its challenges. Brex codebase started as an umbrella project, which is an Elixir feature for managing multiple applications in the same repository, but Thomas believes they have outgrown its capabilities. Now they’re slowly breaking their umbrella project into distinct Elixir applications. All projects still belong to a single repository (mono-repo), which has also grown to include other languages.
+Such quick growth comes with its challenges. Brex codebase started as an umbrella project, which is an Elixir feature for managing multiple applications in the same repository, but Thomas believes they have outgrown its capabilities. Now they’re slowly breaking their umbrella project into individual Elixir applications. All projects still belong to a single repository (a mono-repo), which has also grown to include other languages.
 
 ## The future ahead
 
 As Brex grows, they want to make sure Elixir's adoption will scale alongside their team. As Pedro noted back in 2018, "The lack of a type system makes large-scale refactoring harder, and therefore would be a great addition to the Elixir ecosystem."
 
-With this in mind, Brex decided to join many other companies directly investing in Elixir's future. They hired Eric Meadows-Jönsson, from the Elixir Core Team and [Hex.pm](https://hex.pm) creator, to work on Elixir and increase the amount of static checks done by the compiler. Eric concluded, "The Elixir team has been consistently improving the compiler towards this direction over the years. We introduced cross-reference checking and undefined function warnings back in Elixir v1.3. Since then many other warnings and checks were added. Elixir v1.10 introduced compilation tracers, which allows the community to listen to the compiler and run their own checks. Now we are working towards leveraging existing constructs - such as patterns, guards, and data-constructors to execute more static checks without requiring explicit developer input."
+With this in mind, Brex decided to join many other companies directly investing in Elixir's future. They hired Eric Meadows-Jönsson, from the Elixir Core Team and [Hex.pm](https://hex.pm) creator, to work on Elixir and increase the amount of static checks done by the compiler. Eric concluded, "The Elixir team has been consistently improving the compiler towards this direction over the years. We introduced cross-reference checking and undefined function warnings back in Elixir v1.3. Since then many other warnings and checks were added. Elixir v1.10 introduced compilation tracers, which allows the community to listen to the compiler and run their own checks. Now we are working towards leveraging existing constructs —such as patterns, guards, and data-constructors— to execute more static checks without requiring explicit developer input."
