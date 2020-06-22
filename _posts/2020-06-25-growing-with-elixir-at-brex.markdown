@@ -20,7 +20,7 @@ Thomas Césaré-Herriau, a Lead Engineer at Brex, has recently helped us address
 
 ## An evolving architecture
 
-Brex architecture is made of approximately 40 microservices running on Kubernetes. There is a front-end application, implemented with Phoenix and Absinthe, that interacts with those services.
+Brex architecture is made of approximately 40 microservices running on Kubernetes. There is a front-end application, implemented with [Phoenix](https://phoenixframework.org/) and [Absinthe](http://absinthe-graphql.org/), that interacts with those services.
 
 Synchronous communication is done via gRPC, and Apache Kafka is used for async messages and broadcasts. However, they did not arrive at this architecture overnight, and they had many learning moments along the way.
 
