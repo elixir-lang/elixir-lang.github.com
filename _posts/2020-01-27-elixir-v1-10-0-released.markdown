@@ -3,7 +3,7 @@ layout: post
 title: Elixir v1.10 released
 author: José Valim
 category: Releases
-excerpt: Elixir v1.10 is out with standard library, compiler, and releases improvements
+excerpt: Elixir v1.10 is out with standard library, compiler, and releases improvements.
 ---
 
 Elixir v1.10 comes with improvements to the standard library, the compiler, as well as several additions to the [`mix release` feature added in v1.9](/blog/2019/06/24/elixir-v1-9-0-released/). In particular, this version adds a lot of polish to existing features, such as our configuration system and our sorting APIs.
