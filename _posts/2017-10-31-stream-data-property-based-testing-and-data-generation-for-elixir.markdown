@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "StreamData: Property-based testing and data generation for Elixir"
+title: "StreamData: Property-based testing and data generation"
 author: Andrea Leopardi
 category: Announcements
 excerpt: We are working on data generation and property-based testing for the next versions of Elixir.
@@ -166,6 +166,8 @@ The reasons for writing a new property-based testing library from scratch are be
 > We understand rolling our own implementation has its downsides, especially since it lacks maturity compared to alternatives, but we balance it by actively seeking input from knowledgeable folks and by listening to the feedback that comes from the community, which we are very thankful for.
 
 ## Roadmap
+
+**Update Jun/2020:** after careful consideration, the Elixir team decided to not include `StreamData` in Elixir itself, as it provides all of the feature set necessary as a package.
 
 stream_data and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. We have used the names `StreamData` and `ExUnitProperties` to avoid conflicts when those modules are eventually merged into Elixir. When merged, they will be renamed to the proper `Stream.Data` and `ExUnit.Properties` modules. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
 

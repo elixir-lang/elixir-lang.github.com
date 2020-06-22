@@ -1,7 +1,8 @@
 <div class="widget categories-list">
   <h3 class="widget-title">Blog Categories</h3>
   <ul>
-  {% for category in site.categories %}
+  {% assign sorted_cats = site.categories | sort %}
+  {% for category in sorted_cats %}
     <li><a class="spec" href="/blog/categories.html#{{ category | first }}">{{ category | first }}</a></li>
   {% endfor %}
   </ul>
