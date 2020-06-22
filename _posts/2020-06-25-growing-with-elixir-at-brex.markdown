@@ -8,13 +8,13 @@ excerpt: A case study of how Elixir is being used at Brex.
 
 *Welcome to our series of case studies about companies using Elixir in production. We are glad to invite Brex as our first case.*
 
-[Brex](https://brex.com/) is reimagining financial systems so every growing company can realize their full potential. New customers can get up and running in minutes with corporate credit cards and cash management in a single, strategic account. Launched in June 2018, Brex earned a $1.1 billion valuation with the [announcement of their Series C round](https://techcrunch.com/2018/10/05/how-the-22-year-old-founders-of-brex-built-a-billion-dollar-business-in-less-than-2-years/).  By now, Brex is now valued at $2.6 billion, with Elixir at the core of their technology stack. Approximately 90% of Brex’s backend codebase is written in Elixir.
+[Brex](https://brex.com/) is reimagining financial systems so every growing company can realize their full potential. New customers can get up and running in minutes with corporate credit cards and cash management in a single, strategic account. Launched in June 2018, Brex earned a $1.1 billion valuation with the [announcement of their Series C round](https://techcrunch.com/2018/10/05/how-the-22-year-old-founders-of-brex-built-a-billion-dollar-business-in-less-than-2-years/).  By now, Brex is valued at $2.6 billion, with Elixir at the core of their technology stack. Approximately 90% of Brex’s backend codebase is written in Elixir.
 
 ![Brex website](/images/cases/brex.png)
 
 ## Why Elixir?
 
-Brex aims to build the next generation of B2B financial services without the restrictions of legacy technology. They choose Elixir and the Erlang VM from day one as their primary technology.
+Brex aims to build the next generation of B2B financial services without the restrictions of legacy technology. They choose Elixir and the Erlang VM from day one as their primary technologies.
 
 Thomas Césaré-Herriau, a Lead Engineer at Brex, has recently helped us address the reasons behind this choice: "The reliability and fault tolerance aspects of the Erlang VM are extremely appealing for building financial services. Elixir runs on the same VM, and it provides great onboarding and learning experiences to the platform, which makes Elixir a solid bet for a company like Brex."
 
@@ -24,7 +24,7 @@ Brex architecture is made of approximately 40 microservices running on Kubernete
 
 Synchronous communication is done via gRPC, and Apache Kafka is used for async messages and broadcasts. However, they did not arrive at this architecture overnight, and they had many learning moments along the way.
 
-One of their early lessons relates to the applicability of Erlang's RPC infrastructure. Although Erlang does provide RPC out-of-the-box, Erlang's built-in clustering establishes a full mesh cluster. This setup suits well when running homogenous instances, where all nodes run the same code, but it is a bad fit when building isolated microservices. The Brex team also wanted to plan for a future where they may communicate between services implemented in different languages. These requirements led them to explore more widely adopted RPC mechanisms, eventually settling on gRPC.
+One of their early lessons relates to the applicability of Erlang's RPC infrastructure. Although Erlang does provide RPC out-of-the-box, Erlang's built-in clustering establishes a full mesh cluster. This setup is well suited for running homogenous instances, where all nodes run the same code, but it is a bad fit when building isolated microservices. The Brex team also wanted to plan for a future where they may communicate between services implemented in different languages. These requirements led them to explore more widely adopted RPC mechanisms, eventually settling on gRPC.
 
 Brex was also one of the early adopters of gRPC in the ecosystem—which meant they had to tread through uncharted waters here and there. Nowadays, they have a well-defined set of guidelines and practices that go hand in hand with how they were able to scale the company and their Elixir teams.
 
