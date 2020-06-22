@@ -22,7 +22,7 @@ Thomas Césaré-Herriau, a Lead Engineer at Brex, has recently helped us address
 
 Brex architecture is made of approximately 40 microservices running on Kubernetes. There is a front-end application, implemented with [Phoenix](https://phoenixframework.org/) and [Absinthe](http://absinthe-graphql.org/), that interacts with those services.
 
-Synchronous communication is done via gRPC, and Apache Kafka is used for async messages and broadcasts. However, they did not arrive at this architecture overnight, and they had many learning moments along the way.
+Synchronous communication is done via gRPC, and Apache Kafka is used for asynchronous messages and broadcasts. However, they did not arrive at this architecture overnight, and they had many learning moments along the way.
 
 One of their early lessons relates to the applicability of Erlang's RPC infrastructure. Although Erlang does provide RPC out-of-the-box, Erlang's built-in clustering establishes a full mesh cluster. This setup is well suited for running homogenous instances, where all nodes run the same code, but it is a bad fit when building isolated microservices. The Brex team also wanted to plan for a future where they may communicate between services implemented in different languages. These requirements led them to explore more widely adopted RPC mechanisms, eventually settling on gRPC.
 
