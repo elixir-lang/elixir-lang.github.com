@@ -1,7 +1,6 @@
 ---
 layout: getting-started
 title: Introduction
-redirect_from: /getting_started/1.html
 ---
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
