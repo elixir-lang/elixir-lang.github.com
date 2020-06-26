@@ -47,7 +47,7 @@ $ bundle exec jekyll serve
 ```
 
 The generated site will be available at [http://localhost:4000](http://localhost:4000). You can stop the
-server with <kbd>Ctrl</kbd>-<kbd>C</kbd>.
+server with <kbd><kbd>Ctrl</kbd></kbd>+<kbd><kbd>C</kbd></kbd>.
 
 #### 5. Make your changes and push them
 
