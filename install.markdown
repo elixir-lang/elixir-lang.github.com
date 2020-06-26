@@ -29,6 +29,8 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### Unix (and Unix-like)
 
+  * Alpine Linux (Community repo)
+    * Run: `apk add elixir`
   * Arch Linux (Community repo)
     * Run: `pacman -S elixir`
   * openSUSE (and SLES)
