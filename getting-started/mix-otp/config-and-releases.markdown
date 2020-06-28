@@ -72,17 +72,15 @@ This means we can also configure our `:routing_table` directly in the `config/co
 
 Currently we have two tests tagged with `@tag :distributed`. The "server interaction" test in `KVServerTest`, and the "route requests across nodes" in `KV.RouterTest`. Both tests are failing since they require a routing table, which is currently empty.
 
-The `KV.RouterTest` truly has to be distributed, as its purpose is to test the distribution. However, the test in `KVServerTest` was only made distributed because we had a hardcoded distributed routing table, which we couldn't configure, but now we can!
-
-Therefore, in order to minimize the distributed tests, let's pick a routing table that does not require distribution. Then, for the distributed tests, we will programatically change the routing table. Back in `config/config.exs`, add this line:
+For simplicity, we will define a routing table that always points to the current node. That's the table we will use for development and most of our tests. Back in `config/config.exs`, add this line:
 
 ```elixir
 config :kv, :routing_table, [{?a..?z, node()}]
 ```
 
-This configures a routing table that always points to the current node. Now remove `@tag :distributed` from the test in `test/kv_server_test.exs` and run the suite, the test should now pass.
+With such a simple table available, we can now remove `@tag :distributed` from the test in `test/kv_server_test.exs`. If you run the complete suite, the test should now pass.
 
-Now we only need to make `KV.RouterTest` pass once again. To do so, we will write a setup block that runs before all tests in that file. The setup block will change the application environment and revert it back once we are done, like this:
+However, for the tests in `KV.RouterTest`, we effectively need two nodes in our routing table. To do so, we will write a setup block that runs before all tests in that file. The setup block will change the application environment and revert it back once we are done, like this:
 
 ```elixir
 defmodule KV.RouterTest do
@@ -146,13 +144,18 @@ As a starting point, let's define a release that includes both `:kv_server` and 
 
 That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system.
 
-There is one thing we need to pay attention to. Our routing table config `config :kv, :routing_table, [{?a..?z, node()}]` in `config/config.exs` evaluates the `node()` to `:nonode@nohost`. However, releases start in distributed mode by default. A release named `foo` will use the name `:"foo@computer_name"`. Therefore we have to adjust the routing table to use the proper node name. For now, let's hardcode the node name under `config/config.exs` if the environment is production:
+Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we want our routing table back in `config/config.exs` to look like this:
 
     if Mix.env() == :prod do
-      config :kv, :routing_table, [{?a..?z, :"foo@computer-name"}]
+      config :kv, :routing_table, [
+        {?a..?m, :"foo@computer-name"},
+        {?n..?z, :"bar@computer-name"}
+      ]
     end
 
-While this will suffice for now, the computer name is usually not known upfront when deploying to production. For this purpose, we will later introduce [`config/releases.exs`](#runtime-configuration), which is a configuration file that is executed in the production machine before the system starts, giving you an opportunity to set the proper node name at the right time.
+Note we have wrapped it in a `Mix.env() == :prod` check, so this configuration does not apply to other environments.
+
+While this will suffice for now, you may find the configuration a bit backwards. Usually, the computer name is usually not known upfront during development but only when deploying to production. For this purpose, we will later introduce [`config/releases.exs`](#runtime-configuration), which is a configuration file that is executed in the production machine before the system starts, giving you an opportunity to set the proper node name at the right time.
 
 With the configuration in place, let's give assembling the release another try:
 
@@ -304,7 +307,7 @@ With releases, we were able to "cut different slices" of our project and prepare
 
 Releases also provide built-in hooks for configuring almost every need of the production system:
 
-  * `config/config.exs` (and `config/prod.exs`) - provides build-time application configuration, which is executed when the release is assembled
+  * `config/config.exs` - provides build-time application configuration, which is executed when the release is assembled. This file often imports configuration files based on the environment, such as `config/dev.exs` and `config/prod.exs`
 
   * `config/releases.exs` - provides runtime application configuration. It is executed every time the release boots and is further extensible via config providers
 
