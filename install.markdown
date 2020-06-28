@@ -21,65 +21,85 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### macOS
 
-  * Homebrew
+  - Using **Homebrew**:
     * Update your homebrew to latest: `brew update`
     * Run: `brew install elixir`
-  * Macports
+
+  - Using **Macports**:
     * Run: `sudo port install elixir`
 
-### Unix (and Unix-like)
+### GNU/Linux
 
-  * Alpine Linux (Community repo)
+  - **Alpine Linux** (Community repository)
     * Run: `apk add elixir`
-  * Arch Linux (Community repo)
+
+  - **Arch Linux** (Community repository)
     * Run: `pacman -S elixir`
-  * openSUSE (and SLES)
-    * add Elixir/Erlang repo: `zypper ar -f obs://devel:languages:erlang/ Elixir-Factory`
-    * Run: `zypper in elixir`
-    * optional: if you want to use the latest Erlang, you can use this repo: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
-  * Gentoo
-    * Run: `emerge --ask dev-lang/elixir`
-  * GNU Guix
-    * Run: `guix package -i elixir`
-  * Fedora 21 (and older)
+
+  - **Debian**
+    * _See bellow the instructions for Ubuntu_
+
+  - **Fedora 21 (and older)**
     * Run: `yum install elixir`
-  * Fedora 22 (and newer)
+
+  - **Fedora 22 (and newer)**
     * Run `dnf install elixir`
-  * FreeBSD
-    * From ports: `cd /usr/ports/lang/elixir && make install clean`
-    * From pkg: `pkg install elixir`
-  * Solus
+
+  - **Gentoo**
+    * Run: `emerge --ask dev-lang/elixir`
+
+  - **GNU Guix**
+    * Run: `guix package -i elixir`
+
+  - **openSUSE (and SLES)**
+    * Add Elixir/Erlang repository: `zypper ar -f obs://devel:languages:erlang/ Elixir-Factory`
+    * Run: `zypper in elixir`
+    * Optional: if you want to use the latest Erlang, you can use this repository: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
+
+  - **Slackware**
+    * Using **Sbopkg**:
+      * Run: `sbopkg -ki "erlang-otp elixir"`  
+    * **Manually**:
+      * Download, build and install from SlackBuilds.org: [`erlang-otp`](https://slackbuilds.org/repository/14.2/development/erlang-otp/), and [`elixir`](https://slackbuilds.org/repository/14.2/development/elixir)
+
+  - **Solus**
     * Run: `eopkg install elixir`
-  * Ubuntu 14.04/16.04/17.04/18.04/19.04 or Debian 7/8/9/10
-    * Add Erlang Solutions repo: `wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb`
+
+  - **Ubuntu 14.04/16.04/17.04/18.04/19.04** or **Debian 7/8/9/10**
+    * Add Erlang Solutions repository: `wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb`
     * Run: `sudo apt-get update`
     * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
     * Install Elixir: `sudo apt-get install elixir`
-  * Slackware
-    * Using [`sbopkg`](https://sbopkg.org/): `sbopkg -ki "erlang-otp elixir"`  
-      **Or**  
-      Manually download/build/install from SlackBuilds.org: [`erlang-otp`](https://slackbuilds.org/repository/14.2/development/erlang-otp/), [`elixir`](https://slackbuilds.org/repository/14.2/development/elixir)
-  * OpenBSD
+
+### BSD
+  - **FreeBSD**
+    * Using **ports**:
+      * Run: `cd /usr/ports/lang/elixir && make install clean`
+    * Using **pkg**:
+      * Run: `pkg install elixir`
+
+  - **OpenBSD**
     * Run: `pkg_add elixir`
 
 ### Windows
 
-  * Web installer
+  - Using **our web installer**:
     * [Download the installer](https://repo.hex.pm/elixir-websetup.exe)
     * Click next, next, ..., finish
-  * Chocolatey
-    * `cinst elixir`
+
+  - Using **Chocolatey**:
+    * Run: `cinst elixir`
 
 ### Raspberry Pi
 
 If necessary, replace "buster" with the name of your Raspbian release.
 
   * The Erlang Solutions repository has a prebuilt package for armhf. This saves a significant amount of time in comparison to recompiling natively
-  * Get Erlang key
-    * `echo "deb https://packages.erlang-solutions.com/debian buster contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
+  * Get Erlang key and add it to the keychain:
+    * Run: `echo "deb https://packages.erlang-solutions.com/debian buster contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
     * Run: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
-    * Add to keychain: `sudo apt-key add erlang_solutions.asc`
-  * Install Elixir
+    * Run: `sudo apt-key add erlang_solutions.asc`
+  * Install Elixir:
     * Update apt to latest: `sudo apt update`
     * Run: `sudo apt install elixir`
 
