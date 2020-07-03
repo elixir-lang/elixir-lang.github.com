@@ -179,7 +179,7 @@ iex> <<0, 1>> <> <<2, 3>>
 <<0, 1, 2, 3>>
 ```
 
-Given strings are binaries, we can also pattern match on strings:
+Given that strings are binaries, we can also pattern match on strings:
 
 ```elixir
 iex> <<head, rest::binary>> = "banana"
@@ -190,7 +190,7 @@ iex> rest
 "anana"
 ```
 
-However, remember binary pattern matching works on *bytes*, so matching on the string like "über" with multibyte characters won't match on the _character_, it will match on the _first byte of that character_:
+However, remember that binary pattern matching works on *bytes*, so matching on the string like "über" with multibyte characters won't match on the _character_, it will match on the _first byte of that character_:
 
 ```elixir
 iex> "ü" <> <<0>>
@@ -237,7 +237,7 @@ iex> List.first('hello')
 104
 ```
 
-You can see that instead of containing bytes, a charlist contains integer code points. By default, IEx will only output code points if any of the integers falls outside the ASCII range of 0 to 127.
+You can see that instead of containing bytes, a charlist contains integer code points. By default, IEx will only output code points if any of the integers falls outside the ASCII range of 0 to 127:
 
 ```elixir
 iex> 'hello'
