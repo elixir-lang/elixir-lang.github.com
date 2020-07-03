@@ -37,7 +37,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Run: `pacman -S elixir`
 
   - **Debian**
-    * _See bellow the instructions for Ubuntu_
+    * _See below the instructions for Ubuntu_
 
   - **Fedora 21 (and older)**
     * Run: `yum install elixir`
