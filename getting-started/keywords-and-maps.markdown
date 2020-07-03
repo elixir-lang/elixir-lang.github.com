@@ -56,7 +56,7 @@ query = from w in Weather,
      select: w
 ```
 
-These characteristics are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned the following syntax is supported:
+These characteristics are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned that the following syntax is supported:
 
 ```elixir
 iex> if false, do: :this, else: :that
