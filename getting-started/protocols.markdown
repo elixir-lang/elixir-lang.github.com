@@ -214,7 +214,7 @@ iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 6
 ```
 
-Another useful example is the `String.Chars` protocol, which specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
+Another useful example is the `String.Chars` protocol, which specifies how to convert a data structure to its human representation as a string. It's exposed via the `to_string` function:
 
 ```elixir
 iex> to_string :hello

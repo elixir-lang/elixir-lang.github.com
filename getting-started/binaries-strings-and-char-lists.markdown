@@ -50,7 +50,9 @@ Now that we understand what the Unicode standard is and what code points are, we
 
 Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit bytes. UTF-8 is a **variable width** character encoding that uses one to four bytes to store each code point; it is capable of encoding all valid Unicode code points.
 
-Because UTF-8 is a variable width encoding, the number of characters (i.e. code points) and the number of bytes in a string may not be 1:1. Consider the following:
+Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme.
+
+In other words, what we would expect to be a single character, such as `é` or `ł`, can in practice be multiple characters, each represented by potentially multple bytes. Consider the following:
 
 ```elixir
 iex> string = "hełło"
@@ -61,7 +63,7 @@ iex> byte_size(string)
 7
 ```
 
-`String.length/1` counts characters, but `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, and `o`, but two bytes to represent `ł`. Some of the genius of UTF-8 is how it reserves certain bits to declare how many bytes are needed to represent a code point.
+`String.length/1` counts graphemes, but `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, and `o`, but two bytes to represent `ł`.
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
@@ -202,8 +204,8 @@ false
 iex> rest
 <<188, 98, 101, 114>>
 ```
-Above, `x` matched on only the first byte of the multibyte `ü` character.
 
+Above, `x` matched on only the first byte of the multibyte `ü` character.
 
 Therefore, when pattern matching on strings, it is important to use the `utf8` modifier:
 
