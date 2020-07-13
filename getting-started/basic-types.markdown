@@ -173,7 +173,8 @@ iex> "hellö"
 Elixir also supports string interpolation:
 
 ```elixir
-iex> "hellö #{:world}"
+iex> string = :world
+iex> "hellö #{string}"
 "hellö world"
 ```
 
