@@ -132,10 +132,9 @@ end
 Functions may be called when defining a module attribute, e.g.
 
 ```elixir
-defmodule MyApp.Notification do
-  @service Application.compile_env(:my_app, :email_service)
-  @message Application.compile_env(:my_app, :welcome_email)
-  def welcome(email), do: @service.send_welcome_message(email, @message)
+defmodule MyApp.Status do
+  @service URI.parse("https://example.com")
+  def status(email), do: SomeHttpClient.get(@service)
 end
 ```
 
