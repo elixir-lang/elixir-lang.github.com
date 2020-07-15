@@ -73,7 +73,7 @@ iex>
 
 As you can see, we can modify the agent state in any way we want. Therefore, we most likely don't want to access the Agent API throughout many different places in our code. Instead, we want to encapsulate all Agent-related functionality in a single module, which we will call `KV.Bucket`. Before we implement it, let's write some tests which will outline the API exposed by our module.
 
-Create a file at `test/kv/bucket_test.exs` (remember the `.exs` extension) with the following:
+Create a file at `kv/test/bucket_test.exs` (remember the `.exs` extension) with the following:
 
 ```elixir
 defmodule KV.BucketTest do
@@ -101,7 +101,7 @@ Async or not, our new test should obviously fail, as none of the functionality i
 ** (UndefinedFunctionError) function KV.Bucket.start_link/1 is undefined (module KV.Bucket is not available)
 ```
 
-In order to fix the failing test, let's create a file at `lib/kv/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
+In order to fix the failing test, let's create a file at `kv/lib/bucket.ex` with the contents below. Feel free to give a try at implementing the `KV.Bucket` module yourself using agents before peeking at the implementation below.
 
 ```elixir
 defmodule KV.Bucket do

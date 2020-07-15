@@ -31,7 +31,7 @@ At the end of the chapter, we will also talk about Applications. As we will see,
 
 A supervisor is a process which supervises other processes, which we refer to as child processes. The act of supervising a process includes three distinct responsibilities. The first one is to start child processes. Once a child process is running, the supervisor may restart a child process, either because it terminated abnormally or because a certain condition was reached. For example, a supervisor may restart all children if any child dies. Finally, a supervisor is also responsible for shutting down the child processes when the system is shutting down. Please see the [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) module for a more in-depth discussion.
 
-Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the Supervisor behaviour, inside the `lib/kv/supervisor.ex` file:
+Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the Supervisor behaviour, inside the `kv/lib/supervisor.ex` file:
 
 ```elixir
 defmodule KV.Supervisor do

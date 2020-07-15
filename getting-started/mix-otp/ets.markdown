@@ -49,7 +49,7 @@ iex> :ets.lookup(:buckets_registry, "foo")
 
 Let's change the `KV.Registry` to use ETS tables. The first change is to modify our registry to require a name argument, we will use it to name the ETS table and the registry process itself. ETS names and process names are stored in different locations, so there is no chance of conflicts.
 
-Open up `lib/kv/registry.ex`, and let's change its implementation. We've added comments to the source code to highlight the changes we've made:
+Open up `kv/lib/registry.ex`, and let's change its implementation. We've added comments to the source code to highlight the changes we've made:
 
 ```elixir
 defmodule KV.Registry do
@@ -130,7 +130,7 @@ Notice that before our changes `KV.Registry.lookup/2` sent requests to the serve
 
 In order for the cache mechanism to work, the created ETS table needs to have access `:protected` (the default), so all clients can read from it, while only the `KV.Registry` process writes to it. We have also set `read_concurrency: true` when starting the table, optimizing the table for the common scenario of concurrent read operations.
 
-The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as an argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `test/kv/registry_test.exs` to fix both issues:
+The changes we have performed above have broken our tests because the registry requires the `:name` option when starting up. Furthermore, some registry operations such as `lookup/2` require the name to be given as an argument, instead of a PID, so we can do the ETS table lookup. Let's change the setup function in `kv/test/registry_test.exs` to fix both issues:
 
 ```elixir
   setup context do
@@ -218,14 +218,14 @@ $ mix test --trace
 The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. You may see one or two intermittent failures:
 
 ```
-  1) test removes buckets on exit (KV.RegistryTest)
-     test/kv/registry_test.exs:19
+ 1) test removes buckets on exit (KV.RegistryTest)
+     test/registry_test.exs:19
      Assertion with == failed
-     code: KV.Registry.lookup(registry, "shopping") == :error
-     lhs:  {:ok, #PID<0.109.0>}
-     rhs:  :error
+     code:  assert KV.Registry.lookup(registry, "shopping") == :error
+     left:  {:ok, #PID<0.179.0>}
+     right: :error
      stacktrace:
-       test/kv/registry_test.exs:23
+       test/registry_test.exs:23: (test)
 ```
 
 According to the failure message, we are expecting that the bucket no longer exists on the table, but it still does! This problem is the opposite of the one we have just solved: while previously there was a delay between the command to create a bucket and updating the table, now there is a delay between the bucket process dying and its entry being removed from the table. Since this is a race condition, you may not be able to reproduce it on your machine, but it is there.

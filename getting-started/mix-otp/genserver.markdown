@@ -92,7 +92,7 @@ There is quite a bit more ceremony in the GenServer code but, as we will see, it
 
 For now, we will write only the server callbacks for our bucket registering logic, without providing a proper API, which we will do later.
 
-Create a new file at `lib/kv/registry.ex` with the following contents:
+Create a new file at `kv/lib/registry.ex` with the following contents:
 
 ```elixir
 defmodule KV.Registry do
@@ -147,7 +147,7 @@ This is all good and well, but we still want to offer our users an API that allo
 
 A GenServer is implemented in two parts: the client API and the server callbacks. You can either combine both parts into a single module or you can separate them into a client module and a server module. The client is any process that invokes the client function. The server is always the process identifier or process name that we will explicitly pass as argument to the client API. Here we'll use a single module for both the server callbacks and the client API.
 
-Edit the file at `lib/kv/registry.ex`, filling in the blanks for the client API:
+Edit the file at `kv/lib/registry.ex`, filling in the blanks for the client API:
 
 ```elixir
   ## Client API
@@ -200,7 +200,7 @@ For now, let's write some tests to guarantee our GenServer works as expected.
 
 ## Testing a GenServer
 
-Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
+Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `kv/test/registry_test.exs` with the following:
 
 ```elixir
 defmodule KV.RegistryTest do

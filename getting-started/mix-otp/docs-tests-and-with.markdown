@@ -61,7 +61,7 @@ Doctests are specified by an indentation of four spaces followed by the `iex>` p
 
 Also, note that we started the documentation string using `@doc ~S"""`. The `~S` prevents the `\r\n` characters from being converted to a carriage return and line feed until they are evaluated in the test.
 
-To run our doctests, we'll create a file at `test/kv_server/command_test.exs` and call `doctest KVServer.Command` in the test case:
+To run our doctests, we'll create a file at `kv_server/test/command_test.exs` and call `doctest KVServer.Command` in the test case:
 
 ```elixir
 defmodule KVServer.CommandTest do
@@ -73,11 +73,15 @@ end
 Run the test suite and the doctest should fail:
 
 ```
-  1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
-     test/kv_server/command_test.exs:3
+  1) doctest KVServer.Command.parse/1 (1) (KVServer.CommandTest)
+     test/command_test.exs:3
      Doctest failed
-     code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
-     lhs:  :not_implemented
+     doctest:
+       iex> KVServer.Command.parse("CREATE shopping\r\n")
+       {:ok, {:create, "shopping"}}
+     code:  KVServer.Command.parse("CREATE shopping\r\n") === {:ok, {:create, "shopping"}}
+     left:  :not_implemented
+     right: {:ok, {:create, "shopping"}}
      stacktrace:
        lib/kv_server/command.ex:7: KVServer.Command (module)
 ```

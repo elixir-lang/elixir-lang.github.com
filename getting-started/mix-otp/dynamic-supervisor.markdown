@@ -39,13 +39,13 @@ Since the bucket terminated, the registry also stopped, and our test fails when 
 
 ```
   1) test removes bucket on crash (KV.RegistryTest)
-     test/kv/registry_test.exs:26
-     ** (exit) exited in: GenServer.call(#PID<0.148.0>, {:lookup, "shopping"}, 5000)
+     test/registry_test.exs:26
+     ** (exit) exited in: GenServer.call(#PID<0.179.0>, {:lookup, "shopping"}, 5000)
          ** (EXIT) no process: the process is not alive or there's no process currently associated with the given name, possibly because its application isn't started
      code: assert KV.Registry.lookup(registry, "shopping") == :error
      stacktrace:
-       (elixir) lib/gen_server.ex:770: GenServer.call/3
-       test/kv/registry_test.exs:33: (test)
+       (elixir 1.10.2) lib/gen_server.ex:1023: GenServer.call/3
+       test/registry_test.exs:32: (test)
 ```
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization; instead each child is started manually via `DynamicSupervisor.start_child/2`.
@@ -54,7 +54,7 @@ We are going to solve this issue by defining a new supervisor that will spawn an
 
 Since a `DynamicSupervisor` does not define any children during initialization, the `DynamicSupervisor` also allows us to skip the work of defining a whole separate module with the usual `start_link` function and the `init` callback. Instead, we can define a `DynamicSupervisor` directly in the supervision tree, by giving it a name and a strategy.
 
-Open up `lib/kv/supervisor.ex` and add the dynamic supervisor as a child as follows:
+Open up `kv/lib/supervisor.ex` and add the dynamic supervisor as a child as follows:
 
 
 ```elixir
@@ -112,7 +112,7 @@ defmodule KV.Bucket do
   use Agent, restart: :temporary
 ```
 
-Let's also add a test to `test/kv/bucket_test.exs` that guarantees the bucket is temporary:
+Let's also add a test to `kv/test/bucket_test.exs` that guarantees the bucket is temporary:
 
 ```elixir
   test "are temporary workers" do

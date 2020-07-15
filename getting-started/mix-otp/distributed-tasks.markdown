@@ -119,7 +119,7 @@ res + Task.await(task)
 
 ## Distributed tasks
 
-Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `lib/kv/supervisor.ex` from the `:kv` application. Let's add a task supervisor as the last child of the tree:
+Distributed tasks are exactly the same as supervised tasks. The only difference is that we pass the node name when spawning the task on the supervisor. Open up `kv/lib/supervisor.ex` from the `:kv` application. Let's add a task supervisor as the last child of the tree:
 
 ```elixir
 {Task.Supervisor, name: KV.RouterTasks},
@@ -158,7 +158,7 @@ With this knowledge in hand, let's finally write the routing code.
 
 ## Routing layer
 
-Create a file at `lib/kv/router.ex` with the following contents:
+Create a file at `kv/lib/router.ex` with the following contents:
 
 ```elixir
 defmodule KV.Router do
@@ -200,7 +200,7 @@ defmodule KV.Router do
 end
 ```
 
-Let's write a test to verify our router works. Create a file named `test/kv/router_test.exs` containing:
+Let's write a test to verify our router works. Create a file named `kv/test/router_test.exs` containing:
 
 ```elixir
 defmodule KV.RouterTest do
@@ -245,7 +245,7 @@ Although our tests pass, our testing structure is getting more complex. In parti
 
 Luckily, ExUnit ships with a facility to tag tests, allowing us to run specific callbacks or even filter tests altogether based on those tags. We have already used the `:capture_log` tag in the previous chapter, which has its semantics specified by ExUnit itself.
 
-This time let's add a `:distributed` tag to `test/kv/router_test.exs`:
+This time let's add a `:distributed` tag to `kv/test/router_test.exs`:
 
 ```elixir
 @tag :distributed
