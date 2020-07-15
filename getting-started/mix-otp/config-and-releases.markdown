@@ -90,8 +90,8 @@ defmodule KV.RouterTest do
     current = Application.get_env(:kv, :routing_table)
 
     Application.put_env(:kv, :routing_table, [
-      {?a..?m, :"foo@computer-name"},
-      {?n..?z, :"bar@computer-name"}
+      {?a..?m, :foo@computer-name},
+      {?n..?z, :bar@computer-name}
     ])
 
     on_exit fn -> Application.put_env(:kv, :routing_table, current) end
@@ -148,8 +148,8 @@ Before we assemble the release, let's also define our routing table for producti
 
     if Mix.env() == :prod do
       config :kv, :routing_table, [
-        {?a..?m, :"foo@computer-name"},
-        {?n..?z, :"bar@computer-name"}
+        {?a..?m, :foo@computer-name},
+        {?n..?z, :bar@computer-name}
       ]
     end
 
@@ -227,7 +227,7 @@ And let's connect to it and issue a request in another terminal:
 Since the "shopping" bucket would be stored on `bar`, the request fails as `bar` is not available. If you go back to the terminal running `foo`, you will see:
 
     17:16:19.555 [error] Task #PID<0.622.0> started from #PID<0.620.0> terminating
-    ** (stop) exited in: GenServer.call({KV.RouterTasks, :"bar@computer-name"}, {:start_task, [{:"foo@josemac-2", #PID<0.622.0>, #PID<0.622.0>}, [#PID<0.622.0>, #PID<0.620.0>, #PID<0.618.0>], :monitor, {KV.Router, :route, ["shopping", KV.Registry, :lookup, [KV.Registry, "shopping"]]}], :temporary, nil}, :infinity)
+    ** (stop) exited in: GenServer.call({KV.RouterTasks, :bar@computer-name}, {:start_task, [{:foo@computer-name, #PID<0.622.0>, #PID<0.622.0>}, [#PID<0.622.0>, #PID<0.620.0>, #PID<0.618.0>], :monitor, {KV.Router, :route, ["shopping", KV.Registry, :lookup, [KV.Registry, "shopping"]]}], :temporary, nil}, :infinity)
         ** (EXIT) no connection to bar@computer-name
         (elixir) lib/gen_server.ex:1010: GenServer.call/3
         (elixir) lib/task/supervisor.ex:454: Task.Supervisor.async/6

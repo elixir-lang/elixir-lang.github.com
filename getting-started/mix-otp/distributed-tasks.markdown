@@ -68,7 +68,7 @@ iex> Hello.world
 However, we can spawn a new process on `foo@computer-name` from `bar@computer-name`! Let's give it a try (where `@computer-name` is the one you see locally):
 
 ```elixir
-iex> Node.spawn_link :"foo@computer-name", fn -> Hello.world end
+iex> Node.spawn_link :foo@computer-name, fn -> Hello.world end
 #PID<9014.59.0>
 hello world
 ```
@@ -78,7 +78,7 @@ Elixir spawned a process on another node and returned its pid. The code then exe
 We can send and receive messages from the pid returned by `Node.spawn_link/2` as usual. Let's try a quick ping-pong example:
 
 ```elixir
-iex> pid = Node.spawn_link :"foo@computer-name", fn ->
+iex> pid = Node.spawn_link :foo@computer-name, fn ->
 ...>   receive do
 ...>     {:ping, client} -> send client, :pong
 ...>   end
@@ -135,21 +135,21 @@ $ iex --sname bar -S mix
 From inside `bar@computer-name`, we can now spawn a task directly on the other node via the supervisor:
 
 ```elixir
-iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, fn ->
+iex> task = Task.Supervisor.async {KV.RouterTasks, :foo@computer-name}, fn ->
 ...>   {:ok, node()}
 ...> end
 %Task{owner: #PID<0.122.0>, pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
 iex> Task.await(task)
-{:ok, :"foo@computer-name"}
+{:ok, :foo@computer-name}
 ```
 
 Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function, and arguments explicitly:
 
 ```elixir
-iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
+iex> task = Task.Supervisor.async {KV.RouterTasks, :foo@computer-name}, Kernel, :node, []
 %Task{owner: #PID<0.122.0>, pid: #PID<12467.89.0>, ref: #Reference<0.0.0.404>}
 iex> Task.await(task)
-:"foo@computer-name"
+:foo@computer-name
 ```
 
 The difference is that anonymous functions require the target node to have exactly the same code version as the caller. Using module, function, and arguments is more robust because you only need to find a function with matching arity in the given module.
