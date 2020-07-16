@@ -167,9 +167,9 @@ The reasons for writing a new property-based testing library from scratch are be
 
 ## Roadmap
 
-**Update Jun/2020:** after careful consideration, the Elixir team decided to not include `StreamData` in Elixir itself, as it provides all of the feature set necessary as a package.
+`stream_data` and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. We have used the names `StreamData` and `ExUnitProperties` to avoid conflicts when those modules are eventually merged into Elixir. When merged, they will be renamed to the proper `Stream.Data` and `ExUnit.Properties` modules. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
 
-stream_data and the functionalities it includes are scheduled to be included in one of the next two Elixir releases, likely 1.6 but possibly 1.7. We have used the names `StreamData` and `ExUnitProperties` to avoid conflicts when those modules are eventually merged into Elixir. When merged, they will be renamed to the proper `Stream.Data` and `ExUnit.Properties` modules. Right now, all development is happening in the [stream_data][] repository, where we are discussing features and giving users a chance to try out the functionalities early on. We'd love for anyone to get involved in trying stream_data and we'd love feedback!
+**Update Jun/2020:** after careful consideration, the Elixir team decided to not include `StreamData` in Elixir itself, and keep it as package, as it is able to provide all of the necessary features without a need for direct integration with the language.
 
 [stream_data]: https://github.com/whatyouhide/stream_data
 [quickcheck-paper]: http://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf
