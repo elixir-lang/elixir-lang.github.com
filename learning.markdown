@@ -107,23 +107,23 @@ If you're new to Elixir, you'll get step-by-step guidance in an engaging format 
 
 <div class="clear"></div>
 
-<h4 class="resource">grox.io's Multi-Format Elixir Course</h4>
+<h4 class="resource">grox.io's Elixir Course</h4>
 
 <a class="cover" href="https://grox.io/language/elixir/course" title="grox.io's Multi-Format Elixir Course"><img src="/images/learning/groxio-elixir.png" alt="grox.io's Multi-Format Elixir Course" width="190" /></a>
 
-Learning complex concepts like programming languages is best with multiple formats. Groxio's learning method embraces an interactive mini-book for beginners, video overviews for novices, an online book for presenting higher level concepts, videos with live coding to simulate advanced pair programming through projects meaningful to beginners and experts. 
+Learning complex concepts like programming languages is best with multiple formats. Groxio's learning method embraces an interactive mini-book for beginners, video overviews for novices, an online book for presenting higher level concepts, videos with live coding to simulate advanced pair programming through projects meaningful to beginners and experts.
 
-The Elixir module is a full program with a book with 80 pages, 8 videos, dozens of exercises, and two full test-first projects. Beginners can learn the language, and experts can fill in typical blind spots like writing sigils, building macros, and using streams. 
+The Elixir module is a full program with a book with 80 pages, 8 videos, dozens of exercises, and two full test-first projects. Beginners can learn the language, and experts can fill in typical blind spots like writing sigils, building macros, and using streams.
 
 <div class="clear"></div>
 
-<h4 class="resource">grox.io's Multi-Format OTP Course</h4>
+<h4 class="resource">grox.io's OTP Course</h4>
 
 <a class="cover" href="https://grox.io/language/otp/course" title="grox.io's Multi-Format OTP Course"><img src="/images/learning/groxio-otp.png" alt="grox.io's Multi-Format OTP Course" width="190" /></a>
 
-The best seller <a href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp">Designing Elixir Systems with OTP</a> teaches OTP from a design perspective by showing a system for breaking projects into layers. This course builds on those layering concepts with a 60 page book, 12 videos, projects, and curated links to go into deeper detail for tricky OTP concepts. 
+This course teaches OTP from a design perspective by showing a system for breaking projects into layers. This course builds on those layering concepts with a 60 page book, 12 videos, projects, and curated links to go into deeper detail for tricky OTP concepts.
 
-Understand how back-pressure works, step inside supervision trees, and learn to build your dynamic supervisors. Learn OTP for the first time, or solidify your intuition by building the base concepts by reading a book, watching videos, and working through guided projects using Groxio's blend of media, designed to take you from novice to expert. 
+Understand how back-pressure works, step inside supervision trees, and learn to build your dynamic supervisors. Learn OTP for the first time, or solidify your intuition by building the base concepts by reading a book, watching videos, and working through guided projects using Groxio's blend of media, designed to take you from novice to expert.
 
 <div class="clear"></div>
 
