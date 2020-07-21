@@ -72,7 +72,7 @@ iex> case :ok do
 ** (CaseClauseError) no case clause matching: :ok
 ```
 
-Consult [the full documentation for guards](https://hexdocs.pm/elixir/guards.html) for more information about guards, how they are used, and what expressions are allowed in them.
+Consult [the full documentation for guards](https://hexdocs.pm/elixir/patterns-and-guards.html#guards) for more information about guards, how they are used, and what expressions are allowed in them.
 
 Note anonymous functions can also have multiple clauses and guards:
 
