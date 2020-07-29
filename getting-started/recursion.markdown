@@ -17,7 +17,7 @@ for(i = 0; i < sizeof(array); i++) {
 }
 ```
 
-In the example above, we are mutating both the array and the variable `i`. Mutating is not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached that stops the recursive action from continuing. No data is mutated in this process. Consider the example below that prints a string an arbitrary number of times:
+In the example above, we are mutating both the array and the variable `i`. Mutation is not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached that stops the recursive action from continuing. No data is mutated in this process. Consider the example below that prints a string an arbitrary number of times:
 
 ```elixir
 defmodule Recursion do
