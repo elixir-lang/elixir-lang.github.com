@@ -142,7 +142,7 @@ When defining an attribute, do not leave a line break between the attribute name
 
 ## As temporary storage
 
-To see an example of using module attributes as for storage, look no futher than Elixir's unit test framework called [ExUnit](https://hexdocs.pm/ex_unit/). ExUnit uses module attributes for multiple different purposes:
+To see an example of using module attributes as for storage, look no further than Elixir's unit test framework called [ExUnit](https://hexdocs.pm/ex_unit/). ExUnit uses module attributes for multiple different purposes:
 
 ```elixir
 defmodule MyTest do
