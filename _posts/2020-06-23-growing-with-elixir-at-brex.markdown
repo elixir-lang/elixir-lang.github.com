@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Growing with Elixir at Brex
+title: Elixir at fintech with Brex
 author: José Valim
 category: Cases
 excerpt: A case study of how Elixir is being used at Brex.
