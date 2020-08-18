@@ -6,7 +6,7 @@ category: Cases
 excerpt: A case study of how Elixir is being used at Farmbot.
 ---
 
-[FarmBot](https://farm.bot/) is an open-source precision agriculture CNC farming project that includes a robot farming machine, software, and documentation including a farming data repository. FarmBot’s machines use IoT technology to make it easy for farmers to remotely manage their gardens.
+[FarmBot](https://farm.bot/) is an open-source precision agriculture CNC farming project that includes a robot farming machine, software, and documentation including a farming data repository. FarmBot's machines use IoT technology to make it easy for farmers to remotely manage their gardens.
 
 Farmbot is built with [Nerves](https://www.nerves-project.org/), an open-source platform and infrastructure to build, deploy, and securely manage your fleet of IoT devices at speed and scale.
 
@@ -16,7 +16,7 @@ When Connor Rigby, former embedded systems engineer at Farmbot, initially joined
 
 ## How Nerves helped
 
-Connor brought Nerves to Farmbot by porting the entire proof-of-concept Ruby application he’d created over to Nerves, which he did in his free time over the course of a month, taking him about 20 hours total. He also continued to make open-source contributions to Nerves, helping to structure the networking functionality that is now part of [NervesHub](https://www.nerves-hub.org/), the extensible web service that enables over-the-air firmware update management.
+Connor brought Nerves to Farmbot by porting the entire proof-of-concept Ruby application he'd created over to Nerves, which he did in his free time over the course of a month, taking him about 20 hours total. He also continued to make open-source contributions to Nerves, helping to structure the networking functionality that is now part of [NervesHub](https://www.nerves-hub.org/), the extensible web service that enables over-the-air firmware update management.
 
 <blockquote style="font-size: 24px; color: #444">
 <p>The biggest benefit of using Nerves is definitely how fast you can get up and running.</p>
@@ -37,10 +37,10 @@ For devices that are already connected to the internet, connecting to Nerves req
 
 ### 3. Nerves has all the benefits of Elixir and Erlang.
 
-Because it's written in Elixir and built within the Erlang runtime system, Nerves retains the qualities of that language and framework — notably that they are distributed, fault-tolerant, soft real-time, and highly available. Connor also says that with Nerves, it’s easy to reason about the things you build with Nerves because you only input what you need into a Nerves application, helping you to avoid unnecessary complexities or unforeseen security vulnerabilities. You can check up on devices as they're running and debug them without disruption to the user experience.
+Because it's written in Elixir and built within the Erlang runtime system, Nerves retains the qualities of that language and framework — notably that they are distributed, fault-tolerant, soft real-time, and highly available. Connor also says that with Nerves, it's easy to reason about the things you build with Nerves because you only input what you need into a Nerves application, helping you to avoid unnecessary complexities or unforeseen security vulnerabilities. You can check up on devices as they're running and debug them without disruption to the user experience.
 
 ## The result
 
-FarmBot now has around 300 devices live in NervesHub, with a different deployment for each of their device models. Nerves is built to scale, so as Farmbot continues to grow its user base and expand their product capabilities, they’ll be able to continue developing and releasing reliable firmware updates using Nerves.  
+FarmBot now has around 300 devices live in NervesHub, with a different deployment for each of their device models. Nerves is built to scale, so as Farmbot continues to grow its user base and expand their product capabilities, they'll be able to continue developing and releasing reliable firmware updates using Nerves.  
 
 *This case study has first been published on [Nerves' website](https://www.nerves-project.org/customer-farmbot)*.
