@@ -33,7 +33,7 @@ This is especially helpful for Farmbot users who operate in more remote location
 
 ### 2. Nerves adds convenience with low overhead.
 
-For devices that are already connected to the internet, connecting to Nerves requires no additional configuration because NervesHub is compatible with the current public key infrastructure for device-to-cloud communication. Since Farmbot already had internet-connected devices when they brought Nerves onboard, they were able to use the same “key” to sign in to NervesHub that they use for their cloud service. 
+For devices that are already connected to the internet, connecting to Nerves requires no additional configuration because NervesHub is compatible with the current public key infrastructure for device-to-cloud communication. Since Farmbot already had internet-connected devices when they brought Nerves onboard, they were able to use the same "key" to sign in to NervesHub that they use for their cloud service. 
 
 ### 3. Nerves has all the benefits of Elixir and Erlang.
 
