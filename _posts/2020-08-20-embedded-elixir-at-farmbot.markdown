@@ -8,7 +8,7 @@ excerpt: A case study of how Elixir is being used at Farmbot.
 
 [FarmBot](https://farm.bot/) is an open-source precision agriculture CNC farming project that includes a robot farming machine, software, and documentation including a farming data repository. FarmBot’s machines use IoT technology to make it easy for farmers to remotely manage their gardens.
 
-Farmbot is built with [Nerves](https://www.nerves-project.org/), an open-source platform and infrastructure you need to build, deploy, and securely manage your fleet of IoT devices at speed and scale.
+Farmbot is built with [Nerves](https://www.nerves-project.org/), an open-source platform and infrastructure to build, deploy, and securely manage your fleet of IoT devices at speed and scale.
 
 When Connor Rigby, former embedded systems engineer at Farmbot, initially joined the company, his first project was to build a Farmbot application using Ruby. After completing the proof-of-concept, he knew that he needed a way to make the embedded development process more efficient, reliable, and secure. Connor had used Nerves before at a previous company and was a regular open-source contributor to Nerves, so he knew the platform would help him accomplish these goals.
 
