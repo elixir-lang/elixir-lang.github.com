@@ -35,7 +35,7 @@ This is especially helpful for Farmbot users who operate in more remote location
 
 For devices that are already connected to the internet, connecting to Nerves requires no additional configuration because NervesHub is compatible with the current public key infrastructure for device-to-cloud communication. Since Farmbot already had internet-connected devices when they brought Nerves onboard, they were able to use the same "key" to sign in to NervesHub that they use for their cloud service. 
 
-### 3. Nerves has all the benefits of Elixir and Erlang.
+### 3. Nerves has all the benefits of Elixir and Erlang
 
 Because it's written in Elixir and built within the Erlang runtime system, Nerves retains the qualities of that language and framework — notably that they are distributed, fault-tolerant, soft real-time, and highly available. Connor also says that with Nerves, it's easy to reason about the things you build with Nerves because you only input what you need into a Nerves application, helping you to avoid unnecessary complexities or unforeseen security vulnerabilities. You can check up on devices as they're running and debug them without disruption to the user experience.
 
