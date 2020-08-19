@@ -27,7 +27,7 @@ Connor says that the Nerves Platform and what eventually became NervesHub was a 
 
 ### 1. Nerves supports lean systems and operates well in low-bandwidth areas
 
-Because Nerves bundles entire applications into relatively small archives in terms of firmware images for full Linux systems, Farmbot can use NervesHub to send over-the-air updates more quickly and users can download them faster. (For comparison, an Android update generally clocks in at around 4 GB, but a Nerves update can be packed into as little as 12 MB.) 
+Because Nerves bundles entire applications into relatively small archives in terms of firmware images for full Linux systems, Farmbot can use NervesHub to send over-the-air updates more quickly and users can download them faster. For comparison, an Android update generally clocks in at around 4 GB, but a Nerves update can be packed into as little as 12 MB. 
 
 This is especially helpful for Farmbot users who operate in more remote locations with lower bandwidth and less reliable access to WiFi. When an internet connection is available, NervesHub will connect and check if there's an update, then prompt the user to install the update. 
 
