@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Embedded Elixit at Farmbot
+title: Embedded Elixir at Farmbot
 author: José Valim
 category: Cases
 excerpt: A case study of how Elixir is being used at Farmbot.
