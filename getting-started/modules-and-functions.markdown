@@ -235,6 +235,7 @@ If a function with default values has multiple clauses, it is required to create
 
 ```elixir
 defmodule Concat do
+  # A function head declaring defaults
   def join(a, b \\ nil, sep \\ " ")
 
   def join(a, b, _sep) when is_nil(b) do
