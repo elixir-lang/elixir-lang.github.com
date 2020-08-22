@@ -89,7 +89,7 @@ Similar to `IEx.pry/0`, once a breakpoint is reached code execution stops until 
 
 ## Debugger
 
-For those who enjoy breakpoints but are rather interested in a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module:
+For those who enjoy breakpoints but are rather interested in a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module in a file named `example.ex`:
 
 ```elixir
 defmodule Example do
@@ -106,12 +106,18 @@ defmodule Example do
 end
 ```
 
+Now, let's compile the code by running:
+
+```bash
+$ elixirc example.ex
+```
+
 > If the `debugger` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
 
 Now we can start our debugger:
 
 ```elixir
-$ iex -S mix
+$ iex
 iex(1)> :debugger.start()
 {:ok, #PID<0.87.0>}
 iex(2)> :int.ni(Example)
@@ -130,7 +136,7 @@ When you start the debugger, a Graphical User Interface will open in your machin
 For debugging complex systems, jumping at the code is not enough. It is necessary to have an understanding of the whole virtual machine, processes, applications, as well as set up tracing mechanisms. Luckily this can be achieved in Erlang with `:observer`. In your application:
 
 ```elixir
-$ iex -S mix
+$ iex
 iex(1)> :observer.start()
 ```
 
