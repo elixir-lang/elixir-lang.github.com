@@ -90,6 +90,7 @@ defmodule KV.Registry do
 
   ## Server callbacks
 
+  @impl true
   def init(table) do
     # 3. We have replaced the names map by the ETS table
     names = :ets.new(table, [:named_table, read_concurrency: true])
@@ -99,6 +100,7 @@ defmodule KV.Registry do
 
   # 4. The previous handle_call callback for lookup was removed
 
+  @impl true
   def handle_cast({:create, name}, {names, refs}) do
     # 5. Read and write to the ETS table instead of the map
     case lookup(names, name) do
@@ -113,6 +115,7 @@ defmodule KV.Registry do
     end
   end
 
+  @impl true
   def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
     # 6. Delete from the ETS table instead of the map
     {name, refs} = Map.pop(refs, ref)
@@ -120,6 +123,7 @@ defmodule KV.Registry do
     {:noreply, {names, refs}}
   end
 
+  @impl true
   def handle_info(_msg, state) do
     {:noreply, state}
   end
@@ -186,13 +190,15 @@ However, since `KV.Registry.create/2` is a cast operation, the command will retu
 3. The command above returns `:error`
 4. The registry creates the bucket and updates the cache table
 
-To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's change the function and its callback as follows:
+To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's back to `lib/kv/registry.ex` and change the function and its callback as follows:
 
 ```elixir
 def create(server, name) do
   GenServer.call(server, {:create, name})
 end
-
+```
+```elixir
+@impl true
 def handle_call({:create, name}, _from, {names, refs}) do
   case lookup(names, name) do
     {:ok, pid} ->
@@ -215,7 +221,7 @@ Let's run the tests once again. This time though, we will pass the `--trace` opt
 $ mix test --trace
 ```
 
-The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. You may see one or two intermittent failures:
+The `--trace` option is useful when your tests are deadlocking or there are race conditions, as it runs all tests synchronously (`async: true` has no effect) and shows detailed information about each test. If you run the tests multiple times you may see this intermittent failure:
 
 ```
   1) test removes buckets on exit (KV.RegistryTest)
@@ -234,7 +240,7 @@ Last time we fixed the race condition by replacing the asynchronous operation, a
 
 An easy way to do so is by sending a synchronous request to the registry before we do the bucket lookup. The `Agent.stop/2` operation is synchronous and only returns after the bucket process terminates and all `:DOWN` messages are delivered. Therefore, once `Agent.stop/2` returns, the registry has already received the `:DOWN` message but it may not have processed it yet. In order to guarantee the processing of the `:DOWN` message, we can do a synchronous request. Since messages are processed in order, once the registry replies to the synchronous request, then the `:DOWN` message will definitely have been processed.
 
-Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop/2` in both tests:
+Let's do so by creating a "bogus" bucket, which is a synchronous request, after `Agent.stop/2` in both "remove" tests at `test/kv/registry_test.exs`:
 
 ```elixir
   test "removes buckets on exit", %{registry: registry} do
