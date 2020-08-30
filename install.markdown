@@ -84,7 +84,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 ### Windows
 
   - Using **our web installer**:
-    * [Download the installer](https://repo.hex.pm/elixir-websetup.exe)
+    * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.1/elixir-websetup.exe)
     * Click next, next, ..., finish
 
   - Using **Chocolatey**:
