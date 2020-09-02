@@ -160,7 +160,7 @@ setup do
 end
 ```
 
-Since we have now changed our registry to use `KV.BucketSupervisor`, which is registered globally (`mix test` actually starts your application before running any test as mentioned in the [documentation](https://hexdocs.pm/mix/Mix.Tasks.Test.html), unless the `--no-start` flag is being used), our tests are now relying on this shared supervisor even though each test has its own registry. The question is: should we?
+Since we have now changed our registry to use `KV.BucketSupervisor`, which is registered globally (remember what we saw in the section about starting applications: `mix test` actually starts your application before running any test as mentioned in the [documentation](https://hexdocs.pm/mix/Mix.Tasks.Test.html), unless the `--no-start` flag is being used), our tests are now relying on this shared supervisor even though each test has its own registry. The question is: should we?
 
 It depends. It is ok to rely on shared state as long as we depend only on a non-shared partition of this state. Although multiple registries may start buckets on the shared bucket supervisor, those buckets and registries are isolated from each other. We would only run into concurrency issues if we used a function like `Supervisor.count_children(KV.BucketSupervisor)` which would count all buckets from all registries, potentially giving different results when tests run concurrently.
 
