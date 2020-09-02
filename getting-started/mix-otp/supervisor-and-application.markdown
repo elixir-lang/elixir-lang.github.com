@@ -175,9 +175,11 @@ iex> Application.start(:kv)
 {:error, {:already_started, :kv}}
 ```
 
-Oops, it's already started. Mix normally starts the whole hierarchy of applications defined in our project's `mix.exs` file and it does the same for all dependencies if they depend on other applications.
+Oops, it's already started. Mix starts the current application and all of its dependencies automatically. This is also true for `mix test` and many other Mix commands.
 
-We can pass an option to Mix to ask it to not start our application. Let's give it a try by running `iex -S mix run --no-start`:
+You can change this behaviour by giving the `--no-start` flag to Mix. It is rarely used in practice but it allows us to understand the underlying mechanisms better. Let's give it a try.
+
+Invoking `mix` is the same as `mix run`. Therefore, if you want to pass a flag to `mix` or `iex -S mix`, we just need to add the task name and the desired flags. For example, run `iex -S mix run --no-start`:
 
 ```elixir
 iex> Application.start(:kv)
@@ -207,13 +209,7 @@ iex> Application.ensure_all_started(:kv)
 {:ok, [:logger, :kv]}
 ```
 
-Nothing really exciting happens but it shows how we can control our application.
-
-> When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information by running `mix help run` in your shell.
-
-*What about tests?*
-
-> One interesting detail to highlight is that the `mix test` command used to run your test suite will actually start your application before running any test, as mentioned in the [documentation](https://hexdocs.pm/mix/Mix.Tasks.Test.html). You can disable this behaviour if you'd like to by adding the `--no-start` flag to your command (`mix test --no-start`).
+In practice, our tools always start our applications for us, but there is an API available if you need fine-grained control.
 
 ## The application callback
 
