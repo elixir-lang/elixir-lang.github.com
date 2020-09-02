@@ -211,6 +211,10 @@ Nothing really exciting happens but it shows how we can control our application.
 
 > When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to Mix when starting IEx, it's a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information by running `mix help run` in your shell.
 
+*What about tests?*
+
+> One interesting detail to highlight is that the `mix test` command used to run your test suite will actually start your application before running any test, as mentioned in the [documentation](https://hexdocs.pm/mix/Mix.Tasks.Test.html). You can disable this behaviour if you'd like to by adding the `--no-start` flag to your command (`mix test --no-start`).
+
 ## The application callback
 
 Whenever we invoke `iex -S mix`, Mix automatically starts our application by calling `Application.start(:kv)`. But can we customize what happens when our application starts? As a matter of fact, we can! To do so, we define an application callback.
