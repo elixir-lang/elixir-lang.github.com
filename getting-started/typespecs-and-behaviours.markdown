@@ -37,7 +37,7 @@ Defining custom types can help communicate the intention of your code and increa
 A simple example of a custom type implementation is to provide a more descriptive alias of an existing type. For example, defining `year` as a type makes your function specs more descriptive than if they had simply used `integer`:
 
 ```elixir
-defmodule
+defmodule Person do
    @typedoc """
    A 4 digit year, e.g. 1984
    """
