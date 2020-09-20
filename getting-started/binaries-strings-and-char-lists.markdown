@@ -52,7 +52,7 @@ Elixir uses UTF-8 to encode its strings, which means that code points are encode
 
 Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme.
 
-In other words, what we would expect to be a single character, such as `é` or `ł`, can in practice be multiple characters, each represented by potentially multple bytes. Consider the following:
+In other words, what we would expect to be a single character, such as `é` or `ł`, can in practice be multiple characters, each represented by potentially multiple bytes. Consider the following:
 
 ```elixir
 iex> string = "hełło"
