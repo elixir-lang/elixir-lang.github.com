@@ -59,7 +59,7 @@ You may define compound custom types, e.g. maps:
 }
 ```
 
-[Structs](https://elixir-lang.org/getting-started/structs.html) offer similar functionalty.
+[Structs](https://elixir-lang.org/getting-started/structs.html) offer similar functionality.
 
 Let's look at another example to understand how to define more complex types. Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product, and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random remark as the second element.
 
