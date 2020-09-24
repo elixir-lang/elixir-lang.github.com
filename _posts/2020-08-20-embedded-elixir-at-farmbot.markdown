@@ -20,7 +20,7 @@ Connor brought Nerves to Farmbot by porting the entire proof-of-concept Ruby app
 
 <blockquote style="font-size: 24px; color: #444">
 <p>The biggest benefit of using Nerves is definitely how fast you can get up and running.</p>
-<p>— Connor Rigby, Embedded Systems Engineer</p>
+<p style="font-size: 20px">— Connor Rigby, Embedded Systems Engineer</p>
 </blockquote>
 
 Connor says that the Nerves Platform and what eventually became NervesHub was a great choice for Farmbot because:

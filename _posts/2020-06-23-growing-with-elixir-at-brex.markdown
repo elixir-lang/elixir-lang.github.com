@@ -34,7 +34,7 @@ When Thomas joined the team, back in April 2018, there were only three backend e
 
 <blockquote style="font-size: 24px; color: #444">
 <p>Despite the fact that Elixir is a relatively niche language, new hires that never had contact with Elixir before are productive within three weeks</p>
-<p>– Pedro Franceschi, Brex's co-founder</p>
+<p style="font-size: 20px">– Pedro Franceschi, Brex's co-founder</p>
 </blockquote>
 
 Pedro Franceschi, Brex's co-founder, [wrote about their experience when onboarding new engineers](https://medium.com/brexeng/why-brex-chose-elixir-fe1a4f313195): "Despite the fact that Elixir is a relatively niche language, new hires that never had contact with Elixir before are productive within three weeks. There are a decent amount of books/documentation available on the language that accelerate the ramp-up process."
