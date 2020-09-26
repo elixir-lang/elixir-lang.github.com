@@ -124,7 +124,7 @@ iex> is_binary(<<3::4>>)
 false
 iex> is_bitstring(<<0, 255, 42>>)
 true
-iex> is_binary(<<0, 255, 42>>)
+iex> is_binary(<<0, 255, 42>>) # default is 8, can be read as: is_bitstring(<<0::8, 255::8, 42::8>>)
 true
 iex> is_binary(<<42::16>>)
 true
