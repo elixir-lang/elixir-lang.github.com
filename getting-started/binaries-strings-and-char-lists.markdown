@@ -276,7 +276,7 @@ iex> to_string 1
 "1"
 ```
 
-Note that those functions are polymorphic: not only do they convert charlists to strings, they also operate on integers, atoms, and so on.
+Note that those functions are polymorphic - not only do they convert charlists to strings, they also operate on integers, atoms, and so on.
 
 String (binary) concatenation uses the `<>` operator but charlists, being lists, use the list concatenation operator `++`:
 
