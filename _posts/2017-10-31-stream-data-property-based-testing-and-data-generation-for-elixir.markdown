@@ -119,7 +119,7 @@ defmodule MyPropertyTest do
   use ExUnit.Case, async: true
   use ExUnitProperties
 
-  property "sum of positive integer is greater than both integers" do
+  property "the in/2 operator works with lists" do
     check all list <- list_of(term()),
               list != [],
               elem <- member_of(list) do
