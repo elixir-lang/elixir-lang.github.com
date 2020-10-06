@@ -157,7 +157,7 @@ $ touch lib/hexpm/accounts/user.ex && mix compile
 Compiling 16 files (.ex)
 ```
 
-To make things even better, Elixir v1.11 also introduces a more granular tracking for umbrela projects (and path dependencies in general). In previous versions, a module from a sibling application would always be treated as a compile time dependency. This often meant that changing an application would cause many modules in sibling applications to recompile. Elixir v1.11 will tag modules from dependencies as exports whenever possible, yielding dramatic improvements in those cases.
+To make things even better, Elixir v1.11 also introduces a more granular tracking for umbrella projects (and path dependencies in general). In previous versions, a module from a sibling application would always be treated as a compile time dependency. This often meant that changing an application would cause many modules in sibling applications to recompile. Elixir v1.11 will tag modules from dependencies as exports whenever possible, yielding dramatic improvements in those cases.
 
 To round up the list of compiler enhancements, the `--profile=time` option added in Elixir v1.10 now also includes the time to compile each individual file. For example, in the Plug project, one can now get:
 
