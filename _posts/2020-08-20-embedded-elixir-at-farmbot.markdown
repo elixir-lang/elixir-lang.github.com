@@ -4,6 +4,8 @@ title: Embedded Elixir at Farmbot
 author: José Valim
 category: Cases
 excerpt: A case study of how Elixir is being used at Farmbot.
+logo: /images/cases/logos/farmbot.png
+tags: embedded nerves
 ---
 
 [FarmBot](https://farm.bot/) is an open-source precision agriculture CNC farming project that includes a robot farming machine, software, and documentation including a farming data repository. FarmBot's machines use IoT technology to make it easy for farmers to remotely manage their gardens.

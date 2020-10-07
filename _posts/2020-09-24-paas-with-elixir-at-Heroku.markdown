@@ -4,6 +4,8 @@ title: PaaS with Elixir at Heroku
 author: José Valim
 category: Cases
 excerpt: A case study of how Elixir is being used at Heroku.
+logo: /images/cases/logos/heroku.png
+tags: paas phoenix
 ---
 
 [Heroku](https://www.heroku.com) provides services and tools to build, run, and scale web applications. They enable developers and teams to focus on the design and craft of their apps. Heroku started development back in 2007, focused on the Ruby programming language, and since then, they have expanded to support multiple runtimes, either officially or via buildpacks.
