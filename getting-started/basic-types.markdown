@@ -86,11 +86,20 @@ We can also use this syntax to access documentation. The Elixir shell defines th
 ```elixir
 iex> h round/1
                              def round()
-                             
+
 Rounds a number to the nearest integer.
 ```
 
-It also works with operators and other constructs (try `h +/2`). Invoking `h` without arguments displays the documentation for `IEx.Helpers`, which is where `h` and other functionality is defined.
+`h round/1` works because it is defined in `Kernel` module. All functions in the `Kernel` module are automatically imported into our namespace. Most often you will also include the module name when looking up for documentation for a given function:
+
+```elixir
+iex> h Kernel.round/1
+                             def round()
+
+Rounds a number to the nearest integer.
+```
+
+You can use the module+function to lookup for anything, including operators (try `h Kernel.+/2`). Invoking `h` without arguments displays the documentation for `IEx.Helpers`, which is where `h` and other functionality is defined.
 
 ## Booleans
 
