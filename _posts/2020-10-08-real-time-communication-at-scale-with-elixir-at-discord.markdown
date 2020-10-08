@@ -47,7 +47,7 @@ The chat infrastructure developers are not the only ones touching the Elixir cod
 
 To run at this scale, Discord learned how to leverage the Erlang VM's power, its community, and when to recognize challenges that require them to reach for their own solutions.
 
-For example, Discord uses [Cowboy](https://github.com/ninenines/cowboy/) for handling WebSockets connections and TCP servers. To manage data bursts and provide load regulation, such as back-pressure and load-shedding, they use [GenStage](https://github.com/elixir-lang/gen_stage), which they have [discussed in detail in the past](https://blog.discord.com/how-discord-handles-push-request-bursts-of-over-a-million-per-minute-with-elixirs-genstage-8f899f0221b4).
+For example, Discord uses [Cowboy](https://github.com/ninenines/cowboy/) for handling WebSocket connections and TCP servers. To manage data bursts and provide load regulation, such as back-pressure and load-shedding, they use [GenStage](https://github.com/elixir-lang/gen_stage), which they have [discussed in detail in the past](https://blog.discord.com/how-discord-handles-push-request-bursts-of-over-a-million-per-minute-with-elixirs-genstage-8f899f0221b4).
 
 Other times, the efforts of the company and the community go hand in hand. That was the case when Discord used [the Rustler project](https://github.com/rusterlium/rustler), which provides a safe bridge between Elixir and Rust, to [scale to 11 million concurrent users](https://blog.discord.com/using-rust-to-scale-elixir-for-11-million-concurrent-users-c6f19fc029d3). They used the Rustler to hook a custom data structure built in Rust directly into their Elixir services.
 
