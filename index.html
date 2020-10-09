@@ -27,10 +27,10 @@ layout: default
       {% for post in site.categories.Cases limit: 3 %}
         <a href="{{ post.url }}">
           <div>
-            <div>
+            <div class="cases-image">
               <img src="{{ post.logo }}" />
             </div>
-            <div>
+            <div class="cases-tag">
               {% for tag in post.tags %}
                 <span>#{{tag}}</span>
               {% endfor %}
