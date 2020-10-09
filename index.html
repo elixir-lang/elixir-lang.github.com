@@ -28,7 +28,11 @@ layout: default
         <a href="{{ post.url }}">
           <div>
             <div class="cases-image">
-              <img src="{{ post.logo }}" />
+              {% if post.logo == nil %}
+                <img src="/images/cases/logos/default-image.png"> 
+              {% else %}
+                <img src="{{ post.logo }}"> 
+              {% endif %} 
             </div>
             <div class="cases-tag">
               {% for tag in post.tags %}
