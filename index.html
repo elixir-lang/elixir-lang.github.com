@@ -17,6 +17,35 @@ layout: default
   </div>
 
   <div class="hentry post">
+    
+    <div class="cases-header">
+      <h3>Companies using Elixir in production</h3>
+      <a href="/blog/categories.html#Cases">See more cases →</a>
+    </div>
+
+    <div class="clases-boxes">
+      {% for post in site.categories.Cases limit: 3 %}
+        <a href="{{ post.url }}">
+          <div>
+            <div class="cases-image">
+              {% if post.logo == nil %}
+                <img src="/images/cases/logos/default-image.png"> 
+              {% else %}
+                <img src="{{ post.logo }}"> 
+              {% endif %} 
+            </div>
+            <div class="cases-tag">
+              {% for tag in post.tags %}
+                <span>#{{tag}}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </a>        
+      {% endfor %}      
+    </div>
+  </div>
+
+  <div class="hentry post">
     <h3>Platform features</h3>
   </div>
 

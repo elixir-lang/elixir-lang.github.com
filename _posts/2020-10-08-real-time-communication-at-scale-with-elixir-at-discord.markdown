@@ -4,6 +4,8 @@ title: Real time communication at scale with Elixir at Discord
 author: José Valim
 category: Cases
 excerpt: A case study of how Elixir is being used at Discord.
+logo: /images/cases/logos/discord.png
+tags: real-time genstage
 ---
 
 Founded in 2015 by Jason Citron and Stan Vishnevskiy, [Discord](https://discord.com/) is a permanent, invite-only space for your communities and friends, where people can hop between voice, video, and text, depending on how they want to talk, letting them have conversations in a very natural or authentic way. Today, the service has over 100 million monthly active users from across the globe. Every day people spend 4 billion minutes in conversation on Discord servers, across 6.7 million active servers / communities.
