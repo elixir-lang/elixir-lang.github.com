@@ -462,31 +462,21 @@ iframe.video { border:0; }
 -------------------------------------------------------------- */
 #menu-primary {
   font-size: 1em;
-  width: 75%;
-  margin: 30px 0 12px 0;
-  float: right;
-  position: relative;
-  z-index: 99;
 }
-#menu-primary .menu {
-  float: right;
-  margin-left: 0;
-}
-#menu-primary .menu ul {
-  float: right;
+#menu-primary ul {
   margin: 0;
 }
 #menu-primary li {
-  display: block;
-  float: left;
-  min-height: 30px;
+  display: inline-block;
 }
 #menu-primary li a {
   line-height: 1em;
   font-size: 1em;
-  margin-left: 20px;
-  display: block;
+  margin-right: 20px;
   text-transform: uppercase;
+}
+#menu-primary li:last-child a {
+  margin-right: 0;
 }
 #menu-primary li.current-menu-item a { color: #aaa; }
 #menu-primary ul li a:hover { color: #222; }
@@ -507,52 +497,17 @@ body.learning         div.menu li.learning        a {
 #header {
   clear: both;
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0;
 }
 #branding {
-  float: left;
-  width: 25%;
-  overflow: hidden;
-  margin-top: 20px;
+  max-width: 225px;
   margin-bottom: 20px;
 }
-#site-title {
-  font-size: 2.307692307692308em;  /* 30 / 13 = 2.307692307692308 */
-  line-height: 1em;
-  font-weight: bold;
-  margin: 0 0 20px 5px;
-  text-transform: uppercase;
-  letter-spacing: -2px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  word-wrap: break-word;
-}
-#site-title a {
-  color: #222;
-  border-bottom: none;
-}
-#header img { max-width: 100%; }
-
-#header {
-  padding-bottom: 10px;
-}
-
-#site-description {
-  display: none;
-}
-
-#site-description {
-  font-size: 20px;
-  line-height: 1.5em;
-  margin: 0;
-  color: #333;
-  text-transform: none;
-  float: left;
-  width: 91.48936170212766%;
-  clear: both;
-  text-align: center;
-  border-top: 5px solid #444;
-  padding: 18px 4.25531914893617% 20px 4.25531914893617%;  /* 40px / 940px = 4.25531914893617% */
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 30px;
+#branding img {
+  width: 100%;
 }
 
 .sidebar .widget.news {
@@ -879,40 +834,21 @@ body.learning         div.menu li.learning        a {
   }
   body { line-height: 1.615384615384615em; }
   p { margin-bottom: 1.615384615384615em; }
-  #branding {
-    float: left;
-    width: 100%;
-    position: relative;
-  }
   .hentry .archive-thumbnail {
     width: 110px;
     height: 110px;
   }
   #site-description { font-size: 1.3em; }
-  #menu-primary {
-    float: left;
-    clear: both;
-    width: 100%;
-    margin-top: 5px;
-  }
-  #menu-primary .menu { float: left; }
-  #menu-primary ul li { clear: left; }
-  #menu-primary ul li a { margin-left: 0; }
   #content { width: 100%; }
   .comment-list li li { padding-left: 0; }
   #sidebar-primary {
     width: 100%;
     clear: left;
+    border-top: 1px dotted #CCC;
+    padding-top: 45px;
   }
   #created-by ul {
     margin: 0;
-  }
-}
-
-/* Tiny Mobile (portrait) */
-@media only screen and (max-width: 467px) {
-  #header img {
-    max-width: 100px;
   }
 }
 
