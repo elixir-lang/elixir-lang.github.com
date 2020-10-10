@@ -2,6 +2,7 @@
 section: getting-started
 layout: getting-started
 title: Distributed tasks and tags
+category: Mix and OTP
 ---
 
 {% include mix-otp-preface.html %}

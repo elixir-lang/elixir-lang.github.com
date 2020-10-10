@@ -2,6 +2,7 @@
 section: getting-started
 layout: getting-started
 title: Configuration and releases
+category: Mix and OTP
 ---
 
 {% include mix-otp-preface.html %}
