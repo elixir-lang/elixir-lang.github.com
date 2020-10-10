@@ -12,7 +12,7 @@ tags: paas phoenix
 
 As the platform grew, their engineering teams also adopted different languages, one of them being Elixir. In this article, we will talk about how two distinct engineering teams at Heroku, the Front-end team and the Vault team, have adopted Elixir.
 
-![Heroku](/images/cases/heroku.png)
+![Heroku](/images/cases/bg/heroku.png)
 
 ## First steps with Elixir
 

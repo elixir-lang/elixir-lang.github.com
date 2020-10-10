@@ -642,7 +642,7 @@ body.learning         div.menu li.learning        a {
 .entry-title a, .entry-title a:visited { color: #222; }
 .entry-title a:hover { color: #4e2a5e; }
 
-/* Post Cases titles
+/* Cases
 -------------------------------------------------------------- */
 .cases-header {
   display: flex;
@@ -650,42 +650,39 @@ body.learning         div.menu li.learning        a {
   justify-content: space-between;
 }
 
-/* Post Cases boxes
--------------------------------------------------------------- */
-.clases-boxes {
+.cases-boxes {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 1em;
 }
 
-.clases-boxes a {
+@media screen and (max-width: 959px) { 
+  .cases-boxes {
+    justify-content: space-around;
+  }
+}
+
+.cases-box {
+  margin: 1em 0.25em;
   text-decoration: none;
+  display: none;
 }
 
-@media screen and (max-width: 480px) { 
-  .clases-boxes {
-    justify-content: center;
-    width: 100%;
-   }
+.cases-box:nth-child(-n+3) {
+  display: block;
 }
 
 .cases-image {
-    display: flex;
-    justify-content: center;
-    width: 175px;
-    height: 125px;
-    padding: 10px;
-    outline-style: solid;
-    outline-width: 1.5px;
-    outline-color: #E5E5E5;
-    margin: auto;
-}
+  display: flex;
+  justify-content: center;
+  width: 175px;
+  height: 125px;
+  padding: 10px;
+  outline-style: solid;
+  outline-width: 1.5px;
+  outline-color: #E5E5E5;
+  margin: auto;
 
-.cases-image:hover {
-  outline-width: 2px;
-  outline-color: #4E2A8E;
-  background-color:#F6F4F9;
 }
 
 .cases-tag {
@@ -696,10 +693,6 @@ body.learning         div.menu li.learning        a {
   margin:  0;
 }
 
-.cases-tag span:hover {
-  background-color: #4E2A8E;
-}
-
 .cases-tag span {
   font-size: 12px;
   text-decoration: none;
@@ -708,6 +701,19 @@ body.learning         div.menu li.learning        a {
   background-color: #9EB0C3;
   border-radius: 3px;
   margin: 5px 5px 0px 5px;
+}
+
+.cases-box:hover .cases-image {
+  outline-width: 2px;
+  outline-color: #4E2A8E;
+}
+
+.cases-box:hover img {
+  opacity: 1.0;
+}
+
+.cases-box:hover .cases-tag span {
+  background-color: #4E2A8E;
 }
 
 /* Post bylines/datelines

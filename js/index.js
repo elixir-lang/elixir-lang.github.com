@@ -1,5 +1,4 @@
 // https://github.com/ghiculescu/jekyll-table-of-contents
-
 $.fn.toc = function(options) {
   var defaults = {
     title: '',
@@ -108,6 +107,27 @@ $.fn.toc = function(options) {
   output.html(html)
 };
 
+// https://css-tricks.com/snippets/jquery/shuffle-dom-elements/
+$.fn.shuffle = function() {
+  var allElems = this.get(),
+      getRandom = function(max) {
+        return Math.floor(Math.random() * max);
+      },
+      shuffled = $.map(allElems, function(){
+        var random = getRandom(allElems.length),
+            randEl = $(allElems[random]).clone(true)[0];
+        allElems.splice(random, 1);
+        return randEl;
+     });
+
+  this.each(function(i){
+    $(this).replaceWith($(shuffled[i]));
+  });
+
+  return $(shuffled);
+};
+
+// use plugins
 $(document).ready(function() {
   $('.toc').toc({
     title: '',
@@ -120,10 +140,14 @@ $(document).ready(function() {
     backToTopId: 'toc',
     backToTopTitle: 'Back to Table of Contents',
   });
+
   $('.jekyll-toc-header a.jekyll-toc-link-here span.jekyll-toc-icon').addClass('icon icon-link');
   $('.jekyll-toc-header a.jekyll-toc-back-to-top span.jekyll-toc-icon').addClass('icon icon-chevron-up');
+
   $('#top-banner .close').click(function() {
     $(this).parent().slideUp(200);
     document.cookie = 'topBannerDisabled=true';
   })
+
+  $("#shuffled-boxes").children().shuffle()
 });
