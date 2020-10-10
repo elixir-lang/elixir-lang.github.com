@@ -1,12 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Keyword lists and maps
 redirect_from: /getting-started/maps-and-dicts.html
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, etc.
 

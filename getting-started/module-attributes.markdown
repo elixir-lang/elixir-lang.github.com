@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Module attributes
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 Module attributes in Elixir serve three purposes:
 

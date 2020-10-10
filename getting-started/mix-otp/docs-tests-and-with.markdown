@@ -1,12 +1,10 @@
 ---
+section: getting-started
 layout: getting-started
 title: Doctests, patterns and with
 redirect_from: /getting-started/mix_otp/docs-tests-and-pipelines.html
+category: Mix and OTP
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 {% include mix-otp-preface.html %}
 

@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: case, cond, and if
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In this chapter, we will learn about the `case`, `cond`, and `if` control flow structures.
 

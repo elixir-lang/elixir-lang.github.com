@@ -1,12 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Introduction
 ---
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 Welcome!
 

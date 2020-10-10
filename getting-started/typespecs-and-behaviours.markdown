@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Typespecs and behaviours
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 ## Types and specs
 

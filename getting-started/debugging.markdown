@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Debugging
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 There are a number of ways to debug code in Elixir. In this chapter we will cover some of the more common ways of doing so.
 

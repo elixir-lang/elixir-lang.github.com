@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Where to go next
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 Eager to learn more? Keep reading!
 

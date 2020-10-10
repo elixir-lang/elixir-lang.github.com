@@ -1,11 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Domain-specific languages
+category: Meta-programming in Elixir
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 ## Foreword
 

@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Recursion
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 ## Loops through recursion
 

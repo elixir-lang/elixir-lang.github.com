@@ -496,6 +496,8 @@ body.install          div.menu li.install         a,
 body.getting-started  div.menu li.getting-started a,
 body.blog             div.menu li.blog            a,
 body.docs             div.menu li.docs            a,
+body.development      div.menu li.development     a,
+body.cases            div.menu li.cases           a,
 body.learning         div.menu li.learning        a {
   color: #aaa;
 }
@@ -665,10 +667,13 @@ body.learning         div.menu li.learning        a {
 .cases-box {
   margin: 1em 0.25em;
   text-decoration: none;
+}
+
+#shuffled-cases .cases-box {
   display: none;
 }
 
-.cases-box:nth-child(-n+3) {
+#shuffled-cases .cases-box:nth-child(-n+3) {
   display: block;
 }
 
@@ -1074,4 +1079,15 @@ ol.jekyll-toc li a {
 
 #top-banner .close:hover {
   opacity: 0.7;
+}
+
+/* Getting started */
+.getting-started-title h1 {
+  font-size: 2.3em;
+}
+
+.getting-started-title small {
+  font-size: 1em;
+  color: #999;
+  display: block;
 }

@@ -1,12 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Structs
 redirect_from: /getting-started/struct.html
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In [chapter 7](/getting-started/keywords-and-maps.html) we learned about maps:
 

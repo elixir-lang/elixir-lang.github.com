@@ -1,11 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Introduction to Mix
+category: Mix and OTP
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In this guide, we will learn how to build a complete Elixir application, with its own supervision tree, configuration, tests and more.
 

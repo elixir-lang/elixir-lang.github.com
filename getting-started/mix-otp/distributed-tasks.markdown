@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Distributed tasks and tags
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 {% include mix-otp-preface.html %}
 

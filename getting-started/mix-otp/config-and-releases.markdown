@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Configuration and releases
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 {% include mix-otp-preface.html %}
 

@@ -1,11 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: ETS
+category: Mix and OTP
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 {% include mix-otp-preface.html %}
 

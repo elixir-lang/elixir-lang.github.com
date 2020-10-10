@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Sigils
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms, for example, are mostly created via the `:atom` representation.
 

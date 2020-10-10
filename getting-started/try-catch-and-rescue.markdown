@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: try, catch, and rescue
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 Elixir has three error mechanisms: errors, throws, and exits. In this chapter, we will explore each of them and include remarks about when each should be used.
 

@@ -2,7 +2,7 @@
 layout: post
 title: Elixir at fintech with Brex
 author: José Valim
-category: Cases
+category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Brex.
 logo: /images/cases/logos/brex.png
 tags: fintech phoenix grpc

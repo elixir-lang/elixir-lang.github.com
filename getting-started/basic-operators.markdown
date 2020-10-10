@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Basic operators
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In the [previous chapter](/getting-started/basic-types.html), we saw Elixir provides `+`, `-`, `*`, `/` as arithmetic operators, plus the functions `div/2` and `rem/2` for integer division and remainder.
 

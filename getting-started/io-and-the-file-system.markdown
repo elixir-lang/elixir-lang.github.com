@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: IO and the file system
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](https://hexdocs.pm/elixir/IO.html), [`File`](https://hexdocs.pm/elixir/File.html) and [`Path`](https://hexdocs.pm/elixir/Path.html).
 

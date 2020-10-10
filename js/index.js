@@ -149,5 +149,5 @@ $(document).ready(function() {
     document.cookie = 'topBannerDisabled=true';
   })
 
-  $("#shuffled-boxes").children().shuffle()
+  $("#shuffled-cases").children().shuffle()
 });

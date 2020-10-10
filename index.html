@@ -19,11 +19,11 @@ layout: default
   <div class="hentry post">
     <div class="cases-header">
       <h4>Companies using Elixir in production</h4>
-      <a href="/blog/categories.html#Cases">See more cases →</a>
+      <a href="/cases.html">See more cases →</a>
     </div>
 
-    <div class="cases-boxes" id="shuffled-boxes">
-      {% for post in site.categories.Cases %}
+    <div class="cases-boxes" id="shuffled-cases">
+      {% for post in site.categories["Elixir in Production"] %}
         <a class="cases-box" href="{{ post.url }}">
           <div class="cases-image">
             {% if post.logo == nil %}
