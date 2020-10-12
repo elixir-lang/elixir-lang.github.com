@@ -2,7 +2,7 @@
 layout: post
 title: Embedded Elixir at Farmbot
 author: José Valim
-category: Cases
+category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Farmbot.
 logo: /images/cases/logos/farmbot.png
 tags: embedded nerves
@@ -14,7 +14,7 @@ Farmbot is built with [Nerves](https://www.nerves-project.org/), an open-source 
 
 When Connor Rigby, former embedded systems engineer at Farmbot, initially joined the company, his first project was to build a Farmbot application using Ruby. After completing the proof-of-concept, he knew that he needed a way to make the embedded development process more efficient, reliable, and secure. Connor had used Nerves before at a previous company and was a regular open-source contributor to Nerves, so he knew the platform would help him accomplish these goals.
 
-![Farmbot](/images/cases/farmbot.jpg)
+![Farmbot](/images/cases/bg/farmbot.jpg)
 
 ## How Nerves helped
 

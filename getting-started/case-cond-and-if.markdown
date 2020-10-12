@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: case, cond, and if
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In this chapter, we will learn about the `case`, `cond`, and `if` control flow structures.
 
@@ -114,7 +111,7 @@ iex> cond do
 "But this will"
 ```
 
-This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
+This is equivalent to `else if` clauses in many imperative languages (although used much less frequently here).
 
 If all of the conditions return `nil` or `false`, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 

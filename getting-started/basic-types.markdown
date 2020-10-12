@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Basic types
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In this chapter we will learn more about Elixir basic types: integers, floats, booleans, atoms, strings, lists and tuples. Some basic types are:
 

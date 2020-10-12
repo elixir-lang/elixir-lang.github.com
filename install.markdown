@@ -5,9 +5,7 @@ layout: default
 ---
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
-# {{ page.title }}
-
-{% include toc.html %}
+# Install
 
 The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling it.
 

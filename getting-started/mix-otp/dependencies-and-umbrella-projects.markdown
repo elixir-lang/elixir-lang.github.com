@@ -1,12 +1,10 @@
 ---
+section: getting-started
 layout: getting-started
 title: Dependencies and umbrella projects
 redirect_from: /getting-started/mix-otp/dependencies-and-umbrella-apps.html
+category: Mix and OTP
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 {% include mix-otp-preface.html %}
 

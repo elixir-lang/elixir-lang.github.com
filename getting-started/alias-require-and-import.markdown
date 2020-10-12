@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: alias, require, and import
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In order to facilitate software reuse, Elixir provides three directives (`alias`, `require` and `import`) plus a macro called `use` summarized below:
 

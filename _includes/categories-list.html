@@ -3,7 +3,14 @@
   <ul>
   {% assign sorted_cats = site.categories | sort %}
   {% for category in sorted_cats %}
-    <li><a class="spec" href="/blog/categories.html#{{ category | first }}">{{ category | first }}</a></li>
+    {% assign category_first = category | first %}
+    <li>
+    {% if category_first == "Elixir in Production" %}
+      <a class="spec" href="/cases.html">{{ category_first }}</a>
+    {% else %}
+      <a class="spec" href="/blog/categories.html#{{ category_first }}">{{ category_first }}</a>
+    {% endif %}      
+    </li>
   {% endfor %}
   </ul>
 </div>

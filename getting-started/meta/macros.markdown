@@ -1,11 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Macros
+category: Meta-programming in Elixir
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 ## Foreword
 

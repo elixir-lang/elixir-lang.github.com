@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Enumerables and Streams
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 ## Enumerables
 

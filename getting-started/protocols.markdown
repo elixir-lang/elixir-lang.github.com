@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Protocols
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 Protocols are a mechanism to achieve polymorphism in Elixir when you want behavior to vary depending on the data type. We are already familiar with one way of solving this type of problem: via pattern matching and guard clauses. Consider a simple utility module that would tell us the type of input variable:
 

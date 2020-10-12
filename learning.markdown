@@ -4,9 +4,7 @@ section: learning
 layout: default
 ---
 
-# {{ page.title }}
-
-{% include toc.html %}
+# Learning
 
 Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations and explore how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html). If you already know Erlang and you want to know Elixir (or vice-versa), check out our [Crash Course for Erlang developers](/crash-course.html).
 

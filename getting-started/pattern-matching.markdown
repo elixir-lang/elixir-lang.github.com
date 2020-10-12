@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Pattern matching
 ---
-
-# {{ page.title }}<span hidden>.</span>
-
-{% include toc.html %}
 
 In this chapter, we will show how the `=` operator in Elixir is actually a match operator and how to use it to pattern match inside data structures. Finally, we will learn about the pin operator `^` used to access previously bound values.
 

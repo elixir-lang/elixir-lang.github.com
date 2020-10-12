@@ -1,12 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Modules and functions
 redirect_from: /getting-started/modules.html
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](https://hexdocs.pm/elixir/String.html):
 

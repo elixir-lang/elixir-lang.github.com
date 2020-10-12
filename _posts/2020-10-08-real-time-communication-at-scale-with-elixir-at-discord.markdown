@@ -2,17 +2,17 @@
 layout: post
 title: Real time communication at scale with Elixir at Discord
 author: José Valim
-category: Cases
+category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Discord.
 logo: /images/cases/logos/discord.png
-tags: real-time genstage
+tags: real-time genstage otp
 ---
 
 Founded in 2015 by Jason Citron and Stan Vishnevskiy, [Discord](https://discord.com/) is a permanent, invite-only space for your communities and friends, where people can hop between voice, video, and text, depending on how they want to talk, letting them have conversations in a very natural or authentic way. Today, the service has over 100 million monthly active users from across the globe. Every day people spend 4 billion minutes in conversation on Discord servers, across 6.7 million active servers / communities.
 
 From day one, Discord has used Elixir as the backbone of its chat infrastructure. When Discord first adopted the language, they were still working on building a viable business, with many questions and challenges in front of them. Elixir played a crucial role in giving them the desired technological flexibility to grow the company and also became the building block that would allow their systems to run on a massive scale.
 
-![Discord](/images/cases/discord.png)
+![Discord](/images/cases/bg/discord.png)
 
 ## Starting technologies
 

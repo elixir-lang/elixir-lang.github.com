@@ -1,11 +1,9 @@
 ---
+section: getting-started
 layout: getting-started
 title: Quote and unquote
+category: Meta-programming in Elixir
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 This guide aims to introduce the meta-programming techniques available in Elixir. The ability to represent an Elixir program by its own data structures is at the heart of meta-programming. This chapter starts by exploring those structures and the associated `quote` and `unquote` constructs, so we can take a look at macros in the next chapter and finally build our own domain specific language.
 

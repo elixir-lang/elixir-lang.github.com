@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Binaries, strings, and charlists
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 In "Basic types", we learned a little bit about strings and we used the `is_binary/1` function for checks:
 

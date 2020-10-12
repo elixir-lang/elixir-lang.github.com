@@ -1,11 +1,8 @@
 ---
+section: getting-started
 layout: getting-started
 title: Erlang libraries
 ---
-
-# {{ page.title }}
-
-{% include toc.html %}
 
 Elixir provides excellent interoperability with Erlang libraries. In fact,
 Elixir discourages simply wrapping Erlang libraries in favor of directly
