@@ -279,11 +279,11 @@ String (binary) concatenation uses the `<>` operator but charlists, being lists,
 
 ```elixir
 iex> 'this ' <> 'fails'
-** (CompileError) iex:2: invalid literal 'this ' in <<>>
-    (elixir) src/elixir_bitstring.erl:19: :elixir_bitstring.expand/6
-    (elixir) src/elixir_bitstring.erl:12: :elixir_bitstring.expand/4
+** (ArgumentError) expected binary argument in <> operator but got: 'this '
+    (elixir) lib/kernel.ex:1821: Kernel.wrap_concatenation/3
+    (elixir) lib/kernel.ex:1808: Kernel.extract_concatenations/2
     (elixir) expanding macro: Kernel.<>/2
-    iex:2: (file)
+    iex:1: (file)
 iex> 'this ' ++ 'works'
 'this works'
 iex> "he" ++ "llo"
