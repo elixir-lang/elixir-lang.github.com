@@ -8,7 +8,7 @@ excerpt: Elixir v1.11 is out with improvements to the compiler and tighter integ
 
 Over the last releases, the Elixir team has been focusing on the compiler, both in terms of catching more mistakes at compilation time and making it faster. Elixir v1.11 has made excellent progress on both fronts. This release also includes many other goodies, such as tighter Erlang integration, support for more guard expressions, built-in datetime formatting, and other calendar enhancements.
 
-During this period, we have also started [publishing a series of production cases](https://elixir-lang.org/blog/categories.html#Cases) on our website, featuring Elixir's usage at [Brex](https://elixir-lang.org/blog/2020/06/23/growing-with-elixir-at-brex/), [Farmbot](https://elixir-lang.org/blog/2020/08/20/embedded-elixir-at-farmbot/), and [Heroku](https://elixir-lang.org/blog/2020/09/24/paas-with-elixir-at-Heroku/), with many more cases coming soon.
+During this period, we have also started [publishing a series of production cases](/cases.html) on our website, featuring Elixir's usage at [Brex](/blog/2020/06/23/growing-with-elixir-at-brex/), [Farmbot](/blog/2020/08/20/embedded-elixir-at-farmbot/), and [Heroku](/blog/2020/09/24/paas-with-elixir-at-Heroku/), with many more cases coming soon.
 
 For now, let's focus on what's new in Elixir v1.11.
 

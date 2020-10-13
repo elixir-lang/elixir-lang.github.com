@@ -8,6 +8,8 @@ logo: /images/cases/logos/farmbot.png
 tags: embedded nerves
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [Click here](/cases.html) to see all cases we have published so far.*
+
 [FarmBot](https://farm.bot/) is an open-source precision agriculture CNC farming project that includes a robot farming machine, software, and documentation including a farming data repository. FarmBot's machines use IoT technology to make it easy for farmers to remotely manage their gardens.
 
 Farmbot is built with [Nerves](https://www.nerves-project.org/), an open-source platform and infrastructure to build, deploy, and securely manage your fleet of IoT devices at speed and scale.

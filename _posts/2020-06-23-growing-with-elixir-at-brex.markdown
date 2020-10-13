@@ -8,7 +8,7 @@ logo: /images/cases/logos/brex.png
 tags: fintech phoenix grpc
 ---
 
-*Welcome to our series of case studies about companies using Elixir in production. We are glad to invite Brex as our first case.*
+*Welcome to our series of case studies about companies using Elixir in production. [Click here](/cases.html) to see all cases we have published so far.*
 
 [Brex](https://brex.com/) is reimagining financial systems so every growing company can realize their full potential. New customers can get up and running in minutes with corporate credit cards and cash management in a single, strategic account. Launched in June 2018, Brex earned a $1.1 billion valuation with the [announcement of their Series C round](https://techcrunch.com/2018/10/05/how-the-22-year-old-founders-of-brex-built-a-billion-dollar-business-in-less-than-2-years/).  By now, Brex is valued at $2.6 billion, with Elixir at the core of their technology stack. Approximately 90% of Brex’s backend codebase is written in Elixir.
 

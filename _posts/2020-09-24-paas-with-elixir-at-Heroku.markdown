@@ -8,6 +8,8 @@ logo: /images/cases/logos/heroku.png
 tags: paas phoenix
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [Click here](/cases.html) to see all cases we have published so far.*
+
 [Heroku](https://www.heroku.com) provides services and tools to build, run, and scale web applications. They enable developers and teams to focus on the design and craft of their apps. Heroku started development back in 2007, focused on the Ruby programming language, and since then, they have expanded to support multiple runtimes, either officially or via buildpacks.
 
 As the platform grew, their engineering teams also adopted different languages, one of them being Elixir. In this article, we will talk about how two distinct engineering teams at Heroku, the Front-end team and the Vault team, have adopted Elixir.
