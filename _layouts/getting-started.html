@@ -9,7 +9,12 @@
      <h3 class="widget-title">{{guide.title}}</h3>
       <ol>
         {% for node in guide.pages %}
-          <li><a class="spec" href="{{guide.dir}}{{node.slug}}.html" title="{{node.title | escape}}">{{node.title}}</a></li>
+          {% assign page_url = guide.dir | append: node.slug | append: '.html' %}
+          {% if page.url == page_url %}
+            <li><span title="{{node.title | escape}}">{{node.title}}</span></li>
+          {% else %}
+            <li><a class="spec" href="{{page_url}}" title="{{node.title | escape}}">{{node.title}}</a></li>
+          {% endif %}
         {% endfor %}
       </ol>
     </div>
