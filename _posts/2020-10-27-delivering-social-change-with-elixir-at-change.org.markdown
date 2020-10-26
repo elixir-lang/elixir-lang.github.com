@@ -20,27 +20,27 @@ The first step for Change.org's engineering team was to outline the requirements
 
 The next stage was to build proofs-of-concept in different programming languages. Not many companies can afford this step, but Change.org's team knew the new system was vital to their business and wanted to be thorough in their analysis.
 
-Around this time, John Mertens, Director of Engineering, was coming back from parental leave. He used this opportunity to catch up with different technologies whenever possible. That's when he stumbled upon [José Valim's presentation at Lambda Days](https://www.youtube.com/watch?v=XPlXNUXmcgE), which discussed two libraries in the Elixir ecosystem: [GenStage](https://github.com/elixir-lang/gen_stage/) and [Flow](https://github.com/dashbitco/flow).
+Around this time, John Mertens, Director of Engineering, was coming back from parental leave. He used this opportunity to catch up with different technologies whenever possible. That's when he stumbled upon [José Valim's presentation at Lambda Days](https://www.youtube.com/watch?v=XPlXNUXmcgE), which discussed two libraries in the Elixir ecosystem: [GenStage](https://github.com/elixir-lang/gen_stage) and [Flow](https://github.com/dashbitco/flow).
 
 They developed prototypes in four technologies: JRuby, Akka Streams, Node.js, and Elixir. The goal was to evaluate performance, developer experience, and community support for their specific use cases. Each technology had to process 100k messages as fast as possible. John was responsible for the Elixir implementation and put his newly acquired knowledge to use.
 
-After two evaluation rounds, the team chose to go ahead with Elixir. Their team of 3 engineers had 18 months to replace the stack they were using for the last several years by their own implementation.
+After two evaluation rounds, the team chose to go ahead with Elixir. Their team of 3 engineers had 18 months to replace the stack they had been using for the last several years with their own Elixir implementation.
 
 ## Learning Elixir
 
-When they started the project, none of the original team members had prior experience with Elixir. Only Justin Almeida, who joined six months in, had used Elixir before.
+When they started the project, none of the original team members had prior experience with Elixir. Only Justin Almeida, who joined when the project had been running by six months, had used Elixir before.
 
-Luckily, the team felt supported by the different resources available in the community. John recalls: "We were in one of our early meetings discussing how to introduce Elixir into our stack when PragProg announced the [Adopting Elixir](https://pragprog.com/titles/tvmelixir/adopting-elixir/) book, which was extremely helpful in answering many of our questions."
+Luckily, the team felt supported by the different resources available in the community. John recalls: "We were in one of our early meetings discussing how to introduce Elixir into our stack when Pragmatic Programmers announced the [Adopting Elixir](https://pragprog.com/titles/tvmelixir/adopting-elixir/) book, which was extremely helpful in answering many of our questions."
 
 ## The new system
 
-The team developed three Elixir applications to replace the external vendor. The first application processes all incoming events to decide if an email should go out and to whom.
+The team developed three Elixir applications to replace the external vendor. The first application processes all incoming events to decide whether an email should go out and to whom.
 
-The next application is the one effectively responsible for dispatching the e-mails. For each message, it finds the appropriate template as well as the user locale and preferences. It then assembles the e-mail and delivers it with the help of a Mail Transfer Agent (MTA).
+The next application is the one effectively responsible for dispatching the emails. For each message, it finds the appropriate template as well as the user locale and preferences. It then assembles the email and delivers it with the help of a Mail Transfer Agent (MTA).
 
 The last application is responsible for analytics. It receives webhook calls from the MTA with batches of different events, which are processed and funneled into their data warehouse for later use.
 
-Around four months in, they put the new system in production. While Change.org has dozens of different email templates, the initial deployment handled a single and straight-forward case: password recovery.
+After about four months, they put the new system in production. While Change.org has dozens of different email templates, the initial deployment handled a single and straight-forward case: password recovery.
 
 Once the new system was in production, they continued to migrate different use cases to the system, increasing the numbers of handled events and delivered emails day after day. After one year, they had completed the migration ahead of schedule.
 
@@ -56,9 +56,9 @@ The team was kind enough to share some of their internal graphs. In the example 
 
 Once this burst happens, all nodes max their CPUs, emitting around 3000 emails per second until they drain the message queue. The whole time memory usage remains at 5%.
 
-The back-pressure provided by the [GenStage](https://github.com/elixir-lang/gen_stage/) library played a crucial role in the system’s performance.  Since those applications fetch events from message queues, process them, and submit them into third-party services, they must avoid overloading any part of the stack. GenStage addresses this by allowing the different components, called stages in the library terminology, to communicate how much data they can handle right now. For example, if sending messages to the MTA is slower than usual, the system will naturally get fewer events from the queue.
+The back-pressure provided by the [GenStage](https://github.com/elixir-lang/gen_stage) library played a crucial role in the system’s performance.  Since those applications fetch events from message queues, process them, and submit them into third-party services, they must avoid overloading any part of the stack. GenStage addresses this by allowing the different components, called stages in the library terminology, to communicate how much data they can handle right now. For example, if sending messages to the MTA is slower than usual, the system will naturally get fewer events from the queue.
 
-Another essential feature of the system is to work in batches. Receiving and sending data is more efficient and cost-effective if you can do it in groups instead of one-by-one. John has given [a presentation at ElixirConf EU sharing the lessons from their first trillion messages](https://www.youtube.com/watch?v=t46L9RKmlNo).
+Another essential feature of the system is to work in batches. Receiving and sending data is more efficient and cost-effective if you can do it in groups instead of one-by-one. John has given [a presentation at ElixirConf Europe sharing the lessons learned from their first trillion messages](https://www.youtube.com/watch?v=t46L9RKmlNo).
 
 The activity on Change.org has grown considerably over the last year too. The systems have coped just fine. Justin remarks: "everything has been working so well that some of those services are not really on our minds."
 
@@ -78,4 +78,4 @@ In a nutshell, they use Broadway to ingest, aggregate, and store events in the d
 
 One recent example is [Change.org's Bandit service](https://medium.com/making-change-org/our-elixir-bandit-service-e2b6af6eebc4). The service provides a Phoenix API that decides which copy to present to users in various parts of their product. As users interact with these copies, data is fed into the system and analyzed in batches with Broadway. They use this feedback to optimize and make better choices in the future.
 
-The team has also grown to 10 Elixir developers thanks to the multiple training and communities of practice they have organized internally. Change.org is also looking for Elixir backend engineers, as they aim to bring experience and diversity to their group. Interested developers can [learn more about these opportunities on their website](https://www.change.org/careers).
+The team has also grown to ten Elixir developers thanks to the multiple training and communities of practice they have organized internally. Change.org is also looking for Elixir backend engineers, as they aim to bring experience and diversity to their group. Interested developers can [learn more about these opportunities on their website](https://www.change.org/careers).
