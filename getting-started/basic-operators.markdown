@@ -64,7 +64,7 @@ nil
 iex> true && 17
 17
 
-# !
+# not
 iex> !true
 false
 iex> !1
