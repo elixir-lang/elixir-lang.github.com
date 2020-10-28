@@ -133,7 +133,7 @@ Pattern matching is a really powerful language feature. It is built in to almost
 
 Once you "get" pattern matching, it feels like a super power. Pattern Matching makes new patterns of coding possible. You start to unlearn some of the patterns you've used in other languages because now you can create even clearer and more elegant code than was possible before!
 
-The course covers getting setup with Elixir, the data types, how to pattern match each of them, and more! An included TDD project let's you easily apply what you're learning.
+The course covers getting setup with Elixir, the data types, how to pattern match each of them, and more! An included TDD project helps you easily apply what you're learning.
 
 <div class="clear"></div>
 
