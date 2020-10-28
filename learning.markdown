@@ -125,6 +125,18 @@ Understand how back-pressure works, step inside supervision trees, and learn to 
 
 <div class="clear"></div>
 
+<h4 class="resource">ThinkingElixir.com's Free Pattern Matching Course</h4>
+
+<a class="cover" href="https://thinkingelixir.com/available-courses/pattern-matching/" title="ThinkingElixir.com's Free Pattern Matching Course"><img src="/images/learning/thinking-elixir-pattern-matching-course-tile-190px.png" alt="ThinkingElixir.com's Free Pattern Matching Course" width="190" /></a>
+
+Pattern matching is a really powerful language feature. It is built in to almost every corner or Elixir. In order for you to even <em>read</em> Elixir code and follow along, you have to understand Pattern Matching.
+
+Once you "get" pattern matching, it feels like a super power. Pattern Matching makes new patterns of coding possible. You start to unlearn some of the patterns you've used in other languages because now you can create even clearer and more elegant code than was possible before!
+
+The course covers getting setup with Elixir, the data types, how to pattern match each of them, and more! An included TDD project let's you easily apply what you're learning.
+
+<div class="clear"></div>
+
 ## Other Resources
 
 <h4 class="resource">Elixir Flashcards</h4>
