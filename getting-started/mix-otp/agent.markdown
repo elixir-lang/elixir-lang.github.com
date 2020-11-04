@@ -44,7 +44,7 @@ iex> {:ok, agent} = Agent.start_link fn -> [] end
 iex> Agent.update(agent, fn list -> ["eggs" | list] end)
 :ok
 iex> Agent.get(agent, fn list -> list end)
-["eggs"]
+["eggs" | {}]
 iex> Agent.stop(agent)
 :ok
 ```
