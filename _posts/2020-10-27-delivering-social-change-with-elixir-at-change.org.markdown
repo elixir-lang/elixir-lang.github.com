@@ -8,6 +8,8 @@ logo: /images/cases/logos/change.png
 tags: genstage+broadway social
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
+
 [Change.org](https://change.org/) is a social change platform, with over 400 million users worldwide. Two years ago, their engineering team faced a challenge to migrate their messaging system from an external vendor to an in-house solution, to reduce costs and gain flexibility.
 
 This article will discuss how they approached this problem, why they chose Elixir, and how their system grew to deliver more than 1 billion emails per month. Change.org is also [hiring Elixir engineers to join their team](https://www.change.org/careers).

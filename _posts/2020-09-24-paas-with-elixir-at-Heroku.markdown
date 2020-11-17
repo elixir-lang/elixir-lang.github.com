@@ -8,7 +8,7 @@ logo: /images/cases/logos/heroku.png
 tags: paas phoenix
 ---
 
-*Welcome to our series of case studies about companies using Elixir in production. [Click here](/cases.html) to see all cases we have published so far.*
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
 
 [Heroku](https://www.heroku.com) provides services and tools to build, run, and scale web applications. They enable developers and teams to focus on the design and craft of their apps. Heroku started development back in 2007, focused on the Ruby programming language, and since then, they have expanded to support multiple runtimes, either officially or via buildpacks.
 

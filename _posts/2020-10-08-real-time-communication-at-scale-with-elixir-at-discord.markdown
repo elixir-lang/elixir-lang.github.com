@@ -8,7 +8,7 @@ logo: /images/cases/logos/discord.png
 tags: real-time genstage otp
 ---
 
-*Welcome to our series of case studies about companies using Elixir in production. [Click here](/cases.html) to see all cases we have published so far.*
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
 
 Founded in 2015 by Jason Citron and Stan Vishnevskiy, [Discord](https://discord.com/) is a permanent, invite-only space for your communities and friends, where people can hop between voice, video, and text, depending on how they want to talk, letting them have conversations in a very natural or authentic way. Today, the service has over 100 million monthly active users from across the globe. Every day people spend 4 billion minutes in conversation on Discord servers, across 6.7 million active servers / communities.
 
