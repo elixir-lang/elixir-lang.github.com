@@ -10,7 +10,7 @@ tags: real-time phoenix otp
 
 [Slab](https://slab.com/) is a knowledge base and team wiki that democratizes knowledge. Jason Chen started Slab in August 2016, after picking Elixir and Phoenix as the best tools to build real-time collaborative applications. The company has grown to 6 engineers since then, distributed worldwide, and relied upon by more than 7000 companies and customers like Asana, Discord, and Glossier. If you are interested in helping companies become a source of learning and purpose, especially  during these times where remote collaboration is essential, [Slab is hiring](https://slab.com/jobs?ref=elixir).
 
-![Discord](/images/cases/bg/slab.png)
+![Slab](/images/cases/bg/slab.png)
 
 ## Why Elixir?
 
@@ -29,7 +29,7 @@ The trial went better than expected, and Jason's journey with Slab had officiall
 
 ## Growing with the platform
 
-Shortly after, Slab was in a private beta with a handful of companies as users. For each major feature they had along the way, Elixir and Phoenix provided the building blocks for it. When they implemented real-time comments, they used Phoenix Channels and Phoenix PubSub. The pattern goes on: "for asynchronous processing, [we simply use Elixir tasks](https://hexdocs.pm/elixir/Task.html)". Later on, to track users editing a document and give each a different cursor color, they used [Phoenix Presence](https://hexdocs.pm/phoenix/Phoenix.Presence.html), a tool that no other web framework offers out-of-the-box. 
+Shortly after, Slab was in a private beta with a handful of companies as users. For each major feature they had along the way, Elixir and Phoenix provided the building blocks for it. When they implemented real-time comments, they used Phoenix Channels and Phoenix PubSub. The pattern goes on: "for asynchronous processing, we simply use [Elixir tasks](https://hexdocs.pm/elixir/Task.html)". Later on, to track users editing a document and give each a different cursor color, they used [Phoenix Presence](https://hexdocs.pm/phoenix/Phoenix.Presence.html), a tool that no other web framework offers out-of-the-box. 
 
 Another leap in Jason's journey with Slab and Elixir was when he had to learn Erlang/OTP, a group of behaviors that ship as part of Erlang's standard library for building distributed and fault-tolerant applications.
 
