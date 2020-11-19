@@ -126,7 +126,14 @@ We can create a `Parser` behaviour:
 
 ```elixir
 defmodule Parser do
+  @doc """
+  Parses a JSON string.
+  """
   @callback parse(String.t) :: {:ok, term} | {:error, String.t}
+  
+  @doc """
+  Lists all supported file extensions.
+  """
   @callback extensions() :: [String.t]
 end
 ```
