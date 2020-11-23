@@ -183,7 +183,7 @@ iex> if false, do: :this, else: :that
 :that
 ```
 
-`do/end` blocks are a syntactic convenience built on top of the keywords one. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
+`do/end` blocks are a syntactic convenience built on top of the keyword ones. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
 
 ```elixir
 iex> if true do
