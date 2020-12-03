@@ -84,6 +84,8 @@ $ elixir math.exs
 
 The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
 
+> Note: actually, you can execute files with both extensions and no bytecode file will be created. But it will make a difference if you compile your projects with the `mix` build tool.
+
 ## Named functions
 
 Inside a module, we can define functions with `def/2` and private functions with `defp/2`. A function defined with `def/2` can be invoked from other modules while a private function can only be invoked locally.
