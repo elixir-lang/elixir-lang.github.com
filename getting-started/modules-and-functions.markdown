@@ -62,7 +62,7 @@ When working on actual projects, the build tool called `mix` will be responsible
 
 ## Scripted mode
 
-In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting. When executed, both extensions compile and load their modules into memory, although only `.ex` files write their bytecode to disk in the format of `.beam` files.
+In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting. This convention is followed by projects like `mix`.
 
 For instance, we can create a file called `math.exs`:
 
@@ -82,9 +82,7 @@ And execute it as:
 $ elixir math.exs
 ```
 
-The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
-
-> Note: actually, you can execute files with both extensions and no bytecode file will be created. But it will make a difference if you compile your projects with the `mix` build tool.
+Because we used `elixir` instead of `elixirc`, the module was compiled and loaded into memory, but no `.beam` file was written to disk. In the following examples, we recommend you write your code into script files and execute them as shown above.
 
 ## Named functions
 
