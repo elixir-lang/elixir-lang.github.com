@@ -122,7 +122,7 @@ The following escape codes can be used in strings and char lists:
 * `\xDD` - character with hexadecimal representation DD (e.g., `\x13`)
 * `\x{D...}` - character with hexadecimal representation with one or more hexadecimal digits (e.g., `\x{abc13}`)
 
-Sigils also support heredocs, that is, triple double- or single-quotes as separators:
+Sigils also support heredocs, that is, three double-quotes or single-quotes as separators:
 
 ```iex
 iex> ~s"""
