@@ -118,7 +118,7 @@ The following escape codes can be used in strings and char lists:
 
 In addition to those, a double quote inside a double-quoted string needs to be escaped as `\"`, and, analogously, a single quote inside a single-quoted char list needs to be escaped as `\'`. Nevertheless, it is better style to change delimiters as seen above than to escape them.
 
-Sigils also support heredocs, that is, triple double- or single-quotes as separators:
+Sigils also support heredocs, that is, three double-quotes or single-quotes as separators:
 
 ```elixir
 iex> ~s"""
