@@ -20,7 +20,7 @@ At its heart, Duffel is building the new operating system for travel. When a dev
 
 ## Growing with Open Source
 
-When Steve co-founded the company in November 2017, he already had plenty of experience with Elixir. Steve started using the language before it reached 1.0, back in 2013. He started his journey by hacking on [Dynamo](https://github.com/devinus/dynamo), Phoenix’ ancestor, and eventually introduced Elixir at his previous company, by using it for an internal project. He also organized meet-ups in London and contributed to Open Source projects, including some of his own, such as [Swoosh](https://github.com/swoosh/swoosh).
+When Steve co-founded the company in November 2017, he already had plenty of experience with Elixir. Steve started using the language before it reached 1.0, back in 2013. He started his journey by hacking on [Dynamo](https://github.com/devinus/dynamo), Phoenix's ancestor, and eventually introduced Elixir at his previous company, by using it for an internal project. He also organized meet-ups in London and contributed to Open Source projects, including some of his own, such as [Swoosh](https://github.com/swoosh/swoosh).
 
 The founders joined [Y Combinator](https://www.ycombinator.com/) in Summer 2018. Once they came back to London, they hired Alan Kennedy as their first engineer. Alan first heard about Elixir when he and Steve were colleagues at GoCardless. Alan kept an eye on it but never actively used it until he joined Duffel. Alan recalls struggling to jump from a language that promotes mutability to an immutable language like Elixir. Once everything clicked, he acknowledged the new programming model is conceptually much simpler.
 
