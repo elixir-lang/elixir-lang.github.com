@@ -256,7 +256,7 @@ iex(2)> KV.Registry.lookup(KV.Registry, "shopping")
 {:ok, #PID<0.88.0>}
 ```
 
-Let's recap what is happening. Whenever we invoke `iex -S mix`, it automatically starts our application by calling `Application.start(:kv)`, which then invokes the application callback. The application callback's job is to start a **supervision tree**. Right now, we only have a single supervisor, but sometimes a supervisor is also supervised, giving it a shape of a tree. So far, our supervisor has a single child, a `KV.Registry`, which is started with name `KV.Registry`.
+Let's recap what is happening. Whenever we invoke `iex -S mix`, it automatically starts our application by calling `Application.start(:kv)`, which then invokes the application callback. The application callback's job is to start a **supervision tree**. Right now, we only have a single supervisor, but sometimes another supervisor is also supervised, giving it a shape of a tree. So far, our supervisor has a single child, a `KV.Registry`, which is started with name `KV.Registry`.
 
 ## Projects or applications?
 
