@@ -91,6 +91,16 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <div class="clear"></div>
 
+<h4 class="resource">Elixir Succinctly</h4>
+
+<a class="cover" href="https://www.syncfusion.com/ebooks/elixir-succinctly" title="Elixir Succinctly"><img src="https://cdn.syncfusion.com/content/images/downloads/ebook/ebook-cover/elixir-succinctly.png" alt="Elixir Succinctly" width="190" /></a>
+
+<a href="https://www.syncfusion.com/ebooks/elixir-succinctly">Elixir Succinctly</a> is a free ebook to start learning Elixir. It cover the installation and the firsts step with the language and it goes on with the syntax.  
+It then describe the OTP platform talking about messages, processes and gen server.  
+The final part cover the building of a sample Elixir application.
+
+<div class="clear"></div>
+
 ## Courses
 
 <h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
