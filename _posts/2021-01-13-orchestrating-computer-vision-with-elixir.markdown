@@ -8,7 +8,7 @@ logo: /images/cases/logos/v7.png
 tags: phoenix computer-vision
 ---
 
-V7 is a web platform to create the sense of sight. A hub for machine learning and software engineers to develop their computer vision projects with data set management, image/video labeling, and one-click model training to automate any visual task.
+[V7](https://www.v7labs.com) is a web platform to create the sense of sight. A hub for machine learning and software engineers to develop their computer vision projects with data set management, image/video labeling, and one-click model training to automate any visual task.
 
 Founded in 2018 by Alberto Rizzoli and Simon Edwardsson, V7 uses Elixir, Phoenix, and Cowboy to power their web platform, responsible for managing large amounts of data and orchestrating dozens of Python nodes to carry out machine learning jobs. They have [recently closed a $3M seed round](https://www.notion.so/V7-Labs-raises-3-million-to-empower-AI-teams-with-automated-training-data-workflows-2c9b36d2043e44f3b536efae0a204632), and they are currently [hiring backend engineers to augment their Elixir team](https://www.v7labs.com/working-at-v7).
 
@@ -18,7 +18,7 @@ Founded in 2018 by Alberto Rizzoli and Simon Edwardsson, V7 uses Elixir, Phoenix
 
 Throughout the years, we have been continuously automating visual tasks to speed up manual processes and reduce the rate of errors. For example:
 
-  * Routine inspection of infrastructure. Oil pipelines and offshore oil rigs require constant examination against corrosion. Once there is too much rust, it can damage the pipeline and cause leakage. Nowadays, you can use drones to take pictures and automate the detection of oxidated spots.
+  * Routine inspection of infrastructure: oil pipelines and offshore oil rigs require constant examination against corrosion. Once there is too much rust, it can damage the pipeline and cause leakage. Nowadays, you can use drones to take pictures and automate the detection of oxidated spots.
 
   * Medical examination: there is a growing use of digital pathology to assist doctors in diagnosing diseases. For example, during a biopsy of possible liver cancer, doctors use a microscope to visualize human tissue and stitch together an image of the cells, which are then individually analyzed. AI can double-check these images and help speed up problematic cells in case of positives.
 
