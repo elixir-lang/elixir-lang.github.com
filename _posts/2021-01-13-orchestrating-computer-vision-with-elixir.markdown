@@ -14,7 +14,7 @@ Founded in 2018 by Alberto Rizzoli and Simon Edwardsson, V7 uses Elixir, Phoenix
 
 ![V7](/images/cases/bg/v7.png)
 
-## Computer vision
+## Visual tasks
 
 Throughout the years, we have been continuously automating visual tasks to speed up manual processes and reduce the rate of errors. For example:
 
