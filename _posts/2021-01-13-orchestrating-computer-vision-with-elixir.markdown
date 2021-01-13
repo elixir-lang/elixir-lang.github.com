@@ -24,7 +24,7 @@ Throughout the years, we have been continuously automating visual tasks to speed
 
   * Agriculture and farming: a wine producer may want to count grapes in a vineyard to estimate the wine production for a given season with higher precision. Farmers may use video to assess the health and the amount of exercise on free-range chickens and pigs.
 
-  * Visual automation also plays a growing role in quality assurance and robotics. A fast-food manufacturer can use cameras to identify fries with black spots, while harvesters may use robots to pick apples from trees.
+  * Visual automation also plays a growing role in quality assurance and robotics: a fast-food manufacturer can use cameras to identify fries with black spots, while harvesters may use robots to pick apples from trees.
 
 Neural networks are at the heart of these tasks, and there is a growing need to automate the creation of the networks themselves.
 
