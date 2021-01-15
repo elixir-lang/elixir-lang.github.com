@@ -88,7 +88,7 @@ iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 
 Sets, maps, and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the [`Collectable`](https://hexdocs.pm/elixir/Collectable.html) protocol.
 
-A common use case of `:into` can be transforming values in a map, without touching the keys:
+A common use case of `:into` can be transforming values in a map:
 
 ```elixir
 iex> for {key, val} <- %{"a" => 1, "b" => 2}, into: %{}, do: {key, val * val}
@@ -105,3 +105,7 @@ iex> for line <- stream, into: stream do
 ```
 
 Now type any string into the terminal and you will see that the same value will be printed in upper-case. Unfortunately, this example also got your IEx shell stuck in the comprehension, so you will need to hit `Ctrl+C` twice to get out of it. :)
+
+## Other options
+
+Comprehensions support other options, such as `:reduce` and `:uniq`. Please [check the complete reference](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#for/1) for more information.
