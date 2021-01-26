@@ -101,7 +101,7 @@ iex> duplicate :ok, 3
 [:ok, :ok, :ok]
 ```
 
-We imported only the function `duplicate` (with arity 2) from `List`. Although `:only` is optional, its usage is recommended in order to avoid importing all the functions of a given module inside the current scope. `:except` could also be given as an option in order to import everything in a module *except* a list of functions.
+We imported only the function `duplicate` (with arity 2) from `List`. Although `only:` is optional, its usage is recommended in order to avoid importing all the functions of a given module inside the current scope. `except:` could also be given as an option in order to import everything in a module *except* a list of functions.
 
 Note that `import` is **lexically scoped** too. This means that we can import specific macros or functions inside function definitions:
 
