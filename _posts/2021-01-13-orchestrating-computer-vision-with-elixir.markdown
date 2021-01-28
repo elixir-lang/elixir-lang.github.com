@@ -5,7 +5,7 @@ author: José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at V7.
 logo: /images/cases/logos/v7.png
-tags: phoenix computer-vision
+tags: computer-vision phoenix
 ---
 
 [V7](https://www.v7labs.com) is a web platform to create the sense of sight. A hub for machine learning and software engineers to develop their computer vision projects with data set management, image/video labeling, and one-click model training to automate any visual task.
