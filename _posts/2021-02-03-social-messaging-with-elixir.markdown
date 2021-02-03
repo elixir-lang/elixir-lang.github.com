@@ -18,7 +18,7 @@ Community is powered by the Erlang Ecosystem, with Elixir and RabbitMQ playing c
 
 Tomas Koci and Ustin Zarubin were the two engineers behind Community's initial implementation. The company was pivoting from a product they had written in Go and they felt the language was not expressive enough for the products they were building. So when faced with the challenge of developing a social messaging platform on top of SMS, they were open to trying a different stack.
 
-Their first encounter with Elixir was a casual one. They were chatting about the challenges ahead of them when their roommate mentioned Elixir. Shortly after, things started to click. They both had a physics background, so they found the functional paradigm quite intuitive. The Erlang VM also has its origins in Telecommunications, and they were building a telecom centric product, which gave them more confidence.
+Their first encounter with Elixir was a casual one. They were chatting about the challenges ahead of them when their roommate mentioned Elixir. Shortly after, things started to click. They both had a physics background, so they found the functional paradigm quite intuitive. The Erlang VM also has its origins in telecommunications, and they were building a telecom centric product, which gave them more confidence.
 
 Besides the technological aspect, they also began to be active in the Elixir community. Tomas recaps: "we started attending the Elixir meetups happening here in Chattanooga. We met many developers, heard about production cases, and learned how companies like Bleacher Report were using Elixir at scale". From then on, they were sold on giving Elixir a try.
 
@@ -63,6 +63,6 @@ Community's engineering team has seen stable growth over the last two years. Tod
 
 Karl Matthias, who joined early on, believes the challenges they face and the excitement for working on a new language has been positive for hiring talent. He details: "we try to hire the best production engineers we can, sometimes they know Elixir, sometimes they don't. Our team has generally seen learning Elixir as a positive and exciting experience".
 
-The team is also happy and confident about the stability Elixir provides. Karl adds: "Elixir supervisors have our back every time something goes wrong. They automatically reestablish connections to RabbitMQ, they handled dropped database connections, etc. The system never went wrong to the point our infrastructure layer had to kick-in, which has been quite refreshing."
+The team is also happy and confident about the stability Elixir provides. Karl adds: "Elixir supervisors have our back every time something goes wrong. They automatically reestablish connections to RabbitMQ, they handle dropped database connections, etc. The system has never gone wrong to the point our infrastructure layer had to kick-in, which has been quite refreshing."
 
 The Community team ended our conversation with a curious remark. They had just shut down their first implementation of the system, the one that received a sudden spike of four hundred thousand users on a Saturday night. Tomas concludes: "it is pretty amazing that the service we implemented while learning Elixir has been running and operating in production just fine, even after all of these milestones. And that's generally true for all of our services: once deployed, we can mostly forget about them".
