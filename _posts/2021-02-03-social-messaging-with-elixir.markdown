@@ -12,7 +12,7 @@ tags: messaging broadway
 
 Community is powered by the Erlang Ecosystem, with Elixir and RabbitMQ playing central roles. This article gives an overview of the system and the tools used to handle spikes of million of users caused by events such as this tweet:
 
-<blockquote class="twitter-tweet tw-align-center" data-cards="hidden"><p lang="en" dir="ltr">All right, let&#39;s try something new. If you’re in the United States, send me a text at 773-365-9687 — I want to hear how you&#39;re doing, what&#39;s on your mind, and how you&#39;re planning on voting this year. <br><br>I&#39;ll be in touch from time to time to share what&#39;s on my mind, too. <a href="https://t.co/NX91bSqbtG">pic.twitter.com/NX91bSqbtG</a></p>&mdash; Barack Obama (@BarackObama) <a href="https://twitter.com/BarackObama/status/1308769164190941187?ref_src=twsrc%5Etfw">September 23, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-cards="hidden"><p lang="en" dir="ltr">All right, let&#39;s try something new. If you’re in the United States, send me a text at 773-365-9687 — I want to hear how you&#39;re doing, what&#39;s on your mind, and how you&#39;re planning on voting this year. <br><br>I&#39;ll be in touch from time to time to share what&#39;s on my mind, too. <a href="https://t.co/NX91bSqbtG">pic.twitter.com/NX91bSqbtG</a></p>&mdash; Barack Obama (@BarackObama) <a href="https://twitter.com/BarackObama/status/1308769164190941187?ref_src=twsrc%5Etfw">September 23, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## The first steps with Elixir
 
