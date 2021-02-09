@@ -99,11 +99,13 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <div class="clear"></div>
 
-<h4 class="resource">Learn Functional Programming With Elixir</h4>
+<h4 class="resource">Create a cryptocurrency trading bot in Elixir</h4>
 
 <a class="cover" href="https://leanpub.com/create-a-cryptocurrency-trading-bot-in-elixir" title="Create a cryptocurrency trading bot in Elixir – by Kamil Skowron"><img src="/images/learning/create-a-cryptocurrency-trading-bot-in-elixir.png" alt="Create a cryptocurrency trading bot in Elixir cover" width="190" /></a>
 
 This book will take you on a journey to create a cryptocurrency trading bot in Elixir. You will be able to see first-hand, how complex systems are designed and developed as we will build them together! This book is intended for people that went through the "Getting Started" guide on Elixir's website and are looking for the next step to get some hands-on experience. The book focuses on building an application starting from scratch and implementing features on top of previously developed code as it would happen on daily basis at work as a software engineer.
+
+Disclaimer: This book does *not* advocate investing in cryptocurrencies nor trading them. The strategy implemented in the book is *naive* and will most probably cause loss of invested funds. Cryptocurrency trading bot has been chosen as a topic of this book as it's a complex enough problem to showcase different parts of Elixir and OTP, not to make you rich ;)
 
 <div class="clear"></div>
 
