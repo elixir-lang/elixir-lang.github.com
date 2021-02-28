@@ -149,7 +149,7 @@ $ cd elixir
 $ make clean test
 ```
 
-If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on Github](https://github.com/elixir-lang/elixir).
+If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on GitHub](https://github.com/elixir-lang/elixir).
 
 ## Installing Erlang
 
