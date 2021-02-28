@@ -26,7 +26,7 @@ Discord has also explored other technologies along the way, Go and Rust being tw
 
 ## Communication at scale
 
-Effective communication plays an essential role when handling millions of connected users concurrently. To put things into perspective, some of Discord's most popular servers, such as those dedicated to Fortnite and Minecraft, are nearing six hundred thousand users. At a given moment, it is not unlikely to encounter more than two hundred thousand active users in those servers. If someone changes their username, Discord has to broadcast this change to all connected users. 
+Effective communication plays an essential role when handling millions of connected users concurrently. To put things into perspective, some of Discord's most popular servers, such as those dedicated to Fortnite and Minecraft, are nearing six hundred thousand users. At a given moment, it is not unlikely to encounter more than two hundred thousand active users in those servers. If someone changes their username, Discord has to broadcast this change to all connected users.
 
 Overall, Discord's communication runs at impressive numbers. They have crossed more than 12 million concurrent users across all servers, with more than 26 million WebSocket events to clients per second, and Elixir is powering all of this.
 

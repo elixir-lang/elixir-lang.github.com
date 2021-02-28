@@ -56,7 +56,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
   - **Slackware**
     * Using **Sbopkg**:
-      * Run: `sbopkg -ki "erlang-otp elixir"`  
+      * Run: `sbopkg -ki "erlang-otp elixir"`
     * **Manually**:
       * Download, build and install from SlackBuilds.org: [`erlang-otp`](https://slackbuilds.org/repository/14.2/development/erlang-otp/), and [`elixir`](https://slackbuilds.org/repository/14.2/development/elixir)
 

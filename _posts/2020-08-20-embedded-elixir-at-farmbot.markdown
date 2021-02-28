@@ -31,13 +31,13 @@ Connor says that the Nerves Platform and what eventually became NervesHub was a 
 
 ### 1. Nerves supports lean systems and operates well in low-bandwidth areas
 
-Because Nerves bundles entire applications into relatively small archives in terms of firmware images for full Linux systems, Farmbot can use NervesHub to send over-the-air updates more quickly and users can download them faster. For comparison, an Android update generally clocks in at around 4 GB, but a Nerves update can be packed into as little as 12 MB. 
+Because Nerves bundles entire applications into relatively small archives in terms of firmware images for full Linux systems, Farmbot can use NervesHub to send over-the-air updates more quickly and users can download them faster. For comparison, an Android update generally clocks in at around 4 GB, but a Nerves update can be packed into as little as 12 MB.
 
-This is especially helpful for Farmbot users who operate in more remote locations with lower bandwidth and less reliable access to Wi-Fi. When an internet connection is available, NervesHub will connect and check if there's an update, and then prompt the user to install the update. 
+This is especially helpful for Farmbot users who operate in more remote locations with lower bandwidth and less reliable access to Wi-Fi. When an internet connection is available, NervesHub will connect and check if there's an update, and then prompt the user to install the update.
 
 ### 2. Nerves adds convenience with low overhead
 
-For devices that are already connected to the internet, connecting to Nerves requires no additional configuration because NervesHub is compatible with the current public key infrastructure for device-to-cloud communication. Since Farmbot already had internet-connected devices when they brought Nerves onboard, they were able to use the same "key" to sign in to NervesHub that they use for their cloud service. 
+For devices that are already connected to the internet, connecting to Nerves requires no additional configuration because NervesHub is compatible with the current public key infrastructure for device-to-cloud communication. Since Farmbot already had internet-connected devices when they brought Nerves onboard, they were able to use the same "key" to sign in to NervesHub that they use for their cloud service.
 
 ### 3. Nerves has all the benefits of Elixir and Erlang
 
@@ -45,6 +45,6 @@ Because it's written in Elixir and built within the Erlang runtime system, Nerve
 
 ## The result
 
-FarmBot now has around 300 devices live in NervesHub, with a different deployment for each of their device models. Nerves is built to scale, so as Farmbot continues to grow its user base and expand their product capabilities, they'll be able to continue developing and releasing reliable firmware updates using Nerves.  
+FarmBot now has around 300 devices live in NervesHub, with a different deployment for each of their device models. Nerves is built to scale, so as Farmbot continues to grow its user base and expand their product capabilities, they'll be able to continue developing and releasing reliable firmware updates using Nerves.
 
 *This case study has first been published on [Nerves' website](https://www.nerves-project.org/customer-farmbot)*.

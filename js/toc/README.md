@@ -60,7 +60,7 @@ Will render this table of contents:
     3. Page 2
       a. Note on Paragraph 2
       b. Note on Paragraph 4
-      
+
 ### Configuration
 
 #### List Type
@@ -100,7 +100,7 @@ Otherwise, you can use the stylesheet below to have the icon and the header alig
 ```
 
 #### Headers Used
-By default the table of content is displayed when at least 3 headers are found. 
+By default the table of content is displayed when at least 3 headers are found.
 You can customize the minimum number of headers required with this setting:
 
 ```javascript

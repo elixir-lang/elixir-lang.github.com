@@ -29,7 +29,7 @@ You can see all the built-in types provided by Elixir [in the typespecs docs](ht
 
 ### Defining custom types
 
-Defining custom types can help communicate the intention of your code and increase its readability. Custom types can be defined within modules via the `@type` attribute. 
+Defining custom types can help communicate the intention of your code and increase its readability. Custom types can be defined within modules via the `@type` attribute.
 
 A simple example of a custom type implementation is to provide a more descriptive alias of an existing type. For example, defining `year` as a type makes your function specs more descriptive than if they had simply used `integer`:
 
@@ -39,7 +39,7 @@ defmodule Person do
    A 4 digit year, e.g. 1984
    """
    @type year :: integer
-   
+
    @spec current_age(year) :: integer
    def current_age(year_of_birth), do: # implementation
 end
@@ -130,7 +130,7 @@ defmodule Parser do
   Parses a string.
   """
   @callback parse(String.t) :: {:ok, term} | {:error, String.t}
-  
+
   @doc """
   Lists all supported file extensions.
   """
@@ -150,7 +150,7 @@ defmodule JSONParser do
 
   @impl Parser
   def parse(str), do: {:ok, "some json " <> str} # ... parse JSON
-  
+
   @impl Parser
   def extensions, do: ["json"]
 end
@@ -162,7 +162,7 @@ defmodule YAMLParser do
 
   @impl Parser
   def parse(str), do: {:ok, "some yaml " <> str} # ... parse YAML
-  
+
   @impl Parser
   def extensions, do: ["yml"]
 end
@@ -178,7 +178,7 @@ defmodule BADParser do
 
   @impl Parser
   def parse, do: {:ok, "something bad"}
-  
+
   @impl Parser
   def extensions, do: ["bad"]
 end

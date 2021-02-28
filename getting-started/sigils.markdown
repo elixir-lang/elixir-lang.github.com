@@ -161,7 +161,7 @@ def convert(...)
 
 Elixir offers several sigils to deal with various flavors of times and dates.
 
-### Date 
+### Date
 
 A [%Date{}](https://hexdocs.pm/elixir/Date.html) struct contains the fields `year`, `month`, `day`, and `calendar`. You can create one using the `~D` sigil:
 

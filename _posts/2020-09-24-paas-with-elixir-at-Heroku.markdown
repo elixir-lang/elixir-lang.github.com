@@ -61,7 +61,7 @@ The growth of both Elixir teams has been mostly organic. Given there are multipl
 
 According to Matthew Peck, "the paradigm shift from Object-Oriented languages to Functional Programming was our biggest challenge when first learning Elixir". However, the team agrees the investment was worth it: "Learning Elixir has made us better programmers. We have found that immutability made our code more readable, easier to test, and simpler to make concurrent. Now when we go back to an Object-Oriented language, we are thinking about how we can apply the same concepts there" - said Mike Hagerdon.
 
-Amanda Dolan added some remarks on Elixir's capabilities for writing concurrent and fault-tolerant applications: "One other challenge when learning Elixir is fully grasping concurrency and the Erlang/OTP patterns". Some of them felt it took longer to master those concepts than they first expected. 
+Amanda Dolan added some remarks on Elixir's capabilities for writing concurrent and fault-tolerant applications: "One other challenge when learning Elixir is fully grasping concurrency and the Erlang/OTP patterns". Some of them felt it took longer to master those concepts than they first expected.
 
 Taylor Mock has his take on the challenges teams may face when adopting Elixir: "Another difference between Elixir and our previous stacks, Ruby and Node.js, is in the ecosystems". They were initially concerned that the Elixir ecosystem would lack when it comes to third-party tools, but that was not what they saw. Taylor continues: "We found out that we can get really far with the concepts and mechanisms that the language itself provides. This shift can be scary, but we are now past it, and we find ourselves with leaner applications and fewer dependencies".
 
