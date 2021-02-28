@@ -137,7 +137,7 @@ iex> %User{}
 Doing it in reverse order will raise a syntax error:
 
 ```elixir
-iex> defmodule User do                          
+iex> defmodule User do
 ...>   defstruct [name: "John", age: 27, :email]
 ...> end
 ** (SyntaxError) iex:107: syntax error before: email
