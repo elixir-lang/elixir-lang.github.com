@@ -122,7 +122,7 @@ Once the release is unpacked, you are ready to run the `elixir` and `iex` comman
 
 ## Compiling with version managers
 
-There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you can't install Erlang or Elixir as mentioned above or if your package manager is simply outdated. Here are some of those tools:
+There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
 
   * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
   * [exenv](https://github.com/exenv/exenv) - install and manage different Elixir versions
