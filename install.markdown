@@ -41,7 +41,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Run: `yum install elixir`
 
   - **Fedora 22 (and newer)**
-    * Run `dnf install elixir`
+    * Run `dnf install elixir erlang`
 
   - **Gentoo**
     * Run: `emerge --ask dev-lang/elixir`
