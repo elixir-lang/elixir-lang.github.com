@@ -128,7 +128,7 @@ defmodule KV.Bucket do
 end
 ```
 
-The first step in our implementation is to call `use Agent`.
+The first step in our implementation is to call `use Agent`. Most of the functionality we will learn in this guide, such as `GenServer` and `Supervisor`, follow this pattern. For all of them, calling `use` generates a `child_spec` function with default configuration, which will be handy when we start supervising processes in chapter 4.
 
 Then we define a `start_link/1` function, which will effectively start the agent. It is a convention to define a `start_link/1` function that always accepts a list of options. We don't plan on using any options right now, but we might later on. We then proceed to call `Agent.start_link/1`, which receives an anonymous function that returns the Agent's initial state.
 
