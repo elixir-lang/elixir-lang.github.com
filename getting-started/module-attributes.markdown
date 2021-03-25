@@ -135,6 +135,16 @@ end
 
 Be careful, however: *functions defined in the same module as the attribute itself cannot be called* because they have not yet been compiled when the attribute is being defined.
 
+Note that the function will be called at compilation time and its *return value*, not the function call itself, is what will be substituted in for the attribute. So, if `URI.parse("https://example.com")` returns a struct of `%URI{}`, then the above example will compile to something like this:
+
+```elixir
+defmodule MyApp.Status do
+  def status(email), do: SomeHttpClient.get(%URI{})
+end
+```
+
+This can be useful for pre-computing constant values, but it can also cause problems if you're expecting the function to be called at runtime. So if you are e.g. reading a value from a database or the environment inside an attribute, be aware that it will read that value only at compilation time.
+
 When defining an attribute, do not leave a line break between the attribute name and its value.
 
 ## As temporary storage
