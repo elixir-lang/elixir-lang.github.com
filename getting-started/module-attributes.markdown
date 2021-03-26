@@ -85,8 +85,6 @@ defmodule MyServer do
 end
 ```
 
-> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](https://hexdocs.pm/elixir/Module.html#register_attribute/3).
-
 Trying to access an attribute that was not defined will print a warning:
 
 ```elixir
@@ -110,7 +108,54 @@ MyServer.first_data #=> 14
 MyServer.second_data #=> 13
 ```
 
-Every time an attribute is read inside a function, a snapshot of its current value is taken. In other words, the value is read at compilation time and not at runtime. As we are going to see, this also makes attributes useful as storage during module compilation.
+> Note: do not add a newline between the attribute and its value, otherwise Elixir will assume you are reading the value, rather than setting it.
+
+Functions may be called when defining a module attribute:
+
+```elixir
+defmodule MyApp.Status do
+  @service URI.parse("https://example.com")
+  def status(email) do
+    SomeHttpClient.get(@service)
+  end
+end
+```
+
+The function above will be called at compilation time and its *return value*, not the function call itself, is what will be substituted in for the attribute. So the above will effectively compile to this:
+
+```elixir
+defmodule MyApp.Status do
+  def status(email) do
+    SomeHttpClient.get(%URI{
+      authority: "example.com",
+      host: "example.com",
+      port: 443,
+      scheme: "https"
+    })
+  end
+end
+```
+
+This can be useful for pre-computing constant values, but it can also cause problems if you're expecting the function to be called at runtime. For example, if you are reading a value from a database or an environment variable inside an attribute, be aware that it will read that value only at compilation time. Be careful, however: *functions defined in the same module as the attribute itself cannot be called* because they have not yet been compiled when the attribute is being defined.
+
+Every time an attribute is read inside a function, Elixir takes a snapshot of its current value. Therefore if you read the same attribute multiple times inside multiple functions, you may end-up making multiple copies of it. That's usually not an issue, but if you are using functions to compute large module attributes, that can slow down compilation. The solution is to move the attribute to shared function. For example, instead of this:
+
+```elixir
+def some_function, do: do_something_with(@example)
+def another_function, do: do_something_else_with(@example)
+```
+
+Prefer this:
+
+```elixir
+def some_function, do: do_something_with(example())
+def another_function, do: do_something_else_with(example())
+defp example, do: @example
+```
+
+If `@example` is cheap to compute, it may be even better to skip the module attribute altogether.
+
+### Accumulating attributes
 
 Normally, repeating a module attribute will cause its value to be reassigned, but there are circumstances where you may want to [configure the module attribute](https://hexdocs.pm/elixir/Module.html#register_attribute/3) so that its values are accumulated:
 
@@ -123,19 +168,6 @@ defmodule Foo do
   # here @param == [:bar, :foo]
 end
 ```
-
-Functions may be called when defining a module attribute, e.g.
-
-```elixir
-defmodule MyApp.Status do
-  @service URI.parse("https://example.com")
-  def status(email), do: SomeHttpClient.get(@service)
-end
-```
-
-Be careful, however: *functions defined in the same module as the attribute itself cannot be called* because they have not yet been compiled when the attribute is being defined.
-
-When defining an attribute, do not leave a line break between the attribute name and its value.
 
 ## As temporary storage
 
