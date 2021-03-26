@@ -135,11 +135,30 @@ end
 
 Be careful, however: *functions defined in the same module as the attribute itself cannot be called* because they have not yet been compiled when the attribute is being defined.
 
-Note that the function will be called at compilation time and its *return value*, not the function call itself, is what will be substituted in for the attribute. So, if `URI.parse("https://example.com")` returns a struct of `%URI{}`, then the above example will compile to something like this:
+Note that the function will be called at compilation time and its *return value*, not the function call itself, is what will be substituted in for the attribute. So, if `URI.parse("https://example.com")` returns this:
+
+```elixir
+iex> URI.parse("https://example.com")
+%URI{
+  authority: "example.com",
+  host: "example.com",
+  port: 443,
+  scheme: "https",
+}
+```
+
+Then the above example will compile to something like this:
 
 ```elixir
 defmodule MyApp.Status do
-  def status(email), do: SomeHttpClient.get(%URI{})
+  def status(email),
+    do:
+      SomeHttpClient.get(%URI{
+        authority: "example.com",
+        host: "example.com",
+        port: 443,
+        scheme: "https"
+      })
 end
 ```
 
