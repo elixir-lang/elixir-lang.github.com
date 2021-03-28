@@ -99,6 +99,14 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <div class="clear"></div>
 
+<h4 class="resource">Concurrent Data Processing in Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/titles/sgdpelixir/concurrent-data-processing-in-elixir" title="Concurrent Data Processing in Elixir – by Svilen Gospodinov"><img src="/images/learning/concurrent-data-processing.jpg" alt="Concurrent Data Processing cover" width="190" /></a>
+
+Learn different ways of writing concurrent code in Elixir and increase your application’s performance, without sacrificing scalability or fault-tolerance. Most projects benefit from running background tasks and processing data concurrently, but the world of OTP and various libraries can be challenging. Which Supervisor and what strategy to use? What about GenServer? Maybe you need back-pressure, but is GenStage, Flow, or Broadway a better choice? You will learn everything you need to know to answer these questions, start building highly concurrent applications in no time, and write code that’s not only fast, but also resilient to errors and easy to scale.
+
+<div class="clear"></div>
+
 ## Courses
 
 <h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
