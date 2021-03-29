@@ -12,17 +12,6 @@ Outside of our website, the Elixir Community has also produced plenty of resourc
 
 ## Books
 
-<h4 class="resource">Programming Elixir 1.6</h4>
-
-<a class="cover" href="https://pragprog.com/book/elixir16/programming-elixir-1-6" title="Programming Elixir 1.6: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
-– by Dave Thomas"><img src="/images/learning/programming-elixir-1-6.jpg" alt="Programming Elixir cover" width="190" /></a>
-
-This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.6 and beyond. Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches.
-
-Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM. Elixir's pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it's Elixir.
-
-<div class="clear"></div>
-
 <h4 class="resource">Elixir in Action</h4>
 
 <a class="cover" href="https://www.manning.com/books/elixir-in-action-second-edition" title="Elixir in Action
@@ -34,6 +23,17 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <div class="clear"></div>
 
+<h4 class="resource">Programming Elixir 1.6</h4>
+
+<a class="cover" href="https://pragprog.com/book/elixir16/programming-elixir-1-6" title="Programming Elixir 1.6: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
+– by Dave Thomas"><img src="/images/learning/programming-elixir-1-6.jpg" alt="Programming Elixir cover" width="190" /></a>
+
+This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.6 and beyond. Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches.
+
+Meet Elixir, a modern, functional, concurrent language built on the rock-solid Erlang VM. Elixir's pragmatic syntax and built-in support for metaprogramming will make you productive and keep you interested for the long haul. Maybe the time is right for the Next Big Thing. Maybe it's Elixir.
+
+<div class="clear"></div>
+
 <h4 class="resource">Adopting Elixir</h4>
 
 <a class="cover" href="https://pragprog.com/book/tvmelixir/adopting-elixir" title="Adopting Elixir: From Concept to Production
@@ -42,15 +42,6 @@ The book starts with a basic introduction to the Elixir language and functional 
 Adoption is more than programming. Elixir is an exciting new language, but to successfully get your application from start to finish, you're going to need to know more than just the language. You need the case studies and strategies in this book.
 
 Learn the best practices for the whole life of your application, from design and team-building, to managing stakeholders, to deployment and monitoring. Go beyond the syntax and the tools to learn the techniques you need to develop your Elixir application from concept to production.
-
-<div class="clear"></div>
-
-<h4 class="resource">The Little Elixir and OTP Guidebook</h4>
-
-<a class="cover" href="http://www.manning.com/tanweihao/" title="The Little Elixir and OTP Guidebook
-– by Benjamin Tan Wei Hao"><img src="/images/learning/the-little-elixir-and-otp-guidebook-meap.jpg" alt="The Little Elixir and OTP Guidebook cover" width="190" /></a>
-
-The Little Elixir & OTP Guidebook gets you started programming applications with Elixir and OTP. You begin with a quick overview of the Elixir language syntax, along with just enough functional programming to use it effectively. Then, you'll dive straight into OTP and learn how it helps you build scalable, fault-tolerant and distributed applications through several fun examples. Come rediscover the joy of programming with Elixir and remember how it feels like to be a beginner again.
 
 <div class="clear"></div>
 
@@ -96,14 +87,6 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 <a class="cover" href="https://www.syncfusion.com/ebooks/elixir-succinctly" title="Elixir Succinctly"><img src="https://cdn.syncfusion.com/content/images/downloads/ebook/ebook-cover/elixir-succinctly.png" alt="Elixir Succinctly" width="190" /></a>
 
 <a href="https://www.syncfusion.com/ebooks/elixir-succinctly">Elixir Succinctly</a> is a free ebook to start learning Elixir. It covers the installation and the first steps with the language and the syntax.  It then describes the Erlang/OTP platform, describing messages, processes, and GenServer. The final part covers the building of a sample Elixir application.
-
-<div class="clear"></div>
-
-<h4 class="resource">Concurrent Data Processing in Elixir</h4>
-
-<a class="cover" href="https://pragprog.com/titles/sgdpelixir/concurrent-data-processing-in-elixir" title="Concurrent Data Processing in Elixir – by Svilen Gospodinov"><img src="/images/learning/concurrent-data-processing.jpg" alt="Concurrent Data Processing cover" width="190" /></a>
-
-Learn different ways of writing concurrent code in Elixir and increase your application’s performance, without sacrificing scalability or fault-tolerance. Most projects benefit from running background tasks and processing data concurrently, but the world of OTP and various libraries can be challenging. Which Supervisor and what strategy to use? What about GenServer? Maybe you need back-pressure, but is GenStage, Flow, or Broadway a better choice? You will learn everything you need to know to answer these questions, start building highly concurrent applications in no time, and write code that’s not only fast, but also resilient to errors and easy to scale.
 
 <div class="clear"></div>
 
@@ -244,19 +227,27 @@ Write code that writes code with Elixir macros. Macros make metaprogramming poss
 
 <div class="clear"></div>
 
-<h4 class="resource">Erlang in Anger</h4>
-
-<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
-
-This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
-
-<div class="clear"></div>
-
 <h4 class="resource">Designing Elixir Systems with OTP</h4>
 
 <a class="cover" href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
 – by James Edward Gray, II and Bruce A. Tate"><img src="/images/learning/designing-elixir-systems.jpg" alt="Designing Elixir Systems with OTP cover" width="190" /></a>
 
 You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that's kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what's happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
+
+<div class="clear"></div>
+
+<h4 class="resource">Concurrent Data Processing in Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/titles/sgdpelixir/concurrent-data-processing-in-elixir" title="Concurrent Data Processing in Elixir – by Svilen Gospodinov"><img src="/images/learning/concurrent-data-processing.jpg" alt="Concurrent Data Processing cover" width="190" /></a>
+
+Learn different ways of writing concurrent code in Elixir and increase your application’s performance, without sacrificing scalability or fault-tolerance. Most projects benefit from running background tasks and processing data concurrently, but the world of OTP and various libraries can be challenging. Which Supervisor and what strategy to use? What about GenServer? Maybe you need back-pressure, but is GenStage, Flow, or Broadway a better choice? You will learn everything you need to know to answer these questions, start building highly concurrent applications in no time, and write code that’s not only fast, but also resilient to errors and easy to scale.
+
+<div class="clear"></div>
+
+<h4 class="resource">Erlang in Anger</h4>
+
+<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
+
+This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
 
 <div class="clear"></div>
