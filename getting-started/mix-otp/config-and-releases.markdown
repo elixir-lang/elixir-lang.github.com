@@ -153,7 +153,7 @@ Before we assemble the release, let's also define our routing table for producti
 
 Note we have wrapped it in a `Mix.env() == :prod` check, so this configuration does not apply to other environments.
 
-While this will suffice for now, you may find the configuration a bit backwards. Usually, the computer name is usually not known upfront during development but only when deploying to production. For this purpose, we will later introduce [`config/releases.exs`](#runtime-configuration), which is a configuration file that is executed in the production machine before the system starts, giving you an opportunity to set the proper node name at the right time.
+While this will suffice for now, you may find the configuration a bit backwards. Usually, the computer name is not known upfront during development but only when deploying to production. For this purpose, we will later introduce [`config/releases.exs`](#runtime-configuration), which is a configuration file that is executed in the production machine before the system starts, giving you an opportunity to set the proper node name at the right time.
 
 With the configuration in place, let's give assembling the release another try:
 
