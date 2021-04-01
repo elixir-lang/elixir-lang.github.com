@@ -8,6 +8,8 @@ logo: /images/cases/logos/community.png
 tags: messaging broadway
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
+
 [Community](https://community.com/) is a platform that enables instant and direct communication with the people you want to reach, using the simplicity of text messaging. Used by names like Paul McCartney, Metallica, and Barack Obama, Community connects small businesses, stars, and high-profile individuals directly to their audiences.
 
 Community is powered by the Erlang Ecosystem, with Elixir and RabbitMQ playing central roles. This article gives an overview of the system and the tools used to handle spikes of million of users caused by events such as this tweet:

@@ -8,6 +8,8 @@ logo: /images/cases/logos/slab.png
 tags: collab phoenix otp
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
+
 [Slab](https://slab.com/) is a knowledge base and team wiki that democratizes knowledge. Jason Chen started Slab in August 2016, after picking Elixir and Phoenix as the best tools to build real-time collaborative applications. The company has grown to 6 engineers since then, distributed worldwide, and relied upon by more than 7000 companies and customers like Asana, Discord, and Glossier. If you are interested in helping companies become a source of learning and purpose, especially  during these times where remote collaboration is essential, [Slab is hiring](https://slab.com/jobs?ref=elixir).
 
 ![Slab](/images/cases/bg/slab.png)

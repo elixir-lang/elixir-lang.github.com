@@ -8,6 +8,8 @@ logo: /images/cases/logos/duffel.png
 tags: api integration xml
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
+
 [Duffel](https://duffel.com/) is building the new software backbone of the travel industry. Their first product is the Flights API, a developer-friendly platform that enables any business to instantly search flights, make bookings, reserve seats, and sell paid extras like checked bags. Duffel is connected to more than 20 of the world’s largest airlines, including American Airlines, Emirates, and Lufthansa. The company was founded in November 2017 and in 2019 it opened a private beta of their API and has raised $56M total in funding. It now has 40 employees across its offices in London and New York. This article discusses how Duffel has used Elixir as their technology of choice to modernize an industry built on old standards and outdated stacks. If you are interested in shaping the future of travel, [Duffel is hiring](https://duffel.com/careers).
 
 ![Duffel](/images/cases/bg/duffel.png)

@@ -8,6 +8,8 @@ logo: /images/cases/logos/v7.png
 tags: computer-vision phoenix
 ---
 
+*Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
+
 [V7](https://www.v7labs.com) is a web platform to create the sense of sight. A hub for machine learning and software engineers to develop their computer vision projects with data set management, image/video labeling, and one-click model training to automate any visual task.
 
 Founded in 2018 by Alberto Rizzoli and Simon Edwardsson, V7 uses Elixir, Phoenix, and Cowboy to power their web platform, responsible for managing large amounts of data and orchestrating dozens of Python nodes to carry out machine learning jobs. They have [recently closed a $3M seed round](https://www.notion.so/V7-Labs-raises-3-million-to-empower-AI-teams-with-automated-training-data-workflows-2c9b36d2043e44f3b536efae0a204632), and they are currently [hiring backend engineers to augment their Elixir team](https://www.v7labs.com/working-at-v7).
