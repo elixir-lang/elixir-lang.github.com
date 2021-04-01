@@ -14,7 +14,9 @@ PepsiCo is one of the world's leading food and beverage companies serving more t
 
 Although we will explore only two teams in this article, [PepsiCo is hiring Elixir engineers across multiple teams](https://www.pepsicojobs.com/teams-ecommerce). Let's get started.
 
-![PepsiCo](/images/cases/bg/pepsico.jpg)
+<div style="margin: 0 auto; padding-right: 80px;">
+<img src="/images/cases/bg/pepsico.jpg" alt="PepsiCo">
+</div>
 
 ## The first steps
 
