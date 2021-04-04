@@ -79,18 +79,19 @@ This section goes over some of the syntactic differences between the two languag
 
 ### Operator names
 
-Some operators are spelled differently.
+Some operators are spelled differently, others are not available.
 
-| Erlang         | Elixir         | Meaning                                 |
-|----------------|----------------|-----------------------------------------|
-| and            | NOT AVAILABLE  | Logical 'and', evaluates both arguments |
-| andalso        | and            | Logical 'and', short-circuits           |
-| or             | NOT AVAILABLE  | Logical 'or', evaluates both arguments  |
-| orelse         | or             | Logical 'or', short-circuits            |
-| =:=            | ===            | A match operator                        |
-| =/=            | !==            | A negative match                        |
-| /=             | !=             | Not equals                              |
-| =<             | <=             | Less than or equals                     |
+| Erlang         | Elixir         | Meaning                                          |
+|----------------|----------------|--------------------------------------------------|
+| and            | NOT AVAILABLE  | Strictly boolean 'and', evaluates both arguments |
+| andalso        | and            | Strictly boolean "and", short-circuits           |
+| or             | NOT AVAILABLE  | Strictly boolean 'or', evaluates both arguments  |
+| orelse         | or             | Strictly boolean "or", short-circuits            |
+| xor            | NOT AVAILABLE  | Strictly boolean 'xor'                           |
+| =:=            | ===            | Strictly equals to                               |
+| =/=            | !==            | Strictly not equals to                           |
+| /=             | !=             | Not equals to                                    |
+| =<             | <=             | Less than or equals to                           |
 
 
 ### Delimiters
