@@ -18,13 +18,11 @@ Elixir brings the concept of module attributes from Erlang. For example:
 
 ```elixir
 defmodule MyServer do
-  @vsn 2
+  @moduledoc "My server code."
 end
 ```
 
-In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang <abbr title="Virtual Machine">VM</abbr> to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
-
-Elixir has a handful of reserved attributes. Here are a few of them, the most commonly used ones:
+In the example above, we are defining the module documentation by using the module attribute syntax. Elixir has a handful of reserved attributes. Here are a few of them, the most commonly used ones:
 
 * `@moduledoc` - provides documentation for the current module.
 * `@doc` - provides documentation for the function or macro that follows the attribute.
@@ -153,7 +151,7 @@ def another_function, do: do_something_else_with(example())
 defp example, do: @example
 ```
 
-If `@example` is cheap to compute, it may be even better to skip the module attribute altogether.
+If `@example` is cheap to compute, it may be even better to skip the module attribute altogether, and compute its value inside the function.
 
 ### Accumulating attributes
 
@@ -187,6 +185,6 @@ end
 
 In the example above, `ExUnit` stores the value of `async: true` in a module attribute to change how the module is compiled. Tags are also defined as `accumulate: true` attributes, and they store tags that can be used to setup and filter tests. For example, you can avoid running external tests on your machine because they are slow and dependent on other services, while they can still be enabled in your build system.
 
-In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide and learn how to use module attributes as storage to allow developers to create DSLs.
+In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide and learn how to use module attributes as storage to allow developers to create Domain Specific Languages (DSLs).
 
 In the next chapters, we'll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions.

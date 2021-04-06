@@ -35,8 +35,7 @@ iex> for {:good, n} <- values, do: n * n
 Alternatively to pattern matching, filters can be used to select some particular elements. For example, we can select the multiples of 3 and discard all others:
 
 ```elixir
-iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end
-iex> for n <- 0..5, multiple_of_3?.(n), do: n * n
+iex> for n <- 0..5, rem(n, 3) == 0, do: n * n
 [0, 9]
 ```
 
@@ -46,7 +45,8 @@ Comprehensions generally provide a much more concise representation than using t
 
 ```elixir
 dirs = ['/home/mikey', '/home/james']
-for dir  <- dirs,
+
+for dir <- dirs,
     file <- File.ls!(dir),
     path = Path.join(dir, file),
     File.regular?(path) do

@@ -194,7 +194,7 @@ iex> ndt = ~N[2019-10-31 23:00:07]
 
 Why is it called naive? Because it does not contain timezone information. Therefore, the given datetime may not exist at all or it may exist twice in certain timezones - for example, when we move the clock back and forward for daylight saving time.
 
-### DateTime
+### UTC DateTime
 
 A [%DateTime{}](https://hexdocs.pm/elixir/DateTime.html) struct contains the same fields as a `NaiveDateTime` with the addition of fields to track timezones. The `~U` sigil allows developers to create a DateTime in the UTC timezone:
 

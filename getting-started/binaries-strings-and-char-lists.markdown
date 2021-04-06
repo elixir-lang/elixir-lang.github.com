@@ -108,6 +108,7 @@ Any value that exceeds what can be stored by the number of bits provisioned is t
 iex> <<1>> === <<257>>
 true
 ```
+
 Here, 257 in base 2 would be represented as `100000001`, but since we have reserved only 8 bits for its representation (by default), the left-most bit is ignored and the value becomes truncated to `00000001`, or simply `1` in decimal.
 
 ## Binaries
@@ -141,7 +142,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 Note that unless you explicitly use `::` modifiers, each entry in the binary pattern is expected to match a single byte (exactly 8 bits). If we want to match on a binary of unknown size, we can use the `binary` modifier at the end of the pattern:
 
 ```elixir
-iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
+iex> <<0, 1, x::binary>> = <<0, 1, 2, 3>>
 <<0, 1, 2, 3>>
 iex> x
 <<2, 3>>
@@ -226,34 +227,22 @@ Our tour of our bitstrings, binaries, and strings is nearly complete, but we hav
 Whereas strings (i.e. binaries) are created using double-quotes, charlists are created with single-quoted literals:
 
 ```elixir
+iex> 'hello'
+'hello'
+iex> [?h, ?e, ?l, ?l, ?o]
+'hello'
+```
+
+You can see that instead of containing bytes, a charlist contains integer code points. However, the list is only printed in single-quotes if all code points are within the ASCII range:
+
+```elixir
 iex> 'hełło'
 [104, 101, 322, 322, 111]
-iex> is_list 'hełło'
+iex> is_list('hełło')
 true
-iex> 'hello'
-'hello'
-iex> List.first('hello')
-104
 ```
 
-You can see that instead of containing bytes, a charlist contains integer code points. By default, IEx will only output code points if any of the integers falls outside the ASCII range of 0 to 127:
-
-```elixir
-iex> 'hello'
-'hello'
-iex> 'hełło'
-[104, 101, 322, 322, 111]
-```
-
-If you wish to inspect the code points in a single-quoted literal, you can force this by passing the `charlists` option to `IO.inspect/2`:
-
-```elixir
-iex> IO.inspect('hello', charlists: :as_lists)
-[104, 101, 108, 108, 111]
-'hello'
-```
-
-Interpreting integers as codepoints may lead to some surprising behavior. For example, if you are storing a list of integers that happen to range between 0 and 127, by default IEx will interpret this as a charlist and it will display the corresponding ASCII characters.
+Interpreting integers as code points may lead to some surprising behavior. For example, if you are storing a list of integers that happen to range between 0 and 127, by default IEx will interpret this as a charlist and it will display the corresponding ASCII characters.
 
 ```elixir
 iex> heartbeats_per_minute = [99, 97, 116]
@@ -263,13 +252,13 @@ iex> heartbeats_per_minute = [99, 97, 116]
 You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:
 
 ```elixir
-iex> to_charlist "hełło"
+iex> to_charlist("hełło")
 [104, 101, 322, 322, 111]
-iex> to_string 'hełło'
+iex> to_string('hełło')
 "hełło"
-iex> to_string :hello
+iex> to_string(:hello)
 "hello"
-iex> to_string 1
+iex> to_string(1)
 "1"
 ```
 

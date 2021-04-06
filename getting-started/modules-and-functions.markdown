@@ -54,11 +54,11 @@ iex> Math.sum(1, 2)
 
 Elixir projects are usually organized into three directories:
 
-* ebin - contains the compiled bytecode
-* lib - contains elixir code (usually `.ex` files)
-* test - contains tests (usually `.exs` files)
+* `_build` - contains compilation artifacts
+* `lib` - contains Elixir code (usually `.ex` files)
+* `test` - contains tests (usually `.exs` files)
 
-When working on actual projects, the build tool called `mix` will be responsible for compiling and setting up the proper paths for you. For learning purposes, Elixir also supports a scripted mode which is more flexible and does not generate any compiled artifacts.
+When working on actual projects, the build tool called `mix` will be responsible for compiling and setting up the proper paths for you. For learning and convenience purposes, Elixir also supports a scripted mode which is more flexible and does not generate any compiled artifacts.
 
 ## Scripted mode
 
@@ -135,7 +135,7 @@ defmodule Math do
 end
 ```
 
-And it will provide the same behaviour. You may use `do:` for one-liners but always use `do`/`end` for functions spanning multiple lines.
+And it will provide the same behaviour. You may use `do:` for one-liners but always use `do`/`end` for functions spanning multiple lines. If you prefer to be consistent, you can use `do/end` throughout your codebase.
 
 ## Function capturing
 
@@ -183,16 +183,7 @@ iex)> fun2.("morning")
 
 The `&1` represents the first argument passed into the function. `&(&1 + 1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
 
-If you want to capture a function from a module, you can do `&Module.function()`:
-
-```elixir
-iex> fun = &List.flatten(&1, &2)
-&List.flatten/2
-iex> fun.([1, [[2], 3]], [4, 5])
-[1, 2, 3, 4, 5]
-```
-
-`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end` which in this case is equivalent to `&List.flatten/2`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#&/1).
+You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#&/1).
 
 ## Default arguments
 
@@ -228,7 +219,7 @@ iex> DefaultTest.dowork
 "hello"
 ```
 
-If a function with default values has multiple clauses, it is required to create a function head (without an actual body) for declaring defaults:
+If a function with default values has multiple clauses, it is required to create a function head (a function definition without a body) for declaring defaults:
 
 ```elixir
 defmodule Concat do
@@ -267,9 +258,9 @@ defmodule Concat do
 end
 ```
 
-If we save the code above in a file named "concat.ex" and compile it, Elixir will emit the following warning:
+Elixir will emit the following warning:
 
-    warning: this clause cannot match because a previous clause at line 2 always matches
+    concat.ex:7: warning: this clause cannot match because a previous clause at line 2 always matches
 
 The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
 
@@ -288,5 +279,7 @@ iex> Concat.join "Hello", "world", "_"
 ***Second join
 "Hello_world"
 ```
+
+Removing the default argument in this case will fix the warning.
 
 This finishes our short introduction to modules. In the next chapters, we will learn how to use named functions for recursion, explore Elixir lexical directives that can be used for importing functions from other modules and discuss module attributes.

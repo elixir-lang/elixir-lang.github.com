@@ -15,7 +15,7 @@ In this chapter, we will learn about the basic constructs for spawning new proce
 The basic mechanism for spawning new processes is the auto-imported `spawn/1` function:
 
 ```elixir
-iex> spawn fn -> 1 + 2 end
+iex> spawn(fn -> 1 + 2 end)
 #PID<0.43.0>
 ```
 
@@ -24,7 +24,7 @@ iex> spawn fn -> 1 + 2 end
 Notice `spawn/1` returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:
 
 ```elixir
-iex> pid = spawn fn -> 1 + 2 end
+iex> pid = spawn(fn -> 1 + 2 end)
 #PID<0.44.0>
 iex> Process.alive?(pid)
 false
@@ -48,7 +48,7 @@ Processes get much more interesting when we are able to send and receive message
 We can send messages to a process with `send/2` and receive them with `receive/1`:
 
 ```elixir
-iex> send self(), {:hello, "world"}
+iex> send(self(), {:hello, "world"})
 {:hello, "world"}
 iex> receive do
 ...>   {:hello, msg} -> msg
@@ -79,7 +79,7 @@ Let's put it all together and send messages between processes:
 ```elixir
 iex> parent = self()
 #PID<0.41.0>
-iex> spawn fn -> send(parent, {:hello, self()}) end
+iex> spawn(fn -> send(parent, {:hello, self()}) end)
 #PID<0.48.0>
 iex> receive do
 ...>   {:hello, pid} -> "Got hello from #{inspect pid}"
@@ -92,7 +92,7 @@ The `inspect/1` function is used to convert a data structure's internal represen
 While in the shell, you may find the helper `flush/0` quite useful. It flushes and prints all the messages in the mailbox.
 
 ```elixir
-iex> send self(), :hello
+iex> send(self(), :hello)
 :hello
 iex> flush()
 :hello
@@ -104,7 +104,7 @@ iex> flush()
 The majority of times we spawn processes in Elixir, we spawn them as linked processes. Before we show an example with `spawn_link/1`, let's see what happens when a process started with `spawn/1` fails:
 
 ```elixir
-iex> spawn fn -> raise "oops" end
+iex> spawn(fn -> raise "oops" end)
 #PID<0.58.0>
 
 [error] Process #PID<0.58.00> raised an exception
@@ -117,7 +117,7 @@ It merely logged an error but the parent process is still running. That's becaus
 ```elixir
 iex> self()
 #PID<0.41.0>
-iex> spawn_link fn -> raise "oops" end
+iex> spawn_link(fn -> raise "oops" end)
 
 ** (EXIT from #PID<0.41.0>) evaluator process exited with reason: an exception was raised:
     ** (RuntimeError) oops
@@ -143,7 +143,7 @@ While other languages would require us to catch/handle exceptions, in Elixir we 
 Tasks build on top of the spawn functions to provide better error reports and introspection:
 
 ```elixir
-iex(1)> Task.start fn -> raise "oops" end
+iex(1)> Task.start(fn -> raise "oops" end)
 {:ok, #PID<0.55.0>}
 
 15:22:33.046 [error] Task #PID<0.55.0> started from #PID<0.53.0> terminating
@@ -188,9 +188,9 @@ Note that the `start_link` function starts a new process that runs the `loop/1` 
 Let's give it a try by running `iex kv.exs`:
 
 ```elixir
-iex> {:ok, pid} = KV.start_link
+iex> {:ok, pid} = KV.start_link()
 {:ok, #PID<0.62.0>}
-iex> send pid, {:get, :hello, self()}
+iex> send(pid, {:get, :hello, self()})
 {:get, :hello, #PID<0.41.0>}
 iex> flush()
 nil
@@ -200,9 +200,9 @@ nil
 At first, the process map has no keys, so sending a `:get` message and then flushing the current process inbox returns `nil`. Let's send a `:put` message and try it again:
 
 ```elixir
-iex> send pid, {:put, :hello, :world}
+iex> send(pid, {:put, :hello, :world})
 {:put, :hello, :world}
-iex> send pid, {:get, :hello, self()}
+iex> send(pid, {:get, :hello, self()})
 {:get, :hello, #PID<0.41.0>}
 iex> flush()
 :world
@@ -216,7 +216,7 @@ It is also possible to register the `pid`, giving it a name, and allowing everyo
 ```elixir
 iex> Process.register(pid, :kv)
 true
-iex> send :kv, {:get, :hello, self()}
+iex> send(:kv, {:get, :hello, self()})
 {:get, :hello, #PID<0.41.0>}
 iex> flush()
 :world

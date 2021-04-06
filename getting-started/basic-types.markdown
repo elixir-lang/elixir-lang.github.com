@@ -41,7 +41,7 @@ iex> rem 10, 3
 1
 ```
 
-Notice that Elixir allows you to drop the parentheses when invoking named functions. This feature gives a cleaner syntax when writing declarations and control-flow constructs.
+Notice that Elixir allows you to drop the parentheses when invoking named functions. This feature gives a cleaner syntax when writing declarations and control-flow constructs. However, Elixir developers generally prefer to use parentheses.
 
 Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:
 
@@ -197,7 +197,7 @@ iex> "hello\nworld"
 You can print a string using the `IO.puts/1` function from the `IO` module:
 
 ```elixir
-iex> IO.puts "hello\nworld"
+iex> IO.puts("hello\nworld")
 hello
 world
 :ok
@@ -248,7 +248,7 @@ true
 
 In the example above, we defined an anonymous function that receives two arguments, `a` and `b`, and returns the result of `a + b`. The arguments are always on the left-hand side of `->` and the code to be executed on the right-hand side. The anonymous function is stored in the variable `add`.
 
-Parenthesised arguments after the anonymous function indicate that we want the function to be evaluated, not just its definition returned.  Note that a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling the anonymous function matched to a variable `add` and a named function `add/2`. We will explore named functions when dealing with [Modules and Functions](/getting-started/modules-and-functions.html), since named functions can only be defined within a module. For now, just remember that Elixir makes a clear distinction between anonymous functions and named functions.
+We can invoke anonymous functions by passing arguments to it. Note that a dot (`.`) between the variable and parentheses is required to invoke an anonymous function. The dot ensures there is no ambiguity between calling the anonymous function matched to a variable `add` and a named function `add/2`. We will write our own named functions when dealing with [Modules and Functions](/getting-started/modules-and-functions.html). For now, just remember that Elixir makes a clear distinction between anonymous functions and named functions.
 
 Anonymous functions in Elixir are also identified by the number of arguments they receive. We can check if a function is of any given arity by using `is_function/2`:
 
@@ -261,7 +261,7 @@ iex> is_function(add, 1)
 false
 ```
 
-Finally, anonymous functions are also closures and as such they can access variables that are in scope when the function is defined. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
+Finally, anonymous functions can also access variables that are in scope when the function is defined. This is typically refered to as closures, as they close over their scope. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
 ```elixir
 iex> double = fn a -> add.(a, a) end
@@ -316,7 +316,7 @@ iex> tl(list)
 Getting the head or the tail of an empty list throws an error:
 
 ```elixir
-iex> hd []
+iex> hd([])
 ** (ArgumentError) argument error
 ```
 

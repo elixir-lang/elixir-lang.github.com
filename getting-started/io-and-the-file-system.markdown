@@ -118,9 +118,9 @@ iex> IO.write(file, "is anybody out there")
 Let's see in more detail what happens when you request `IO.write(pid, binary)`. The `IO` module sends a message to the process identified by `pid` with the desired operation. A small ad-hoc process can help us see it:
 
 ```elixir
-iex> pid = spawn fn ->
+iex> pid = spawn(fn ->
 ...>  receive do: (msg -> IO.inspect msg)
-...> end
+...> end)
 #PID<0.57.0>
 iex> IO.write(pid, "hello")
 {:io_request, #PID<0.41.0>, #Reference<0.0.8.91>,
@@ -128,9 +128,9 @@ iex> IO.write(pid, "hello")
 ** (ErlangError) erlang error: :terminated
 ```
 
-After `IO.write/2`, we can see the request sent by the `IO` module (a four-elements tuple) printed out. Soon after that, we see that it fails since the `IO` module expected some kind of result, which we did not supply.
+After `IO.write/2`, we can see the request sent by the `IO` module printed out (a four-elements tuple). Soon after that, we see that it fails since the `IO` module expected some kind of result, which we did not supply.
 
-By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows I/O messages to be routed between different nodes running Distributed Erlang or even exchange files to perform read/write operations across nodes.
+By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows I/O messages to be routed between different nodes running Distributed Erlang or even exchange files to perform read/write operations across nodes. Neat!
 
 ## `iodata` and `chardata`
 

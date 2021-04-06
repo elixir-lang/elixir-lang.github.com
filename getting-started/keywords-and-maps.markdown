@@ -47,10 +47,11 @@ Keyword lists are important because they have three special characteristics:
 For example, [the Ecto library](https://github.com/elixir-lang/ecto) makes use of these features to provide an elegant DSL for writing database queries:
 
 ```elixir
-query = from w in Weather,
-      where: w.prcp > 0,
-      where: w.temp < 20,
-     select: w
+query =
+  from w in Weather,
+    where: w.prcp > 0,
+    where: w.temp < 20,
+    select: w
 ```
 
 These characteristics are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned that the following syntax is supported:
@@ -196,8 +197,10 @@ iex> users = [
   john: %{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]},
   mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}
 ]
-[john: %{age: 27, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
- mary: %{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}]
+[
+  john: %{age: 27, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
+  mary: %{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}
+]
 ```
 
 We have a keyword list of users where each value is a map containing the name, age and a list of programming languages each user likes. If we wanted to access the age for john, we could write:
@@ -211,16 +214,20 @@ It happens we can also use this same syntax for updating the value:
 
 ```elixir
 iex> users = put_in users[:john].age, 31
-[john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
- mary: %{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}]
+[
+  john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
+  mary: %{age: 29, languages: ["Elixir", "F#", "Clojure"], name: "Mary"}
+]
 ```
 
 The `update_in/2` macro is similar but allows us to pass a function that controls how the value changes. For example, let's remove "Clojure" from Mary's list of languages:
 
 ```elixir
 iex> users = update_in users[:mary].languages, fn languages -> List.delete(languages, "Clojure") end
-[john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
- mary: %{age: 29, languages: ["Elixir", "F#"], name: "Mary"}]
+[
+  john: %{age: 31, languages: ["Erlang", "Ruby", "Elixir"], name: "John"},
+  mary: %{age: 29, languages: ["Elixir", "F#"], name: "Mary"}
+]
 ```
 
 There is more to learn about `put_in/2` and `update_in/2`, including the `get_and_update_in/2` that allows us to extract a value and update the data structure at once. There are also `put_in/3`, `update_in/3` and `get_and_update_in/3` which allow dynamic access into the data structure. [Check their respective documentation in the `Kernel` module for more information](https://hexdocs.pm/elixir/Kernel.html).

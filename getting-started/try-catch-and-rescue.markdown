@@ -69,20 +69,20 @@ iex> try do
 In practice, however, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information about whether the file was opened successfully:
 
 ```elixir
-iex> File.read "hello"
+iex> File.read("hello")
 {:error, :enoent}
-iex> File.write "hello", "world"
+iex> File.write("hello", "world")
 :ok
-iex> File.read "hello"
+iex> File.read("hello")
 {:ok, "world"}
 ```
 
 There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can use pattern matching within the `case` construct:
 
 ```elixir
-iex> case File.read "hello" do
-...>   {:ok, body}      -> IO.puts "Success: #{body}"
-...>   {:error, reason} -> IO.puts "Error: #{reason}"
+iex> case File.read("hello") do
+...>   {:ok, body} -> IO.puts("Success: #{body}")
+...>   {:error, reason} -> IO.puts("Error: #{reason}")
 ...> end
 ```
 
@@ -91,7 +91,7 @@ At the end of the day, it's up to your application to decide if an error while o
 For the cases where you do expect a file to exist (and the lack of that file is truly an *error*) you may use `File.read!/1`:
 
 ```elixir
-iex> File.read! "unknown"
+iex> File.read!("unknown")
 ** (File.Error) could not read file unknown: no such file or directory
     (elixir) lib/file.ex:272: File.read!/1
 ```
@@ -108,9 +108,9 @@ Those situations are quite uncommon in practice except when interfacing with lib
 
 ```elixir
 iex> try do
-...>   Enum.each -50..50, fn(x) ->
+...>   Enum.each(-50..50, fn(x) ->
 ...>     if rem(x, 13) == 0, do: throw(x)
-...>   end
+...>   end)
 ...>   "Got nothing"
 ...> catch
 ...>   x -> "Got #{x}"
@@ -121,7 +121,7 @@ iex> try do
 Since `Enum` *does* provide a proper API, in practice `Enum.find/2` is the way to go:
 
 ```elixir
-iex> Enum.find -50..50, &(rem(&1, 13) == 0)
+iex> Enum.find(-50..50, &(rem(&1, 13) == 0))
 -39
 ```
 
@@ -130,7 +130,7 @@ iex> Enum.find -50..50, &(rem(&1, 13) == 0)
 All Elixir code runs inside processes that communicate with each other. When a process dies of "natural causes" (e.g., unhandled exceptions), it sends an `exit` signal. A process can also die by explicitly sending an `exit` signal:
 
 ```elixir
-iex> spawn_link fn -> exit(1) end
+iex> spawn_link(fn -> exit(1) end)
 ** (EXIT from #PID<0.56.0>) evaluator process exited with reason: 1
 ```
 
@@ -140,7 +140,7 @@ In the example above, the linked process died by sending an `exit` signal with a
 
 ```elixir
 iex> try do
-...>   exit "I am exiting"
+...>   exit("I am exiting")
 ...> catch
 ...>   :exit, _ -> "not really"
 ...> end
@@ -158,9 +158,9 @@ It is exactly this supervision system that makes constructs like `try/catch` and
 Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and use an `after` clause to close it--even if something goes wrong:
 
 ```elixir
-iex> {:ok, file} = File.open "sample", [:utf8, :write]
+iex> {:ok, file} = File.open("sample", [:utf8, :write])
 iex> try do
-...>   IO.write file, "olá"
+...>   IO.write(file, "olá")
 ...>   raise "oops, something went wrong"
 ...> after
 ...>   File.close(file)

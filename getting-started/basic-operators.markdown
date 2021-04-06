@@ -47,8 +47,6 @@ iex> true or raise("This error will never be raised")
 true
 ```
 
-> Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
-
 Besides these boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
 
 ```elixir

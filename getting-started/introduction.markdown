@@ -57,7 +57,7 @@ It seems we are ready to go! We will use the interactive shell quite a lot in th
 After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting the following Elixir code into a file:
 
 ```elixir
-IO.puts "Hello world from Elixir"
+IO.puts("Hello world from Elixir")
 ```
 
 Save it as `simple.exs` and execute it with `elixir`:

@@ -198,33 +198,4 @@ iex> if true, do: (
 13
 ```
 
-One thing to keep in mind when using `do/end` blocks is they are always bound to the outermost function call. For example, the following expression:
-
-```elixir
-iex> is_number if true do
-...>  1 + 2
-...> end
-** (CompileError) iex:1: undefined function is_number/2
-```
-
-Would be parsed as:
-
-```elixir
-iex> is_number(if true) do
-...>  1 + 2
-...> end
-** (CompileError) iex:1: undefined function is_number/2
-```
-
-which leads to an undefined function error because that invocation passes two arguments, and `is_number/2` does not exist. The `if true` expression is invalid in itself because it needs the block, but since the arity of `is_number/2` does not match, Elixir does not even reach its evaluation.
-
-Adding explicit parentheses is enough to bind the block to `if`:
-
-```elixir
-iex> is_number(if true do
-...>  1 + 2
-...> end)
-true
-```
-
 Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings, and char lists".

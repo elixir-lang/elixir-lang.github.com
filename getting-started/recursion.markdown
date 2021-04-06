@@ -34,7 +34,7 @@ Recursion.print_multiple_times("Hello!", 3)
 # Hello!
 ```
 
-Similar to `case`, a function may have many clauses. A particular clause is executed when the arguments passed to the function match the clause's argument patterns and its guard evaluates to `true`.
+Similar to `case`, a function may have many clauses. A particular clause is executed when the arguments passed to the function match the clause's argument patterns and its guards evaluate to `true`.
 
 When `print_multiple_times/2` is initially called in the example above, the argument `n` is equal to `3`.
 
