@@ -41,7 +41,7 @@ iex> rem 10, 3
 1
 ```
 
-Notice that Elixir allows you to drop the parentheses when invoking named functions. This feature gives a cleaner syntax when writing declarations and control-flow constructs. However, Elixir developers generally prefer to use parentheses.
+Notice that Elixir allows you to drop the parentheses when invoking named functions with at least one argument. This feature gives a cleaner syntax when writing declarations and control-flow constructs. However, Elixir developers generally prefer to use parentheses.
 
 Elixir also supports shortcut notations for entering binary, octal, and hexadecimal numbers:
 
