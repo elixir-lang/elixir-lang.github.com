@@ -125,9 +125,11 @@ Conflict found at
 
 Which can be fixed by adding `::binary` to the second component:
 
-    def run_length(string) when is_binary(string) do
-      <<byte_size(string)::32, string::binary>>
-    end
+```elixir
+def run_length(string) when is_binary(string) do
+  <<byte_size(string)::32, string::binary>>
+end
+```
 
 While some of those warnings could be automatically fixed by the compiler, future versions will also perform those checks across functions and potentially across modules, where automatic fixes wouldn't be desired (nor possible).
 
