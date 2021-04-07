@@ -6,6 +6,7 @@ category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Community.
 logo: /images/cases/logos/community.png
 tags: messaging broadway
+redirect_from: /blog/2021/02/03/social-messaging-with-elixir/
 ---
 
 *Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*

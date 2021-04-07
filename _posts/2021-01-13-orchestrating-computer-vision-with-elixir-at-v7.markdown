@@ -6,6 +6,7 @@ category: Elixir in Production
 excerpt: A case study of how Elixir is being used at V7.
 logo: /images/cases/logos/v7.png
 tags: computer-vision phoenix
+redirect_from: /blog/2021/01/13/orchestrating-computer-vision-with-elixir/
 ---
 
 *Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*
