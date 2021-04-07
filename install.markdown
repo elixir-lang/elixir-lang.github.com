@@ -19,11 +19,10 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### macOS
 
-  - Using **Homebrew**:
-    * Update your homebrew to latest: `brew update`
+  - Using Homebrew:
     * Run: `brew install elixir`
 
-  - Using **Macports**:
+  - Using Macports:
     * Run: `sudo port install elixir`
 
 ### GNU/Linux
@@ -55,15 +54,15 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Optional: if you want to use the latest Erlang, you can use this repository: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
 
   - **Slackware**
-    * Using **Sbopkg**:
+    * Using Sbopkg:
       * Run: `sbopkg -ki "erlang-otp elixir"`
-    * **Manually**:
+    * Manually:
       * Download, build and install from SlackBuilds.org: [`erlang-otp`](https://slackbuilds.org/repository/14.2/development/erlang-otp/), and [`elixir`](https://slackbuilds.org/repository/14.2/development/elixir)
 
   - **Solus**
     * Run: `eopkg install elixir`
 
-  - **Ubuntu 14.04/16.04/17.04/18.04/19.04** or **Debian 7/8/9/10**
+  - **Ubuntu** or **Debian**
     * Add Erlang Solutions repository: `wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb`
     * Run: `sudo apt-get update`
     * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
@@ -71,9 +70,9 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### BSD
   - **FreeBSD**
-    * Using **ports**:
+    * Using ports:
       * Run: `cd /usr/ports/lang/elixir && make install clean`
-    * Using **pkg**:
+    * Using pkg:
       * Run: `pkg install elixir`
 
   - **OpenBSD**
@@ -81,11 +80,11 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### Windows
 
-  - Using **our web installer**:
+  - Using our web installer:
     * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.1/elixir-websetup.exe)
     * Click next, next, ..., finish
 
-  - Using **Chocolatey**:
+  - Using Chocolatey:
     * Run: `cinst elixir`
 
 ### Raspberry Pi
@@ -169,9 +168,9 @@ Notice that depending on how you installed Erlang, Erlang binaries might not be 
 
 It is highly recommended to add Elixir's bin path to your PATH environment variable to ease development.
 
-On **Windows**, there are [instructions for different versions](http://www.computerhope.com/issues/ch000549.htm) explaining the process.
+On Windows, there are [instructions for different versions](http://www.computerhope.com/issues/ch000549.htm) explaining the process.
 
-On **Unix systems**, you need to [find your shell profile file](https://unix.stackexchange.com/a/117470/101951), and then add to the end of this file the following line reflecting the path to your Elixir installation:
+On Unix systems, you need to [find your shell profile file](https://unix.stackexchange.com/a/117470/101951), and then add to the end of this file the following line reflecting the path to your Elixir installation:
 
 ```bash
 export PATH="$PATH:/path/to/elixir/bin"
