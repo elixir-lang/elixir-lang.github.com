@@ -111,7 +111,7 @@ iex> cond do
 "But this will"
 ```
 
-This is equivalent to `else if` clauses in many imperative languages (although used much less frequently here).
+This is equivalent to `else if` clauses in many imperative languages - although used less frequently in Elixir.
 
 If all of the conditions return `nil` or `false`, an error (`CondClauseError`) is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
 
@@ -163,6 +163,32 @@ iex> if nil do
 ...>   "This will"
 ...> end
 "This will"
+```
+
+This is also a good opportunity to talk about variable scoping in Elixir. If any variable is declared or changed inside `if`, `case`, and friends, the declaration and change will only be visible inside the construct. For example:
+
+```elixir
+iex> x = 1
+1
+iex> if true do
+...>   x = x + 1
+...> end
+2
+iex> x
+1
+```
+
+In said cases, if you want to change a value, you must return the value from the `if`:
+
+```elixir
+iex> x = 1
+1
+iex> x = if true do
+...>   x + 1
+...> else
+...>   x
+...> end
+2
 ```
 
 > Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](https://hexdocs.pm/elixir/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
