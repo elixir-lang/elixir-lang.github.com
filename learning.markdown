@@ -6,6 +6,8 @@ layout: default
 
 # Learning
 
+{% include toc.html %}
+
 Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations and explore how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html). If you already know Erlang and you want to know Elixir (or vice-versa), check out our [Crash Course for Erlang developers](/crash-course.html).
 
 Outside of our website, the Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that suits your pace and goals.
@@ -90,6 +92,42 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <div class="clear"></div>
 
+## In-depth books
+
+<h4 class="resource">Metaprogramming Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done and Have Fun
+– by Chris Mccord"><img src="/images/learning/metaprogramming-elixir.jpg" alt="Metaprogramming Elixir cover" width="190" /></a>
+
+Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you'll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You'll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
+
+<div class="clear"></div>
+
+<h4 class="resource">Designing Elixir Systems with OTP</h4>
+
+<a class="cover" href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
+– by James Edward Gray, II and Bruce A. Tate"><img src="/images/learning/designing-elixir-systems.jpg" alt="Designing Elixir Systems with OTP cover" width="190" /></a>
+
+You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that's kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what's happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
+
+<div class="clear"></div>
+
+<h4 class="resource">Concurrent Data Processing in Elixir</h4>
+
+<a class="cover" href="https://pragprog.com/titles/sgdpelixir/concurrent-data-processing-in-elixir" title="Concurrent Data Processing in Elixir – by Svilen Gospodinov"><img src="/images/learning/concurrent-data-processing.jpg" alt="Concurrent Data Processing cover" width="190" /></a>
+
+Learn different ways of writing concurrent code in Elixir and increase your application’s performance, without sacrificing scalability or fault-tolerance. Most projects benefit from running background tasks and processing data concurrently, but the world of OTP and various libraries can be challenging. Which Supervisor and what strategy to use? What about GenServer? Maybe you need back-pressure, but is GenStage, Flow, or Broadway a better choice? You will learn everything you need to know to answer these questions, start building highly concurrent applications in no time, and write code that’s not only fast, but also resilient to errors and easy to scale.
+
+<div class="clear"></div>
+
+<h4 class="resource">Erlang in Anger</h4>
+
+<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
+
+This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
+
+<div class="clear"></div>
+
 ## Courses
 
 <h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
@@ -136,7 +174,43 @@ The course covers getting setup with Elixir, the data types, how to pattern matc
 
 <div class="clear"></div>
 
-## Other Resources
+## Screencasts
+
+<h4 class="resource">LearnElixir.tv</h4>
+
+<a class="cover" href="http://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
+  <img src="/images/learning/learn-elixir-tv.png" alt="LearnElixir.tv cover" width="190" />
+</a>
+
+LearnElixir.tv is a screencast series which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length, and are posted weekly.
+
+It's intended to help beginners get familiar with all of Elixir's features by building their knowledge incrementally. Experienced Elixir developers might also learn a trick or two.
+
+<div class="clear"></div>
+
+<h4 class="resource">ElixirCasts.io</h4>
+
+<a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
+  <img src="/images/learning/elixircasts.png" alt="elixircasts.io cover" width="190" />
+</a>
+
+ElixirCasts is a collection of simple screencasts that cover a wide range of Elixir and Phoenix topics. Each episode tackles a specific problem or explores a new library, demystifying it in a language that's easy to understand.
+
+Episodes range from beginner focused to more moderate and advanced topics. Come build your knowledge of Elixir with us, one episode at a time.
+
+<div class="clear"></div>
+
+<h4 class="resource">Alchemist Camp</h4>
+
+<a class="cover" href="http://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
+
+Alchemist Camp is the largest producer of free Elixir screencasts and has dozens of hours of screencasts on YouTube. The videos are often longer-form and focused around projects, such as building a small Phoenix clone, or an OTP worker to regularly collect statistics from multiple APIs. Content is driven by viewer request.
+
+Alchemist Camp is aimed at people who have some web development experience and want to ship real-world projects in Elixir.
+
+<div class="clear"></div>
+
+## Other resources
 
 <h4 class="resource">Elixir Flashcards</h4>
 
@@ -177,77 +251,5 @@ Running in Production is a podcast where developers and engineers talk about
 running small and large Elixir / Phoenix web apps in production.
 
 Topics include tech stacks, success stories, lessons learned and deployment tips.
-
-<div class="clear"></div>
-
-## Screencasts
-
-<h4 class="resource">LearnElixir.tv</h4>
-
-<a class="cover" href="http://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
-  <img src="/images/learning/learn-elixir-tv.png" alt="LearnElixir.tv cover" width="190" />
-</a>
-
-LearnElixir.tv is a screencast series which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length, and are posted weekly.
-
-It's intended to help beginners get familiar with all of Elixir's features by building their knowledge incrementally. Experienced Elixir developers might also learn a trick or two.
-
-<div class="clear"></div>
-
-<h4 class="resource">ElixirCasts.io</h4>
-
-<a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
-  <img src="/images/learning/elixircasts.png" alt="elixircasts.io cover" width="190" />
-</a>
-
-ElixirCasts is a collection of simple screencasts that cover a wide range of Elixir and Phoenix topics. Each episode tackles a specific problem or explores a new library, demystifying it in a language that's easy to understand.
-
-Episodes range from beginner focused to more moderate and advanced topics. Come build your knowledge of Elixir with us, one episode at a time.
-
-<div class="clear"></div>
-
-<h4 class="resource">Alchemist Camp</h4>
-
-<a class="cover" href="http://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
-
-Alchemist Camp is the largest producer of free Elixir screencasts and has dozens of hours of screencasts on YouTube. The videos are often longer-form and focused around projects, such as building a small Phoenix clone, or an OTP worker to regularly collect statistics from multiple APIs. Content is driven by viewer request.
-
-Alchemist Camp is aimed at people who have some web development experience and want to ship real-world projects in Elixir.
-
-<div class="clear"></div>
-
-## In-depth Resources
-
-<h4 class="resource">Metaprogramming Elixir</h4>
-
-<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done and Have Fun
-– by Chris Mccord"><img src="/images/learning/metaprogramming-elixir.jpg" alt="Metaprogramming Elixir cover" width="190" /></a>
-
-Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you'll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You'll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
-
-<div class="clear"></div>
-
-<h4 class="resource">Designing Elixir Systems with OTP</h4>
-
-<a class="cover" href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
-– by James Edward Gray, II and Bruce A. Tate"><img src="/images/learning/designing-elixir-systems.jpg" alt="Designing Elixir Systems with OTP cover" width="190" /></a>
-
-You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that's kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what's happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
-
-<div class="clear"></div>
-
-<h4 class="resource">Concurrent Data Processing in Elixir</h4>
-
-<a class="cover" href="https://pragprog.com/titles/sgdpelixir/concurrent-data-processing-in-elixir" title="Concurrent Data Processing in Elixir – by Svilen Gospodinov"><img src="/images/learning/concurrent-data-processing.jpg" alt="Concurrent Data Processing cover" width="190" /></a>
-
-Learn different ways of writing concurrent code in Elixir and increase your application’s performance, without sacrificing scalability or fault-tolerance. Most projects benefit from running background tasks and processing data concurrently, but the world of OTP and various libraries can be challenging. Which Supervisor and what strategy to use? What about GenServer? Maybe you need back-pressure, but is GenStage, Flow, or Broadway a better choice? You will learn everything you need to know to answer these questions, start building highly concurrent applications in no time, and write code that’s not only fast, but also resilient to errors and easy to scale.
-
-<div class="clear"></div>
-
-<h4 class="resource">Erlang in Anger</h4>
-
-<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
-
-This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
 
 <div class="clear"></div>
