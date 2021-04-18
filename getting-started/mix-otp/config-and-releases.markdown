@@ -219,10 +219,17 @@ And let's connect to it and issue a request in another terminal:
     Trying 127.0.0.1...
     Connected to localhost.
     Escape character is '^]'.
+    CREATE bitsandpieces
+    OK
+    PUT bitsandpieces sword 1
+    OK
+    GET bitsandpieces sword
+    1
+    OK
     GET shopping foo
     Connection closed by foreign host.
 
-Since the "shopping" bucket would be stored on `bar`, the request fails as `bar` is not available. If you go back to the terminal running `foo`, you will see:
+Our application works already when we operate on the bucket named "bitsandpieces". But since the "shopping" bucket would be stored on `bar`, the request fails as `bar` is not available. If you go back to the terminal running `foo`, you will see:
 
     17:16:19.555 [error] Task #PID<0.622.0> started from #PID<0.620.0> terminating
     ** (stop) exited in: GenServer.call({KV.RouterTasks, :"bar@computer-name"}, {:start_task, [{:"foo@josemac-2", #PID<0.622.0>, #PID<0.622.0>}, [#PID<0.622.0>, #PID<0.620.0>, #PID<0.618.0>], :monitor, {KV.Router, :route, ["shopping", KV.Registry, :lookup, [KV.Registry, "shopping"]]}], :temporary, nil}, :infinity)
