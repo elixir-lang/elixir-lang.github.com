@@ -307,7 +307,7 @@ def run({:create, bucket}) do
 end
 ```
 
-Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, add `@tag :distributed` to this test too:
+Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, change the `test_helper.exs` for `:kv_server` application as we did for `:kv` and add `@tag :distributed` to this test too:
 
 ```elixir
 @tag :distributed
