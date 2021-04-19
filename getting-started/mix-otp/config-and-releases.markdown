@@ -254,15 +254,20 @@ releases: [
 ]
 ```
 
-And now let's assemble it:
+And now let's assemble both releases:
 
+    $ MIX_ENV=prod mix release foo
     $ MIX_ENV=prod mix release bar
 
-And then start it:
+Stop `foo` is if it still running and re-start it to load the `cookie`:
+
+    $ _build/prod/rel/foo/bin/foo start
+
+And start `bar` in a another terminal:
 
     $ _build/prod/rel/bar/bin/bar start
 
-If you start `bar` while `foo` is still running, you will see an error like the error below happen 5 times, before the application finally shuts down:
+You should see an error like the error below happen 5 times, before the application finally shuts down:
 
     17:21:57.567 [error] Task #PID<0.620.0> started from KVServer.Supervisor terminating
     ** (MatchError) no match of right hand side value: {:error, :eaddrinuse}
@@ -289,7 +294,7 @@ releases: [
 ]
 ```
 
-And now let's assemble it once more:
+And now let's assemble `bar` once more:
 
     $ MIX_ENV=prod mix release bar
 
