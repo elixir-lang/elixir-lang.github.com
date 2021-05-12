@@ -47,14 +47,6 @@ Learn the best practices for the whole life of your application, from design and
 
 <div class="clear"></div>
 
-<h4 class="resource">Elixir School</h4>
-
-<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
-
-Elixir-School is an open and community driven effort inspired by Twitter's Scala School. The site's content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
-
-<div class="clear"></div>
-
 <h4 class="resource">Joy of Elixir</h4>
 
 <a class="cover" href="http://joyofelixir.com" title="Joy of Elixir"><img src="/images/learning/joy-of-elixir.jpg" alt="Joy of Elixir" width="190" /></a>
@@ -84,7 +76,7 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <div class="clear"></div>
 
-<h4 class="resource">Elixir Succinctly</h4>
+<h4 class="resource">Elixir Succinctly<span class="free">free</span></h4>
 
 <a class="cover" href="https://www.syncfusion.com/ebooks/elixir-succinctly" title="Elixir Succinctly"><img src="https://cdn.syncfusion.com/content/images/downloads/ebook/ebook-cover/elixir-succinctly.png" alt="Elixir Succinctly" width="190" /></a>
 
@@ -120,7 +112,7 @@ Learn different ways of writing concurrent code in Elixir and increase your appl
 
 <div class="clear"></div>
 
-<h4 class="resource">Erlang in Anger</h4>
+<h4 class="resource">Erlang in Anger<span class="free">free</span></h4>
 
 <a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
 
@@ -129,6 +121,14 @@ This book intends to be a little guide about how to be the Erlang medic in a tim
 <div class="clear"></div>
 
 ## Courses
+
+<h4 class="resource">Elixir School<span class="free">free</span></h4>
+
+<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
+
+Elixir-School is an open and community driven effort inspired by Twitter's Scala School. The site's content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
+
+<div class="clear"></div>
 
 <h4 class="resource">Pragmatic Studio's Elixir/OTP Course</h4>
 
@@ -162,9 +162,9 @@ Understand how back-pressure works, step inside supervision trees, and learn to 
 
 <div class="clear"></div>
 
-<h4 class="resource">ThinkingElixir.com's Free Pattern Matching Course</h4>
+<h4 class="resource">ThinkingElixir.com's Pattern Matching Course<span class="free">free</span></h4>
 
-<a class="cover" href="https://thinkingelixir.com/available-courses/pattern-matching/" title="ThinkingElixir.com's Free Pattern Matching Course"><img src="/images/learning/thinking-elixir-pattern-matching-course-tile-190px.png" alt="ThinkingElixir.com's Free Pattern Matching Course" width="190" /></a>
+<a class="cover" href="https://thinkingelixir.com/available-courses/pattern-matching/" title="ThinkingElixir.com's Pattern Matching Course"><img src="/images/learning/thinking-elixir-pattern-matching-course-tile-190px.png" alt="ThinkingElixir.com's Free Pattern Matching Course" width="190" /></a>
 
 Pattern matching is a really powerful language feature. It is built in to almost every corner or Elixir. In order for you to even <em>read</em> Elixir code and follow along, you have to understand Pattern Matching.
 
@@ -174,21 +174,21 @@ The course covers getting setup with Elixir, the data types, how to pattern matc
 
 <div class="clear"></div>
 
-## Screencasts
-
 <h4 class="resource">LearnElixir.tv</h4>
 
 <a class="cover" href="http://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
   <img src="/images/learning/learn-elixir-tv.png" alt="LearnElixir.tv cover" width="190" />
 </a>
 
-LearnElixir.tv is a screencast series which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length, and are posted weekly.
+LearnElixir.tv is a video course which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length.
 
 It's intended to help beginners get familiar with all of Elixir's features by building their knowledge incrementally. Experienced Elixir developers might also learn a trick or two.
 
 <div class="clear"></div>
 
-<h4 class="resource">ElixirCasts.io</h4>
+## Screencasts
+
+<h4 class="resource">ElixirCasts.io<span class="free">free</span></h4>
 
 <a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
   <img src="/images/learning/elixircasts.png" alt="elixircasts.io cover" width="190" />
@@ -200,7 +200,7 @@ Episodes range from beginner focused to more moderate and advanced topics. Come 
 
 <div class="clear"></div>
 
-<h4 class="resource">Alchemist Camp</h4>
+<h4 class="resource">Alchemist Camp<span class="free">free</span></h4>
 
 <a class="cover" href="http://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
 
@@ -225,7 +225,7 @@ Combined with books, tutorials and screencasts, using flashcards is the killer c
 
 <div class="clear"></div>
 
-<h4 class="resource">Elixir Koans</h4>
+<h4 class="resource">Elixir Koans<span class="free">free</span></h4>
 
 <a class="cover" href="http://elixirkoans.io/" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
 
@@ -233,7 +233,7 @@ Elixir koans is a fun, easy way to get started with the Elixir programming langu
 
 <div class="clear"></div>
 
-<h4 class="resource">Exercism.io</h4>
+<h4 class="resource">Exercism.io<span class="free">free</span></h4>
 
 <a class="cover" href="https://exercism.io/tracks/elixir" title="Elixir Track on Exercism.io"> <img src="https://assets.exercism.io/tracks/elixir-bordered-turquoise.png" alt="Exercism.io Elixir track" width="190" /></a>
 
@@ -243,7 +243,7 @@ Once you have completed an exercise you can also view other students' solutions.
 
 <div class="clear"></div>
 
-<h4 class="resource">Running in Production Podcast</h4>
+<h4 class="resource">Running in Production Podcast<span class="free">free</span></h4>
 
 <a class="cover" href="https://runninginproduction.com/tags/elixir" title="Running in Production Podcast"><img src="/images/learning/running-in-production-logo.jpg" alt="Running in Production Podcast" width="190" /></a>
 
