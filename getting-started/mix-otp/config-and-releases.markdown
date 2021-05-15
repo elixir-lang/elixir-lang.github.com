@@ -270,7 +270,7 @@ Stop `foo` is if it still running and re-start it to load the `cookie`:
 
     $ _build/prod/rel/foo/bin/foo start
 
-And start `bar` in a another terminal:
+And start `bar` in another terminal:
 
     $ _build/prod/rel/bar/bin/bar start
 
