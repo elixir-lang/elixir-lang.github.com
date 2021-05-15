@@ -213,7 +213,7 @@ So far, we have assembled a release named `foo`, but our routing table contains 
     $ _build/prod/rel/foo/bin/foo start
     16:58:58.508 [info]  Accepting connections on port 4040
 
-And let's connect to it and issue a request in an another terminal:
+And let's connect to it and issue a request in another terminal:
 
     $ telnet 127.0.0.1 4040
     Trying 127.0.0.1...
@@ -270,7 +270,7 @@ Stop `foo` is if it still running and re-start it to load the `cookie`:
 
     $ _build/prod/rel/foo/bin/foo start
 
-And start `bar` in an another terminal:
+And start `bar` in another terminal:
 
     $ _build/prod/rel/bar/bin/bar start
 
