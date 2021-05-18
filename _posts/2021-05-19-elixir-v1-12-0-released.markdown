@@ -6,7 +6,7 @@ category: Releases
 excerpt: Elixir v1.12 is out with improvements to scripting, tighter Erlang/OTP 24 integration, stepped ranges, and dozen of new functions across the standard library
 ---
 
-Elixir v1.12 is out with improvements to scripting, tighter Erlang/OTP 24 integration, stepped ranges, and dozen of new functions across the standard library. Overall this is a small release, which continues our tradition of bringing Elixir developers quality of life improvements every 6 months.
+Elixir v1.12 is out with improvements to scripting, tighter Erlang/OTP 24 integration, stepped ranges, and dozen of new functions across the standard library. Overall this is a small release, which continues our tradition of bringing Elixir developers quality of life improvements every 6 months. Some of these improvements directly relates with the [recent efforts of bringing Numerical Computing to Elixir](https://dashbit.co/blog/nx-numerical-elixir-is-now-publicly-available).
 
 Elixir v1.12 requires Erlang/OTP 22+. We also recommend running `mix local.rebar` after installation to upgrade to the latest Rebar versions, which includes support for Erlang OTP/24+.
 
