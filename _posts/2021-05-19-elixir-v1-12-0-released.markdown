@@ -10,7 +10,7 @@ Elixir v1.12 is out with improvements to scripting, tighter Erlang/OTP 24 integr
 
 Elixir v1.12 requires Erlang/OTP 22+. We also recommend running `mix local.rebar` after installation to upgrade to the latest Rebar versions, which includes support for Erlang OTP/24+.
 
-Note: this announcement contains [asciinema](https://asciinema.org) snippets. You may need to enable 3rd-party JavaScript on this site in order to see them. If JavaScript is disabled, noscript tags with the proper links will be shown.
+Note: this announcement contains [asciinema](https://asciinema.org) snippets. You may need to enable 3rd-party JavaScript on this site in order to see them. If JavaScript is disabled, `noscript` tags with the proper links will be shown.
 
 ## Scripting improvements: `Mix.install/2` and `System.trap_signal/3`
 
@@ -20,7 +20,7 @@ Elixir v1.12 brings new conveniences for those using Elixir for scripting (via `
 
 ```elixir
 Mix.install([:jason])
-IO.puts Jason.encode!(%{hello: :world})
+IO.puts(Jason.encode!(%{hello: :world}))
 ```
 
 `Mix.install/2` also performs protocol consolidation, which gives script developers an option to execute their code in the most performant format possible. Note `Mix.install/2` is currently experimental and it may change in future releases.
@@ -33,7 +33,7 @@ Another improvement to scripting is the ability to trap exit signals via `System
 
 This is particularly useful when your tests get stuck and you want to know which one is the culprit.
 
-**Important**: Trapping signals may have strong implications on how a system shuts down and behave in production and therefore it is extremely discouraged for libraries to set their own traps. Instead, they should redirect users to configure them themselves. The only cases where it is acceptable for libraries to set their own traps is when using Elixir in script mode, such as in `.exs` files and via Mix tasks.
+**Important**: Trapping signals may have strong implications on how a system shuts down and behaves in production and therefore it is extremely discouraged for libraries to set their own traps. Instead, they should redirect users to configure them themselves. The only cases where it is acceptable for libraries to set their own traps is when using Elixir in script mode, such as in `.exs` files and via Mix tasks.
 
 ## Tighter Erlang/OTP 24 integration
 
@@ -47,7 +47,7 @@ However, in Elixir v1.12 with Erlang/OTP 24:
 
 <script type="text/javascript" src="https://asciinema.org/a/4l1ORaVDVdHB7Gi5DccIYFgSL.js" data-rows="20" id="asciicast-4l1ORaVDVdHB7Gi5DccIYFgSL" async></script><noscript><p><a href="https://asciinema.org/a/4l1ORaVDVdHB7Gi5DccIYFgSL">See the example in asciinema</a></p></noscript>
 
-Finally, note Rebar v2 no longer works on Erlang/OTP 24+. Mix defaults to Rebar v3 since v1.4, so no changes should be necessary by the huge majority of developers. However, if you are explicitly setting `manager: :rebar` in your dependency, you want to move to Rebar v3 by removing the `:manager` option. Compatibility with unsupported Rebar versions will be removed from Mix in the future.
+Finally, note Rebar v2 no longer works on Erlang/OTP 24+. Mix defaults to Rebar v3 since Elixir v1.4, so no changes should be necessary by the vast majority of developers. However, if you are explicitly setting `manager: :rebar` in your dependency, you want to move to Rebar v3 by removing the `:manager` option. Compatibility with unsupported Rebar versions will be removed from Mix in the future.
 
 ## Stepped ranges
 
@@ -61,7 +61,7 @@ As of Elixir v1.12, implicitly decreasing ranges are soft-deprecated and warning
 
 ## `then/2` and `tap/2`
 
-Two new functions have been added to `Kernel` module, in order to ease working with pipelines. [`tap/2`](https://hexdocs.pm/elixir/1.12/Kernel.html#tap/2) passes the given argument to an anonymous function, returning the argument itself. While [`then/2`](https://hexdocs.pm/elixir/1.12/Kernel.html#then/2) passes the given argument to an anonymous function, returning the result. The following:
+Two new functions have been added to `Kernel` module, in order to ease working with pipelines. [`tap/2`](https://hexdocs.pm/elixir/1.12/Kernel.html#tap/2) passes the given argument to an anonymous function, returning the argument itself. [`then/2`](https://hexdocs.pm/elixir/1.12/Kernel.html#then/2) passes the given argument to an anonymous function, returning the result. The following:
 
 ```elixir
 "hello world"
@@ -92,9 +92,9 @@ IEx got two important quality of life improvements in this release. Hitting tab 
 
 Elixir v1.12 has also added many functions across the standard library. The `Enum` module received additions such as `Enum.count_until/2`, `Enum.product/1`, `Enum.zip_with/2`, and more. The `Integer` module now includes `Integer.pow/2` and `Integer.extended_gcd/2`.
 
-The Code module got a [`cursor_context/2`](https://hexdocs.pm/elixir/1.12/Code.html#cursor_context/2) function, which is now used to power `IEx` autocompletion and it is [used by projects such as Livebook to provide intellisense](https://user-images.githubusercontent.com/17034772/115117125-533b2900-9f9d-11eb-94a9-a2cf2ccb7388.mp4).
+The `Code` module got a [`cursor_context/2`](https://hexdocs.pm/elixir/1.12/Code.html#cursor_context/2) function, which is now used to power `IEx` autocompletion and it is [used by projects such as Livebook to provide intellisense](https://user-images.githubusercontent.com/17034772/115117125-533b2900-9f9d-11eb-94a9-a2cf2ccb7388.mp4).
 
-The EEx application has also been extended to provide metadata on text segments. This has enabled the Surface and Phoenix LiveView teams to implement [a new template language called HEEx](https://github.com/phoenixframework/phoenix_live_view/pull/1440), which validates both HTML and EEx. Finally, the Registry module supports the `:compressed` option, which is useful for GraphQL applications managing hundreds of thousands of subscriptions via [Absinthe](http://absinthe-graphql.org/).
+The EEx application has also been extended to provide metadata on text segments. This has enabled the Surface and Phoenix LiveView teams to implement [a new template language called HEEx](https://github.com/phoenixframework/phoenix_live_view/pull/1440), which validates both HTML and EEx. Finally, the `Registry` module supports the `:compressed` option, which is useful for GraphQL applications managing hundreds of thousands of subscriptions via [Absinthe](http://absinthe-graphql.org/).
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
 
