@@ -56,7 +56,7 @@ In this chapter, we will create our first project using Mix and explore differen
 
 When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` executables, you also get an executable Elixir script named `mix`.
 
-Let's create our first project by invoking `mix new` from the command line. We'll pass the project name as the argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
+Let's create our first project by invoking `mix new` from the command line. We'll pass the project path as the argument (`kv`, in this case). By default the application name and module name will be retrieved from the path. So we tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
 
 ```console
 $ mix new kv --module KV
