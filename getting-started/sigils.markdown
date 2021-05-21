@@ -225,7 +225,7 @@ iex> h sigil_r
 ...
 ```
 
-We can also provide our own sigils by implementing functions that follow the `sigil_{identifier}` pattern. For example, let's implement the `~i` sigil that returns an integer (with the optional `n` modifier to make it negative):
+We can also provide our own sigils by implementing functions that follow the `sigil_{character}` pattern. For example, let's implement the `~i` sigil that returns an integer (with the optional `n` modifier to make it negative):
 
 ```elixir
 iex> defmodule MySigils do
