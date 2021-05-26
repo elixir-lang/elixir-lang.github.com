@@ -29,7 +29,7 @@ One of the goals we have set was to have a good website and documentation before
 
 At the same time, [we were working on pygments support](https://bitbucket.org/birkenfeld/pygments-main/pull-request/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, GitHub was able to syntax highlight Elixir code and [our API documentation was online](/).
 
-At the same time, people started to gather around #elixir-lang channel on irc.freenode.net and [play with Elixir](https://github.com/elixir-lang/elixir/tree/master/lib/mix), [start their](https://github.com/guedes/exdate) [own projects](https://github.com/yrashk/validatex) and [tutorials](https://github.com/alco/elixir/wiki/Erlang-Syntax:-A-Crash-Course).
+At the same time, people started to gather around #elixir-lang channel on irc.freenode.net (now migrated to #elixir on irc.libera.chat) to [play with Elixir](https://github.com/elixir-lang/elixir/tree/master/lib/mix), [start their](https://github.com/guedes/exdate) [own projects](https://github.com/yrashk/validatex) and [tutorials](https://github.com/alco/elixir/wiki/Erlang-Syntax:-A-Crash-Course).
 
 Although the initial release was scheduled to April 2012, the feedback from such early developers forced us to review some design and syntax decisions and were extremely important to shape the language as it is today.
 
