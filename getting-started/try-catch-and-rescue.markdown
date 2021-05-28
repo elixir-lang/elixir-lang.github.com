@@ -8,7 +8,7 @@ Elixir has three error mechanisms: errors, throws, and exits. In this chapter, w
 
 ## Errors
 
-Errors (or *exceptions*) are used when exceptional things happen in the code. A sample error can be retrieved by trying to add a number into an atom:
+Errors (or *exceptions*) are used when exceptional things happen in the code. A sample error can be retrieved by trying to add a number to an atom:
 
 ```elixir
 iex> :foo + 1
@@ -30,7 +30,7 @@ iex> raise ArgumentError, message: "invalid argument foo"
 ** (ArgumentError) invalid argument foo
 ```
 
-You can also define your own errors by creating a module and using the `defexception` construct inside it; this way, you'll create an error with the same name as the module it's defined in. The most common case is to define a custom exception with a message field:
+You can also define your own errors by creating a module and using the `defexception` construct inside it. This way, you'll create an error with the same name as the module it's defined in. The most common case is to define a custom exception with a message field:
 
 ```elixir
 iex> defmodule MyError do
@@ -53,9 +53,9 @@ iex> try do
 %RuntimeError{message: "oops"}
 ```
 
-The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session.
+The example above rescues the runtime error and returns the exception itself, which is then printed in the `iex` session.
 
-If you don't have any use for the error, you don't have to provide it:
+If you don't have any use for the exception, you don't have to pass a variable to `rescue`:
 
 ```elixir
 iex> try do
@@ -66,7 +66,7 @@ iex> try do
 "Error!"
 ```
 
-In practice, however, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information about whether the file was opened successfully:
+In practice, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing information about whether the file was opened successfully:
 
 ```elixir
 iex> File.read("hello")
@@ -77,7 +77,7 @@ iex> File.read("hello")
 {:ok, "world"}
 ```
 
-There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can use pattern matching within the `case` construct:
+There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can use pattern matching using the `case` construct:
 
 ```elixir
 iex> case File.read("hello") do
@@ -85,8 +85,6 @@ iex> case File.read("hello") do
 ...>   {:error, reason} -> IO.puts("Error: #{reason}")
 ...> end
 ```
-
-At the end of the day, it's up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead, it leaves it up to the developer to choose the best way to proceed.
 
 For the cases where you do expect a file to exist (and the lack of that file is truly an *error*) you may use `File.read!/1`:
 
@@ -96,9 +94,27 @@ iex> File.read!("unknown")
     (elixir) lib/file.ex:272: File.read!/1
 ```
 
-Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](https://hexdocs.pm/elixir/File.html) is a good example of this convention.
+At the end of the day, it's up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead, it leaves it up to the developer to choose the best way to proceed.
 
-In Elixir, we avoid using `try/rescue` because **we don't use errors for control flow**. We take errors literally: they are reserved for unexpected and/or exceptional situations. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
+Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine.
+
+### Reraise
+
+While we generally avoid using `try/rescue` in Elixir, one situation where we may want to use such constracuts is for observability/monitoring. Imagine you want to log that something went wrong, you could do:
+
+```elixir
+try do
+  ... some code ...
+rescue
+  e ->
+    Logger.error(Exception.format(:error, e, __STACKTRACE__))
+    reraise e, __STACKTRACE__
+end
+```
+
+In the example above, we rescued the exception, logged it, and then re-raised it. We use the `__STACKTRACE__` construct both when formatting the exception and when re-raising. This ensures we reraise the exception as is, without changing value or its origin. 
+
+Generally speaking, we take errors in Elixir literally: they are reserved for unexpected and/or exceptional situations, never for controlling the flow of our code. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
 
 ## Throws
 
@@ -214,7 +230,7 @@ Exceptions in the `else` block are not caught. If no pattern inside the `else` b
 
 ## Variables scope
 
-It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
+Similar to `case`, `cond`, `if` and other constructs in Elixir, variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. In other words, this code is invalid:
 
 ```elixir
 iex> try do
@@ -227,7 +243,7 @@ iex> what_happened
 ** (RuntimeError) undefined function: what_happened/0
 ```
 
-Instead, you can store the value of the `try` expression:
+Instead, you should return the value of the `try` expression:
 
 ```elixir
 iex> what_happened =
@@ -241,4 +257,17 @@ iex> what_happened
 :rescued
 ```
 
-This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages, although they may be handy in some situations where a library or some particular code is not playing "by the rules".
+Furthermore, variables defined in the do-block of `try` are not available inside `rescue/after/else` either. This is because the `try` block may fail at any moment and therefore the variables may have never been bound in the first place. So this also isn't valid:
+
+```elixir
+iex> try do
+...>   raise "fail"
+...>   what_happened = :did_not_raise
+...> rescue
+...>   _ -> what_happened
+...> end
+iex> what_happened
+** (RuntimeError) undefined function: what_happened/0
+```
+
+This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages.
