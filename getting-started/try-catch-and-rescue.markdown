@@ -100,7 +100,7 @@ Many functions in the standard library follow the pattern of having a counterpar
 
 ### Reraise
 
-While we generally avoid using `try/rescue` in Elixir, one situation where we may want to use such constracuts is for observability/monitoring. Imagine you want to log that something went wrong, you could do:
+While we generally avoid using `try/rescue` in Elixir, one situation where we may want to use such constructs is for observability/monitoring. Imagine you want to log that something went wrong, you could do:
 
 ```elixir
 try do
