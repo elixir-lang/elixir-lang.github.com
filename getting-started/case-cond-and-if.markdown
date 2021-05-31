@@ -165,7 +165,7 @@ iex> if nil do
 "This will"
 ```
 
-This is also a good opportunity to talk about variable scoping in Elixir. If any variable is declared or changed inside `if`, `case`, and friends, the declaration and change will only be visible inside the construct. For example:
+This is also a good opportunity to talk about variable scoping in Elixir. If any variable is declared or changed inside `if`, `case`, and similar constructs, the declaration and change will only be visible inside the construct. For example:
 
 ```elixir
 iex> x = 1
