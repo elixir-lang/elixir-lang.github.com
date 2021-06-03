@@ -12,7 +12,7 @@ tags: virtual-spaces phoenix
 
 [Hubs](https://hubs.mozilla.com/) is Mozilla's take on virtual social experiences. You build your own private spaces and share them with your friends, co-workers, and community. Avatars in this space can move freely in a 3D social environment and watch videos, exchange messages, and talk to other people nearby. All you need is a browser and a microphone!
 
-Hubs is [fully open source](https://github.com/mozilla/hubs) and you can host it on your infrastructure via [Hubs Cloud](https://hubs.mozilla.com/cloud). Community managers, educators, and event organizers have been using Hubs Cloud to run virtual events and online activities tailored to their specific brandings and needs. All it takes to run your own version of Hubs is one click away - which perhaps makes Hubs the most deployed Phoenix application ever!
+Hubs is [fully](https://github.com/mozilla/hubs) [open source](https://github.com/mozilla/reticulum) and you can host it on your infrastructure via [Hubs Cloud](https://hubs.mozilla.com/cloud). Community managers, educators, and event organizers have been using Hubs Cloud to run virtual events and online activities tailored to their specific brandings and needs. All it takes to run your own version of Hubs is one click away - which perhaps makes Hubs the most deployed Phoenix application ever!
 
 ![Mozilla Hubs](/images/cases/bg/mozilla-hubs.jpg)
 
