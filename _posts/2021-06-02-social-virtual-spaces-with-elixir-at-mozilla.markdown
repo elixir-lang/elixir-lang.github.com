@@ -12,7 +12,7 @@ tags: virtual-spaces phoenix
 
 [Hubs](https://hubs.mozilla.com/) is Mozilla's take on virtual social experiences. You build your own private spaces and share them with your friends, co-workers, and community. Avatars in this space can move freely in a 3D social environment and watch videos, exchange messages, and talk to other people nearby. All you need is a browser and a microphone!
 
-Hubs is [fully open source](https://github.com/mozilla/hubs). You can also host it on your infrastructure via [Hubs Cloud](https://hubs.mozilla.com/cloud). Community managers, educators, and event organizers have been using Hubs Cloud to run virtual events and online activities tailored to their specific brandings and needs. All it takes to run your own version of Hubs is a button click - which perhaps makes Hubs the most deployed Phoenix application ever!
+Hubs is [fully open source](https://github.com/mozilla/hubs) and you can host it on your infrastructure via [Hubs Cloud](https://hubs.mozilla.com/cloud). Community managers, educators, and event organizers have been using Hubs Cloud to run virtual events and online activities tailored to their specific brandings and needs. All it takes to run your own version of Hubs is one click away - which perhaps makes Hubs the most deployed Phoenix application ever!
 
 ![Mozilla Hubs](/images/cases/bg/mozilla-hubs.jpg)
 
@@ -20,7 +20,7 @@ Hubs is [fully open source](https://github.com/mozilla/hubs). You can also host 
 
 The Hubs team started at Mozilla as the Mixed Reality team about 3.5 years ago. Their main goal was to explore ways for online social interaction via avatars and mixed reality.
 
-They quickly focused on building their first proof of concept, where avatars could communicate, move around, and join different rooms, everything running directly from the browser. This was a significant departure from the state of the art of Virtual Reality everywhere, as the getting started experience up to this point was cumbersome and often required steep investment in the form of VR headsets.
+They quickly focused on building their first proof of concept, where avatars could communicate, move around, and join different rooms, everything running directly in the browser. This was a significant departure from the state of the art of Virtual Reality everywhere, as the getting started experience up to this point was cumbersome and often required steep investment in the form of VR headsets.
 
 The initial prototype was a success and it pushed the team to build a product. However, all communication in the proof of concept was peer-to-peer, which limited the features and experiences they could provide. Therefore the Hubs team knew they needed a capable backend technology to provide fan-out communication and coordinate how all different avatars interact within the virtual spaces. John Shaughnessy, Staff Software Engineer at Mozilla, comments: "When you get a lot of people in the same space, be it virtual or in the real world, there is never only a single conversation going on. Once you get ten or twenty different people in a room, conference calls don’t work well. In Hubs, people transition between multiple simultaneous conversations simply by moving around".
 
