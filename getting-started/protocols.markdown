@@ -198,7 +198,7 @@ end
 
 Now all data types (including structs) that have not implemented the `Size` protocol will be considered to have a size of `0`.
 
-Which technique is best between deriving and falling back to any depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
+Which technique is best between deriving and falling back to `Any` depends on the use case but, given Elixir developers prefer explicit over implicit, you may see many libraries pushing towards the `@derive` approach.
 
 ## Built-in protocols
 
