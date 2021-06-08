@@ -169,7 +169,7 @@ end
 
 ## As temporary storage
 
-To see an example of using module attributes as for storage, look no further than Elixir's unit test framework called [ExUnit](https://hexdocs.pm/ex_unit/). ExUnit uses module attributes for multiple different purposes:
+To see an example of using module attributes as storage, look no further than Elixir's unit test framework called [ExUnit](https://hexdocs.pm/ex_unit/). ExUnit uses module attributes for multiple different purposes:
 
 ```elixir
 defmodule MyTest do
