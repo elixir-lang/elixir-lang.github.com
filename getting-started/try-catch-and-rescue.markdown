@@ -266,7 +266,6 @@ iex> try do
 ...> rescue
 ...>   _ -> what_happened
 ...> end
-iex> what_happened
 ** (RuntimeError) undefined function: what_happened/0
 ```
 
