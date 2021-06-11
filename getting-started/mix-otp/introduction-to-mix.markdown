@@ -9,8 +9,8 @@ In this guide, we will learn how to build a complete Elixir application, with it
 
 The requirements for this guide are (see `elixir -v`):
 
-  * Elixir 1.9.0 onwards
-  * Erlang/OTP 20 onwards
+  * Elixir 1.11.0 onwards
+  * Erlang/OTP 22 onwards
 
 The application works as a distributed key-value store. We are going to organize key-value pairs into buckets and distribute those buckets across multiple nodes. We will also build a simple client that allows us to connect to any of those nodes and send requests such as:
 

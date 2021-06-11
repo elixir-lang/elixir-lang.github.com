@@ -55,9 +55,13 @@ We need a way to configure the application environment. That's when we use confi
 
 ## Configuration
 
-Configuration files provide a mechanism for us to configure the environment of any application. Such configuration is done by the `config/config.exs` file. This config file is read at build time, when we compile our application.
+Configuration files provide a mechanism for us to configure the environment of any application. Elixir provides two configuration entry points:
 
-For example, we can configure IEx default prompt to another value. Let's create the `config/config.exs` file with the following content:
+  * `config/config.exs` - this file is read at build time, before we compile our application and before we even load our dependencies. This means we can't access the code in our application nor in our dependencies. However, it means we can control how they are compiled
+
+  * `config/runtime.exs` - this file is read after our application and dependencies are compiled and therefore it can configure how our application works at runtime. If you want to read system environment variables (via `System.get_env/1`) or any sort of external configuration, this is the appropriate place to do so
+
+For example, we can configure IEx default prompt to another value. Let's create the `config/runtime.exs` file with the following content:
 
 ```elixir
 import Config
@@ -66,11 +70,11 @@ config :iex, default_prompt: ">>>"
 
 Start IEx with `iex -S mix` and you can see that the IEx prompt has changed.
 
-This means we can also configure our `:routing_table` directly in the `config/config.exs` file. However, which configuration value should we use?
+This means we can also configure our `:routing_table` directly in the `config/runtime.exs` file. However, which configuration value should we use?
 
 Currently we have two tests tagged with `@tag :distributed`. The "server interaction" test in `KVServerTest`, and the "route requests across nodes" in `KV.RouterTest`. Both tests are failing since they require a routing table, which is currently empty.
 
-For simplicity, we will define a routing table that always points to the current node. That's the table we will use for development and most of our tests. Back in `config/config.exs`, add this line:
+For simplicity, we will define a routing table that always points to the current node. That's the table we will use for development and most of our tests. Back in `config/runtime.exs`, add this line:
 
 ```elixir
 config :kv, :routing_table, [{?a..?z, node()}]
@@ -133,27 +137,30 @@ That's because an umbrella project gives us plenty of options when deploying the
 
 As a starting point, let's define a release that includes both `:kv_server` and `:kv` applications. We will also add a version to it. Open up the `mix.exs` in the umbrella root and add inside `def project`:
 
-    releases: [
-      foo: [
-        version: "0.0.1",
-        applications: [kv_server: :permanent, kv: :permanent]
-      ]
-    ]
+```elixir
+releases: [
+  foo: [
+    version: "0.0.1",
+    applications: [kv_server: :permanent, kv: :permanent]
+  ]
+]
+```
+
 
 That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system.
 
-Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we want our routing table back in `config/config.exs` to look like this:
+Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we want our routing table to look like this:
 
+```elixir
     if Mix.env() == :prod do
       config :kv, :routing_table, [
         {?a..?m, :"foo@computer-name"},
         {?n..?z, :"bar@computer-name"}
       ]
     end
+```
 
-Note we have wrapped it in a `Mix.env() == :prod` check, so this configuration does not apply to other environments.
-
-While this will suffice for now, you may find the configuration a bit backwards. Usually, the computer name is not known upfront during development but only when deploying to production. For this purpose, we will later introduce [`config/releases.exs`](#runtime-configuration), which is a configuration file that is executed in the production machine before the system starts, giving you an opportunity to set the proper node name at the right time.
+We have hardcoded the table and node names, which is good enough for our example, but you would likely move it to an external configuration system in an actual production setup. We have also wrapped it in a `Mix.env() == :prod` check, so this configuration does not apply to other environments. 
 
 With the configuration in place, let's give assembling the release another try:
 
@@ -284,7 +291,9 @@ You should see an error like the error below happen 5 times, before the applicat
     Function: #Function<0.98032413/0 in KVServer.Application.start/2>
         Args: []
 
-That's happening because the release `foo` is already listening on port `4040` and `bar` is trying to do the same! One option could be to move the `:port` configuration to the application environment, like we did for the routing table. But let's try something else. Let's make it so the `bar` release contains only the `:kv` application. So it works as a storage but it won't have a front-end. Change the `:bar` information to this:
+That's happening because the release `foo` is already listening on port `4040` and `bar` is trying to do the same! One option could be to move the `:port` configuration to the application environment, like we did for the routing table, and setup different ports per node.
+
+But let's try something else. Let's make it so the `bar` release contains only the `:kv` application. So it works as a storage but it won't have a front-end. Change the `:bar` information to this:
 
 ```elixir
 releases: [
@@ -317,15 +326,15 @@ With releases, we were able to "cut different slices" of our project and prepare
 
 Releases also provide built-in hooks for configuring almost every need of the production system:
 
-  * `config/config.exs` - provides build-time application configuration, which is executed when the release is assembled. This file often imports configuration files based on the environment, such as `config/dev.exs` and `config/prod.exs`
+  * `config/config.exs` - provides build-time application configuration, which is executed before our application compiles. This file often imports configuration files based on the environment, such as `config/dev.exs` and `config/prod.exs`
 
-  * `config/releases.exs` - provides runtime application configuration. It is executed every time the release boots and is further extensible via config providers
-
-  * `rel/vm.args.eex` - a template file that is copied into every release and provides static configuration of the Erlang Virtual Machine and other runtime flags
+  * `config/runtime.exs` - provides runtime application configuration. It is executed every time the release boots and is further extensible via config providers
 
   * `rel/env.sh.eex` and `rel/env.bat.eex` - template files that are copied into every release and executed on every command to set up environment variables, including ones specific to the VM, and the general environment
 
-We have already explored `config/config.exs`. Now let's talk about `rel/env.sh.eex` and then `config/releases.exs` before we end this chapter.
+  * `rel/vm.args.eex` - a template file that is copied into every release and provides static configuration of the Erlang Virtual Machine and other runtime flags
+
+As we have seen, `config/config.exs` and `config/runtime.exs` are loaded during releases and regular Mix commands. On the other hand, `rel/env.sh.eex` and `rel/vm.args.eex` are specific to releases. Let's take a look.
 
 ### Operating System environment configuration
 
@@ -368,18 +377,23 @@ rem set RELEASE_NODE=<%= @release.name %>@127.0.0.1
 
 Once again, uncomment the last two lines by removing the leading `rem ` to enable full distribution. And that's all!
 
-### Runtime configuration
+### VM args
 
-Another common need in releases is to compute configuration when the release runs, not when the release is assembled. The `config/config.exs` file we defined at the beginning of this chapter runs on every Mix command, when we build, test and run our application. This is great, because it provides a unified configuration for dev, test, and prod.
+The `rel/vm.args.eex` allows you to specify low-level flags that control how the Erlang VM and its runtime operate. You specify entries as if you were specifying arguments in the command line with code comments also supported. Here is the default generated file:
 
-However, your production environments may have specific needs. For example, right now we are hardcoding the routing table, but in production, you may need to read the routing table from disk, from another service, or even reach out to your orchestration tool, like Kubernetes. This can be done by adding a `config/releases.exs`. As the name says, this file runs every time the release starts. For instance, you could make the `KVServer` port configurable, and the value for the port is only given at runtime:
+    ## Customize flags given to the VM: https://erlang.org/doc/man/erl.html
+    ## -mode/-name/-sname/-setcookie are configured via env vars, do not set them here
 
-```elixir
-import Config
-config :kv_server, :port, System.fetch_env!("PORT")
-```
+    ## Number of dirty schedulers doing IO work (file, sockets, and others)
+    ##+SDio 5
 
-`config/releases.exs` files work very similar to regular `config/config.exs` files, but they may have some restrictions. You can [read the documentation](https://hexdocs.pm/mix/1.9.0/Mix.Tasks.Release.html#module-runtime-configuration) for more information.
+    ## Increase number of concurrent ports/sockets
+    ##+Q 65536
+
+    ## Tweak GC to run more often
+    ##-env ERL_FULLSWEEP_AFTER 10
+
+You can see [a complete list of VM args and flags in the Erlang documentation](http://erlang.org/doc/man/erl.html).
 
 ## Summing up
 
@@ -387,6 +401,6 @@ Throughout the guide, we have built a very simple distributed key-value store as
 
 If you are looking for a distributed key-value store to use in production, you should definitely look into [Riak](http://basho.com/products/riak-kv/), which also runs in the Erlang <abbr title="Virtual Machine">VM</abbr>. In Riak, the buckets are replicated, to avoid data loss, and instead of a router, they use [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) to map a bucket to a node. A consistent hashing algorithm helps reduce the amount of data that needs to be migrated when new storage nodes are added to your live system.
 
-Of course, Elixir can be used for much more than distributed key-value stores. Embedded systems, data-processing and data-ingestion, web applications, streaming systems, and others are many of the different domains Elixir excels at. We hope this guide has prepared you to explore any of those domains or any future domain you may desire to bring Elixir into.
+Of course, Elixir can be used for much more than distributed key-value stores. Embedded systems, data-processing and data-ingestion, web applications, audio/video streaming systems, and others are many of the different domains Elixir excels at. We hope this guide has prepared you to explore any of those domains or any future domain you may desire to bring Elixir into.
 
 Happy coding!
