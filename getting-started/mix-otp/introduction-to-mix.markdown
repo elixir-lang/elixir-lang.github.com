@@ -286,7 +286,7 @@ Customization per environment can be done by accessing [the `Mix.env` function](
 def project do
   [
     ...,
-    start_permanent: Mix.env == :prod,
+    start_permanent: Mix.env() == :prod,
     ...
   ]
 end
