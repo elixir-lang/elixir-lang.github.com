@@ -101,7 +101,7 @@ The last step is to change the registry to use the dynamic supervisor:
 
 That's enough for our tests to pass but there is a resource leakage in our application. When a bucket terminates, the supervisor will start a new bucket in its place. After all, that's the role of the supervisor!
 
-However, when the supervisor restarts the new bucket, the registry does not know about it. So we will have an empty bucket in the supervisor that nobody can access! To solve this, we want to say that buckets are actually temporary. If they crash, regardless of the reason, they should not be restarted.
+However, when the supervisor starts the new bucket, the registry does not know about it. So we will have an empty bucket in the supervisor that nobody can access! To solve this, we want to say that buckets are actually temporary. If they crash, regardless of the reason, they should not be restarted.
 
 We can do this by passing the `restart: :temporary` option to `use Agent` in `KV.Bucket`:
 
