@@ -149,18 +149,22 @@ releases: [
 
 That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system.
 
-Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we want our routing table to look like this:
+Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we need to update `config/runtime.exs` to look like this:
 
 ```elixir
-    if Mix.env() == :prod do
-      config :kv, :routing_table, [
-        {?a..?m, :"foo@computer-name"},
-        {?n..?z, :"bar@computer-name"}
-      ]
-    end
+import Config
+    
+config :kv, :routing_table, [{?a..?z, node()}]
+
+if config_env() == :prod do
+  config :kv, :routing_table, [
+    {?a..?m, :"foo@computer-name"},
+    {?n..?z, :"bar@computer-name"}
+  ]
+end
 ```
 
-We have hardcoded the table and node names, which is good enough for our example, but you would likely move it to an external configuration system in an actual production setup. We have also wrapped it in a `Mix.env() == :prod` check, so this configuration does not apply to other environments. 
+We have hardcoded the table and node names, which is good enough for our example, but you would likely move it to an external configuration system in an actual production setup. We have also wrapped it in a `config_env() == :prod` check, so this configuration does not apply to other environments. 
 
 With the configuration in place, let's give assembling the release another try:
 
