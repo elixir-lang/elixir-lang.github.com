@@ -149,7 +149,7 @@ releases: [
 
 That defines a release named `foo` with both `kv_server` and `kv` applications. Their mode is set to `:permanent`, which means that, if those applications crash, the whole node terminates. That's reasonable since those applications are essential to our system.
 
-Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we need to update `runtime.exs` to look like this:
+Before we assemble the release, let's also define our routing table for production. Given we expect to have two nodes, we need to update `config/runtime.exs` to look like this:
 
 ```elixir
 import Config
