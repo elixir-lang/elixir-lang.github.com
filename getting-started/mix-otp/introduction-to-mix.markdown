@@ -192,7 +192,7 @@ It is important to note a couple of things:
 
 1. the test file is an Elixir script file (`.exs`). This is convenient because we don't need to compile test files before running them;
 
-2. we define a test module named `KVTest`, in which we [`use ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API;
+2. we define a test module named `KVTest`, in which we use [`ExUnit.Case`](https://hexdocs.pm/ex_unit/ExUnit.Case.html) to inject the testing API;
 
 3. we use one of the imported macros, [`doctest/1`](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#doctest/1), to indicate that the `KV` module contains doctests (we will discuss those in a later chapter);
 
