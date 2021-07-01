@@ -84,8 +84,8 @@ Elixir v1.5 streamlines how supervisors are defined and used in Elixir. Elixir n
 import Supervisor.Spec
 
 children = [
-  supervisor(MyApp.Repo, []),
-  supervisor(MyApp.Endpoint, [])
+  supervisor(MyApp.Repo, [[]]),
+  supervisor(MyApp.Endpoint, [[]])
 ]
 
 Supervisor.start_link(children, strategy: :one_for_one)
