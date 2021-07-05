@@ -59,7 +59,7 @@ iex> {a, b, c} = {:hello, "world"}
 ** (MatchError) no match of right hand side value: {:hello, "world"}
 ```
 
-And also when comparing different types:
+And also when comparing different types, for example if matching a tuple on the left side with a list on the right side:
 
 ```elixir
 iex> {a, b, c} = [:hello, "world", 42]
