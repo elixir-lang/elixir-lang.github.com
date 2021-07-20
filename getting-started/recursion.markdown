@@ -18,12 +18,13 @@ In the example above, we are mutating both the array and the variable `i`. Howev
 
 ```elixir
 defmodule Recursion do
-  def print_multiple_times(_msg, n) when n == 0 do
+  def print_multiple_times(msg, n) when n > 0 do
+    IO.puts(msg)
+    print_multiple_times(msg, n - 1)
   end
 
-  def print_multiple_times(msg, n) when n > 0 do
-    IO.puts msg
-    print_multiple_times(msg, n - 1)
+  def print_multiple_times(_msg, 0) do
+    :ok
   end
 end
 
@@ -31,21 +32,35 @@ Recursion.print_multiple_times("Hello!", 3)
 # Hello!
 # Hello!
 # Hello!
+:ok
 ```
 
 Similar to `case`, a function may have many clauses. A particular clause is executed when the arguments passed to the function match the clause's argument patterns and its guards evaluate to `true`.
 
 When `print_multiple_times/2` is initially called in the example above, the argument `n` is equal to `3`.
 
-The first clause has a guard which says "use this definition if and only if `n` is equal to `0`". Since this is not the case, Elixir proceeds to the next clause's definition.
+The first clause has a guard which says "use this definition if and only if `n` is more than `0`". Since this is the case, it prints the `msg` and then calls itself passing `n - 1` (`2`) as the second argument.
 
-The second clause matches the pattern since `n` is greater than 0. It first prints our `msg` and then calls itself passing `n - 1` (`2`) as the second argument.
+Now we execute the same function again, starting from the first the clause. Given the second argument, `n`, is still more than 0, we print the message and call ourselves once more, now with the second argument set to `1`. Then we print the message one last time and call `print_multiple_times("Hello!", 0)`, starting from the top once again.
 
-Our `msg` is printed and `print_multiple_times/2` is called again, this time with the second argument set to `1`.
-The second definition is execute again, printing and `print_multiple_times/2` is called once more, this time with the second argument set to `0`.
-Because `n` is now set to `0`, the guard in our first definition of `print_multiple_times/2` evaluates to true, and we execute this particular definition. Which does nothing.
+When the second argument is zero, the guard `n > 0` evaluates to false, and the first function clause won't execute. Elixir then proceeds to try the next function clause, which explicitly matches on the case where `n` is `0`. This clause, also known as the termination clause, ignores the message argument by assigning it to the `_msg` variable and returns the atom `:ok`.
 
-We defined `print_multiple_times/2` so that, no matter what number is passed as the second argument, it either triggers our first definition (known as a _base case_) or it triggers our second definition, which will ensure that we get exactly one step closer to our base case.
+Finally, if you pass an argument that does not match any clause, Elixir raises a `FunctionClauseError`:
+
+```elixir
+iex> Recursion.print_multiple_times "Hello!", -1
+** (FunctionClauseError) no function clause matching in Recursion.print_multiple_times/2
+
+    The following arguments were given to Recursion.print_multiple_times/2:
+
+        # 1
+        "Hello!"
+
+        # 2
+        -1
+
+    iex:1: Recursion.print_multiple_times/2
+```
 
 ## Reduce and map algorithms
 
