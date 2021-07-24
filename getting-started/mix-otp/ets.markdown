@@ -227,9 +227,9 @@ The `--trace` option is useful when your tests are deadlocking or there are race
   1) test removes buckets on exit (KV.RegistryTest)
      test/kv/registry_test.exs:19
      Assertion with == failed
-     code: KV.Registry.lookup(registry, "shopping") == :error
-     lhs:  {:ok, #PID<0.109.0>}
-     rhs:  :error
+     code:  assert KV.Registry.lookup(registry, "shopping") == :error
+     left:  {:ok, #PID<0.109.0>}
+     right: :error
      stacktrace:
        test/kv/registry_test.exs:23
 ```
