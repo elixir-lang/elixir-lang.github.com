@@ -32,9 +32,9 @@ All examples listed next must strictly adhere to the terms outlined in the previ
 
   * Usage of the Elixir logo to display it as a supported technology in a service or platform. For instance, you may say "we support Elixir" and list the Elixir logo, but you may not refer to yourself as "the Elixir platform" nor imply any form of endorsement or association with Elixir.
 
-  * Usage of the Elixir logo in non-commercial community meetups, presentations, and courses when referring to the language and its ecosystem under nominative use.
+  * Usage of the Elixir logo in non-commercial community meetups, in presentations, and in courses when referring to the language and its ecosystem under nominative use.
 
-  * Inclusion of the Elixir logo in icon libraries. Note users of the Elixir icon must still adhere to Elixir's trademark policies.
+  * Inclusion of the Elixir logo in non-commercial icon sets. Note users of the Elixir icon must still adhere to Elixir's trademark policies.
 
   * Usage of the Elixir word in book titles, conferences, and podcasts. You must not use the word in a way to imply uniqueness or endorsement from the Elixir team. "The Elixir book" and "The Elixir podcast" are not permitted, "Elixir in Action" and "Thinking Elixir" are.
 
