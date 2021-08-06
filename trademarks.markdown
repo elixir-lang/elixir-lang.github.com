@@ -42,7 +42,7 @@ All examples listed next must strictly adhere to the terms outlined in the previ
 
   * Usage of the "Elixir" word in book titles, meetups, conferences, and podcasts. You must not use the word to imply uniqueness or endorsement from the Elixir team. "The Elixir book" and "The Elixir podcast" are not permitted. "Elixir in Action", "Thinking Elixir", and "Kraków Elixir User Group" are.
 
-  * Usage of the "Elixir" word in the names of freely distributed software and hardware products is allowed when referring to use with or suitability for the Elixir programming language, such as wxElixir, Elixirsense, etc. If the product includes Elixir itself, the version and the list of modifications, if any, must be included.
+  * Usage of the "Elixir" word in the names of freely distributed software and hardware products is allowed when referring to use with or suitability for the Elixir programming language, such as wxElixir, Elixirsense, etc. If the product includes the Elixir programming language itself, the version and the list of modifications, if any, must be included [according to its license](https://github.com/elixir-lang/elixir/blob/master/LICENSE).
 
 ## Examples of not permitted use
 
