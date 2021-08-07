@@ -14,6 +14,8 @@ Anyone can use the Elixir trademarks if that use of the trademark is nominative.
 
 You must not visually combine the Elixir logo with any other images, or change the logo in any way other than ways required by printing restrictions. If you want to create your own visual identity in relation to Elixir, you might design or combine your mark on top of any "water drop silhouette", as seen in many community projects and initiatives. You must not combine or modify the Elixir logo.
 
+The Elixir logo is [available in our repository](https://github.com/elixir-lang/elixir-lang.github.com/tree/master/logos) in both vertical and horizontal versions.
+
 ## Nominative use
 
 The "nominative use" (or "nominative fair use") is a legal doctrine that authorizes everyone (even commercial companies) to use or refer to the trademark of another if:
@@ -38,11 +40,11 @@ All examples listed next must strictly adhere to the terms outlined in the previ
 
   * Usage of the Elixir logo in non-commercial swag (stickers, t-shirts, mugs, etc) to promote the Elixir programming language. The Elixir marks must be the only marks featured in the product. You need permission to make swag that include Elixir and other third party marks in them.
 
-  * Inclusion of the Elixir logo in non-commercial icon sets. Note users of the Elixir icons must still adhere to Elixir's trademark policies.
+  * Inclusion of the Elixir logo in non-commercial icon sets. Use of the Elixir icons must still adhere to Elixir's trademark policies.
 
-  * Usage of the "Elixir" word in book titles, meetups, conferences, and podcasts. You must not use the word to imply uniqueness or endorsement from the Elixir team. "The Elixir book" and "The Elixir podcast" are not permitted. "Elixir in Action", "Thinking Elixir", and "Kraków Elixir User Group" are.
+  * Usage of the "Elixir" word in book titles, meetups, conferences, and podcasts. You must not use the word to imply uniqueness or endorsement from the Elixir team. "The Elixir book" and "The Elixir podcast" are not permitted. "Elixir in Action", "Thinking Elixir", and "Kraków Elixir User Group" are valid examples already in use today.
 
-  * Usage of the "Elixir" word in the names of freely distributed software and hardware products is allowed when referring to use with or suitability for the Elixir programming language, such as wxElixir, Elixirsense, etc. If the product includes the Elixir programming language itself, the version and the list of modifications, if any, must be included [according to its license](https://github.com/elixir-lang/elixir/blob/master/LICENSE).
+  * Usage of the "Elixir" word in the names of freely distributed software and hardware products is allowed when referring to use with or suitability for the Elixir programming language, such as wxElixir, Elixirsense, etc. If the product includes the Elixir programming language itself, then [you must also respect its license](https://github.com/elixir-lang/elixir/blob/master/LICENSE).
 
 ## Examples of not permitted use
 
@@ -58,6 +60,6 @@ All examples listed next must strictly adhere to the terms outlined in the previ
 
 You can request permission by emailing trademarks@elixir-lang.org.
 
-## Disclaimer
+## Important note
 
 Nothing in this page shall be interpreted to allow any third party to claim any association with the Elixir project and the Elixir Team, or to imply any approval or support by the Elixir project and the Elixir Team for any third party products, services, or events.
