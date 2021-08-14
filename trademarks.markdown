@@ -12,7 +12,7 @@ This document outlines the policy for allowed usage of the "Elixir" word and the
 
 Anyone can use the Elixir trademarks if that use of the trademark is nominative. The trademarks must not be used to disparage the project and its community, nor be used in any way to imply ownership, endorsement, or association with the Elixir project and the Elixir Team.
 
-You must not visually combine the Elixir logo with any other images, or change the logo in any way other than ways required by printing restrictions. If you want to create your own visual identity in relation to Elixir, you might design or combine your mark on top of any "water drop silhouette", as seen in many community projects and initiatives. You must not combine or modify the Elixir logo.
+You must not visually combine the Elixir logo with any other images, or change the logo in any way other than ways required by printing restrictions. If you want to create your own visual identity in relation to Elixir, you might use the shape of an unrelated "water drop" as part of your design, as seen in many community projects and initiatives. You must not combine or modify the Elixir logo.
 
 The Elixir logo is [available in our repository](https://github.com/elixir-lang/elixir-lang.github.com/tree/master/logos) in both vertical and horizontal versions.
 
@@ -48,6 +48,8 @@ All examples listed next must strictly adhere to the terms outlined in the previ
 
 ## Examples of not permitted use
 
+Here is a non-exhaustive list of non permitted uses of the marks:
+
   * Usage of the Elixir logo in book covers, conferences, and podcasts.
 
   * Usage of the Elixir logo as the mark of third party projects, even in combination with other marks.
@@ -55,6 +57,8 @@ All examples listed next must strictly adhere to the terms outlined in the previ
   * Naming any company or product after Elixir, such as "The Elixir Hosting", "The Elixir Consultants", etc.
 
 ## Examples that require permission
+
+Here are some examples that may be granted permission upon request:
 
   * Selling merchandise (stickers, t-shirts, mugs, etc).
 
