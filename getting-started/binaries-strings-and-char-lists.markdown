@@ -49,18 +49,20 @@ Elixir uses UTF-8 to encode its strings, which means that code points are encode
 
 Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme.
 
-In other words, what we would expect to be a single character, such as `é` or `ł`, can in practice be multiple characters, each represented by potentially multiple bytes. Consider the following:
+In other words, what we would expect to be a single character, such as é, can in practice be multiple codepoints (in this case, e and an acute accent), each represented by potentially multiple bytes. Consider the following:
 
 ```elixir
-iex> string = "hełło"
-"hełło"
+iex> string = "héllo"
+"héllo"
 iex> String.length(string)
 5
+iex> length(String.to_charlist(string))
+6
 iex> byte_size(string)
 7
 ```
 
-`String.length/1` counts graphemes, but `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, and `o`, but two bytes to represent `ł`.
+`String.length/1` counts graphemes and returned 5. To count the number of code points, we can use `String.to_charlist/1` to convert a string to a list of codepoints, and then we get its length, which returned 6. Finally, `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, `l`, and `o`, but two bytes to represent the acute accent, adding to 7.
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
