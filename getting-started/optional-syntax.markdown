@@ -4,7 +4,7 @@ layout: getting-started
 title: Optional syntax sheet
 ---
 
-Throughout this guide, we learned that the Elixir syntax support a few affordances where developers may omit delimiters to make code more readable. For example, we learned that parentheses are optional:
+Throughout this guide, we learned that the Elixir syntax allow developers to omit delimiters in a few occasions to make code more readable. For example, we learned that parentheses are optional:
 
 ```elixir
 iex> length([1, 2, 3]) == length [1, 2, 3]
@@ -26,7 +26,7 @@ iex> if true, do: :this, else: :that
 :this
 ```
 
-Those affordances, which we call here "optional syntax", allow the language syntax core to be small, without sacrificing the readability and expressiveness of your code. This is what allows us to write:
+Those conveniences, which we call here "optional syntax", allow the language syntax core to be small, without sacrificing the readability and expressiveness of your code. This is what allows us to write:
 
 ```elixir
 defmodule Math do
@@ -44,7 +44,7 @@ defmodule(Math, [
 ])
 ```
 
-In this brief chapter, we will review the four affordances provided by the language, using a short snippet as playground.
+In this brief chapter, we will review the four rules provided by the language, using a short snippet as playground.
 
 ## Walk-through
 
@@ -58,7 +58,7 @@ else
 end
 ```
 
-Now let's remove its affordances one by one:
+Now let's remove the conveniences one by one:
 
 1. do-end blocks are equivalent to keywords:
 
