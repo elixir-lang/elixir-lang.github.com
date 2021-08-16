@@ -159,8 +159,8 @@ We have just scratched the surface of what the Erlang VM has to offer, for examp
 
 The community has also created its own tools, often to aid in production, other times in development:
 
-  * [wObserver](https://github.com/shinyscorpion/wObserver) observes production nodes through a web interface.
+  * [Phoenix LiveDashboard](https://github.com/phoenixframework/phoenix_live_dashboard) a dashboard for production nodes through a web interface.
   * [visualixir](https://github.com/koudelka/visualixir) is a development-time process message visualizer.
   * [erlyberly](https://github.com/andytill/erlyberly) is a GUI for tracing during development.
 
-There are probably many more to come too!
+Happy debugging!
