@@ -21,10 +21,10 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### macOS
 
-  - Using Homebrew:
+  - Using [Homebrew](https://brew.sh/):
     * Run: `brew install elixir`
 
-  - Using Macports:
+  - Using [Macports](https://www.macports.org/):
     * Run: `sudo port install elixir`
 
 ### GNU/Linux
