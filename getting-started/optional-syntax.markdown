@@ -4,14 +4,14 @@ layout: getting-started
 title: Optional syntax sheet
 ---
 
-Throughout this guide, we learned that the Elixir syntax allow developers to omit delimiters in a few occasions to make code more readable. For example, we learned that parentheses are optional:
+In this guide so far, we learned that the Elixir syntax allows developers to omit delimiters in a few occasions to make code more readable. For example, we learned that parentheses are optional:
 
 ```elixir
 iex> length([1, 2, 3]) == length [1, 2, 3]
 true
 ```
 
-and that `do`/`end` blocks are equivalent to keyword lists:
+and that `do`-`end` blocks are equivalent to keyword lists:
 
 ```elixir
 # do-end blocks
@@ -60,7 +60,7 @@ end
 
 Now let's remove the conveniences one by one:
 
-1. do-end blocks are equivalent to keywords:
+1. `do`-`end` blocks are equivalent to keywords:
 
    ```elixir
    if variable?, do: Call.this(), else: Call.that()
