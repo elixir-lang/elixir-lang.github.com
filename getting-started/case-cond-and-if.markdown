@@ -152,7 +152,7 @@ iex> unless true do
 nil
 ```
 
-If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and instead it returns `nil`. The opposite happens with `unless/2`.
+If the condition given to `if/2` returns `false` or `nil`, the body given between `do`-`end` is not executed and instead it returns `nil`. The opposite happens with `unless/2`.
 
 They also support `else` blocks:
 
@@ -193,9 +193,9 @@ iex> x = if true do
 
 > Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](https://hexdocs.pm/elixir/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
-## `do/end` blocks
+## `do`-`end` blocks
 
-At this point, we have learned four control structures: `case`, `cond`, `if`, and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:
+At this point, we have learned four control structures: `case`, `cond`, `if`, and `unless`, and they were all wrapped in `do`-`end` blocks. It happens we could also write `if` as follows:
 
 ```elixir
 iex> if true, do: 1 + 2
@@ -209,7 +209,7 @@ iex> if false, do: :this, else: :that
 :that
 ```
 
-`do/end` blocks are a syntactic convenience built on top of the keyword ones. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
+`do`-`end` blocks are a syntactic convenience built on top of the keyword ones. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
 
 ```elixir
 iex> if true do
