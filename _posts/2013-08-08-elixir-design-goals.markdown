@@ -125,7 +125,7 @@ defmodule Hello, do: (
 )
 ```
 
-And finally we added `do/end` as convenience for the common `do: (...)` construct:
+And finally we added `do`-`end` as convenience for the common `do: (...)` construct:
 
 ```elixir
 defmodule Hello do

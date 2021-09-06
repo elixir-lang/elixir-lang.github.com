@@ -11,7 +11,7 @@ iex> length([1, 2, 3]) == length [1, 2, 3]
 true
 ```
 
-and that `do`/`end` blocks are equivalent to keyword lists:
+and that `do`-`end` blocks are equivalent to keyword lists:
 
 ```elixir
 # do-end blocks
@@ -60,7 +60,7 @@ end
 
 Now let's remove the conveniences one by one:
 
-1. `do`/`end` blocks are equivalent to keywords:
+1. `do`-`end` blocks are equivalent to keywords:
 
    ```elixir
    if variable?, do: Call.this(), else: Call.that()
