@@ -58,10 +58,10 @@ iex> Base.encode16(:crypto.hash(:sha256, "Elixir"))
 "3315715A7A3AD57428298676C5AE465DADA38D951BDFAC9348A8A31E9C7401CB"
 ```
 
-The `:crypto` module is not part of the Erlang standard library, but is
-included with the Erlang distribution. This means you must list `:crypto`
-in your project's applications list whenever you use it. To do this,
-edit your `mix.exs` file to include:
+The `:crypto` module is part of the `:crypto` application that ships with
+Erlang. This means you must list the `:crypto` application as an additional
+application in your project configuration. To do this, edit your `mix.exs`
+file to include:
 
 ```elixir
 def application do
