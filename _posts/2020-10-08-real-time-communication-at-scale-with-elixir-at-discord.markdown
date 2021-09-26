@@ -14,7 +14,7 @@ Founded in 2015 by Jason Citron and Stan Vishnevskiy, [Discord](https://discord.
 
 From day one, Discord has used Elixir as the backbone of its chat infrastructure. When Discord first adopted the language, they were still working on building a viable business, with many questions and challenges in front of them. Elixir played a crucial role in giving them the desired technological flexibility to grow the company and also became the building block that would allow their systems to run on a massive scale.
 
-![Discord](/images/cases/bg/discord.png)
+![Discord](/images/cases/bg/discord.jpg)
 
 ## Starting technologies
 
