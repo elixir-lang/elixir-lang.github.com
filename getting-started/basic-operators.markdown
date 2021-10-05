@@ -100,12 +100,10 @@ iex> 1 < :atom
 true
 ```
 
-The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
+The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The sorting order, from lower to higher, is:
 
-    number < atom < reference < function < port < pid < tuple < map < list < bitstring
+    number, atom, reference, function, port, pid, tuple, map, list, bitstring
 
-You don't actually need to memorize this ordering; it's enough to know that this ordering exists.
-
-For reference information about operators (and ordering), check the [reference page on operators](https://hexdocs.pm/elixir/operators.html).
+You don't actually need to memorize this; it's enough to know that it exists. For more information, check the [reference page on operators and ordering](https://hexdocs.pm/elixir/operators.html).
 
 In the next chapter, we are going to discuss pattern matching through the use of `=`, the match operator.
