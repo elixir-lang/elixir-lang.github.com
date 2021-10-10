@@ -247,7 +247,7 @@ end
 
 When we `use Application`, we may define a couple of functions, similar to when we used `Supervisor` or `GenServer`. This time we only had to define a `start/2` function. The `Application` behaviour also has a `stop/1` callback, but it is rarely used in practice. You can check the documentation for more information.
 
-Now that you have defined an application callback which starts our supervisor, we expect the `KV.Registry` process to be up and running as soon we start `iex -S mix`. Let's give it another try:
+Now that you have defined an application callback which starts our supervisor, we expect the `KV.Registry` process to be up and running as soon as we start `iex -S mix`. Let's give it another try:
 
 ```elixir
 iex(1)> KV.Registry.create(KV.Registry, "shopping")
