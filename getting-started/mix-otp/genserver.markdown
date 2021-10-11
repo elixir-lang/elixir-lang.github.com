@@ -304,9 +304,8 @@ def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
 end
 
 @impl true
-require Logger
-
 def handle_info(msg, state) do
+  require Logger
   Logger.debug("Unexpected message in KV.Registry: #{inspect(msg)}")
   {:noreply, state}
 end
