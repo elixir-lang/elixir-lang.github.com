@@ -304,8 +304,10 @@ def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
 end
 
 @impl true
-def handle_info(_msg, state) do
-  IO.puts("Oops! Shouldn't be here. Check argument pattern-match of another `handle_info`.")
+require Logger
+
+def handle_info(msg, state) do
+  Logger.debug("Unexpected message in KV.Registry: #{inspect(msg)}")
   {:noreply, state}
 end
 ```
