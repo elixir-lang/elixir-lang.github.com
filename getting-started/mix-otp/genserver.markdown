@@ -304,14 +304,17 @@ def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
 end
 
 @impl true
-def handle_info(_msg, state) do
+require Logger
+
+def handle_info(msg, state) do
+  Logger.debug("Unexpected message in KV.Registry: #{inspect(msg)}")
   {:noreply, state}
 end
 ```
 
 Observe that we were able to considerably change the server implementation without changing any of the client API. That's one of the benefits of explicitly segregating the server and the client.
 
-Finally, different from the other callbacks, we have defined a "catch-all" clause for `handle_info/2` that discards any unknown message. To understand why, let's move on to the next section.
+Finally, different from the other callbacks, we have defined a "catch-all" clause for `handle_info/2` that discards and logs any unknown message. To understand why, let's move on to the next section.
 
 ## `call`, `cast` or `info`?
 
@@ -319,7 +322,7 @@ So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handl
 
 1. `handle_call/3` must be used for synchronous requests. This should be the default choice as waiting for the server reply is a useful backpressure mechanism.
 
-2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. A cast does not even guarantee the server has received the message and, for this reason, should be used sparingly. For example, the `create/2` function we have defined in this chapter should have used `call/2`. We have used `cast/2` for didactic purposes.
+2. `handle_cast/2` must be used for asynchronous requests, when you don't care about a reply. A cast does not guarantee the server has received the message and, for this reason, should be used sparingly. For example, the `create/2` function we have defined in this chapter should have used `call/2`. We have used `cast/2` for didactic purposes.
 
 3. `handle_info/2` must be used for all other messages a server may receive that are not sent via `GenServer.call/2` or `GenServer.cast/2`, including regular messages sent with `send/2`. The monitoring `:DOWN` messages are an example of this.
 
