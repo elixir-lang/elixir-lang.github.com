@@ -305,6 +305,7 @@ end
 
 @impl true
 def handle_info(_msg, state) do
+  IO.puts("Oops! Shouldn't be here. Check argument pattern-match of another `handle_info`.")
   {:noreply, state}
 end
 ```
