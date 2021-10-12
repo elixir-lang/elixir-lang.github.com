@@ -143,7 +143,7 @@ iex> defmodule User do
 ** (SyntaxError) iex:107: syntax error before: email
 ```
 
-You can also enforce that certain keys have to be specified when creating the struct:
+You can also enforce that certain keys have to be specified when creating the struct via the `@enforce_keys` module attribute:
 
 ```elixir
 iex> defmodule Car do
@@ -154,3 +154,5 @@ iex> %Car{}
 ** (ArgumentError) the following keys must also be given when building struct Car: [:make]
     expanding struct: Car.__struct__/1
 ```
+
+Enforcing keys provides a simple compile-time guarantee to aid developers when building structs. It is not enforced on updates and it does not provide any sort of value-validation.
