@@ -154,3 +154,5 @@ iex> %Car{}
 ** (ArgumentError) the following keys must also be given when building struct Car: [:make]
     expanding struct: Car.__struct__/1
 ```
+
+Keep in mind `@enforce_keys` is a simple compile-time guarantee to aid developers when building structs. It is not enforced on updates and it does not provide any sort of value-validation.
