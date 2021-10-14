@@ -288,7 +288,11 @@ The pattern of keeping multiple applications in the same repository is known as 
 
 If you find yourself in a position where you want to use different configurations in each application for the same dependency or use different dependency versions, then it is likely your codebase has grown beyond what umbrellas can provide.
 
-The good news is that breaking an umbrella apart is quite straightforward, as you simply need to move applications outside of the umbrella project's `apps/` directory. In the worst case scenario, you can discard the umbrella project and all related configuration (`build_path`, `config_path`, `deps_path` and `lockfile`) and still leverage the "mono-repo" pattern by keeping all applications together in the same repository. Each application will have its own dependencies and configuration. Dependencies between those applications can still be explicitly listed by using the `:path` option (in contrast to `:git`).
+The good news is that breaking an umbrella apart is quite straightforward, as you simply need to move applications outside of the umbrella project's `apps/` directory and update the project's mix.exs file to no longer set the `build_path`, `config_path`, `deps_path`, and `lockfile` configuration. You can depend on private projects outside of the umbrella in multiple ways:
+
+  1. Move it to a separate folder within the same repository and point to it using a path dependency (the mono-repo pattern)
+  2. Move the repository to a separate Git repository and depend on it
+  3. Publish the project to a private [Hex.pm](https://hex.pm/) organization
 
 ## Summing up
 
