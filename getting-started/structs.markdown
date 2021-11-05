@@ -95,7 +95,7 @@ iex> john = %User{}
 iex> john[:name]
 ** (UndefinedFunctionError) function User.fetch/2 is undefined (User does not implement the Access behaviour)
              User.fetch(%User{age: 27, name: "John"}, :name)
-iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
+iex> Enum.each(john, fn {field, value} -> IO.puts(value) end)
 ** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
 
