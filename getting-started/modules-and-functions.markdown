@@ -167,6 +167,15 @@ iex> (&is_function/1).(fun)
 true
 ```
 
+You can also capture operators:
+
+```elixir
+iex> add = &+/2
+&:erlang.+/2
+iex> add.(1, 2)
+3
+```
+
 Note the capture syntax can also be used as a shortcut for creating functions:
 
 ```elixir
