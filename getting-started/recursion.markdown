@@ -133,7 +133,7 @@ iex> Enum.map([1, 2, 3], fn(x) -> x * 2 end)
 Or, using the capture syntax:
 
 ```elixir
-iex> Enum.reduce([1, 2, 3], 0, &(&1 + &2)
+iex> Enum.reduce([1, 2, 3], 0, &(&1 + &2))
 6
 iex> Enum.map([1, 2, 3], &(&1 * 2))
 [2, 4, 6]
