@@ -25,12 +25,12 @@ Choose which version you want documentation for.
 
 #### Development
 
-* [Elixir](https://hexdocs.pm/elixir/master/) - standard library
-* [EEx](https://hexdocs.pm/eex/master/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/master/) - unit test library
-* [IEx](https://hexdocs.pm/iex/master/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/master/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/master/) - build tool
+* [Elixir](https://hexdocs.pm/elixir/main/) - standard library
+* [EEx](https://hexdocs.pm/eex/main/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/main/) - unit test library
+* [IEx](https://hexdocs.pm/iex/main/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/main/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/main/) - build tool
 
 {% for version in site.data.elixir-versions %}
   {% if version[0] == 'stable' %}

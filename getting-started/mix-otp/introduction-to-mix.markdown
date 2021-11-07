@@ -310,7 +310,7 @@ Or on Windows:
 
 ## Exploring
 
-There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/). Read [the Mix source code here](https://github.com/elixir-lang/elixir/tree/master/lib/mix).
+There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](https://hexdocs.pm/mix/). Read [the Mix source code here](https://github.com/elixir-lang/elixir/tree/main/lib/mix).
 
 Keep in mind that you can always invoke the help task to list all available tasks:
 
