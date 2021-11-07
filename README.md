@@ -1,4 +1,4 @@
-This projects holds the contents for Elixir website hosted at [elixir-lang.org](https://elixir-lang.org).
+This projects holds the contents for the Elixir website hosted at [elixir-lang.org](https://elixir-lang.org).
 
 It is automatically transformed by [Jekyll](https://github.com/mojombo/jekyll) into a static site.
 
