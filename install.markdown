@@ -111,9 +111,7 @@ If you are familiar with Docker you can use the official Docker image to get sta
   * Enter bash within container with installed `elixir`
     * Run: `docker run -it --rm elixir bash`
 
-Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](#installing-erlang) section below.
-
-If you need to programmatically fetch the list of Elixir precompiled packages alongside their checksums, access [https://elixir-lang.org/elixir.csv](https://elixir-lang.org/elixir.csv).
+The above will automatically point to the latest Erlang and Elixir available. For production usage, we recommend using [Hex.pm Docker images](https://hub.docker.com/r/hexpm/elixir), which are immutable and point to a specific Erlang and Elixir version.
 
 ## Precompiled package
 
