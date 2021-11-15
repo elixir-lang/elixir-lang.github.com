@@ -29,7 +29,7 @@ We have updated [the ExDoc tool](https://github.com/elixir-lang/ex_doc) to start
 
   * Functions, macros, callbacks and types now include the version in which they were added. For example, [see the top right corner of the `defguard` docs](https://hexdocs.pm/elixir/Kernel.html#defguard/1)
 
-  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/master/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
+  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/main/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
 
 Elixir's interactive shell, IEx, has also been updated to print metadata:
 

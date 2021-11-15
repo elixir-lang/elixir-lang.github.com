@@ -18,7 +18,7 @@ Although most users don't need to concern with the implementation of the Enumera
 
 ## Mix
 
-The tool that received most improvements in this release was Mix. The biggest change is that Mix no longer compiles projects in place but to the `_build` directory. For example, take the [Ecto project](https://github.com/elixir-lang/ecto) that [depends on `postgrex` and `poolboy`](https://github.com/elixir-lang/ecto/blob/master/mix.exs#L24-L25). When compiled, all the artifacts will be placed in the `_build` directory like this:
+The tool that received most improvements in this release was Mix. The biggest change is that Mix no longer compiles projects in place but to the `_build` directory. For example, take the [Ecto project](https://github.com/elixir-ecto/ecto) that [depends on `postgrex` and `poolboy`](https://github.com/elixir-ecto/ecto/blob/v0.1.0/mix.exs#L25-L30). When compiled, all the artifacts will be placed in the `_build` directory like this:
 
 ```
 _build
@@ -43,7 +43,7 @@ Mix has also added support to optional dependencies and improved common patterns
 
 With this release, we also want to welcome [Eric MJ](https://github.com/ericmj) to the Elixir Team. He has done fantastic work on Elixir, helping us maintain the codebase and working on many of the important features from previous releases and now many more to come.
 
-Eric is also maintainer of both [Ecto](https://github.com/elixir-lang/ecto) and [Postgrex](https://github.com/ericmj/postgrex) projects. Which are proving to be very useful to the Elixir community too!
+Eric is also maintainer of both [Ecto](https://github.com/elixir-ecto/ecto) and [Postgrex](https://github.com/elixir-ecto/postgrex) projects. Which are proving to be very useful to the Elixir community too!
 
 ## Tidying up
 

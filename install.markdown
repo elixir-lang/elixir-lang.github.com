@@ -140,7 +140,7 @@ Next you should download source code ([.zip](https://github.com/elixir-lang/elix
 
 After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
-In case you are feeling a bit more adventurous, you can also compile from master:
+In case you are feeling a bit more adventurous, you can also compile from main:
 
 ```bash
 $ git clone https://github.com/elixir-lang/elixir.git

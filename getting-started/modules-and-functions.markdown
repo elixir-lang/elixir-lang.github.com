@@ -122,7 +122,7 @@ IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
 IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 ```
 
-*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#trailing-question-mark-foo).*
+*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#trailing-question-mark-foo).*
 
 Giving an argument that does not match any of the clauses raises an error.
 
