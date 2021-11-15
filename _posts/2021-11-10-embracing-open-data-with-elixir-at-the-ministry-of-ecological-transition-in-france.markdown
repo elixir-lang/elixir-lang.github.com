@@ -4,7 +4,7 @@ title: Embracing open data with Elixir at the Ministry of Ecological Transition 
 author: José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at the Ministry of Ecological Transition in France.
-logo: /images/cases/logos/met-france.png
+logo: /images/cases/logos/met-france.svg
 tags: open-data gov phoenix
 ---
 
