@@ -3,10 +3,10 @@ layout: post
 title: A peek inside Elixir's Parallel Compiler
 author: José Valim
 category: Internals
-excerpt: Today, a parallel compiler just landed in Elixir master. The goal of the parallel compiler is to compile files in parallel, automatically detecting dependencies between files. In this blog post, we are going to take a peek into the parallel compiler internals and learn more about Erlang and Elixir in the process.
+excerpt: Today, a parallel compiler just landed in Elixir main. The goal of the parallel compiler is to compile files in parallel, automatically detecting dependencies between files. In this blog post, we are going to take a peek into the parallel compiler internals and learn more about Erlang and Elixir in the process.
 ---
 
-Today, a parallel compiler just landed in Elixir master. The goal of the parallel compiler is to compile files in parallel, automatically detecting dependencies between files. In this blog post, we are going to take a peek into the parallel compiler internals and learn more about Erlang and Elixir in the process.
+Today, a parallel compiler just landed in Elixir main. The goal of the parallel compiler is to compile files in parallel, automatically detecting dependencies between files. In this blog post, we are going to take a peek into the parallel compiler internals and learn more about Erlang and Elixir in the process.
 
 ## Process-based serial compilation
 

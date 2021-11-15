@@ -185,7 +185,7 @@ end
 ```
 
 This code generates a warning letting you know that you are mistakenly implementing `parse/0` instead of `parse/1`.
-You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/master/Module.html#module-impl).
+You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/main/Module.html#module-impl).
 
 ### Dynamic dispatch
 
