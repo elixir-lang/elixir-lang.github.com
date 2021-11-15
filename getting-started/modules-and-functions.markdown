@@ -249,7 +249,7 @@ IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 IO.puts Concat.join("Hello")               #=> Hello
 ```
 
-*The leading underscore in `_sep` means that the variable will be ignored in this function; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#underscore-_foo).*
+*The leading underscore in `_sep` means that the variable will be ignored in this function; see [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#underscore-_foo).*
 
 When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 
