@@ -116,7 +116,7 @@ Behaviours provide a way to:
 * define a set of functions that have to be implemented by a module;
 * ensure that a module implements all the functions in that set.
 
-If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.
+If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement. Unlike Protocols, behaviours are independent of the type/data.
 
 ### Defining behaviours
 
