@@ -19,7 +19,7 @@ defmodule ElixirLangGuide do
     config = %{
       guide: nil,
       homepage: "http://elixir-lang.org",
-      output: ".",
+      output: "../downloads/books",
       root_dir: source,
       scripts: [],
       styles: assets("priv/app-*.css"),

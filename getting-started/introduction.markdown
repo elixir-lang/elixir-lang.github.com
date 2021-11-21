@@ -20,9 +20,9 @@ Let's get started!
 
 > The Elixir guides are also available in EPUB format:
 >
->   * [Getting started guide](https://repo.hex.pm/guides/elixir/elixir-getting-started-guide.epub)
->   * [Mix and OTP guide](https://repo.hex.pm/guides/elixir/mix-and-otp.epub)
->   * [Meta-programming guide](https://repo.hex.pm/guides/elixir/meta-programming-in-elixir.epub)
+>   * [Getting started guide](https://elixir-lang.org/downloads/books/elixir-getting-started-guide.epub)
+>   * [Mix and OTP guide](https://elixir-lang.org/downloads/books/mix-and-otp.epub)
+>   * [Meta-programming guide](https://elixir-lang.org/downloads/books/meta-programming-in-elixir.epub)
 
 ## Installation
 
