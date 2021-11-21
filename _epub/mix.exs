@@ -24,7 +24,7 @@ defmodule ElixirLangGuide.Mixfile do
 
   defp deps do
     [
-      {:yaml_elixir, "~> 1.3"},
+      {:yaml_elixir, "~> 2.0"},
       {:earmark, "~> 1.0"},
       {:bupe, "~> 0.3.0"},
       {:makeup_elixir, "~> 0.14"}
