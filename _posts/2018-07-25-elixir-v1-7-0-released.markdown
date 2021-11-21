@@ -12,7 +12,7 @@ We are also glad to welcome Michał Muskała to the Elixir Core team. Prior to j
 
 ## Documentation metadata
 
-Elixir v1.7 implements [EEP 48](http://erlang.org/eep/eeps/eep-0048.html). EEP 48 aims to bring documentation interoperability across all languages running on the Erlang VM.
+Elixir v1.7 implements [EEP 48](http://www.erlang.org/eep/eeps/eep-0048.html). EEP 48 aims to bring documentation interoperability across all languages running on the Erlang VM.
 
 Furthermore, EEP 48 introduces the ability to annotate documentation with metadata, which we have made possible to leverage from Elixir:
 

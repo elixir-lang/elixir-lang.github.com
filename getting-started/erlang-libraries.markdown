@@ -10,13 +10,13 @@ interfacing with Erlang code. In this section, we will present some of the
 most common and useful Erlang functionality that is not found in Elixir.
 
 As you grow more proficient in Elixir, you may want to explore the Erlang
-[STDLIB Reference Manual](http://erlang.org/doc/apps/stdlib/index.html) in more
+[STDLIB Reference Manual](http://www.erlang.org/doc/apps/stdlib/index.html) in more
 detail.
 
 ## The binary module
 
 The built-in Elixir String module handles binaries that are UTF-8 encoded.
-[The binary module](http://erlang.org/doc/man/binary.html) is useful when
+[The binary module](http://www.erlang.org/doc/man/binary.html) is useful when
 you are dealing with binary data that is not necessarily UTF-8 encoded.
 
 ```elixir
@@ -35,7 +35,7 @@ Elixir does not contain a function similar to `printf` found in C and other
 languages. Luckily, the Erlang standard library functions `:io.format/2` and
 `:io_lib.format/2` may be used. The first formats to terminal output, while
 the second formats to an iolist. The format specifiers differ from `printf`,
-[refer to the Erlang documentation for details](http://erlang.org/doc/man/io.html#format-1).
+[refer to the Erlang documentation for details](http://www.erlang.org/doc/man/io.html#format-1).
 
 ```elixir
 iex> :io.format("Pi is approximately given by:~10.3f~n", [:math.pi])
@@ -50,7 +50,7 @@ Unicode handling.
 
 ## The crypto module
 
-[The crypto module](http://erlang.org/doc/man/crypto.html) contains hashing
+[The crypto module](http://www.erlang.org/doc/man/crypto.html) contains hashing
 functions, digital signatures, encryption and more:
 
 ```elixir
@@ -71,8 +71,8 @@ end
 
 ## The digraph module
 
-[The digraph module](http://erlang.org/doc/man/digraph.html) (as well as
-[digraph_utils](http://erlang.org/doc/man/digraph_utils.html)) contains
+[The digraph module](http://www.erlang.org/doc/man/digraph.html) (as well as
+[digraph_utils](http://www.erlang.org/doc/man/digraph_utils.html)) contains
 functions for dealing with directed graphs built of vertices and edges.
 After constructing the graph, the algorithms in there will help find,
 for instance, the shortest path between two vertices, or loops in the graph.
@@ -94,8 +94,8 @@ is possible because they are implemented as ETS tables, explained next.
 
 ## Erlang Term Storage
 
-The modules [`ets`](http://erlang.org/doc/man/ets.html) and
-[`dets`](http://erlang.org/doc/man/dets.html) handle storage of large
+The modules [`ets`](http://www.erlang.org/doc/man/ets.html) and
+[`dets`](http://www.erlang.org/doc/man/dets.html) handle storage of large
 data structures in memory or on disk respectively.
 
 ETS lets you create a table containing tuples. By default, ETS tables
@@ -121,7 +121,7 @@ iex> :ets.i(table)
 
 ## The math module
 
-[The `math` module](http://erlang.org/doc/man/math.html) contains common
+[The `math` module](http://www.erlang.org/doc/man/math.html) contains common
 mathematical operations covering trigonometry, exponential, and logarithmic
 functions.
 
@@ -137,7 +137,7 @@ iex> :math.log(7.694785265142018e23)
 
 ## The queue module
 
-The [`queue` is a data structure](http://erlang.org/doc/man/queue.html)
+The [`queue` is a data structure](http://www.erlang.org/doc/man/queue.html)
 that implements (double-ended) FIFO (first-in first-out) queues efficiently:
 
 ```elixir
@@ -157,7 +157,7 @@ iex> value
 
 ## The rand module
 
-[`rand` has functions](http://erlang.org/doc/man/rand.html) for returning
+[`rand` has functions](http://www.erlang.org/doc/man/rand.html) for returning
 random values and setting the random seed.
 
 ```elixir
@@ -172,7 +172,7 @@ iex> :rand.uniform(6)
 
 ## The zip and zlib modules
 
-[The `zip` module](http://erlang.org/doc/man/zip.html) lets you read and write
+[The `zip` module](http://www.erlang.org/doc/man/zip.html) lets you read and write
 ZIP files to and from disk or memory, as well as extracting file information.
 
 This code counts the number of files in a ZIP file:
@@ -182,7 +182,7 @@ iex> :zip.foldl(fn _, _, _, acc -> acc + 1 end, 0, :binary.bin_to_list("file.zip
 {:ok, 633}
 ```
 
-[The `zlib` module](http://erlang.org/doc/man/zlib.html) deals with data compression in zlib format, as found in the
+[The `zlib` module](http://www.erlang.org/doc/man/zlib.html) deals with data compression in zlib format, as found in the
 `gzip` command.
 
 ```elixir

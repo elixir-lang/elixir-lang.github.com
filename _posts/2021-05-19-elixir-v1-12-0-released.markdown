@@ -39,7 +39,7 @@ This is particularly useful when your tests get stuck and you want to know which
 
 [Erlang/OTP 24 ships with JIT compilation](https://blog.erlang.org/My-OTP-24-Highlights/) and Elixir developers don't have to do anything to reap its benefits. There are many other features in Erlang/OTP 24 to look forwards to and Elixir v1.12 provides integration with many of them: such as support for 16bit floats in bitstrings as well as performance improvements in the compiler and during code evaluation.
 
-Another excellent feature in Erlang/OTP 24 is the implementation of [EEP 54](http://erlang.org/eeps/eep-0054.html), which provides extended error information for many functions in Erlang's stdlib. Elixir v1.12 fully leverages this feature to improve reporting for errors coming from Erlang. For example, in earlier OTP versions, inserting an invalid argument into an ETS table that no longer exists would simply error with `ArgumentError`:
+Another excellent feature in Erlang/OTP 24 is the implementation of [EEP 54](http://www.erlang.org/eeps/eep-0054.html), which provides extended error information for many functions in Erlang's stdlib. Elixir v1.12 fully leverages this feature to improve reporting for errors coming from Erlang. For example, in earlier OTP versions, inserting an invalid argument into an ETS table that no longer exists would simply error with `ArgumentError`:
 
 <script type="text/javascript" src="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm.js" data-rows="20" id="asciicast-1s79Cwf2JvSLYihAahIobVyBm" async></script><noscript><p><a href="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm">See the example in asciinema</a></p></noscript>
 

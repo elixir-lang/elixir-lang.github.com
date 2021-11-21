@@ -255,7 +255,7 @@ Our application works already when we operate on the bucket named "bitsandpieces
     Function: #Function<0.128611034/0 in KVServer.loop_acceptor/1>
         Args: []
 
-Let's now define a release for `:bar`. One first step could be to define a release exactly like `foo` inside `mix.exs`. Additionally we will set the `cookie` option on both releases to `weknoweachother` in order for them to allow connections from each other. See the [Distributed Erlang Documentation](http://erlang.org/doc/reference_manual/distributed.html) for further information on this topic:
+Let's now define a release for `:bar`. One first step could be to define a release exactly like `foo` inside `mix.exs`. Additionally we will set the `cookie` option on both releases to `weknoweachother` in order for them to allow connections from each other. See the [Distributed Erlang Documentation](http://www.erlang.org/doc/reference_manual/distributed.html) for further information on this topic:
 
 ```elixir
 releases: [
@@ -385,7 +385,7 @@ Once again, uncomment the last two lines by removing the leading `rem ` to enabl
 
 The `rel/vm.args.eex` allows you to specify low-level flags that control how the Erlang VM and its runtime operate. You specify entries as if you were specifying arguments in the command line with code comments also supported. Here is the default generated file:
 
-    ## Customize flags given to the VM: https://erlang.org/doc/man/erl.html
+    ## Customize flags given to the VM: https://www.erlang.org/doc/man/erl.html
     ## -mode/-name/-sname/-setcookie are configured via env vars, do not set them here
 
     ## Number of dirty schedulers doing IO work (file, sockets, and others)
@@ -397,7 +397,7 @@ The `rel/vm.args.eex` allows you to specify low-level flags that control how the
     ## Tweak GC to run more often
     ##-env ERL_FULLSWEEP_AFTER 10
 
-You can see [a complete list of VM args and flags in the Erlang documentation](http://erlang.org/doc/man/erl.html).
+You can see [a complete list of VM args and flags in the Erlang documentation](http://www.erlang.org/doc/man/erl.html).
 
 ## Summing up
 

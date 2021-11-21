@@ -152,8 +152,8 @@ Finally, remember you can also get a mini-overview of the runtime info by callin
 We have just scratched the surface of what the Erlang VM has to offer, for example:
 
   * Alongside the observer application, Erlang also includes a `:crashdump_viewer` to view crash dumps
-  * Integration with OS level tracers, such as [Linux Trace Toolkit,](http://erlang.org/doc/apps/runtime_tools/LTTng.html) [DTRACE,](http://erlang.org/doc/apps/runtime_tools/DTRACE.html) and [SystemTap](http://erlang.org/doc/apps/runtime_tools/SYSTEMTAP.html)
-  * [Microstate accounting](http://erlang.org/doc/man/msacc.html) measures how much time the runtime spends in several low-level tasks in a short time interval
+  * Integration with OS level tracers, such as [Linux Trace Toolkit,](http://www.erlang.org/doc/apps/runtime_tools/LTTng.html) [DTRACE,](http://www.erlang.org/doc/apps/runtime_tools/DTRACE.html) and [SystemTap](http://www.erlang.org/doc/apps/runtime_tools/SYSTEMTAP.html)
+  * [Microstate accounting](http://www.erlang.org/doc/man/msacc.html) measures how much time the runtime spends in several low-level tasks in a short time interval
   * Mix ships with many tasks under the `profile` namespace, such as `cprof` and `fprof`
   * And more
 
