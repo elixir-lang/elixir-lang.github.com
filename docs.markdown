@@ -6,7 +6,9 @@ layout: default
 
 # Documentation
 
-Choose which version you want documentation for.
+The Elixir programming language is broken into 6 applications. The links below
+reference the documentation for the modules and functions in each of those
+applications. For a general introduction to the language, see our [guides](/guides.html).
 
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
