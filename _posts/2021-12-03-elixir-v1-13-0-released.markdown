@@ -18,7 +18,7 @@ Note: this announcement contains [asciinema](https://asciinema.org) snippets. Yo
 
 The feature that will most and immediately benefit all Elixir developers is the series of improvements we have made to how the compiler tracks file contents.
 
-Generally speaking, once a a file changes, it may lead to other files in your codebase to be recompiled. In previous versions, however, Elixir made no effort to understand which parts of the file changed. This means the smallest of changes to certain files, such as configuration files, could trigger a full project recompilation.
+Generally speaking, once a file changes, it may lead to other files in your codebase to be recompiled. In previous versions, however, Elixir made no effort to understand which parts of the file changed. This meant the smallest of changes to certain files, such as configuration files, could trigger a full project recompilation.
 
 This release comes with a series of improvements that better understand how your files change. In particular:
 
@@ -37,7 +37,7 @@ In a nutshell, Elixir went from triggering full recompilations whenever any of `
   * you change the compilation options in `mix.exs`
   * you change the configuration for the current project in `config/config.exs`
 
-To give a more practical example, take a regular [Phoenix project](https://phoenixframework.org/). It is most likely divided in two main directories: `my_app` and `my_app_web`. Most of your usage of Phoenix' APIs will happen within the files in the `my_app_web` diretory. However, if you bumped your Phoenix version or changed its configuration in previous Elixir versions, it would cause all files, in both directories, to recompile. With these changes, the recompilation should affect mostly the files in `my_app_web`.
+To give a more practical example, take a regular [Phoenix project](https://phoenixframework.org/). It is most likely divided in two main directories: `my_app` and `my_app_web`. Most of your usage of Phoenix' APIs will happen within the files in the `my_app_web` directory. However, if you bumped your Phoenix version or changed its configuration in previous Elixir versions, it would cause all files, in both directories, to be recompiled. With these changes, the recompilation should affect mostly the files in `my_app_web`.
 
 > To futher clarify, the Elixir compiler is not tracking directories. It is just a consequence of how Phoenix projects are organized that most dependencies to Phoenix are within `my_app_web`.
 
