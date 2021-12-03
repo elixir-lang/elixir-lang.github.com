@@ -37,7 +37,7 @@ In a nutshell, Elixir went from triggering full recompilations whenever any of `
   * you change the compilation options in `mix.exs`
   * you change the configuration for the current project in `config/config.exs`
 
-To give a more practical example, take a [regular Phoenix project](https://phoenixframework.org/). It is most likely divided in two main directories: `my_app` and `my_app_web`. Most of your usage of Phoenix' APIs will happen within the files in the `my_app_web` diretory. However, if you bumped your Phoenix version or changed its configuration in previous Elixir versions, it would cause all files, in both directories, to recompile. With these changes, the recompilation should affect mostly the files in `my_app_web`.
+To give a more practical example, take a regular [Phoenix project](https://phoenixframework.org/). It is most likely divided in two main directories: `my_app` and `my_app_web`. Most of your usage of Phoenix' APIs will happen within the files in the `my_app_web` diretory. However, if you bumped your Phoenix version or changed its configuration in previous Elixir versions, it would cause all files, in both directories, to recompile. With these changes, the recompilation should affect mostly the files in `my_app_web`.
 
 > To futher clarify, the Elixir compiler is not tracking directories. It is just a consequence of how Phoenix projects are organized that most dependencies to Phoenix are within `my_app_web`.
 
@@ -73,7 +73,7 @@ Elixir v1.13 comes with many improvements to `mix xref`, such as:
 
   * `mix xref graph` now supports multiple `--sink` and `--source` to be given.
 
-If you haven't used `mix xref` before, it may be hard to visualize what those changes mean. If you want to learn more, you can [watch the relevant section of my ElixirConf 2021 keynote (timestamped)](https://youtu.be/ydjx2kKHzrM?t=772) that includes a short introduction to `mix xref`.
+If you haven't used `mix xref` before, it may be hard to visualize what those changes mean. If you want to learn more, you can [watch the relevant section of my ElixirConf 2021 keynote](https://youtu.be/ydjx2kKHzrM?t=772) that includes a short introduction to `mix xref`.
 
 Those improvements came from direct feedback from the community. A special shout out to Marc-André Lafortune for the contributions and testing.
 
@@ -81,23 +81,19 @@ Those improvements came from direct feedback from the community. A special shout
 
 Thanks to its sigils, Elixir provides the ability of embedding snippets in other languages inside its source code. One could use it to embed XML:
 
-```elixir
-~X"""
-<?xml version="1.0" encoding="UTF-8"?>
-<text><![CDATA[Hello World]]></text>
-"""
-```
+    ~X"""
+    <?xml version="1.0" encoding="UTF-8"?>
+    <text><![CDATA[Hello World]]></text>
+    """
 
-Or even Zig, [via the Zigler project](https://github.com/ityonemo/zigler):
+Or even [Zig](https://ziglang.org/), [via the Zigler project](https://github.com/ityonemo/zigler):
 
-```elixir
-~Z"""
-/// nif: example_fun/2
-fn example_fun(value1: f64, value2: f64) bool {
-  return value1 > value2;
-}
-"""
-```
+    ~Z"""
+    /// nif: example_fun/2
+    fn example_fun(value1: f64, value2: f64) bool {
+      return value1 > value2;
+    }
+    """
 
 However, while you can format Elixir source code with [`mix format`](https://hexdocs.pm/mix/Mix.Tasks.Format.html), you could not format the code inside snippets.
 
@@ -147,6 +143,10 @@ The `Code` module has also been augmented with two functions: [`Code.string_to_q
 
 `elixir --short-version` has been added to quickly get the Elixir version, without booting the Erlang VM. The `Task` module includes performance optimizations and [new](https://hexdocs.pm/Task.html#ignore/1) [functions](https://hexdocs.pm/Task.html#completed/1). Finally, `mix test --profile-require=time` has been added to debug loading times of test suites and the recently added [`Mix.install/2`](https://hexdocs.pm/mix/Mix.html#install#2) has been improved with new options and environment variables.
 
-For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.13.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+## Learn more
+
+For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.13.0). You can also [watch my ElixirConf 2021 keynote about Elixir v1.13](https://youtu.be/ydjx2kKHzrM) to learn more.
+
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
 
 Have fun!
