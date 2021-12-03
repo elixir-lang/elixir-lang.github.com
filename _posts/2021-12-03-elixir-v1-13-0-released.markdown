@@ -28,7 +28,7 @@ This release comes with a series of improvements that better understand how your
 
   * Changing compile-time configuration files (`config/config.exs` and any other files imported from it) now only recompiles the project files that depend on the reconfigured applications, instead of a full project recompilation. However, if you change the configuration of your application itself, the whole project is still recompiled.
 
-  * Adding, updating or removing a dependency now only recompiles the project files that depend on the modified a dependency.
+  * Adding, updating or removing a dependency now only recompiles the project files that depend on the modified dependency.
 
   * If your project has both Erlang and Elixir files, changing an Erlang file will now recompile only the Elixir files that depend on it.
 
@@ -57,7 +57,7 @@ Similarly, you can now autocomplete struct names and their fields:
 
 <script id="asciicast-A44auZ00saSud3l7DbOL4IMYn" src="https://asciinema.org/a/A44auZ00saSud3l7DbOL4IMYn.js" async></script><noscript><p><a href="https://asciinema.org/a/A44auZ00saSud3l7DbOL4IMYn">See the example in asciinema</a></p></noscript>
 
-Overall, we hope the `Code.Fragment` module will become the shared foundation to power many of the tools in the ecosystem. We have also improved the amount of reflection APIs in [`Module`](https://hexdocs.pm/elixir/Module.html), which can then be used to power code intelligence features.
+Overall, we hope the `Code.Fragment` module will become the shared foundation to power many of the tools in the ecosystem. We have also added new reflection APIs to [`Module`](https://hexdocs.pm/elixir/Module.html), which can then be used to power code intelligence features.
 
 ## mix xref
 
