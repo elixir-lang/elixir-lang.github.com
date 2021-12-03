@@ -139,9 +139,9 @@ We are looking forward to see how this new functionality will be used by communi
       1 | hello + * world
         |         ^
 
-The `Code` module has also been augmented with two functions: [`Code.string_to_quoted_with_comments/2`](https://hexdocs.pm/Code.html#string_to_quoted_with_comments/2) and [`Code.quoted_to_algebra/2`](https://hexdocs.pm/Code.html#quoted_to_algebra/2). Those functions allow someone to retrieve the Elixir AST with their original source code comments, and then convert this AST to formatted code. In other words, those functions provide a wrapper around the Elixir Code Formatter, supporting developers who wish to create tools that directly manipulate and custom format Elixir source code.
+The `Code` module has also been augmented with two functions: [`Code.string_to_quoted_with_comments/2`](https://hexdocs.pm/elixir/Code.html#string_to_quoted_with_comments/2) and [`Code.quoted_to_algebra/2`](https://hexdocs.pm/elixir/Code.html#quoted_to_algebra/2). Those functions allow someone to retrieve the Elixir AST with their original source code comments, and then convert this AST to formatted code. In other words, those functions provide a wrapper around the Elixir Code Formatter, supporting developers who wish to create tools that directly manipulate and custom format Elixir source code.
 
-`elixir --short-version` has been added to quickly get the Elixir version, without booting the Erlang VM. The `Task` module includes performance optimizations and [new](https://hexdocs.pm/Task.html#ignore/1) [functions](https://hexdocs.pm/Task.html#completed/1). Finally, `mix test --profile-require=time` has been added to debug loading times of test suites and the recently added [`Mix.install/2`](https://hexdocs.pm/mix/Mix.html#install#2) has been improved with new options and environment variables.
+`elixir --short-version` has been added to quickly get the Elixir version, without booting the Erlang VM. The `Task` module includes performance optimizations and [new](https://hexdocs.pm/elixir/Task.html#ignore/1) [functions](https://hexdocs.pm/elixir/Task.html#completed/1). Finally, `mix test --profile-require=time` has been added to debug loading times of test suites and the recently added [`Mix.install/2`](https://hexdocs.pm/mix/Mix.html#install#2) has been improved with new options and environment variables.
 
 ## Learn more
 
