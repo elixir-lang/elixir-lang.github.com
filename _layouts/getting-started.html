@@ -3,6 +3,8 @@
 <div id="sidebar-primary" class="sidebar">
   {% include search.html %}
 
+  <a class="spec" href="/docs.html" style="display: block;margin-bottom: 20px">API Documentation</a>
+
   {% assign guides = site.data.getting-started  %}
   {% for guide in site.data.getting-started %}
     <div class="widget">
@@ -33,13 +35,6 @@
     {{ content }}
   </article><!-- .hfeed -->
 
-  <div id="edit-on-github">
-    <span>Is something wrong?</span>
-    <a href="{{ site.github.repository_url }}/edit/main/{{ page.path }}">
-      Edit this page on GitHub.
-    </a>
-  </div>
-
   {% assign url_parts = page.url | split: '/' %}
   {% assign url_parts_size = url_parts | size %}
   {% assign file_name = url_parts | last %}
@@ -67,6 +62,12 @@
     {% endif %}
   {% endfor %}
 
+  <div id="edit-on-github">
+    <span>Is something wrong?</span>
+    <a href="{{ site.github.repository_url }}/edit/main/{{ page.path }}">
+      Edit this page on GitHub.
+    </a>
+  </div>
 </div><!-- #content -->
 
 {% include bottom.html %}

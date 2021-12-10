@@ -11,8 +11,8 @@ In this tutorial, we are going to teach you about Elixir fundamentals - the lang
 
 Our requirements are (see `elixir -v`):
 
-  * Elixir 1.5.0 onwards
-  * Erlang/OTP 19 onwards
+  * Elixir 1.11.0 onwards
+  * Erlang/OTP 22 onwards
 
 Let's get started!
 
@@ -73,7 +73,7 @@ Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-start
 
 When going through this getting started guide, it is common to have questions; after all, that is part of the learning process! There are many places where you can ask questions, here are some of them:
 
-  * [Official #elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
+  * [#elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
   * [Elixir Forum](http://elixirforum.com)
   * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
   * [Elixir on Discord](https://discord.gg/elixir)

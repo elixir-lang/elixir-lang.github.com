@@ -8,9 +8,9 @@ layout: default
 
 {% include toc.html %}
 
-Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations and explore how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html). If you already know Erlang and you want to know Elixir (or vice-versa), check out our [Crash Course for Erlang developers](/crash-course.html).
+Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations. Later on, it explores how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html).
 
-Outside of our website, the Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that suits your pace and goals.
+Outside of our website, the Elixir Community has also produced plenty of resources to learn the language from different backgrounds and other perspectives. We list some of them below. We are sure you will find a resource that suits your pace and goals.
 
 ## Books
 
