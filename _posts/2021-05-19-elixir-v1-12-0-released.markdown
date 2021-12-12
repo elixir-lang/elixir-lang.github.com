@@ -29,7 +29,7 @@ Furthermore, `Mix.install/2` pairs nicely with Livebook, a newly announced proje
 
 Another improvement to scripting is the ability to trap exit signals via `System.trap_signal/3`. All you need is the signal name and a callback that will be invoked when the signal triggers. For example, ExUnit leverages this functionality to print all currently running tests when you abort the test suite via SIGQUIT (`Ctrl+\\ `). You can see this in action when running tests in the Plug project below:
 
-<script type="text/javascript" src="https://asciinema.org/a/qPOJ9Vd8DiEXttEv7olNJPUR0.js" data-rows="20" id="asciicast-qPOJ9Vd8DiEXttEv7olNJPUR0" async></script><noscript><p><a href="https://asciinema.org/a/qPOJ9Vd8DiEXttEv7olNJPUR0">See the example in asciinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/qPOJ9Vd8DiEXttEv7olNJPUR0.js" id="asciicast-qPOJ9Vd8DiEXttEv7olNJPUR0" async></script><noscript><p><a href="https://asciinema.org/a/qPOJ9Vd8DiEXttEv7olNJPUR0">See the example in asciinema</a></p></noscript>
 
 This is particularly useful when your tests get stuck and you want to know which one is the culprit.
 
@@ -41,11 +41,11 @@ This is particularly useful when your tests get stuck and you want to know which
 
 Another excellent feature in Erlang/OTP 24 is the implementation of [EEP 54](http://www.erlang.org/eeps/eep-0054.html), which provides extended error information for many functions in Erlang's stdlib. Elixir v1.12 fully leverages this feature to improve reporting for errors coming from Erlang. For example, in earlier OTP versions, inserting an invalid argument into an ETS table that no longer exists would simply error with `ArgumentError`:
 
-<script type="text/javascript" src="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm.js" data-rows="20" id="asciicast-1s79Cwf2JvSLYihAahIobVyBm" async></script><noscript><p><a href="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm">See the example in asciinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm.js" id="asciicast-1s79Cwf2JvSLYihAahIobVyBm" async></script><noscript><p><a href="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm">See the example in asciinema</a></p></noscript>
 
 However, in Elixir v1.12 with Erlang/OTP 24:
 
-<script type="text/javascript" src="https://asciinema.org/a/4l1ORaVDVdHB7Gi5DccIYFgSL.js" data-rows="20" id="asciicast-4l1ORaVDVdHB7Gi5DccIYFgSL" async></script><noscript><p><a href="https://asciinema.org/a/4l1ORaVDVdHB7Gi5DccIYFgSL">See the example in asciinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/4l1ORaVDVdHB7Gi5DccIYFgSL.js" id="asciicast-4l1ORaVDVdHB7Gi5DccIYFgSL" async></script><noscript><p><a href="https://asciinema.org/a/4l1ORaVDVdHB7Gi5DccIYFgSL">See the example in asciinema</a></p></noscript>
 
 Finally, note Rebar v2 no longer works on Erlang/OTP 24+. Mix defaults to Rebar v3 since Elixir v1.4, so no changes should be necessary by the vast majority of developers. However, if you are explicitly setting `manager: :rebar` in your dependency, you want to move to Rebar v3 by removing the `:manager` option. Compatibility with unsupported Rebar versions will be removed from Mix in the future.
 
@@ -86,7 +86,7 @@ Both `tap/2` and `then/2` are implemented as macros, and compiler improvements a
 
 IEx got two important quality of life improvements in this release. Hitting tab after a function invocation will show all of the arguments for said function and it is now possible to paste code with pipelines in the shell. See both features in action below:
 
-<script type="text/javascript" src="https://asciinema.org/a/IMSAZUqLFlmGRsPk4gKuJ3tN0.js" data-rows="20" id="asciicast-IMSAZUqLFlmGRsPk4gKuJ3tN0" async></script><noscript><p><a href="https://asciinema.org/a/IMSAZUqLFlmGRsPk4gKuJ3tN0">See the example in asciinema</a></p></noscript>
+<script type="text/javascript" src="https://asciinema.org/a/IMSAZUqLFlmGRsPk4gKuJ3tN0.js" id="asciicast-IMSAZUqLFlmGRsPk4gKuJ3tN0" async></script><noscript><p><a href="https://asciinema.org/a/IMSAZUqLFlmGRsPk4gKuJ3tN0">See the example in asciinema</a></p></noscript>
 
 ## Additional functions
 
