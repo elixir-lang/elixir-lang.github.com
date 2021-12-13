@@ -154,7 +154,7 @@ If the tests pass, you are ready to go. Otherwise, feel free to open an issue [i
 
 The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later. When installing Elixir, Erlang is generally installed automatically for you. However, if you want to install Erlang manually, you might check:
 
-  * [Source code distribution and Windows installers from Erlang's official website](http://www.erlang.org/download.html)
+  * [Source code distribution and Windows installers from Erlang's official website](http://www.erlang.org/downloads.html)
   * [Precompiled packages for some Unix-like installations](https://www.erlang-solutions.com/resources/download.html)
   * [A general list of installation methods from the Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
 
