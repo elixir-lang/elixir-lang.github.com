@@ -218,7 +218,7 @@ iex> try do
 ...>   ArithmeticError ->
 ...>     :infinity
 ...> else
-...>   y when y < 1 and y > -1 ->
+...>   x when x < 1 and x > -1 ->
 ...>     :small
 ...>   _ ->
 ...>     :large
