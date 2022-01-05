@@ -103,9 +103,6 @@ Parses the given `line` into a command.
     iex> KVServer.Command.parse "CREATE shopping\r\n"
     {:ok, {:create, "shopping"}}
 
-    iex> KVServer.Command.parse "CREATE  shopping  \r\n"
-    {:ok, {:create, "shopping"}}
-
     iex> KVServer.Command.parse "PUT shopping milk 1\r\n"
     {:ok, {:put, "shopping", "milk", "1"}}
 
