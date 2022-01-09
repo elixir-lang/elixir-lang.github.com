@@ -123,7 +123,7 @@ A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implem
 We have also many other smaller improvements:
 
 * Our CLI now supports `--hidden` and `--cookie` flags which are useful for distributed modes;
-* Our test framework, ExUnit, is now able to capture all the communication that happens with a registed IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](https://hexdocs.pm/ex_unit/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts to some inputs and what it prints to the terminal;
+* Our test framework, ExUnit, is now able to capture all the communication that happens with a registered IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](https://hexdocs.pm/ex_unit/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts to some inputs and what it prints to the terminal;
 * `IEx` now allows files to be imported into the shell with `import_file` and also loads `~/.iex` on startup for custom configuration;
 * The `String`, `Enum` and `Dict` modules got more convenience functions that goes from checking unicode character validity to taking values out of a dictionary;
 * And many, many more!

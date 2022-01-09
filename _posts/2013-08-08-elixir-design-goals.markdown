@@ -208,7 +208,7 @@ There are many other protocols exposed by the language, like [the `Inspect` prot
 
 ## Summing up
 
-The goal of this post was to sumarize the language goals: compatibility, productivity and extensibility. By being compatibile with the Erlang VM, we are providing developers another toolset for building concurrent, distributed and fault-tolerant systems.
+The goal of this post was to sumarize the language goals: compatibility, productivity and extensibility. By being compatible with the Erlang VM, we are providing developers another toolset for building concurrent, distributed and fault-tolerant systems.
 
 We also hope to have clarified what Elixir brings to the Erlang VM, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with extensible and consistent APIs for diverse types, including strict and lazy enumeration, unicode handling, a test framework and more.
 

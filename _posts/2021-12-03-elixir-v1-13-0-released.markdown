@@ -39,7 +39,7 @@ In a nutshell, Elixir went from triggering full recompilations whenever any of `
 
 To give a more practical example, take a regular [Phoenix project](https://phoenixframework.org/). It is most likely divided in two main directories: `my_app` and `my_app_web`. Most of your usage of Phoenix' APIs will happen within the files in the `my_app_web` directory. However, if you bumped your Phoenix version or changed its configuration in previous Elixir versions, it would cause all files, in both directories, to be recompiled. With these changes, the recompilation should affect mostly the files in `my_app_web`.
 
-> To futher clarify, the Elixir compiler is not tracking directories. It is just a consequence of how Phoenix projects are organized that most dependencies to Phoenix are within `my_app_web`.
+> To further clarify, the Elixir compiler is not tracking directories. It is just a consequence of how Phoenix projects are organized that most dependencies to Phoenix are within `my_app_web`.
 
 ## Code fragments
 
