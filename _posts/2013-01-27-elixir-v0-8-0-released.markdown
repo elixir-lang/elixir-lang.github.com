@@ -74,7 +74,7 @@ You can read more about [macros in the getting started guide](/getting-started/c
 
 ## A new way to manipulate pathnames
 
-Elixir v0.8 contains a bit of house cleaning too. We have created [the Path module](https://hexdocs.pm/elixir/Path.html) to accommodate functions used to manipulate filesystem paths and have also added functions like [`System.tmp_dir` and `System.user_home`](https://hexdocs.pm/elixir/System.html) which are meant to work accross different operating systems and are very handy when scripting.
+Elixir v0.8 contains a bit of house cleaning too. We have created [the Path module](https://hexdocs.pm/elixir/Path.html) to accommodate functions used to manipulate filesystem paths and have also added functions like [`System.tmp_dir` and `System.user_home`](https://hexdocs.pm/elixir/System.html) which are meant to work across different operating systems and are very handy when scripting.
 
 ## The new HashDict
 

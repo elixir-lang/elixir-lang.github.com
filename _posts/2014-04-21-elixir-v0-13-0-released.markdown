@@ -3,7 +3,7 @@ layout: post
 title: Elixir v0.13.0 released, hex.pm and ElixirConf announced
 author: José Valim
 category: Releases
-excerpt: "Elixir v0.13.0 comes with substantial improvements to the language: maps, structs, comprehensiona and more. It also marks the announcement of the hex.pm package manager and the announcment of ElixirConf!"
+excerpt: "Elixir v0.13.0 comes with substantial improvements to the language: maps, structs, comprehensiona and more. It also marks the announcement of the hex.pm package manager and the announcement of ElixirConf!"
 ---
 
 Hello folks!
@@ -187,7 +187,7 @@ With the introduction of maps and structs, some deprecations will arrive on upco
 
 Note though only Elixir records are being deprecated. Erlang records, which are basically syntax sugar around tuples, will remain in the language for the rare cases Elixir developers need to interact with Erlang libraries that provide records. In particular, the [Record](https://hexdocs.pm/elixir/Record.html) has been updated to provide the new Record API (while keeping the old one for backwards compatibility).
 
-Finally, structs are still in active development and new features, like `@derive`, should land in upcoming Elixir releases. For those interested, the [original maps and structs proposal is still availble](https://gist.github.com/josevalim/b30c881df36801611d13).
+Finally, structs are still in active development and new features, like `@derive`, should land in upcoming Elixir releases. For those interested, the [original maps and structs proposal is still available](https://gist.github.com/josevalim/b30c881df36801611d13).
 
 ## Comprehensions
 
@@ -248,7 +248,7 @@ $ MIX_ENV=test mix deps.get
 $ mix test
 ```
 
-In Elixir v0.13, `mix deps.get` only fetches dependencies and it does so accross all environments (unless an `--only` flag is specified). To support this new behaviour, dependencies now support the `:only` option:
+In Elixir v0.13, `mix deps.get` only fetches dependencies and it does so across all environments (unless an `--only` flag is specified). To support this new behaviour, dependencies now support the `:only` option:
 
 ```elixir
 def deps do

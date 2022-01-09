@@ -261,7 +261,7 @@ iex> is_function(add, 1)
 false
 ```
 
-Finally, anonymous functions can also access variables that are in scope when the function is defined. This is typically refered to as closures, as they close over their scope. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
+Finally, anonymous functions can also access variables that are in scope when the function is defined. This is typically referred to as closures, as they close over their scope. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
 ```elixir
 iex> double = fn a -> add.(a, a) end

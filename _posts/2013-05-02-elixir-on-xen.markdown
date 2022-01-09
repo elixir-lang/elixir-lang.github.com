@@ -12,7 +12,7 @@ Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir proje
 
 [Xen](https://en.wikipedia.org/wiki/Xen) is an open-source baremetal hypervisor that allows many operating systems to run on the same hardware. Xen is frequently used for server virtualization, Infrastructure as a Service (IaaS) and security applications.
 
-Elixir on Xen runs on top of the Xen Hypervisor (via the LING VM) but with no traditional OS underneath it, taking away numerous administrative, scalability, and performance issues. This  limits options of a malicious attacker, making it an excellent choice for high-security applications, and reduces startup latency, allowing developers to spawn new VMs in less than 100 miliseconds.
+Elixir on Xen runs on top of the Xen Hypervisor (via the LING VM) but with no traditional OS underneath it, taking away numerous administrative, scalability, and performance issues. This  limits options of a malicious attacker, making it an excellent choice for high-security applications, and reduces startup latency, allowing developers to spawn new VMs in less than 100 milliseconds.
 
 You can learn more about Xen and the LING VM on the [Erlang on Xen website](http://erlangonxen.org).
 

@@ -350,7 +350,7 @@ File.stream!("path/to/some/file", read_ahead: 100_000) # NEW!
 |> Enum.to_list()
 ```
 
-Flow will look at the computations we want to perform and start a series of stages to execute our code while keeping the amount of data being transfered between processes to a minimum. If you are interested in `GenStage.Flow` and how the computations above are spread across multiple stages, [we have written some documentation based on the prototypes we have built so far](https://hexdocs.pm/gen_stage/Experimental.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
+Flow will look at the computations we want to perform and start a series of stages to execute our code while keeping the amount of data being transferred between processes to a minimum. If you are interested in `GenStage.Flow` and how the computations above are spread across multiple stages, [we have written some documentation based on the prototypes we have built so far](https://hexdocs.pm/gen_stage/Experimental.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
 
 For the word counting problem with a fixed data, early experiments show a linear increase in performance with a fixed overhead of 20%. In other words, a dataset that takes 60s with a single core, takes 36s on a machine with 2 cores and 18s in one with 4 cores. All of those gains by simply moving your computations from streams to Flow. We plan to benchmark on machines with over 40 cores soon.
 

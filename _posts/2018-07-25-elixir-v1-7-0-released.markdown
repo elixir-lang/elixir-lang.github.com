@@ -113,7 +113,7 @@ The `assert` macro is able to look at the code, extract the current file, the li
 
 However, sometimes we need to write assertions such as `assert some_function(expr1, var2)`. When such assertion fails, we usually have to re-run the tests, now debugging or printing the values of `expr1` and `var2`. In Elixir v1.7, when a "bare" assertion fails, we will print the value of each argument individually. For a simple example such as `assert some_vars(1 + 2, 3 + 4)`, we get this report:
 
-![ExUnit Bare Asssertion Diff](/images/contents/exunit-bare-assertion-diff.png)
+![ExUnit Bare Assertion Diff](/images/contents/exunit-bare-assertion-diff.png)
 
 We have also [added coloring and diffing to doctests](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#content).
 

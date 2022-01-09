@@ -296,7 +296,7 @@ defp lookup(bucket, callback) do
 end
 ```
 
-Good! Now `GET`, `PUT` and `DELETE` requests are all routed to the approriate node. Let's also make sure that when a new bucket is created it ends up on the correct node. Replace the `run/1` function in `KVServer.Command`, the one that matches the `:create` command, with the following:
+Good! Now `GET`, `PUT` and `DELETE` requests are all routed to the appropriate node. Let's also make sure that when a new bucket is created it ends up on the correct node. Replace the `run/1` function in `KVServer.Command`, the one that matches the `:create` command, with the following:
 
 ```elixir
 def run({:create, bucket}) do
