@@ -139,7 +139,7 @@ iex> cond do
 
 ## `if` and `unless`
 
-Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for only one condition:
+Besides `case` and `cond`, Elixir also provides `if/2` and `unless/2`, which are useful when you need to check for only one condition:
 
 ```elixir
 iex> if true do
@@ -193,35 +193,4 @@ iex> x = if true do
 
 > Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](https://hexdocs.pm/elixir/Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
 
-## `do`-`end` blocks
-
-At this point, we have learned four control structures: `case`, `cond`, `if`, and `unless`, and they were all wrapped in `do`-`end` blocks. It happens we could also write `if` as follows:
-
-```elixir
-iex> if true, do: 1 + 2
-3
-```
-
-Notice how the example above has a comma between `true` and `do:`, that's because it is using Elixir's regular syntax where each argument is separated by a comma. We say this syntax is using *keyword lists*. We can pass `else` using keywords too:
-
-```elixir
-iex> if false, do: :this, else: :that
-:that
-```
-
-`do`-`end` blocks are a syntactic convenience built on top of the keyword ones. That's why `do/end` blocks do not require a comma between the previous argument and the block. They are useful exactly because they remove the verbosity when writing blocks of code. These are equivalent:
-
-```elixir
-iex> if true do
-...>   a = 1 + 2
-...>   a + 10
-...> end
-13
-iex> if true, do: (
-...>   a = 1 + 2
-...>   a + 10
-...> )
-13
-```
-
-Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings, and char lists".
+We have concluded the introduction to the most fundamental control-flow constructs in Elixir. Now it is time to talk about "Binaries, strings, and char lists".
