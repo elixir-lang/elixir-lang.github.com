@@ -75,12 +75,12 @@ Elixir provides macros as a mechanism for meta-programming (writing code that ge
 Public functions in modules are globally available, but in order to use macros, you need to opt-in by requiring the module they are defined in.
 
 ```elixir
-iex> Integer.is_odd(3)
-** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1
-    (elixir) src/elixir_dispatch.erl:97: :elixir_dispatch.dispatch_require/6
-iex> require Integer
+iex(1)> Integer.is_odd(3)
+** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. However there is a macro with the same name and arity. Be sure to require Integer if you intend to invoke this macro
+    (elixir 1.13.2) Integer.is_odd(3)
+iex(1)> require Integer
 Integer
-iex> Integer.is_odd(3)
+iex(2)> Integer.is_odd(3)
 true
 ```
 
