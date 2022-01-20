@@ -186,6 +186,16 @@ It's intended to help beginners get familiar with all of Elixir's features by bu
 
 <div class="clear"></div>
 
+<h4 class="resource">Educative.io's Metaprogramming in Elixir Course</h4>
+
+<a class="cover" href="https://www.educative.io/courses/metaprogramming-elixir" title="Educative.io's Metaprogramming in Elixir Course">
+  <img src="/images/learning/educative-io-metaprogramming.png" alt="Educative.io's Metaprogramming in Elixir Course" width="190" />
+</a>
+
+Get introduced to the concept of metaprogramming. Learn how to level up your programming skills by discovering the full potential of the macro system in Elixir. Understand the ins and outs of metaprogramming at a fundamental level and write incredible libraries by doing more with less code.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">ElixirCasts.io<span class="free">free</span></h4>
