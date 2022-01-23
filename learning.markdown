@@ -196,6 +196,20 @@ Get introduced to the concept of metaprogramming. Learn how to level up your pro
 
 <div class="clear"></div>
 
+<h4 class="resource">Learn-Elixir.dev</h4>
+
+<a class="cover" href="https://learn-elixir.dev" title="Learn Elixir Development">
+  <img src="/images/learning/learn-elixir-dev.png" alt="Learn-Elixir.dev cover" width="190" />
+</a>
+
+At your own pace, progress through 132 videos, 30 quizzes, 9 assignments, and 2 major projects of your choosing to demonstrate your working knowledge of a production-level quality of code. You’ll learn Syntax/Fundamentals,  REST, GraphQL with Absinthe, Phoenix, OTP, Testing, Ecto, architecture, how to scale, how to go distributed, and more…
+
+Join our weekly live coaching sessions every Wednesday at 12:00-noon pacific time to close any gaps in knowledge and get specific answers to your specific questions!
+
+Found your start-up, migrate a codebase, build that app! Our midterm and final projects create a great win-win scenario for you to complete your personal project while mastering the language. Or if you’re more career-focused we can offer referrals, recommendations, or references and host your completed projects on GitHub to show hiring managers your proficiency programming Elixir.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">ElixirCasts.io<span class="free">free</span></h4>
