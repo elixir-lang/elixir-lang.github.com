@@ -85,7 +85,7 @@ Besides the tuple defined above, there are five Elixir literals that, when quote
 {key, value} #=> Tuples with two elements
 ```
 
-Most Elixir code has a straight-forward translation to its underlying quoted expression. We recommend you try out different code samples and see what the results are. For example, what does `String.upcase("foo")` expand to? We have also learned that `if(true, do: :this, else: :that)` is the same as `if true do :this else :that end`. How does this affirmation hold with quoted expressions?
+Most Elixir code has a straight-forward translation to its underlying quoted expression. We recommend you try out different code samples and see what the results are. For example, what does `String.upcase("foo")` expand to? We have also learned that `if(true, do: :this, else: :that)` is the same as `if true, do: :this, else: :that`. How does this affirmation hold with quoted expressions?
 
 ## Unquoting
 
