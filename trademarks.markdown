@@ -14,7 +14,7 @@ Anyone can use the Elixir trademarks if that use of the trademark is nominative.
 
 You must not visually combine the Elixir logo with any other images, or change the logo in any way other than ways required by printing restrictions. If you want to create your own visual identity in relation to Elixir, you might use the shape of an unrelated "water drop" as part of your design, as seen in many community projects and initiatives. You must not combine or modify the Elixir logo.
 
-The Elixir logo is [available in our repository](https://github.com/elixir-lang/elixir-lang.github.com/tree/main/logos) in both vertical and horizontal versions.
+The Elixir logo is [available in our repository](https://github.com/elixir-lang/elixir-lang.github.com/tree/main/downloads/logos) in both vertical and horizontal versions.
 
 ## Nominative use
 
