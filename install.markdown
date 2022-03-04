@@ -85,6 +85,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   - Using our web installer:
     * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.2/elixir-websetup.exe)
     * Click next, next, ..., finish
+    * If you run into issues, check out the [Windows Installer issues tracker](https://github.com/elixir-lang/elixir-windows-setup)
 
   - Using Chocolatey:
     * Run: `cinst elixir`
