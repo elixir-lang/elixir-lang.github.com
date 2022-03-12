@@ -57,12 +57,12 @@ iex> string = "héllo"
 iex> String.length(string)
 5
 iex> length(String.to_charlist(string))
-6
+5
 iex> byte_size(string)
-7
+6
 ```
 
-`String.length/1` counts graphemes and returned 5. To count the number of code points, we can use `String.to_charlist/1` to convert a string to a list of codepoints, and then we get its length, which returned 6. Finally, `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, `l`, and `o`, but two bytes to represent the acute accent, adding to 7.
+`String.length/1` counts graphemes and returned 5. To count the number of code points, we can use `String.to_charlist/1` to convert a string to a list of codepoints, and then we get its length, which returned 5. Finally, `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, `l`, and `o`, but two bytes to represent the acute accent, adding to 6.
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
