@@ -45,26 +45,46 @@ The hex representation will also help you look up information about a code point
 
 Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it: encoding is an implementation. In other words, we need a mechanism to convert the code point numbers into bytes so they can be stored in memory, written to disk, etc.
 
-Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit bytes. UTF-8 is a **variable width** character encoding that uses one to four bytes to store each code point; it is capable of encoding all valid Unicode code points.
-
-Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme.
-
-In other words, what we would expect to be a single character, such as é, can in practice be multiple codepoints (in this case, e and an acute accent), each represented by potentially multiple bytes. Consider the following:
+Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit bytes. UTF-8 is a **variable width** character encoding that uses one to four bytes to store each code point. It is capable of encoding all valid Unicode code points. Let's see an example:
 
 ```elixir
 iex> string = "héllo"
 "héllo"
 iex> String.length(string)
 5
-iex> length(String.to_charlist(string))
-6
 iex> byte_size(string)
-7
+6
 ```
 
-`String.length/1` counts graphemes and returned 5. To count the number of code points, we can use `String.to_charlist/1` to convert a string to a list of codepoints, and then we get its length, which returned 6. Finally, `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, `l`, and `o`, but two bytes to represent the acute accent, adding to 7.
+Although the string above has 5 characters, it uses 6 bytes, as two bytes are used to represent the character `é`.
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
+
+Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme. We can use the function `String.normalize/2` to get the composed (usualy the default in most systems) and the decomposed representation of a string. Let's force the composed (`:nfc`) representation first:
+
+```elixir
+iex> composed = String.normalize("é", :nfc)
+"é"
+iex> String.codepoints(composed)
+["é"]
+iex> String.graphemes(composed)
+["é"]
+```
+
+Now the decomposed (`:nfd`) version:
+
+```elixir
+iex> decomposed = String.normalize("é", :nfd)
+"é"
+iex> String.codepoints(decomposed)
+["e", "́"]
+iex> String.graphemes(decomposed)
+["é"]
+```
+
+Even though they are visually the same, the decomposed version is made of two characters, where the acute accent `´` is its own character.
+
+Although these rules may sound complicated, UTF-8 encoded documents are everywhere. This page itself is encoded in UTF-8. The encoding information is given to your browser which then knows how to render all of the bytes, characters, and graphemes accordingly.
 
 A common trick in Elixir when you want to see the inner binary representation of a string is to concatenate the null byte `<<0>>` to it:
 
