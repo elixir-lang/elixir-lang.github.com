@@ -72,12 +72,10 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 
 ### BSD
   - **FreeBSD**
-  - * The latest Elixir release is named [lang/elixir-devel](https://freshports.org/lang/elixir-devel)
-  - * The default Elixir, [lang/elixir](https://freshports.org/lang/elixir) may
-      lag slightly, as dependent ports are often not able to be updated to the
-      newest Elixir release immediately
-  - To Install, use either `lang/lixir-devel` or `lang/elixir` as you
-      prefer:
+    * The latest Elixir release is named [lang/elixir-devel](https://freshports.org/lang/elixir-devel).
+      The default Elixir, [lang/elixir](https://freshports.org/lang/elixir), may
+      lag slightly as dependent ports are often not able to be updated to the
+      newest Elixir release immediately.
     * Using ports:
       * Run: `cd /usr/ports/lang/elixir && make install clean`
     * Using pkg:
