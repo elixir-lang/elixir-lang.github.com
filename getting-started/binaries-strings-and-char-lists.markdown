@@ -232,8 +232,6 @@ iex> rest
 "ber"
 ```
 
-You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
-
 ## Charlists
 
 Our tour of our bitstrings, binaries, and strings is nearly complete, but we have one more data type to explain: the charlist.
