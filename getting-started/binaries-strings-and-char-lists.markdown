@@ -33,7 +33,7 @@ iex> ?ł
 Note that most Unicode code charts will refer to a code point by its hexadecimal (hex) representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\uXXXX` notation and the hex representation of its code point number:
 
 ```elixir
-iex> "\u0061" === "a"
+iex> "\u0061" == "a"
 true
 iex> 0x0061 = 97 = ?a
 97
@@ -105,7 +105,7 @@ A complete reference about the binary / bitstring constructor `<<>>` can be foun
 By default, 8 bits (i.e. 1 byte) is used to store each number in a bitstring, but you can manually specify the number of bits via a `::n` modifier to denote the size in `n` bits, or you can use the more verbose declaration `::size(n)`:
 
 ```elixir
-iex> <<42>> === <<42::8>>
+iex> <<42>> == <<42::8>>
 true
 iex> <<3::4>>
 <<3::size(4)>>
@@ -121,7 +121,7 @@ true
 Any value that exceeds what can be stored by the number of bits provisioned is truncated:
 
 ```elixir
-iex> <<1>> === <<257>>
+iex> <<1>> == <<257>>
 true
 ```
 
