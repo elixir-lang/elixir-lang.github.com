@@ -30,7 +30,7 @@ iex> ?ł
 322
 ```
 
-Note that most Unicode code charts will refer to a code point by its hexadecimal representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\u` notation and the hex representation of its code point number:
+Note that most Unicode code charts will refer to a code point by its hexadecimal (hex) representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\uXXXX` notation and the hex representation of its code point number:
 
 ```elixir
 iex> "\u0061" === "a"
@@ -60,33 +60,27 @@ Although the string above has 5 characters, it uses 6 bytes, as two bytes are us
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
-Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme. We can use the function `String.normalize/2` to get the composed (usualy the default in most systems) and the decomposed representation of a string. Let's force the composed (`:nfc`) representation first:
+Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, the [woman firefighter emoji](https://emojipedia.org/woman-firefighter/) is represented as the combination of three characters: the woman emoji (👩), a hidden zero-width joiner, and the fire engine emoji (🚒):
 
 ```elixir
-iex> composed = String.normalize("é", :nfc)
-"é"
-iex> String.codepoints(composed)
-["é"]
-iex> String.graphemes(composed)
-["é"]
+iex> String.codepoints("👩‍🚒")
+["👩", "‍", "🚒"]
+iex> String.graphemes("👩‍🚒")
+["👩‍🚒"]
 ```
 
-Now the decomposed (`:nfd`) version:
+However, Elixir is smart enough to know they are seen as a single character, and therefore the length is still one:
 
 ```elixir
-iex> decomposed = String.normalize("é", :nfd)
-"é"
-iex> String.codepoints(decomposed)
-["e", "́"]
-iex> String.graphemes(decomposed)
-["é"]
+iex> String.length("👩‍🚒")
+1
 ```
 
-Even though they are visually the same, the decomposed version is made of two characters, where the acute accent `´` is its own character.
+> Note: if you can't see the emoji above in your terminal, you need to make sure your terminal supports emoji and that you are using a font that can render them.
 
 Although these rules may sound complicated, UTF-8 encoded documents are everywhere. This page itself is encoded in UTF-8. The encoding information is given to your browser which then knows how to render all of the bytes, characters, and graphemes accordingly.
 
-A common trick in Elixir when you want to see the inner binary representation of a string is to concatenate the null byte `<<0>>` to it:
+If you want to see the exact bytes that a string would be stored in a file, a common trick is to concatenate the null byte `<<0>>` to it:
 
 ```elixir
 iex> "hełło" <> <<0>>
