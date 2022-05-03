@@ -102,7 +102,8 @@ If necessary, replace "buster" with the name of your Raspbian release.
   * Get Erlang key and add it to the keychain:
     * Run: `echo "deb https://packages.erlang-solutions.com/debian buster contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
     * Run: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
-    * Run: `sudo apt-key add erlang_solutions.asc`
+    * Run: `cat erlang_solutions.asc | gpg --dearmor > erlang_solutions.gpg`
+    * Run: `sudo install -o root -g root -m 644 erlang_solutions.gpg /etc/apt/trusted.gpg.d/`
   * Install Elixir:
     * Update apt to latest: `sudo apt update`
     * Run: `sudo apt install elixir`
