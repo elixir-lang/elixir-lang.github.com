@@ -70,6 +70,9 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
     * Install Elixir: `sudo apt-get install elixir`
 
+  - **Void Linux**
+    * Run: `xbps-install -S elixir`
+    
 ### BSD
   - **FreeBSD**
     * The latest Elixir release is named [lang/elixir-devel](https://freshports.org/lang/elixir-devel).
