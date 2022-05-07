@@ -26,25 +26,7 @@ iex> if true, do: :this, else: :that
 :this
 ```
 
-Those conveniences, which we call here "optional syntax", allow the language syntax core to be small, without sacrificing the readability and expressiveness of your code. This is what allows us to write:
-
-```elixir
-defmodule Math do
-  def add(a, b) do
-    a + b
-  end
-end
-```
-
-instead of:
-
-```elixir
-defmodule(Math, [
-  {:do, def(add(a, b), [{:do, a + b}])}
-])
-```
-
-In this brief chapter, we will review the four rules provided by the language, using a short snippet as playground.
+Those conveniences, which we call here "optional syntax", allow the language syntax core to be small, without sacrificing the readability and expressiveness of your code.  In this brief chapter, we will review the four rules provided by the language, using a short snippet as playground.
 
 ## Walk-through
 
@@ -84,6 +66,24 @@ Now let's remove the conveniences one by one:
    if(variable?, [{:do, Call.this()}, {:else, Call.that()}])
    ```
 
-That's it! Those four rules outline the optional syntax of the majority of the code we have written so far. Whenever you have any questions, this quick walk-through has you covered.
+That's it! Those four rules outline the optional syntax of the code we have written so far. Whenever you have any questions, this quick walk-through has you covered.
 
-In their day to day, Elixir developers use the [`mix format`](https://hexdocs.pm/mix/Mix.Tasks.Format.html) task to format their codebase according to a well-defined set of rules defined by the Elixir team and the community. For instance, `mix format` will always add parentheses to function calls unless explicitly configured to not do so. This ensures all codebases in your company and in the community follow the same standards.
+At the end of the day, those rules are what enables us to write:
+
+```elixir
+defmodule Math do
+  def add(a, b) do
+    a + b
+  end
+end
+```
+
+instead of:
+
+```elixir
+defmodule(Math, [
+  {:do, def(add(a, b), [{:do, a + b}])}
+])
+```
+
+Finally, if you are worried about when to apply those rules, keep in mind that those concerns are handled by the Elixir formatter. In our day to day, Elixir developers use the [`mix format`](https://hexdocs.pm/mix/Mix.Tasks.Format.html) task to format our codebases according to a well-defined set of rules defined by the Elixir team and the community. For instance, `mix format` will always add parentheses to function calls unless explicitly configured to not do so. This ensures all codebases in your company and in the community follow the same standards.
