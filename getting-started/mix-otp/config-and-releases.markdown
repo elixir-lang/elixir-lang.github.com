@@ -277,7 +277,7 @@ And now let's assemble both releases:
     $ MIX_ENV=prod mix release foo
     $ MIX_ENV=prod mix release bar
 
-Stop `foo` is if it still running and re-start it to load the `cookie`:
+Stop `foo` if it's still running and re-start it to load the `cookie`:
 
     $ _build/prod/rel/foo/bin/foo start
 
