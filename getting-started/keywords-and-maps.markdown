@@ -213,7 +213,7 @@ iex> if true do
 "This will be seen"
 ```
 
-It happens that `do` blocks are nothing more than a syntax convenienice on top of keywords. We can rewrite the above to:
+It happens that `do` blocks are nothing more than a syntax convenience on top of keywords. We can rewrite the above to:
 
 ```elixir
 iex> if true, do: "This will be seen", else: "This won't"
