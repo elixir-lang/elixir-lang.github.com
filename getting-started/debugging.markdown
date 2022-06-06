@@ -145,6 +145,8 @@ The above will open another Graphical User Interface that provides many panes to
 
 We explore the Observer in the context of an actual project [in the Dynamic Supervisor chapter of the Mix & OTP guide](/getting-started/mix-otp/dynamic-supervisor.html). This is one of the debugging techniques [the Phoenix framework used to achieve 2 million connections on a single machine](https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections).
 
+If you are using the Phoenix web framework, it ships with the [Phoenix LiveDashboard](https://github.com/phoenixframework/phoenix_live_dashboard), a web dashboard for production nodes which provides similar features to Observer.
+
 Finally, remember you can also get a mini-overview of the runtime info by calling `runtime_info/0` directly in IEx.
 
 ## Other tools and community
@@ -152,15 +154,13 @@ Finally, remember you can also get a mini-overview of the runtime info by callin
 We have just scratched the surface of what the Erlang VM has to offer, for example:
 
   * Alongside the observer application, Erlang also includes a `:crashdump_viewer` to view crash dumps
+
   * Integration with OS level tracers, such as [Linux Trace Toolkit,](http://www.erlang.org/doc/apps/runtime_tools/LTTng.html) [DTRACE,](http://www.erlang.org/doc/apps/runtime_tools/DTRACE.html) and [SystemTap](http://www.erlang.org/doc/apps/runtime_tools/SYSTEMTAP.html)
+
   * [Microstate accounting](http://www.erlang.org/doc/man/msacc.html) measures how much time the runtime spends in several low-level tasks in a short time interval
+
   * Mix ships with many tasks under the `profile` namespace, such as `cprof` and `fprof`
-  * And more
 
-The community has also created its own tools, often to aid in production, other times in development:
-
-  * [Phoenix LiveDashboard](https://github.com/phoenixframework/phoenix_live_dashboard) a dashboard for production nodes through a web interface.
-  * [visualixir](https://github.com/koudelka/visualixir) is a development-time process message visualizer.
-  * [erlyberly](https://github.com/andytill/erlyberly) is a GUI for tracing during development.
+  * For more advanced use cases, we recommend the excellent [Erlang in Anger](https://www.erlang-in-anger.com/), which is available as a free ebook
 
 Happy debugging!

@@ -20,11 +20,14 @@ iex> if true do
 ...> else
 ...>   :that
 ...> end
+:this
 
 # keyword lists
 iex> if true, do: :this, else: :that
 :this
 ```
+
+Keyword lists use Elixir's regular notation for separating arguments, where we separate each key-value pair with commas, and each key is followed by `:`. In the `do`-blocks, we get rid of the colons, the commas, and separate each keyword by a newline. They are useful exactly because they remove the verbosity when writing blocks of code. Most of the time, we use the block syntax, but it is good to know they are equivalent.
 
 Those conveniences, which we call here "optional syntax", allow the language syntax core to be small, without sacrificing the readability and expressiveness of your code.  In this brief chapter, we will review the four rules provided by the language, using a short snippet as playground.
 
@@ -66,7 +69,7 @@ Now let's remove the conveniences one by one:
    if(variable?, [{:do, Call.this()}, {:else, Call.that()}])
    ```
 
-That's it! Those four rules outline the optional syntax of the code we have written so far. Whenever you have any questions, this quick walk-through has you covered.
+That's it! Those four rules outline the optional syntax available in Elixir. Those rules apply everywhere consistently, regardless of the construct you are invoking. Whenever you have any questions, this quick walk-through has you covered.
 
 At the end of the day, those rules are what enables us to write:
 
