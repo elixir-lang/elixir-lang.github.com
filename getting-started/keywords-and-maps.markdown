@@ -198,6 +198,8 @@ iex> map.c
 ** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
 
+This syntax has one large benefit in that it raises if the key does not exist in the map. Sometimes the Elixir compiler may even warn too. This makes it useful to get quick feedback and spot bugs and typos early on.
+
 Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post by José Valim](https://dashbit.co/blog/writing-assertive-code-with-elixir) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
 ## `do`-blocks and keywords
