@@ -583,11 +583,11 @@ lists:map(Square, [1, 2, 3, 4]).
 **Elixir**
 
 ```elixir
-sum = fn(a, b) -> a + b end
+sum = fn a, b -> a + b end
 sum.(4, 3)
 #=> 7
 
-square = fn(x) -> x * x end
+square = fn x -> x * x end
 Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 ```

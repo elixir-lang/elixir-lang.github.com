@@ -5,31 +5,68 @@ title: Keyword lists and maps
 redirect_from: /getting-started/maps-and-dicts.html
 ---
 
-So far we haven't discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, etc.
+Now let's talk about associative data structures. Associative data structures are able to associate a key to a certain value. Different languages call these different names like dictionaries, hashes, associative arrays, etc.
 
 In Elixir, we have two main associative data structures: keyword lists and maps. It's time to learn more about them!
 
 ## Keyword lists
 
-In many functional programming languages, it is common to use a list of 2-item tuples as the representation of a key-value data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:
+Keyword lists are a data-structure used to pass options to functions. Imagine you want to split a string of numbers. We can use `String.split/2`:
 
 ```elixir
-iex> list = [{:a, 1}, {:b, 2}]
-[a: 1, b: 2]
-iex> list == [a: 1, b: 2]
+iex> String.split("1 2 3", " ")
+["1", "2", "3"]
+```
+
+However, what happens if there is an additional space between the numbers:
+
+```elixir
+iex> String.split("1  2  3", " ")
+["1", "", "2", "", "3"]
+```
+
+As you can see, there are now empty strings in our results. Luckily, the `String.split/3` function allows the `trim` option to be set to true:
+
+```elixir
+iex> String.split("1  2  3", " ", [trim: true])
+["1", "2", "3"]
+```
+
+`[trim: true]` is a keyword list. Furthermore, when a keyword list is the last argument of a function, we can skip the brackets and write:
+
+```elixir
+iex> String.split("1  2  3", " ", trim: true)
+["1", "2", "3"]
+```
+
+As the name implies, keyword lists are simply lists. In particular, keyword lists are 2-item tuples where the first element (the key) is an atom and the second element can be any value. Both representations are the same:
+
+```elixir
+iex> [{:trim, true}] == [trim: true]
 true
 ```
 
-As you can see above, Elixir supports a special syntax for defining such lists: `[key: value]`. Underneath it maps to the same list of tuples as above. Since keyword lists are lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:
+Since keyword lists are lists, we can use all operations available to lists. For example, we can use `++` to add new values to a keyword list:
 
 ```elixir
+iex> list = [a: 1, b: 2]
+[a: 1, b: 2]
 iex> list ++ [c: 3]
 [a: 1, b: 2, c: 3]
 iex> [a: 0] ++ list
 [a: 0, a: 1, b: 2]
 ```
 
-Note that values added to the front are the ones fetched on lookup:
+You can read the value of a keyword list using the brackets syntax:
+
+```elixir
+iex> list[:a]
+1
+iex> list[:b]
+2
+```
+
+In case of duplicate keys, values added to the front are the ones fetched:
 
 ```elixir
 iex> new_list = [a: 0] ++ list
@@ -54,29 +91,6 @@ query =
     select: w
 ```
 
-These characteristics are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the `if/2` macro, we mentioned that the following syntax is supported:
-
-```elixir
-iex> if false, do: :this, else: :that
-:that
-```
-
-The `do:` and `else:` pairs form a keyword list! In fact, the call above is equivalent to:
-
-```elixir
-iex> if(false, [do: :this, else: :that])
-:that
-```
-
-Which, as we have seen above, is the same as:
-
-```elixir
-iex> if(false, [{:do, :this}, {:else, :that}])
-:that
-```
-
-In general, when the keyword list is the last argument of a function, the square brackets are optional.
-
 Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists requires the number of items and their order to match:
 
 ```elixir
@@ -90,7 +104,7 @@ iex> [b: b, a: a] = [a: 1, b: 2]
 ** (MatchError) no match of right hand side value: [a: 1, b: 2]
 ```
 
-In order to manipulate keyword lists, Elixir provides [the `Keyword` module](https://hexdocs.pm/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
+In order to manipulate keyword lists, Elixir provides [the `Keyword` module](https://hexdocs.pm/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as them: the longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
 ## Maps
 
@@ -184,7 +198,35 @@ iex> map.c
 ** (KeyError) key :c not found in: %{2 => :b, :a => 1}
 ```
 
+This syntax has one large benefit in that it raises if the key does not exist in the map. Sometimes the Elixir compiler may even warn too. This makes it useful to get quick feedback and spot bugs and typos early on.
+
 Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post by José Valim](https://dashbit.co/blog/writing-assertive-code-with-elixir) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
+
+## `do`-blocks and keywords
+
+As we have seen, keywords are mostly used in the language to pass optional values. In fact, we have used keywords before in this guide. For example, we have seen:
+
+```elixir
+iex> if true do
+...>   "This will be seen"
+...> else
+...>   "This won't"
+...> end
+"This will be seen"
+```
+
+It happens that `do` blocks are nothing more than a syntax convenience on top of keywords. We can rewrite the above to:
+
+```elixir
+iex> if true, do: "This will be seen", else: "This won't"
+"This will be seen"
+```
+
+Pay close attention to both syntaxes. In the keyword list format, we separate each key-value pair with commas, and each key is followed by `:`. In the `do`-blocks, we get rid of the colons, the commas, and separate each keyword by a newline. They are useful exactly because they remove the verbosity when writing blocks of code. Most of the time, you will use the block syntax, but it is good to know they are equivalent.
+
+Note that only a handful of keyword lists can be converted to blocks: `do`, `else`, `catch`, `rescue`, and `after`. Those are all the keywords used by Elixir control-flow constructs. We have already learned some of them and we will learn others in the future.
+
+With this out of the way, let's see how we can work with nested data structures.
 
 ## Nested data structures
 

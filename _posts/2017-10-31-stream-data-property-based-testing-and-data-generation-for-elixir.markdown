@@ -27,7 +27,7 @@ Enum.take(generator, 5)
 #=> [0, 1, 3, 3, 2]
 ```
 
-`StreamData.map/2` is encouraged over `Stream.map/2` because generators return values that can shrink, which is something property-based testing takes advantage of as we'll see later on. When treated as enumerables, generators return normal values that cannot be shrinked.
+`StreamData.map/2` is encouraged over `Stream.map/2` because generators return values that can shrink, which is something property-based testing takes advantage of as we'll see later on. When treated as enumerables, generators return normal values that cannot be shrunk.
 
 We decided to separate data-generation from property-based testing because it's something that developers can take advantage of in situations outside of property-based testing. For example, data streams can be used to seed a database or to have randomly generated data available during regular tests.
 

@@ -52,7 +52,7 @@ Typically, stable releases are pushed to Hex. If you want to depend on an extern
 
 ```elixir
 def deps do
-  [{:plug, git: "git://github.com/elixir-lang/plug.git"}]
+  [{:plug, git: "https://github.com/elixir-lang/plug.git"}]
 end
 ```
 

@@ -122,11 +122,11 @@ IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
 IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 ```
 
-*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#trailing-question-mark-foo).*
+*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#trailing-question-mark-foo).*
 
 Giving an argument that does not match any of the clauses raises an error.
 
-Similar to constructs like `if`, named functions support both `do:` and `do`-`end` block syntax, as [we learned `do`-`end` is a convenient syntax for the keyword list format](/getting-started/case-cond-and-if.html#doend-blocks). For example, we can edit `math.exs` to look like this:
+Similar to constructs like `if`, named functions support both `do:` and `do`-block syntax, as [we learned in the previous chapter](/getting-started/keywords-and-maps.html#do-blocks-and-keywords). For example, we can edit `math.exs` to look like this:
 
 ```elixir
 defmodule Math do
@@ -135,7 +135,7 @@ defmodule Math do
 end
 ```
 
-And it will provide the same behaviour. You may use `do:` for one-liners but always use `do`-`end` for functions spanning multiple lines. If you prefer to be consistent, you can use `do`-`end` throughout your codebase.
+And it will provide the same behaviour. You may use `do:` for one-liners but always use `do`-blocks for functions spanning multiple lines. If you prefer to be consistent, you can use `do`-blocks throughout your codebase.
 
 ## Function capturing
 
@@ -165,6 +165,15 @@ iex> &is_function/1
 &:erlang.is_function/1
 iex> (&is_function/1).(fun)
 true
+```
+
+You can also capture operators:
+
+```elixir
+iex> add = &+/2
+&:erlang.+/2
+iex> add.(1, 2)
+3
 ```
 
 Note the capture syntax can also be used as a shortcut for creating functions:
@@ -240,7 +249,7 @@ IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 IO.puts Concat.join("Hello")               #=> Hello
 ```
 
-*The leading underscore in `_sep` means that the variable will be ignored in this function; see [Naming Conventions](https://hexdocs.pm/elixir/master/naming-conventions.html#underscore-_foo).*
+*The leading underscore in `_sep` means that the variable will be ignored in this function; see [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#underscore-_foo).*
 
 When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 

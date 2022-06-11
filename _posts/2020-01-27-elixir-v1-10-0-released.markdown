@@ -118,7 +118,7 @@ While this is the preferred approach, there are still two scenarios we need to a
 
   1. Not everyone may be aware of this pitfall, so they will mistakenly read the application environment at compile-time, until they are bitten by this behaviour
 
-  2. In rare occasions, you trully need to read the application environment at compile-time, and you want to be warned when you try to configure at runtime something that is valid only at compilation time
+  2. In rare occasions, you truly need to read the application environment at compile-time, and you want to be warned when you try to configure at runtime something that is valid only at compilation time
 
 Elixir v1.10 aims to solve these two scenarios by introducing a `Application.compile_env/3` function. For example, to read the value at compile time, you can now do:
 

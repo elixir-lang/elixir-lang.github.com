@@ -44,7 +44,7 @@ We've also added a more compact and visual form of the `function` helper. Now,
 instead of `function(Enum, :all?, 2)` you can use `function(Enum.all?/2)`.
 
 We've also figured out how to achieve an up to 6x [performance increase](https://github.com/elixir-lang/elixir/blob/v0.7.2/lib/elixir/lib/kernel.ex#L1386-L1417)
-under some circunstances when using records.
+under some circumstances when using records.
 
 ...and [many other fixes & improvements](https://github.com/elixir-lang/elixir/blob/v0.7.2/CHANGELOG.md).
 

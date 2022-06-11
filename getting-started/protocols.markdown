@@ -205,9 +205,9 @@ Which technique is best between deriving and falling back to `Any` depends on th
 Elixir ships with some built-in protocols. In previous chapters, we have discussed the `Enum` module which provides many functions that work with any data structure that implements the `Enumerable` protocol:
 
 ```elixir
-iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
+iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
 [2, 4, 6]
-iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
+iex> Enum.reduce(1..3, 0, fn x, acc -> x + acc end)
 6
 ```
 

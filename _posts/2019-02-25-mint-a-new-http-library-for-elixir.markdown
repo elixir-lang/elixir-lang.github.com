@@ -14,7 +14,7 @@ To validate this we built out the library with a common API supporting both HTTP
 
 Mint HTTP connections are managed directly in the process that starts the connection, which means no connection pool is used nor new processes spawned when a connection is opened. This allows the user of the library to build their own process structure that fits their application.
 
-With Mint each connection has a single immutable data structure that the user needs to manage. Mint uses ["active mode"](http://erlang.org/doc/man/inet.html#setopts-2) sockets. This means data and events from the socket are sent as messages to the process that started the connection. The user passes the messages to the `stream/2` function that returns the updated connection and a list of "responses". Responses are streamed back which means you won't receive a single full HTTP response back from `stream/2`, instead the response is returned in partial response chunks. A chunk can be the status line, HTTP headers, or part of the response body.
+With Mint each connection has a single immutable data structure that the user needs to manage. Mint uses ["active mode"](http://www.erlang.org/doc/man/inet.html#setopts-2) sockets. This means data and events from the socket are sent as messages to the process that started the connection. The user passes the messages to the `stream/2` function that returns the updated connection and a list of "responses". Responses are streamed back which means you won't receive a single full HTTP response back from `stream/2`, instead the response is returned in partial response chunks. A chunk can be the status line, HTTP headers, or part of the response body.
 
 Let's look at an example of sending a request with Mint:
 
@@ -60,7 +60,7 @@ Of course, none of this stops you from building a connection pool on top of Mint
 
 ## HTTP/1 and HTTP/2
 
-The `Mint.HTTP` module has a single interface for both HTTP/1 and HTTP/2 connections and performs version negotation on HTTPS connections, HTTP connections default to HTTP/1. You can specify which HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version-specific features.
+The `Mint.HTTP` module has a single interface for both HTTP/1 and HTTP/2 connections and performs version negotiation on HTTPS connections, HTTP connections default to HTTP/1. You can specify which HTTP version you want to use or use the `Mint.HTTP1` or `Mint.HTTP2` modules directly if you want to use version-specific features.
 
 ## Safe-by-default HTTPS
 

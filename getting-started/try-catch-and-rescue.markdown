@@ -98,6 +98,18 @@ At the end of the day, it's up to your application to decide if an error while o
 
 Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](https://hexdocs.pm/elixir/File.html) is a good example of this convention.
 
+### Fail fast / Let it crash
+
+One saying that is common in the Erlang community, as well as Elixir's, is "fail fast" / "let it crash". The idea behind let it crash is that, in case something _unexpected_ happens, it is best to let the exception happen, without rescuing it.
+
+It is important to emphasize the word _unexpected_. For example, imagine you are building a script to process files. Your script receive filenames as inputs. It is expected that users may make mistakes and provide unknown filenames. In this scenario, while you could use `File.read!/1` to read files and let it crash in case of invalid filenames, it probably makes more sense to use `File.read/1` and provide users of your script with a clear and precise feedback of what went wrong.
+
+Other times, you may fully expect a certain file to exist, and in case it does not, it means something terribly wrong has happened elsewhere. In such cases, `File.read!/1` is all you need.
+
+The second approach also works because, as discussed in the [Processes](/getting-started/processes.html) chapter, all Elixir code runs inside processes that are isolated and don't share anything by default. Therefore, an unhandled exception in a process will never crash or corrupt the state of another process. This allows us to define supervisor processes, which are meant to observe when a process terminates unexpectedly, and starts a new one in its place.
+
+At the end of the day, "fail fast" / "let it crash" is a way of saying that, when something _unexpected_ happens, it is best to start from scratch within a new processes, freshly started by a supervisor, rather than blindly trying to rescue all possible error cases without the full context of when and how they can happen.
+
 ### Reraise
 
 While we generally avoid using `try/rescue` in Elixir, one situation where we may want to use such constructs is for observability/monitoring. Imagine you want to log that something went wrong, you could do:
@@ -124,7 +136,7 @@ Those situations are quite uncommon in practice except when interfacing with lib
 
 ```elixir
 iex> try do
-...>   Enum.each(-50..50, fn(x) ->
+...>   Enum.each(-50..50, fn x ->
 ...>     if rem(x, 13) == 0, do: throw(x)
 ...>   end)
 ...>   "Got nothing"

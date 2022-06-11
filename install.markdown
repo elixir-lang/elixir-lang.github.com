@@ -70,12 +70,19 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
     * Install Elixir: `sudo apt-get install elixir`
 
+  - **Void Linux**
+    * Run: `xbps-install -S elixir`
+    
 ### BSD
   - **FreeBSD**
+    * The latest Elixir release is named [lang/elixir-devel](https://freshports.org/lang/elixir-devel).
+      The default Elixir, [lang/elixir](https://freshports.org/lang/elixir), may
+      lag slightly as dependent ports are often not able to be updated to the
+      newest Elixir release immediately.
     * Using ports:
       * Run: `cd /usr/ports/lang/elixir && make install clean`
     * Using pkg:
-      * Run: `pkg install elixir`
+      * Run: `pkg install elixir` or `pkg install elixir-devel`
 
   - **OpenBSD**
     * Run: `pkg_add elixir`
@@ -83,8 +90,9 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
 ### Windows
 
   - Using our web installer:
-    * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.1/elixir-websetup.exe)
+    * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.2/elixir-websetup.exe)
     * Click next, next, ..., finish
+    * If you run into issues, check out the [Windows Installer issues tracker](https://github.com/elixir-lang/elixir-windows-setup)
 
   - Using Chocolatey:
     * Run: `cinst elixir`
@@ -97,7 +105,8 @@ If necessary, replace "buster" with the name of your Raspbian release.
   * Get Erlang key and add it to the keychain:
     * Run: `echo "deb https://packages.erlang-solutions.com/debian buster contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
     * Run: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
-    * Run: `sudo apt-key add erlang_solutions.asc`
+    * Run: `cat erlang_solutions.asc | gpg --dearmor > erlang_solutions.gpg`
+    * Run: `sudo install -o root -g root -m 644 erlang_solutions.gpg /etc/apt/trusted.gpg.d/`
   * Install Elixir:
     * Update apt to latest: `sudo apt update`
     * Run: `sudo apt install elixir`
@@ -111,9 +120,7 @@ If you are familiar with Docker you can use the official Docker image to get sta
   * Enter bash within container with installed `elixir`
     * Run: `docker run -it --rm elixir bash`
 
-Those distributions will likely install Erlang automatically for you too. In case they don't, check the [Installing Erlang](#installing-erlang) section below.
-
-If you need to programmatically fetch the list of Elixir precompiled packages alongside their checksums, access [https://elixir-lang.org/elixir.csv](https://elixir-lang.org/elixir.csv).
+The above will automatically point to the latest Erlang and Elixir available. For production usage, we recommend using [Hex.pm Docker images](https://hub.docker.com/r/hexpm/elixir), which are immutable and point to a specific Erlang and Elixir version.
 
 ## Precompiled package
 
@@ -142,7 +149,7 @@ Next you should download source code ([.zip](https://github.com/elixir-lang/elix
 
 After compiling, you are ready to run the elixir and `iex` commands from the bin directory. It is recommended that you [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
-In case you are feeling a bit more adventurous, you can also compile from master:
+In case you are feeling a bit more adventurous, you can also compile from main:
 
 ```bash
 $ git clone https://github.com/elixir-lang/elixir.git
@@ -156,7 +163,7 @@ If the tests pass, you are ready to go. Otherwise, feel free to open an issue [i
 
 The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later. When installing Elixir, Erlang is generally installed automatically for you. However, if you want to install Erlang manually, you might check:
 
-  * [Source code distribution and Windows installers from Erlang's official website](http://www.erlang.org/download.html)
+  * [Source code distribution and Windows installers from Erlang's official website](http://www.erlang.org/downloads.html)
   * [Precompiled packages for some Unix-like installations](https://www.erlang-solutions.com/resources/download.html)
   * [A general list of installation methods from the Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
 

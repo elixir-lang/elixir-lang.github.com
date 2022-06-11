@@ -116,7 +116,7 @@ Behaviours provide a way to:
 * define a set of functions that have to be implemented by a module;
 * ensure that a module implements all the functions in that set.
 
-If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.
+If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement. Unlike Protocols, behaviours are independent of the type/data.
 
 ### Defining behaviours
 
@@ -185,7 +185,7 @@ end
 ```
 
 This code generates a warning letting you know that you are mistakenly implementing `parse/0` instead of `parse/1`.
-You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/master/Module.html#module-impl).
+You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/main/Module.html#module-impl).
 
 ### Dynamic dispatch
 

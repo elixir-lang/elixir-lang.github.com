@@ -12,7 +12,7 @@ We are also glad to welcome Michał Muskała to the Elixir Core team. Prior to j
 
 ## Documentation metadata
 
-Elixir v1.7 implements [EEP 48](http://erlang.org/eep/eeps/eep-0048.html). EEP 48 aims to bring documentation interoperability across all languages running on the Erlang VM.
+Elixir v1.7 implements [EEP 48](http://www.erlang.org/eep/eeps/eep-0048.html). EEP 48 aims to bring documentation interoperability across all languages running on the Erlang VM.
 
 Furthermore, EEP 48 introduces the ability to annotate documentation with metadata, which we have made possible to leverage from Elixir:
 
@@ -29,7 +29,7 @@ We have updated [the ExDoc tool](https://github.com/elixir-lang/ex_doc) to start
 
   * Functions, macros, callbacks and types now include the version in which they were added. For example, [see the top right corner of the `defguard` docs](https://hexdocs.pm/elixir/Kernel.html#defguard/1)
 
-  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/master/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
+  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/main/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
 
 Elixir's interactive shell, IEx, has also been updated to print metadata:
 
@@ -113,7 +113,7 @@ The `assert` macro is able to look at the code, extract the current file, the li
 
 However, sometimes we need to write assertions such as `assert some_function(expr1, var2)`. When such assertion fails, we usually have to re-run the tests, now debugging or printing the values of `expr1` and `var2`. In Elixir v1.7, when a "bare" assertion fails, we will print the value of each argument individually. For a simple example such as `assert some_vars(1 + 2, 3 + 4)`, we get this report:
 
-![ExUnit Bare Asssertion Diff](/images/contents/exunit-bare-assertion-diff.png)
+![ExUnit Bare Assertion Diff](/images/contents/exunit-bare-assertion-diff.png)
 
 We have also [added coloring and diffing to doctests](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#content).
 

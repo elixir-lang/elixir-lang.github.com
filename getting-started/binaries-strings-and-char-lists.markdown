@@ -30,10 +30,10 @@ iex> ?ł
 322
 ```
 
-Note that most Unicode code charts will refer to a code point by its hexadecimal representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\u` notation and the hex representation of its code point number:
+Note that most Unicode code charts will refer to a code point by its hexadecimal (hex) representation, e.g. `97` translates to `0061` in hex, and we can represent any Unicode character in an Elixir string by using the `\uXXXX` notation and the hex representation of its code point number:
 
 ```elixir
-iex> "\u0061" === "a"
+iex> "\u0061" == "a"
 true
 iex> 0x0061 = 97 = ?a
 97
@@ -45,28 +45,42 @@ The hex representation will also help you look up information about a code point
 
 Now that we understand what the Unicode standard is and what code points are, we can finally talk about encodings. Whereas the code point is **what** we store, an encoding deals with **how** we store it: encoding is an implementation. In other words, we need a mechanism to convert the code point numbers into bytes so they can be stored in memory, written to disk, etc.
 
-Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit bytes. UTF-8 is a **variable width** character encoding that uses one to four bytes to store each code point; it is capable of encoding all valid Unicode code points.
-
-Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, `é` can be represented in Unicode as a single character. It can also be represented as the combination of the character `e` and the acute accent character `´` into a single grapheme.
-
-In other words, what we would expect to be a single character, such as é, can in practice be multiple codepoints (in this case, e and an acute accent), each represented by potentially multiple bytes. Consider the following:
+Elixir uses UTF-8 to encode its strings, which means that code points are encoded as a series of 8-bit bytes. UTF-8 is a **variable width** character encoding that uses one to four bytes to store each code point. It is capable of encoding all valid Unicode code points. Let's see an example:
 
 ```elixir
 iex> string = "héllo"
 "héllo"
 iex> String.length(string)
 5
-iex> length(String.to_charlist(string))
-6
 iex> byte_size(string)
-7
+6
 ```
 
-`String.length/1` counts graphemes and returned 5. To count the number of code points, we can use `String.to_charlist/1` to convert a string to a list of codepoints, and then we get its length, which returned 6. Finally, `byte_size/1` reveals the number of underlying raw bytes needed to store the string when using UTF-8 encoding. UTF-8 requires one byte to represent the characters `h`, `e`, `l`, and `o`, but two bytes to represent the acute accent, adding to 7.
+Although the string above has 5 characters, it uses 6 bytes, as two bytes are used to represent the character `é`.
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
-A common trick in Elixir when you want to see the inner binary representation of a string is to concatenate the null byte `<<0>>` to it:
+Besides defining characters, UTF-8 also provides a notion of graphemes. Graphemes may consist of multiple characters that are often perceived as one. For example, the [woman firefighter emoji](https://emojipedia.org/woman-firefighter/) is represented as the combination of three characters: the woman emoji (👩), a hidden zero-width joiner, and the fire engine emoji (🚒):
+
+```elixir
+iex> String.codepoints("👩‍🚒")
+["👩", "‍", "🚒"]
+iex> String.graphemes("👩‍🚒")
+["👩‍🚒"]
+```
+
+However, Elixir is smart enough to know they are seen as a single character, and therefore the length is still one:
+
+```elixir
+iex> String.length("👩‍🚒")
+1
+```
+
+> Note: if you can't see the emoji above in your terminal, you need to make sure your terminal supports emoji and that you are using a font that can render them.
+
+Although these rules may sound complicated, UTF-8 encoded documents are everywhere. This page itself is encoded in UTF-8. The encoding information is given to your browser which then knows how to render all of the bytes, characters, and graphemes accordingly.
+
+If you want to see the exact bytes that a string would be stored in a file, a common trick is to concatenate the null byte `<<0>>` to it:
 
 ```elixir
 iex> "hełło" <> <<0>>
@@ -91,7 +105,7 @@ A complete reference about the binary / bitstring constructor `<<>>` can be foun
 By default, 8 bits (i.e. 1 byte) is used to store each number in a bitstring, but you can manually specify the number of bits via a `::n` modifier to denote the size in `n` bits, or you can use the more verbose declaration `::size(n)`:
 
 ```elixir
-iex> <<42>> === <<42::8>>
+iex> <<42>> == <<42::8>>
 true
 iex> <<3::4>>
 <<3::size(4)>>
@@ -107,7 +121,7 @@ true
 Any value that exceeds what can be stored by the number of bits provisioned is truncated:
 
 ```elixir
-iex> <<1>> === <<257>>
+iex> <<1>> == <<257>>
 true
 ```
 
@@ -217,8 +231,6 @@ true
 iex> rest
 "ber"
 ```
-
-You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
 
 ## Charlists
 

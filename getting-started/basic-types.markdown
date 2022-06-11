@@ -261,7 +261,7 @@ iex> is_function(add, 1)
 false
 ```
 
-Finally, anonymous functions can also access variables that are in scope when the function is defined. This is typically refered to as closures, as they close over their scope. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
+Finally, anonymous functions can also access variables that are in scope when the function is defined. This is typically referred to as closures, as they close over their scope. Let's define a new anonymous function that uses the `add` anonymous function we have previously defined:
 
 ```elixir
 iex> double = fn a -> add.(a, a) end
@@ -401,6 +401,7 @@ Similarly, the performance of list concatenation depends on the length of the le
 
 ```elixir
 iex> list = [1, 2, 3]
+[1, 2, 3]
 
 # This is fast as we only need to traverse `[0]` to prepend to `list`
 iex> [0] ++ list
@@ -415,6 +416,7 @@ Tuples, on the other hand, are stored contiguously in memory. This means getting
 
 ```elixir
 iex> tuple = {:a, :b, :c, :d}
+{:a, :b, :c, :d}
 iex> put_elem(tuple, 2, :e)
 {:a, :b, :e, :d}
 ```

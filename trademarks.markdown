@@ -14,7 +14,7 @@ Anyone can use the Elixir trademarks if that use of the trademark is nominative.
 
 You must not visually combine the Elixir logo with any other images, or change the logo in any way other than ways required by printing restrictions. If you want to create your own visual identity in relation to Elixir, you might use the shape of an unrelated "water drop" as part of your design, as seen in many community projects and initiatives. You must not combine or modify the Elixir logo.
 
-The Elixir logo is [available in our repository](https://github.com/elixir-lang/elixir-lang.github.com/tree/master/logos) in both vertical and horizontal versions.
+The Elixir logo is [available in our repository](https://github.com/elixir-lang/elixir-lang.github.com/tree/main/downloads/logos) in both vertical and horizontal versions.
 
 ## Nominative use
 
@@ -44,7 +44,7 @@ All examples listed next must strictly adhere to the terms outlined in the previ
 
   * Usage of the "Elixir" word in book titles, meetups, conferences, and podcasts. You must not use the word to imply uniqueness or endorsement from the Elixir team. "The Elixir book" and "The Elixir podcast" are not permitted. "Elixir in Action", "Thinking Elixir", and "Kraków Elixir User Group" are valid examples already in use today.
 
-  * Usage of the "Elixir" word in the names of freely distributed software and hardware products is allowed when referring to use with or suitability for the Elixir programming language, such as wxElixir, Elixirsense, etc. If the product includes the Elixir programming language itself, then [you must also respect its license](https://github.com/elixir-lang/elixir/blob/master/LICENSE).
+  * Usage of the "Elixir" word in the names of freely distributed software and hardware products is allowed when referring to use with or suitability for the Elixir programming language, such as wxElixir, Elixirsense, etc. If the product includes the Elixir programming language itself, then [you must also respect its license](https://github.com/elixir-lang/elixir/blob/main/LICENSE).
 
 ## Examples of not permitted use
 

@@ -19,7 +19,7 @@ defmodule ElixirLangGuide do
     config = %{
       guide: nil,
       homepage: "http://elixir-lang.org",
-      output: ".",
+      output: "../downloads/books",
       root_dir: source,
       scripts: [],
       styles: assets("priv/app-*.css"),
@@ -49,14 +49,14 @@ defmodule ElixirLangGuide do
       options.root_dir
       |> Path.expand()
       |> Path.join("_data/getting-started.yml")
-      |> YamlElixir.read_from_file()
+      |> YamlElixir.read_from_file!()
       |> generate_nav(options)
 
     elixir_versions =
       options.root_dir
       |> Path.expand()
       |> Path.join("_data/elixir-versions.yml")
-      |> YamlElixir.read_from_file()
+      |> YamlElixir.read_from_file!()
 
     options = Map.put(options, :elixir_versions, elixir_versions)
 

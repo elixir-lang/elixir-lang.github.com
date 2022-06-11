@@ -8,9 +8,9 @@ layout: default
 
 {% include toc.html %}
 
-Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations and explore how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html). If you already know Erlang and you want to know Elixir (or vice-versa), check out our [Crash Course for Erlang developers](/crash-course.html).
+Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations. Later on, it explores how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html).
 
-Outside of our website, the Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that suits your pace and goals.
+Outside of our website, the Elixir Community has also produced plenty of resources to learn the language from different backgrounds and other perspectives. We list some of them below. We are sure you will find a resource that suits your pace and goals.
 
 ## Books
 
@@ -183,6 +183,30 @@ The course covers getting setup with Elixir, the data types, how to pattern matc
 LearnElixir.tv is a video course which provides in-depth, step-by-step videos about Elixir's main features. Videos range from 7 to 15 minutes in length.
 
 It's intended to help beginners get familiar with all of Elixir's features by building their knowledge incrementally. Experienced Elixir developers might also learn a trick or two.
+
+<div class="clear"></div>
+
+<h4 class="resource">Educative.io's Metaprogramming in Elixir Course</h4>
+
+<a class="cover" href="https://www.educative.io/courses/metaprogramming-elixir" title="Educative.io's Metaprogramming in Elixir Course">
+  <img src="/images/learning/educative-io-metaprogramming.png" alt="Educative.io's Metaprogramming in Elixir Course" width="190" />
+</a>
+
+Get introduced to the concept of metaprogramming. Learn how to level up your programming skills by discovering the full potential of the macro system in Elixir. Understand the ins and outs of metaprogramming at a fundamental level and write incredible libraries by doing more with less code.
+
+<div class="clear"></div>
+
+<h4 class="resource">Learn-Elixir.dev</h4>
+
+<a class="cover" href="https://learn-elixir.dev" title="Learn Elixir Development">
+  <img src="/images/learning/learn-elixir-dev.png" alt="Learn-Elixir.dev cover" width="190" />
+</a>
+
+At your own pace, progress through 132 videos, 30 quizzes, 9 assignments, and 2 major projects of your choosing to demonstrate your working knowledge of a production-level quality of code. You’ll learn Syntax/Fundamentals,  REST, GraphQL with Absinthe, Phoenix, OTP, Testing, Ecto, architecture, how to scale, how to go distributed, and more…
+
+Join our weekly live coaching sessions every Wednesday at 12:00-noon pacific time to close any gaps in knowledge and get specific answers to your specific questions!
+
+Found your start-up, migrate a codebase, build that app! Our midterm and final projects create a great win-win scenario for you to complete your personal project while mastering the language. Or if you’re more career-focused we can offer referrals, recommendations, or references and host your completed projects on GitHub to show hiring managers your proficiency programming Elixir.
 
 <div class="clear"></div>
 
