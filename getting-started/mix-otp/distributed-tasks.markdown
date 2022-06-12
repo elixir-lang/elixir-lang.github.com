@@ -20,9 +20,9 @@ The routing layer will receive a routing table of the following format:
 
 The router will check the first byte of the bucket name against the table and dispatch to the appropriate node based on that. For example, a bucket starting with the letter "a" (`?a` represents the Unicode codepoint of the letter "a") will be dispatched to node `foo@computer-name`.
 
-If the matching entry points to the node evaluating the request, then we've finished routing, and this node will perform the requested operation. If the matching entry points to a different node, we'll pass the request to this node, which will look at its own routing table (which may be different from the one in the first node) and act accordingly. If no entry matches, an error will be raised.
+If the matching entry points to the node evaluating the request, then we've finished routing, and this node will perform the requested operation. If the matching entry points to a different node, we'll pass the request to said node, which will look at its own routing table (which may be different from the one in the first node) and act accordingly. If no entry matches, an error will be raised.
 
-> Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines on the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Second, you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info). Third, if you want to learn more about distribution in general, we recommend [this great Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon).
+> Note: we will be using two nodes in the same machine throughout this chapter. You are free to use two (or more) different machines on the same network but you need to do some prep work. First of all, you need to ensure all machines have a `~/.erlang.cookie` file with exactly the same value. Then you need to guarantee [epmd](http://www.erlang.org/doc/man/epmd.html) is running on a port that is not blocked (you can run `epmd -d` for debug info).
 
 ## Our first distributed code
 
@@ -66,7 +66,7 @@ iex> Hello.world
 However, we can spawn a new process on `foo@computer-name` from `bar@computer-name`! Let's give it a try (where `@computer-name` is the one you see locally):
 
 ```elixir
-iex> Node.spawn_link :"foo@computer-name", fn -> Hello.world end
+iex> Node.spawn_link(:"foo@computer-name", fn -> Hello.world() end)
 #PID<9014.59.0>
 hello world
 ```
@@ -76,13 +76,13 @@ Elixir spawned a process on another node and returned its pid. The code then exe
 We can send and receive messages from the pid returned by `Node.spawn_link/2` as usual. Let's try a quick ping-pong example:
 
 ```elixir
-iex> pid = Node.spawn_link :"foo@computer-name", fn ->
+iex> pid = Node.spawn_link(:"foo@computer-name", fn ->
 ...>   receive do
-...>     {:ping, client} -> send client, :pong
+...>     {:ping, client} -> send(client, :pong)
 ...>   end
-...> end
+...> end)
 #PID<9014.59.0>
-iex> send pid, {:ping, self()}
+iex> send(pid, {:ping, self()})
 {:ping, #PID<0.73.0>}
 iex> flush()
 :pong
@@ -93,13 +93,13 @@ From our quick exploration, we could conclude that we should use `Node.spawn_lin
 
 There are three better alternatives to `Node.spawn_link/2` that we could use in our implementation:
 
-1. We could use Erlang's [:rpc](http://www.erlang.org/doc/man/rpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:rpc.call(:"foo@computer-name", Hello, :world, [])` and it will print "hello world"
+1. We could use Erlang's [:erpc](http://www.erlang.org/doc/man/erpc.html) module to execute functions on a remote node. Inside the `bar@computer-name` shell above, you can call `:erpc.call(:"foo@computer-name", Hello, :world, [])` and it will print "hello world"
 
 2. We could have a server running on the other node and send requests to that node via the [GenServer](https://hexdocs.pm/elixir/GenServer.html) API. For example, you can call a server on a remote node by using `GenServer.call({name, node}, arg)` or passing the remote process PID as the first argument
 
 3. We could use [tasks](https://hexdocs.pm/elixir/Task.html), which we have learned about in [a previous chapter](/getting-started/mix-otp/task-and-gen-tcp.html), as they can be spawned on both local and remote nodes
 
-The options above have different properties. Both `:rpc` and using a GenServer would serialize your requests on a single server, while tasks are effectively running asynchronously on the remote node, with the only serialization point being the spawning done by the supervisor.
+The options above have different properties. The GenServer would serialize your requests on a single server, while tasks are effectively running asynchronously on the remote node, with the only serialization point being the spawning done by the supervisor.
 
 For our routing layer, we are going to use tasks, but feel free to explore the other alternatives too.
 
@@ -133,9 +133,9 @@ $ iex --sname bar -S mix
 From inside `bar@computer-name`, we can now spawn a task directly on the other node via the supervisor:
 
 ```elixir
-iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, fn ->
+iex> task = Task.Supervisor.async({KV.RouterTasks, :"foo@computer-name"}, fn ->
 ...>   {:ok, node()}
-...> end
+...> end)
 %Task{owner: #PID<0.122.0>, pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
 iex> Task.await(task)
 {:ok, :"foo@computer-name"}
@@ -144,7 +144,7 @@ iex> Task.await(task)
 Our first distributed task retrieves the name of the node the task is running on. Notice we have given an anonymous function to `Task.Supervisor.async/2` but, in distributed cases, it is preferable to give the module, function, and arguments explicitly:
 
 ```elixir
-iex> task = Task.Supervisor.async {KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, []
+iex> task = Task.Supervisor.async({KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, [])
 %Task{owner: #PID<0.122.0>, pid: #PID<12467.89.0>, ref: #Reference<0.0.0.404>}
 iex> Task.await(task)
 :"foo@computer-name"
@@ -206,9 +206,9 @@ defmodule KV.RouterTest do
 
   test "route requests across nodes" do
     assert KV.Router.route("hello", Kernel, :node, []) ==
-           :"foo@computer-name"
+             :"foo@computer-name"
     assert KV.Router.route("world", Kernel, :node, []) ==
-           :"bar@computer-name"
+             :"bar@computer-name"
   end
 
   test "raises on unknown entries" do
@@ -256,7 +256,7 @@ With the test properly tagged, we can now check if the node is alive on the netw
 
 ```elixir
 exclude =
-  if Node.alive?, do: [], else: [distributed: true]
+  if Node.alive?(), do: [], else: [distributed: true]
 
 ExUnit.start(exclude: exclude)
 ```
@@ -285,7 +285,18 @@ You can read more about filters, tags and the default tags in [`ExUnit.Case` mod
 
 ## Wiring it all up
 
-Now with our routing system in place, let's change `KVServer` to use the router. Replace the `lookup/2` function in `KVServer.Command` by the following one:
+Now with our routing system in place, let's change `KVServer` to use the router. Replace the `lookup/2` function in `KVServer.Command` from this:
+
+```elixir
+defp lookup(bucket, callback) do
+  case KV.Registry.lookup(KV.Registry, bucket) do
+    {:ok, pid} -> callback.(pid)
+    :error -> {:error, :not_found}
+  end
+end
+```
+
+by this:
 
 ```elixir
 defp lookup(bucket, callback) do
@@ -296,7 +307,9 @@ defp lookup(bucket, callback) do
 end
 ```
 
-Good! Now `GET`, `PUT` and `DELETE` requests are all routed to the appropriate node. Let's also make sure that when a new bucket is created it ends up on the correct node. Replace the `run/1` function in `KVServer.Command`, the one that matches the `:create` command, with the following:
+Instead of directly looking up the registry, we are using the router instead to match a specific node. Then we get a `pid` that can be from any process in our cluster. From now on, `GET`, `PUT` and `DELETE` requests are all routed to the appropriate node.
+
+Let's also make sure that when a new bucket is created it ends up on the correct node. Replace the `run/1` function in `KVServer.Command`, the one that matches the `:create` command, with the following:
 
 ```elixir
 def run({:create, bucket}) do
@@ -307,17 +320,30 @@ def run({:create, bucket}) do
 end
 ```
 
-Now if you run the tests, you will see the test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, change the `test_helper.exs` for `:kv_server` application as we did for `:kv` and add `@tag :distributed` to this test too:
+Now if you run the tests, you will see that an existing test that checks the server interaction will fail, as it will attempt to use the routing table. To address this failure, change the `test_helper.exs` for `:kv_server` application as we did for `:kv` and add `@tag :distributed` to this test too:
 
 ```elixir
 @tag :distributed
 test "server interaction", %{socket: socket} do
 ```
 
-However, keep in mind that by making the test distributed, we will likely run it less frequently, since we may not do the distributed setup on every test run.
+However, keep in mind that by making the test distributed, we will likely run it less frequently, since we may not do the distributed setup on every test run. We will learn how to address this in the next chapter, by effectively learning how to make the routing table configurable.
 
-There are a couple other options here. One option is to spawn the distributed node programmatically at the beginning of `test/test_helper.exs`. Erlang/OTP does provide APIs for doing so, but they are non-trivial and therefore we won't cover them here.
+## Summing up
 
-Another option is to make the routing table configurable. This means we can change the routing table on specific tests to assert for specific behaviour. As we will learn in the next chapter, changing the routing table this way has the downside that those particular tests can no longer run asynchronously, so it is a technique that should be used sparingly.
+We have only scratched the surface of what is possible when it comes to distribution.
 
-With the routing table integrated, we have made a lot of progress in building our distributed key-value store but, up to this point, the routing table is still hard-coded. In the next chapter, we will learn how to make the routing table configurable and how to package our application for production.
+In all of our examples, we relied on Erlang's ability to automatically connect nodes whenever there is a request. For example, when we invoked `Node.spawn_link(:"foo@computer-name", fn -> Hello.world() end)`, Erlang automatically connected to said and started a new process. However, you may also want to take a more explicit approach to connections, by using [`Node.connect/1`](https://hexdocs.pm/elixir/Node.html#connect/1) and [`Node.disconnect/1`](https://hexdocs.pm/elixir/Node.html#disconnect/1).
+
+In production, you may have nodes connecting and disconnecting at any time. In such scenarios, you need to provide _node discoverability_. Libraries such as [libcluster](https://github.com/bitwalker/libcluster/) and [peerage](https://github.com/mrluc/peerage) provide several strategies for node discoverability using DNS, Kubernetes, etc.
+
+Distributed key-value stores, used in real-life, need to consider the fact nodes may go up and down at any time and also migrate the bucket across nodes. Even further, buckets often need to be duplicated between nodes, so a failure in a node does not lead to the whole bucket being lost. This process is called *replication*. Our implementation won't attempt to tackle such problems. Instead, we assume there is a fixed number nodes and therefore used a fixed routing table.
+
+These topics can be daunting at first but remember that most Elixir frameworks abstract those concerns for you. But if you are interested in distributed systems after all, there is much to explore. Here are some references:
+
+  * [The excellent Distribunomicon chapter from Learn You Some Erlang](http://learnyousomeerlang.com/distribunomicon)
+  * [Erlang's global module](https://www.erlang.org/doc/man/global.html), which can provide global names and global locks, allowing unique names and unique locks in a whole cluster of machines
+  * [Erlang's pg module](https://www.erlang.org/doc/man/pg.html), which allows process to join different groups shared across the whole cluster
+  * [Phoenix PubSub project](https://github.com/phoenixframework/phoenix_pubsub), which provides a distributed messaging system and a distributed presence system for tracking users and processes in a cluster
+
+You will also find many libraries for building distributed systems within the overall Erlang ecosystem. For now, it is time to go back to our simple distributed key-value store and learn how to configure and package it for production.
