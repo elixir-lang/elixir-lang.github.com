@@ -335,7 +335,7 @@ We have only scratched the surface of what is possible when it comes to distribu
 
 In all of our examples, we relied on Erlang's ability to automatically connect nodes whenever there is a request. For example, when we invoked `Node.spawn_link(:"foo@computer-name", fn -> Hello.world() end)`, Erlang automatically connected to said and started a new process. However, you may also want to take a more explicit approach to connections, by using [`Node.connect/1`](https://hexdocs.pm/elixir/Node.html#connect/1) and [`Node.disconnect/1`](https://hexdocs.pm/elixir/Node.html#disconnect/1).
 
-By default, Erlang establishes a fully meshed network, which means all nodes are connected to each other. Under this topology, the Erlang distribution is known to scale to several dozens of nodes in the same cluster. Erlang also has the concept of hidden nodes too which also allows developers to bring custom topologies, as seen [in the Partisan project](https://github.com/lasp-lang/partisan).
+By default, Erlang establishes a fully meshed network, which means all nodes are connected to each other. Under this topology, the Erlang distribution is known to scale to several dozens of nodes in the same cluster. Erlang also has the concept of hidden nodes, which can allow developers to assemble custom topologies as seen in projects such as [Partisan](https://github.com/lasp-lang/partisan).
 
 In production, you may have nodes connecting and disconnecting at any time. In such scenarios, you need to provide _node discoverability_. Libraries such as [libcluster](https://github.com/bitwalker/libcluster/) and [peerage](https://github.com/mrluc/peerage) provide several strategies for node discoverability using DNS, Kubernetes, etc.
 
