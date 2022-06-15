@@ -41,7 +41,7 @@ When `print_multiple_times/2` is initially called in the example above, the argu
 
 The first clause has a guard which says "use this definition if and only if `n` is more than `0`". Since this is the case, it prints the `msg` and then calls itself passing `n - 1` (`2`) as the second argument.
 
-Now we execute the same function again, starting from the first the clause. Given the second argument, `n`, is still more than 0, we print the message and call ourselves once more, now with the second argument set to `1`. Then we print the message one last time and call `print_multiple_times("Hello!", 0)`, starting from the top once again.
+Now we execute the same function again, starting from the first clause. Given the second argument, `n`, is still more than 0, we print the message and call ourselves once more, now with the second argument set to `1`. Then we print the message one last time and call `print_multiple_times("Hello!", 0)`, starting from the top once again.
 
 When the second argument is zero, the guard `n > 0` evaluates to false, and the first function clause won't execute. Elixir then proceeds to try the next function clause, which explicitly matches on the case where `n` is `0`. This clause, also known as the termination clause, ignores the message argument by assigning it to the `_msg` variable and returns the atom `:ok`.
 
