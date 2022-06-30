@@ -14,7 +14,7 @@ defmodule Utility do
 end
 ```
 
-If the use of this module were confined to your own project, you would be able to keep defining new `type/1` functions for each new data type. However, this code could be problematic if it were shared as a dependency by multiple apps because there would be no easy way to extend its functionality.
+If the use of this module were confined to your own project, you would be able to keep defining new `type/1` functions for each new data type. However, this code could be problematic if it was shared as a dependency by multiple apps because there would be no easy way to extend its functionality.
 
 This is where protocols can help us: protocols allow us to extend the original behavior for as many data types as we need. That's because **dispatching on a protocol is available to any data type that has implemented the protocol** and a protocol can be implemented by anyone, at any time.
 
