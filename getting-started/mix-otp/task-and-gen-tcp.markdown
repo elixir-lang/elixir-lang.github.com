@@ -154,7 +154,7 @@ Insert these changes in your code and now you may start your application using t
 Now that the server is part of the supervision tree, it should start automatically when we run the application. Start your server, now passing the port, and once again use the `telnet` client to make sure that everything still works:
 
 ```console
-$ telnet 127.0.0.1 4040
+$ telnet 127.0.0.1 4321
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
@@ -169,7 +169,7 @@ Yes, it works! However, does it *scale*?
 Try to connect two telnet clients at the same time. When you do so, you will notice that the second client doesn't echo:
 
 ```console
-$ telnet 127.0.0.1 4040
+$ telnet 127.0.0.1 4321
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
