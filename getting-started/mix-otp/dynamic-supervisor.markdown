@@ -48,6 +48,8 @@ Since the bucket terminated, the registry also stopped, and our test fails when 
 
 We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization; instead each child is started manually via `DynamicSupervisor.start_child/2`.
 
+> It's important to notice that even though `Supervisor` is also capable of starting children dynamically, the `DynamicSupervisor` module allow us to rely on an efficient implementation designed for this specific purpose.   
+
 ## The bucket supervisor
 
 Since a `DynamicSupervisor` does not define any children during initialization, the `DynamicSupervisor` also allows us to skip the work of defining a whole separate module with the usual `start_link` function and the `init` callback. Instead, we can define a `DynamicSupervisor` directly in the supervision tree, by giving it a name and a strategy.
