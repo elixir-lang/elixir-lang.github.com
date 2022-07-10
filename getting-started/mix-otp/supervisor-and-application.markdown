@@ -270,4 +270,4 @@ When we talk about applications, we talk about <abbr title="Open Telecom Platfor
 
 Although this chapter was the first time we implemented a supervisor, it was not the first time we used one! In the previous chapter, when we used `start_supervised!` to start the registry during our tests, `ExUnit` started the registry under a supervisor managed by the ExUnit framework itself. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise processes in our applications, aligning our production code and tests with best practices.
 
-But we are not done yet. So far we are supervising the registry but our application is also starting buckets. Since buckets are started dynamically, they have to be supervised by a special type of supervisor, called `DynamicSupervisor`, which we will explore next.
+But we are not done yet. So far we are supervising the registry but our application is also starting buckets. Since buckets are started dynamically, we can use a special type of supervisor called `DynamicSupervisor`, which is optimized to handle such scenarios. Let's explore it next.
