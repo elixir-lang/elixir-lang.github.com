@@ -155,7 +155,7 @@ Will output:
 
 The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated. All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
 
-Once the project is compiled, you can start an `iex` session inside the project by running:
+Once the project is compiled, you can start an `iex` session inside the project by running the command below. The `-S mix` is necessary to load the project in the interactive shell:
 
 ```console
 $ iex -S mix
