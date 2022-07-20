@@ -84,6 +84,51 @@ Unfortunately, similar to `IO.inspect/2`, `IEx.pry/0` also requires us to change
 
 Similar to `IEx.pry/0`, once a breakpoint is reached code execution stops until `continue` is invoked. However, note `break!/2` does not have access to aliases and imports from the debugged code as it works on the compiled artifact rather than on source.
 
+## `dbg`
+
+Elixir v1.14 introduced `dbg/2`. `dbg` is similar to `IO.inspect/2`, but specifically tailored for debugging. It prints the value passed to it and returns it (just like `IO.inspect/2`), but it also prints the code and location.
+
+```elixir
+# In my_file.exs
+feature = %{name: :dbg, inspiration: "Rust"}
+dbg(feature)
+dbg(Map.put(feature, :in_version, "1.14.0"))
+```
+
+The code above prints this:
+
+```shell
+[my_file.exs:2: (file)]
+feature #=> %{inspiration: "Rust", name: :dbg}
+[my_file.exs:3: (file)]
+Map.put(feature, :in_version, "1.14.0") #=> %{in_version: "1.14.0", inspiration: "Rust", name: :dbg}
+```
+
+When talking about `IO.inspect/2`, we mentioned its usefulness when placed between steps of `|>` pipelines. `dbg` does it better: it understands Elixir code, so it will print values at *every step of the pipeline*.
+
+```elixir
+# In dbg_pipes.exs
+__ENV__.file
+|> String.split("/", trim: true)
+|> List.last()
+|> File.exists?()
+|> dbg()
+```
+
+This code prints:
+
+```shell
+[dbg_pipes.exs:5: (file)]
+__ENV__.file #=> "/home/myuser/dbg_pipes.exs"
+|> String.split("/", trim: true) #=> ["home", "myuser", "dbg_pipes.exs"]
+|> List.last() #=> "dbg_pipes.exs"
+|> File.exists?() #=> true
+```
+
+`dbg` also works with the IEx breakpoints we mentioned earlier. When you call code that contains `dbg` via IEx, every `dbg` call sets up a breakpoint. For pipelines, you can even step through each line in the pipeline.
+
+<script id="asciicast-509509" src="https://asciinema.org/a/509509.js" async></script>
+
 ## Debugger
 
 For those who enjoy breakpoints but are rather interested in a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module in a file named `example.ex`:
