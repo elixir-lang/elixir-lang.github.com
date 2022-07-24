@@ -104,8 +104,6 @@ __ENV__.file #=> "/home/myuser/dbg_pipes.exs"
 |> File.exists?() #=> true
 ```
 
-`dbg` also works with the IEx breakpoints and prying. When you call code that contains `dbg` via IEx, every `dbg` call sets up a breakpoint. For pipelines, you can even step through each line in the pipeline. We'll talk more about breakpoints and prying in the next section.
-
 ## Breakpoints
 
 When code calling `dbg` is executed via `iex`, IEx will ask you to "stop" the code execution where the `dbg` call is. If you accept, you'll be able to access all variables, as well as imports and aliases from the code, directly from IEx. This is called "prying". While the pry session is running, the code execution stops, until `continue` or `next` are called. Remember you can always run `iex` in the context of a project with `iex -S mix TASK`.
