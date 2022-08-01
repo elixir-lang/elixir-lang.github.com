@@ -105,7 +105,7 @@ defmodule KV.RouterTest do
 
 Note we removed `async: true` from `use ExUnit.Case`. Since the application environment is a global storage, tests that modify it cannot run concurrently. With all changes in place, all tests should pass, including the distributed one.
 
-Details of other configuration strategies are beyond the scope of this document, but you should be aware that other sources of runtime configuration data can be specified as configuration providers in `mix.exs`. For more details see the documentation for the [Config.Provider module](https://hexdocs.pm/elixir/main/Config.Provider.html#content). Excellent ibraries for many types of config providers can be found on [hex](https://hex.pm) that can ease the use of environment variables and configuration files of various types, such as TOML, YAML, INI, and JSON.
+Details of other configuration strategies are beyond the scope of this document, but you should be aware that other sources of runtime configuration data can be specified as configuration providers in `mix.exs`. For more details see the documentation for the [Config.Provider module](https://hexdocs.pm/elixir/main/Config.Provider.html#content). Excellent libraries for many types of config providers can be found on [Hex](https://hex.pm). These can ease the use of environment variables and configuration files of various formats, such as TOML, YAML, INI, and JSON.
 
 ## Releases
 
