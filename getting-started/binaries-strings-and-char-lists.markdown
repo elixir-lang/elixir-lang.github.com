@@ -236,9 +236,9 @@ iex> rest
 
 Our tour of our bitstrings, binaries, and strings is nearly complete, but we have one more data type to explain: the charlist.
 
-**A charlist is a list of integers where all the integers are valid code points.** In practice, you will not come across them often, except perhaps when interfacing with Erlang, in particular when using older libraries that do not accept binaries as arguments.
+**A charlist is a list of integers where all the integers are valid code points.** In practice, you will not come across them often, only in specific scenarios such as interfacing with older Erlang libraries that do not accept binaries as arguments.
 
-Whereas strings (i.e. binaries) are created using double-quotes, charlists are created with single-quoted literals:
+Whereas double-quotes creates strings, single-quotes create charlist literals:
 
 ```elixir
 iex> 'hello'
@@ -247,7 +247,9 @@ iex> [?h, ?e, ?l, ?l, ?o]
 'hello'
 ```
 
-You can see that instead of containing bytes, a charlist contains integer code points. However, the list is only printed in single-quotes if all code points are within the ASCII range:
+The key takeaway is that `"hello"` is not the same as `'hello'`. Generally speaking, **double-quotes must always be used to represent strings in Elixir**. In any case, let's learn how charlists work.
+
+Instead of containing bytes, a charlist contains integer code points. However, the list is only printed in single-quotes if all code points are within the ASCII range:
 
 ```elixir
 iex> 'hełło'
