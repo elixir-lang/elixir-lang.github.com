@@ -6,9 +6,9 @@ layout: default
 
 # {{ page.title }}
 
-## Development
+This page outlines the language's past and future development.
 
-This section outlines the language's past and future development.
+## Development
 
 José Valim created Elixir in 2012 as a Research and Development project inside Plataformatec. Elixir's goal is to be [a productive and extensible language](/blog/2013/08/08/elixir-design-goals/) for writing maintainable and reliable software.
 
@@ -44,7 +44,7 @@ The Elixir Team is composed by:
   * Andrea Leopardi
   * Fernando Tapia Rico
 
-We are also indebted to the past members of the Elixir Team:
+We are also grateful to the past members of the Elixir Team:
 
   * Alexei Sholik
   * James Fish
