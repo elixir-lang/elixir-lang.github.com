@@ -1,18 +1,20 @@
 ---
-title: "Development"
+title: "Development & Team"
 section: development
 layout: default
 ---
 
 # {{ page.title }}
 
-In this section we outline the language's past and future development.
+## Development
+
+This section outlines the language's past and future development.
 
 José Valim created Elixir in 2012 as a Research and Development project inside Plataformatec. Elixir's goal is to be [a productive and extensible language](/blog/2013/08/08/elixir-design-goals/) for writing maintainable and reliable software.
 
 Elixir runs on top of the Erlang Virtual Machine, which provides a scalable and fault-tolerant foundation. Elixir was designed to leverage this foundation without performance costs and aims to contribute to the wider ecosystem whenever possible.
 
-Elixir's source code is under the [Apache 2 License](https://github.com/elixir-lang/elixir/blob/main/LICENSE) and is maintained by the Elixir Core team, composed of four members: Andrea Leopardi, Eric Meadows-Jönsson, Fernando Tapia Rico, and José Valim. The source code and information for contributors can be found on [the language repository](https://github.com/elixir-lang/elixir). Special thanks go to Alexei Sholik, Michał Muskała, James Fish, and Aleksei Magusev who were previous members of the Elixir team. 
+Elixir's source code is under the [Apache 2 License](https://github.com/elixir-lang/elixir/blob/main/LICENSE) and is maintained by the [Elixir Team](#team). The source code and contribution guidelines can be found on [the language repository](https://github.com/elixir-lang/elixir).
 
 Elixir v1.0 was released in September 2014 and a new minor version is released every 6 months, around May and November of every year. New releases are announced in the read-only [announcements mailing list](https://groups.google.com/group/elixir-lang-ann) with a link to the complete CHANGELOG. All security releases [will be tagged with "[security]"](https://groups.google.com/forum/#!searchin/elixir-lang-ann/%5Bsecurity%5D%7Csort:date). Security vulnerabilities should be disclosed to [elixir-security@googlegroups.com](mailto:elixir-security@googlegroups.com). Our [compatibility and deprecation policies](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#content) are also documented.
 
@@ -32,3 +34,21 @@ Elixir also relies on a vibrant community to support its growth. The community i
 The best way to support the language is by getting involved in its community and contributing to the ecosystem.
 
 Welcome!
+
+## Team
+
+The Elixir Team is composed by:
+
+  * José Valim
+  * Eric Meadows-Jönsson
+  * Andrea Leopardi
+  * Fernando Tapia Rico
+
+We are also indebted to the past members of the Elixir Team:
+
+  * Alexei Sholik
+  * James Fish
+  * Aleksei Magusev
+  * Michał Muskała
+
+Finally, we thank all of our [contributors](https://github.com/elixir-lang/elixir/graphs/contributors).
