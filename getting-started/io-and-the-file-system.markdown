@@ -66,7 +66,7 @@ Notice that the version with `!` returns the contents of the file instead of a t
 The version without `!` is preferred when you want to handle different outcomes using pattern matching:
 
 ```elixir
-case File.read(file) do
+case File.read("hello") do
   {:ok, body}      -> # do something with the `body`
   {:error, reason} -> # handle the error caused by `reason`
 end
@@ -75,7 +75,7 @@ end
 However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. Avoid writing:
 
 ```elixir
-{:ok, body} = File.read(file)
+{:ok, body} = File.read("unknown")
 ```
 
 as, in case of an error, `File.read/1` will return `{:error, reason}` and the pattern matching will fail. You will still get the desired result (a raised error), but the message will be about the pattern which doesn't match (thus being cryptic in respect to what the error actually is about).
