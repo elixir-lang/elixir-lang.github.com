@@ -143,7 +143,7 @@ While other languages would require us to catch/handle exceptions, in Elixir we 
 Tasks build on top of the spawn functions to provide better error reports and introspection:
 
 ```elixir
-iex(1)> Task.start(fn -> raise "oops" end)
+iex> Task.start(fn -> raise "oops" end)
 {:ok, #PID<0.55.0>}
 
 15:22:33.046 [error] Task #PID<0.55.0> started from #PID<0.53.0> terminating
