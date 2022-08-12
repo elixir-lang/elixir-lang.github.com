@@ -113,13 +113,13 @@ $ iex
 Then start the debugger:
 
 ```elixir
-iex(1)> :debugger.start()
+iex> :debugger.start()
 {:ok, #PID<0.87.0>}
-iex(2)> :int.ni(Example)
+iex> :int.ni(Example)
 {:module, Example}
-iex(3)> :int.break(Example, 3)
+iex> :int.break(Example, 3)
 :ok
-iex(4)> Example.double_sum(1, 2)
+iex> Example.double_sum(1, 2)
 ```
 
 > If the `debugger` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
@@ -134,7 +134,7 @@ For debugging complex systems, jumping at the code is not enough. It is necessar
 
 ```elixir
 $ iex
-iex(1)> :observer.start()
+iex> :observer.start()
 ```
 
 > Similar to the `debugger` note above, your package manager may require a separate installation in order to run Observer.

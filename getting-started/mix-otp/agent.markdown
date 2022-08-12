@@ -66,7 +66,6 @@ iex> Agent.update(agent, fn list -> [:nop | list] end)
 :ok
 iex> Agent.get(agent, fn content -> content end)
 [:nop, 12, %{a: 123}]
-iex>
 ```
 
 As you can see, we can modify the agent state in any way we want. Therefore, we most likely don't want to access the Agent API throughout many different places in our code. Instead, we want to encapsulate all Agent-related functionality in a single module, which we will call `KV.Bucket`. Before we implement it, let's write some tests which will outline the API exposed by our module.

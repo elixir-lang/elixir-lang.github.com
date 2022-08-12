@@ -186,7 +186,7 @@ iex> fun.(1)
 
 iex> fun2 = &"Good #{&1}"
 #Function<6.127694169/1 in :erl_eval.expr/5>
-iex)> fun2.("morning")
+iex> fun2.("morning")
 "Good morning"
 ```
 

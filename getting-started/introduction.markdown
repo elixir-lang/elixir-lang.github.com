@@ -40,9 +40,9 @@ Open up `iex` and type the following expressions:
 Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
 Interactive Elixir ({{ stable.version }}) - press Ctrl+C to exit
-iex(1)> 40 + 2
+iex> 40 + 2
 42
-iex(2)> "hello" <> " world"
+iex> "hello" <> " world"
 "hello world"
 ```
 
