@@ -12,7 +12,7 @@ iex> String.length("hello")
 5
 ```
 
-The first letter of every module must be in uppercase. The first letter of every named function must be in lowercase. In order to create our own modules in Elixir, we use the `defmodule` macro. We use the `def` macro to define functions in that module:
+In order to create our own modules in Elixir, we use the `defmodule` macro. The first letter of the module must be in uppercase. We use the `def` macro to define functions in that module. The first letter of every function must be in lowercase (or underscore):
 
 ```elixir
 iex> defmodule Math do
