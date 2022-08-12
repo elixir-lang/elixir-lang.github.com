@@ -34,13 +34,13 @@ hello world
 The [`File`](https://hexdocs.pm/elixir/File.html) module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific `IO.binread/2` and `IO.binwrite/2` functions from the `IO` module:
 
 ```elixir
-iex> {:ok, file} = File.open("hello", [:write])
+iex> {:ok, file} = File.open("path/to/file/hello", [:write])
 {:ok, #PID<0.47.0>}
 iex> IO.binwrite(file, "world")
 :ok
 iex> File.close(file)
 :ok
-iex> File.read("hello")
+iex> File.read("path/to/file/hello")
 {:ok, "world"}
 ```
 
@@ -51,14 +51,14 @@ Besides functions for opening, reading and writing files, the `File` module has 
 You will also notice that functions in the `File` module have two variants: one "regular" variant and another variant with a trailing bang (`!`). For example, when we read the `"hello"` file in the example above, we use `File.read/1`. Alternatively, we can use `File.read!/1`:
 
 ```elixir
-iex> File.read("hello")
+iex> File.read("path/to/file/hello")
 {:ok, "world"}
-iex> File.read!("hello")
+iex> File.read!("path/to/file/hello")
 "world"
-iex> File.read("unknown")
+iex> File.read("path/to/file/unknown")
 {:error, :enoent}
-iex> File.read!("unknown")
-** (File.Error) could not read file "unknown": no such file or directory
+iex> File.read!("path/to/file/unknown")
+** (File.Error) could not read file "path/to/file/unknown": no such file or directory
 ```
 
 Notice that the version with `!` returns the contents of the file instead of a tuple, and if anything goes wrong the function raises an error.
@@ -66,7 +66,7 @@ Notice that the version with `!` returns the contents of the file instead of a t
 The version without `!` is preferred when you want to handle different outcomes using pattern matching:
 
 ```elixir
-case File.read("hello") do
+case File.read("path/to/file/hello") do
   {:ok, body}      -> # do something with the `body`
   {:error, reason} -> # handle the error caused by `reason`
 end
@@ -75,7 +75,7 @@ end
 However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. Avoid writing:
 
 ```elixir
-{:ok, body} = File.read("unknown")
+{:ok, body} = File.read("path/to/file/unknown")
 ```
 
 as, in case of an error, `File.read/1` will return `{:error, reason}` and the pattern matching will fail. You will still get the desired result (a raised error), but the message will be about the pattern which doesn't match (thus being cryptic in respect to what the error actually is about).

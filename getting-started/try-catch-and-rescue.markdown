@@ -274,11 +274,11 @@ Furthermore, variables defined in the do-block of `try` are not available inside
 ```elixir
 iex> try do
 ...>   raise "fail"
-...>   what_happened2 = :did_not_raise
+...>   another_what_happened = :did_not_raise
 ...> rescue
-...>   _ -> what_happened2
+...>   _ -> another_what_happened
 ...> end
-** (RuntimeError) undefined function: what_happened2/0
+** (RuntimeError) undefined function: another_what_happened/0
 ```
 
 This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages.
