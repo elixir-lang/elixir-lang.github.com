@@ -67,7 +67,7 @@ The version without `!` is preferred when you want to handle different outcomes 
 
 ```elixir
 case File.read("path/to/file/hello") do
-  {:ok, body}      -> # do something with the `body`
+  {:ok, body} -> # do something with the `body`
   {:error, reason} -> # handle the error caused by `reason`
 end
 ```
@@ -80,7 +80,7 @@ However, if you expect the file to be there, the bang variation is more useful a
 
 as, in case of an error, `File.read/1` will return `{:error, reason}` and the pattern matching will fail. You will still get the desired result (a raised error), but the message will be about the pattern which doesn't match (thus being cryptic in respect to what the error actually is about).
 
-Therefore, if you don't want to handle the error outcomes, prefer using `File.read!/1`.
+Therefore, if you don't want to handle the error outcomes, prefer use the functions ending with an exclamation mark, such as `File.read!/1`.
 
 ## The `Path` module
 
@@ -95,7 +95,7 @@ iex> Path.expand("~/hello")
 
 Using functions from the `Path` module as opposed to directly manipulating strings is preferred since the `Path` module takes care of different operating systems transparently. Finally, keep in mind that Elixir will automatically convert slashes (`/`) into backslashes (`\`) on Windows when performing file operations.
 
-With this, we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr> and other curiosities.
+With this, we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next section, we will peek a bit under the covers and learn how the IO system is implemented in the <abbr title="Virtual Machine">VM</abbr>.
 
 ## Processes
 
@@ -106,7 +106,7 @@ iex> {:ok, file} = File.open("hello", [:write])
 {:ok, #PID<0.47.0>}
 ```
 
-That happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). Given a file is a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated:
+This happens because the `IO` module actually works with processes (see [chapter 11](/getting-started/processes.html)). Given a file is a process, when you write to a file that has been closed, you are actually sending a message to a process which has been terminated:
 
 ```elixir
 iex> File.close(file)
@@ -130,7 +130,7 @@ iex> IO.write(pid, "hello")
 
 After `IO.write/2`, we can see the request sent by the `IO` module printed out (a four-elements tuple). Soon after that, we see that it fails since the `IO` module expected some kind of result, which we did not supply.
 
-By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows I/O messages to be routed between different nodes running Distributed Erlang or even exchange files to perform read/write operations across nodes. Neat!
+By modeling IO devices with processes, the Erlang <abbr title="Virtual Machine">VM</abbr> allows IO messages to be routed between different nodes running Distributed Erlang or even exchange files to perform read/write operations across nodes. Neat!
 
 ## `iodata` and `chardata`
 
