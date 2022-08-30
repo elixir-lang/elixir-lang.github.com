@@ -94,8 +94,9 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Click next, next, ..., finish
     * If you run into issues, check out the [Windows Installer issues tracker](https://github.com/elixir-lang/elixir-windows-setup)
 
-  - Using Chocolatey:
-    * Run: `cinst elixir`
+  - Using Scoop:
+    * Install Erlang: `scoop install erlang`
+    * Install Elixir: `scoop install elixir`
 
 ### Raspberry Pi
 
