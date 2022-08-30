@@ -98,9 +98,6 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Install Erlang: `scoop install erlang`
     * Install Elixir: `scoop install elixir`
 
-  - Using Chocolatey:
-    * Run: `cinst elixir`
-
 ### Raspberry Pi
 
 If necessary, replace "buster" with the name of your Raspbian release.
