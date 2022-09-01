@@ -63,26 +63,60 @@ When `some_fun/3` is invoked with `:foo`, `"bar"`, `:baz` it prints:
 
 Please see [IO.inspect/2](https://hexdocs.pm/elixir/IO.html#inspect/2) to read more about other ways in which one could use this function. Also, in order to find a full list of other formatting options that one can use alongside `IO.inspect/2`, see [Inspect.Opts](https://hexdocs.pm/elixir/Inspect.Opts.html).
 
-## `IEx.pry/0` and `IEx.break!/2`
+## `dbg`
 
-While `IO.inspect/2` is static, Elixir's interactive shell provides more dynamic ways to interact with debugged code.
-
-The first one is with [`IEx.pry/0`](https://hexdocs.pm/iex/IEx.html#pry/0) which we can use instead of `IO.inspect binding()`:
+Elixir v1.14 introduced `dbg/2`. `dbg` is similar to `IO.inspect/2`, but specifically tailored for debugging. It prints the value passed to it and returns it (just like `IO.inspect/2`), but it also prints the code and location.
 
 ```elixir
-def some_fun(a, b, c) do
-  require IEx; IEx.pry
-  ...
-end
+# In my_file.exs
+feature = %{name: :dbg, inspiration: "Rust"}
+dbg(feature)
+dbg(Map.put(feature, :in_version, "1.14.0"))
 ```
 
-Once the code above is executed inside an `iex` session, IEx will ask if we want to pry into the current code. If accepted, we will be able to access all variables, as well as imports and aliases from the code, directly From IEx. While pry is running, the code execution stops, until `continue` is called. Remember you can always run `iex` in the context of a project with `iex -S mix TASK`.
+The code above prints this:
 
-Unfortunately, similar to `IO.inspect/2`, `IEx.pry/0` also requires us to change the code we intend to debug. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
+```shell
+[my_file.exs:2: (file)]
+feature #=> %{inspiration: "Rust", name: :dbg}
+[my_file.exs:3: (file)]
+Map.put(feature, :in_version, "1.14.0") #=> %{in_version: "1.14.0", inspiration: "Rust", name: :dbg}
+```
+
+When talking about `IO.inspect/2`, we mentioned its usefulness when placed between steps of `|>` pipelines. `dbg` does it better: it understands Elixir code, so it will print values at *every step of the pipeline*.
+
+```elixir
+# In dbg_pipes.exs
+__ENV__.file
+|> String.split("/", trim: true)
+|> List.last()
+|> File.exists?()
+|> dbg()
+```
+
+This code prints:
+
+```shell
+[dbg_pipes.exs:5: (file)]
+__ENV__.file #=> "/home/myuser/dbg_pipes.exs"
+|> String.split("/", trim: true) #=> ["home", "myuser", "dbg_pipes.exs"]
+|> List.last() #=> "dbg_pipes.exs"
+|> File.exists?() #=> true
+```
+
+## Breakpoints
+
+When code calling `dbg` is executed via `iex`, IEx will ask you to "stop" the code execution where the `dbg` call is. If you accept, you'll be able to access all variables, as well as imports and aliases from the code, directly from IEx. This is called "prying". While the pry session is running, the code execution stops, until `continue` or `next` are called. Remember you can always run `iex` in the context of a project with `iex -S mix TASK`.
+
+<script id="asciicast-509509" src="https://asciinema.org/a/509509.js" async></script>
+
+`dbg` is the most common way to pry into code execution, but if you want to avoid printing debug information, you can use `IEx.pry/0` to set up a manual pry breakpoint.
+
+`dbg` calls requires us to change the code we intend to debug. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
 
 <script type="text/javascript" src="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs.js" id="asciicast-0h3po0AmTcBAorc5GBNU97nrs" async></script><noscript><p><a href="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs">See the example in asciinema</a></p></noscript>
 
-Similar to `IEx.pry/0`, once a breakpoint is reached code execution stops until `continue` is invoked. However, note `break!/2` does not have access to aliases and imports from the debugged code as it works on the compiled artifact rather than on source.
+Similar to `dbg`, once a breakpoint is reached code execution stops until `continue` or `next` are invoked. However, `break!/2` does not have access to aliases and imports from the debugged code as it works on the compiled artifact rather than on source code.
 
 ## Debugger
 
