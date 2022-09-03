@@ -125,7 +125,12 @@ The above will automatically point to the latest Erlang and Elixir available. Fo
 
 ## Precompiled package
 
-Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the [Precompiled.zip file for the latest release](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Precompiled.zip).
+Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download and unzip the appropriate `Precompiled.zip` file for the latest release, depending on which version of Erlang you are using:
+
+
+{% for otp_version in stable.otp_versions %}
+* [Elixir {{ stable.version }} on Erlang {{ otp_version }}](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/elixir-otp-{{ otp_version }}.zip)
+{% endfor %}
 
 Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
