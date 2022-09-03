@@ -129,8 +129,7 @@ Elixir provides a precompiled package for every release. First [install Erlang](
 
 
 {% for otp_version in stable.otp_versions %}
-* [Elixir {{ stable.version }} on Erlang {{ otp_version }}](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/elixir-otp-{{ otp_version }}.zip)
-{% endfor %}
+  * [Elixir {{ stable.version }} on Erlang {{ otp_version }}](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/elixir-otp-{{ otp_version }}.zip){% endfor %}
 
 Once the release is unpacked, you are ready to run the `elixir` and `iex` commands from the `bin` directory, but we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
 
