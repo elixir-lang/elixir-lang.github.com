@@ -215,6 +215,21 @@ defmodule Foo do
 end
 ```
 
+Aliasing a nested module does not bring parent modules into scope. Consider the following example:
+
+```elixir
+defmodule Foo do
+  defmodule Bar do
+    defmodule Baz do
+    end
+  end
+end
+
+alias Foo.Bar.Baz
+# The module `Foo.Bar.Baz` is now available as `Baz`
+# However, the module `Foo.Bar` is *not* available as `Bar`
+```
+
 As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.
 
 ## Multi alias/import/require/use
