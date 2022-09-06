@@ -62,7 +62,7 @@ Hello world!
 :ok
 ```
 
-However notice that in Elixir you don't need to create a file only to create a new module, Elixir modules can be defined directly in the shell:
+However, notice that in Elixir you don't need to create a file only to create a new module; Elixir modules can be defined directly in the shell:
 
 ```elixir
 defmodule MyModule do
