@@ -28,7 +28,7 @@ hello() ->
 Add your functions to it, save it to disk, run `erl` from the same directory and execute the `compile` command:
 
 ```erl
-Eshell V5.9  (abort with ^G)
+Eshell V13.0.4  (abort with ^G)
 1> c(module_name).
 ok
 1> module_name:hello().
@@ -46,7 +46,7 @@ Elixir too has an interactive shell called `iex`. Compiling Elixir code can be d
 # module_name.ex
 defmodule ModuleName do
   def hello do
-    IO.puts "Hello World"
+    IO.puts("Hello world!")
   end
 end
 ```
@@ -54,10 +54,10 @@ end
 And compiled from `iex`:
 
 ```elixir
-Interactive Elixir
+Interactive Elixir (1.14.0) - press Ctrl+C to exit (type h() ENTER for help)
 iex> c("module_name.ex")
 [ModuleName]
-iex> ModuleName.hello
+iex> ModuleName.hello()
 Hello world!
 :ok
 ```
@@ -65,11 +65,18 @@ Hello world!
 However, notice that in Elixir you don't need to create a file only to create a new module; Elixir modules can be defined directly in the shell:
 
 ```elixir
-defmodule MyModule do
-  def hello do
-    IO.puts "Another Hello"
-  end
-end
+iex> defmodule MyModule do
+...>   def hello do
+...>     IO.puts("Another Hello")
+...>   end
+...> end
+{:module, MyModule,
+ <<70, 79, 82, 49, 0, 0, 5, 136, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 187,
+   0, 0, 0, 19, 15, 69, 108, 105, 120, 105, 114, 46, 77, 121, 77, 111, 100, 117,
+   108, 101, 8, 95, 95, 105, 110, 102, 111, ...>>, {:hello, 0}}
+iex> MyModule.hello()
+Another Hello
+:ok
 ```
 
 
@@ -218,11 +225,11 @@ is_atom('').                %=> true
 **Elixir**
 
 ```elixir
-is_atom :ok                 #=> true
-is_atom :'ok'               #=> true
-is_atom Ok                  #=> true
-is_atom :"Multiple words"   #=> true
-is_atom :""                 #=> true
+is_atom(:ok)                #=> true
+is_atom(:'ok')              #=> true
+is_atom(Ok)                 #=> true
+is_atom(:"Multiple words")  #=> true
+is_atom(:"")                #=> true
 ```
 
 ### Tuples
@@ -263,9 +270,9 @@ is_binary(<<"Hello">>).  %=> true
 **Elixir**
 
 ```elixir
-is_list 'Hello'          #=> true
-is_binary "Hello"        #=> true
-is_binary <<"Hello">>    #=> true
+is_list('Hello')         #=> true
+is_binary("Hello")       #=> true
+is_binary(<<"Hello">>)   #=> true
 <<"Hello">> === "Hello"  #=> true
 ```
 
@@ -274,11 +281,11 @@ In Elixir, the word **string** means a UTF-8 binary and there is a `String` modu
 Elixir also supports multiline strings (also called *heredocs*):
 
 ```elixir
-is_binary """
+is_binary("""
 This is a binary
 spanning several
 lines.
-"""
+""")
 #=> true
 ```
 
@@ -349,18 +356,18 @@ re:run("abc ", Pattern).
 **Elixir**
 
 ```elixir
-Regex.run ~r/abc\s/, "abc "
+Regex.run(~r/abc\s/, "abc ")
 #=> ["abc "]
 ```
 
 Regexes are also supported in heredocs, which is convenient when defining multiline regexes:
 
 ```elixir
-Regex.regex? ~r"""
+Regex.regex?(~r"""
 This is a regex
 spanning several
 lines.
-"""
+""")
 #=> true
 ```
 
@@ -394,12 +401,12 @@ An Elixir equivalent to the Erlang above:
 defmodule HelloModule do
   # A "Hello world" function
   def some_fun do
-    IO.puts "Hello world!"
+    IO.puts("Hello world!")
   end
 
   # This one works only with lists
   def some_fun(list) when is_list(list) do
-    IO.inspect list
+    IO.inspect(list)
   end
 
   # A private function
@@ -415,7 +422,7 @@ In Elixir, it is also possible to have multiple modules in one file, as well as 
 defmodule HelloModule do
   defmodule Utils do
     def util do
-      IO.puts "Utilize"
+      IO.puts("Utilize")
     end
 
     defp priv do
@@ -431,13 +438,14 @@ end
 defmodule ByeModule do
 end
 
-HelloModule.dummy
+HelloModule.dummy()
 #=> :ok
 
-HelloModule.Utils.util
-#=> "Utilize"
+HelloModule.Utils.util()
+# "Utilize"
+#=> :ok
 
-HelloModule.Utils.priv
+HelloModule.Utils.priv()
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
 ```
 
@@ -467,8 +475,8 @@ loop_through([]) ->
 
 ```elixir
 def loop_through([head | tail]) do
-  IO.inspect head
-  loop_through tail
+  IO.inspect(head)
+  loop_through(tail)
 end
 
 def loop_through([]) do
@@ -541,13 +549,13 @@ def sum(a, b) when is_binary(a) and is_binary(b) do
   a <> b
 end
 
-sum 1, 2
+sum(1, 2)
 #=> 3
 
-sum [1], [2]
+sum([1], [2])
 #=> [1, 2]
 
-sum "a", "b"
+sum("a", "b")
 #=> "ab"
 ```
 
@@ -560,8 +568,8 @@ def mul_by(x, n \\ 2) do
   x * n
 end
 
-mul_by 4, 3 #=> 12
-mul_by 4    #=> 8
+mul_by(4, 3) #=> 12
+mul_by(4)    #=> 8
 ```
 
 ### Anonymous functions
@@ -588,7 +596,7 @@ sum.(4, 3)
 #=> 7
 
 square = fn x -> x * x end
-Enum.map [1, 2, 3, 4], square
+Enum.map([1, 2, 3, 4], square)
 #=> [1, 4, 9, 16]
 ```
 
@@ -614,11 +622,12 @@ F({a, b}).
 
 ```elixir
 f = fn
-      {:a, :b} = tuple ->
-        IO.puts "All your #{inspect tuple} are belong to us"
-      [] ->
-        "Empty"
-    end
+  {:a, :b} = tuple ->
+    "All your #{inspect(tuple)} are belong to us"
+
+  [] ->
+    "Empty"
+end
 
 f.([])
 #=> "Empty"
@@ -659,7 +668,7 @@ defmodule Math do
   end
 end
 
-Enum.map [1, 2, 3], &Math.square/1
+Enum.map([1, 2, 3], &Math.square/1)
 #=> [1, 4, 9]
 ```
 
@@ -669,10 +678,10 @@ Enum.map [1, 2, 3], &Math.square/1
 Elixir supports partial application of functions which can be used to define anonymous functions in a concise way:
 
 ```elixir
-Enum.map [1, 2, 3, 4], &(&1 * 2)
+Enum.map([1, 2, 3, 4], &(&1 * 2))
 #=> [2, 4, 6, 8]
 
-List.foldl [1, 2, 3, 4], 0, &(&1 + &2)
+List.foldl([1, 2, 3, 4], 0, &(&1 + &2))
 #=> 10
 ```
 
@@ -685,7 +694,7 @@ defmodule Math do
   end
 end
 
-Enum.map [1, 2, 3], &Math.square/1
+Enum.map([1, 2, 3], &Math.square/1)
 #=> [1, 4, 9]
 ```
 
@@ -749,14 +758,17 @@ Test_fun(10).
 **Elixir**
 
 ```elixir
-test_fun = fn(x) ->
+test_fun = fn x ->
   cond do
     x > 10 ->
       :greater_than_ten
+
     x < 10 and x > 0 ->
       :less_than_ten_positive
+
     x < 0 or x === 0 ->
       :zero_or_negative
+
     true ->
       :exactly_ten
   end
@@ -810,9 +822,9 @@ end.
 **Elixir**
 
 ```elixir
-pid = Kernel.self
+pid = Kernel.self()
 
-send pid, {:hello}
+send(pid, {:hello})
 
 receive do
   {:hello} -> :ok
