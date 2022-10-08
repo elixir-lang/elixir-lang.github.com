@@ -30,7 +30,7 @@ For example, different languages can extract performance benefits from types. Ho
 
 Another benefit of types is to _aid_ documentation (emphasis on the word _aid_ as I don't believe types replace textual documentation). Elixir already reaps similar benefits from [typespecs](https://hexdocs.pm/elixir/typespecs.html) and I would expect an integrated type system to be even more valuable in this area.
 
-However, the upsides and downsides of static typing become fuzzier and prone to exaggerations once we discuss them in the context of code maintainance, in particular when comparing types with other software verification techniques, such as tests. In those situations, it is common to hear unrealistic claims such as "a static type system would catch 80% of my Elixir bugs" or that "you need to write fewer tests once you have static types".
+However, the upsides and downsides of static typing become fuzzier and prone to exaggerations once we discuss them in the context of code maintenance, in particular when comparing types with other software verification techniques, such as tests. In those situations, it is common to hear unrealistic claims such as "a static type system would catch 80% of my Elixir bugs" or that "you need to write fewer tests once you have static types".
 
 While [I explore why I don't believe those claims are true during the keynote](https://www.youtube.com/watch?v=Jf5Hsa1KOc8), saying a static type system helps catch bugs is not helpful unless we discuss exactly the type of bugs it is supposed to identify, and that's what we should focus on.
 
@@ -104,7 +104,7 @@ We could think of it as a function that has both types `(integer() -> integer())
 
 We also have a data-structure called atoms in Elixir. They uniquely represent a value which is given by their own name. Such as `:sunday` or `:banana`. You can think of the type `atom()` as the set of all atoms. In addition, we can think of the values `:sunday` and `:banana` as subtypes of `atom()`, as they are contained in the set of all atoms. `:sunday` and `:banana` are also known as singleton types (as they are made up of only one value).
 
-In fact, we could even consider each integer to be a singleton type that belongs to the `integer()` set. The choice of which values will become singletons in our typesystem will strongly depend on the trade-offs we defined in the previous sections.
+In fact, we could even consider each integer to be a singleton type that belongs to the `integer()` set. The choice of which values will become singletons in our type system will strongly depend on the trade-offs we defined in the previous sections.
 
 Furthermore, the type system has to be gradual, as any typed Elixir code would have to interact with untyped Elixir code.
 
@@ -130,7 +130,7 @@ One of the challenges in implementing a type system - at least for someone who d
 
 The first step, the one we are currently working on, is to leverage the existing type information found in Elixir programs. As previously mentioned, [we write assertive code](https://dashbit.co/blog/writing-assertive-code-with-elixir) in Elixir, which means there is a lot of type information in patterns and guards. We want to lift this information and use it to type check existing codebases. The Erlang compiler already does so to improve performance within a single module and we want to eventually do so across modules and applications too.
 
-During this phase, Elixir developers won't have to change a single line of code to levarage the benefits of the type system. Of course, we will catch only part of existing bugs, but this will allows us to stress test, benchmark, and collect feedback from developers, making improvements behind the scenes (or even revert the whole thing if we believe it won't lead us where we expect).
+During this phase, Elixir developers won't have to change a single line of code to leverage the benefits of the type system. Of course, we will catch only part of existing bugs, but this will allows us to stress test, benchmark, and collect feedback from developers, making improvements behind the scenes (or even revert the whole thing if we believe it won't lead us where we expect).
 
 The next step is to introduce typed structs into the language, allowing struct types to propagate throughout the system, as you pattern match on structs throughout the codebase. In this stage we will introduce a new API for defining structs, yet to be discussed, and developers will have to use the new API to reap its benefits.
 
