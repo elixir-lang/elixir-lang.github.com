@@ -11,6 +11,8 @@ Elixir is a dynamically typed language, so all types in Elixir are checked at ru
 1. declaring typed function signatures (also called specifications);
 2. declaring custom types.
 
+Typespecs are useful for code clarity and static code analysis (for example, Erlang's [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html) tool).
+
 ### Function specifications
 
 Elixir provides many [built-in types](https://hexdocs.pm/elixir/typespecs.html#built-in-types), such as `integer` or `pid`, that can be used to document function signatures.  For example, the `round/1` function, which rounds a number to its nearest integer. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
