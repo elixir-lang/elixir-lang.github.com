@@ -11,7 +11,7 @@ Elixir is a dynamically typed language, so all types in Elixir are checked at ru
 1. declaring typed function signatures (also called specifications);
 2. declaring custom types.
 
-Although typespecs are primarily for documentation (i.e. they are not enforced, either at compile-time or run-time), they are useful for code clarity and static code analysis (e.g. Erlang's [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html) tool).
+Typespecs are useful for code clarity and static code analysis (for example, Erlang's [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html) tool).
 
 ### Function specifications
 
