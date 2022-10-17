@@ -6,7 +6,7 @@ title: Typespecs and behaviours
 
 ## Types and specs
 
-Elixir is a dynamically typed language. Types are not checked, and type errors are not thrown, at compile-time. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
+Elixir is a dynamically typed language, so all types in Elixir are checked at runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
 1. declaring typed function signatures (also called specifications);
 2. declaring custom types.
