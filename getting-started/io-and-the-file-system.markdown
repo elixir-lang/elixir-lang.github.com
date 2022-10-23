@@ -80,7 +80,7 @@ However, if you expect the file to be there, the bang variation is more useful a
 
 as, in case of an error, `File.read/1` will return `{:error, reason}` and the pattern matching will fail. You will still get the desired result (a raised error), but the message will be about the pattern which doesn't match (thus being cryptic in respect to what the error actually is about).
 
-Therefore, if you don't want to handle the error outcomes, prefer use the functions ending with an exclamation mark, such as `File.read!/1`.
+Therefore, if you don't want to handle the error outcomes, prefer to use the functions ending with an exclamation mark, such as `File.read!/1`.
 
 ## The `Path` module
 
@@ -213,7 +213,7 @@ We packed a lot into this small section, so let's break it down:
 
   * iodata and chardata are lists of binaries and integers. Those binaries and integers can be arbitrarily nested inside lists. Their goal is to give flexibility and performance when working with IO devices and files
 
-  * the choice between iodata and chardata depends on the encoding of the IO device. If the file is opened without encoding, the file expects iodata, and the functions in the `IO` module starting with `bin*` must be used. The default IO device (`:stdio`) and files opened with `:utf8` encoding work expect chardata and work with the remaining functions in the `IO` module
+  * the choice between iodata and chardata depends on the encoding of the IO device. If the file is opened without encoding, the file expects iodata, and the functions in the `IO` module starting with `bin*` must be used. The default IO device (`:stdio`) and files opened with `:utf8` encoding expect chardata and work with the remaining functions in the `IO` module
 
   * charlists are a special case of chardata, where it exclusively uses a list of integers Unicode codepoints. They can be created with the `~c` sigil. Lists of integers are automatically printed using the `~c` sigil if all integers in a list represent printable ASCII codepoints.
 
