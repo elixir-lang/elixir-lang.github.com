@@ -32,7 +32,7 @@ The keyword list used with `defstruct` defines what fields the struct will have 
 
 Structs take the name of the module they're defined in. In the example above, we defined a struct named `User`.
 
-We can now create `User` structs by using a syntax similar to the one used to create maps (if you have defined the struct in a separate file, you can compile the file inside IEx before proceeding by running `c "file.exs"`; be aware you may get an error saying `the struct was not yet defined` if you try the below example in a file directly due to when definitions are resolved):
+We can now create `User` structs by using a syntax similar to the one used to create maps:
 
 ```elixir
 iex> %User{}
@@ -41,11 +41,13 @@ iex> %User{name: "Jane"}
 %User{age: 27, name: "Jane"}
 ```
 
+> Note: If you have defined the struct in a separate file, you can compile the file inside IEx before proceeding by running `c "file.exs"`. Be aware you may get an error saying `the struct was not yet defined` if you try the example above in a file directly due to when definitions are resolved.
+
 Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:
 
 ```elixir
 iex> %User{oops: :field}
-** (KeyError) key :oops not found in: %User{age: 27, name: "John"}
+** (KeyError) key :oops not found expanding struct: User.__struct__/1
 ```
 
 ## Accessing and updating structs
@@ -96,7 +98,7 @@ iex> john[:name]
 ** (UndefinedFunctionError) function User.fetch/2 is undefined (User does not implement the Access behaviour)
              User.fetch(%User{age: 27, name: "John"}, :name)
 iex> Enum.each(john, fn {field, value} -> IO.puts(value) end)
-** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
+** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"} of type User (a struct)
 ```
 
 However, since structs are just maps, they work with the functions from the `Map` module:
@@ -140,7 +142,7 @@ Doing it in reverse order will raise a syntax error:
 iex> defmodule User do
 ...>   defstruct [name: "John", age: 27, :email]
 ...> end
-** (SyntaxError) iex:107: syntax error before: email
+** (SyntaxError) iex:107: unexpected expression after keyword list. Keyword lists must always come last in lists and maps.
 ```
 
 You can also enforce that certain keys have to be specified when creating the struct via the `@enforce_keys` module attribute:
