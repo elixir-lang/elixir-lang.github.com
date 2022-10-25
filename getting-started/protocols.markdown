@@ -4,7 +4,7 @@ layout: getting-started
 title: Protocols
 ---
 
-Protocols are a mechanism to achieve polymorphism in Elixir when you want behavior to vary depending on the data type. We are already familiar with one way of solving this type of problem: via pattern matching and guard clauses. Consider a simple utility module that would tell us the type of input variable:
+Protocols are a mechanism to achieve polymorphism in Elixir when you want behaviour to vary depending on the data type. We are already familiar with one way of solving this type of problem: via pattern matching and guard clauses. Consider a simple utility module that would tell us the type of input variable:
 
 ```elixir
 defmodule Utility do
@@ -16,7 +16,7 @@ end
 
 If the use of this module were confined to your own project, you would be able to keep defining new `type/1` functions for each new data type. However, this code could be problematic if it was shared as a dependency by multiple apps because there would be no easy way to extend its functionality.
 
-This is where protocols can help us: protocols allow us to extend the original behavior for as many data types as we need. That's because **dispatching on a protocol is available to any data type that has implemented the protocol** and a protocol can be implemented by anyone, at any time.
+This is where protocols can help us: protocols allow us to extend the original behaviour for as many data types as we need. That's because **dispatching on a protocol is available to any data type that has implemented the protocol** and a protocol can be implemented by anyone, at any time.
 
 Here's how we could write the same `Utility.type/1` functionality as a protocol:
 
@@ -98,7 +98,7 @@ Passing a data type that doesn't implement the protocol raises an error:
 
 ```elixir
 iex> Size.size([1, 2, 3])
-** (Protocol.UndefinedError) protocol Size not implemented for [1, 2, 3]
+** (Protocol.UndefinedError) protocol Size not implemented for [1, 2, 3] of type List
 ```
 
 It's possible to implement protocols for all Elixir data types:
@@ -125,9 +125,9 @@ In the [previous chapter](/getting-started/structs.html), we have learned that a
 iex> Size.size(%{})
 0
 iex> set = %MapSet{} = MapSet.new
-#MapSet<[]>
+MapSet.new([])
 iex> Size.size(set)
-** (Protocol.UndefinedError) protocol Size not implemented for #MapSet<[]>
+** (Protocol.UndefinedError) protocol Size not implemented for MapSet.new([]) of type MapSet (a struct)
 ```
 
 Instead of sharing protocol implementation with maps, structs require their own protocol implementation. Since a `MapSet` has its size precomputed and accessible through `MapSet.size/1`, we can define a `Size` implementation for it:
@@ -231,7 +231,7 @@ The snippet above only works because numbers implement the `String.Chars` protoc
 iex> tuple = {1, 2, 3}
 {1, 2, 3}
 iex> "tuple: #{tuple}"
-** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}
+** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3} of type Tuple
 ```
 
 When there is a need to "print" a more complex data structure, one can use the `inspect` function, based on the `Inspect` protocol:
