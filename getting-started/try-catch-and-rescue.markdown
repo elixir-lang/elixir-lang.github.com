@@ -90,7 +90,7 @@ For the cases where you do expect a file to exist (and the lack of that file is 
 
 ```elixir
 iex> File.read!("unknown")
-** (File.Error) could not read file unknown: no such file or directory
+** (File.Error) could not read file "unknown": no such file or directory
     (elixir) lib/file.ex:272: File.read!/1
 ```
 
@@ -102,11 +102,11 @@ Many functions in the standard library follow the pattern of having a counterpar
 
 One saying that is common in the Erlang community, as well as Elixir's, is "fail fast" / "let it crash". The idea behind let it crash is that, in case something _unexpected_ happens, it is best to let the exception happen, without rescuing it.
 
-It is important to emphasize the word _unexpected_. For example, imagine you are building a script to process files. Your script receive filenames as inputs. It is expected that users may make mistakes and provide unknown filenames. In this scenario, while you could use `File.read!/1` to read files and let it crash in case of invalid filenames, it probably makes more sense to use `File.read/1` and provide users of your script with a clear and precise feedback of what went wrong.
+It is important to emphasize the word _unexpected_. For example, imagine you are building a script to process files. Your script receives filenames as inputs. It is expected that users may make mistakes and provide unknown filenames. In this scenario, while you could use `File.read!/1` to read files and let it crash in case of invalid filenames, it probably makes more sense to use `File.read/1` and provide users of your script with a clear and precise feedback of what went wrong.
 
 Other times, you may fully expect a certain file to exist, and in case it does not, it means something terribly wrong has happened elsewhere. In such cases, `File.read!/1` is all you need.
 
-The second approach also works because, as discussed in the [Processes](/getting-started/processes.html) chapter, all Elixir code runs inside processes that are isolated and don't share anything by default. Therefore, an unhandled exception in a process will never crash or corrupt the state of another process. This allows us to define supervisor processes, which are meant to observe when a process terminates unexpectedly, and starts a new one in its place.
+The second approach also works because, as discussed in the [Processes](/getting-started/processes.html) chapter, all Elixir code runs inside processes that are isolated and don't share anything by default. Therefore, an unhandled exception in a process will never crash or corrupt the state of another process. This allows us to define supervisor processes, which are meant to observe when a process terminates unexpectedly, and start a new one in its place.
 
 At the end of the day, "fail fast" / "let it crash" is a way of saying that, when something _unexpected_ happens, it is best to start from scratch within a new processes, freshly started by a supervisor, rather than blindly trying to rescue all possible error cases without the full context of when and how they can happen.
 
@@ -159,7 +159,7 @@ All Elixir code runs inside processes that communicate with each other. When a p
 
 ```elixir
 iex> spawn_link(fn -> exit(1) end)
-** (EXIT from #PID<0.56.0>) evaluator process exited with reason: 1
+** (EXIT from #PID<0.56.0>) shell process exited with reason: 1
 ```
 
 In the example above, the linked process died by sending an `exit` signal with a value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
@@ -183,7 +183,7 @@ It is exactly this supervision system that makes constructs like `try/catch` and
 
 ## After
 
-Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and use an `after` clause to close it--even if something goes wrong:
+Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and use an `after` clause to close it -- even if something goes wrong:
 
 ```elixir
 iex> {:ok, file} = File.open("sample", [:utf8, :write])
@@ -252,7 +252,7 @@ iex> try do
 ...>   _ -> what_happened = :rescued
 ...> end
 iex> what_happened
-** (RuntimeError) undefined function: what_happened/0
+** (CompileError) undefined function: what_happened/0
 ```
 
 Instead, you should return the value of the `try` expression:
@@ -278,7 +278,7 @@ iex> try do
 ...> rescue
 ...>   _ -> another_what_happened
 ...> end
-** (RuntimeError) undefined function: another_what_happened/0
+** (CompileError) undefined function: another_what_happened/0
 ```
 
 This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages.
