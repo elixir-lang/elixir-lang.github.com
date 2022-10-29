@@ -112,7 +112,7 @@ When code calling `dbg` is executed via `iex`, IEx will ask you to "stop" the co
 
 `dbg` is the most common way to pry into code execution, but if you want to avoid printing debug information, you can use `IEx.pry/0` to set up a manual pry breakpoint.
 
-`dbg` calls requires us to change the code we intend to debug. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
+`dbg` calls require us to change the code we intend to debug. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
 
 <script type="text/javascript" src="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs.js" id="asciicast-0h3po0AmTcBAorc5GBNU97nrs" async></script><noscript><p><a href="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs">See the example in asciinema</a></p></noscript>
 
@@ -158,7 +158,7 @@ iex> Example.double_sum(1, 2)
 
 > If the `debugger` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
 
-When you start the debugger, a Graphical User Interface will open in your machine. We call `:int.ni(Example)` to prepare our module for debugging and then add a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
+When you start the debugger, a Graphical User Interface will open on your machine. We call `:int.ni(Example)` to prepare our module for debugging and then add a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
 
 <img src="/images/contents/debugger-elixir.gif" width="640" alt="Debugger GUI GIF" />
 
