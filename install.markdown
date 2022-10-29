@@ -141,7 +141,6 @@ Once the release is download, unpack it, and you are ready to run the `elixir` a
 There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
 
   * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
-  * [exenv](https://github.com/exenv/exenv) - install and manage different Elixir versions
   * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
   * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
 
