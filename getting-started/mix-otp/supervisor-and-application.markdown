@@ -84,7 +84,7 @@ What happens if we intentionally crash the registry started by the supervisor? L
 iex> [{_, registry, _, _}] = Supervisor.which_children(sup)
 [{KV.Registry, #PID<0.150.0>, :worker, [KV.Registry]}]
 iex> GenServer.call(registry, :bad_input)
-08:52:57.311 [error] GenServer KV.Registry terminating
+08:52:57.311 [error] GenServer #PID<0.150.0> terminating
 ** (FunctionClauseError) no function clause matching in KV.Registry.handle_call/3
 iex> Supervisor.which_children(sup)
 [{KV.Registry, #PID<0.157.0>, :worker, [KV.Registry]}]
