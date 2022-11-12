@@ -71,11 +71,15 @@ end
 Run the test suite and the doctest should fail:
 
 ```
-  1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
+  1) doctest KVServer.Command.parse/1 (1) (KVServer.CommandTest)
      test/kv_server/command_test.exs:3
      Doctest failed
+     doctest:
+       iex> KVServer.Command.parse("CREATE shopping\r\n")
+       {:ok, {:create, "shopping"}}
      code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
-     lhs:  :not_implemented
+     left:  :not_implemented
+     right: {:ok, {:create, "shopping"}}
      stacktrace:
        lib/kv_server/command.ex:7: KVServer.Command (module)
 ```
@@ -439,7 +443,7 @@ In case the test crashes, you will see a report as follows:
 
      The following output was logged:
 
-     13:44:10.035 [info]  Application kv exited: :stopped
+     13:44:10.035 [notice] Application kv exited: :stopped
 ```
 
 With this simple integration test, we start to see why integration tests may be slow. Not only can this test not run asynchronously, but it also requires the expensive setup of stopping and starting the `:kv` application. In fact, your test suite may even fail and run into timeouts. If that's the case, you can tweak the `:gen_tcp.recv(socket, 0)` call to pass a third argument, which is the timeout in milliseconds. In the next chapter we will learn about application configuration, which we could use to make the timeout configurable, if desired.
