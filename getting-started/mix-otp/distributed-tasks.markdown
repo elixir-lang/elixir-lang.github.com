@@ -59,7 +59,7 @@ Note that inside this new IEx session, we cannot access `Hello.world/0`:
 
 ```elixir
 iex> Hello.world
-** (UndefinedFunctionError) undefined function: Hello.world/0
+** (UndefinedFunctionError) function Hello.world/0 is undefined (module Hello is not available)
     Hello.world()
 ```
 
@@ -105,7 +105,7 @@ For our routing layer, we are going to use tasks, but feel free to explore the o
 
 ## async/await
 
-So far we have explored tasks that are started and run in isolation, with no regard for their return value. However, sometimes it is useful to run a task to compute a value and read its result later on. For this, tasks also provide the `async/await` pattern:
+So far we have explored tasks that are started and run in isolation, without regard to their return value. However, sometimes it is useful to run a task to compute a value and read its result later on. For this, tasks also provide the `async/await` pattern:
 
 ```elixir
 task = Task.async(fn -> compute_something_expensive() end)
@@ -136,7 +136,12 @@ From inside `bar@computer-name`, we can now spawn a task directly on the other n
 iex> task = Task.Supervisor.async({KV.RouterTasks, :"foo@computer-name"}, fn ->
 ...>   {:ok, node()}
 ...> end)
-%Task{owner: #PID<0.122.0>, pid: #PID<12467.88.0>, ref: #Reference<0.0.0.400>}
+%Task{
+  mfa: {:erlang, :apply, 2},
+  owner: #PID<0.122.0>,
+  pid: #PID<12467.88.0>,
+  ref: #Reference<0.0.0.400>
+}
 iex> Task.await(task)
 {:ok, :"foo@computer-name"}
 ```
@@ -145,7 +150,12 @@ Our first distributed task retrieves the name of the node the task is running on
 
 ```elixir
 iex> task = Task.Supervisor.async({KV.RouterTasks, :"foo@computer-name"}, Kernel, :node, [])
-%Task{owner: #PID<0.122.0>, pid: #PID<12467.89.0>, ref: #Reference<0.0.0.404>}
+%Task{
+  mfa: {Kernel, :node, 0},
+  owner: #PID<0.122.0>,
+  pid: #PID<12467.89.0>,
+  ref: #Reference<0.0.0.404>
+}
 iex> Task.await(task)
 :"foo@computer-name"
 ```
@@ -270,7 +280,7 @@ Excluding tags: [distributed: true]
 .......
 
 Finished in 0.05 seconds
-8 tests, 0 failures, 1 excluded
+9 tests, 0 failures, 1 excluded
 ```
 
 This time all tests passed and ExUnit warned us that distributed tests were being excluded. If you run tests with `$ elixir --sname foo -S mix test`, one extra test should run and successfully pass as long as the `bar@computer-name` node is available.
@@ -333,13 +343,13 @@ However, keep in mind that by making the test distributed, we will likely run it
 
 We have only scratched the surface of what is possible when it comes to distribution.
 
-In all of our examples, we relied on Erlang's ability to automatically connect nodes whenever there is a request. For example, when we invoked `Node.spawn_link(:"foo@computer-name", fn -> Hello.world() end)`, Erlang automatically connected to said and started a new process. However, you may also want to take a more explicit approach to connections, by using [`Node.connect/1`](https://hexdocs.pm/elixir/Node.html#connect/1) and [`Node.disconnect/1`](https://hexdocs.pm/elixir/Node.html#disconnect/1).
+In all of our examples, we relied on Erlang's ability to automatically connect nodes whenever there is a request. For example, when we invoked `Node.spawn_link(:"foo@computer-name", fn -> Hello.world() end)`, Erlang automatically connected to said node and started a new process. However, you may also want to take a more explicit approach to connections, by using [`Node.connect/1`](https://hexdocs.pm/elixir/Node.html#connect/1) and [`Node.disconnect/1`](https://hexdocs.pm/elixir/Node.html#disconnect/1).
 
 By default, Erlang establishes a fully meshed network, which means all nodes are connected to each other. Under this topology, the Erlang distribution is known to scale to several dozens of nodes in the same cluster. Erlang also has the concept of hidden nodes, which can allow developers to assemble custom topologies as seen in projects such as [Partisan](https://github.com/lasp-lang/partisan).
 
 In production, you may have nodes connecting and disconnecting at any time. In such scenarios, you need to provide _node discoverability_. Libraries such as [libcluster](https://github.com/bitwalker/libcluster/) and [peerage](https://github.com/mrluc/peerage) provide several strategies for node discoverability using DNS, Kubernetes, etc.
 
-Distributed key-value stores, used in real-life, need to consider the fact nodes may go up and down at any time and also migrate the bucket across nodes. Even further, buckets often need to be duplicated between nodes, so a failure in a node does not lead to the whole bucket being lost. This process is called *replication*. Our implementation won't attempt to tackle such problems. Instead, we assume there is a fixed number nodes and therefore use a fixed routing table.
+Distributed key-value stores, used in real-life, need to consider the fact nodes may go up and down at any time and also migrate the bucket across nodes. Even further, buckets often need to be duplicated between nodes, so a failure in a node does not lead to the whole bucket being lost. This process is called *replication*. Our implementation won't attempt to tackle such problems. Instead, we assume there is a fixed number of nodes and therefore use a fixed routing table.
 
 These topics can be daunting at first but remember that most Elixir frameworks abstract those concerns for you. For example, when using [the Phoenix web framework](https://phoenixframework.org), its plug-and-play abstractions take care of sending messages and tracking how users join and leave a cluster. However, if you are interested in distributed systems after all, there is much to explore. Here are some additional references:
 
