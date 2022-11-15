@@ -172,7 +172,7 @@ With the configuration in place, let's give assembling the release another try:
 
     $ MIX_ENV=prod mix release foo
     * assembling foo-0.0.1 on MIX_ENV=prod
-    * skipping runtime configuration (config/releases.exs not found)
+    * skipping runtime configuration (config/runtime.exs not found)
 
     Release created at _build/prod/rel/foo!
 
@@ -350,6 +350,7 @@ For instance, releases run using short-names (`--sname`). However, if you want t
 
     $ mix release.init
     * creating rel/vm.args.eex
+    * creating rel/remote.vm.args.eex
     * creating rel/env.sh.eex
     * creating rel/env.bat.eex
 
@@ -358,16 +359,24 @@ If you open up `rel/env.sh.eex`, you will see:
 ```shell
 #!/bin/sh
 
-# Sets and enables heart (recommended only in daemon mode)
-# if [ "$RELEASE_COMMAND" = "daemon" ] || [ "$RELEASE_COMMAND" = "daemon_iex" ]; then
-#   HEART_COMMAND="$RELEASE_ROOT/bin/$RELEASE_NAME $RELEASE_COMMAND"
-#   export HEART_COMMAND
-#   export ELIXIR_ERL_OPTIONS="-heart"
-# fi
+# # Sets and enables heart (recommended only in daemon mode)
+# case $RELEASE_COMMAND in
+#   daemon*)
+#     HEART_COMMAND="$RELEASE_ROOT/bin/$RELEASE_NAME $RELEASE_COMMAND"
+#     export HEART_COMMAND
+#     export ELIXIR_ERL_OPTIONS="-heart"
+#     ;;
+#   *)
+#     ;;
+# esac
 
-# Set the release to work across nodes
+# # Set the release to load code on demand (interactive) instead of preloading (embedded).
+# export RELEASE_MODE=interactive
+
+# # Set the release to work across nodes.
+# # RELEASE_DISTRIBUTION must be "sname" (local), "name" (distributed) or "none".
 # export RELEASE_DISTRIBUTION=name
-# export RELEASE_NODE=<%= @release.name %>@127.0.0.1
+# export RELEASE_NODE=<%= @release.name %>
 ```
 
 The steps necessary to work across nodes is already commented out as an example. You can enable full distribution by uncommenting the last two lines by removing the leading  `# `.
@@ -376,9 +385,13 @@ If you are on Windows, you will have to open up `rel/env.bat.eex`, where you wil
 
 ```bat
 @echo off
-rem Set the release to work across nodes
+rem Set the release to load code on demand (interactive) instead of preloading (embedded).
+rem set RELEASE_MODE=interactive
+
+rem Set the release to work across nodes.
+rem RELEASE_DISTRIBUTION must be "sname" (local), "name" (distributed) or "none".
 rem set RELEASE_DISTRIBUTION=name
-rem set RELEASE_NODE=<%= @release.name %>@127.0.0.1
+rem set RELEASE_NODE=<%= @release.name %>
 ```
 
 Once again, uncomment the last two lines by removing the leading `rem ` to enable full distribution. And that's all!
@@ -389,9 +402,6 @@ The `rel/vm.args.eex` allows you to specify low-level flags that control how the
 
     ## Customize flags given to the VM: https://www.erlang.org/doc/man/erl.html
     ## -mode/-name/-sname/-setcookie are configured via env vars, do not set them here
-
-    ## Number of dirty schedulers doing IO work (file, sockets, and others)
-    ##+SDio 5
 
     ## Increase number of concurrent ports/sockets
     ##+Q 65536
