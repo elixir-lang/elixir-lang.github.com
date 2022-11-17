@@ -96,19 +96,11 @@ The preferred option for installing Elixir. Choose your operating system and too
     * Install Erlang: `scoop install erlang`
     * Install Elixir: `scoop install elixir`
 
-### Raspberry Pi
+### Raspberry Pi and embedded devices
 
-If necessary, replace "buster" with the name of your Raspbian release.
+To build and package an Elixir application, with the whole operating system, and burn that into a disk or deploy it overwhere, [check out the Nerves project](https://www.nerves-project.org).
 
-  * The Erlang Solutions repository has a prebuilt package for armhf. This saves a significant amount of time in comparison to recompiling natively
-  * Get Erlang key and add it to the keychain:
-    * Run: `echo "deb https://packages.erlang-solutions.com/debian buster contrib" | sudo tee /etc/apt/sources.list.d/erlang-solutions.list`
-    * Run: `wget https://packages.erlang-solutions.com/debian/erlang_solutions.asc`
-    * Run: `cat erlang_solutions.asc | gpg --dearmor > erlang_solutions.gpg`
-    * Run: `sudo install -o root -g root -m 644 erlang_solutions.gpg /etc/apt/trusted.gpg.d/`
-  * Install Elixir:
-    * Update apt to latest: `sudo apt update`
-    * Run: `sudo apt install elixir`
+If you want to install Elixir as part of an existing Operating System, please follow the relevant steps above for your Operating System or install from precompiled/source.
 
 ### Docker
 
@@ -182,7 +174,7 @@ The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or 
   * [Precompiled packages for some Unix-like installations](https://www.erlang-solutions.com/resources/download.html)
   * [A general list of installation methods from the Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
 
-After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl`. You will see some information similar to:
+After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl -s halt`. You will see some information similar to:
 
     Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
