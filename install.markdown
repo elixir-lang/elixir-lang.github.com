@@ -17,7 +17,7 @@ Note that Elixir {{ stable.name }} requires Erlang {{ stable.minimum_otp }} or l
 
 The preferred option for installing Elixir. Choose your operating system and tool.
 
-If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source.
+**If your distribution contains an old Elixir/Erlang version, see the sections below for installing Elixir/Erlang from version managers or from source**.
 
 ### macOS
 
@@ -36,7 +36,7 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
     * Run: `pacman -S elixir`
 
   - **Debian**
-    * _See below the instructions for Ubuntu_
+    * Run: `sudo apt-get install elixir`
 
   - **Fedora 21 (and older)**
     * Run: `yum install elixir`
@@ -64,20 +64,14 @@ If your distribution contains an old Elixir/Erlang version, see the sections bel
   - **Solus**
     * Run: `eopkg install elixir`
 
-  - **Ubuntu** or **Debian**
-    * From primary package repositories:
-      * Run: `sudo apt-get install elixir`
+  - **Ubuntu**
+    * Run: `sudo apt-get install elixir`
  
-    * From Erlang Solutions, for more recent Elixir/Erlang versions on Ubuntu LTS (< 22.04) or Debian Stable releases:
-      * Add Erlang Solutions repository: `wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb`
-      * Run: `sudo apt-get update`
-      * Install the Erlang/OTP platform and all of its applications: `sudo apt-get install esl-erlang`
-      * Install Elixir: `sudo apt-get install elixir`
-
   - **Void Linux**
     * Run: `xbps-install -S elixir`
     
 ### BSD
+
   - **FreeBSD**
     * The latest Elixir release is named [lang/elixir-devel](https://freshports.org/lang/elixir-devel).
       The default Elixir, [lang/elixir](https://freshports.org/lang/elixir), may
@@ -134,7 +128,21 @@ Elixir provides a precompiled package for every release. First [install Erlang](
 {% for otp_version in stable.otp_versions %}
   * [Elixir {{ stable.version }} on Erlang {{ otp_version }}](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/elixir-otp-{{ otp_version }}.zip){% endfor %}
 
-Once the release is download, unpack it, and you are ready to run the `elixir` and `iex` commands from the `bin` directory. However, we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
+Once you download the release, unpack it, and you are ready to run the `elixir` and `iex` commands from the `bin` directory. However, we recommend you to [add Elixir's bin path to your PATH environment variable](#setting-path-environment-variable) to ease development.
+
+### Mirrors and nightly builds
+
+The links above point directly to the GitHub release. We also host and mirror precompiled packages and nightly builds globally via `repo.hex.pm` using the following URL scheme:
+
+    https://repo.hex.pm/builds/elixir/${ELIXIR_VERSION}-otp-${OTP_VERSION}.zip
+
+For example, to use Elixir v1.13.3 with Erlang/OTP 24.x, use:
+
+    https://repo.hex.pm/builds/elixir/v1.13.3-otp-24.zip
+
+To use nightly for a given Erlang/OTP version (such as 25), use:
+
+    https://repo.hex.pm/builds/elixir/main-otp-25.zip
 
 ## Compiling with version managers
 
