@@ -12,7 +12,7 @@ In May 2022, we have celebrated 10 years since Elixir v0.5, the first public rel
 
 At such occasions, it may be tempting to try to predict how Elixir will look in 10 years from now. However, I believe that would be a futile effort, because, 10 years ago, I would never have guessed Elixir would have gone [beyond excelling at web development](https://phoenixframework.org/), but also into domains such as [embedded software](https://www.nerves-project.org/) and making inroads into machine learning and data analysis with projects such as [Nx (Numerical Elixir)](https://github.com/elixir-nx/nx), [Explorer](https://github.com/elixir-nx/explorer), [Axon](https://github.com/elixir-nx/axon) and [Livebook](https://livebook.dev/). Elixir was designed to be extensible and how it will be extended has always been a community effort.
 
-For these reasons, I choose to focus on *My Future with Elixir*. Those are the projects I am personally excited about and working on alongside other community members. The topic of today's article is type systems, as discussed in my ElixirConf EU presentation in May 2022.
+For these reasons, I choose to focus on *My Future* with Elixir. Those are the projects I am personally excited about and working on alongside other community members. The topic of today's article is type systems, as discussed in my ElixirConf EU presentation in May 2022.
 
 ## The elephant in the room: types
 
