@@ -88,7 +88,7 @@ The preferred option for installing Elixir. Choose your operating system and too
 ### Windows
 
   - Using our web installer:
-    * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.2/elixir-websetup.exe)
+    * [Download the installer](https://github.com/elixir-lang/elixir-windows-setup/releases/download/v2.3/elixir-websetup.exe)
     * Click next, next, ..., finish
     * If you run into issues, check out the [Windows Installer issues tracker](https://github.com/elixir-lang/elixir-windows-setup)
 
