@@ -29,7 +29,7 @@ We added Cheatsheets to ExDoc because we value developer experience and believe 
 
 Since the beginning, one of Elixir's principles is that documentation should be a first-class citizen. What this idea means to us is that documentation should be easy to write and easy to read. ExDoc has been continuously evolving over the years, guided by this principle.
 
-Here are some of the features added to ExDoc over the years that make reading and writing documentation in Elixir a great experience.
+Here are some of the features added to ExDoc over the years that make reading and writing documentation in Elixir a joy.
 
 ### Beautiful and usable design
 As developers, we may not have the skill to make beautifully designed UIs. That doesn't mean we don't appreciate it.
