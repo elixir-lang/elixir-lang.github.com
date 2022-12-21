@@ -55,7 +55,7 @@ For every module, function, or page, ExDoc gives you a link that you can click t
 ![](https://i.imgur.com/PXvoeDk.gif)
 
 ### Guides
-One of the most common formats of library documentation is an API reference. But depending on your need, that's not the most approachable doc format. For example, when you're just getting started with a lib, or when you want to learn how to solve a specific problem using it.
+One of the most common formats of library documentation is an API reference. But depending on your need, that's not the most approachable doc format. For example, when you're just getting started with a library, or when you want to learn how to solve a specific problem using it.
 
 That's why ExDoc allows writing other types of docs besides API references, like Getting Started Guides or How-tos.
 
