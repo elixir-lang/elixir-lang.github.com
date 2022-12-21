@@ -59,7 +59,7 @@ One of the most common formats of library documentation is an API reference. But
 
 That's why ExDoc allows writing other types of docs besides API references, like Getting Started Guides or How-tos.
 
-Look at how [Ecto's documentation](https://hexdocs.pm/ecto/Ecto.html) uses that, for example:
+Look at how [Ecto's documentation](https://hexdocs.pm/ecto/getting-started.html) uses that, for example:
 
 ![](https://i.imgur.com/KInZb4x.gif)
 
