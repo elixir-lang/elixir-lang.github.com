@@ -104,15 +104,15 @@ __ENV__.file #=> "/home/myuser/dbg_pipes.exs"
 |> File.exists?() #=> true
 ```
 
+Note `dbg` only supports stepping for pipelines (in other words, it can only step through the code it sees). For general stepping of functions, you will need to set breakpoints using `IEx.break!/4`.
+
 ## Breakpoints
 
 When code calling `dbg` is executed via `iex`, IEx will ask you to "stop" the code execution where the `dbg` call is. If you accept, you'll be able to access all variables, as well as imports and aliases from the code, directly from IEx. This is called "prying". While the pry session is running, the code execution stops, until `continue` or `next` are called. Remember you can always run `iex` in the context of a project with `iex -S mix TASK`.
 
 <script id="asciicast-509509" src="https://asciinema.org/a/509509.js" async></script>
 
-`dbg` is the most common way to pry into code execution, but if you want to avoid printing debug information, you can use `IEx.pry/0` to set up a manual pry breakpoint.
-
-`dbg` calls require us to change the code we intend to debug. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
+`dbg` calls require us to change the code we intend to debug and has limited stepping functionality. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
 
 <script type="text/javascript" src="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs.js" id="asciicast-0h3po0AmTcBAorc5GBNU97nrs" async></script><noscript><p><a href="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs">See the example in asciinema</a></p></noscript>
 
