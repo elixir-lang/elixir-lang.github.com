@@ -95,6 +95,8 @@ The search bar also supports autocompletion for module and function names:
 
 ![](https://i.imgur.com/2cmsuDi.gif)
 
+The best part is that full-text search is fully implemented on the client-side, which means ExDoc pages can be fully hosted as static pages anywhere.
+
 ### Keyboard shortcut to navigate to docs of other Hex packages
 
 It's usual for an application to have many dependencies. And while coding, we usually need to read the documentation of more than one of those dependencies.
