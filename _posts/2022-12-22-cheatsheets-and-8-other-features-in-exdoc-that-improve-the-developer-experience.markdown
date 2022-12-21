@@ -2,7 +2,7 @@
 layout: post
 title: "Cheatsheets and 8 other features in ExDoc that improve the developer experience"
 author: Hugo Baraúna
-category: Internals
+category: Announcements
 excerpt: This post explains the motivation behind the new ExDoc Cheatsheet feature. It also highlights other ExDoc features that show how it has been evolving to make the documentation experience in Elixir better and better.
 ---
 
