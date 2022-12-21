@@ -21,7 +21,7 @@ Imagine if you had to go to a different place for every type of documentation yo
 
 ExDoc Cheatsheet represents one step further in the direction of making documentation in Elixir an even more comprehensive and integrated experience.
 
-It's also worth mentioning that ExDoc Cheatshees is inspired by [devhints.io](https://devhints.io) from [Rico Sta. Cruz](https://twitter.com/rstacruz), and it was a contribution from [Paulo Valim](https://twitter.com/paulovalim) and [Yordis Prieto](https://twitter.com/alchemist_ubi).
+ExDoc Cheatsheets are inspired by [devhints.io](https://devhints.io) from [Rico Sta. Cruz](https://twitter.com/rstacruz), and were contributed by [Paulo Valim](https://twitter.com/paulovalim) and [Yordis Prieto](https://twitter.com/alchemist_ubi).
 
 
 ## 10 features that show how ExDoc has improved developer experience over time
