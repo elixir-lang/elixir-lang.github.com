@@ -13,7 +13,7 @@ In this blog post, we'll explain what that new feature is and the motivation beh
 ## What is ExDoc Cheatsheet and how it improves documentation experience
 ExDoc's Cheatsheets are Markdown files with the  `.cheatmd` extension. One can use it to write cheatsheets for their Elixir projects.
 
-Writing and reading cheatsheets is not exactly a new thing for developers. But, what that feature brings as a novelty is a possibility of integrating a cheatsheet alongside the rest of the documentation of an Elixir project instead of hosting it in a different place.
+Writing and reading cheatsheets is not exactly new to developers. What ExDoc brings to the table is the possibility of integrating cheatsheets alongside the rest of the documentation of an Elixir project, instead of hosting it in a different place.
 
 Developers need different kinds of docs at different times. When one is learning about a new library, a guide format is proper. When one needs to know if a library can solve a specific problem, an API reference can be more appropriate. When someone wants to remember a couple of functions they already used from that library, a cheatsheet could be more practical.
 
