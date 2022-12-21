@@ -11,7 +11,7 @@ ExDoc has a cool new feature, [Cheatsheets](https://hexdocs.pm/ex_doc/cheatsheet
 In this blog post, we'll explain what that new feature is and the motivation behind it. We'll also take the opportunity to highlight other ExDoc features that show how it has been evolving to make the documentation experience in Elixir better and better.
 
 ## What is ExDoc Cheatsheet and how it improves documentation experience
-ExDoc's Cheatsheets are Markdown files with the  `.cheatmd` extension. One can use it to write cheatsheets about their Elixir project.
+ExDoc's Cheatsheets are Markdown files with the  `.cheatmd` extension. One can use it to write cheatsheets for their Elixir projects.
 
 Writing and reading cheatsheets is not exactly a new thing for developers. But, what that feature brings as a novelty is a possibility of integrating a cheatsheet alongside the rest of the documentation of an Elixir project instead of hosting it in a different place.
 
