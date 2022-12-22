@@ -1,30 +1,31 @@
 ---
 layout: post
-title: "Cheatsheets and 8 other features in ExDoc that improve the developer experience"
+title: "Cheatsheets and other 8 ExDoc features that improve the developer experience"
 author: Hugo Baraúna
 category: Announcements
-excerpt: This post explains the motivation behind the new ExDoc Cheatsheet feature. It also highlights other ExDoc features that show how it has been evolving to make the documentation experience in Elixir better and better.
+excerpt: This post explains the motivation behind the new ExDoc Cheatsheet feature. It also highlights other ExDoc features that show how ExDoc has been evolving to make the documentation experience in Elixir better and better.
 ---
 
-ExDoc has a cool new feature, [Cheatsheets](https://hexdocs.pm/ex_doc/cheatsheet.html)!
+ExDoc has a cool new feature, [cheatsheets](https://hexdocs.pm/ex_doc/cheatsheet.html)!
 
 In this blog post, we'll explain what that new feature is and the motivation behind it. We'll also take the opportunity to highlight other ExDoc features that show how it has been evolving to make the documentation experience in Elixir better and better.
 
-## What is ExDoc Cheatsheet and how it improves documentation experience
-ExDoc's Cheatsheets are Markdown files with the  `.cheatmd` extension. One can use it to write cheatsheets for their Elixir projects. Here's an [example of how the Ecto project is using](https://hexdocs.pm/ecto/crud.html) them.
+## What are ExDoc Cheatsheets and how they improve the documentation experience
+ExDoc's Cheatsheets are Markdown files with the  `.cheatmd` extension. You can see [an example](https://hexdocs.pm/ecto/crud.html) of how the Ecto project is using them.
 
 Writing and reading cheatsheets is not exactly new to developers. What ExDoc brings to the table is the possibility of integrating cheatsheets alongside the rest of the documentation of an Elixir project, instead of hosting it in a different place.
 
 Developers need different kinds of docs at different times. When one is learning about a new library, a guide format is proper. When one needs to know if a library can solve a specific problem, an API reference can be more appropriate. When someone wants to remember a couple of functions they already used from that library, a cheatsheet could be more practical.
 
-Imagine if you had to go to a different place for every type of documentation you're looking for. That would make a very fragmented experience. And not only for readers of documentation but also for writers.
+Imagine if you had to go to a different place for every type of documentation you're looking for. That would make a very fragmented experience, not only for readers of documentation but also for writers.
 
-ExDoc Cheatsheet represents one step further in the direction of making documentation in Elixir an even more comprehensive and integrated experience.
+ExDoc Cheatsheets represent one step further in the direction of making documentation in Elixir an even more comprehensive and integrated experience.
 
 ExDoc Cheatsheets are inspired by [devhints.io](https://devhints.io) from [Rico Sta. Cruz](https://twitter.com/rstacruz), and were contributed by [Paulo Valim](https://twitter.com/paulovalim) and [Yordis Prieto](https://twitter.com/alchemist_ubi).
 
 
-## 8 features that show how ExDoc has improved developer experience over time
+## Eight features that show how ExDoc has improved developer experience over time
+
 We added Cheatsheets to ExDoc because we value developer experience and believe documentation is a core aspect of it.
 
 Since the beginning, one of Elixir's principles is that documentation should be a first-class citizen. What this idea means to us is that documentation should be easy to write and easy to read. ExDoc has been continuously evolving over the years, guided by this principle.
@@ -55,7 +56,7 @@ For every module, function, or page, ExDoc gives you a link that you can click t
 ![](https://i.imgur.com/PXvoeDk.gif)
 
 ### Guides
-One of the most common formats of library documentation is an API reference. But depending on your need, that's not the most approachable doc format. For example, when you're just getting started with a library, or when you want to learn how to solve a specific problem using it.
+One of the most common formats of library documentation is an API reference. But depending on your needs, that's not the most approachable format. For example,it's not optimal when you're just getting started with a library or when you want to learn how to solve a specific problem using it.
 
 That's why ExDoc allows writing other types of docs besides API references, like Getting Started Guides or How-tos.
 
