@@ -96,7 +96,7 @@ The preferred option for installing Elixir. Choose your operating system and too
     * Install Erlang: `scoop install erlang`
     * Install Elixir: `scoop install elixir`
 
-  - Using Chocolatey:
+  - Using [Chocolatey](https://community.chocolatey.org/):
     * Install Elixir (installs Erlang as a dependency): `choco install elixir`
 
 ### Raspberry Pi and embedded devices
