@@ -36,7 +36,9 @@ On the language homepage, we mention that Elixir makes documentation a first-cla
 
 In this section, we will implement the parsing functionality, document it and make sure our documentation is up to date with doctests. This helps us provide documentation with accurate code samples.
 
-Let's create our command parser at `lib/kv_server/command.ex` and start with the doctest:
+We need two steps to achieve this: first we write the documentation and then we instruct ExUnit to extract and run the examples in it by calling [`ExUnit.DocTest.doctest/1`])(https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#doctest/1).
+
+Let's start by creating an empty definition of the parsing function with documentation at `lib/kv_server/command.ex`:
 
 ```elixir
 defmodule KVServer.Command do
