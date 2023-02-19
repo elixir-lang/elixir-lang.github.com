@@ -122,7 +122,7 @@ IO.puts Math.zero?([1, 2, 3]) #=> ** (FunctionClauseError)
 IO.puts Math.zero?(0.0)       #=> ** (FunctionClauseError)
 ```
 
-*The trailing question mark in `zero?` means that this function returns a boolean; see [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#trailing-question-mark-foo).*
+The trailing question mark in `zero?` means that this function returns a boolean. To learn more about the naming conventions for modules, function names, variables and more in Elixir, see [Naming Conventions](https://hexdocs.pm/elixir/naming-conventions.html).
 
 Giving an argument that does not match any of the clauses raises an error.
 
@@ -249,7 +249,7 @@ IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 IO.puts Concat.join("Hello")               #=> Hello
 ```
 
-*The leading underscore in `_sep` means that the variable will be ignored in this function; see [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#underscore-_foo).*
+When a variable is not used by a function or a clause, we add a leading underscore (`_`) to its name to signal this intent. This rule is also covered in our [Naming Conventions](https://hexdocs.pm/elixir/main/naming-conventions.html#underscore-_foo) document.
 
 When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
 
