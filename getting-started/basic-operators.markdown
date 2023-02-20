@@ -93,6 +93,6 @@ iex> 1 === 1.0
 false
 ```
 
-We say these operators perform _structural comparison_. For more information, you can read our dumcentation on [Structural vs Semantic comparisons](https://hexdocs.pm/elixir/Kernel.html#module-structural-comparison).
+We say these operators perform _structural comparison_. For more information, you can read our documentation on [Structural vs Semantic comparisons](https://hexdocs.pm/elixir/Kernel.html#module-structural-comparison).
 
 In the next chapter, we are going to discuss pattern matching through the use of `=`, the match operator.
