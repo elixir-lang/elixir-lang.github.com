@@ -177,7 +177,7 @@ The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or 
   * [Precompiled packages for some Unix-like installations](https://www.erlang-solutions.com/resources/download.html)
   * [A general list of installation methods from the Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/).
 
-After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl -s halt`. You will see some information similar to:
+After Erlang is installed, you should be able to open up the command line (or command prompt) and check the Erlang version by typing `erl -s erlang halt`. You will see some information similar to:
 
     Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
