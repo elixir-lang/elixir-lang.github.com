@@ -5,7 +5,7 @@ author: Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at SparkMeter.
 logo: /images/cases/logos/sparkmeter.png
-tags: embedded nerves
+tags: nerves cloud phoenix
 ---
 
 *Welcome to our series of case studies about companies using Elixir in production. [See all](https://elixir-lang.org/cases.html) cases we have published so far.*
@@ -114,10 +114,11 @@ Michael also pointed out that by controlling the complete connection from the gr
 Finally, the new generation of their system also enabled them to release more often. Before, they were releasing new versions every quarter, but with the new system, they could release weekly when needed.
 
 ## Summing up
+
 In conclusion, SparkMeter's adoption of Elixir and Nerves has led to many benefits for their mission-critical grid-management system.
 
 Elixir was used to design elegant solutions across data processing, HTTP APIs, and within the embedded space. This unified development model led to a more productive and robust environment, with less complexity and fewer moving parts.
 
-Additionally, the ability to control the entire connection from the ground to the cloud resulted in reduced bandwidth usage and improved resiliency. Essential requirements, given the diversity of conditions and locations the grid edge management unit may be deployed at.
+Additionally, the ability to control the entire connection from the ground to the cloud resulted in reduced bandwidth usage and improved resiliency. This fulfills essential requirements, given the diversity of conditions and locations the grid edge management unit may be deployed at.
 
 The new system also allowed for more frequent releases, enabling SparkMeter to respond quickly to their business needs.
