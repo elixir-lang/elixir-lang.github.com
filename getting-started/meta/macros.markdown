@@ -230,7 +230,7 @@ Many of the functions in the `Macro` module expect an environment. You can read 
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time.
 
-It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error a compilation error, since the macro won't be expanded and will be translated to a function call:
+It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise a compilation error, since the macro won't be expanded and will be translated to a function call:
 
 ```elixir
 iex> defmodule Sample do
