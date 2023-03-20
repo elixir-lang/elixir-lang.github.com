@@ -75,7 +75,7 @@ When going through this getting started guide, it is common to have questions; a
 
   * [#elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
   * [Elixir Forum](http://elixirforum.com)
-  * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
+  * [Elixir on Slack](https://elixir-lang.slack.com)
   * [Elixir on Discord](https://discord.gg/elixir)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 
