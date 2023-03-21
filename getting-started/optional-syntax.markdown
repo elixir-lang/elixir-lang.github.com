@@ -71,7 +71,7 @@ Now let's remove the conveniences one by one:
 
 That's it! Those four rules outline the optional syntax available in Elixir.
 
-To understand why these rules matter, we can briefly compare Elixir with many other programming languages. Most programming languages has several keywords for defining methods, functions, conditionals, loops, and so forth. Each of those keywords have their own syntax rules attached to them.
+To understand why these rules matter, we can briefly compare Elixir with many other programming languages. Most programming languages have several keywords for defining methods, functions, conditionals, loops, and so forth. Each of those keywords have their own syntax rules attached to them.
 
 However, in Elixir, the syntax for defining modules, functions, conditionals, and so on all use the syntax rules above! None of these language features require special "keywords" in the language. At the end, learning Elixir requires knowing less syntax because the language is built on fewer rules. The other benefit is that developers can also extend the language in a way that is consistent with the language itself, since the constructs for designing and extending the language are the same!
 
