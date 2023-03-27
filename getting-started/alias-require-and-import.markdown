@@ -90,7 +90,7 @@ Note that like the `alias` directive, `require` is also lexically scoped. We wil
 
 ## import
 
-We use `import` whenever we want to access functions or macros from other modules without using the fully-qualified name. Note we can only import public functions, as private functions are never accessible externally.
+We use `import` whenever we want to access functions or macros from other modules without using the fully-qualified name. Note we can only import public functions, as private functions are never accessible externally. `import`ing a module automatically `require`s it.
 
 For example, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
@@ -114,7 +114,7 @@ defmodule Math do
 end
 ```
 
-In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter). `import`ing a module automatically `require`s it.
+In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter).
 
 Note that `import`s are generally discouraged in the language. When working on your own code, prefer `alias` to `import`.
 
