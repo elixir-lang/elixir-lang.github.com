@@ -4,9 +4,7 @@ layout: getting-started
 title: IO and the file system
 ---
 
-This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like [`IO`](https://hexdocs.pm/elixir/IO.html), [`File`](https://hexdocs.pm/elixir/File.html) and [`Path`](https://hexdocs.pm/elixir/Path.html).
-
-We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the <abbr title="Virtual Machine">VM</abbr>.
+This chapter is an introduction to input/output mechanisms, file-system-related tasks, and related modules such as [`IO`](https://hexdocs.pm/elixir/IO.html), [`File`](https://hexdocs.pm/elixir/File.html), and [`Path`](https://hexdocs.pm/elixir/Path.html). The IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the VM.
 
 ## The `IO` module
 
