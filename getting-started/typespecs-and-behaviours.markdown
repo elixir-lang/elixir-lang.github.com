@@ -159,14 +159,14 @@ end
 ```
 
 ```elixir
-defmodule YAMLParser do
+defmodule CSVParser do
   @behaviour Parser
 
   @impl Parser
-  def parse(str), do: {:ok, "some yaml " <> str} # ... parse YAML
+  def parse(str), do: {:ok, "some csv " <> str} # ... parse CSV
 
   @impl Parser
-  def extensions, do: [".yml"]
+  def extensions, do: [".csv"]
 end
 ```
 
@@ -191,7 +191,7 @@ You can read more about `@impl` in the [module documentation](https://hexdocs.pm
 
 ### Using behaviours
 
-Behaviours are useful because you can now pass modules around as arguments and you can then _call back_ to any of the functions specified in the behaviour. For example, we can have a function that receives a filename, several parsers, and parses it with the appropriate parser based on its extension:
+Behaviours are useful because you can pass modules around as arguments and you can then _call back_ to any of the functions specified in the behaviour. For example, we can have a function that receives a filename, several parsers, and parses the file based on its extension:
 
 ```elixir
 @spec parse_path(Path.t(), [module()]) :: {:ok, term} | {:error, atom}
