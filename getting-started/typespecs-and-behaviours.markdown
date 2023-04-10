@@ -142,6 +142,8 @@ end
 
 Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` attribute. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` attribute we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
 
+`@callback` was initially for callbacks only. Then the idea evolved and people started using them for contract-driven programming.
+
 ### Adopting behaviours
 
 Adopting a behaviour is straightforward:
