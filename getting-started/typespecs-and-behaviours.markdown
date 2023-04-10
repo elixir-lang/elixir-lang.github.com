@@ -142,6 +142,55 @@ end
 
 Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` attribute. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` attribute we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
 
+### Implementing behaviours
+
+Implementing a behaviour is straightforward:
+
+```elixir
+defmodule JSONParser do
+  @behaviour Parser
+
+  @impl Parser
+  def parse(str), do: {:ok, "some json " <> str} # ... parse JSON
+
+  @impl Parser
+  def extensions, do: [".json"]
+end
+```
+
+```elixir
+defmodule YAMLParser do
+  @behaviour Parser
+
+  @impl Parser
+  def parse(str), do: {:ok, "some yaml " <> str} # ... parse YAML
+
+  @impl Parser
+  def extensions, do: [".yml"]
+end
+```
+
+If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
+
+Furthermore, with `@impl` you can also make sure that you are implementing the **correct** callbacks from the given behaviour in an explicit manner. For example, the following parser implements both `parse` and `extensions`. However, thanks to a typo, `BADParser` is implementing `parse/0` instead of `parse/1`.
+
+```elixir
+defmodule BADParser do
+  @behaviour Parser
+
+  @impl Parser
+  def parse, do: {:ok, "something bad"}
+
+  @impl Parser
+  def extensions, do: ["bad"]
+end
+```
+
+This code generates a warning letting you know that you are mistakenly implementing `parse/0` instead of `parse/1`.
+You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/main/Module.html#module-impl).
+
+### Using behaviours
+
 Behaviours are useful because you can now pass modules around as arguments and you can then _call back_ to any of the functions specified in the behaviour. For example, we can have a function that receives a filename, several parsers, and parses it with the appropriate parser based on its extension:
 
 ```elixir
@@ -172,70 +221,5 @@ end
 ```
 
 Of course, you could also invoke any parser directly: `CSVParser.parse(...)`.
-
-### Adopting behaviours
-
-Adopting a behaviour is straightforward:
-
-```elixir
-defmodule JSONParser do
-  @behaviour Parser
-
-  @impl Parser
-  def parse(str), do: {:ok, "some json " <> str} # ... parse JSON
-
-  @impl Parser
-  def extensions, do: ["json"]
-end
-```
-
-```elixir
-defmodule YAMLParser do
-  @behaviour Parser
-
-  @impl Parser
-  def parse(str), do: {:ok, "some yaml " <> str} # ... parse YAML
-
-  @impl Parser
-  def extensions, do: ["yml"]
-end
-```
-
-If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
-
-Furthermore, with `@impl` you can also make sure that you are implementing the **correct** callbacks from the given behaviour in an explicit manner. For example, the following parser implements both `parse` and `extensions`; however, thanks to a typo, `BADParser` is implementing `parse/0` instead of `parse/1`.
-
-```elixir
-defmodule BADParser do
-  @behaviour Parser
-
-  @impl Parser
-  def parse, do: {:ok, "something bad"}
-
-  @impl Parser
-  def extensions, do: ["bad"]
-end
-```
-
-This code generates a warning letting you know that you are mistakenly implementing `parse/0` instead of `parse/1`.
-You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/main/Module.html#module-impl).
-
-### Dynamic dispatch
-
-Behaviours are frequently used with dynamic dispatching. For example, we could add a `parse!` function to the `Parser` module that dispatches to the given implementation and returns the `:ok` result or raises in cases of `:error`:
-
-```elixir
-defmodule Parser do
-  @callback parse(String.t) :: {:ok, term} | {:error, String.t}
-  @callback extensions() :: [String.t]
-
-  def parse!(implementation, contents) do
-    case implementation.parse(contents) do
-      {:ok, data} -> data
-      {:error, error} -> raise ArgumentError, "parsing error: #{error}"
-    end
-  end
-end
-```
 
 Note you don't need to define a behaviour in order to dynamically dispatch on a module, but those features often go hand in hand.
