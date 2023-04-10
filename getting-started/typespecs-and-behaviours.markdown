@@ -131,7 +131,7 @@ defmodule Parser do
   @doc """
   Parses a string.
   """
-  @callback parse(String.t) :: {:ok, term} | {:error, String.t}
+  @callback parse(String.t) :: {:ok, term} | {:error, atom}
 
   @doc """
   Lists all supported file extensions.
@@ -142,7 +142,36 @@ end
 
 Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` attribute. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` attribute we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
 
-`@callback` was initially for callbacks only. Then the idea evolved and people started using them for contract-driven programming.
+Behaviours are useful because you can now pass modules around as arguments and you can then _call back_ to any of the functions specified in the behaviour. For example, we can have a function that receives a filename, several parsers, and parses it with the appropriate parser based on its extension:
+
+```elixir
+@spec parse_path(Path.t(), [module()]) :: {:ok, term} | {:error, atom}
+def parse_path(filename, parsers) do
+  with {:ok, ext} <- parse_extension(filename),
+       {:ok, parser} <- find_parser(extension, parsers),
+       {:ok, contents} <- File.read(filename) do
+    parser.parse(contents)
+  end
+end
+
+defp parse_extension(filename) do
+  if ext = Path.extname(filename) do
+    {:ok, ext}
+  else
+    {:error, :no_extension}
+  end
+end
+
+defp find_parser(extension, parsers) do
+  if parser = Enum.find(parsers, fn parser -> ext in parser.extensions() end) do
+    {:ok, parser}
+  else
+    {:error, :no_matching_parser}
+  end
+end
+```
+
+Of course, you could also invoke any parser directly: `CSVParser.parse(...)`.
 
 ### Adopting behaviours
 
