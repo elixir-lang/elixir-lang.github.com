@@ -197,7 +197,7 @@ Behaviours are useful because you can pass modules around as arguments and you c
 @spec parse_path(Path.t(), [module()]) :: {:ok, term} | {:error, atom}
 def parse_path(filename, parsers) do
   with {:ok, ext} <- parse_extension(filename),
-       {:ok, parser} <- find_parser(extension, parsers),
+       {:ok, parser} <- find_parser(ext, parsers),
        {:ok, contents} <- File.read(filename) do
     parser.parse(contents)
   end
