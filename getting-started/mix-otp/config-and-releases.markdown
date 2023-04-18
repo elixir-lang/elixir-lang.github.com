@@ -174,7 +174,7 @@ With the configuration in place, let's give assembling the release another try:
     * assembling foo-0.0.1 on MIX_ENV=prod
     * skipping runtime configuration (config/runtime.exs not found)
 
-    Release created at _build/prod/rel/foo!
+    Release created at _build/prod/rel/foo
 
         # To start your system
         _build/prod/rel/foo/bin/foo start
