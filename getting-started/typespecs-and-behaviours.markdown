@@ -211,7 +211,7 @@ defp parse_extension(filename) do
   end
 end
 
-defp find_parser(extension, parsers) do
+defp find_parser(ext, parsers) do
   if parser = Enum.find(parsers, fn parser -> ext in parser.extensions() end) do
     {:ok, parser}
   else
