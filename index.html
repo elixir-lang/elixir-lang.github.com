@@ -8,7 +8,7 @@ layout: default
     <div class="entry-summary">
       <h5>Elixir is a dynamic, functional language for building scalable and maintainable applications.</h5>
 
-      <p>Elixir runs on the Erlang VM, known for creating low-latency, distributed, and fault-tolerant systems. These capabilities and Elixir tooling allow developers to be productive in several domains, such as web development, embedded software, data pipelines, and multimedia processing, across a wide range of industries.</p>
+      <p>Elixir runs on the Erlang VM, known for creating low-latency, distributed, and fault-tolerant systems. These capabilities and Elixir tooling allow developers to be productive in several domains, such as web development, embedded software, machine learning, data pipelines, and multimedia processing, across a wide range of industries.</p>
 
       <p>Here is a peek:</p>
 
@@ -52,7 +52,6 @@ iex> "Elixir" |> String.graphemes() |> Enum.frequencies()
   <div class="hentry post">
     <h4>Scalability</h4>
     <div class="entry-summary">
-
       <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>
 
 {% highlight elixir %}
@@ -69,9 +68,9 @@ receive do
 end
 {% endhighlight %}
 
-      <p>Due to their lightweight nature, it is not uncommon to have hundreds of thousands of processes running <i>concurrently</i> in the same machine. Isolation allows processes to be garbage collected independently, reducing system-wide pauses, and using all machine resources as efficiently as possible (vertical scaling).</p>
+      <p>Due to their lightweight nature, you can hundreds of thousands of processes <i>concurrently</i> in the same machine, using all machine resources efficiently (vertical scaling). Processes may also communicate with other processes running on different machines to coordinate work across multiple nodes (horizontal scaling).</p>
 
-      <p>Processes are also able to communicate with other processes running on different machines in the same network. This provides the foundation for distribution, allowing developers to coordinate work across multiple nodes (horizontal scaling).</p>
+      <p>Together with projects such as <a href="https://github.com/elixir-nx/">Numerical Elixir</a>, Elixir scales across cores, clusters, and GPUs.</p>
     </div>
   </div>
 
@@ -79,9 +78,9 @@ end
     <h4>Fault-tolerance</h4>
 
     <div class="entry-summary">
-      <p>The unavoidable truth about software running in production is that <i>things will go wrong</i>. Even more when we take network, file systems, and other third-party resources into account.</p>
+      <p>The unavoidable truth about software in production is that <i>things will go wrong</i>. Even more when we take network, file systems, and other third-party resources into account.</p>
 
-      <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
+      <p>To react to failures, Elixir supervisors describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
 
 {% highlight elixir %}
 children = [
@@ -92,7 +91,7 @@ children = [
 Supervisor.start_link(children, strategy: :one_for_one)
 {% endhighlight %}
 
-      <p>The combination of fault-tolerance and event-driven programming via message passing makes Elixir an excellent choice for reactive programming and robust architectures. Frameworks, <a href="https://www.nerves-project.org/">such as Nerves</a>, build on this foundation to enable productive development of reliable embedded/IoT systems.</p>
+      <p>The combination of fault-tolerance and message passing makes Elixir an excellent choice for event-driven systems and robust architectures. Frameworks, <a href="https://www.nerves-project.org/">such as Nerves</a>, build on this foundation to enable productive development of reliable embedded/IoT systems.</p>
     </div>
   </div>
 
@@ -104,14 +103,7 @@ Supervisor.start_link(children, strategy: :one_for_one)
     <h4>Functional programming</h4>
 
     <div class="entry-summary">
-      <p>Functional programming promotes a coding style that helps developers write code that is short, concise, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
-
-{% highlight elixir %}
-%User{name: name, age: age} = User.get("John Doe")
-name #=> "John Doe"
-{% endhighlight %}
-
-      <p>When mixed with guards, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>
+      <p>Functional programming promotes a coding style that helps developers write code that is short, concise, and maintainable. For example, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>
 
 {% highlight elixir %}
 def drive(%User{age: age}) when age >= 16 do
@@ -122,7 +114,7 @@ drive(User.get("John Doe"))
 #=> Fails if the user is under 16
 {% endhighlight %}
 
-      <p>Elixir relies heavily on those features to ensure your software is working under the expected constraints. And when it is not, don't worry, supervisors have your back!</p>
+      <p>Elixir relies on those features to ensure your software is working under the expected constraints. And when it is not, don't worry, supervisors have your back!</p>
     </div>
   </div>
 
@@ -130,7 +122,7 @@ drive(User.get("John Doe"))
     <h4>Extensibility and DSLs</h4>
 
     <div class="entry-summary">
-      <p>Elixir has been designed to be extensible, letting developers naturally extend the language to particular domains, in order to increase their productivity.</p>
+      <p>Elixir has been designed to be extensible, allowing developers naturally extend the language to particular domains, in order to increase their productivity.</p>
 
       <p>As an example, let's write a simple test case using <a href="https://hexdocs.pm/ex_unit/">Elixir's test framework called ExUnit</a>:</p>
 
@@ -146,7 +138,7 @@ end
 
       <p>The <code>async: true</code> option allows <code>test</code>s to run in parallel, using as many CPU cores as possible, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures.</p>
 
-      <p>Other examples include using <a href="https://github.com/elixir-ecto/ecto">Elixir to write SQL queries</a>, <a href="https://github.com/elixir-nx/nx">compiling a subset of Elixir to the GPU</a>, and many more.</p>
+      <p>Other examples include using <a href="https://github.com/elixir-ecto/ecto">Elixir to write SQL queries</a>, <a href="https://github.com/elixir-nx/nx">compiling a subset of Elixir to the GPU</a>, and more.</p>
     </div>
   </div>
 
@@ -169,7 +161,7 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 <span style="color:#919D41">1 test, 0 failures</span>
 </code></pre>
 
-      <p>Mix is also able to manage dependencies and integrates with the <a href="https://hex.pm/">Hex package manager</a>, which performs dependency resolution, fetches remote packages, and <a href="https://hexdocs.pm/">hosts documentation</a> for the whole ecosystem.</p>
+      <p>Mix also integrates with the <a href="https://hex.pm/">Hex package manager</a> for dependency management and <a href="https://hexdocs.pm/">hosting documentation</a> for the whole ecosystem.</p>
     </div>
   </div>
 
@@ -177,7 +169,7 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
     <h4>Interactive development</h4>
 
     <div class="entry-summary">
-      <p>Tools like <a href="https://hexdocs.pm/iex/">IEx (Elixir's interactive shell)</a> are able to leverage many aspects of the language and platform to provide auto-complete, debugging tools, code reloading, as well as nicely formatted documentation:</p>
+      <p>Tools like <a href="https://hexdocs.pm/iex/">IEx (Elixir's interactive shell)</a> leverage the language and platform to provide auto-complete, debugging tools, code reloading, as well as nicely formatted documentation:</p>
 
 {% highlight text %}
 $ iex
@@ -196,10 +188,10 @@ iex> recompile               # Recompiles the current project on the fly
     <h4>Erlang compatible</h4>
 
     <div class="entry-summary">
-      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang's ecosystem, used by companies like <a href="https://www.heroku.com">Heroku</a>, <a href="https://www.whatsapp.com">WhatsApp</a>, <a href="https://klarna.com">Klarna</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang's ecosystem, used by companies like <a href="https://www.whatsapp.com">WhatsApp</a>, <a href="https://klarna.com">Klarna</a>, and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
 
 {% highlight elixir %}
-iex> :crypto.hash(:md5, "Using crypto from Erlang OTP")
+iex> :crypto.hash(:sha256, "Using crypto from Erlang OTP")
 <<192, 223, 75, 115, ...>>
 {% endhighlight %}
 
