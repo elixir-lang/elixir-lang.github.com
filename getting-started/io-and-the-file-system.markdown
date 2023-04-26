@@ -109,7 +109,7 @@ This happens because the `IO` module actually works with processes (see [chapter
 ```elixir
 iex> File.close(file)
 :ok
-iex> IO.write(file, "is anybody out there")
+iex> IO.binwrite(file, "is anybody out there")
 {:error, :terminated}
 ```
 
