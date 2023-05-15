@@ -63,7 +63,7 @@ Now let's remove the conveniences one by one:
    if variable?, [{:do, Call.this()}, {:else, Call.that()}]
    ```
 
-4. Finally, parentheses are optional, but let's add them:
+4. Finally, parentheses are optional on function calls, but let's add them:
 
    ```elixir
    if(variable?, [{:do, Call.this()}, {:else, Call.that()}])
