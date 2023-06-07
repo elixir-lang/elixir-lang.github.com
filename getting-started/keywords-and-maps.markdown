@@ -39,7 +39,7 @@ iex> String.split("1  2  3", " ", trim: true)
 ["1", "2", "3"]
 ```
 
-As the name implies, keyword lists are simply lists. In particular, keyword lists are 2-item tuples where the first element (the key) is an atom and the second element can be any value. Both representations are the same:
+As the name implies, keyword lists are simply lists. In particular, they are lists consisting of 2-item tuples where the first element (the key) is an atom and the second element can be any value. Both representations are the same:
 
 ```elixir
 iex> [{:trim, true}] == [trim: true]

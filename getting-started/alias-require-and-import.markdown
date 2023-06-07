@@ -76,7 +76,7 @@ Public functions in modules are globally available, but in order to use macros, 
 
 ```elixir
 iex> Integer.is_odd(3)
-** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. However there is a macro with the same name and arity. Be sure to require Integer if you intend to invoke this macro
+** (UndefinedFunctionError) function Integer.is_odd/1 is undefined or private. However, there is a macro with the same name and arity. Be sure to require Integer if you intend to invoke this macro
     (elixir) Integer.is_odd(3)
 iex> require Integer
 Integer
@@ -90,7 +90,7 @@ Note that like the `alias` directive, `require` is also lexically scoped. We wil
 
 ## import
 
-We use `import` whenever we want to access functions or macros from other modules without using the fully-qualified name. Note we can only import public functions, as private functions are never accessible externally.
+We use `import` whenever we want to access functions or macros from other modules without using the fully-qualified name. Note we can only import public functions, as private functions are never accessible externally. `import`ing a module automatically `require`s it.
 
 For example, if we want to use the `duplicate/2` function from the `List` module several times, we can import it:
 
@@ -114,7 +114,7 @@ defmodule Math do
 end
 ```
 
-In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter). `import`ing a module automatically `require`s it.
+In the example above, the imported `List.duplicate/2` is only visible within that specific function. `duplicate/2` won't be available in any other function in that module (or any other module for that matter).
 
 Note that `import`s are generally discouraged in the language. When working on your own code, prefer `alias` to `import`.
 
@@ -215,11 +215,26 @@ defmodule Foo do
 end
 ```
 
+Aliasing a nested module does not bring parent modules into scope. Consider the following example:
+
+```elixir
+defmodule Foo do
+  defmodule Bar do
+    defmodule Baz do
+    end
+  end
+end
+
+alias Foo.Bar.Baz
+# The module `Foo.Bar.Baz` is now available as `Baz`
+# However, the module `Foo.Bar` is *not* available as `Bar`
+```
+
 As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.
 
 ## Multi alias/import/require/use
 
-It is possible to alias, import or require multiple modules at once. This is particularly useful once we start nesting modules, which is very common when building Elixir applications. For example, imagine you have an application where all modules are nested under `MyApp`, you can alias the modules `MyApp.Foo`, `MyApp.Bar` and `MyApp.Baz` at once as follows:
+It is possible to `alias`, `import`, `require`, or `use` multiple modules at once. This is particularly useful once we start nesting modules, which is very common when building Elixir applications. For example, imagine you have an application where all modules are nested under `MyApp`, you can alias the modules `MyApp.Foo`, `MyApp.Bar` and `MyApp.Baz` at once as follows:
 
 ```elixir
 alias MyApp.{Foo, Bar, Baz}

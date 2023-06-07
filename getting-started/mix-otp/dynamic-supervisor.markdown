@@ -9,7 +9,7 @@ category: Mix and OTP
 
 We have now successfully defined our supervisor which is automatically started (and stopped) as part of our application lifecycle.
 
-Remember however that our `KV.Registry` is both linking (via `start_link`) and monitoring (via `monitor`) bucket processes in the `handle_cast/2` callback:
+Remember, however, that our `KV.Registry` is both linking (via `start_link`) and monitoring (via `monitor`) bucket processes in the `handle_cast/2` callback:
 
 ```elixir
 {:ok, bucket} = KV.Bucket.start_link([])
@@ -46,7 +46,7 @@ Since the bucket terminated, the registry also stopped, and our test fails when 
        test/kv/registry_test.exs:33: (test)
 ```
 
-We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization; instead each child is started manually via `DynamicSupervisor.start_child/2`.
+We are going to solve this issue by defining a new supervisor that will spawn and supervise all buckets. Opposite to the previous Supervisor we defined, the children are not known upfront, but they are rather started dynamically. For those situations, we use a supervisor optimized to such use cases called `DynamicSupervisor`. The `DynamicSupervisor` does not expect a list of children during initialization; instead each child is started manually via `DynamicSupervisor.start_child/2`.
 
 ## The bucket supervisor
 

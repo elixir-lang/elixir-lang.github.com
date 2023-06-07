@@ -65,7 +65,7 @@ Will render this table of contents:
 
 #### List Type
 By default the table of contents is rendered as an `<ol>`, so you can change the number formatting using CSS.
-However you can use the `<ul>` tag, using the `listType` option:
+However, you can use the `<ul>` tag, using the `listType` option:
 
 ```javascript
 $('#toc').toc({ listType: 'ul' });

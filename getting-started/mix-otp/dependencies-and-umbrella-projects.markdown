@@ -164,7 +164,7 @@ defmodule KVServer.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.10",
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -198,7 +198,7 @@ deps_path: "../../deps",
 lockfile: "../../mix.lock",
 ```
 
-Those options mean all dependencies will be checked out to `kv_umbrella/deps`, and they will share the same build, config and lock files. We haven't talked about configuration yet, but from here we can build the intuition that all configuration and dependencies are shared across all projects in an umbrella, and it is not per application.
+Those options mean all dependencies will be checked out to `kv_umbrella/deps`, and they will share the same build, config, and lock files. We haven't talked about configuration yet, but keep in mind all configuration and dependencies are shared across all projects in an umbrella, and it is not per application.
 
 The second change is in the `application` function inside `mix.exs`:
 
@@ -223,6 +223,7 @@ defmodule KVServer.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [

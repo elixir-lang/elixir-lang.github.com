@@ -11,6 +11,8 @@ Elixir is a dynamically typed language, so all types in Elixir are checked at ru
 1. declaring typed function signatures (also called specifications);
 2. declaring custom types.
 
+Typespecs are useful for code clarity and static code analysis (for example, Erlang's [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html) tool).
+
 ### Function specifications
 
 Elixir provides many [built-in types](https://hexdocs.pm/elixir/typespecs.html#built-in-types), such as `integer` or `pid`, that can be used to document function signatures.  For example, the `round/1` function, which rounds a number to its nearest integer. As you can see [in its documentation](https://hexdocs.pm/elixir/Kernel.html#round/1), `round/1`'s typed signature is written as:
@@ -129,7 +131,7 @@ defmodule Parser do
   @doc """
   Parses a string.
   """
-  @callback parse(String.t) :: {:ok, term} | {:error, String.t}
+  @callback parse(String.t) :: {:ok, term} | {:error, atom}
 
   @doc """
   Lists all supported file extensions.
@@ -140,9 +142,9 @@ end
 
 Modules adopting the `Parser` behaviour will have to implement all the functions defined with the `@callback` attribute. As you can see, `@callback` expects a function name but also a function specification like the ones used with the `@spec` attribute we saw above. Also note that the `term` type is used to represent the parsed value. In Elixir, the `term` type is a shortcut to represent any type.
 
-### Adopting behaviours
+### Implementing behaviours
 
-Adopting a behaviour is straightforward:
+Implementing a behaviour is straightforward:
 
 ```elixir
 defmodule JSONParser do
@@ -152,25 +154,25 @@ defmodule JSONParser do
   def parse(str), do: {:ok, "some json " <> str} # ... parse JSON
 
   @impl Parser
-  def extensions, do: ["json"]
+  def extensions, do: [".json"]
 end
 ```
 
 ```elixir
-defmodule YAMLParser do
+defmodule CSVParser do
   @behaviour Parser
 
   @impl Parser
-  def parse(str), do: {:ok, "some yaml " <> str} # ... parse YAML
+  def parse(str), do: {:ok, "some csv " <> str} # ... parse CSV
 
   @impl Parser
-  def extensions, do: ["yml"]
+  def extensions, do: [".csv"]
 end
 ```
 
 If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
 
-Furthermore, with `@impl` you can also make sure that you are implementing the **correct** callbacks from the given behaviour in an explicit manner. For example, the following parser implements both `parse` and `extensions`, however thanks to a typo, `BADParser` is implementing `parse/0` instead of `parse/1`.
+Furthermore, with `@impl` you can also make sure that you are implementing the **correct** callbacks from the given behaviour in an explicit manner. For example, the following parser implements both `parse` and `extensions`. However, thanks to a typo, `BADParser` is implementing `parse/0` instead of `parse/1`.
 
 ```elixir
 defmodule BADParser do
@@ -187,22 +189,37 @@ end
 This code generates a warning letting you know that you are mistakenly implementing `parse/0` instead of `parse/1`.
 You can read more about `@impl` in the [module documentation](https://hexdocs.pm/elixir/main/Module.html#module-impl).
 
-### Dynamic dispatch
+### Using behaviours
 
-Behaviours are frequently used with dynamic dispatching. For example, we could add a `parse!` function to the `Parser` module that dispatches to the given implementation and returns the `:ok` result or raises in cases of `:error`:
+Behaviours are useful because you can pass modules around as arguments and you can then _call back_ to any of the functions specified in the behaviour. For example, we can have a function that receives a filename, several parsers, and parses the file based on its extension:
 
 ```elixir
-defmodule Parser do
-  @callback parse(String.t) :: {:ok, term} | {:error, String.t}
-  @callback extensions() :: [String.t]
+@spec parse_path(Path.t(), [module()]) :: {:ok, term} | {:error, atom}
+def parse_path(filename, parsers) do
+  with {:ok, ext} <- parse_extension(filename),
+       {:ok, parser} <- find_parser(ext, parsers),
+       {:ok, contents} <- File.read(filename) do
+    parser.parse(contents)
+  end
+end
 
-  def parse!(implementation, contents) do
-    case implementation.parse(contents) do
-      {:ok, data} -> data
-      {:error, error} -> raise ArgumentError, "parsing error: #{error}"
-    end
+defp parse_extension(filename) do
+  if ext = Path.extname(filename) do
+    {:ok, ext}
+  else
+    {:error, :no_extension}
+  end
+end
+
+defp find_parser(ext, parsers) do
+  if parser = Enum.find(parsers, fn parser -> ext in parser.extensions() end) do
+    {:ok, parser}
+  else
+    {:error, :no_matching_parser}
   end
 end
 ```
+
+Of course, you could also invoke any parser directly: `CSVParser.parse(...)`.
 
 Note you don't need to define a behaviour in order to dynamically dispatch on a module, but those features often go hand in hand.

@@ -108,4 +108,7 @@ Now type any string into the terminal and you will see that the same value will 
 
 ## Other options
 
-Comprehensions support other options, such as `:reduce` and `:uniq`. Please [check the complete reference](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#for/1) for more information.
+Comprehensions support other options, such as `:reduce` and `:uniq`. Here are additional resources to learn more about comprehensions:
+
+  * [`for` official reference in Elixir documentation](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#for/1)
+  * [Mitchell Hanberg's comprehensive guide to Elixir's comprehensions](https://www.mitchellhanberg.com/the-comprehensive-guide-to-elixirs-for-comprehension/)

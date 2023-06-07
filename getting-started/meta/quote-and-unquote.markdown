@@ -146,6 +146,8 @@ In some cases, you may need to inject such *values* into *quoted expressions*. T
 
 ```elixir
 iex> map = %{hello: :world}
+iex> quote do: map
+{:map, [], Elixir}
 iex> Macro.escape(map)
 {:%{}, [], [hello: :world]}
 ```

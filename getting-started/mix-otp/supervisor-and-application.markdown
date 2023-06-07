@@ -59,7 +59,7 @@ Once the supervisor starts, it will traverse the list of children and it will in
 The `child_spec/1` function returns the child specification which describes how to start the process, if the process is a worker or a supervisor, if the process is temporary, transient or permanent and so on. The `child_spec/1` function is automatically defined when we `use Agent`, `use GenServer`, `use Supervisor`, etc. Let's give it a try in the terminal with `iex -S mix`:
 
 ```elixir
-iex(1)> KV.Registry.child_spec([])
+iex> KV.Registry.child_spec([])
 %{id: KV.Registry, start: {KV.Registry, :start_link, [[]]}}
 ```
 
@@ -70,9 +70,9 @@ After the supervisor retrieves all child specifications, it proceeds to start it
 Let's take the supervisor for a spin:
 
 ```elixir
-iex(1)> {:ok, sup} = KV.Supervisor.start_link([])
+iex> {:ok, sup} = KV.Supervisor.start_link([])
 {:ok, #PID<0.148.0>}
-iex(2)> Supervisor.which_children(sup)
+iex> Supervisor.which_children(sup)
 [{KV.Registry, #PID<0.150.0>, :worker, [KV.Registry]}]
 ```
 
@@ -81,12 +81,12 @@ So far we have started the supervisor and listed its children. Once the supervis
 What happens if we intentionally crash the registry started by the supervisor? Let's do so by sending it a bad input on `call`:
 
 ```elixir
-iex(3)> [{_, registry, _, _}] = Supervisor.which_children(sup)
+iex> [{_, registry, _, _}] = Supervisor.which_children(sup)
 [{KV.Registry, #PID<0.150.0>, :worker, [KV.Registry]}]
-iex(4) GenServer.call(registry, :bad_input)
-08:52:57.311 [error] GenServer KV.Registry terminating
+iex> GenServer.call(registry, :bad_input)
+08:52:57.311 [error] GenServer #PID<0.150.0> terminating
 ** (FunctionClauseError) no function clause matching in KV.Registry.handle_call/3
-iex(5) Supervisor.which_children(sup)
+iex> Supervisor.which_children(sup)
 [{KV.Registry, #PID<0.157.0>, :worker, [KV.Registry]}]
 ```
 
@@ -250,9 +250,9 @@ When we `use Application`, we may define a couple of functions, similar to when 
 Now that you have defined an application callback which starts our supervisor, we expect the `KV.Registry` process to be up and running as soon as we start `iex -S mix`. Let's give it another try:
 
 ```elixir
-iex(1)> KV.Registry.create(KV.Registry, "shopping")
+iex> KV.Registry.create(KV.Registry, "shopping")
 :ok
-iex(2)> KV.Registry.lookup(KV.Registry, "shopping")
+iex> KV.Registry.lookup(KV.Registry, "shopping")
 {:ok, #PID<0.88.0>}
 ```
 
@@ -270,4 +270,4 @@ When we talk about applications, we talk about <abbr title="Open Telecom Platfor
 
 Although this chapter was the first time we implemented a supervisor, it was not the first time we used one! In the previous chapter, when we used `start_supervised!` to start the registry during our tests, `ExUnit` started the registry under a supervisor managed by the ExUnit framework itself. By defining our own supervisor, we provide more structure on how we initialize, shutdown and supervise processes in our applications, aligning our production code and tests with best practices.
 
-But we are not done yet. So far we are supervising the registry but our application is also starting buckets. Since buckets are started dynamically, they have to be supervised by a special type of supervisor, called `DynamicSupervisor`, which we will explore next.
+But we are not done yet. So far we are supervising the registry but our application is also starting buckets. Since buckets are started dynamically, we can use a special type of supervisor called `DynamicSupervisor`, which is optimized to handle such scenarios. Let's explore it next.

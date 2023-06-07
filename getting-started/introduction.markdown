@@ -40,9 +40,9 @@ Open up `iex` and type the following expressions:
 Erlang/OTP {{ stable.minimum_otp }} [64-bit] [smp:2:2] [...]
 
 Interactive Elixir ({{ stable.version }}) - press Ctrl+C to exit
-iex(1)> 40 + 2
+iex> 40 + 2
 42
-iex(2)> "hello" <> " world"
+iex> "hello" <> " world"
 "hello world"
 ```
 
@@ -50,7 +50,7 @@ Please note that some details like version numbers may differ a bit in your sess
 
 It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
 
-> Note: if you are on Windows, you can also try `iex --werl` (`iex.bat --werl` on PowerShell) which may provide a better experience depending on which console you are using.
+> Note: if you are on Windows and running on an Erlang/OTP version earlier than 26, you can also try `iex --werl` (`iex.bat --werl` on PowerShell) which may provide a better experience depending on which console you are using.
 
 ## Running scripts
 
@@ -75,7 +75,7 @@ When going through this getting started guide, it is common to have questions; a
 
   * [#elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
   * [Elixir Forum](http://elixirforum.com)
-  * [Elixir on Slack](https://elixir-slackin.herokuapp.com/)
+  * [Elixir on Slack](https://elixir-lang.slack.com)
   * [Elixir on Discord](https://discord.gg/elixir)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 

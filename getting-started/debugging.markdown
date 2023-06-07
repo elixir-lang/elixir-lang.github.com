@@ -63,26 +63,60 @@ When `some_fun/3` is invoked with `:foo`, `"bar"`, `:baz` it prints:
 
 Please see [IO.inspect/2](https://hexdocs.pm/elixir/IO.html#inspect/2) to read more about other ways in which one could use this function. Also, in order to find a full list of other formatting options that one can use alongside `IO.inspect/2`, see [Inspect.Opts](https://hexdocs.pm/elixir/Inspect.Opts.html).
 
-## `IEx.pry/0` and `IEx.break!/2`
+## `dbg`
 
-While `IO.inspect/2` is static, Elixir's interactive shell provides more dynamic ways to interact with debugged code.
-
-The first one is with [`IEx.pry/0`](https://hexdocs.pm/iex/IEx.html#pry/0) which we can use instead of `IO.inspect binding()`:
+Elixir v1.14 introduced `dbg/2`. `dbg` is similar to `IO.inspect/2`, but specifically tailored for debugging. It prints the value passed to it and returns it (just like `IO.inspect/2`), but it also prints the code and location.
 
 ```elixir
-def some_fun(a, b, c) do
-  require IEx; IEx.pry
-  ...
-end
+# In my_file.exs
+feature = %{name: :dbg, inspiration: "Rust"}
+dbg(feature)
+dbg(Map.put(feature, :in_version, "1.14.0"))
 ```
 
-Once the code above is executed inside an `iex` session, IEx will ask if we want to pry into the current code. If accepted, we will be able to access all variables, as well as imports and aliases from the code, directly From IEx. While pry is running, the code execution stops, until `continue` is called. Remember you can always run `iex` in the context of a project with `iex -S mix TASK`.
+The code above prints this:
 
-Unfortunately, similar to `IO.inspect/2`, `IEx.pry/0` also requires us to change the code we intend to debug. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
+```shell
+[my_file.exs:2: (file)]
+feature #=> %{inspiration: "Rust", name: :dbg}
+[my_file.exs:3: (file)]
+Map.put(feature, :in_version, "1.14.0") #=> %{in_version: "1.14.0", inspiration: "Rust", name: :dbg}
+```
+
+When talking about `IO.inspect/2`, we mentioned its usefulness when placed between steps of `|>` pipelines. `dbg` does it better: it understands Elixir code, so it will print values at *every step of the pipeline*.
+
+```elixir
+# In dbg_pipes.exs
+__ENV__.file
+|> String.split("/", trim: true)
+|> List.last()
+|> File.exists?()
+|> dbg()
+```
+
+This code prints:
+
+```shell
+[dbg_pipes.exs:5: (file)]
+__ENV__.file #=> "/home/myuser/dbg_pipes.exs"
+|> String.split("/", trim: true) #=> ["home", "myuser", "dbg_pipes.exs"]
+|> List.last() #=> "dbg_pipes.exs"
+|> File.exists?() #=> true
+```
+
+Note `dbg` only supports stepping for pipelines (in other words, it can only step through the code it sees). For general stepping of functions, you will need to set breakpoints using `IEx.break!/4`.
+
+## Breakpoints
+
+When code calling `dbg` is executed via `iex`, IEx will ask you to "stop" the code execution where the `dbg` call is. If you accept, you'll be able to access all variables, as well as imports and aliases from the code, directly from IEx. This is called "prying". While the pry session is running, the code execution stops, until `continue` or `next` are called. Remember you can always run `iex` in the context of a project with `iex -S mix TASK`.
+
+<script id="asciicast-509509" src="https://asciinema.org/a/509509.js" async></script>
+
+`dbg` calls require us to change the code we intend to debug and has limited stepping functionality. Luckily IEx also provides a [`break!/2`](https://hexdocs.pm/iex/IEx.html#break!/2) function which allows you to set and manage breakpoints on any Elixir code without modifying its source:
 
 <script type="text/javascript" src="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs.js" id="asciicast-0h3po0AmTcBAorc5GBNU97nrs" async></script><noscript><p><a href="https://asciinema.org/a/0h3po0AmTcBAorc5GBNU97nrs">See the example in asciinema</a></p></noscript>
 
-Similar to `IEx.pry/0`, once a breakpoint is reached code execution stops until `continue` is invoked. However, note `break!/2` does not have access to aliases and imports from the debugged code as it works on the compiled artifact rather than on source.
+Similar to `dbg`, once a breakpoint is reached code execution stops until `continue` or `next` are invoked. However, `break!/2` does not have access to aliases and imports from the debugged code as it works on the compiled artifact rather than on source code.
 
 ## Debugger
 
@@ -113,18 +147,18 @@ $ iex
 Then start the debugger:
 
 ```elixir
-iex(1)> :debugger.start()
+iex> :debugger.start()
 {:ok, #PID<0.87.0>}
-iex(2)> :int.ni(Example)
+iex> :int.ni(Example)
 {:module, Example}
-iex(3)> :int.break(Example, 3)
+iex> :int.break(Example, 3)
 :ok
-iex(4)> Example.double_sum(1, 2)
+iex> Example.double_sum(1, 2)
 ```
 
 > If the `debugger` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
 
-When you start the debugger, a Graphical User Interface will open in your machine. We call `:int.ni(Example)` to prepare our module for debugging and then add a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
+When you start the debugger, a Graphical User Interface will open on your machine. We call `:int.ni(Example)` to prepare our module for debugging and then add a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
 
 <img src="/images/contents/debugger-elixir.gif" width="640" alt="Debugger GUI GIF" />
 
@@ -134,7 +168,7 @@ For debugging complex systems, jumping at the code is not enough. It is necessar
 
 ```elixir
 $ iex
-iex(1)> :observer.start()
+iex> :observer.start()
 ```
 
 > Similar to the `debugger` note above, your package manager may require a separate installation in order to run Observer.

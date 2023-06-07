@@ -93,17 +93,6 @@ iex> 1 === 1.0
 false
 ```
 
-In Elixir, we can compare two different data types:
-
-```elixir
-iex> 1 < :atom
-true
-```
-
-The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The sorting order, from lower to higher, is:
-
-    number, atom, reference, function, port, pid, tuple, map, list, bitstring
-
-You don't actually need to memorize this; it's enough to know that it exists. For more information, check the [reference page on operators and ordering](https://hexdocs.pm/elixir/operators.html).
+We say these operators perform _structural comparison_. For more information, you can read our documentation on [Structural vs Semantic comparisons](https://hexdocs.pm/elixir/Kernel.html#module-structural-comparison).
 
 In the next chapter, we are going to discuss pattern matching through the use of `=`, the match operator.

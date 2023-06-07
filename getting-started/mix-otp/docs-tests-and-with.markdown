@@ -36,7 +36,9 @@ On the language homepage, we mention that Elixir makes documentation a first-cla
 
 In this section, we will implement the parsing functionality, document it and make sure our documentation is up to date with doctests. This helps us provide documentation with accurate code samples.
 
-Let's create our command parser at `lib/kv_server/command.ex` and start with the doctest:
+We need two steps to achieve this: first we write the documentation and then we instruct ExUnit to extract and run the examples in it by calling [`ExUnit.DocTest.doctest/1`](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#doctest/1).
+
+Let's start by creating an empty definition of the parsing function with documentation at `lib/kv_server/command.ex`:
 
 ```elixir
 defmodule KVServer.Command do
@@ -71,11 +73,15 @@ end
 Run the test suite and the doctest should fail:
 
 ```
-  1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
+  1) doctest KVServer.Command.parse/1 (1) (KVServer.CommandTest)
      test/kv_server/command_test.exs:3
      Doctest failed
+     doctest:
+       iex> KVServer.Command.parse("CREATE shopping\r\n")
+       {:ok, {:create, "shopping"}}
      code: KVServer.Command.parse "CREATE shopping\r\n" === {:ok, {:create, "shopping"}}
-     lhs:  :not_implemented
+     left:  :not_implemented
+     right: {:ok, {:create, "shopping"}}
      stacktrace:
        lib/kv_server/command.ex:7: KVServer.Command (module)
 ```
@@ -420,7 +426,7 @@ This time, since our test relies on global data, we have not given `async: true`
 18:12:10.698 [info] Application kv exited: :stopped
 ```
 
-To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test case, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report.
+To avoid printing log messages during tests, ExUnit provides a neat feature called `:capture_log`. By setting `@tag :capture_log` before each test or `@moduletag :capture_log` for the whole test module, ExUnit will automatically capture anything that is logged while the test runs. In case our test fails, the captured logs will be printed alongside the ExUnit report.
 
 Between `use ExUnit.Case` and setup, add the following call:
 
@@ -439,7 +445,7 @@ In case the test crashes, you will see a report as follows:
 
      The following output was logged:
 
-     13:44:10.035 [info]  Application kv exited: :stopped
+     13:44:10.035 [notice] Application kv exited: :stopped
 ```
 
 With this simple integration test, we start to see why integration tests may be slow. Not only can this test not run asynchronously, but it also requires the expensive setup of stopping and starting the `:kv` application. In fact, your test suite may even fail and run into timeouts. If that's the case, you can tweak the `:gen_tcp.recv(socket, 0)` call to pass a third argument, which is the timeout in milliseconds. In the next chapter we will learn about application configuration, which we could use to make the timeout configurable, if desired.

@@ -151,3 +151,13 @@ $(document).ready(function() {
 
   $("#shuffled-cases").children().shuffle()
 });
+
+// Automatically redirect to https
+(function (){
+  const location = window.location.href;
+  const localhost = /:\/\/(?:localhost|127.0.0.1|::1)/
+
+  if (location.startsWith("http://") && !localhost.test(location)) {
+    window.location.href = location.replace("http://", "https://");
+  }
+})();

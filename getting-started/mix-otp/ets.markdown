@@ -190,7 +190,7 @@ However, since `KV.Registry.create/2` is a cast operation, the command will retu
 3. The command above returns `:error`
 4. The registry creates the bucket and updates the cache table
 
-To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's back to `lib/kv/registry.ex` and change the function and its callback as follows:
+To fix the failure we need to make `KV.Registry.create/2` synchronous by using `call/2` rather than `cast/2`. This will guarantee that the client will only continue after changes have been made to the table. Let's go back to `lib/kv/registry.ex` and change the function and its callback as follows:
 
 ```elixir
 def create(server, name) do

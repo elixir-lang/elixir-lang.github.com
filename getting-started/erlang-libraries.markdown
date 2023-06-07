@@ -69,6 +69,11 @@ def application do
 end
 ```
 
+Any module that is not part of the `:kernel` or `:stdlib` Erlang applications
+must have their application explicitly listed in your `mix.exs`. You can find
+the application name of any Erlang module in the Erlang documentation, immediately
+below the Erlang logo in the sidebar.
+
 ## The digraph module
 
 [The digraph module](http://www.erlang.org/doc/man/digraph.html) (as well as
