@@ -240,4 +240,4 @@ It is possible to `alias`, `import`, `require`, or `use` multiple modules at onc
 alias MyApp.{Foo, Bar, Baz}
 ```
 
-With this, we have finished our tour of Elixir modules. The last topic to cover is module attributes.
+With this, we have finished our tour of Elixir modules. The next topic to cover is module attributes.
