@@ -43,7 +43,7 @@ iex> %User{name: "Jane"}
 
 > Note: If you have defined the struct in a separate file, you can compile the file inside IEx before proceeding by running `c "file.exs"`. Be aware you may get an error saying `the struct was not yet defined` if you try the example above in a file directly due to when definitions are resolved.
 
-Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:
+Structs provide *compile-time* guarantees that only the fields defined through `defstruct` will be allowed to exist in a struct:
 
 ```elixir
 iex> %User{oops: :field}
