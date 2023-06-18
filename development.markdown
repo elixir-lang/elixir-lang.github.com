@@ -43,7 +43,7 @@ The Elixir Team is composed by:
   * Eric Meadows-Jönsson
   * Andrea Leopardi
   * Fernando Tapia Rico
-  * Sabiwara
+  * Jean Klingler
 
 We are also grateful to the past members of the Elixir Team:
 

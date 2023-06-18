@@ -16,7 +16,7 @@ features such as log rotation and compaction out of the box.
 You will also find additional convenience functions in `Code`,
 `Map`, `Keyword`, all Calendar modules, and others.
 
-Finally, we are glad to welcome [Sabiwara](https://github.com/sabiwara/)
+Finally, we are glad to welcome [Jean Klingler](https://github.com/sabiwara/)
 as a member of the Elixir Core team. Thank you for your contributions!
 
 ## Compile and boot-time improvements
