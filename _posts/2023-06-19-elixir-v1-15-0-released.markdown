@@ -11,7 +11,7 @@ Elixir v1.15 has just been released. 🎉
 Elixir v1.15 is a smaller release with focused improvements
 on compilation and boot times. This release also completes
 our integration process with Erlang/OTP logger, bringing new
-features such as log rotation and compaction out of the box.
+features such as log rotation and compression out of the box.
 
 You will also find additional convenience functions in `Code`,
 `Map`, `Keyword`, all Calendar modules, and others.
@@ -113,7 +113,7 @@ at the top of your `mix.exs` to bring the old behaviour back.
 ## Integration with Erlang/OTP logger
 
 This release provides additional features such as global logger
-metadata and file logging (with rotation and compaction) out of the box!
+metadata and [file logging](https://hexdocs.pm/logger/Logger.html#module-erlang-otp-handlers) (with rotation and compression) out of the box!
 
 This release also soft-deprecates Elixir's Logger Backends in
 favor of Erlang's Logger handlers. Elixir will automatically
