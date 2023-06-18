@@ -69,7 +69,7 @@ amount of recompilation when swapping branches. Finally, dependencies
 are automatically recompiled when their compile-time configuration changes,
 providing a smoother development experience.
 
-### Potential incompatibilities
+##### Potential incompatibilities
 
 Due to the code path pruning, if you have an application or dependency
 that does not specify its dependencies on Erlang and Elixir application,
@@ -100,7 +100,7 @@ information can be leveraged by editors, allowing them to point to several
 errors at once. We have currently ongoing work and contribution to further
 improve the compiler diagnostics in future Elixir releases.
 
-### Potential compatibilies
+##### Potential incompatibilies
 
 As part of this effort, the behaviour where undefined variables were transformed
 into nullary function calls, often leading to confusing error reports, has
