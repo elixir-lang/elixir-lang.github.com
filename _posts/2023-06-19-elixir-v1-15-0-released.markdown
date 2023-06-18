@@ -107,7 +107,7 @@ improve the compiler diagnostics in future Elixir releases.
 
 As part of this effort, the behaviour where undefined variables were transformed
 into nullary function calls, often leading to confusing error reports, has
-been disabled by default. You can invoke `Code.compiler_options(on_undefined_variable: :warn)`
+been disabled during project compilation. You can invoke `Code.compiler_options(on_undefined_variable: :warn)`
 at the top of your `mix.exs` to bring the old behaviour back.
 
 ## Integration with Erlang/OTP logger
