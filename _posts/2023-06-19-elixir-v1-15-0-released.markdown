@@ -27,7 +27,7 @@ now caches and prunes load paths before compilation, ensuring your
 project (and dependencies!) compile faster and in an environment
 closer to production.
 
-In a nutshell the Erlang VM loads modules from code paths. Each
+In a nutshell, the Erlang VM loads modules from code paths. Each
 application that ships with Erlang and Elixir plus each dependency
 become an entry in your code path. The larger the code path, the
 more work Erlang has to do in order to find a module.
