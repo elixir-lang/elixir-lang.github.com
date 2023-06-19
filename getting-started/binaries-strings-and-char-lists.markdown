@@ -238,13 +238,22 @@ Our tour of our bitstrings, binaries, and strings is nearly complete, but we hav
 
 **A charlist is a list of integers where all the integers are valid code points.** In practice, you will not come across them often, only in specific scenarios such as interfacing with older Erlang libraries that do not accept binaries as arguments.
 
-Whereas double-quotes creates strings, single-quotes create charlist literals:
+```elixir
+iex> ~c"hello"
+~c"hello"
+iex> [?h, ?e, ?l, ?l, ?o]
+~c"hello"
+```
+
+The `~c` sigil (we'll cover sigils later in the ["Sigils"](/getting-started/sigils.html) section)
+indicates the fact that we are dealing with a charlist and not a regular string.
+
+Whereas double-quotes creates strings, single-quotes create charlist literals.
+Charlists used to be represented with single quotes in Elixir <1.15:
 
 ```elixir
 iex> 'hello'
-'hello'
-iex> [?h, ?e, ?l, ?l, ?o]
-'hello'
+~c"hello"
 ```
 
 The key takeaway is that `"hello"` is not the same as `'hello'`. Generally speaking, **double-quotes must always be used to represent strings in Elixir**. In any case, let's learn how charlists work.
@@ -252,9 +261,9 @@ The key takeaway is that `"hello"` is not the same as `'hello'`. Generally speak
 Instead of containing bytes, a charlist contains integer code points. However, the list is only printed in single-quotes if all code points are within the ASCII range:
 
 ```elixir
-iex> 'hełło'
+iex> ~c"hełło"
 [104, 101, 322, 322, 111]
-iex> is_list('hełło')
+iex> is_list(~c"hełło")
 true
 ```
 
@@ -262,7 +271,7 @@ Interpreting integers as code points may lead to some surprising behavior. For e
 
 ```elixir
 iex> heartbeats_per_minute = [99, 97, 116]
-'cat'
+~c"cat"
 ```
 
 You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:
@@ -270,7 +279,7 @@ You can convert a charlist to a string and back by using the `to_string/1` and `
 ```elixir
 iex> to_charlist("hełło")
 [104, 101, 322, 322, 111]
-iex> to_string('hełło')
+iex> to_string(~c"hełło")
 "hełło"
 iex> to_string(:hello)
 "hello"
@@ -283,14 +292,14 @@ Note that those functions are polymorphic - not only do they convert charlists t
 String (binary) concatenation uses the `<>` operator but charlists, being lists, use the list concatenation operator `++`:
 
 ```elixir
-iex> 'this ' <> 'fails'
-** (ArgumentError) expected binary argument in <> operator but got: 'this '
+iex> ~c"this " <> ~c"fails"
+** (ArgumentError) expected binary argument in <> operator but got: ~c"this "
     (elixir) lib/kernel.ex:1821: Kernel.wrap_concatenation/3
     (elixir) lib/kernel.ex:1808: Kernel.extract_concatenations/2
     (elixir) expanding macro: Kernel.<>/2
     iex:1: (file)
-iex> 'this ' ++ 'works'
-'this works'
+iex> ~c"this " ++ ~c"works"
+~c"this works"
 iex> "he" ++ "llo"
 ** (ArgumentError) argument error
     :erlang.++("he", "llo")

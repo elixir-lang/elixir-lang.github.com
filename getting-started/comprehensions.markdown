@@ -44,7 +44,7 @@ Comprehensions discard all elements for which the filter expression returns `fal
 Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and gets the size of each file in those directories:
 
 ```elixir
-dirs = ['/home/mikey', '/home/james']
+dirs = ["/home/mikey", "/home/james"]
 
 for dir <- dirs,
     file <- File.ls!(dir),

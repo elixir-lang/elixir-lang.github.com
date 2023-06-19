@@ -320,11 +320,18 @@ iex> hd([])
 ** (ArgumentError) argument error
 ```
 
-Sometimes you will create a list and it will return a value in single quotes. For example:
+Sometimes you will create a list and it will return a quoted value preceded by `~c`. For example:
 
 ```elixir
 iex> [11, 12, 13]
-'\v\f\r'
+~c"\v\f\r"
+iex> [104, 101, 108, 108, 111]
+~c"hello"
+```
+
+In Elixir < 1.15, this might be displayed as single quotes instead:
+
+```elixir
 iex> [104, 101, 108, 108, 111]
 'hello'
 ```
@@ -332,9 +339,9 @@ iex> [104, 101, 108, 108, 111]
 When Elixir sees a list of printable ASCII numbers, Elixir will print that as a charlist (literally a list of characters). Charlists are quite common when interfacing with existing Erlang code. Whenever you see a value in IEx and you are not quite sure what it is, you can use the `i/1` to retrieve information about it:
 
 ```elixir
-iex> i 'hello'
+iex> i ~c"hello"
 Term
-  'hello'
+  i ~c"hello"
 Data type
   List
 Description
@@ -352,6 +359,8 @@ Keep in mind single-quoted and double-quoted representations are not equivalent 
 ```elixir
 iex> 'hello' == "hello"
 false
+iex> 'hello' == ~c"hello"
+true
 ```
 
 Single quotes are charlists, double quotes are strings. We will talk more about them in the ["Binaries, strings and charlists"](/getting-started/binaries-strings-and-char-lists.html) chapter.
