@@ -151,6 +151,7 @@ config :logger, :default_handler,
   ]
 ```
 
+Finally, the previous Logger Backends API is now soft-deprecated.
 If you implement your own backends, you want to consider migrating to
 [`:logger_backends`](https://github.com/elixir-lang/logger_backends)
 in the long term. See the new [`Logger`](https://hexdocs.pm/logger)
