@@ -103,7 +103,7 @@ information can be leveraged by editors, allowing them to point to several
 errors at once. We have currently ongoing work and contribution to further
 improve the compiler diagnostics in future Elixir releases.
 
-##### Potential incompatibilies
+##### Potential incompatibilities
 
 As part of this effort, the behaviour where undefined variables were transformed
 into nullary function calls, often leading to confusing error reports, has
