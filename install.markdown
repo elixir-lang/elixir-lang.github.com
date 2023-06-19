@@ -102,7 +102,11 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 ### Windows
 
   - Using Windows installers:
-    * [Download and run the online Elixir installer](https://github.com/elixir-lang/elixir-windows-setup/releases/tag/v2.4)
+    * [Download and run the Erlang installer](https://www.erlang.org/downloads.html)
+    * Download and run the Elixir installer compatible with your Erlang/OTP version:
+{% for otp_version in stable.otp_versions %}      * [Elixir {{ stable.version }} on Erlang {{ otp_version }}](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/elixir-otp-{{ otp_version }}.exe)
+{% endfor %}
+      Run `erl` in the terminal if you are unsure of your Erlang/OTP version.<br />Previous Elixir versions are available in our [Releases](https://github.com/elixir-lang/elixir/releases) page.
 
   - Using [Scoop](https://scoop.sh/):
     * Install Erlang: `scoop install erlang`
@@ -110,6 +114,8 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
   - Using [Chocolatey](https://community.chocolatey.org/):
     * Install Elixir (installs Erlang as a dependency): `choco install elixir`
+
+Elixir versions before v1.15 can also be installed using the deprecated [Online Elixir Installer](https://github.com/elixir-lang/elixir-windows-setup/releases/tag/v2.4).
 
 ### Raspberry Pi and embedded devices
 
