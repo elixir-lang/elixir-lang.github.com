@@ -65,11 +65,13 @@ iex> ~s(this is a string with "double" quotes, not 'single' ones)
 
 ### Char lists
 
-The `~c` sigil is useful for generating char lists that contain single quotes:
+The `~c` sigil is the regular way to represent charlists.
 
 ```elixir
-iex> ~c(this is a char list containing 'single quotes')
-'this is a char list containing \'single quotes\''
+iex> [?c, ?a, ?t]
+~c"cat"
+iex> ~c(this is a char list containing "double quotes")
+~c"this is a char list containing \"double quotes\""
 ```
 
 ### Word lists
@@ -214,7 +216,7 @@ iex> time_zone
 As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling `sigil_r` with a binary and a char list as the argument:
 
 ```elixir
-iex> sigil_r(<<"foo">>, 'i')
+iex> sigil_r(<<"foo">>, ~c"i")
 ~r"foo"i
 ```
 
