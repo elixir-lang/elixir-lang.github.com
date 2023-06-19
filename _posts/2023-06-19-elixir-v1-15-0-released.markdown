@@ -75,7 +75,7 @@ providing a smoother development experience.
 ##### Potential incompatibilities
 
 Due to the code path pruning, if you have an application or dependency
-that does not specify its dependencies on Erlang and Elixir application,
+that does not specify its dependencies on Erlang/OTP and core Elixir applications,
 which has always been erroneus behaviour, it may no longer compile
 successfully in Elixir v1.15. You can temporarily disable code path pruning
 by setting `prune_code_paths: false` in your `mix.exs`, although doing so
