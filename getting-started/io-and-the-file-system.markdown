@@ -110,7 +110,12 @@ This happens because the `IO` module actually works with processes (see [chapter
 iex> File.close(file)
 :ok
 iex> IO.write(file, "is anybody out there")
-{:error, :terminated}
+** (ErlangError) Erlang error: :terminated:
+
+  * 1st argument: the device has terminated
+
+    (stdlib 5.0) io.erl:94: :io.put_chars(#PID<0.114.0>, "is anybody out there")
+    iex:4: (file)
 ```
 
 Let's see in more detail what happens when you request `IO.write(pid, binary)`. The `IO` module sends a message to the process identified by `pid` with the desired operation. A small ad-hoc process can help us see it:
