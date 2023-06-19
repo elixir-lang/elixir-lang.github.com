@@ -136,6 +136,21 @@ config :logger, :default_formatter,
   format: "$time $message $metadata"
 ```
 
+To replace the default console handler by one that writes to disk,
+with log rotation and compression:
+
+```elixir
+config :logger, :default_handler,
+  config: [
+    file: ~c"system.log",
+    filesync_repeat_interval: 5000,
+    file_check: 5000,
+    max_no_bytes: 10_000_000,
+    max_no_files: 5,
+    compress_on_rotate: true
+  ]
+```
+
 If you implement your own backends, you want to consider migrating to
 [`:logger_backends`](https://github.com/elixir-lang/logger_backends)
 in the long term. See the new [`Logger`](https://hexdocs.pm/logger)
