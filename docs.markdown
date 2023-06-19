@@ -12,18 +12,30 @@ applications. For a general introduction to the language, see our [guides](/gett
 
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
-<h4 id="stable">Stable
-  {% if stable.docs_zip == true %}
-    <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/Docs.zip">download</a>)</small>
+{% for version in site.data.elixir-versions %}
+  {% if version[0] == 'stable' %}
+    {% continue %}
   {% endif %}
+
+<h4 id="{{ version[1].name }}">
+  {{ version[1].name }}
+  {% if version[1].version == stable.version %}<small>(stable)</small>{% endif %}
+  <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ version[1].version }}/Docs.zip">download</a>)</small>
 </h4>
 
-* [Elixir](https://hexdocs.pm/elixir/) - standard library
-* [EEx](https://hexdocs.pm/eex/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/) - unit test library
-* [IEx](https://hexdocs.pm/iex/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/) - build tool
+{% if version[1].otp_versions %}
+Supported Erlang/OTP versions: {% for otp in version[1].otp_versions reversed %}{{ otp }}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}.
+{% endif %}
+
+* [Elixir](https://hexdocs.pm/elixir/{{ version[1].version }}/) - standard library
+* [EEx](https://hexdocs.pm/eex/{{ version[1].version }}/) - templating library
+* [ExUnit](https://hexdocs.pm/ex_unit/{{ version[1].version }}/) - unit test library
+* [IEx](https://hexdocs.pm/iex/{{ version[1].version }}/) - interactive shell
+* [Logger](https://hexdocs.pm/logger/{{ version[1].version }}/) - built-in Logger
+* [Mix](https://hexdocs.pm/mix/{{ version[1].version }}/) - build tool
+
+<div style="margin-top: 40px"></div>
+{% endfor %}
 
 #### Development
 
@@ -33,20 +45,3 @@ applications. For a general introduction to the language, see our [guides](/gett
 * [IEx](https://hexdocs.pm/iex/main/) - interactive shell
 * [Logger](https://hexdocs.pm/logger/main/) - built-in Logger
 * [Mix](https://hexdocs.pm/mix/main/) - build tool
-
-{% for version in site.data.elixir-versions %}
-  {% if version[0] == 'stable' %}
-    {% continue %}
-  {% endif %}
-
-<h4 id="{{ version[1].name }}">{{ version[1].name }}
-  {% if version[1].docs_zip == true %}<small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ version[1].version }}/Docs.zip">download</a>)</small>{% endif %}
-</h4>
-
-* [Elixir](https://hexdocs.pm/elixir/{{ version[1].version }}/) - standard library
-* [EEx](https://hexdocs.pm/eex/{{ version[1].version }}/) - templating library
-* [ExUnit](https://hexdocs.pm/ex_unit/{{ version[1].version }}/) - unit test library
-* [IEx](https://hexdocs.pm/iex/{{ version[1].version }}/) - interactive shell
-* [Logger](https://hexdocs.pm/logger/{{ version[1].version }}/) - built-in Logger
-* [Mix](https://hexdocs.pm/mix/{{ version[1].version }}/) - build tool
-{% endfor %}
