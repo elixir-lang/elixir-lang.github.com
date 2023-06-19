@@ -329,7 +329,7 @@ iex> [104, 101, 108, 108, 111]
 ~c"hello"
 ```
 
-In Elixir < 1.15, this might be displayed as single quotes instead:
+In Elixir versions before v1.15, this might be displayed as single quotes instead:
 
 ```elixir
 iex> [104, 101, 108, 108, 111]
