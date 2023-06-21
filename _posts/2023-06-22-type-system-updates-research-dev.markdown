@@ -27,7 +27,7 @@ able to achieve this goal with a gradual set-theoretic type system
 and we are now ready to head towards development. Over the last 2 months,
 we have published plenty of resources on our results:
 
-  * [A technical report on the design principles of the Elixir type system](https://www.irif.fr/_media/users/gduboc/elixir-types.pdf)
+  * [A technical report on the design principles of the Elixir type system](https://arxiv.org/abs/2306.06391)
   * [A technical presentation by Guillaume Duboc at ElixirConf 2023 on the work above](https://youtube.com/watch?v=gJJH7a2J9O8)
   * [An informal discussion with Giuseppe Castagna, Guillaume Duboc, and José Valim on the SmartLogic podcast](https://smartlogic.io/podcast/elixir-wizards/s10-e12-jose-guillaume-giuseppe-types-elixir/)
   * [An informal Q&A with Guillaume Duboc, José Valim, and the community on Twitch](https://www.twitch.tv/videos/1841707383)
