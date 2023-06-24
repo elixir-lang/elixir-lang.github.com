@@ -11,7 +11,7 @@ and develop a type system for Elixir ([video presentation](https://www.youtube.c
 ([written report](/blog/2022/10/05/my-future-with-elixir-set-theoretic-types/)).
 
 This work is happening under the lead of [Giuseppe Castagna](https://www.irif.fr/~gc/),
-Senior Research Scientist at [IRIF](https://www.irif.fr), and taken by
+CNRS Senior Researcher, and taken by
 [Guillaume Duboc](https://www.irif.fr/users/gduboc/index) as part of his
 PhD studies, with further guidance from myself (José Valim).
 
