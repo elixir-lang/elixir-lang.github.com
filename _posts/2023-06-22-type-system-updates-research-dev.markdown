@@ -57,7 +57,7 @@ Elixir compiler.
 
 In the first release, types will be used just internally by the compiler.
 The type system will extract type information from patterns and guards to
-find the most obvious of mistakes, such as typos in field names or type
+find the most obvious mistakes, such as typos in field names or type
 mismatches from attempting to add an integer to a string, without introducing
 any user-facing changes to the language. At this stage, our main goal is
 to assess the performance impact of the type system and the quality of
