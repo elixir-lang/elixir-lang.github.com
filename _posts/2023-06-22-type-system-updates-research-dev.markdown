@@ -51,7 +51,7 @@ of 2023 onwards is on development.
 
 Incorporating a type system into a language used at scale can be a daunting
 task. Our concerns range from how the community will interact and use the
-type system to how it will perform on large code bases. Therefore, our plan
+type system to how it will perform on large codebases. Therefore, our plan
 is to gradually introduce our gradual (pun intended) type system into the
 Elixir compiler.
 
