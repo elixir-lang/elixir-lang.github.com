@@ -106,9 +106,35 @@ iex> [b: b, a: a] = [a: 1, b: 2]
 
 In order to manipulate keyword lists, Elixir provides [the `Keyword` module](https://hexdocs.pm/elixir/Keyword.html). Remember, though, keyword lists are simply lists, and as such they provide the same linear performance characteristics as them: the longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
-## Maps
+### `do`-blocks and keywords
 
-Whenever you need a key-value store, maps are the "go to" data structure in Elixir. A map is created using the `%{}` syntax:
+As we have seen, keywords are mostly used in the language to pass optional values. In fact, we have used keywords before in this guide. For example, we have seen:
+
+```elixir
+iex> if true do
+...>   "This will be seen"
+...> else
+...>   "This won't"
+...> end
+"This will be seen"
+```
+
+It happens that `do` blocks are nothing more than a syntax convenience on top of keywords. We can rewrite the above to:
+
+```elixir
+iex> if true, do: "This will be seen", else: "This won't"
+"This will be seen"
+```
+
+Pay close attention to both syntaxes. In the keyword list format, we separate each key-value pair with commas, and each key is followed by `:`. In the `do`-blocks, we get rid of the colons, the commas, and separate each keyword by a newline. They are useful exactly because they remove the verbosity when writing blocks of code. Most of the time, you will use the block syntax, but it is good to know they are equivalent.
+
+Note that only a handful of keyword lists can be converted to blocks: `do`, `else`, `catch`, `rescue`, and `after`. Those are all the keywords used by Elixir control-flow constructs. We have already learned some of them and we will learn others in the future.
+
+With this out of the way, let's see how we can work with nested data structures.
+
+## Maps as key-value pairs
+
+Whenever you need to store key-value pairs, maps are the "go to" data structure in Elixir. A map is created using the `%{}` syntax:
 
 ```elixir
 iex> map = %{:a => 1, 2 => :b}
@@ -141,20 +167,7 @@ iex> %{:c => c} = %{:a => 1, 2 => :b}
 
 As shown above, a map matches as long as the keys in the pattern exist in the given map. Therefore, an empty map matches all maps.
 
-Variables can be used when accessing, matching and adding map keys:
-
-```elixir
-iex> n = 1
-1
-iex> map = %{n => :one}
-%{1 => :one}
-iex> map[n]
-:one
-iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}
-%{1 => :one, 2 => :two, 3 => :three}
-```
-
-[The `Map` module](https://hexdocs.pm/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to manipulate maps:
+[The `Map` module](https://hexdocs.pm/elixir/Map.html) provides a very similar API to the `Keyword` module with convenience functions to add, remove, and update maps keys:
 
 ```elixir
 iex> Map.get(%{:a => 1, 2 => :b}, :a)
@@ -165,68 +178,39 @@ iex> Map.to_list(%{:a => 1, 2 => :b})
 [{2, :b}, {:a, 1}]
 ```
 
-Maps have the following syntax for updating a key's value:
+## Maps of fixed keys
+
+In the previous section, we have used maps as a key-value data structure where keys can be added or removed at any time. However, it is also common to create maps with a pre-defined set of keys. Their values may be updated, but new keys are never added nor removed. This is useful when we know the shape of the data we are working with and, if we get a different key, it likely means a mistake
+was done elsewhere.
+
+We define such maps using the same syntax as in the previous section, except
+that all keys must be atoms:
 
 ```elixir
-iex> map = %{:a => 1, 2 => :b}
-%{2 => :b, :a => 1}
-
-iex> %{map | 2 => "two"}
-%{2 => "two", :a => 1}
-iex> %{map | :c => 3}
-** (KeyError) key :c not found in: %{2 => :b, :a => 1}
+iex> map = %{:name => "John", :age => 23}
+%{name: "John", age: 23}
 ```
 
-The syntax above requires the given key to exist. It cannot be used to add new keys. For example, using it with the `:c` key failed because there is no `:c` in the map.
+As you can see from the printed result above, Elixir also allows you to
+write maps of atom keys using the same `key: value` syntax as keyword lists.
 
-When all the keys in a map are atoms, you can use the keyword syntax for convenience:
+When the keys are atoms, we can also also access them using the `map.key`
+syntax:
 
 ```elixir
-iex> map = %{a: 1, b: 2}
-%{a: 1, b: 2}
+iex> map = %{name: "John", age: 23}
+%{name: "John", age: 23}
+
+iex> map.name
+"John"
+iex> map.agee
+** (KeyError) key :agee not found in: %{name: "John", age: 23}
 ```
 
-Another interesting property of maps is that they provide their own syntax for accessing atom keys:
+This syntax has one large benefit in that it raises if the key does not exist in the map. Sometimes the Elixir compiler may even warn too. This makes it useful to get quick feedback and spot bugs and typos early on. This is also
+the syntax used to power another Elixir feature called "Structs".
 
-```elixir
-iex> map = %{:a => 1, 2 => :b}
-%{2 => :b, :a => 1}
-
-iex> map.a
-1
-iex> map.c
-** (KeyError) key :c not found in: %{2 => :b, :a => 1}
-```
-
-This syntax has one large benefit in that it raises if the key does not exist in the map. Sometimes the Elixir compiler may even warn too. This makes it useful to get quick feedback and spot bugs and typos early on.
-
-Elixir developers typically prefer to use the `map.field` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post by José Valim](https://dashbit.co/blog/writing-assertive-code-with-elixir) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
-
-## `do`-blocks and keywords
-
-As we have seen, keywords are mostly used in the language to pass optional values. In fact, we have used keywords before in this guide. For example, we have seen:
-
-```elixir
-iex> if true do
-...>   "This will be seen"
-...> else
-...>   "This won't"
-...> end
-"This will be seen"
-```
-
-It happens that `do` blocks are nothing more than a syntax convenience on top of keywords. We can rewrite the above to:
-
-```elixir
-iex> if true, do: "This will be seen", else: "This won't"
-"This will be seen"
-```
-
-Pay close attention to both syntaxes. In the keyword list format, we separate each key-value pair with commas, and each key is followed by `:`. In the `do`-blocks, we get rid of the colons, the commas, and separate each keyword by a newline. They are useful exactly because they remove the verbosity when writing blocks of code. Most of the time, you will use the block syntax, but it is good to know they are equivalent.
-
-Note that only a handful of keyword lists can be converted to blocks: `do`, `else`, `catch`, `rescue`, and `after`. Those are all the keywords used by Elixir control-flow constructs. We have already learned some of them and we will learn others in the future.
-
-With this out of the way, let's see how we can work with nested data structures.
+Elixir developers typically prefer to use the `map.key` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post by José Valim](https://dashbit.co/blog/writing-assertive-code-with-elixir) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
 
 ## Nested data structures
 
@@ -272,6 +256,17 @@ iex> users = update_in users[:mary].languages, fn languages -> List.delete(langu
 ]
 ```
 
-There is more to learn about `put_in/2` and `update_in/2`, including the `get_and_update_in/2` that allows us to extract a value and update the data structure at once. There are also `put_in/3`, `update_in/3` and `get_and_update_in/3` which allow dynamic access into the data structure. [Check their respective documentation in the `Kernel` module for more information](https://hexdocs.pm/elixir/Kernel.html).
+There is more to learn about `put_in/2` and `update_in/2`, including the `get_and_update_in/2` that allows us to extract a value and update the data structure at once. There are also `put_in/3`, `update_in/3` and `get_and_update_in/3` which allow dynamic access into the data structure. [Check their respective documentation in the `Kernel` module for more information](https://hexdocs.pm/elixir/Kernel.html). Between the Access
+module and pattern matching, Elixir developers have a rich set of tools
+for manipulating nested and complex data structures.
 
-This concludes our introduction to associative data structures in Elixir. You will find out that, given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.
+## Summary
+
+This concludes our introduction to associative data structures in Elixir.
+As a summary, you should:
+
+  * Use keyword lists for passing optional values to functions
+
+  * Use maps for general key-value data structures and when working with known data (with fixed keys)
+
+Now we can move on to talk about modules and functions.
