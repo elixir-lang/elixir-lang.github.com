@@ -18,7 +18,7 @@ PhD studies, with further guidance from myself (José Valim).
 This article is a summary of where we are in our efforts and where we
 are going.
 
-### Out of research
+## Out of research
 
 Our main goal during research is to find a type system that can model
 most of Elixir's functional semantics and develop brand new theory on
@@ -44,7 +44,7 @@ the [CNRS](https://www.cnrs.fr/fr) and [Remote](https://remote.com),
 with sponsorships from [Fresha](https://www.fresha.com),
 [Supabase](https://supabase.com), and [Dashbit](https://dashbit.co).
 
-### Into development
+## Into development
 
 While there is still on-going research, our focus for the second semester
 of 2023 onwards is on development.
