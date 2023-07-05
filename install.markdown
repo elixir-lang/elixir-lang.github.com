@@ -9,13 +9,15 @@ layout: default
 
 {% include toc.html %}
 
-The quickest way to install Elixir is through a distribution or using one of the available installers. If not available, then we recommend the precompiled packages or compiling it.
+The quickest way to install Elixir is through a distribution or using one of the available installers. If such an option is not available, then we recommend using the precompiled packages or compiling the language yourself. All of these options are detailed next.
 
-Note that Elixir {{ stable.name }} requires Erlang {{ stable.minimum_otp }} or later. Many of the instructions below will automatically install Erlang for you. In case they do not, read the "Installing Erlang" section.
+Note that Elixir {{ stable.name }} requires Erlang {{ stable.minimum_otp }} or later. Many of the instructions below will automatically install Erlang for you. If they do not, the "Installing Erlang" section has you covered.
+
+If you are not sure if you have Elixir installed or not, you can run `elixir --version` in your terminal.
 
 ## By Operating System
 
-Choose your operating system and tool.
+Install Elixir according to your operating system and tool of choice.
 
 ### macOS
 
@@ -170,10 +172,8 @@ In case you are feeling a bit more adventurous, you can also compile from main:
 ```bash
 $ git clone https://github.com/elixir-lang/elixir.git
 $ cd elixir
-$ make clean test
+$ make clean compile
 ```
-
-If the tests pass, you are ready to go. Otherwise, feel free to open an issue [in the issues tracker on GitHub](https://github.com/elixir-lang/elixir).
 
 ## Installing Erlang
 
@@ -201,6 +201,20 @@ On Unix systems, you need to [find your shell profile file](https://unix.stackex
 export PATH="$PATH:/path/to/elixir/bin"
 ```
 
-## Checking the installed version of Elixir
+## Asking questions
 
-Once you have Elixir installed, you can check its version by running `elixir --version`.
+After Elixir is up and running, it is common to have questions as you learn and use the language. There are many places where you can ask questions, here are some of them:
+
+  * [#elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
+  * [Elixir Forum](http://elixirforum.com)
+  * [Elixir on Slack](https://elixir-lang.slack.com)
+  * [Elixir on Discord](https://discord.gg/elixir)
+  * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
+
+When asking questions, remember these two tips:
+
+  * Instead of asking "how to do X in Elixir", ask "how to solve Y in Elixir". In other words, don't ask how to implement a particular solution, instead describe the problem at hand. Stating the problem gives more context and less bias for a correct answer.
+
+  * In case things are not working as expected, please include as much information as you can in your report, for example: your Elixir version, the code snippet and the error message alongside the error stacktrace.
+
+Enjoy!
