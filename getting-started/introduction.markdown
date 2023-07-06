@@ -18,12 +18,6 @@ Let's get started!
 
 > If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com).
 
-> The Elixir guides are also available in EPUB format:
->
->   * [Getting started guide](https://elixir-lang.org/downloads/books/elixir-getting-started-guide.epub)
->   * [Mix and OTP guide](https://elixir-lang.org/downloads/books/mix-and-otp.epub)
->   * [Meta-programming guide](https://elixir-lang.org/downloads/books/meta-programming-in-elixir.epub)
-
 ## Installation
 
 If you haven't yet installed Elixir, visit our [installation page](/install.html). Once you are done, you can run `elixir --version` to get the current Elixir version.
