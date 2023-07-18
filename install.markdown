@@ -52,7 +52,16 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
     * Run: `pacman -S elixir`
 
   - **Debian**
-    * Run: `sudo apt-get install elixir`
+    * Run: `sudo apt install elixir`
+
+  - **Debian** (and **Ubuntu**) alternative
+    * Use the [RabbitMQ Packages](https://launchpad.net/~rabbitmq) (might not be up-to-date however likely newer than the distribution)
+
+      ```bash
+      $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
+      $ sudo apt update
+      $ sudo apt install elixir
+      ```
 
   - **Fedora 21 (and older)**
     * Run: `yum install elixir`
@@ -81,7 +90,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
     * Run: `eopkg install elixir`
 
   - **Ubuntu**
-    * Run: `sudo apt-get install elixir`
+    * Run: `sudo apt install elixir`
 
   - **Void Linux**
     * Run: `xbps-install -S elixir`
