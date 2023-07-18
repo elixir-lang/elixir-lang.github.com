@@ -33,6 +33,14 @@ Note version managers (described below), are also available for macOS.
 
 On Unix systems, there are two options to install Elixir. You can use the Erlang/Elixir packages that are part of your distribution, although those may lag behind in version numbers (especially for LTS releases). In such cases, you can also opt to use a version manager.
 
+For **Debian** and **Ubuntu**, there is also a third option to use the [RabbitMQ Packages](https://launchpad.net/~rabbitmq) (might not be up-to-date however likely newer than the distribution)
+
+```bash
+$ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
+$ sudo apt update
+$ sudo apt install elixir
+```
+
 #### Version managers
 
 There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
