@@ -288,7 +288,7 @@ This time all tests passed and ExUnit warned us that distributed tests were bein
 The `mix test` command also allows us to dynamically include and exclude tags. For example, we can run `$ mix test --include distributed` to run distributed tests regardless of the value set in `test/test_helper.exs`. We could also pass `--exclude` to exclude a particular tag from the command line. Finally, `--only` can be used to run only tests with a particular tag:
 
 ```console
-$ elixir --sname foo -S mix test --only distributed
+$ iex --sname foo -S mix test --only distributed
 ```
 
 You can read more about filters, tags and the default tags in [`ExUnit.Case` module documentation](https://hexdocs.pm/ex_unit/ExUnit.Case.html).
