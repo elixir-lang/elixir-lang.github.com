@@ -251,7 +251,7 @@ Combined with books, tutorials and screencasts, using flashcards is the killer c
 
 <h4 class="resource">Elixir Koans<span class="free">free</span></h4>
 
-<a class="cover" href="http://elixirkoans.io/" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
+<a class="cover" href="https://github.com/elixirkoans/elixir-koans" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
 
 Elixir koans is a fun, easy way to get started with the Elixir programming language. It is an idiomatic tour of the language.
 
