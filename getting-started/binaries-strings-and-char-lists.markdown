@@ -272,6 +272,9 @@ Interpreting integers as code points may lead to some surprising behavior. For e
 ```elixir
 iex> heartbeats_per_minute = [99, 97, 116]
 ~c"cat"
+#to print as list
+iex> inspect(heartbeats_per_minute, charlists: :as_list)
+"[99, 97, 116]"
 ```
 
 You can convert a charlist to a string and back by using the `to_string/1` and `to_charlist/1` functions:
