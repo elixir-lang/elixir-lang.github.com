@@ -118,50 +118,6 @@ When code calling `dbg` is executed via `iex`, IEx will ask you to "stop" the co
 
 Similar to `dbg`, once a breakpoint is reached code execution stops until `continue` or `next` are invoked. However, `break!/2` does not have access to aliases and imports from the debugged code as it works on the compiled artifact rather than on source code.
 
-## Debugger
-
-For those who enjoy breakpoints but are rather interested in a visual debugger, Erlang/OTP ships with a graphical debugger conveniently named `:debugger`. Let's define a module in a file named `example.ex`:
-
-```elixir
-defmodule Example do
-  def double_sum(x, y) do
-    hard_work(x, y)
-  end
-
-  defp hard_work(x, y) do
-    x = 2 * x
-    y = 2 * y
-
-    x + y
-  end
-end
-```
-
-Now let's compile the file and run an IEx session:
-
-```console
-$ elixirc example.ex
-$ iex
-```
-
-Then start the debugger:
-
-```elixir
-iex> :debugger.start()
-{:ok, #PID<0.87.0>}
-iex> :int.ni(Example)
-{:module, Example}
-iex> :int.break(Example, 3)
-:ok
-iex> Example.double_sum(1, 2)
-```
-
-> If the `debugger` does not start, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
-
-When you start the debugger, a Graphical User Interface will open on your machine. We call `:int.ni(Example)` to prepare our module for debugging and then add a breakpoint to line 3 with `:int.break(Example, 3)`. After we call our function, we can see our process with break status in the debugger:
-
-<img src="/images/contents/debugger-elixir.gif" width="640" alt="Debugger GUI GIF" />
-
 ## Observer
 
 For debugging complex systems, jumping at the code is not enough. It is necessary to have an understanding of the whole virtual machine, processes, applications, as well as set up tracing mechanisms. Luckily this can be achieved in Erlang with `:observer`. In your application:
@@ -171,7 +127,18 @@ $ iex
 iex> :observer.start()
 ```
 
-> Similar to the `debugger` note above, your package manager may require a separate installation in order to run Observer.
+> When running `iex` inside a project with `iex -S mix`, `observer` won't be available as a dependency. To do so, you will need to call the following functions before:
+>
+> ```elixir
+> iex> Mix.ensure_application!(:wx)
+> iex> Mix.ensure_application!(:runtime_tools)
+> iex> Mix.ensure_application!(:observer)
+> iex> :observer.start()
+> ```
+>
+> If any of the calls above fail, here is what may have happened: some package managers default to installing a minimized Erlang without WX bindings for GUI support. In some package managers, you may be able to replace the headless Erlang with a more complete package (look for packages named `erlang` vs `erlang-nox` on Debian/Ubuntu/Arch). In others managers, you may need to install a separate `erlang-wx` (or similarly named) package.
+>
+> There are conversations to improve this experience in future releases.
 
 The above will open another Graphical User Interface that provides many panes to fully understand and navigate the runtime and your project:
 
