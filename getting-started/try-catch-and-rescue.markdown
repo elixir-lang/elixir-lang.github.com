@@ -124,7 +124,7 @@ rescue
 end
 ```
 
-In the example above, we rescued the exception, logged it, and then re-raised it. We use the `__STACKTRACE__` construct both when formatting the exception and when re-raising. This ensures we reraise the exception as is, without changing value or its origin. 
+In the example above, we rescued the exception, logged it, and then re-raised it. We use the `__STACKTRACE__` construct both when formatting the exception and when re-raising. This ensures we reraise the exception as is, without changing value or its origin.
 
 Generally speaking, we take errors in Elixir literally: they are reserved for unexpected and/or exceptional situations, never for controlling the flow of our code. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
 
@@ -252,7 +252,7 @@ iex> try do
 ...>   _ -> what_happened = :rescued
 ...> end
 iex> what_happened
-** (CompileError) undefined function: what_happened/0
+** (CompileError) undefined variable "what_happened"
 ```
 
 Instead, you should return the value of the `try` expression:
@@ -278,7 +278,7 @@ iex> try do
 ...> rescue
 ...>   _ -> another_what_happened
 ...> end
-** (CompileError) undefined function: another_what_happened/0
+** (CompileError) undefined variable "another_what_happened"
 ```
 
 This finishes our introduction to `try`, `catch`, and `rescue`. You will find they are used less frequently in Elixir than in other languages.
