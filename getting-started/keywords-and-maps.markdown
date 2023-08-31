@@ -207,7 +207,7 @@ iex> map.agee
 ** (KeyError) key :agee not found in: %{name: "John", age: 23}
 ```
 
-This syntax has one large benefit in that it raises if the key does not exist in the map. Sometimes the Elixir compiler may even warn too. This makes it useful to get quick feedback and spot bugs and typos early on. This is also
+This syntax has one large benefit in that it raises an exception if the key does not exist in the map. Sometimes the Elixir compiler may even warn too. This makes it useful to get quick feedback and spot bugs and typos early on. This is also
 the syntax used to power another Elixir feature called "Structs".
 
 Elixir developers typically prefer to use the `map.key` syntax and pattern matching instead of the functions in the `Map` module when working with maps because they lead to an assertive style of programming. [This blog post by José Valim](https://dashbit.co/blog/writing-assertive-code-with-elixir) provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.
