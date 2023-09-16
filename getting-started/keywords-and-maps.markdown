@@ -194,7 +194,7 @@ iex> map = %{:name => "John", :age => 23}
 As you can see from the printed result above, Elixir also allows you to
 write maps of atom keys using the same `key: value` syntax as keyword lists.
 
-When the keys are atoms, we can also also access them using the `map.key`
+When the keys are atoms, we can also access them using the `map.key`
 syntax:
 
 ```elixir
