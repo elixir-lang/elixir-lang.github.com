@@ -3,7 +3,7 @@ layout: post
 title: "Strong arrows: a new approach to gradual typing"
 author: José Valim
 category: Announcements
-excerpt: A short status update on the effort to bring a type system into Elixir.
+excerpt: An introduction to strong arrows and how it leverages the Erlang VM to provide sound gradual typing.
 ---
 
 *This is article expands on the topic of gradual set-theoretic typing discussed during my keynote at [ElixirConf US 2023](https://www.youtube.com/watch?v=giYbq4HmfGA).*
