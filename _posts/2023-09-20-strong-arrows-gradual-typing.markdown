@@ -165,9 +165,9 @@ $ a -> a when a: number()
 def identity(arg) when is_number(arg), do: arg
 ```
 
-In the example above, `identity` will fail if given any value that is not an integer. We often rely on pattern matching and guards and, in turn, they helps us assert on the types we are working with. Not only that, Erlang's JIT compiler already relies on this information to perform optimizations whenever possible.
+In the example above, `identity` will fail if given any value that is not a number. We often rely on pattern matching and guards and, in turn, they helps us assert on the types we are working with. Not only that, Erlang's JIT compiler already relies on this information to [perform optimizations](https://www.erlang.org/blog/type-based-optimizations-in-the-jit/) whenever possible.
 
-We also say Elixir is strongly typed because its functions and operators avoid implicit type conversions. The following functions also fail when the input does not match its type:
+We also say Elixir is strongly typed because its functions and operators avoid implicit type conversions. The following functions also fail when their input does not match their type:
 
 ```elixir
 $ binary() -> binary()
@@ -190,7 +190,7 @@ iex(3)> increment("foobar")
 
 In other words, Elixir's runtime consistently checks the values and their types at runtime. If `increment` fails when given something else than a number, then it will fail when the `dynamic()` type does not match its input at runtime. This guarantees `increment` returns its declared type and therefore we do not need to introduce runtime type checks when calling said function from untyped code.
 
-When we look at the `identity`, `debug`, and `increment` functions above, we - as developers - can state that these functions raise when given a value that does not match its input. However, how can we generalize this property so it is computed by the type system itself? To do so, we introduce a concept called **strong arrows**, which rely on set-theoretical types to derive this property.
+When we look at the `identity`, `debug`, and `increment` functions above, we - as developers - can state that these functions raise when given a value that does not match their input. However, how can we generalize this property so it is computed by the type system itself? To do so, we introduce a concept called **strong arrows**, which rely on set-theoretical types to derive this property.
 
 The idea goes as follows: a strong arrow is a function that can be statically proven that, when evaluated on values outside of its input types (i.e. its domain), it will error. For example, in our `increment` function, if we pass a `string()` as argument, it won't type check, because `string() + integer()` is not a valid operation. Thanks to set-theoretic types, we can compute all values outside of the domain by computing the negation of a set. Given `increment/1` will fail for all types which are `not number()`, the function is strong.
 
@@ -225,7 +225,7 @@ In the example above, `negate/1`'s type is a strong arrow, as it raises for any 
 
 > Errata: my presentation used the type `integer()` instead of `number()` for this example. However, that was a mistake in the slide. Giving the type `integer(), integer() -> integer()` to `subtract` and `integer() -> integer()` to `negate` does not make `subtract` a strong arrow. Can you tell why?
 
-Luckily, strong arrows can also be leveraged by other gradually typed languages. However, the more polymorphic a language and its functions are, the more unlikely it is to conclude that a given function is strong. For example, in other gradually typed languages such as Python or Ruby, the `+` operator is extensible and the user can define custom types where the operation is valid. In TypeScript, `"foobar" + 1` is also a valid operation, which expands the function domain. In both cases, an `increment` function restricted to numbers would not be receive a strong arrow type. Therefore, to remain sound, they must either restrict the operands with further runtime checks or return `dynamic()` and reduce the number of compile-time checks.
+Luckily, strong arrows can also be leveraged by other gradually typed languages. However, the more polymorphic a language and its functions are, the more unlikely it is to conclude that a given function is strong. For example, in other gradually typed languages such as Python or Ruby, the `+` operator is extensible and the user can define custom types where the operation is valid. In TypeScript, `"foobar" + 1` is also a valid operation, which expands the function domain. In both cases, an `increment` function restricted to numbers would not have a strong arrow type. Therefore, to remain sound, they must either restrict the operands with further runtime checks or return `dynamic()` and reduce the number of compile-time checks.
 
 There is one last scenario to consider, which I did not include during my keynote for brevity. Take this function:
 
@@ -252,7 +252,7 @@ The function receives two dynamically typed arguments and computes the remainder
 
 Here lies the issue: if `increment(dynamic())` returns `number()`, then `number()` includes both `integer() or float()`, and therefore the program above won't type check because `rem/2` does not accept floats. When faced with this problem, there are two possible reactions:
 
-1. It is correct for the function to not type check given increment may return a number
+1. It is correct for the function to not type check given increment may return a float
 
 2. It is incorrect for the function to not type check because the error it describes never occurs in the codebase
 
