@@ -265,7 +265,9 @@ When faced with this problem, there are two possible reactions:
 
 2. It is incorrect for the function to not type check because the error it describes never occurs in the codebase
 
-Another interesting property of gradual set-theoretic types is that we can also define upper bounds on the `dynamic()` type. If a function returns `number()`, it means the caller needs to handle both `integer()` and `float()`. However, if a function returns `dynamic() and number()`, it means the type is defined at runtime, but it must still verify it is one of `integer()` or `float()` at compile time. Therefore, the return of `dynamic() and number()` would not emit false positives, but if you attempt to use the string concatenation operator (`<>`) on it, you'd still get a typing violation!
+Another interesting property of gradual set-theoretic types is that we can also define upper bounds on the `dynamic()` type. If a function returns `number()`, it means the caller needs to handle both `integer()` and `float()`. However, if a function returns `dynamic() and number()`, it means the type is defined at runtime, but it must still verify it is one of `integer()` or `float()` at compile time.
+
+Therefore, `rem/2` will type check if its second argument has the type `dynamic() and number()`, as there is one type at runtime (`integer()`) that satisfies type checking. On the other hand, if you attempt to use the string concatenation operator (`<>`) on `dynamic() and number()`, then there is no acceptable runtime type and you'd still get a typing violation!
 
 Going back to strong arrows, there are two possible return types from a strong arrow:
 
