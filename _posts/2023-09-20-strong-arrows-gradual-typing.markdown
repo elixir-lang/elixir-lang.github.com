@@ -101,7 +101,7 @@ But at the end of the day it will simply expand to intersections. The important 
 
 > Note: for the type-curious readers, set-theoretic types implement a limited form of bounded quantification a-la kernel fun. In a nutshell, it means we can only compare functions if they have the same bounds. For example, our type system cannot answer if `a -> a when a: integer() or boolean()` is a subtype of `a -> a when a: integer()`.
 
-Not only that, we get lower bounds for free. If intersections allow us to place an upper bound, a union is a lower bound, because it says a given type must always be considered: `a or atom()` means atoms and any other type (which may or may not be a subset of atoms).
+We also get lower bounds for free. If intersections allow us to place an upper bound on a type variable, a union is equivalent to a lower bound as it specified the type variable will always be augmented by the union-ed type. For example, `a or atom()` says the result will always include atoms plus whatever else specified by `a` (which may be an atom, `atom()` itself, or a completely disjoint type such as `integer()`).
 
 Elixir protocols, which is an Elixir construct equivalent to Haskell Typeclasses or Java interfaces, is another example of functionality that can be modelled exclusively with intersections. This is left as an exercise to the reader (or the topic of a future blog post).
 
