@@ -250,11 +250,16 @@ There is one last scenario we must take into consideration when interfacing dyna
 def increment_and_remainder(numerator, denominator) do
   rem(numerator, increment(denominator))
 end
+
+$ (integer() -> integer()) and (float() -> float())
+def increment(number), do: number + 1
 ```
 
-The function receives two dynamically typed arguments and computes the remainder of the numerator by the denominator incremented by one. The `rem/2` operation expects both sides to be integers and returns an integer. Therefore the type of `increment_and_remainder/2` would be `dynamic(), dynamic() -> integer()`. Let's also consider that this function is part of an existing codebase where all calls to `increment_and_remainder` pass two valid integers.
+The `increment_and_remainder/2` function is untyped, therefore both of its arguments receive type `dynamic()`. The function then computes the remainder of the numerator by the denominator incremented by one. For this example, let's assume all uses of `increment_and_remainder/2` in our program passes two integers as arguments.
 
-Here lies the issue: if `increment(dynamic())` returns `number()`, then `number()` includes both `integer() or float()`, and therefore the program above won't type check because `rem/2` does not accept floats. When faced with this problem, there are two possible reactions:
+Given `increment/1` has a strong arrow type, according to our definition, `increment(dynamic())` will return `integer() or float()` (also known as `number()`). Here lies the issue: if `increment(dynamic())` returns `integer() or float()`, the program above won't type check because `rem/2` does not accept floats.
+
+When faced with this problem, there are two possible reactions:
 
 1. It is correct for the function to not type check given increment may return a float
 
