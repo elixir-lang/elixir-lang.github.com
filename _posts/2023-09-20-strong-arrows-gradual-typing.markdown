@@ -132,21 +132,25 @@ def debug(arg) do
 end
 ```
 
-The code above calls `identity` with an argument and then uses the string concatenation operator (`<>`) to concatenate `"we got: "` to the result of `identity(arg)`. Since `identity/1` is meant to return a number and string concatenation requires two strings as operands, there is a typing error in this program. On the other hand, if you call `debug("hello")` at runtime, the code will work and won't raise any exceptions.
+Since `debug/1` is untyped, its argument will receive the type `dynamic()`.
+
+`debug/1` proceeds to call `identity` with an argument and then uses the string concatenation operator (`<>`) to concatenate `"we got: "` to the result of `identity(arg)`. Since `identity/1` is meant to return a number and string concatenation requires two strings as operands, there is a typing error in this program. On the other hand, if you call `debug("hello")` at runtime, the code will work and won't raise any exceptions.
 
 In other words, the static typing version of the program and its runtime execution do not match in behaviour. So how do we tackle this?
 
-One option is to say that's all behaving as expected. If `debug/1` is untyped, its `arg` will have the `dynamic()` type. Therefore, to type check this program, we specify that `identity(dynamic())` returns the `dynamic()` type, the concatenation of a string with `dynamic()` also returns `dynamic()`, and consequently `debug/1` gets the type `dynamic() -> dynamic()`, with no type errors emitted.
+One option is to say that's all behaving as expected. If `debug/1` is untyped, its `arg` has the `dynamic()` type. To type check this program, we specify that `identity(dynamic())` returns the `dynamic()` type, the concatenation of a string with `dynamic()` also returns `dynamic()`, and consequently `debug/1` gets the type `dynamic() -> dynamic()`, with no type errors emitted.
 
 The trouble is: this is not a very useful choice. Once `dynamic()` enters the system, it _spreads everywhere_, we perform fewer checks, effectively discarding the information that `identity/1` returns a number, and the overall type system becomes less useful.
 
-Another option would be for us to say: well, let's ignore the `dynamic()` type. If the function says it returns a `number()`, then it will surely be a number! In this version, `identity(dynamic())` returns `number()` and the type system will catch a type error when concatenating a string with a number.
+Another option would be for us to say: once we call a statically typed function with `dynamic()`, we will ignore the `dynamic()` type. If the function says it returns a `number()`, then it will surely be a number! In this version, `identity(dynamic())` returns `number()` and the type system will catch a type error when concatenating a string with a number.
 
-This is similar to the approach taken by TypeScript. This means we can perform further static checks, but it also means we can call `debug("foobar")` and that will return the string `"we got: foobar"`! How can that be possible when the type system told us that `identity` returns a `number()`? This can lead to confusion and surprising results at runtime. We say this system is unsound, because the types at runtime do not match our compile-time types.
+This is similar to the approach taken by TypeScript. This means we can perform further static checks, but it also means we can call `debug("foobar")` and that will return the string `"we got: foobar"`! But how can that be possible when the type system told us that `identity` returns a `number()`? This can lead to confusion and surprising results at runtime. We say this system is unsound, because the types at runtime do not match our compile-time types.
 
 None of our solutions so far attempted to match the static and runtime behaviors, but rather, they picked one in favor of the other.
 
-But don't despair, there is yet another option. We could introduce runtime checks when we cross the "dynamic <-> static" boundaries. In this case, we could say `identity(dynamic())` returns a `number()`, but we will introduce a runtime check into the code to guarantee that's the case. This means we get static checks, we ensure the value is correct at runtime, with the cost of introducing additional checks at runtime and those checks may, unfortunately, affect performance. One approach being explored is to actually [rely on those checks to introduce compiler optimizations](https://arxiv.org/abs/2206.13831).
+But don't despair, there is yet another option. We could introduce runtime checks whenever we cross the "dynamic <-> static" boundaries. In this case, we could say `identity(dynamic())` returns a `number()`, but we will introduce a runtime check into the code to guarantee that's the case. This means we get static checks, we ensure the value is correct at runtime, with the cost of introducing additional checks at runtime. Unfortunately, those checks may affect performance, depending on the complexity of the data structure and on how many times we cross the static <-> dynamic boundary.
+
+> Note: there is [recent research in using the runtime checks introduced by a gradual type system to provide compiler optimizations](https://arxiv.org/abs/2206.13831). Some of these techniques are already leveraged by the Erlang VM to optimize code based on patterns and guards.
 
 To summarize, we have three options:
 
