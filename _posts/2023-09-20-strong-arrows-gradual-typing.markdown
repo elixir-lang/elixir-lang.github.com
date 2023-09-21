@@ -101,17 +101,17 @@ But at the end of the day it will simply expand to intersections. The important 
 
 > Note: for the type-curious readers, set-theoretic types implement [a limited form of bounded quantification *à la* Kernel Fun](http://lucacardelli.name/Papers/OnUnderstanding.pdf). In a nutshell, it means we can only compare functions if they have the same bounds. For example, our type system states `a -> a when a: integer() or boolean()` is not a subtype of `a -> a when a: integer()`.
 
-We also get lower bounds for free. If intersections allow us to place an upper bound on a type variable, a union is equivalent to a lower bound as it specified the type variable will always be augmented by the union-ed type. For example, `a or atom()` says the result will always include atoms plus whatever else specified by `a` (which may be an atom, `atom()` itself, or a completely disjoint type such as `integer()`).
+We also get lower bounds for free. If intersections allow us to place an upper bound on a type variable, a union is equivalent to a lower bound as it specifies the type variable will always be augmented by the union-ed type. For example, `a or atom()` says the result will always include atoms plus whatever else specified by `a` (which may be an atom, `atom()` itself, or a completely disjoint type such as `integer()`).
 
-Elixir protocols, which is an Elixir construct equivalent to Haskell Typeclasses or Java interfaces, is another example of functionality that can be modelled exclusively with intersections. This is left as an exercise to the reader (or the topic of a future blog post).
+Elixir protocols, which is an Elixir construct equivalent to Haskell Typeclasses or Java interfaces, is another example of functionality that can be modelled and composed with set-theoretic types without additional semantics. The exact mechanism to do so is left as an exercise to the reader (or the topic of a future blog post).
 
 ## Enter gradual typing
 
-Elixir is a functional dynamic programming language. Existing Elixir programs are untyped which means that, a type system needs to have mechanisms to interface existing Elixir code with future statically typed Elixir code. We can achieve this with gradual typing.
+Elixir is a functional dynamic programming language. Existing Elixir programs are untyped, which means that a type system needs mechanisms to interface existing Elixir code with future statically typed Elixir code. We can achieve this with gradual typing.
 
 A gradual type system is a type system that defines a `dynamic()` type. It is sometimes written as `?` and sometimes known as the `any` type (but I prefer to avoid `any` because it is too short and too lax in languages like TypeScript).
 
-In Elixir, the `dynamic()` type means the type is only known at runtime, effectively disabling static checks for that type. But perhaps, more interestingly, we can also place upper and lower bounds on the dynamic type using set operations. As we will soon learn, this will reveal interesting properties about our type system.
+In Elixir, the `dynamic()` type means the type is only known at runtime, effectively disabling static checks for that type. More interestingly, we can also place upper and lower bounds on the dynamic type using set operations. As we will soon learn, this will reveal interesting properties about our type system.
 
 It is often said that gradual typing is the best of both words. Perhaps ironically, that's true and false at the same time. If you use a gradual type system but you never use the `dynamic()` type, then it behaves exactly like a static type system. However, the more you use the `dynamic()` type, the fewer guarantees the type system will give you, the more the `dynamic()` type propagates through the system. Therefore, it is in our interest to reduce the occurrences of the `dynamic()` type as much as possible, and that's what we set out to do.
 
@@ -148,7 +148,7 @@ This is similar to the approach taken by TypeScript. This means we can perform f
 
 None of our solutions so far attempted to match the static and runtime behaviors, but rather, they picked one in favor of the other.
 
-But don't despair, there is yet another option. We could introduce runtime checks whenever we cross the "dynamic <-> static" boundaries. In this case, we could say `identity(dynamic())` returns a `number()`, but we will introduce a runtime check into the code to guarantee that's the case. This means we get static checks, we ensure the value is correct at runtime, with the cost of introducing additional checks at runtime. Unfortunately, those checks may affect performance, depending on the complexity of the data structure and on how many times we cross the static <-> dynamic boundary.
+But don't despair, there is yet another option. We could introduce runtime checks whenever we cross the "dynamic <-> static" boundaries. In this case, we could say `identity(dynamic())` returns a `number()`, but we will introduce a runtime check into the code to guarantee that's the case. This means we get static checks, we ensure the value is correct at runtime, with the cost of introducing additional checks at runtime. Unfortunately, those checks may affect performance, depending on the complexity of the data structure and on how many times we cross the "dynamic <-> static" boundary.
 
 > Note: there is [recent research in using the runtime checks introduced by a gradual type system to provide compiler optimizations](https://arxiv.org/abs/2206.13831). Some of these techniques are already leveraged by the Erlang VM to optimize code based on patterns and guards.
 
@@ -194,7 +194,7 @@ iex(3)> increment("foobar")
 
 In other words, Elixir's runtime consistently checks the values and their types at runtime. If `increment` fails when given something else than a number, then it will fail when the `dynamic()` type does not match its input at runtime. This guarantees `increment` returns its declared type and therefore we do not need to introduce runtime type checks when calling said function from untyped code.
 
-When we look at the `identity`, `debug`, and `increment` functions above, we - as developers - can state that these functions raise when given a value that does not match their input. However, how can we generalize this property so it is computed by the type system itself? To do so, we introduce a concept called **strong arrows**, which rely on set-theoretical types to derive this property.
+When we look at the `identity`, `debug`, and `increment` functions above, we - as developers - can state that these functions raise when given a value that does not match their input. However, how can we generalize this property so it is computed by the type system itself? To do so, we introduce a new concept called **strong arrows**, which relies on set-theoretical types to derive this property.
 
 The idea goes as follows: a strong arrow is a function that can be statically proven that, when evaluated on values outside of its input types (i.e. its domain), it will error. For example, in our `increment` function, if we pass a `string()` as argument, it won't type check, because `string() + integer()` is not a valid operation. Thanks to set-theoretic types, we can compute all values outside of the domain by computing the negation of a set. Given `increment/1` will fail for all types which are `not number()`, the function is strong.
 
@@ -211,7 +211,7 @@ def debug(arg) do
 end
 ```
 
-However, If the `identity` function is not strong, then we must fallback to one of the strategies in the previous section.
+However, if the `identity` function is not strong, then we must fallback to one of the strategies in the previous section.
 
 Another powerful property of strong arrows is that they are composable. Let's pick an example from the paper:
 
@@ -225,11 +225,11 @@ $ number() -> number()
 def negate(int), do: -int
 ```
 
-In the example above, `negate/1`'s type is a strong arrow, as it raises for any input outside of its domain. `subtract/2`'s type is also a strong arrow, because both `+` and our own `negate` are strong arrows too. This is an important capability as it limits the capability `dynamic()` types have to spread throughout the system.
+In the example above, `negate/1`'s type is a strong arrow, as it raises for any input outside of its domain. `subtract/2`'s type is also a strong arrow, because both `+` and our own `negate` are strong arrows too. This is an important capability as it limits how `dynamic()` types spread throughout the system.
 
-> Errata: my presentation used the type `integer()` instead of `number()` for this example. However, that was a mistake in the slide. Giving the type `integer(), integer() -> integer()` to `subtract` and `integer() -> integer()` to `negate` does not make `subtract` a strong arrow. Can you tell why?
+> Errata: my presentation used the type `integer()` instead of `number()` for the example above. However, that was a mistake in the slide. Giving the type `integer(), integer() -> integer()` to `subtract` and `integer() -> integer()` to `negate` does not make `subtract` a strong arrow. Can you tell why?
 
-Luckily, strong arrows can also be leveraged by other gradually typed languages. However, the more polymorphic a language and its functions are, the more unlikely it is to conclude that a given function is strong. For example, in other gradually typed languages such as Python or Ruby, the `+` operator is extensible and the user can define custom types where the operation is valid. In TypeScript, `"foobar" + 1` is also a valid operation, which expands the function domain. In both cases, an `increment` function restricted to numbers would not have a strong arrow type. Therefore, to remain sound, they must either restrict the operands with further runtime checks or return `dynamic()` and reduce the number of compile-time checks.
+Luckily, other gradually typed languages can also leverage strong arrows. However, the more polymorphic a language and its functions are, the more unlikely it is to conclude that a given function is strong. For example, in other gradually typed languages such as Python or Ruby, the `+` operator is extensible and the user can define custom types where the operation is valid. In TypeScript, `"foobar" + 1` is also a valid operation, which expands the function domain. In both cases, an `increment` function restricted to numbers would not have a strong arrow type, as the operator won't fail for all types outside of `number()`. Therefore, to remain sound, they must either restrict the operands with further runtime checks or return `dynamic()` (reducing the number of compile-time checks).
 
 There is one last scenario to consider, which I did not include during my keynote for brevity. Take this function:
 
@@ -238,7 +238,7 @@ $ integer() -> :ok
 def receives_integer_and_returns_ok(_arg), do: :ok
 ```
 
-The function above can receive any type and return `:ok`. Is its type a strong arrow? Well, according to our definition, it is not. If we negate its input, type checking does not fail, it will still return `:ok`.
+The function above can receive any type and return `:ok`. Is its type a strong arrow? Well, according to our definition, it is not. If we negate its input, type checking does not fail, it returns `:ok`.
 
 However, given the return type is always the same, it should be a strong arrow! To do so, let's amend and rephrase our definition of strong arrows: we negate the domain (i.e. the inputs) of a function and then type check it. If the function returns `none()` (i.e. it does not type check) or a type which is a subset of its codomain (i.e. its output), then it is a strong arrow.
 
@@ -261,11 +261,11 @@ Given `increment/1` has a strong arrow type, according to our definition, `incre
 
 When faced with this problem, there are two possible reactions:
 
-1. It is correct for the function to not type check given increment may return a float
+1. It is correct for the function to not type check given `increment` may return a float
 
 2. It is incorrect for the function to not type check because the error it describes never occurs in the codebase
 
-Another interesting property of gradual set-theoretic types is that we can also define upper bounds on the `dynamic()` type. If a function returns `number()`, it means the caller needs to handle both `integer()` and `float()`. However, if a function returns `dynamic() and number()`, it means the type is defined at runtime, but it must still verify it is one of `integer()` or `float()` at compile time.
+Another interesting property of gradual set-theoretic types is that we can also place upper bounds on the `dynamic()` type. If a function returns `number()`, it means the caller needs to handle both `integer()` and `float()`. However, if a function returns `dynamic() and number()`, it means the type is defined at runtime, but it must still verify it is one of `integer()` or `float()` at compile time.
 
 Therefore, `rem/2` will type check if its second argument has the type `dynamic() and number()`, as there is one type at runtime (`integer()`) that satisfies type checking. On the other hand, if you attempt to use the string concatenation operator (`<>`) on `dynamic() and number()`, then there is no acceptable runtime type and you'd still get a typing violation!
 
@@ -275,15 +275,15 @@ Going back to strong arrows, there are two possible return types from a strong a
 
 2. A strong arrow, when presented with a dynamic type, returns the intersection of the codomain with the `dynamic()` type
 
-The second option opens up the possibility for existing codebases to gradually migrate to static types without dealing with false positives. Coming from a dynamic background, false positives can be seen as noisy or as an indication that static types are not worth the trouble. With strong arrows and set-theoretic types, we will be able to explore different trade-offs on mixed codebases. Which of the two choices above we will adopt as a default and how to customize them is yet to be decided. It will depend on the community feedback as we experiment and integrate the type system.
+The second option opens up the possibility for existing codebases to gradually migrate to static types without dealing with false positives. Coming from a dynamic background, false positives can be seen as noisy or as an indication that static types are not worth the trouble. With strong arrows and gradual set-theoretic types, we will be able to explore different trade-offs on mixed codebases. Which of the two choices above we will adopt as a default and how to customize them is yet to be decided. It will depend on the community feedback as we experiment and integrate the type system.
 
-Erlang and Elixir developers who use Dialyzer will be familiar with these trade-offs, as the second option mirrors Dialyzer's behaviour of no false positives. The difference here is that our semantics are integrated into a complete type system. If no type signature is present, the `dynamic()` type is used, and we will leverage the techniques described here to interface dynamic and static code. If a function has a type signature, and no `dynamic()` type is present, then it will behave as statically typed code when called with statically typed arguments. Migrating to static types will naturally reduce the interaction points between dynamic and static code, eventually removing the reliance on the `dynamic()` type.
+Erlang and Elixir developers who use Dialyzer will be familiar with these trade-offs, as the second option mirrors Dialyzer's behaviour of no false positives. The difference here is that our semantics are integrated into a complete type system. If no type signature is present, the `dynamic()` type is used, and we will leverage the techniques described here to interface dynamic and static code. If a function has a type signature, and no `dynamic()` type is present, then it will behave as statically typed code when called with statically typed arguments. Migrating to static types will naturally reduce the interaction points between dynamic and static code, removing the reliance on the `dynamic()` type.
 
 ## Summary
 
 Set-theoretic types allow us to express many typing features based on set operations of union, intersection, and negation.
 
-In particular, we have been exploring a set-theoretic type system for Elixir, paying special attention to how the type system will integrate with existing codebases and how it can best leverage the semantics of the Erlang Virtual Machine. The type system will also perform limited inference based on patterns and guards (as described in the paper), which - in addition to strong arrows - we hope to bring some of the benefits of static typing to codebases without changing a single line of code.
+In particular, we have been exploring a gradual set-theoretic type system for Elixir, paying special attention to how the type system will integrate with existing codebases and how it can best leverage the semantics of the Erlang Virtual Machine. The type system will also perform limited inference based on patterns and guards (as described in the paper), which - in addition to strong arrows - we hope to bring some of the benefits of static typing to codebases without changing a single line of code.
 
 While our efforts have officially moved from research into development, and [we have outlined an implementation plan](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/), we haven't yet fully implemented nor assessed the usability of set-theoretic types in existing Elixir codebases, nor large nor small. There is much to implement and validate, and we don't rule the possibility of finding unforeseen deal breakers that could send us back to square one. Yet we are pleased and cautiously excited with the new developments so far.
 
