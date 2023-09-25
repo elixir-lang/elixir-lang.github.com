@@ -79,7 +79,7 @@ id :: Ord a => a -> a
 id x = x
 ```
 
-In order words, these functions can accept any type as long as they fullfil a given constraint. This in turn is called bounded polymorphism, because we are putting bounds on the types we can receive.
+In other words, these functions can accept any type as long as they fulfill a given constraint. This in turn is called bounded polymorphism, because we are putting bounds on the types we can receive.
 
 With all that said, how can we implement bounded polymorphism in set-theoretic types? Imagine we have a type variable `a`, how can we ensure it is bounded or constrained to another type?
 
@@ -90,7 +90,7 @@ $ a and number() -> a and number()
 def identity(arg), do: arg
 ```
 
-Or course, we can provide syntax sugar for those constraints:
+Of course, we can provide syntax sugar for those constraints:
 
 ```elixir
 $ a -> a when a: number()
@@ -200,7 +200,7 @@ The idea goes as follows: a strong arrow is a function that can be statically pr
 
 By applying this rule to all typed functions, we will know which functions are strong and which ones are not. If a function is strong, the type system knows that calling it with a `dynamic()` type will always evaluate to its return type! Therefore we say the return type of `increment(dynamic())` is `number()`, which is sound and does not need further runtime checks!
 
-Going back to our `debug` function, when used with a guarded identity, it will be able emit warnings at compile-time, errors at runtime, without introducing any additional runtime check:
+Going back to our `debug` function, when used with a guarded identity, it will be able to emit warnings at compile-time, errors at runtime, without introducing any additional runtime check:
 
 ```elixir
 $ a -> a when a: number()
@@ -285,7 +285,7 @@ Set-theoretic types allow us to express many typing features based on set operat
 
 In particular, we have been exploring a gradual set-theoretic type system for Elixir, paying special attention to how the type system will integrate with existing codebases and how it can best leverage the semantics of the Erlang Virtual Machine. The type system will also perform limited inference based on patterns and guards (as described in the paper), which - in addition to strong arrows - we hope to bring some of the benefits of static typing to codebases without changing a single line of code.
 
-While our efforts have officially moved from research into development, and [we have outlined an implementation plan](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/), we haven't yet fully implemented nor assessed the usability of set-theoretic types in existing Elixir codebases, nor large nor small. There is much to implement and validate, and we don't rule the possibility of finding unforeseen deal breakers that could send us back to square one. Yet we are pleased and cautiously excited with the new developments so far.
+While our efforts have officially moved from research into development, and [we have outlined an implementation plan](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/), we haven't yet fully implemented nor assessed the usability of set-theoretic types in existing Elixir codebases, either large or small. There is much to implement and validate, and we don't rule the possibility of finding unforeseen deal breakers that could send us back to square one. Yet we are pleased and cautiously excited with the new developments so far.
 
 The development of Elixir's type system is sponsored by [Fresha](https://www.fresha.com) ([they are hiring!](https://www.fresha.com/careers/openings?department=engineering)),
 [Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/jobs/experienced-elixir-developer)),
