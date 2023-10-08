@@ -37,7 +37,7 @@ Interactive Elixir ({{ stable.version }}) - press Ctrl+C to exit
 iex> 40 + 2
 42
 iex> "hello" <> " world"
-"hello world"
+"hello world from olessya"
 ```
 
 Please note that some details like version numbers may differ a bit in your session; that's not important. From now on `iex` sessions will be stripped down to focus on the code. To exit `iex` press `Ctrl+C` twice.
