@@ -60,7 +60,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
       ```bash
       $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
       $ sudo apt update
-      $ sudo apt install elixir
+      $ sudo apt install elixir erlang-dev erlang-xmerl
       ```
 
   - **Fedora 21 (and older)**
