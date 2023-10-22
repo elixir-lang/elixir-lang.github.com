@@ -48,6 +48,8 @@ iex> a
 :hello
 iex> b
 "world"
+iex> c
+42
 ```
 
 A pattern match error will occur if the sides can't be matched, for example if the tuples have different sizes:
