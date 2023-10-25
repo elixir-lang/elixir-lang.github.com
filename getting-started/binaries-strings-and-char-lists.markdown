@@ -53,10 +53,10 @@ iex> string = "héllo"
 iex> String.length(string)
 5
 iex> byte_size(string)
-6
+7
 ```
 
-Although the string above has 5 characters, it uses 6 bytes, as two bytes are used to represent the character `é`.
+Although the string above has 5 characters, it uses 7 bytes, as three bytes are used to represent the character `é`.
 
 > Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering `iex` (`iex.bat`).
 
