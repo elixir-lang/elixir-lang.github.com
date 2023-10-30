@@ -24,4 +24,4 @@ Our interactive shell (IEx) also had many improvements, thanks to the Elixir dev
 
 That's it. For the next months, we will continue improving Elixir (you can see some ideas floating around in the [issues tracker](https://github.com/elixir-lang/elixir/issues)) but we will start to focus on other tools and libraries for the community.
 
-Thank you and don't forget to [give Elixir a try](/getting-started/introduction.html)!
+Thank you and don't forget to [give Elixir a try](https://hexdocs.pm/elixir/1.16/introduction.html)!

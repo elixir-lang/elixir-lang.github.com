@@ -129,6 +129,6 @@ It is also possible to install escripts and archives by providing a Git/GitHub r
 
 ## Summing up
 
-The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.orghttps://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
 
 Happy coding!

@@ -96,6 +96,6 @@ First of all, Elixir is built on top of Erlang/OTP and we simply leverage all of
 
 Second, Elixir was designed to be an extensible language. The same tools and abstractions we used to create and enhance the language are also available to libraries and frameworks. This means the community can continue to improve the ecosystem without a need to change the language itself, which would effectively become a bottleneck for progress.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more. We have also updated our [advanced Mix & OTP](https://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html) to talk about releases. If you are looking for a more fast paced introduction to the language, see the [How I Start: Elixir](http://howistart.org/posts/elixir/1/index.html) tutorial, which has also been brought to the latest and greatest.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more. We have also updated our [advanced Mix & OTP](https://hexdocs.pm/elixir/1.16/introduction-to-mix.html) to talk about releases. If you are looking for a more fast paced introduction to the language, see the [How I Start: Elixir](http://howistart.org/posts/elixir/1/index.html) tutorial, which has also been brought to the latest and greatest.
 
 Have fun!

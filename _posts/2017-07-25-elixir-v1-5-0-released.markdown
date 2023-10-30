@@ -175,4 +175,4 @@ Overall, using `@impl` has the following advantages:
 
 The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.5.0). There are many other exciting changes, such as compiler enhancements that reduces compilation times by 10%-15% on averages. When taken into account with the compiler improvements in Erlang/OTP 20 itself, some applications have seen gains up to 30% in compilation times.
 
-Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.orghttps://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
