@@ -130,4 +130,4 @@ We have also many other smaller improvements:
 
 A huge thank you to our community for sending bug reports, providing bug fixes and contributing all those amazing features. And when are **you** joining us? :)
 
-Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or [check this 30 minute video from PragProg](https://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir).
+Give Elixir a try! You can start with our [getting started guide](https://hexdocs.pm/elixir/1.16/introduction.html), or [check this 30 minute video from PragProg](https://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir).

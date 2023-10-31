@@ -212,4 +212,4 @@ The goal of this post was to sumarize the language goals: compatibility, product
 
 We also hope to have clarified what Elixir brings to the Erlang VM, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with extensible and consistent APIs for diverse types, including strict and lazy enumeration, unicode handling, a test framework and more.
 
-Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or check out our sidebar for other learning resources.
+Give Elixir a try! You can start with our [getting started guide](https://hexdocs.pm/elixir/1.16/introduction.html), or check out our sidebar for other learning resources.

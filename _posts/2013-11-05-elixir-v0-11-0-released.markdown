@@ -67,6 +67,6 @@ In the optimization front, we have pushed the first iteration of a [feature call
 
 And finally, a minor but frequently asked feature has finally arrived into Elixir: variables follow the same rules as other identifiers in the language, which means developers can now name their variables `is_atom?`. For a general overview, [check out the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.11.0/CHANGELOG.md).
 
-Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or check out our sidebar for other learning resources.
+Give Elixir a try! You can start with our [getting started guide](https://hexdocs.pm/elixir/1.16/introduction.html), or check out our sidebar for other learning resources.
 
 **PS:** We have just released v0.11.1 which addresses a regression in Mix and improves the dependencies update process.
