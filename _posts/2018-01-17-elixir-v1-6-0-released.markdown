@@ -153,4 +153,4 @@ The full list of changes is available in our [release notes](https://github.com/
 
 Work on Elixir v1.7 has already started. We still welcome developers to try out the [previously announced StreamData library](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/), that aims to bring data generation and property-based testing to Elixir. The other [features scheduled for v1.7 can be found in the issues tracker](https://github.com/elixir-lang/elixir/issues).
 
-Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.orghttps://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
+Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more.

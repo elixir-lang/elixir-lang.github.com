@@ -147,6 +147,6 @@ The `Code` module has also been augmented with two functions: [`Code.string_to_q
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.13.0). You can also [watch my ElixirConf 2021 keynote about Elixir v1.13](https://youtu.be/ydjx2kKHzrM) to learn more.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.orghttps://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
 
 Have fun!
