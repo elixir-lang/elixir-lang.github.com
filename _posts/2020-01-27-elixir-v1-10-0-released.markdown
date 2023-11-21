@@ -165,6 +165,6 @@ Finally, this release also adds two new guards, `is_struct/1` and `is_map_key/2`
 
 To learn what else is new, you can read the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.10.0).
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.orghttps://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
 
 Have fun!

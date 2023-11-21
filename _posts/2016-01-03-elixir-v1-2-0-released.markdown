@@ -112,6 +112,6 @@ These are great additions on top of the faster compilation times we have achieve
 
 With Rebar 3 gaining more adoption in the Erlang community, Mix is now able to fetch and compile Rebar 3 dependencies. This feature is currently experimental and therefore opt-in: if you have a Rebar 3 dependency, you can ask Mix to use Rebar 3 to compile it by passing the `manager: :rebar3` option. Once configured, Mix will prompt you to install Rebar 3 if it is not yet available.
 
-The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.2.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](http://elixir-lang.orghttps://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
+The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.2.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
 
 Happy coding!
