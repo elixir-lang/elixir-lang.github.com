@@ -128,7 +128,7 @@ Elixir v1.16 incorporates and extends the work on [Understanding Code Smells
 in Elixir Functional Language](https://github.com/lucasvegi/Elixir-Code-Smells/blob/main/etc/2023-emse-code-smells-elixir.pdf),
 by Lucas Vegi and Marco Tulio Valente, from [ASERG/DCC/UFMG](http://aserg.labsoft.dcc.ufmg.br/),
 into [the official documention in the form of anti-patterns](https://hexdocs.pm/elixir/what-anti-patterns.html).
-Our goal is to provide examples of potential pifalls for library and
+Our goal is to provide examples of potential pitfalls for library and
 application developers, with additional context and guidance on how
 to improve their codebases.
 
