@@ -12,7 +12,7 @@ The Elixir team continues improving the developer experience
 via tooling, documentation, and precise feedback, while keeping
 the language stable and compatible.
 
-The major improvements in this release is the addition of
+The notable improvements in this release are the addition of
 compiler diagnostics and extensive improvements to our docs
 in the forms of guides, anti-patterns, diagrams and more.
 
