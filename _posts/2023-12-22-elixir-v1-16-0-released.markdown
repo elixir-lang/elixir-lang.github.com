@@ -143,7 +143,7 @@ to keep only anti-patterns which are unambiguous and actionable, and divided
 them into four categories: [code-related](https://hexdocs.pm/elixir/code-anti-patterns.html),
 [design-related](https://hexdocs.pm/elixir/design-anti-patterns.html),
 [process-related](https://hexdocs.pm/elixir/process-anti-patterns.html),
-and [meta-programming](https://hexdocs.pm/elixir/meta-anti-patterns.html).
+and [meta-programming](https://hexdocs.pm/elixir/macro-anti-patterns.html).
 Then we collected more community feedback during the release candidate
 period, further refining and removing unclear guidance.
 
