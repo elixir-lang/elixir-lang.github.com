@@ -16,7 +16,7 @@ In this article, we will discuss how the proposed type system will tackle gradua
 
 The type system we are currently researching and developing for Elixir is based on set-theoretic types, which is to say its operations are based on the fundamental set operations of union, intersection, and negation.
 
-For example, the atom `:ok` is a value in Elixir, that can be represented by the type `:ok`. All atoms in Elixir as represented by themselves in the type system. A function that returns either `:ok` or `:error` is said to return `:ok or :error`, where the `or` operator represents the union.
+For example, the atom `:ok` is a value in Elixir, that can be represented by the type `:ok`. All atoms in Elixir are represented by themselves in the type system. A function that returns either `:ok` or `:error` is said to return `:ok or :error`, where the `or` operator represents the union.
 
 The types `:ok` and `:error` are contained by the type `atom()`, which is an infinite set representing all atoms. The union of the types `:ok` and `atom()` can be written as `:ok or atom()`, and is equivalent to `atom()` (as `:ok` is a subset of `atom()`). The intersection of the types `:ok` and `atom()` can be written as `:ok and atom()`, and is equivalent to `:ok`.
 
