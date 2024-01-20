@@ -77,6 +77,6 @@ There is only one last major feature planned for upcoming Elixir versions, which
 
 During [my keynote at ElixirConf 2018 US](https://www.youtube.com/watch?v=suOzNeMJXl0), I talked about the next five years for Elixir and much of the emphasis is put on the community. Elixir was designed to be an extensible language and therefore the work on the language itself is meant to reduce with time, which we have seen in the last two releases. We trust the community to continue building on this solid foundation, bringing new challenges to the ecosystem and taking the language to new domains.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
 
 Your turn. :)

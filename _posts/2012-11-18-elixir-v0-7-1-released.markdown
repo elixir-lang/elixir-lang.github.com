@@ -15,7 +15,7 @@ During this time traveling around, we have spoken at many conferences, as [Stran
 
 In case you missed any of those conferences, [the talk I presented at Øredev is available and you can watch it now](https://vimeo.com/53221562). The slides are also available below.
 
-If you want to hear more about Elixir at a conference or an event, please let us know. Thank you and don't forget to [give Elixir a try](https://hexdocs.pm/elixir/1.16/introduction.html)!
+If you want to hear more about Elixir at a conference or an event, please let us know. Thank you and don't forget to [give Elixir a try](https://hexdocs.pm/elixir/introduction.html)!
 
 <script async class="speakerdeck-embed" data-id="cf4727401449013077d112313d1a82a3" data-ratio="1.2994923857868" src="//speakerdeck.com/assets/embed.js"></script>
 

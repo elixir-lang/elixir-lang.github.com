@@ -8,7 +8,7 @@ layout: default
 
 {% include toc.html %}
 
-Elixir's official documentation includes a [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) to learn more about Elixir's foundations. Later on, it explores how to build projects with [Mix and OTP](https://hexdocs.pm/elixir/1.16/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html).
+Elixir's official documentation includes a [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more about Elixir's foundations. Later on, it explores how to build projects with [Mix and OTP](https://hexdocs.pm/elixir/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html).
 
 The Elixir Community has also produced plenty of resources to learn the language from different backgrounds and other perspectives. We list some of them below. We are sure you will find a resource that suits your pace and goals.
 

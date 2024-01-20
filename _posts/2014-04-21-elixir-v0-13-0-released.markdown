@@ -28,7 +28,7 @@ In a nutshell, here is what new:
 
 * Elixir v0.13 also provides structs, an alternative to Elixir records. Structs are more flexible than records, provide faster polymorphic operations, and still provide the same compile-time guarantees many came to love in records;
 
-* The [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) was rewritten from scratch. The previous guide was comprised of 7 chapters and was about to become 2 years old. The new guide features 20 chapters, it explores the new maps and structs (which are part of this release), and it goes deeper into topics like IO and File handling. It also includes an extra guide, still in development, about [Meta-Programming in Elixir](https://hexdocs.pm/elixir/1.16/quote-and-unquote.html);
+* The [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) was rewritten from scratch. The previous guide was comprised of 7 chapters and was about to become 2 years old. The new guide features 20 chapters, it explores the new maps and structs (which are part of this release), and it goes deeper into topics like IO and File handling. It also includes an extra guide, still in development, about [Meta-Programming in Elixir](https://hexdocs.pm/elixir/quote-and-unquote.html);
 
 * Elixir v0.13 provides a new comprehension syntax that not only works with lists, but with any [`Enumerable`](https://hexdocs.pm/elixir/Enumerable.html). The output of a comprehension is also extensible via the [`Collectable`](https://hexdocs.pm/elixir/Collectable.html) protocol;
 
@@ -68,7 +68,7 @@ iex> %{"other" => value} = map
 
 A map pattern will match any map that has all the keys specified in the pattern. The values for the matching keys must also match. For example, `%{"hello" => world}` will match any map that has the key `"hello"` and assign the value to `world`, while `%{"hello" => "world"}` will match any map that has the key `"hello"` with value equals to `"world"`. An empty map pattern (`%{}`) will match all maps.
 
-Developers can use the functions in the [`Map` module](https://hexdocs.pm/elixir/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](https://hexdocs.pm/elixir/1.16/keywords-and-maps.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html)).
+Developers can use the functions in the [`Map` module](https://hexdocs.pm/elixir/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](https://hexdocs.pm/elixir/keywords-and-maps.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html)).
 
 Maps also provide special syntax for creating, accessing and updating maps with atom keys:
 
@@ -179,7 +179,7 @@ The `__struct__` field is also used for polymorphic dispatch in protocols, addre
 
 It is interesting to note that structs solve both drawbacks we have earlier mentioned regarding records. Structs are purely data and polymorphic dispatch is now faster and more robust as it happens only for explicitly tagged structs.
 
-For more information on structs, check out the [Structs chapter in the getting started guide](https://hexdocs.pm/elixir/1.16/structs.html) (you may also want to read the new [Protocols chapter](https://hexdocs.pm/elixir/1.16/protocols.html) after it).
+For more information on structs, check out the [Structs chapter in the getting started guide](https://hexdocs.pm/elixir/structs.html) (you may also want to read the new [Protocols chapter](https://hexdocs.pm/elixir/protocols.html) after it).
 
 ## Maps, structs and the future
 
@@ -279,4 +279,4 @@ That said, in the next months we plan to:
 * Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://www.erlang.org/doc/man/rpc.html);
 * Rewrite the Mix and ExUnit guides to focus on applications and OTP as a whole, rebranding it to "Building Apps with Mix and OTP";
 
-You can learn more about Elixir in our [Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](http://elixirconf.com/) as well as pushing your packages to [hex.pm](https://hex.pm/).
+You can learn more about Elixir in our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](http://elixirconf.com/) as well as pushing your packages to [hex.pm](https://hex.pm/).

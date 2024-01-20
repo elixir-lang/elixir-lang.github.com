@@ -8,7 +8,7 @@ layout: default
 
 The Elixir programming language is broken into 6 applications. The links below
 reference the documentation for the modules and functions in each of those
-applications. See also [our Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html)
+applications. See also [our Getting Started guide](https://hexdocs.pm/elixir/introduction.html)
 and [the Learning page](/learning.html) for books, courses, videos, and more.
 
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}

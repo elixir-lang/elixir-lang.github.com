@@ -144,9 +144,9 @@ In v0.14.0, Elixir closely integrates with OTP by providing modules for building
 
 We have also introduced the concepts of [agents](https://hexdocs.pm/elixir/Agent.html) and the idea of [tasks](https://hexdocs.pm/elixir/Task.html), which can be supervised and distributed. Application configuration has been made first class in Mix, allowing developers to configure their dependencies, sometimes even using different configurations per environment (dev, test or prod by default).
 
-This functionality is at the core of building applications in Erlang and Elixir. For this reason we have published a new guide called [Mix and OTP](https://hexdocs.pm/elixir/1.16/introduction-to-mix.html) where we build a distributed key-value store to help explore all concepts mentioned above. The guide is quite fresh, so please do submit pull requests for typos and mistakes. Feedback is also welcome!
+This functionality is at the core of building applications in Erlang and Elixir. For this reason we have published a new guide called [Mix and OTP](https://hexdocs.pm/elixir/introduction-to-mix.html) where we build a distributed key-value store to help explore all concepts mentioned above. The guide is quite fresh, so please do submit pull requests for typos and mistakes. Feedback is also welcome!
 
-Note "Mix and OTP" is our most advanced guide so far and it expects you to have read our introductory guide. In case you haven't yet, you can [get started here](https://hexdocs.pm/elixir/1.16/introduction.html).
+Note "Mix and OTP" is our most advanced guide so far and it expects you to have read our introductory guide. In case you haven't yet, you can [get started here](https://hexdocs.pm/elixir/introduction.html).
 
 ## What's next?
 
@@ -160,6 +160,6 @@ With v0.14.0 we have reached many of the milestones [we have set in the previous
 
 * Solve all remaining [open issues](https://github.com/elixir-lang/elixir/issues?state=open). We have always kept the issues tracker tidy and there is little work left to solve the existing issues. Note we have also listed all [upcoming backwards incompatible changes](https://github.com/elixir-lang/elixir/issues?labels=Note%3ABackwards+incompatible&page=1&state=open). Many of those changes will actually be deprecated first and developers should be able to follow along without breaking changes in minor releases, but they are breaking changes in the sense they work in v0.14.0 but will work differently by the time v1.0 is released;
 
-That's all for now! Elixir developers can see [a summary of all changes in v0.14.0 in the release notes](https://github.com/elixir-lang/elixir/releases/tag/v0.14.0). In case you are new around here, you can get started with Elixir by reading [our Getting Started guide](https://hexdocs.pm/elixir/1.16/introduction.html).
+That's all for now! Elixir developers can see [a summary of all changes in v0.14.0 in the release notes](https://github.com/elixir-lang/elixir/releases/tag/v0.14.0). In case you are new around here, you can get started with Elixir by reading [our Getting Started guide](https://hexdocs.pm/elixir/introduction.html).
 
 We hope to see you all this July at [ElixirConf](http://elixirconf.com/)!

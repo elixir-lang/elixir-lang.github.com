@@ -18,7 +18,7 @@ And applications can be started directly from the command line as well:
 
     elixir --app my_app
 
-We have written a whole [guide chapter about creating OTP applications, supervisors and servers](https://hexdocs.pm/elixir/1.16/supervisor-and-application.html). Give it a try!
+We have written a whole [guide chapter about creating OTP applications, supervisors and servers](https://hexdocs.pm/elixir/supervisor-and-application.html). Give it a try!
 
 ## Improved Unicode support
 
@@ -70,7 +70,7 @@ When some code call the `unless` macro above, in previous Elixir versions, it wo
 
 Elixir v0.8 ensures that the `unless` macro above will expand to the same `if` macro available when quoted, guaranteeing different libraries can integrate easily without imposing hidden requirements.
 
-You can read more about [macros in the getting started guide](https://hexdocs.pm/elixir/1.16/case-cond-and-if.html) or [go deep into the quote macro docs](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#quote/2).
+You can read more about [macros in the getting started guide](https://hexdocs.pm/elixir/case-cond-and-if.html) or [go deep into the quote macro docs](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#quote/2).
 
 ## A new way to manipulate pathnames
 
@@ -100,4 +100,4 @@ We continue actively working on Elixir and this release is the [result of our ef
 
 Also, we previously announced Elixir is going to be released frequently, every 2 to 4 weeks. We have made a small detour to get v0.8.0 out of the door, but we are back to our regular schedule as of today!
 
-[Celebrate with us and give Elixir a try](https://hexdocs.pm/elixir/1.16/introduction.html)!
+[Celebrate with us and give Elixir a try](https://hexdocs.pm/elixir/introduction.html)!
