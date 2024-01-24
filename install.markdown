@@ -216,6 +216,7 @@ After Elixir is up and running, it is common to have questions as you learn and 
 
   * [#elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
   * [Elixir Forum](http://elixirforum.com)
+  * [Elixir on Slack](https://elixir-slack.community)
   * [Elixir on Discord](https://discord.gg/elixir)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 
