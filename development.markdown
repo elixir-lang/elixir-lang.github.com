@@ -2,6 +2,7 @@
 title: "Development & Team"
 section: development
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # {{ page.title }}

@@ -2,6 +2,7 @@
 title: "Erlang/Elixir Syntax: A Crash Course"
 section: home
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # {{ page.title }}

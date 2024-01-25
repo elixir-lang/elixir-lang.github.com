@@ -2,6 +2,7 @@
 title: "Learning resources"
 section: learning
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # Learning
