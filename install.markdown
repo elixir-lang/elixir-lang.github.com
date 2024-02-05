@@ -2,6 +2,7 @@
 title: "Installing Elixir"
 section: install
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
