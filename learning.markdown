@@ -17,7 +17,7 @@ The Elixir Community has also produced plenty of resources to learn the language
 
 <h4 class="resource">Elixir in Action</h4>
 
-<a class="cover" href="https://www.manning.com/books/elixir-in-action-second-edition" title="Elixir in Action
+<a class="cover" href="https://www.manning.com/books/elixir-in-action-third-edition" title="Elixir in Action
 – by Saša Jurić"><img src="/images/learning/elixir-in-action.jpg" alt="Elixir in Action cover" width="190" /></a>
 
 Elixir in Action is a tutorial book that aims to bring developers new to Elixir and Erlang to the point where they can develop complex systems on their own. No knowledge about Elixir, Erlang, or functional programming is required, but it is assumed that a reader has a few years of production experience using mainstream OO languages, for example C#, Java, Python, or Ruby.
