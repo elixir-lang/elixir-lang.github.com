@@ -213,6 +213,19 @@ Found your start-up, migrate a codebase, build that app! Our midterm and final p
 
 ## Screencasts
 
+<h4 class="resource">ElixirStreams<span class="free">free</span></h4>
+
+<a class="cover" href="https://elixirstreams.com" title="ElixirStreams: Elixir and Phoenix tips, courses, and more.">
+  <img src="/images/learning/elixir-streams-logo.png" alt="elixir streams cover" width="190" />
+</a>
+
+ElixirStreams provides free video tips (under 3 mins!) covering a variety of
+Elixir and Phoenix topics. The videos help you sharpen the saw as you learn
+about new tools and tricks, and they keep you up to date with the latest
+developments in the language.
+
+<div class="clear"></div>
+
 <h4 class="resource">ElixirCasts.io<span class="free">free</span></h4>
 
 <a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
