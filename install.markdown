@@ -53,7 +53,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
     * Run: `pacman -S elixir`
 
   - **Debian**
-    * Run: `sudo apt install elixir`. If you plan to develop Elixir applications you need `erlang-dev` as well. 
+    * Run: `sudo apt install erlang-dev elixir`
 
   - **Debian** (and **Ubuntu**) alternative
     * Use the [RabbitMQ Packages](https://launchpad.net/~rabbitmq) (might not be up-to-date however likely newer than the distribution)
