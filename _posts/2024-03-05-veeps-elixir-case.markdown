@@ -81,7 +81,7 @@ When deploying a new version of the system, they deploy a new cluster altogether
 
 Although they run a distributed system, they organize the code in only one repository, following the Monorepo approach. To do that, they use the [Umbrella Project feature](https://hexdocs.pm/elixir/dependencies-and-umbrella-projects.html#content) from Mix, th build tool that ships with Elixir.
 
-Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all structs sent as messages across the subsystems, guaranteeing all subsystems have a consistent view of the data.
+Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all the structs sent as messages across the subsystems, guaranteeing that all subsystems use the same schemas for that exchanged data.
 
 > With umbrella projects, you can have the developer experience benefits of a single code repository, while being able to build a service-oriented architecture.
 >
