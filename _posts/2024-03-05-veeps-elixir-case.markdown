@@ -68,7 +68,7 @@ After using Elixir for more than two years, Veeps has experienced significant be
 
 Different parts of the Veeps system have different scalability requirements. For instance, when streaming a show, the backend receives metadata from users' devices every 30 seconds to track viewership. This is the so-called *Beaconing service*.
 
-Say you have 250,000 people watching a concert — the Beaconing service handles thousands of requests per second for a few hours at a time. As a result, it needs to scale differently from other parts of the system, such as their merchandise e-commerce or backstage management.
+Say you have 250,000 people watching a concert: the Beaconing service needs to handle thousands of requests per second for a few hours at a time. As a result, it needs to scale differently from other parts of the system, such as the merchandise e-commerce or backstage management.
 
 To tackle this issue, they built a distributed system. They packaged each subsystem as an [Elixir release](https://hexdocs.pm/elixir/config-and-releases.html#releases), totaling five releases. For the communication layer, they used distributed Erlang, which is built into Erlang/OTP, allowing seamless inter-process communication across networked nodes.
 
