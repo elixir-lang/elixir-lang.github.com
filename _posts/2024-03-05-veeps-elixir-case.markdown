@@ -38,8 +38,8 @@ Backed by his experience and several case studies from the Elixir community, suc
 
 With buy-in from management, the plan was set in motion. They had two outstanding goals:
 
-* Prepare the platform to welcome the most famous artists in the world
-* Build their own team of engineers to help innovate and evolve the product
+* Prepare the platform to welcome the most famous artists in the world.
+* Build their own team of engineers to help innovate and evolve the product.
 
 Vincent knew that hiring right-fit technical people can take time and he didn't want to rush the process. Hence, he hired [DockYard](https://dockyard.com/) to rebuild the system while simultaneously searching for the right candidates to build out the team.
 
