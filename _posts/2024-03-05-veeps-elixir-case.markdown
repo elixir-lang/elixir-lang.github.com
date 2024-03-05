@@ -77,7 +77,7 @@ In a nutshell, each node contains several processes with specific responsibiliti
 When deploying a new version of the system, they deploy a new cluster altogether, with all five subsystems at once. Given Elixir's scalability, the whole system uses 9 nodes, making a simple deployment strategy affordable and practical. As we will see, this approach is well-supported during development too, thanks to the use of Umbrella Projects.
 
 
-### Service-oriented architecture within a Monorepo
+### Service-oriented architecture within a monorepo
 
 Although they run a distributed system, they organize the code in only one repository, following the Monorepo approach. To do that, they use the [Umbrella Project feature](https://hexdocs.pm/elixir/dependencies-and-umbrella-projects.html#content) from Mix, a build tool that ships with Elixir.
 
