@@ -12,7 +12,7 @@ tags: scalability broadway phoenix
 
 [Veeps](https://veeps.com/) is a streaming service that offers direct access to live and on-demand events by award-winning artists at the most iconic venues. Founded in 2018, it became part of Live Nation Entertainment in 2021.
 
-Veeps have been named [one of the ten most innovative companies in music](https://www.fastcompany.com/90848907/most-innovative-companies-music-2023) and nominated for an Emmy. They currently hold the [Guinness World Record](https://www.guinnessworldrecords.com/world-records/650975-most-tickets-sold-for-a-livestreamed-concert-by-a-solo-male-artist-current-year) for the world's largest ticketed livestream by a solo male artist — a performance where Elixir and Phoenix played an important role in the backend during the streaming.
+Veeps have been named [one of the ten most innovative companies in music](https://www.fastcompany.com/90848907/most-innovative-companies-music-2023) and nominated for an Emmy. They currently hold the [Guinness World Record](https://www.guinnessworldrecords.com/world-records/650975-most-tickets-sold-for-a-livestreamed-concert-by-a-solo-male-artist-current-year) for the world's largest ticketed livestream by a solo male artist—a performance where Elixir and Phoenix played an important role in the backend during the streaming.
 
 This case study examines how Elixir drove Veeps' technical transformation, surpassing high-scale demands while keeping the development team engaged and productive.
 
