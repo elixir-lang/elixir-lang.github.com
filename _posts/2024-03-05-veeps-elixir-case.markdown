@@ -98,7 +98,7 @@ For caching, the team relies on [ETS (Erlang Term Storage)](https://www.erlang.o
 
 Before the rewrite, the Beaconing service used Google's Firebase. Now, the system uses [Broadway](https://elixir-broadway.org/) to ingest data from hundreds of thousands of HTTP requests from concurrent users. Broadway is an Elixir library for building concurrent data ingestion and processing pipelines. They utilized the library's capabilities to efficiently send requests to AWS services, regulating batch sizes to comply with AWS limits. They also used it to handle rate limiting to adhere to AWS service constraints. All of this was achieved with Broadway's built-in functionality.
 
-Finally, they use [Oban](https://getoban.pro/), an Elixir library for background jobs.
+Finally, they use [Oban](https://getoban.pro/), an Elixir library for background jobs, for all sorts of background-work use cases.
 
 Throughout the development journey, Veeps consistently found that Elixir and its ecosystem had built-in solutions for their technical challenges. Here's what Vincent, CTO of Veeps, had to say about that:
 
