@@ -27,7 +27,7 @@ The Veeps engineering team needed to handle both challenges.
 
 Early on, the Veeps backend was implemented in [Ruby on Rails](https://rubyonrails.org/). Its first version could handle a few thousand simultaneous users watching a concert without any impact to stream quality, which was fine when you have a handful of shows but would be insufficient with the expected show load and massive increase in concurrent viewership across streams. It was around that time that [Vincent Franco](https://twitter.com/vinniefranco) joined Veeps as their CTO.
 
-He had an extensive background in building and maintaining ticketing and event management software at scale. So he used that experience to further improve the system to handle tens of thousands of concurrent users. However, it became clear that improving it to hundreds of thousands would be a difficult challenge requiring substantial engineering efforts and increased operational costs, so the team began evaluating other stacks that could provide the out-of-the-box tooling for scaling in order to reach both short and long-term goals.
+Vincent had an extensive background in building and maintaining ticketing and event management software at scale. So, he used that experience to further improve the system to handle tens of thousands of concurrent users. However, it became clear that improving it to *hundreds* of thousands would be a difficult challenge, requiring substantial engineering efforts and increased operational costs. The team began evaluating other stacks that could provide the out-of-the-box tooling for scaling in order to reach both short and long-term goals.
 
 
 ## Adopting Elixir, hiring, and rewriting the system
