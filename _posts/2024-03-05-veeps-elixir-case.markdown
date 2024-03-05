@@ -106,7 +106,7 @@ Throughout the development journey, Veeps consistently found that Elixir and its
 >
 > \- Vincent Franco, CTO
 
-This operational simplicity benefited not only the production environment but also the development side. The team could focus on learning Elixir and its ecosystem without the need to master additional technologies, resulting in increased productivity.
+This operational simplicity benefitted not only the production environment but also the development side. The team could focus on learning Elixir and its ecosystem without the need to master additional technologies, resulting in increased productivity.
 
 
 ### LiveView: simplifying the interaction between front-end and back-end developers
