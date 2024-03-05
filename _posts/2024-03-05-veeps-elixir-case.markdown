@@ -83,7 +83,7 @@ Although they run a distributed system, they organize the code in only one repos
 
 Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all structs sent as messages across the subsystems, guaranteeing all subsystems have a consistent view of the data.
 
-> With the Umbrella Project, you can have the developer experience benefits of a single code repository while having a service-oriented architecture.
+> With umbrella projects, you can have the developer experience benefits of a single code repository, while being able to build a service-oriented architecture.
 >
 > \- Andrea Leopardi, Principal Engineer
 
