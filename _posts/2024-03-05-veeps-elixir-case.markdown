@@ -45,7 +45,7 @@ Vincent knew that hiring right-fit technical people can take time and he didn't 
 
 Eight months later, the system had been entirely rewritten in Elixir and Phoenix. Phoenix Channels were used to enrich the live concert experience, while Phoenix LiveView empowered the ticket shopping journey.
 
-The rewrite was put to the test shortly after with a livestream that remains one of Veeps’ biggest, still to this day. Before the rewrite, 20 Rails nodes were used during big events, whereas now, only 2 Elixir nodes were required. The new platform was able to handle 83x more concurrent users than the previous system which transparently, was already ahead of competitors.
+The rewrite was put to the test shortly after with a livestream that remains one of Veeps’ biggest, still to this day. Before the rewrite, 20 Rails nodes were used during big events, whereas now, only 2 Elixir nodes were required. And the new platform was able to handle 83x more concurrent users than the previous system.
 
 The increase in infrastructure efficiency significantly reduced the need for complex auto-scaling solutions while providing ample capacity to handle high-traffic spikes.
 
