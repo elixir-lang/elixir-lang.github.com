@@ -21,7 +21,7 @@ This case study examines how Elixir drove Veeps' technical transformation, surpa
 
 Imagine you are tasked with building a system that can livestream a music concert to hundreds of thousands of viewers around the world at the same time.
 
-In some cases, users must purchase a ticket before the concert can be accessed. For a famous artist, it’s not uncommon to see thousands of fans refreshing their browsers and attempting to buy tickets within the first few minutes of the announcement.
+In some cases, users must purchase a ticket before the concert can be accessed. For a famous artist, it’s not uncommon to see thousands of fans continuously refreshing their browsers and attempting to buy tickets within the first few minutes of the announcement.
 
 The Veeps engineering team needed to handle both challenges.
 
