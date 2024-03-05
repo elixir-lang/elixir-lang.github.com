@@ -111,7 +111,7 @@ This operational simplicity benefitted not only the production environment but a
 
 ### LiveView: simplifying the interaction between front-end and back-end developers
 
-After the rewrite, [LiveView](https://github.com/phoenixframework/phoenix_live_view), a Phoenix library for building interactive, real-time web apps, was used for every part of the front-end except for the Onstage subsystem.
+After the rewrite, [LiveView](https://github.com/phoenixframework/phoenix_live_view), a Phoenix library for building interactive, real-time web apps, was used for every part of the front-end except for the "Onstage" subsystem (responsible for the live stream itself).
 
 The two front-end developers, who came from a React background, also started writing LiveView. After this new experience, the team found the process of API negotiation between the front-end and back-end engineers much simpler compared to when using React. This was because they only had to use Elixir modules and functions instead of creating additional HTTP API endpoints and all the extra work that comes with them, such as API versioning.
 
