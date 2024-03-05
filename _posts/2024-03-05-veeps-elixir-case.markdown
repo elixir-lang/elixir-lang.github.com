@@ -96,7 +96,7 @@ This decision made it easier for them to implement other business requirements, 
 
 For caching, the team relies on [ETS (Erlang Term Storage)](https://www.erlang.org/doc/man/ets.html), a high-performing key-value store part of the Erlang standard library. For cache busting between multiple parts of the distributed system, they use [Phoenix PubSub](https://github.com/phoenixframework/phoenix_pubsub), a real-time publisher/subscriber library that comes with [Phoenix](https://phoenixframework.org/).
 
-Before the rewrite, the Beaconing service used Google's Firebase. Now, the system uses [Broadway](https://elixir-broadway.org/) to ingest data from hundreds of thousands of concurrent users. Broadway is an Elixir library for building concurrent data ingestion and processing pipelines. They utilized the library's capabilities to efficiently send requests to AWS services, regulating batch sizes to comply with AWS limits. They also used it to handle rate limiting to adhere to AWS service constraints. All of this was achieved with Broadway's built-in functionality.
+Before the rewrite, the Beaconing service used Google's Firebase. Now, the system uses [Broadway](https://elixir-broadway.org/) to ingest data from hundreds of thousands of HTTP requests from concurrent users. Broadway is an Elixir library for building concurrent data ingestion and processing pipelines. They utilized the library's capabilities to efficiently send requests to AWS services, regulating batch sizes to comply with AWS limits. They also used it to handle rate limiting to adhere to AWS service constraints. All of this was achieved with Broadway's built-in functionality.
 
 Finally, they use [Oban](https://getoban.pro/), an Elixir library for background jobs.
 
