@@ -32,7 +32,7 @@ Vincent had an extensive background in building and maintaining ticketing and ev
 
 ## Adopting Elixir, hiring, and rewriting the system
 
-Vincent, who had successfully deployed Elixir as part of high-volume systems, believed Elixir was an excellent fit for Veeps' requirements.
+Vincent, who had successfully deployed Elixir as part of high-volume systems in the past, believed Elixir was an excellent fit for Veeps' requirements.
 
 Backed by his experience and several case studies from the Elixir community, such as [the one from Discord](/blog/2020/10/08/real-time-communication-at-scale-with-elixir-at-discord/), Vincent convinced management that Elixir could address their immediate scaling needs and become a reliable foundation on which the company could build.
 
