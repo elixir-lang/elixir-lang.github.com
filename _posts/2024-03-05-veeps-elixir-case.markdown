@@ -66,7 +66,7 @@ After using Elixir for more than two years, Veeps has experienced significant be
 
 ### Architectural simplicity
 
-Veeps' system has different scalability requirements for its various parts. For instance, when streaming a concert, the backend receives metadata from users' devices every 30 seconds to track viewership. This is the so-called Beaconing service.
+Different parts of the Veeps system have different scalability requirements. For instance, when streaming a show, the backend receives metadata from users' devices every 30 seconds to track viewership. This is the so-called *Beaconing service*.
 
 Say you have 250,000 people watching a concert — the Beaconing service handles thousands of requests per second for a few hours at a time. As a result, it needs to scale differently from other parts of the system, such as their merchandise e-commerce or backstage management.
 
