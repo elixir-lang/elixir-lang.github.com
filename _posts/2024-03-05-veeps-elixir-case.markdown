@@ -120,7 +120,7 @@ The two front-end developers, who came from a React background, also started wri
 > \- Vincent Franco, CTO
 
 
-## Conclusion: insights from Veeps' Elixir Experience
+## Conclusion: insights from Veeps' Elixir experience
 
 The decision to use Elixir has paid dividends beyond just system scalability. The team, with varied backgrounds in Java, PHP, Ruby, Python, and Javascript, found Elixir's ecosystem to be a harmonious balance of simplicity and power.
 
