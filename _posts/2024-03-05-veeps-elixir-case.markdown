@@ -79,7 +79,7 @@ When deploying a new version of the system, they deploy a new cluster altogether
 
 ### Service-oriented architecture within a monorepo
 
-Although they run a distributed system, they organize the code in only one repository, following the Monorepo approach. To do that, they use the [Umbrella Project feature](https://hexdocs.pm/elixir/dependencies-and-umbrella-projects.html#content) from Mix, th build tool that ships with Elixir.
+Although they run a distributed system, they organize the code in only one repository, following the monorepo approach. To do that, they use the [Umbrella Project feature](https://hexdocs.pm/elixir/dependencies-and-umbrella-projects.html#content) from Mix, th build tool that ships with Elixir.
 
 Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all the structs sent as messages across the subsystems, guaranteeing that all subsystems use the same schemas for that exchanged data.
 
