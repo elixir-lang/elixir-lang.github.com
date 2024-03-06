@@ -5,7 +5,7 @@ author: Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Veeps.
 logo: /images/cases/logos/veeps.svg
-tags: scalability broadway phoenix
+tags: streaming scaling web
 ---
 
 *Welcome to our series of [case studies about companies using Elixir in production](/cases.html).*

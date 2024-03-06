@@ -5,7 +5,7 @@ author: Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at SparkMeter.
 logo: /images/cases/logos/sparkmeter.png
-tags: nerves cloud phoenix
+tags: energy iot nerves
 ---
 
 *Welcome to our series of case studies about companies using Elixir in production. [See all](https://elixir-lang.org/cases.html) cases we have published so far.*
