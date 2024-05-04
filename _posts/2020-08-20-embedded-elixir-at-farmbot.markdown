@@ -47,4 +47,4 @@ Because it's written in Elixir and built within the Erlang runtime system, Nerve
 
 FarmBot now has around 300 devices live in NervesHub, with a different deployment for each of their device models. Nerves is built to scale, so as Farmbot continues to grow its user base and expand their product capabilities, they'll be able to continue developing and releasing reliable firmware updates using Nerves.
 
-*This case study has first been published on [Nerves' website](https://www.nerves-project.org/customer-farmbot)*.
+*This case study has first been published on [Nerves' website](https://nerves-project.org/cases/farmbot)*.
