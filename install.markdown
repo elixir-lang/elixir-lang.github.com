@@ -65,10 +65,12 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
       ```
 
   - **Fedora 21 (and older)**
-    * Run: `yum install elixir`
+    * Run: `sudo yum install elixir`
 
   - **Fedora 22 (and newer)**
-    * Run `dnf install elixir erlang`
+    * Run: `sudo dnf install elixir erlang`
+    * Documentation is available in separate packages: `sudo dnf install elixir-doc erlang-doc`
+    * Fedora's Rawhide repository has newer versions before they go into the main repositories: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
 
   - **Gentoo**
     * Run: `emerge --ask dev-lang/elixir`
