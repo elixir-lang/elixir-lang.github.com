@@ -85,7 +85,8 @@ types](https://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html).
 
 The type system was made possible thanks to a partnership between
 [CNRS](https://www.cnrs.fr/) and [Remote](https://remote.com/). The development
-work is currently sponsored by [Fresha](https://www.fresha.com/),
+work is currently sponsored by [Fresha](https://www.fresha.com/)
+([they are hiring!](https://www.fresha.com/careers/openings?department=engineering)),
 [Starfish*](https://starfish.team/), and [Dashbit](https://dashbit.co/).
 
 ## Erlang/OTP support
