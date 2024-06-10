@@ -15,7 +15,7 @@ Let's dive in.
 
 ## Warnings from gradual set-theoretic types
 
-This release introduces gradual set-theoretic types to infer types from patterns and guards and use them to type check programs, enabling the Elixir compiler to find faults and bugs in codebases without requiring changes to existing software. The underlying principles, theory, and roadmap of our work have been outlined in ["The Design Principles of the Elixir Type System" by Giuseppe Castagna, Guillaume Duboc, José Valim](https://arxiv.org/abs/2306.06391).
+This release introduces gradual set-theoretic types to infer types from patterns and use them to type check programs, enabling the Elixir compiler to find faults and bugs in codebases without requiring changes to existing software. The underlying principles, theory, and roadmap of our work have been outlined in ["The Design Principles of the Elixir Type System" by Giuseppe Castagna, Guillaume Duboc, José Valim](https://arxiv.org/abs/2306.06391).
 
 At the moment, Elixir developers will interact with set-theoretic types only through **warnings** found by the type system. The current implementation models all data types in the language:
 
