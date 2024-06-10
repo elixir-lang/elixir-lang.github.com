@@ -147,7 +147,8 @@ Here are other notable changes in this release:
     the `Map` module.
 
   * A new Mix profiler was added, `mix profile.tprof`, which lets you use the
-    new tprof profiler released with Erlang/OTP 27. This profiler leads to the
+    new [tprof](https://www.erlang.org/doc/apps/tools/tprof.html)
+    profiler released with Erlang/OTP 27. This profiler leads to the
     soft-deprecation of `mix profile.cprof` and `mix profile.eprof`.
 
   * We added `Kernel.is_non_struct_map/1`, a new guard to help with the common
