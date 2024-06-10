@@ -8,7 +8,7 @@ excerpt: Elixir v1.17 released with the start of the type system and Erlang/OTP 
 
 Elixir v1.17 has just been released. 🎉
 
-Elixir v1.17 doesn't implement full static typing, but new set-theoretic type
+Elixir v1.17 doesn't implement full static typing, but the new set-theoretic type
 system is making its first steps into the language in this release. This new version also adds support [Erlang/OTP 27](https://www.erlang.org/downloads/27), the latest and greatest Erlang release. You'll also find a new calendar-related data type (`Duration`) and a `Date.shift/2` function.
 
 Let's dive in.
