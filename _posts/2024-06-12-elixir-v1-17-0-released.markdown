@@ -69,6 +69,10 @@ We focused on *atoms* and *maps* on this initial release as they are respectivel
 
   * Accessing a field that is not defined in a rescued exception.
 
+Here's an example of how one of these warnings looks like:
+
+![Example of a warning when accessing a mispelled struct field](/images/contents/type-warning-on-struct-field.png)
+
 These new warnings will help Elixir developers find bugs earlier and give more
 confidence when refactoring code, especially around maps and structs. While
 Elixir already emitted some of these warnings in the past, those were discovered
