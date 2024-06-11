@@ -79,6 +79,11 @@ Another example, this time it's a warning for structural comparison across two
 
 ![Example of a warning when comparing two structs with ">"](/images/contents/type-warning-on-date-comparison.png)
 
+These warnings also work natively in text editors, as they are standard Elixir
+compiler warnings:
+
+![Example of a type warning inline in an editor](/images/contents/type-warning-in-editor.png)
+
 These new warnings will help Elixir developers find bugs earlier and give more
 confidence when refactoring code, especially around maps and structs. While
 Elixir already emitted some of these warnings in the past, those were discovered
