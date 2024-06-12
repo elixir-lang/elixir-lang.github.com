@@ -91,7 +91,7 @@ better error messages. Keep in mind, however, that the Elixir typechecker only
 infers types from patterns within the same function at the moment. Analysis from
 guards and across function boundaries will be added in future releases. For more
 details, see our new [reference document on gradual set-theoretic
-types](https://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html).
+types](https://hexdocs.pm/elixir/gradual-set-theoretic-types.html).
 
 The type system was made possible thanks to a partnership between
 [CNRS](https://www.cnrs.fr/) and [Remote](https://remote.com/). The development
