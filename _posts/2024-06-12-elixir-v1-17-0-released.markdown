@@ -43,9 +43,6 @@ We focused on *atoms* and *maps* on this initial release as they are respectivel
   * Accessing a key on a map or a struct that does not have the given key, such
     as `user.adress`.
 
-  * Updating a struct or a map that does not define the given key, such as
-    `%{user | adress: ...}`.
-
   * Invoking a function on non-modules, such as `user.address()`.
 
   * Capturing a function on non-modules, such as `&user.address/0`.
