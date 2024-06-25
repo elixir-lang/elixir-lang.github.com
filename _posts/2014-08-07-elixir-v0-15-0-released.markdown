@@ -162,4 +162,4 @@ Alexei is also interested in how we can extend our tooling to the Erlang ecosyst
 
 We are very close to launch Elixir v1.0! All planned features are already in Elixir's codebase and at the moment there are only [four open issues in our tracker tagged with the v1.0 milestone](https://github.com/elixir-lang/elixir/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.0).
 
-Our estimated date for the first release candidate for Elixir v1.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](/getting-started/introduction.html) or by checking one of the many "Learning Resources" on the sidebar.
+Our estimated date for the first release candidate for Elixir v1.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](https://hexdocs.pm/elixir/introduction.html) or by checking one of the many "Learning Resources" on the sidebar.

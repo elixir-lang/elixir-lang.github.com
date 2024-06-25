@@ -6,11 +6,11 @@ category: Announcements
 excerpt: We announce and explore the possibilities for bringing set-theoretic types into Elixir.
 ---
 
-*This is a three-articles series on My Future with Elixir, containing excerpts from my keynotes at [ElixirConf Europe 2022](https://www.youtube.com/watch?v=Jf5Hsa1KOc8) and [ElixirConf US 2022](https://www.youtube.com/watch?v=KmLw58qEtuM).*
+*This is article contains excerpts from my keynotes at [ElixirConf Europe 2022](https://www.youtube.com/watch?v=Jf5Hsa1KOc8) and [ElixirConf US 2022](https://www.youtube.com/watch?v=KmLw58qEtuM).*
 
 In May 2022, we have celebrated 10 years since Elixir v0.5, the first public release of Elixir, was announced.
 
-At such occasions, it may be tempting to try to predict how Elixir will look in 10 years from now. However, I believe that would be a futile effort, because, 10 years ago, I would never have guessed Elixir would have gone [beyond excelling at web development](https://phoenixframework.org/), but also into domains such as [embedded software](https://www.nerves-project.org/) and making inroads into machine learning and data analysis with projects such as [Nx (Numerical Elixir)](https://github.com/elixir-nx/nx), [Explorer](https://github.com/elixir-nx/explorer), [Axon](https://github.com/elixir-nx/axon) and [Livebook](https://livebook.dev/). Elixir was designed to be extensible and how it will be extended has always been a community effort.
+At such occasions, it may be tempting to try to predict how Elixir will look in 10 years from now. However, I believe that would be a futile effort, because, 10 years ago, I would never have guessed Elixir would have gone [beyond excelling at web development](https://phoenixframework.org/), but also into domains such as [embedded software](https://www.nerves-project.org/) and making inroads into machine learning and data analysis with projects such as [Nx (Numerical Elixir)](https://github.com/elixir-nx/nx), [Explorer](https://github.com/elixir-nx/explorer), [Axon](https://github.com/elixir-nx/axon), and [Livebook](https://livebook.dev/) ([here is a summary of the main Numerical Elixir projects](https://github.com/elixir-nx/). Elixir was designed to be extensible and how it will be extended has always been a community effort.
 
 For these reasons, I choose to focus on *My Future* with Elixir. Those are the projects I am personally excited about and working on alongside other community members. The topic of today's article is type systems, as discussed in my ElixirConf EU presentation in May 2022.
 
@@ -104,9 +104,7 @@ We could think of it as a function that has both types `(integer() -> integer())
 
 We also have a data-structure called atoms in Elixir. They uniquely represent a value which is given by their own name. Such as `:sunday` or `:banana`. You can think of the type `atom()` as the set of all atoms. In addition, we can think of the values `:sunday` and `:banana` as subtypes of `atom()`, as they are contained in the set of all atoms. `:sunday` and `:banana` are also known as singleton types (as they are made up of only one value).
 
-In fact, we could even consider each integer to be a singleton type that belongs to the `integer()` set. The choice of which values will become singletons in our type system will strongly depend on the trade-offs we defined in the previous sections.
-
-Furthermore, the type system has to be gradual, as any typed Elixir code would have to interact with untyped Elixir code.
+In fact, we could even consider each integer to be a singleton type that belongs to the `integer()` set. The choice of which values will become singletons in our type system will strongly depend on the trade-offs we defined in the previous sections. The type system also has to be gradual, as typed Elixir code may interact with untyped Elixir code and vice-versa.
 
 Personally, I find set-theoretical types an elegant and accessible approach to reason about types. At the end of the day, an Elixir developer won't have to think about intersections when writing a function with multiple clauses, but the modelling is straight-forward if they are ever to look under the hood.
 
@@ -126,16 +124,16 @@ Finally, it is important to note there are areas we don't plan to tackle at the 
 
 At this point, you may be expecting that Elixir will certainly become a gradually typed language at some moment in its future. However, it is important to note this may not be the case, as there is a long road ahead of us.
 
-One of the challenges in implementing a type system - at least for someone who doesn't have the relevant academic background like myself - is that it feels like a single indivisible step: you take a language without a type system and at the end you have one, without much insight or opportunity for feedback in the middle. Therefore, we have been planning to incorporate the type system into Elixir in steps, which I have been referring to as "a gradual gradual type system": one where we add gradual types to the language gradually.
+One of the challenges in implementing a type system - at least for someone who doesn't have the relevant academic background like myself - is that it feels like a single indivisible step: you take a language without a type system and at the end you have one, without much insight or opportunity for feedback in the middle. Therefore we have been planning to incorporate the type system into Elixir in steps, which I have been referring to as "a gradual gradual type system": one where we add gradual types to the language gradually.
 
 The first step, the one we are currently working on, is to leverage the existing type information found in Elixir programs. As previously mentioned, [we write assertive code](https://dashbit.co/blog/writing-assertive-code-with-elixir) in Elixir, which means there is a lot of type information in patterns and guards. We want to lift this information and use it to type check existing codebases. The Erlang compiler already does so to improve performance within a single module and we want to eventually do so across modules and applications too.
 
-During this phase, Elixir developers won't have to change a single line of code to leverage the benefits of the type system. Of course, we will catch only part of existing bugs, but this will allows us to stress test, benchmark, and collect feedback from developers, making improvements behind the scenes (or even revert the whole thing if we believe it won't lead us where we expect).
+During this phase, Elixir developers won't have to change a single line of code to leverage the benefits of the type system. Of course, we will catch only part of existing bugs, but this will allows us to stress test, benchmark, and collect feedback from developers, making improvements behind the scenes (or even revert the whole thing if we believe it won't take us where we expect).
 
 The next step is to introduce typed structs into the language, allowing struct types to propagate throughout the system, as you pattern match on structs throughout the codebase. In this stage we will introduce a new API for defining structs, yet to be discussed, and developers will have to use the new API to reap its benefits.
 
-Then finally, once we are happy with the improvements and the feedback collected, we can migrate to introduce a new syntax for typing function signatures in Elixir codebases, including support for more advanced features such as polymorphic types. Those will allow us to type complex constructs such as the ones found in the `Enum` module.
+Finally, once we are happy with the improvements and the feedback collected, we can migrate to introduce a new syntax for typing function signatures in Elixir codebases, including support for more advanced features such as polymorphic types. Those will allow us to type complex constructs such as the ones found in the `Enum` module.
 
 The important point to keep in mind is that those features will be explored and developed in steps, with plenty of opportunity to gather community feedback. I also hope our experience may be useful to other ecosystems who wish to gradually introduce type systems into existing programming languages, in a way that feels granular and participative.
 
-Thank you for reading and see you in a future article of the "My Future with Elixir" series.
+Thank you for reading and see you in future updates.

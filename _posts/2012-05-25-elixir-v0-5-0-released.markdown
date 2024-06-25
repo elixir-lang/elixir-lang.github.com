@@ -9,7 +9,7 @@ excerpt: We have finally released Elixir v0.5.0! This marks the first release si
 
 We have finally released [Elixir](/) v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
 
-If you don't care about any of these, you can go straight to our [Getting Started guide](/getting-started/introduction.html). If you do, keep on reading!
+If you don't care about any of these, you can go straight to our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html). If you do, keep on reading!
 
 ## Looking back
 
@@ -45,4 +45,4 @@ In parallel, we will improve our [documentation generation tool](https://github.
 
 Finally, we will continue improving the Standard Library. Although Elixir's goal is to rely on Erlang the most as possible, we also want to provide a small Standard Library which makes better use of Elixir semantics. For the next weeks, we will focus on improving the IO and File manipulation modules. New data types may also appear, for example, ranges come to my mind.
 
-Check out our [home page](/) and the [getting started guide](/getting-started/introduction.html) for more information. Welcome aboard and grab a cup of Elixir, because you are certainly going to enjoy the ride!
+Check out our [home page](/) and the [getting started guide](https://hexdocs.pm/elixir/introduction.html) for more information. Welcome aboard and grab a cup of Elixir, because you are certainly going to enjoy the ride!

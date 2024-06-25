@@ -36,7 +36,7 @@ They eventually settled on three top contenders: Rust, Go, and Elixir. Elixir to
 
 ## Modeling multiplayer with Elixir
 
-Ready to give Elixir a try, Tyler picked up a couple books but soon realized the language's [Getting Started guide](https://elixir-lang.org/getting-started/introduction.html) provided the background he needed. He explains: "while the introductory guide covers the language constructs, the advanced guide on the website has you build an actual project with TCP connections, with the basic architectural patterns we would use in production."
+Ready to give Elixir a try, Tyler picked up a couple books but soon realized the language's [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) provided the background he needed. He explains: "while the introductory guide covers the language constructs, the advanced guide on the website has you build an actual project with TCP connections, with the basic architectural patterns we would use in production."
 
 However, instead of jumping headfirst into the multiplayer server, he decided to give Elixir a try on a smaller problem. He wrote a web proxy to the National Oceanic and Atmospheric Administration (NOAA) weather services and put it in production. This experience taught him the importance of leveraging all of the instrumentation and metrics provided by the Erlang VM. They chose [AppSignal](https://www.appsignal.com/) to help consume and digest this information.
 

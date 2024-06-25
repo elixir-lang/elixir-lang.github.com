@@ -153,4 +153,4 @@ We have also seen important developments in other areas not directly related to 
 
 Finally, don't forget [ElixirConf US](https://elixirconf.com/) is coming soon, in Bellevue, WA, September 4-7. Last year my keynote focused on the last 5 years with Elixir. This year we are ready to look into the 5 years ahead.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.

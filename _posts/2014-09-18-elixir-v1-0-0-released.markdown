@@ -53,7 +53,7 @@ These expectations also apply to future releases under the v1 branch, except for
 
 ## Learn more
 
-You can get started with Elixir via our [Getting Started guide](/getting-started/introduction.html). There are quite some Elixir books out there too, now getting sent to the presses, quite a few can be found in the sidebar, which also includes screencasts and other resources.
+You can get started with Elixir via our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html). There are quite some Elixir books out there too, now getting sent to the presses, quite a few can be found in the sidebar, which also includes screencasts and other resources.
 
 You can also learn more about Elixir by checking out [the videos from ElixirConf 2014](http://www.confreaks.com/events/elixirconf2014), the first (and so far the best) Elixir conference ever! You can learn more about [the language history](http://www.confreaks.com/videos/4134-elixirconf2014-keynote-elixir), [how Elixir can change the way you code](http://www.confreaks.com/videos/4119-elixirconf2014-opening-keynote-think-different) or [even hear stories of how Elixir is being used in production](http://www.confreaks.com/videos/4131-elixirconf2014-otp-in-production-the-nitty-gritty-details-of-game-servers).
 

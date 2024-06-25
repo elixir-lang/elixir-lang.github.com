@@ -2,6 +2,7 @@
 title: "Trademarks policy"
 section: trademarks
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # {{ page.title }}

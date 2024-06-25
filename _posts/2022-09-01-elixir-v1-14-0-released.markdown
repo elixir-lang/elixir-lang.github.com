@@ -186,6 +186,6 @@ Finally, we have improved the `Inspect` protocol for structs so that fields are 
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.14.0).
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
 
 Happy debugging!

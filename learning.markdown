@@ -2,21 +2,22 @@
 title: "Learning resources"
 section: learning
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # Learning
 
 {% include toc.html %}
 
-Our website provides a [Getting Started guide](/getting-started/introduction.html) to learn more about Elixir's foundations. Later on, it explores how to build projects with [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html).
+Elixir's official documentation includes a [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more about Elixir's foundations. Later on, it explores how to build projects with [Mix and OTP](https://hexdocs.pm/elixir/introduction-to-mix.html). Elixir also includes [extensive API documentation](/docs.html).
 
-Outside of our website, the Elixir Community has also produced plenty of resources to learn the language from different backgrounds and other perspectives. We list some of them below. We are sure you will find a resource that suits your pace and goals.
+The Elixir Community has also produced plenty of resources to learn the language from different backgrounds and other perspectives. We list some of them below. We are sure you will find a resource that suits your pace and goals.
 
 ## Books
 
 <h4 class="resource">Elixir in Action</h4>
 
-<a class="cover" href="https://www.manning.com/books/elixir-in-action-second-edition" title="Elixir in Action
+<a class="cover" href="https://www.manning.com/books/elixir-in-action-third-edition" title="Elixir in Action
 – by Saša Jurić"><img src="/images/learning/elixir-in-action.jpg" alt="Elixir in Action cover" width="190" /></a>
 
 Elixir in Action is a tutorial book that aims to bring developers new to Elixir and Erlang to the point where they can develop complex systems on their own. No knowledge about Elixir, Erlang, or functional programming is required, but it is assumed that a reader has a few years of production experience using mainstream OO languages, for example C#, Java, Python, or Ruby.
@@ -27,7 +28,7 @@ The book starts with a basic introduction to the Elixir language and functional 
 
 <h4 class="resource">Programming Elixir 1.6</h4>
 
-<a class="cover" href="https://pragprog.com/book/elixir16/programming-elixir-1-6" title="Programming Elixir 1.6: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
+<a class="cover" href="https://pragprog.com/titles/elixir16/programming-elixir-1-6/" title="Programming Elixir 1.6: Functional |&gt; Concurrent |&gt; Pragmatic |&gt; Fun
 – by Dave Thomas"><img src="/images/learning/programming-elixir-1-6.jpg" alt="Programming Elixir cover" width="190" /></a>
 
 This book is the introduction to Elixir for experienced programmers, completely updated for Elixir 1.6 and beyond. Explore functional programming without the academic overtones (tell me about monads just one more time). Create concurrent applications, but get them right without all the locking and consistency headaches.
@@ -38,7 +39,7 @@ Meet Elixir, a modern, functional, concurrent language built on the rock-solid E
 
 <h4 class="resource">Adopting Elixir</h4>
 
-<a class="cover" href="https://pragprog.com/book/tvmelixir/adopting-elixir" title="Adopting Elixir: From Concept to Production
+<a class="cover" href="https://pragprog.com/titles/tvmelixir/adopting-elixir/" title="Adopting Elixir: From Concept to Production
 – by Ben Marx, José Valim, Bruce Tate"><img src="/images/learning/adopting-elixir.jpg" alt="Programming Elixir cover" width="190" /></a>
 
 Adoption is more than programming. Elixir is an exciting new language, but to successfully get your application from start to finish, you're going to need to know more than just the language. You need the case studies and strategies in this book.
@@ -59,7 +60,7 @@ This book will teach you the core concepts of the Elixir programming language in
 
 <h4 class="resource">Learn Functional Programming With Elixir</h4>
 
-<a class="cover" href="https://pragprog.com/book/cdc-elixir/learn-functional-programming-with-elixir" title="Learn Functional Programming With Elixir: New Foundations for a New World
+<a class="cover" href="https://pragprog.com/titles/cdc-elixir/learn-functional-programming-with-elixir/" title="Learn Functional Programming With Elixir: New Foundations for a New World
 – by Ulisses Almeida"><img src="/images/learning/learn-functional-programming-with-elixir.jpg" alt="Learn Functional Programming with Elixir cover" width="190" /></a>
 
 Elixir's straightforward syntax and this guided tour give you a clean, simple path to learn modern functional programming techniques. No previous functional programming experience required! This book walks you through the right concepts at the right pace, as you explore immutable values and explicit data transformation, functions, modules, recursive functions, pattern matching, high-order functions, polymorphism, and failure handling, all while avoiding side effects. Don't board the Elixir train with an imperative mindset! To get the most out of functional languages, you need to think functionally. This book will get you there.
@@ -88,7 +89,7 @@ If you're a new Elixir developer who's gone through some basic Elixir tutorials 
 
 <h4 class="resource">Metaprogramming Elixir</h4>
 
-<a class="cover" href="https://pragprog.com/book/cmelixir/metaprogramming-elixir" title="Metaprogramming Elixir: Write Less Code, Get More Done and Have Fun
+<a class="cover" href="https://pragprog.com/titles/cmelixir/metaprogramming-elixir/" title="Metaprogramming Elixir: Write Less Code, Get More Done and Have Fun
 – by Chris Mccord"><img src="/images/learning/metaprogramming-elixir.jpg" alt="Metaprogramming Elixir cover" width="190" /></a>
 
 Write code that writes code with Elixir macros. Macros make metaprogramming possible and define the language itself. In this book, you'll learn how to use macros to extend the language with fast, maintainable code and share functionality in ways you never thought possible. You'll discover how to extend Elixir with your own first-class features, optimize performance, and create domain-specific languages.
@@ -97,7 +98,7 @@ Write code that writes code with Elixir macros. Macros make metaprogramming poss
 
 <h4 class="resource">Designing Elixir Systems with OTP</h4>
 
-<a class="cover" href="https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
+<a class="cover" href="https://pragprog.com/titles/jgotp/designing-elixir-systems-with-otp/" title="Designing Elixir Systems with OTP: Write Highly Scalable, Self-Healing Software with Layers
 – by James Edward Gray, II and Bruce A. Tate"><img src="/images/learning/designing-elixir-systems.jpg" alt="Designing Elixir Systems with OTP cover" width="190" /></a>
 
 You know how to code in Elixir; now learn to think in it. Learn to design libraries with intelligent layers that shape the right data structures, flow from one function into the next, and present the right APIs. Embrace the same OTP that's kept our telephone systems reliable and fast for over 30 years. Move beyond understanding the OTP functions to knowing what's happening under the hood, and why that matters. Using that knowledge, instinctively know how to design systems that deliver fast and resilient services to your users, all with an Elixir focus.
@@ -212,6 +213,19 @@ Found your start-up, migrate a codebase, build that app! Our midterm and final p
 
 ## Screencasts
 
+<h4 class="resource">ElixirStreams<span class="free">free</span></h4>
+
+<a class="cover" href="https://elixirstreams.com" title="ElixirStreams: Elixir and Phoenix tips, courses, and more.">
+  <img src="/images/learning/elixir-streams-logo.png" alt="elixir streams cover" width="190" />
+</a>
+
+ElixirStreams provides free video tips (under 3 mins!) covering a variety of
+Elixir and Phoenix topics. The videos help you sharpen the saw as you learn
+about new tools and tricks, and they keep you up to date with the latest
+developments in the language.
+
+<div class="clear"></div>
+
 <h4 class="resource">ElixirCasts.io<span class="free">free</span></h4>
 
 <a class="cover" href="https://elixircasts.io" title="ElixirCasts: Elixir and Phoenix screencasts.">
@@ -251,7 +265,7 @@ Combined with books, tutorials and screencasts, using flashcards is the killer c
 
 <h4 class="resource">Elixir Koans<span class="free">free</span></h4>
 
-<a class="cover" href="http://elixirkoans.io/" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
+<a class="cover" href="https://github.com/elixirkoans/elixir-koans" title="Elixir Koans"><img src="/images/learning/elixir-koans-logo.png" alt="Elixir Koans" width="190" /></a>
 
 Elixir koans is a fun, easy way to get started with the Elixir programming language. It is an idiomatic tour of the language.
 

@@ -2,6 +2,7 @@
 title: "Erlang/Elixir Syntax: A Crash Course"
 section: home
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # {{ page.title }}
@@ -166,7 +167,7 @@ Invoking a function from a module uses different syntax. In Erlang, you would wr
 lists:last([1, 2]).
 ```
 
-to invoke the `last` function from the `List` module. In Elixir, use the dot `.` in place of the colon `:`
+to invoke the `last` function from the `lists` module. In Elixir, use the dot `.` in place of the colon `:`
 
 ```elixir
 List.last([1, 2])
@@ -311,7 +312,7 @@ kw[:another_key]
 
 ### Maps
 
-Erlang R17 introduced maps, a key-value store, with no ordering. Keys and values can be any term. Creating, updating and matching maps in both languages is shown below:
+Maps are key-value pairs with no ordering. Keys and values can be any term. Creating, updating and matching maps in both languages is shown below:
 
 **Erlang**
 
@@ -359,18 +360,6 @@ re:run("abc ", Pattern).
 Regex.run(~r/abc\s/, "abc ")
 #=> ["abc "]
 ```
-
-Regexes are also supported in heredocs, which is convenient when defining multiline regexes:
-
-```elixir
-Regex.regex?(~r"""
-This is a regex
-spanning several
-lines.
-""")
-#=> true
-```
-
 
 ## Modules
 
@@ -449,10 +438,9 @@ HelloModule.Utils.priv()
 #=> ** (UndefinedFunctionError) undefined function: HelloModule.Utils.priv/0
 ```
 
-
 ## Function syntax
 
-[This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, I'm briefly covering the main points and provide sample code both in Erlang and Elixir.
+[This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, we briefly cover the main points and provide sample code both in Erlang and Elixir.
 
 [3]: http://learnyousomeerlang.com/syntax-in-functions
 
@@ -530,8 +518,8 @@ sum(1, 2).
 sum([1], [2]).
 %=> [1, 2]
 
-sum("a", "b").
-%=> "ab"
+sum(<<"a">>, <<"b">>).
+%=> <<"ab">>
 ```
 
 **Elixir**
@@ -834,7 +822,6 @@ after
 end
 ```
 
-
 ## Adding Elixir to existing Erlang programs
 
 Elixir compiles into BEAM byte code (via Erlang Abstract Format). This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the `Elixir.` prefix followed by the regular Elixir name. For example, here is how to use the UTF-8 aware `String` downcase from Elixir in Erlang:
@@ -847,33 +834,6 @@ downcase(Bin) ->
   'Elixir.String':downcase(Bin).
 ```
 
-### Rebar integration
-
-If you are using rebar, you should be able to include Elixir git repository as a dependency:
-
-    https://github.com/elixir-lang/elixir.git
-
-Elixir is structured similar to Erlang's OTP. It is divided into applications that are placed inside the `lib` directory, as seen in its [source code repository](https://github.com/elixir-lang/elixir). Since rebar does not recognize such structure, we need to explicitly add to our `rebar.config` which Elixir apps we want to use, for example:
-
-```erlang
-{lib_dirs, [
-  "deps/elixir/lib"
-]}.
-```
-
-This should be enough to invoke Elixir functions straight from your Erlang code. If you are also going to write Elixir code, you can [install Elixir's rebar plugin for automatic compilation](https://github.com/yrashk/rebar_elixir_plugin).
-
-### Manual integration
-
-If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](/getting-started/introduction.html) and add the `lib` directory in your checkout to `ERL_LIBS`.
-
-
 ## Further reading
 
-Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir.
-
-Elixir also provides a [Getting Started guide][6] and has [documentation available online][7].
-
-[4]: http://www.erlang.org/doc/programming_examples/users_guide.html
-[6]: /getting-started/introduction.html
-[7]: /docs.html
+Both programming languages have plenty of resources available to dig deeper. Check out their respective websites ([Elixir](https://elixir-lang.org) and [Erlang](https://www.erlang.org)) for more information.

@@ -49,4 +49,4 @@ Eric is also maintainer of both [Ecto](https://github.com/elixir-ecto/ecto) and 
 
 There were other small changes, like additions to the `Float` module and improvements the to the typespec syntax. To see the full list, please [see the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.12.0/CHANGELOG.md).
 
-Give Elixir a try! You can start with our [getting started guide](/getting-started/introduction.html), or check out our sidebar for other learning resources.
+Give Elixir a try! You can start with our [getting started guide](https://hexdocs.pm/elixir/introduction.html), or check out our sidebar for other learning resources.

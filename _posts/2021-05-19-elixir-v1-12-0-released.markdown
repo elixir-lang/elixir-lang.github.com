@@ -96,6 +96,6 @@ The `Code` module got a [`cursor_context/2`](https://hexdocs.pm/elixir/1.12/Code
 
 The EEx application has also been extended to provide metadata on text segments. This has enabled the Surface and Phoenix LiveView teams to implement [a new template language called HEEx](https://github.com/phoenixframework/phoenix_live_view/pull/1440), which validates both HTML and EEx. Finally, the `Registry` module supports the `:compressed` option, which is useful for GraphQL applications managing hundreds of thousands of subscriptions via [Absinthe](http://absinthe-graphql.org/).
 
-For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](http://elixir-lang.org/getting-started/introduction.html) to learn more.
+For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
 
 Have fun!

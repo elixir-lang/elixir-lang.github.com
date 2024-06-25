@@ -2,6 +2,7 @@
 title: "Development & Team"
 section: development
 layout: default
+image: /images/social/elixir-og-card.jpg
 ---
 
 # {{ page.title }}
@@ -43,6 +44,7 @@ The Elixir Team is composed by:
   * Eric Meadows-Jönsson
   * Andrea Leopardi
   * Fernando Tapia Rico
+  * Jean Klingler
 
 We are also grateful to the past members of the Elixir Team:
 
