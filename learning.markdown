@@ -211,6 +211,16 @@ Found your start-up, migrate a codebase, build that app! Our midterm and final p
 
 <div class="clear"></div>
 
+<h4 class="resource">TechSchool<span class="free">free</span></h4>
+
+<a class="cover" href="https://techschool.dev/en/bootcamps/fullstack-elixir-and-phoenix" title="TechSchool">
+  <img src="/images/learning/techschool.png" alt="TechSchool" width="190" />
+</a>
+
+TechSchool is an open-source platform that teaches programming through free YouTube videos and other websites. The goal is to make technology education accessible to everyone. It includes several Elixir courses and a complete Fullstack Elixir + Phoenix Bootcamp.
+
+<div class="clear"></div>
+
 ## Screencasts
 
 <h4 class="resource">ElixirStreams<span class="free">free</span></h4>
