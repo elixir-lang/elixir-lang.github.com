@@ -65,7 +65,7 @@ Furthermore, as [set-theoretic types make their way into Elixir](https://elixir-
 
 ## Sponsorships
 
-Currently, [Fly.io](Fly.io) is sponsoring Łukasz Samson to work part-time on the Language Server and editor integration. The [Livebook](https://livebook.dev/) project is donating development time from Jonatan Kłosko, creator of Livebook, to improve the Elixir compiler and its code intelligence APIs.
+Currently, [Fly.io](https://fly.io/) is sponsoring Łukasz Samson to work part-time on the Language Server and editor integration. The [Livebook](https://livebook.dev/) project is donating development time from Jonatan Kłosko, creator of Livebook, to improve the Elixir compiler and its code intelligence APIs.
 
 We are grateful to both companies for investing into the community and you should check them out.
 
