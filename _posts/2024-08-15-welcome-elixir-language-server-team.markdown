@@ -13,7 +13,7 @@ I am glad to welcome Elixir's official Language Server team, formed by (in alpha
 * [Mitch Hanberg](https://www.mitchellhanberg.com/)
 * [Steve Cohen](https://github.com/scohen)
 
-The team will work on the code intelligence infrastructure to be used across tools and editors. These efforts are partially funded by [Fly.io](Fly.io) and [Livebook](https://livebook.dev/).
+The team will work on the code intelligence infrastructure to be used across tools and editors. These efforts are partially funded by [Fly.io](https://fly.io/) and [Livebook](https://livebook.dev/).
 
 ## A brief history
 
