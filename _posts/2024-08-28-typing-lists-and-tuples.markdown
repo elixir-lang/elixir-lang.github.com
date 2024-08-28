@@ -115,7 +115,7 @@ Luckily, it is common in Elixir to use the `!` suffix to encode the possibility 
 
 Now that we have discussed lists, we can talk about tuples. In a way, tuples are more challenging than lists for two reasons:
 
-1. A list is a collection where all elements have the same type, while tuples carry the types of each element
+1. A list is a collection where all elements have the same type (be it a `list(integer())` or `list(integer() or float())`), while tuples carry the types of each element
 
 2. We natively access tuples by index, instead of its head and tail, such `elem(tuple, 0)`
 
