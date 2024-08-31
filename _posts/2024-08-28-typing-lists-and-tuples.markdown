@@ -97,7 +97,7 @@ While different developers will prefer certain idioms over others, I am not conv
 
 ### What about Elixir?
 
-Thanks to set-theoretic types, we will most likely distinguish between empty lists and non-empty lists in Elixir's type system, since pattern matching on them is a common language idiom. Furthermore, several functions in Elixir, such as `String.split/2` are guaranteed to return non-empty lists, which can then be nicely encoded into a function's return type.
+Thanks to set-theoretic types, we will most likely distinguish between empty lists and non-empty lists in Elixir's type system, since pattern matching on them is a common language idiom. Furthermore, several functions in Elixir, such as `String.split/3` are guaranteed to return non-empty lists, which can then be nicely encoded into a function's return type.
 
 Elixir also has the functions `hd` (for head) and `tl` (for tail) inherited from Erlang, which are [valid guards](https://hexdocs.pm/elixir/patterns-and-guards.html). They only accept non-empty lists as arguments, which will now be enforced by the type system too.
 
