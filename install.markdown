@@ -159,7 +159,7 @@ Once you download the release, unpack it, and you are ready to run the `elixir` 
 
 ### Mirrors and nightly builds
 
-The links above point directly to the GitHub release. We also host and mirror precompiled packages and nightly builds globally via `repo.hex.pm` using the following URL scheme:
+The links above point directly to the GitHub release. We also host and mirror precompiled packages and nightly builds globally via `builds.hex.pm` using the following URL scheme:
 
     https://builds.hex.pm/builds/elixir/${ELIXIR_VERSION}-otp-${OTP_VERSION}.zip
 
@@ -170,6 +170,10 @@ For example, to use Elixir v1.13.3 with Erlang/OTP 24.x, use:
 To use nightly for a given Erlang/OTP version (such as 25), use:
 
     https://builds.hex.pm/builds/elixir/main-otp-25.zip
+
+For a list of all builds, use:
+
+    https://builds.hex.pm/builds/elixir/builds.txt
 
 ## Compiling from source
 
