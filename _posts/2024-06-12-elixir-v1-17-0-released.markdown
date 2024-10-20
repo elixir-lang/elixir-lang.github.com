@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Elixir v1.17 released: set-theoretic types in patterns, calendar durations, and Erlang/OTP 27 support"
+title: "Elixir v1.17 released: set-theoretic data types, calendar durations, and Erlang/OTP 27 support"
 author: Andrea Leopardi
 category: Releases
-excerpt: "Elixir v1.17 released: set-theoretic types in patterns, calendar durations, and Erlang/OTP 27 support"
+excerpt: "Elixir v1.17 released: set-theoretic data types, calendar durations, and Erlang/OTP 27 support"
 ---
 
 Elixir v1.17 has just been released. 🎉
