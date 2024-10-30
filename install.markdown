@@ -10,11 +10,41 @@ image: /images/social/elixir-og-card.jpg
 
 {% include toc.html %}
 
-The quickest way to install Elixir is through a distribution or using one of the available installers. If such an option is not available, then we recommend using the precompiled packages or compiling the language yourself. All of these options are detailed next.
+The quickest way to install Elixir is through install script, operating system package manager, or using one of the available installers. If such an option is not available, then we recommend using the precompiled packages or compiling the language yourself. All of these options are detailed next.
 
 Note that Elixir {{ stable.name }} requires Erlang {{ stable.minimum_otp }} or later. Many of the instructions below will automatically install Erlang for you. If they do not, the "Installing Erlang" section has you covered.
 
 If you are not sure if you have Elixir installed or not, you can run `elixir --version` in your terminal.
+
+## Install Script
+
+Elixir and Erlang/OTP can be quickly installed for macOS, Windows, or Ubuntu using an `install.sh`/`install.bat` script:
+
+If you are using bash (macOS/Ubuntu/Windows), run:
+
+```sh
+$ curl -fsSO {{ site.url }}/install.sh
+$ sh install.sh elixir@1.17.3 otp@27.1.2
+$ installs_dir=$HOME/.elixir-install/installs
+$ export PATH=$installs_dir/otp/27.1.2/bin:$PATH
+$ export PATH=$installs_dir/elixir/1.17.3-otp-27/bin:$PATH
+$ iex
+```
+
+If you are using PowerShell (Windows), run:
+
+```pwsh
+> curl.exe -fsSO {{ site.url }}/install.bat
+> .\install.bat elixir@1.17.3 otp@27.1.2
+> $installs_dir = "$env:USERPROFILE\.elixir-install\installs"
+> $env:PATH = "$installs_dir\otp\27.1.2\bin;$env:PATH"
+> $env:PATH = "$installs_dir\elixir\1.17.3-otp-27\bin;$env:PATH"
+> iex.bat
+```
+
+Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
+
+Install scripts support installing Elixir 1.14+.
 
 ## By Operating System
 
