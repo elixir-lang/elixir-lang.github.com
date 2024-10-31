@@ -10,7 +10,7 @@ image: /images/social/elixir-og-card.jpg
 
 {% include toc.html %}
 
-The quickest way to install Elixir is through install script, operating system package manager, or using one of the available installers. If such an option is not available, then we recommend using the precompiled packages or compiling the language yourself. All of these options are detailed next.
+The quickest way to install Elixir is through install scripts, operating system package manager, or using one of the available installers. If such an option is not available, then we recommend using the precompiled packages or compiling the language yourself. All of these options are detailed next.
 
 Note that Elixir {{ stable.name }} requires Erlang {{ stable.minimum_otp }} or later. Many of the instructions below will automatically install Erlang for you. If they do not, the "Installing Erlang" section has you covered.
 
