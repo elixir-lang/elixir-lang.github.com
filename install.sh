@@ -112,7 +112,7 @@ main() {
   export PATH="$elixir_dir/bin:$PATH"
 cat<<EOF
 
-Add this to your shell:
+Run this (or add to your ~/.bashrc or similar file):
 
     export PATH=\$HOME/.elixir-install/installs/otp/$otp_version/bin:\$PATH
     export PATH=\$HOME/.elixir-install/installs/elixir/$elixir_version-otp-$elixir_otp_release/bin:\$PATH

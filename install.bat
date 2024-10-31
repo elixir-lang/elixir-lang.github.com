@@ -15,8 +15,8 @@ echo Usage: install.bat [arguments] [options]
 echo.
 echo Arguments:
 echo.
-echo   elixir@VERSION   Install specific version of Elixir
-echo   otp@VERSION      Install specific version of Erlang/OTP
+echo   elixir@VERSION   Install specific Elixir version. The version can be X.Y.Z, latest, or main
+echo   otp@VERSION      Install specific Erlang/OTP version. The version can be X.Y.Z or latest
 echo.
 echo By default, elixir@latest and otp@latest are installed.
 echo.

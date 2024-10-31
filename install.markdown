@@ -22,24 +22,26 @@ Elixir and Erlang/OTP can be quickly installed for macOS, Windows, or Ubuntu usi
 
 If you are using bash (macOS/Ubuntu/Windows), run:
 
+{{ assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] }}
+
 ```sh
-$ curl -fsSO {{ site.url }}/install.sh
-$ sh install.sh elixir@1.17.3 otp@27.1.2
-$ installs_dir=$HOME/.elixir-install/installs
-$ export PATH=$installs_dir/otp/27.1.2/bin:$PATH
-$ export PATH=$installs_dir/elixir/1.17.3-otp-27/bin:$PATH
-$ iex
+curl -fsSO {{ site.url }}/install.sh
+sh install.sh elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
+installs_dir=$HOME/.elixir-install/installs
+export PATH=$installs_dir/otp/{{ stable.recommended_otp }}/bin:$PATH
+export PATH=$installs_dir/elixir/{{ stable.version }}-otp-{{ stable.otp_versions[0] }}/bin:$PATH
+iex
 ```
 
 If you are using PowerShell (Windows), run:
 
 ```pwsh
-> curl.exe -fsSO {{ site.url }}/install.bat
-> .\install.bat elixir@1.17.3 otp@27.1.2
-> $installs_dir = "$env:USERPROFILE\.elixir-install\installs"
-> $env:PATH = "$installs_dir\otp\27.1.2\bin;$env:PATH"
-> $env:PATH = "$installs_dir\elixir\1.17.3-otp-27\bin;$env:PATH"
-> iex.bat
+curl.exe -fsSO {{ site.url }}/install.bat
+.\install.bat elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
+$installs_dir = "$env:USERPROFILE\.elixir-install\installs"
+$env:PATH = "$installs_dir\otp\{{ stable.recommended_otp }}\bin;$env:PATH"
+$env:PATH = "$installs_dir\elixir\{{ stable.version }}-otp-{{ stable.otp_versions[0] }}\bin;$env:PATH"
+iex.bat
 ```
 
 Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
