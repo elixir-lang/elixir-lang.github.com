@@ -14,8 +14,9 @@ Usage: install.sh [arguments] [options]
 
 Arguments:
 
-  elixir@VERSION   Install specific Elixir version
-  otp@VERSION      Install specific Erlang/OTP version
+  elixir@VERSION   Install specific Elixir version. The version can be X.Y.Z, latest, or main
+  otp@VERSION      Install specific Erlang/OTP version. The version can be X.Y.Z, latest,
+                   master, maint, or maint-RELEASE (e.g. maint-27)
 
 By default, elixir@latest and otp@latest are installed.
 
