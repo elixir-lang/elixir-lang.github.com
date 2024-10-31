@@ -22,8 +22,6 @@ Elixir and Erlang/OTP can be quickly installed for macOS, Windows, or Ubuntu usi
 
 If you are using bash (macOS/Ubuntu/Windows), run:
 
-{{ assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] }}
-
 ```sh
 curl -fsSO {{ site.url }}/install.sh
 sh install.sh elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
