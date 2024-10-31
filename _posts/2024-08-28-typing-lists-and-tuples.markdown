@@ -157,13 +157,13 @@ Overall,
 
 ## Summary
 
-I hope this article outlines some of the design decisions as we bring a gradual type system to Elixir. Although supporting tuples and lists is a "table stakes" feature in most type systems, bringing them to Elixir was an opportunity to understand how the type system will interact with several language idioms, as well as provide a foundation for future decisions. The most important take aways are:
+I hope this article outlines some of the design decisions as we bring a gradual type system to Elixir. Although supporting tuples and lists is a "table stakes" feature in most type systems, bringing them to Elixir is an opportunity to understand how the type system will interact with several language idioms, as well as provide a foundation for future decisions. The most important take aways are:
 
 1. Type safety is a commitment from both sides. If you want your type system to find even more bugs through more precise types, you will need to prove more frequently that your programs are free of certain typing violations.
 
-2. Given not everything will be encoded as types, exceptions are important. Even in the presence of `option` types, it would not be beneficial for developers if `elem(tuple, index)` returned `:none` for negative indexes.
+2. It is not a goal of the type system to avoid all runtime errors. This would require either a type system that is too precise (and require more proofs) or it would require functions to mask hard errors (such as a negative index) as error values. Exceptions still play an important role in typed Elixir and, given they are modelled as structs, they will also be typed in the future.
 
-3. Elixir's convention of using the suffix `!` to encode the possibility of runtime exceptions for a valid domain (the input types) nicely complements the type system, as it can help static programs avoid the boilerplate of converting `:none`/`:error` into exceptions for unexpected scenarios.
+3. Elixir's convention of using the suffix `!` to provide variants that encode the possibility of runtime exceptions for a valid domain (the input types) nicely complements the type system, as it can help static programs avoid the boilerplate of converting `:none`/`:error` into exceptions for unexpected scenarios.
 
 4. Using `dynamic()` in function signatures is a mechanism available in Elixir's type system to signal that a function has dynamic behaviour and may raise runtime errors, allowing violations to be reported on programs that wish to remain fully static. Similar to how other static languages provide dynamic behaviour via `Any` or `Dynamic` types.
 
