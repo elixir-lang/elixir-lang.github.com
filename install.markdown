@@ -29,7 +29,6 @@ Install Elixir according to your operating system and tool of choice.
     * Run: `sudo port install elixir`
 
   - Using [version managers](#version-managers)
-
   - Using [install scripts](#install-scripts)
 
 ### GNU/Linux
@@ -174,9 +173,7 @@ $env:PATH = "$installs_dir\elixir\{{ stable.version }}-otp-{{ stable.otp_version
 iex.bat
 ```
 
-Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
-
-Install scripts support installing Elixir 1.14+.
+You may want to [set the $PATH environment variable](#setting-path-environment-variable) for your whole system. Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
 
 ## Precompiled package
 
