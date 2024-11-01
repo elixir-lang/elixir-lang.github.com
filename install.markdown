@@ -16,36 +16,6 @@ Note that Elixir {{ stable.name }} requires Erlang {{ stable.minimum_otp }} or l
 
 If you are not sure if you have Elixir installed or not, you can run `elixir --version` in your terminal.
 
-## Install Script
-
-Elixir and Erlang/OTP can be quickly installed for macOS, Windows, or Ubuntu using an `install.sh`/`install.bat` script:
-
-If you are using bash (macOS/Ubuntu/Windows), run:
-
-```sh
-curl -fsSO {{ site.url }}/install.sh
-sh install.sh elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
-installs_dir=$HOME/.elixir-install/installs
-export PATH=$installs_dir/otp/{{ stable.recommended_otp }}/bin:$PATH
-export PATH=$installs_dir/elixir/{{ stable.version }}-otp-{{ stable.otp_versions[0] }}/bin:$PATH
-iex
-```
-
-If you are using PowerShell (Windows), run:
-
-```pwsh
-curl.exe -fsSO {{ site.url }}/install.bat
-.\install.bat elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
-$installs_dir = "$env:USERPROFILE\.elixir-install\installs"
-$env:PATH = "$installs_dir\otp\{{ stable.recommended_otp }}\bin;$env:PATH"
-$env:PATH = "$installs_dir\elixir\{{ stable.version }}-otp-{{ stable.otp_versions[0] }}\bin;$env:PATH"
-iex.bat
-```
-
-Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
-
-Install scripts support installing Elixir 1.14+.
-
 ## By Operating System
 
 Install Elixir according to your operating system and tool of choice.
@@ -58,7 +28,9 @@ Install Elixir according to your operating system and tool of choice.
   - Using [Macports](https://www.macports.org/):
     * Run: `sudo port install elixir`
 
-Note version managers (described below), are also available for macOS.
+  - Using [version managers](#version-managers)
+
+  - Using [install scripts](#install-scripts)
 
 ### GNU/Linux
 
@@ -94,10 +66,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
       $ sudo apt install elixir erlang-dev erlang-xmerl
       ```
 
-  - **Fedora 21 (and older)**
-    * Run: `sudo yum install elixir`
-
-  - **Fedora 22 (and newer)**
+  - **Fedora**
     * Run: `sudo dnf install elixir erlang`
     * Documentation is available in separate packages: `sudo dnf install elixir-doc erlang-doc`
     * Fedora's Rawhide repository has newer versions before they go into the main repositories: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
@@ -124,6 +93,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
   - **Ubuntu**
     * Run: `sudo apt install elixir`
+    * Alternativel, use [install scripts](#install-scripts)
 
   - **Void Linux**
     * Run: `xbps-install -S elixir`
@@ -159,7 +129,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
   - Using [Chocolatey](https://community.chocolatey.org/):
     * Install Elixir (installs Erlang as a dependency): `choco install elixir`
 
-Elixir versions before v1.15 can also be installed using the deprecated [Online Elixir Installer](https://github.com/elixir-lang/elixir-windows-setup/releases/tag/v2.4).
+  - Using [install scripts](#install-scripts)
 
 ### Raspberry Pi and embedded devices
 
@@ -177,6 +147,36 @@ If you are familiar with Docker you can use the official Docker image to get sta
     * Run: `docker run -it --rm elixir bash`
 
 The above will automatically point to the latest Erlang and Elixir available. For production usage, we recommend using [Hex.pm Docker images](https://hub.docker.com/r/hexpm/elixir), which are immutable and point to a specific Erlang and Elixir version.
+
+## Install scripts
+
+Elixir and Erlang/OTP can be quickly installed for macOS, Windows, or Ubuntu using an `install.sh`/`install.bat` script:
+
+If you are using bash (macOS/Ubuntu/Windows), run:
+
+```sh
+curl -fsSO {{ site.url }}/install.sh
+sh install.sh elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
+installs_dir=$HOME/.elixir-install/installs
+export PATH=$installs_dir/otp/{{ stable.recommended_otp }}/bin:$PATH
+export PATH=$installs_dir/elixir/{{ stable.version }}-otp-{{ stable.otp_versions[0] }}/bin:$PATH
+iex
+```
+
+If you are using PowerShell (Windows), run:
+
+```pwsh
+curl.exe -fsSO {{ site.url }}/install.bat
+.\install.bat elixir@{{ stable.version }} otp@{{ stable.recommended_otp }}
+$installs_dir = "$env:USERPROFILE\.elixir-install\installs"
+$env:PATH = "$installs_dir\otp\{{ stable.recommended_otp }}\bin;$env:PATH"
+$env:PATH = "$installs_dir\elixir\{{ stable.version }}-otp-{{ stable.otp_versions[0] }}\bin;$env:PATH"
+iex.bat
+```
+
+Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
+
+Install scripts support installing Elixir 1.14+.
 
 ## Precompiled package
 
