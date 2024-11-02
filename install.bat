@@ -4,21 +4,17 @@ REM https://github.com/elixir-lang/elixir-lang.github.com/blob/main/install.bat
 
 setlocal EnableDelayedExpansion
 
-set "otp_version=latest"
-set "elixir_version=latest"
+set "otp_version="
+set "elixir_version="
 set "force=false"
 
 goto :main
 
 :usage
-echo Usage: install.bat [arguments] [options]
+echo Usage: install.bat elixir@ELIXIR_VERSION otp@OTP_VERSION [options]
 echo.
-echo Arguments:
-echo.
-echo   elixir@VERSION   Install specific Elixir version. The version can be X.Y.Z, latest, or main
-echo   otp@VERSION      Install specific Erlang/OTP version. The version can be X.Y.Z or latest
-echo.
-echo By default, elixir@latest and otp@latest are installed.
+echo ELIXIR_VERSION can be X.Y.Z, latest, or main.
+echo OTP_VERSION can be X.Y.Z or latest.
 echo.
 echo Options:
 echo.
@@ -27,9 +23,9 @@ echo   -h, --help       Prints this help
 echo.
 echo Examples:
 echo.
-echo   install.bat
 echo   install.bat elixir@1.16.3 otp@26.2.5.4
-echo   install.bat elixir@main
+echo   install.bat elixir@latest otp@latest
+echo   install.bat elixir@main otp@latest
 echo.
 goto :eof
 
@@ -55,6 +51,18 @@ for %%i in (%*) do (
     echo error: unknown argument !arg!
     exit /b 1
   )
+)
+
+if "%elixir_version%" == "" (
+  call :usage
+  echo error: missing elixir@VERSION argument
+  exit /b 1
+)
+
+if "%otp_version%" == "" (
+  call :usage
+  echo error: missing otp@VERSION argument
+  exit /b 1
 )
 
 if "!otp_version!" == "latest" (

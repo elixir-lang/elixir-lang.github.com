@@ -4,21 +4,16 @@
 
 set -eu
 
-otp_version=latest
-elixir_version=latest
+otp_version=
+elixir_version=
 force=false
 
 usage() {
   cat<<EOF
-Usage: install.sh [arguments] [options]
+Usage: install.sh elixir@ELIXIR_VERSION otp@OTP_VERSION [options]
 
-Arguments:
-
-  elixir@VERSION   Install specific Elixir version. The version can be X.Y.Z, latest, or main
-  otp@VERSION      Install specific Erlang/OTP version. The version can be X.Y.Z, latest,
-                   master, maint, or maint-RELEASE (e.g. maint-27)
-
-By default, elixir@latest and otp@latest are installed.
+ELIXIR_VERSION can be X.Y.Z, latest, or main.
+OTP_VERSION can be X.Y.Z, latest, master, maint, or maint-RELEASE (e.g. maint-27).
 
 Options:
 
@@ -27,13 +22,11 @@ Options:
 
 Examples:
 
-  sh install.sh
   sh install.sh elixir@1.16.3 otp@26.2.5.4
-  sh install.sh elixir@main
+  sh install.sh elixir@latest otp@latest
   sh install.sh elixir@main otp@master
 
 EOF
-  exit 0
 }
 
 main() {
@@ -47,6 +40,7 @@ main() {
         ;;
       -h|--help)
         usage
+        exit 0
         ;;
       -f|--force)
         force=true
@@ -57,6 +51,18 @@ main() {
         ;;
     esac
   done
+
+  if [ -z "${elixir_version}" ]; then
+    usage
+    echo "error: missing elixir@VERSION argument"
+    exit 1
+  fi
+
+  if [ -z "${otp_version}" ]; then
+    usage
+    echo "error: missing otp@VERSION argument"
+    exit 1
+  fi
 
   root_dir="$HOME/.elixir-install"
   tmp_dir="$root_dir/tmp"
