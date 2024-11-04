@@ -105,9 +105,16 @@ main() {
   otp_dir="$root_dir/installs/otp/$otp_version"
   elixir_dir="${root_dir}/installs/elixir/${elixir_version}-otp-${elixir_otp_release}"
 
-  install_otp &
-  install_elixir &
-  wait
+  if unzip_available; then
+    install_otp &
+    install_elixir &
+    wait
+  else
+    # if unzip is missing (e.g. official docker ubuntu image), install otp and elixir
+    # serially because we unzip elixir using OTP zip:extract/2.
+    install_otp
+    install_elixir
+  fi
 
   printf "checking OTP... "
   export PATH="$otp_dir/bin:$PATH"
@@ -253,7 +260,15 @@ install_elixir() {
     echo "unpacking $elixir_zip to $elixir_dir..."
     rm -rf "${elixir_dir}"
     mkdir -p "${elixir_dir}"
-    unzip -q "${tmp_dir}/${elixir_zip}" -d "${elixir_dir}"
+
+    if unzip_available; then
+      unzip -q "${tmp_dir}/${elixir_zip}" -d "${elixir_dir}"
+    else
+      "${otp_dir}/bin/erl" -noshell -eval \
+        '[Zip,Dir] = init:get_plain_arguments(), {ok,_} = zip:unzip(Zip, [{cwd, Dir}]), halt().' \
+        -- "${tmp_dir}/${elixir_zip}" "${elixir_dir}"
+    fi
+
     rm "${tmp_dir}/${elixir_zip}"
   fi
 }
@@ -263,6 +278,10 @@ download() {
   output="$2"
   echo "downloading $url"
   curl --retry 3 -fsSLo "$output" "$url"
+}
+
+unzip_available() {
+  which unzip >/dev/null 2>&1
 }
 
 main "$@"
