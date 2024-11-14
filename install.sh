@@ -107,8 +107,13 @@ main() {
 
   if unzip_available; then
     install_otp &
+    pid_otp=$!
+
     install_elixir &
-    wait
+    pid_elixir=$!
+
+    wait $pid_otp
+    wait $pid_elixir
   else
     # if unzip is missing (e.g. official docker ubuntu image), install otp and elixir
     # serially because we unzip elixir using OTP zip:extract/2.
