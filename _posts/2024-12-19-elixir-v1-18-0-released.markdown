@@ -10,7 +10,7 @@ Elixir v1.18 is an impressive release with improvements across the two main effo
 
 ## Type inference of patterns and return types
 
-There are several updates in the typing department, so let's break it down.
+There are several updates in the typing department, so let's break them down.
 
 #### A type system? In my Elixir?
 
@@ -18,7 +18,7 @@ There is an on-going [research and development](https://elixir-lang.org/blog/202
 
   * **sound** - the types inferred and assigned by the type system align with the behaviour of the program
 
-  * **gradual** - Elixir's type system includes the `dynamic()` type, which can be used when the type of a variable or expression is checked at runtime. In the absense of `dynamic()`, Elixir's type system behaves as a static one
+  * **gradual** - Elixir's type system includes the `dynamic()` type, which can be used when the type of a variable or expression is checked at runtime. In the absence of `dynamic()`, Elixir's type system behaves as a static one
 
   * **developer friendly** - the types are described, implemented, and composed using basic set operations: unions, intersections, and negation (hence it is a set-theoretic type system)
 
@@ -123,7 +123,7 @@ The type system was made possible thanks to a partnership between [CNRS](https:/
 
 ## Language server listeners
 
-3 months ago, we welcomed [the Official Language Server team](https://elixir-lang.org/blog/2024/08/15/welcome-elixir-language-server-team/), with the goal of unifying the efforts behind code intelligence, tools, and editors in Elixir. Elixir v1.18 brings new features on this front by introducing locks and listeners to its compilation. Let's understand what it means.
+Three months ago, we welcomed [the Official Language Server team](https://elixir-lang.org/blog/2024/08/15/welcome-elixir-language-server-team/), with the goal of unifying the efforts behind code intelligence, tools, and editors in Elixir. Elixir v1.18 brings new features on this front by introducing locks and listeners to its compilation. Let's understand what it means.
 
 At the moment, all language server implementations have their own compilation environment. This means that your project and dependencies during development are compiled once, for your own use, and then again for the language server. This duplicate effort could cause the language server experience to lag, when it could be relying on the already compiled artifacts of your project.
 
@@ -138,9 +138,9 @@ These enhancements do not only improve editor tooling, but they also directly be
 
 ## Built-in JSON
 
-[Erlang/OTP 27 added built-in support for `JSON`](https://www.erlang.org/doc/apps/stdlib/json.html) and we are now bringing it to Elixir. A new module, called [`JSON`](https://hexdocs.pm/elixir/1.18/JSON.html), has been added with functions to encode and decode JSON. Its most basic APIs reflect the ones [from the Jason project](https://hexdocs.pm/jason/Jason.html) (the de-facto JSON library in the Elixir community up to this point).
+[Erlang/OTP 27 added built-in support for JSON](https://www.erlang.org/doc/apps/stdlib/json.html) and we are now bringing it to Elixir. A new module, called [`JSON`](https://hexdocs.pm/elixir/1.18/JSON.html), has been added with functions to encode and decode JSON. Its most basic APIs reflect the ones [from the Jason project](https://hexdocs.pm/jason/Jason.html) (the de-facto JSON library in the Elixir community up to this point).
 
-A protocol, called [`JSON.Encoder`](https://hexdocs.pm/elixir/1.18/JSON.Encoder.html), is also provided for those who want to customize how their own data types are encoded to JSON. You can also derive protocols for structs, with a single-line of code:
+A new protocol, called [`JSON.Encoder`](https://hexdocs.pm/elixir/1.18/JSON.Encoder.html), is also provided for those who want to customize how their own data types are encoded to JSON. You can also derive protocols for structs, with a single-line of code:
 
 ```elixir
 @derive {JSON.Encoder, only: [:id, :name]}
