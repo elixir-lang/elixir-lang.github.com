@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Elixir v1.18 released: type checking of function calls, Language Server listeners, built-in JSON, and ExUnit improvements"
+title: "Elixir v1.18 released: type checking of calls, LSP listeners, built-in JSON, and more"
 author: José Valim
 category: Releases
-excerpt: "Elixir v1.18 released: type checking of function calls, Language Server listeners, built-in JSON, and ExUnit improvements"
+excerpt: "Elixir v1.18 released: type checking of function calls, Language Server listeners, built-in JSON, ExUnit improvements, mix format --migrate, and more"
 ---
 
 Elixir v1.18 is an impressive release with improvements across the two main efforts happening within the Elixir ecosystem right now: set-theoretic types and language servers. It also comes with built-in JSON support and adds new capabilities to its unit testing library. Let's go over each of those in detail.
@@ -180,7 +180,7 @@ Once specified, the number of partitions is available as part of the test config
   end
 ```
 
-Prior to parameterized types, Elixir resorted on code generation, which increased compilation types. Furthermore, ExUnit parameterizes the whole test modules, which also allows the different parameters to run concurrently if the `async: true` option is given. Overall, this features allows you to compile and run multiple scenarios more efficiently.
+Prior to parameterized tests, Elixir resorted on code generation, which increased compilation times. Furthermore, ExUnit parameterizes the whole test modules, which also allows the different parameters to run concurrently if the `async: true` option is given. Overall, this features allows you to compile and run multiple scenarios more efficiently.
 
 Finally, ExUnit also comes with the ability of specifying test groups. While ExUnit supports running tests concurrently, those tests must not have shared state between them. However, in large applications, it may be common for some tests to depend on some shared state, and other tests to depend on a completely separate state. For example, part of your tests may depend on Cassandra, while others depend on Redis. Prior to Elixir v1.18, these tests could not run concurrently, but in v1.18 they might as long as they are assigned to different groups:
 
