@@ -12,7 +12,7 @@ Elixir v1.18 is an impressive release with improvements across the two main effo
 
 There are several updates in the typing department, so let's break it down.
 
-### A type system? In my Elixir?
+#### A type system? In my Elixir?
 
 There is an on-going [research and development](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/) effort to bring static types to Elixir. Elixir's type system is:
 
@@ -24,11 +24,11 @@ There is an on-going [research and development](https://elixir-lang.org/blog/202
 
 More interestingly, you can compose `dynamic()` with any type. For example, `dynamic(integer() or float())` means the type is either `integer()` or `float()` at runtime. This allows the type system to emit warnings if none of the types are satisfied, even in the presence of dynamism.
 
-### What has already been done?
+#### What has already been done?
 
 [Elixir v1.17 was the first release to incorporate the type system in the compiler](https://elixir-lang.org/blog/2024/06/12/elixir-v1-17-0-released/). In particular, we have added support for primitive types (integer, float, binary, pids, references, ports), atoms, and maps. We also added type checking to a handful of operations related to those types, such as accessing fields in maps, as in `user.adress` (mind the typo), performing structural comparisons between structs, as in `my_date < ~D[2010-04-17]`, etc.
 
-### What is new in v1.18?
+#### What is new in v1.18?
 
 The most exciting change in Elixir v1.18 is type checking of function calls, alongside gradual inference of patterns and return types. To understand how this will impact your programs, consider the following code defined in `lib/user.ex`:
 
@@ -109,7 +109,7 @@ end
 
 Keep in mind the current implementation does not perform type inference of guards yet, which is an important source of typing information in programs. There is a lot the type system can learn about our codebases, that it does not yet. This brings us to the next topic.
 
-### Future work
+#### Future work
 
 The next Elixir release should improve the typing of maps, tuples, and closures, allowing us to type even more constructs. We also plan to fully type the `with` construct, `for`-comprehensions, as well as protocols.
 
@@ -117,7 +117,7 @@ But more importantly, we want to focus on complete type inference of guards, whi
 
 Future Elixir versions will introduce user-supplied type signatures, which should bring the benefits of a static type system without relying on inference. [Check our previous article on the overall milestones for more information](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/).
 
-### Sponsors
+#### Sponsors
 
 The type system was made possible thanks to a partnership between [CNRS](https://www.cnrs.fr/) and [Remote](https://remote.com/). The development work is currently sponsored by [Fresha](https://www.fresha.com/) ([they are hiring!](https://www.fresha.com/careers/openings?department=engineering)), [Starfish*](https://starfish.team/), and [Dashbit](https://dashbit.co/).
 
