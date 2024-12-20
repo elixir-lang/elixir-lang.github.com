@@ -206,7 +206,7 @@ As of this release, the following migrations are executed:
 
   * Charlists as sigils - formats charlists as `~c` sigils, for example `'foo'` becomes `~c"foo"`.
 
-  * `unless` as negated `if`s - rewrites `unless` expressions using `if` with a negated condition, for example `unless foo do` becomes `if !foo do`. We plan to deprecate `unless` in future relases.
+  * `unless` as negated `if`s - rewrites `unless` expressions using `if` with a negated condition, for example `unless foo do` becomes `if !foo do`. We plan to deprecate `unless` in future releases.
 
 More migrations will be added in future releases to help us push towards more consistent codebases.
 
