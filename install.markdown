@@ -47,17 +47,11 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
 #### Distributions
 
-  - **Alpine Linux** (Community repository)
-    * Run: `apk add elixir`
-
   - **Arch Linux** (Community repository)
     * Run: `pacman -S elixir`
 
   - **Debian**
-    * Run: `sudo apt install erlang-dev elixir`
-
-  - **Debian** (and **Ubuntu**) alternative
-    * Use the [RabbitMQ Packages](https://launchpad.net/~rabbitmq) (might not be up-to-date however likely newer than the distribution)
+    * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq), outlined below, which are likely newer than `apt`, but our recommendation is to use one of the several other installation methods.
 
       ```bash
       $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
@@ -66,9 +60,9 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
       ```
 
   - **Fedora**
-    * Run: `sudo dnf install elixir erlang`
+    * Fedora's Rawhide repository keeps more recent versions: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
+    * You may use the default distribution, but those are often stale: `sudo dnf install elixir erlang`
     * Documentation is available in separate packages: `sudo dnf install elixir-doc erlang-doc`
-    * Fedora's Rawhide repository has newer versions before they go into the main repositories: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
 
   - **Gentoo**
     * Run: `emerge --ask dev-lang/elixir`
@@ -81,21 +75,9 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
     * Run: `zypper in elixir`
     * Optional: if you want to use the latest Erlang, you can use this repository: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
 
-  - **Slackware**
-    * Using Sbopkg:
-      * Run: `sbopkg -ki "erlang-otp elixir"`
-    * Manually:
-      * Download, build and install from SlackBuilds.org: [`erlang-otp`](https://slackbuilds.org/repository/14.2/development/erlang-otp/), and [`elixir`](https://slackbuilds.org/repository/14.2/development/elixir)
-
-  - **Solus**
-    * Run: `eopkg install elixir`
-
   - **Ubuntu**
-    * Run: `sudo apt install elixir`
-    * Alternatively, use [install scripts](#install-scripts)
-
-  - **Void Linux**
-    * Run: `xbps-install -S elixir`
+    * The packages in `apt` tend to lag several versions behind, consider using [install scripts](#install-scripts)
+    * Alternatively, follow the same steps as Debian
 
 ### BSD
 
@@ -121,14 +103,14 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 {% endfor %}
       Run `erl` in the terminal if you are unsure of your Erlang/OTP version.<br />Previous Elixir versions are available in our [Releases](https://github.com/elixir-lang/elixir/releases) page.
 
+  - Using [install scripts](#install-scripts)
+
   - Using [Scoop](https://scoop.sh/):
     * Install Erlang: `scoop install erlang`
     * Install Elixir: `scoop install elixir`
 
   - Using [Chocolatey](https://community.chocolatey.org/):
     * Install Elixir (installs Erlang as a dependency): `choco install elixir`
-
-  - Using [install scripts](#install-scripts)
 
 ### Raspberry Pi and embedded devices
 
