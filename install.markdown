@@ -22,6 +22,8 @@ Install Elixir according to your operating system and tool of choice.
 
 ### macOS
 
+  - Using [install scripts](#install-scripts)
+
   - Using [Homebrew](https://brew.sh/):
     * Run: `brew install elixir`
 
@@ -29,7 +31,6 @@ Install Elixir according to your operating system and tool of choice.
     * Run: `sudo port install elixir`
 
   - Using [version managers](#version-managers)
-  - Using [install scripts](#install-scripts)
 
 ### GNU/Linux
 
@@ -76,7 +77,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
     * Optional: if you want to use the latest Erlang, you can use this repository: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
 
   - **Ubuntu**
-    * The packages in `apt` tend to lag several versions behind, consider using [install scripts](#install-scripts)
+    * The packages in `apt` tend to lag several versions behind, consider using [install scripts](#install-scripts) instead
     * Alternatively, follow the same steps as Debian
 
 ### BSD
