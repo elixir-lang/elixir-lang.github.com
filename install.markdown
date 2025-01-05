@@ -92,7 +92,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
   - **Ubuntu**
     * Run: `sudo apt install elixir`
-    * Alternativel, use [install scripts](#install-scripts)
+    * Alternatively, use [install scripts](#install-scripts)
 
   - **Void Linux**
     * Run: `xbps-install -S elixir`
