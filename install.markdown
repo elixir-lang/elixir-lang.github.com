@@ -34,17 +34,7 @@ Install Elixir according to your operating system and tool of choice.
 
 ### GNU/Linux
 
-On Unix systems, there are two options to install Elixir. You can use the Erlang/Elixir packages that are part of your distribution, although those may lag behind in version numbers (especially for LTS releases). In such cases, you can also opt to use a version manager.
-
-#### Version managers
-
-There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
-
-  * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
-  * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
-  * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
-
-Keep in mind that each Elixir version supports specific Erlang/OTP versions. [See the supported versions alongside our docs](/docs).
+Below we list steps for installing Elixir in different distributions. If your distribution is not listed, you may consider using [version managers](#version-managers).
 
 #### Distributions
 
@@ -52,7 +42,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
     * Run: `pacman -S elixir`
 
   - **Debian**
-    * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq), outlined below, which are likely newer than `apt`, but our recommendation is to use one of the several other installation methods.
+    * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq) outlined below, which are likely newer than `apt`, or use [version managers](#version-managers).
 
       ```bash
       $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
@@ -62,7 +52,7 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
   - **Fedora**
     * Fedora's Rawhide repository keeps more recent versions: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
-    * You may use the default distribution, but those are often stale: `sudo dnf install elixir erlang`
+    * You may use the default distribution, but those often lag behind: `sudo dnf install elixir erlang`
     * Documentation is available in separate packages: `sudo dnf install elixir-doc erlang-doc`
 
   - **Gentoo**
@@ -78,7 +68,17 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
   - **Ubuntu**
     * The packages in `apt` tend to lag several versions behind, consider using [install scripts](#install-scripts) instead
-    * Alternatively, follow the same steps as Debian
+    * Alternatively, follow the steps outlined for Debian distributions
+
+#### Version managers
+
+There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
+
+  * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
+  * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
+  * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
+
+Keep in mind that each Elixir version supports specific Erlang/OTP versions. [See the supported versions alongside our docs](/docs).
 
 ### BSD
 
