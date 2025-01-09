@@ -34,21 +34,12 @@ Install Elixir according to your operating system and tool of choice.
 
 ### GNU/Linux
 
-Below we list steps for installing Elixir in different distributions. If your distribution is not listed, you may consider using [version managers](#version-managers).
+Below we list steps for installing Elixir in different distributions. If your distribution is not listed or the steps below do not work, you may consider using [version managers](#version-managers).
 
 #### Distributions
 
   - **Arch Linux** (Community repository)
     * Run: `pacman -S elixir`
-
-  - **Debian**
-    * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq) outlined below, which are likely newer than `apt`, or use [version managers](#version-managers).
-
-      ```bash
-      $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
-      $ sudo apt update
-      $ sudo apt install elixir erlang-dev erlang-xmerl
-      ```
 
   - **Fedora**
     * Fedora's Rawhide repository keeps more recent versions: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
@@ -67,8 +58,14 @@ Below we list steps for installing Elixir in different distributions. If your di
     * Optional: if you want to use the latest Erlang, you can use this repository: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
 
   - **Ubuntu**
-    * The packages in `apt` tend to lag several versions behind, consider using [install scripts](#install-scripts) instead
-    * Alternatively, follow the steps outlined for Debian distributions
+    * Use [install scripts](#install-scripts) (or alternatively [version managers](#version-managers))
+    * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq) outlined below, which are likely newer than `apt`:
+
+      ```bash
+      $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
+      $ sudo apt update
+      $ sudo apt install git elixir erlang
+      ```
 
 #### Version managers
 
