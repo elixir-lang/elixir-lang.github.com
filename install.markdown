@@ -72,8 +72,7 @@ Below we list steps for installing Elixir in different distributions. If your di
 There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
 
   * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
-  * [kiex](https://github.com/taylor/kiex) - install and manage different Elixir versions
-  * [kerl](https://github.com/yrashk/kerl) - install and manage different Erlang versions
+  * [kerl](https://github.com/kerl/kerl) - install and manage different Erlang versions
 
 Keep in mind that each Elixir version supports specific Erlang/OTP versions. [See the supported versions alongside our docs](/docs).
 
