@@ -18,6 +18,8 @@ Since day zero, Elixir has been their primary technology. Currently, their engin
 
 This case study focuses on their experience using Elixir in a high-growth environment.
 
+![Remote website screenshot](/images/cases/bg/remote.png)
+
 ## Why Elixir?
 
 Marcelo Lebre, co-founder and president of Remote, had worked with many languages and frameworks throughout his career, often encountering the same trade-off: easy-to-code versus easy-to-scale.
