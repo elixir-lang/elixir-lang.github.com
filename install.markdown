@@ -42,7 +42,7 @@ Below we list steps for installing Elixir in different distributions. If your di
     * Run: `pacman -S elixir`
 
   - **Fedora**
-    * Fedora's Rawhide repository keeps more recent versions: `sudo dnf --disablerepo='*' --enablerepo=rawhide install elixir elixir-doc erlang erlang-doc`
+    * Fedora's Rawhide repository keeps more recent versions: `sudo dnf --repo=rawhide install elixir elixir-doc erlang erlang-doc`
     * You may use the default distribution, but those often lag behind: `sudo dnf install elixir erlang`
     * Documentation is available in separate packages: `sudo dnf install elixir-doc erlang-doc`
 
