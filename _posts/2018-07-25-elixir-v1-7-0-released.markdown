@@ -147,7 +147,7 @@ We have also seen important developments in other areas not directly related to 
 
   * We have added [a "Development" section](https://elixir-lang.org/development.html) to the website, that outlines the Elixir team structure and goals
 
-  * [Elixir now has its own mini-documentary](http://doc.honeypot.io/elixir-documentary-2018/), by [Honeypot](https://www.honeypot.io/)
+  * [Elixir now has its own mini-documentary](https://www.youtube.com/watch?v=lxYFOM3UJzo) by Honeypot
 
   * We have already highlighted some of the improvements in the ExDoc tool. Another improvement worth mentioning is the syntax highlighting is now done in Elixir itself, via the [Makeup](https://github.com/tmbb/makeup) library. This gives us more control over the grammar, the style, and improves load times. If you would like to add support for other languages, [reach out](https://github.com/tmbb/makeup)!
 
