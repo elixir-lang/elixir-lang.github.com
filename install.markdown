@@ -52,11 +52,6 @@ Below we list steps for installing Elixir in different distributions. If your di
   - **GNU Guix**
     * Run: `guix package -i elixir`
 
-  - **openSUSE (and SLES)**
-    * Add Elixir/Erlang repository: `zypper ar -f obs://devel:languages:erlang/ Elixir-Factory`
-    * Run: `zypper in elixir`
-    * Optional: if you want to use the latest Erlang, you can use this repository: `zypper ar -f  obs://devel:languages:erlang:Factory Erlang-Factory`
-
   - **Ubuntu**
     * Use [install scripts](#install-scripts) (or alternatively [version managers](#version-managers))
     * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq) outlined below, which are likely newer than `apt`:
