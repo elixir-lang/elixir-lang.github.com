@@ -9,7 +9,7 @@ layout: blog
     <div class="hentry post">
       <div class="sticky-header">
         <h2 class="entry-title"><a class="spec" href="{{ post.url }}" title="{{ post.title }}" rel="bookmark">{{ post.title }}</a></h2>
-        <div class="byline">{{ post.date | date: "%B %d, %Y" }}{% if post.authors %} · by {{ post.authors | join: ", " }}{% endif %} . in {% for category in post.categories %}<a href="/blog/categories.html#{{category}}" class="category">{{ category }}</a>{% endfor %}</div>
+        <div class="byline">{{ post.date | date: "%B %d, %Y" }}{% if post.authors %} · by {{ post.authors | join: ", " }}{% endif %} · in {% for category in post.categories %}<a href="/blog/categories.html#{{category}}" class="category">{{ category }}</a>{% endfor %}</div>
       </div><!-- .sticky-header -->
 
       <div class="entry-summary">
