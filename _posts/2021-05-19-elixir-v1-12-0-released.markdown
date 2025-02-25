@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.12 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.12 is out with improvements to scripting, tighter Erlang/OTP 24 integration, stepped ranges, and dozen of new functions across the standard library
 ---

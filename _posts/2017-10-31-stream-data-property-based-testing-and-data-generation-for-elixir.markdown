@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "StreamData: Property-based testing and data generation"
-author: Andrea Leopardi
+authors:
+-  Andrea Leopardi
 category: Announcements
 excerpt: We are working on data generation and property-based testing for the next versions of Elixir.
 ---

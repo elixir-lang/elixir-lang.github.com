@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.14.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: "Elixir v0.14.0 is released and expands the work on structs and bringing more of OTP right into Elixir and Mix"
 ---

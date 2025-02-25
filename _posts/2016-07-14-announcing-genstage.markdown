@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Announcing GenStage
-author: José Valim
+authors:
+-  José Valim
 category: Announcements
 excerpt: GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases.
 ---

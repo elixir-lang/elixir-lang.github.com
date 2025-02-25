@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Typing lists and tuples in Elixir"
-author: José Valim
+authors:
+- José Valim
 category: Announcements
 excerpt: "This article explores the design decisions of typing lists and tuples in Elixir within a sound gradual type system"
 ---

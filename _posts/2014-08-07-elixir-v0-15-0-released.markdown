@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.15.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: "Elixir v0.15.0 introduces Elixir's Logger, Mix aliases and is the last stop before Elixir v1.0. We are also glad to welcome Alexei into our team!"
 ---

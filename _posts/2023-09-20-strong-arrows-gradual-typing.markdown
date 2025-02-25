@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Strong arrows: a new approach to gradual typing"
-author: José Valim
+authors:
+- José Valim
 category: Announcements
 excerpt: An introduction to strong arrows and how it leverages the Erlang VM to provide sound gradual typing.
 ---

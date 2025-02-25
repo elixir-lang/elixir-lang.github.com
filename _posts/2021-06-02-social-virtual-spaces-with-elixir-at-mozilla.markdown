@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Social virtual spaces with Elixir at Mozilla
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Mozilla.
 logo: /images/cases/logos/mozilla-hubs.png

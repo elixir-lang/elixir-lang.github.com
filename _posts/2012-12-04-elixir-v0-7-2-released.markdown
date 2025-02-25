@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.7.2 released
-author: Yurii Rashkovskii
+authors:
+-  Yurii Rashkovskii
 category: Releases
 excerpt: Elixir v0.7.2 is released, new, improved type specifications syntax and many other improvements.
 

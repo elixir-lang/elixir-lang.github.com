@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir Design Goals
-author: José Valim
+authors:
+-  José Valim
 category: Internals
 excerpt: Highlight of Elixir design goals.
 ---

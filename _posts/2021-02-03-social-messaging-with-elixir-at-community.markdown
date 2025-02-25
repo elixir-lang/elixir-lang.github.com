@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Social messaging with Elixir at Community
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Community.
 logo: /images/cases/logos/community.png

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Integrating travel with Elixir at Duffel
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Duffel.
 logo: /images/cases/logos/duffel.png

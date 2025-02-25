@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.7 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.7 includes many quality of life improvements, focusing on documentation, Logger and ExUnit, as well as a new Elixir Core team member!
 ---

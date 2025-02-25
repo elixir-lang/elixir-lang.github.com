@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Type system updates: moving from research into development"
-author: José Valim
+authors:
+- José Valim
 category: Announcements
 excerpt: A short status update on the effort to bring a type system into Elixir.
 ---

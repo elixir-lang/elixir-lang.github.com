@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Scaling a streaming service to hundreds of thousands of concurrent viewers at Veeps"
-author: Hugo Baraúna
+authors:
+- Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Veeps.
 logo: /images/cases/logos/veeps.svg

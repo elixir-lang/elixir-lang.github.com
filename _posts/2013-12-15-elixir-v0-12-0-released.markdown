@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.12.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.12.0 is out with improved enumerables, build patterns and welcoming a new member to our team
 ---

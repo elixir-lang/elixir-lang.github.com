@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Remote: growing from zero to unicorn with Elixir"
-author: Hugo Baraúna
+authors:
+- Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Remote.
 logo: /images/cases/logos/remote.png

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.8.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: On the last 9th January, we celebrated two years since Elixir's first commit and to celebrate this occasion we have prepared a big release. Elixir v0.8 is out, with documentation, optimizations, bug fixes and shiny new features. Let's take a look at them!
 ---

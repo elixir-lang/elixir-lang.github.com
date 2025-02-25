@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.11 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.11 is out with improvements to the compiler and tighter integration with Erlang/OTP
 ---

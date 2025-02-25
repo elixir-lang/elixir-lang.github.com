@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.3 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.3 brings many improvements to the language, the compiler and its tooling, specially Mix (Elixir's build tool) and ExUnit (Elixir's test framework).
 ---

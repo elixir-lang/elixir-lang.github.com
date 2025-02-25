@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.13.0 released, hex.pm and ElixirConf announced
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: "Elixir v0.13.0 comes with substantial improvements to the language: maps, structs, comprehensiona and more. It also marks the announcement of the hex.pm package manager and the announcement of ElixirConf!"
 ---

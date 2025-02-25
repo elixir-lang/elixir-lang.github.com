@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.15 released
-author: José Valim
+authors:
+- José Valim
 category: Releases
 excerpt: Elixir v1.15 with improvements to compilation and boot times.
 ---

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.4 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.4 brings many improvements to the language, its standard library and the Mix build tool.
 ---

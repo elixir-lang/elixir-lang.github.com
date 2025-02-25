@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.11.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.11.0 is out and it focus on improving and optimizing the patterns often used by the community.
 ---

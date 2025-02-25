@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.5 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.5 integrates with Erlang/OTP 20 and bring changes that improves the language reach and the developer experience
 ---

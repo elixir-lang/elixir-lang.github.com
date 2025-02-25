@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.9.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.9.0 is released with support for reducers, umbrella projects, faster compilation times and dropped support for R15 and earlier OTP versions.
 ---

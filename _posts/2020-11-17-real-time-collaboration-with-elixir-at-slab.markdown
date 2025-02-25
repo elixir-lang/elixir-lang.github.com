@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Real-time collaboration with Elixir at Slab
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Slab.
 logo: /images/cases/logos/slab.png

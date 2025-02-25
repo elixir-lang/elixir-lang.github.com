@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.14 released
-author: Andrea Leopardi
+authors:
+- Andrea Leopardi
 category: Releases
 excerpt: Elixir v1.14 is out with a focus on debugging and developer experience
 ---
