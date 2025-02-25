@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.16 released
-author: José Valim
+authors:
+- José Valim
 category: Releases
 excerpt: Elixir v1.16 released with compiler diagnostics and extensive documentation
 ---

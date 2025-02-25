@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Google Summer of Code 2013
-author: José Valim
+authors:
+-  José Valim
 category: Announcements
 excerpt: Elixir is taking part in Google Summer of Code 2013! Are you a student? Join us!
 ---

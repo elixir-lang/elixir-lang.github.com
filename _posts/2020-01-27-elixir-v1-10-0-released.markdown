@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.10 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.10 is out with standard library, compiler, and releases improvements.
 ---

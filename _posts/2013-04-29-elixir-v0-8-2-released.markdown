@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.8.2 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.8.2 is released with bug fixes, better Erlang R16 support and doctests.
 ---

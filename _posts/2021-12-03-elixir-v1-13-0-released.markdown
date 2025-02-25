@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.13 released
-author: José Valim
+authors:
+- José Valim
 category: Releases
 excerpt: Elixir v1.13 is out with a focus on developer tooling
 ---

@@ -15,11 +15,11 @@ elixir_url: http://elixir-lang.org
 <entry>
   <title>{{ post.title }}</title>
   <link href="{{ page.elixir_url }}{{ post.url }}"/>
-  {% if post.author %}
-  <author>
-    <name>{{ post.author }}</name>
-  </author>
-  {% endif %}
+  {% for author in post.authors %}
+    <author>
+      <name>{{ author }}</name>
+    </author>
+  {% endfor %}
   <updated>{{ post.date | date_to_xmlschema }}</updated>
   <id>{{ post.id }}</id>
   <content type="html">{{ post.content | xml_escape }}</content>

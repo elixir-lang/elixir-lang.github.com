@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Mint, a new HTTP client for Elixir
-author: Eric Meadows-Jönsson
+authors:
+-  Eric Meadows-Jönsson
 category: Announcements
 excerpt: Mint is a new low-level HTTP client that aims to provide a small and functional core that others can build on top.
 ---

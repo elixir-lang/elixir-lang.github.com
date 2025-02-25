@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Elixir v1.18 released: type checking of calls, LSP listeners, built-in JSON, and more"
-author: José Valim
+authors:
+- José Valim
 category: Releases
 excerpt: "Elixir v1.18 released: type checking of function calls, Language Server listeners, built-in JSON, ExUnit improvements, mix format --migrate, and more"
 ---

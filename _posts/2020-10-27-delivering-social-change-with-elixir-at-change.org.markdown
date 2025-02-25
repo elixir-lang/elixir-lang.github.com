@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Delivering social change with Elixir at Change.org
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Change.org.
 logo: /images/cases/logos/change.png

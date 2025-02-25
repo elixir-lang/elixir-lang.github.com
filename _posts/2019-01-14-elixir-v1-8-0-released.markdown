@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.8 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.8 comes with many improvements at the infrastructure level, improving compilation time, speeding up common patterns, and adding features around introspection of the system.
 ---

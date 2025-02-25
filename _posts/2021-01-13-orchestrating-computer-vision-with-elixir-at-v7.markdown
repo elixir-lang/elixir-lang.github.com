@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Orchestrating computer vision with Elixir at V7
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at V7.
 logo: /images/cases/logos/v7.png

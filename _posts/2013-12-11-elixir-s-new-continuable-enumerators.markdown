@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir's new continuable enumerators
-author: Peter Minten
+authors:
+-  Peter Minten
 category: Internals
 excerpt: In 0.12.0 Elixir's enumerators have gained the ability to suspend value
          production and to terminate early.

@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.10.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.10.0 is out with support for streams, sets, pretty printing and many improvements for Mix and ExUnit.
 ---

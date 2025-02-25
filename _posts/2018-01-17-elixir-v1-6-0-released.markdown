@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.6 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.6 includes a code formatter, defguard, dynamic supervision and new module attributes that improves code quality and the developer experience
 ---

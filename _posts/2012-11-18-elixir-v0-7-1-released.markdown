@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.7.1 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.7.1 was released to celebrate the end of a two months journey traveling around Europe, United States and Brazil talking about Elixir.
 

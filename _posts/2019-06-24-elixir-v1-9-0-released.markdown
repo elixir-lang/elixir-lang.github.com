@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v1.9 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v1.9 is out with releases support, improved configuration and more.
 ---

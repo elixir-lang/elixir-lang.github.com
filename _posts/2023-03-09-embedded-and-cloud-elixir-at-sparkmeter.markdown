@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Embedded and cloud Elixir for grid-management at Sparkmeter"
-author: Hugo Baraúna
+authors:
+- Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at SparkMeter.
 logo: /images/cases/logos/sparkmeter.png

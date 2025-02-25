@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "My Future with Elixir: set-theoretic types"
-author: José Valim
+authors:
+- José Valim
 category: Announcements
 excerpt: We announce and explore the possibilities for bringing set-theoretic types into Elixir.
 ---

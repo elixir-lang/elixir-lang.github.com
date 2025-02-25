@@ -11,7 +11,7 @@ layout: blog
         {% if page.subtitle %}
         <h2>{{ page.subtitle }}</h2>
         {% endif %}
-        <div class="byline">{{ page.date | date: "%B %d, %Y" }}{% if page.author %} &middot; by {{ page.author}}{% endif %} &middot; in {% for category in page.categories %}
+        <div class="byline">{{ page.date | date: "%B %d, %Y" }}{% if page.authors %} &middot; by {{ page.authors | join: ", " }}{% endif %} &middot; in {% for category in page.categories %}
           {% if category == "Elixir in Production" %}
             <a class="category" href="/cases.html">{{ category }}</a>
           {% else %}

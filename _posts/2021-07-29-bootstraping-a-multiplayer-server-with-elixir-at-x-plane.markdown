@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Bootstrapping a multiplayer server with Elixir at X-Plane
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at X-Plane.
 logo: /images/cases/logos/x-plane.png

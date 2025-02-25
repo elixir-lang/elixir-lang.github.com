@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Real time communication at scale with Elixir at Discord
-author: José Valim
+authors:
+-  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Discord.
 logo: /images/cases/logos/discord.png

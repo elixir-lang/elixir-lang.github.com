@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.7.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: Elixir v0.7.0 is released with many improvements! Read on for more information.
 

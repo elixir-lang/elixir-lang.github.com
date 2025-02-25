@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Google Summer of Code 2018 projects
-author: Andrea Leopardi
+authors:
+-  Andrea Leopardi
 category: Announcements
 excerpt: Once again Elixir is participating in Google Summer of Code 2018. In this post, we'll have a look at the active projects.
 ---

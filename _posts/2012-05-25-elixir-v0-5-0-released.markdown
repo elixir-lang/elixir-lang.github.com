@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir v0.5.0 released
-author: José Valim
+authors:
+-  José Valim
 category: Releases
 excerpt: We have finally released Elixir v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
 

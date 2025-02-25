@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Elixir on Xen
-author: José Valim
+authors:
+-  José Valim
 category: Announcements
 excerpt: The Erlang on Xen team has added support for Elixir and we will tell you how you can use it!
 ---

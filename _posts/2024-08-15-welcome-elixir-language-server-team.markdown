@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Announcing the official Elixir Language Server team"
-author: José Valim
+authors:
+- José Valim
 category: Announcements
 excerpt: "Announcing the official Elixir Language Server team to work on the code intelligence infrastructure to be used across tools and editors"
 ---
