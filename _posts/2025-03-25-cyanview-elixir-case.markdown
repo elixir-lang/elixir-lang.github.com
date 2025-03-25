@@ -7,7 +7,7 @@ authors:
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Cyanview.
 logo: /images/cases/logos/cyanview.png
-tags: growth team web
+tags: superbowl mqtt
 ---
 
 How do you coordinate visual fidelity across two hundred cameras for a live event like the Super Bowl?
@@ -21,7 +21,7 @@ A small team of three built a product so powerful and effective that it spread a
 These devices put Elixir right in the critical path for serious broadcast operations. By choosing Elixir, Cyanview gained best-in-class networking features, state-of-the-art resilience and an ecosystem that allowed fast iteration on product features.
 
 
-![Cyanview Remote Control Panels in a control room.](/images/cases/bg/cyanview-1.jpg "Cyanview Remote Control Panels in a control room.")
+![Operating many displays with Cyanview products.](/images/cases/bg/cyanview-4.jpg "Operating many displays with Cyanview products.")
 
 
 ## Why Elixir?
@@ -93,7 +93,7 @@ Cyanview hopes to grow the team more, but plans to do so responsibly over time. 
 
 Development is highly active, with complementary products already in place alongside the main RCP device, and the future holds even more in that regard. Cloud offerings are on the horizon, along with exciting hardware projects that build on the lessons learned so far. As these developments unfold, we’ll see Elixir play an increasingly critical role in some of the world’s largest live broadcasts.
 
-![Operating many displays with Cyanview products.](/images/cases/bg/cyanview-4.jpg "Operating many displays with Cyanview products.")
+![Cyanview Remote Control Panels in a control room.](/images/cases/bg/cyanview-1.jpg "Cyanview Remote Control Panels in a control room.")
 
 
 ## In summary
