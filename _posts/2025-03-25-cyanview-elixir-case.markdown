@@ -100,4 +100,3 @@ Development is highly active, with complementary products already in place along
 
 A high-quality product delivering the right innovation at the right time in an industry that's been underserved in terms of good integration. Elixir provided serious leverage for developing a lot of integrations with high confidence and consistent reliability. In an era where productivity and lean, efficient teams are everything, Cyanview is a prime example of how Elixir empowers small teams to achieve an outsized impact.
 
-
