@@ -62,7 +62,7 @@ It goes without saying that integration with so much proprietary equipment comes
 
 ## Growth & team composition
 
-The team has grown over the 9 years that the company has been operating, but it did so at a slow and steady pace. On average, the company has added just one person per year. With nine employees at the time of writing, Cyanview supports some of the biggest broadcast events in the world. .
+The team has grown over the 9 years that the company has been operating, but it did so at a slow and steady pace. On average, the company has added just one person per year. With nine employees at the time of writing, Cyanview supports some of the biggest broadcast events in the world.
 
 There are two Elixir developers on board: Daniil who is focusing on revising some of the UI as well as charting a course into more cloud functionality, and Ghislain, who works on cameras and integration. Both LiveView and Elm are used to power device UIs and dashboards.
 
