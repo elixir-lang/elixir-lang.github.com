@@ -74,7 +74,7 @@ What’s interesting is that, overall, the other embedded developers say that th
 ![Operator using Cyanview RCP for a massive crowd in an arena.](/images/cases/bg/cyanview-3.jpg "Operator using Cyanview RCP for a massive crowd in an arena.")
 
 
-Whether it’s providing onboard cameras in 40+ cars during the 24 hours of Le Mans, covering Ninja Warrior, the Australian Open, and the US Open, operating a studio in the Louvre, being installed in NFL pylons, or connecting over 200 cameras simultaneously the – product speaks for itself. Cyanview built a device for a world that runs on top of IP, using Elixir, a language with networking and protocols deep in its bones. This choice enabled them to do both: implement support for all the equipment and provide features no one else had.
+Whether it’s providing onboard cameras in 40+ cars during the 24 hours of Le Mans, covering Ninja Warrior, the Australian Open, and the US Open, operating a studio in the Louvre, being installed in NFL pylons, or connecting over 200 cameras simultaneously – the product speaks for itself. Cyanview built a device for a world that runs on top of IP, using Elixir, a language with networking and protocols deep in its bones. This choice enabled them to do both: implement support for all the equipment and provide features no one else had.
 
 By shifting from conventional local-area radio frequency, serial connections, and inflexible proprietary protocols to IP networking, Cyanview’s devices redefined how camera systems operate. Their feature set is unheard of in the industry: Unlimited multicam. Tally lights. Pan & Tilt control. Integration with color correctors. World-spanning remote production.
 
