@@ -5,6 +5,7 @@ authors:
 - Hugo Baraúna
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Remote.
+flagship: true
 logo: /images/cases/logos/remote.png
 tags: growth team web
 ---

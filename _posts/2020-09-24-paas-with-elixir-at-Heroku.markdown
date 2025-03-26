@@ -5,6 +5,7 @@ authors:
 -  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Heroku.
+flagship: true
 logo: /images/cases/logos/heroku.png
 tags: paas phoenix
 ---
