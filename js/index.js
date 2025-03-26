@@ -149,7 +149,20 @@ $(document).ready(function() {
     document.cookie = 'topBannerDisabled=true';
   })
 
-  $("#shuffled-cases").children().shuffle()
+  let keep = [];
+  let i = 0;
+  $(".cases-box.shuffle").shuffle().each(function() {
+     console.log(i);
+     if(i < 3) {
+         console.log(this);
+         keep.push($(this));
+         i++;
+     }
+  });
+  $(".cases-box.shuffle").remove();
+  console.log(keep);
+  $(".cases-boxes").append(keep);
+
 });
 
 // Automatically redirect to https
