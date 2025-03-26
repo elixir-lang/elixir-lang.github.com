@@ -5,6 +5,7 @@ authors:
 -  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Discord.
+flagship: true
 logo: /images/cases/logos/discord.png
 tags: real-time genstage otp
 ---
