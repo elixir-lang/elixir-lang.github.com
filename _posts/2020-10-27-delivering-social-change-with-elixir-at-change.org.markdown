@@ -5,6 +5,7 @@ authors:
 -  José Valim
 category: Elixir in Production
 excerpt: A case study of how Elixir is being used at Change.org.
+flagship: true
 logo: /images/cases/logos/change.png
 tags: social broadway
 ---
