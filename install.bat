@@ -139,7 +139,16 @@ if not exist "%otp_dir%\bin" (
   curl.exe -fsSLo %tmp_dir%\%otp_zip% "!otp_url!" || exit /b 1
 
   echo unpacking %tmp_dir%\%otp_zip%
-  powershell -Command "Expand-Archive -LiteralPath %tmp_dir%\%otp_zip% -DestinationPath %otp_dir%"
+  powershell -NoProfile -Command ^
+    "$ErrorActionPreference='Stop';" ^
+    "try {" ^
+    "  if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {" ^
+    "    Add-Type -AssemblyName System.IO.Compression.FileSystem;" ^
+    "    [System.IO.Compression.ZipFile]::ExtractToDirectory('%tmp_dir%\%otp_zip%', '%otp_dir%')" ^
+    "  } else {" ^
+    "    Expand-Archive -LiteralPath '%tmp_dir%\%otp_zip%' -DestinationPath '%otp_dir%' -Force" ^
+    "  }" ^
+    "} catch { Write-Error $_; exit 1 }"
   del /f /q "%tmp_dir%\%otp_zip%"
   cd /d "%otp_dir%"
 
@@ -166,7 +175,16 @@ if not exist "%elixir_dir%\bin" (
   curl.exe -fsSLo "%tmp_dir%\%elixir_zip%" "!elixir_url!" || exit /b 1
 
   echo unpacking %tmp_dir%\%elixir_zip%
-  powershell -Command "Expand-Archive -LiteralPath %tmp_dir%\%elixir_zip% -DestinationPath %elixir_dir%"
+  powershell -NoProfile -Command ^
+    "$ErrorActionPreference='Stop';" ^
+    "try {" ^
+    "  if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {" ^
+    "    Add-Type -AssemblyName System.IO.Compression.FileSystem;" ^
+    "    [System.IO.Compression.ZipFile]::ExtractToDirectory('%tmp_dir%\%elixir_zip%', '%elixir_dir%')" ^
+    "  } else {" ^
+    "    Expand-Archive -LiteralPath '%tmp_dir%\%elixir_zip%' -DestinationPath '%elixir_dir%' -Force" ^
+    "  }" ^
+    "} catch { Write-Error $_; exit 1 }"
   del /f /q %tmp_dir%\%elixir_zip%
 )
 goto :eof
