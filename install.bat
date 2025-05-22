@@ -66,7 +66,7 @@ if "%otp_version%" == "" (
 )
 
 if "!otp_version!" == "latest" (
-  set "url=https://github.com/erlef/otp_builds/releases/latest"
+  set "url=https://github.com/erlang/otp/releases/latest"
   for /f "tokens=2 delims= " %%a in ('curl -fsS --head "!url!" ^| findstr /I "^location:"') do set url=%%a
   set "otp_version=!url:*releases/tag/OTP-=!"
 )
@@ -79,12 +79,21 @@ if "!elixir_version!" == "latest" (
 
 for /f "tokens=1 delims=." %%A in ("!otp_version!") do set "elixir_otp_release=%%A"
 for /f "tokens=1,2 delims=." %%A in ("!elixir_version!") do set "elixir_major_minor=%%A.%%B"
-if "%elixir_major_minor%" == "1.15" (
+
+if "%elixir_major_minor%" == "1.14" (
+  if %elixir_otp_release% GEQ 25 set "elixir_otp_release=25"
+) else if "%elixir_major_minor%" == "1.15" (
   if %elixir_otp_release% GEQ 26 set "elixir_otp_release=26"
 ) else if "%elixir_major_minor%" == "1.16" (
   if %elixir_otp_release% GEQ 26 set "elixir_otp_release=26"
-) else if "%elixir_major_minor%" == "1.14" (
-  if %elixir_otp_release% GEQ 25 set "elixir_otp_release=25"
+) else if "%elixir_major_minor%" == "1.17" (
+  if %elixir_otp_release% GEQ 27 set "elixir_otp_release=27"
+) else if "%elixir_major_minor%" == "1.18" (
+  if %elixir_otp_release% GEQ 27 set "elixir_otp_release=27"
+) else if "%elixir_major_minor%" == "1.19" (
+  if %elixir_otp_release% GEQ 28 set "elixir_otp_release=28"
+) else (
+  if %elixir_otp_release% GEQ 28 set "elixir_otp_release=28"
 )
 
 set "root_dir=%USERPROFILE%\.elixir-install"
@@ -161,7 +170,15 @@ exit /b 0
 goto :eof
 
 :install_elixir
-set "elixir_zip=elixir-!elixir_version!-otp-!elixir_otp_release!.zip"
+set "elixir_zip=elixir-otp-!elixir_otp_release!.zip"
+
+if "%elixir_version%" == "main" (
+  rem Do not remove this comment
+  set "ref=main-latest"
+) else (
+  rem Do not remove this comment
+  set "ref=v%elixir_version%"
+)
 
 if "%force%" == "true" (
   if exist "%elixir_dir%" (
@@ -170,7 +187,7 @@ if "%force%" == "true" (
 )
 
 if not exist "%elixir_dir%\bin" (
-  set "elixir_url=https://github.com/elixir-lang/elixir/releases/download/v!elixir_version!/elixir-otp-%elixir_otp_release%.zip"
+  set "elixir_url=https://github.com/elixir-lang/elixir/releases/download/%ref%/elixir-otp-%elixir_otp_release%.zip"
   echo downloading !elixir_url!...
   curl.exe -fsSLo "%tmp_dir%\%elixir_zip%" "!elixir_url!" || exit /b 1
 

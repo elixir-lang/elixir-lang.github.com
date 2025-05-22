@@ -97,8 +97,14 @@ main() {
     1.15.*|1.16.*)
       [ "${elixir_otp_release}" -ge 26 ] && elixir_otp_release=26
       ;;
-    *)
+    1.17.*|1.18.*)
       [ "${elixir_otp_release}" -ge 27 ] && elixir_otp_release=27
+      ;;
+    1.19.*)
+      [ "${elixir_otp_release}" -ge 28 ] && elixir_otp_release=28
+      ;;
+    *)
+      [ "${elixir_otp_release}" -ge 28 ] && elixir_otp_release=28
       ;;
   esac
 
