@@ -27,7 +27,7 @@ Our initial budget of $7000 was donated by Dashbit ($5000) and Oban ($2000) to t
 
 To request a stipend, visit the [Erlang Ecosystem Foundation website and choose "Elixir Outreach" as the stipend type](https://erlef.org/stipends/form?type=elixir-outreach).
 
-Given we have limited funds, we cannot guarantee they will be available when you request them. We recommend reaching out to us before submitting or accepting your talk. Therefore, by contacting us early, we can validate if the event matches the criteria above, ask questions, and earmark the funds. Once your talk is accepted, send us any itemized travel and accommodation costs so we can transfer the stipend to you, (not in excess of $700 USD).
+Given we have limited funds, we cannot guarantee they will be available when you request them. We recommend reaching out to us before submitting or acceptance your talk. Therefore, by contacting us early, we can validate if the event matches the criteria above, ask questions, and earmark the funds. Once your talk is accepted, send us any itemized travel and accommodation costs so we can transfer the stipend to you, (not in excess of $700 USD).
 
 You can also request a stipend after your talk has already been accepted, but then there are no guarantees a stipend will be available.
 
