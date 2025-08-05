@@ -20,9 +20,7 @@ A small team of three built a product so powerful and effective that it spread a
 
 These devices put Elixir right in the critical path for serious broadcast operations. By choosing Elixir, Cyanview gained best-in-class networking features, state-of-the-art resilience and an ecosystem that allowed fast iteration on product features.
 
-
-![Operating many displays with Cyanview products.](/images/cases/bg/cyanview-4.jpg "Operating many displays with Cyanview products.")
-
+![Operating many displays with Cyanview products](/images/cases/bg/cyanview-4.jpg "Operating many displays with Cyanview products")
 
 ## Why Elixir?
 
@@ -40,12 +38,9 @@ David Bourgeois, the founder of Cyanview, told us a story how these technical de
 
 "During the Olympics in China, a studio in Beijing relied on a large number of Panasonic PTZ cameras. Most of their team, however, was based in Paris and needed to control the cameras remotely to run various shows throughout the day. The problem? Panasonic’s camera protocols were never designed for internet use — they require precise timing and multiple messages for every adjustment. With network latency, that leads to timeouts, disconnects, and system failures... So they ended up placing our devices next to the cameras in Beijing and controlled them over IP from Paris — just as designed."
 
-
-![Cyanview RIO device mounted on a camera at a sports field.](/images/cases/bg/cyanview-2.jpg "Cyanview RIO device mounted on a camera at a sports field.")
-
+![Cyanview RIO device mounted on a camera at a sports field](/images/cases/bg/cyanview-2.jpg "Cyanview RIO device mounted on a camera at a sports field")
 
 The devices in a given location communicate and coordinate on the network over a custom MQTT protocol. Over a hundred cameras without issue on a single Remote Control Panel (RCP), implemented on top of Elixir's network stack.
-
 
 ## Technical composition
 
@@ -59,7 +54,6 @@ It goes without saying that integration with so much proprietary equipment comes
 
 "If one camera connection has a blip, a buggy protocol or the physical connection to a device breaks it is incredibly important that everything else keeps working. And this is where Elixir’s supervision trees provide a critical advantage."
 
-
 ## Growth & team composition
 
 The team has grown over the 9 years that the company has been operating, but it did so at a slow and steady pace. On average, the company has added just one person per year. With nine employees at the time of writing, Cyanview supports some of the biggest broadcast events in the world.
@@ -68,11 +62,9 @@ There are two Elixir developers on board: Daniil who is focusing on revising som
 
 What’s interesting is that, overall, the other embedded developers say that they don't know much about Elixir and they don't use it in their day-to-day work. Nonetheless, they are very comfortable implementing protocols and encodings in Elixir. The main reason they haven’t fully learned the language is simply time — they have plenty of other work to focus on, and deep Elixir expertise hasn’t been necessary. After all, there’s much more to their work beyond Elixir: designing PCBs, selecting electronic components, reverse engineering protocols, interfacing with displays, implementing FPGAs, managing production tests, real productions and releasing firmware updates.
 
-
 ## Innovation and customer focus
 
-![Operator using Cyanview RCP for a massive crowd in an arena.](/images/cases/bg/cyanview-3.jpg "Operator using Cyanview RCP for a massive crowd in an arena.")
-
+![Operator using Cyanview RCP for a massive crowd in an arena](/images/cases/bg/cyanview-3.jpg "Operator using Cyanview RCP for a massive crowd in an arena")
 
 Whether it’s providing onboard cameras in 40+ cars during the 24 hours of Le Mans, covering Ninja Warrior, the Australian Open, and the US Open, operating a studio in the Louvre, being installed in NFL pylons, or connecting over 200 cameras simultaneously – the product speaks for itself. Cyanview built a device for a world that runs on top of IP, using Elixir, a language with networking and protocols deep in its bones. This choice enabled them to do both: implement support for all the equipment and provide features no one else had.
 
@@ -81,7 +73,6 @@ By shifting from conventional local-area radio frequency, serial connections, an
 The ease and safety of shipping new functionality have allowed the company to support new features very quickly. One example is the increasing use of mirrorless cameras on gimbals to capture crowd shots. Cyanview were able to prototype gimbal control, test it with a customer and validate that it worked in a very short amount of time. This quick prototyping and validation of features is made possible by a flexible architecture that ensures that critical fundamentals don't break.
 
 Camera companies that don't produce broadcast shading remotes, such as Canon or RED, recommend Cyanview to their customers. Rather than competing with most broadcast hardware companies, Cyanview considers itself a partner. The power of a small team, a quality product and powerful tools can be surprising. Rather than focusing on marketing, Cyanview works very closely with its customers by supporting the success of their events and providing in-depth customer service.
-
 
 ## Looking back and forward
 
@@ -93,8 +84,7 @@ Cyanview hopes to grow the team more, but plans to do so responsibly over time. 
 
 Development is highly active, with complementary products already in place alongside the main RCP device, and the future holds even more in that regard. Cloud offerings are on the horizon, along with exciting hardware projects that build on the lessons learned so far. As these developments unfold, we’ll see Elixir play an increasingly critical role in some of the world’s largest live broadcasts.
 
-![Cyanview Remote Control Panels in a control room.](/images/cases/bg/cyanview-1.jpg "Cyanview Remote Control Panels in a control room.")
-
+![Cyanview Remote Control Panels in a control room](/images/cases/bg/cyanview-1.jpg "Cyanview Remote Control Panels in a control room")
 
 ## In summary
 
