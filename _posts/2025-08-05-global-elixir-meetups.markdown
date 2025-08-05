@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Take part in the Global Elixir Meetup week"
+title: "Take part in the Global Elixir Meetups week"
 authors:
 - José Valim
 category: Announcements
