@@ -237,7 +237,7 @@ Elixir, by way of Erlang, has built-in support for distributed systems. Multiple
 
 Nodes become discoverable in the cluster simply by starting them with names. Once we connect to a node, we can send messages, spawn remote processes, and more. Here's an example:
 
-```elixir
+```shell
 $ iex --name a@127.0.0.1 --cookie secret
 $ iex --name b@127.0.0.1 --cookie secret
 iex(a@127.0.0.1)> Node.connect(:"b@127.0.0.1")
