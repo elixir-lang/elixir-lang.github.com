@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Elixir v1.19 released: enhanced type checking and up to 4x faster compilation for large projects"
+title: "Elixir v1.19 released: enhanced type checking, broader type inference, and up to 4x faster compilation for large projects"
 authors:
 - José Valim
 category: Releases
-excerpt: "Elixir v1.19 released: type checking of protocols, type inference of anonymous functions, improved compile times, and more"
+excerpt: "Elixir v1.19 released: type checking of protocols and anonymous functions, broader type inference, improved compile times, and more"
 ---
 
 Elixir v1.19 brings further improvements to the type system and compilation times, allowing us to find more bugs, faster.
@@ -12,6 +12,46 @@ Elixir v1.19 brings further improvements to the type system and compilation time
 ## Type system improvements
 
 This release improves the type system around two key areas, anonymous functions and protocols. To make these enhancements possible, while they seem simple on the surface, we had to go beyond the existing literature, extending the existing theory and developing new techniques, which we will outline in future articles. For now, let's look at what's new.
+
+### Type inference of all constructs
+
+Type inference (or reconstruction) is the ability of a type system to automatically deduce, either partially or fully, the type of an expression at compile time. Type inference may occur at different levels. For example, many programming languages can automatically infer the types of variables, also known "local type inference", but not all can infer type signatures of functions.
+
+Originally, our plan with Elixir's upcoming type system was to support type inference of patterns, guards, and return types. Therefore, if you wrote this simple function:
+
+```elixir
+def even?(x) when is_integer(x) do
+  rem(x, 2) == 0
+end
+```
+
+Elixir would correctly infer the type to be `integer() -> boolean()`. However, if you wrote this function:
+
+```elixir
+def even?(x) do
+  rem(x, 2) == 0
+end
+```
+
+The type would be `dynamic() -> boolean()`, since there are no guards, even though the functions behave virtually the same, as the `rem` operator expects both arguments to be integer (they just raise different exceptions for non-integer values).
+
+Inferring type signatures comes with a series of trade-offs:
+
+  * Speed - type inference algorithms are often more computationally intensive than type checking algorithms.
+
+  * Expressiveness - in any given type system, the constructs that support inference are always a subset of those that can be type-checked. Therefore, if a programming language is restricted to only fully reconstructed types, it is less expressive than a solely type checked counterpart.
+
+  * Incremental compilation - type inference complicates incremental compilation. If module A depends on module B, which depends on module C, a change to C may require the type signature in B to be reconstructed, which may then require A to be recomputed (and so on). This dependency chain may require large projects to explicitly add type signatures for stability and compilation efficiency.
+
+  * Cascading errors - when a user accidentally makes type errors or the code has conflicting assumptions, type inference may lead to less clear error messages as the type system tries to reconcile diverging type assumptions across code paths.
+
+On the other hand, type inference offers the benefit of enabling type checking for functions and codebases without requiring the user to add type annotations. To balance these trade-offs, we are exploring "module type inference": our goal is to infer type signatures considering invocations of functions in the same module and of functions from *other applications* (such as Elixir itself and your dependencies). Once module types are inferred, your whole project is type checked considering all declared and inferred types.
+
+We have successfully implemented these features as part of Elixir v1.19, by performing inference of all constructs (except guards), taking into account the signatures from calls to functions within the same module and in Elixir's standard library. This means the second function above, without the guard, will also infer the type `integer() -> boolean()`.
+
+In future releases, we plan to perform type inference of guards (originally planned for v1.19) and also consider the type signatures of your dependencies during inference. Overall, these changes allow us to assess the impact of the trade-offs above as the type system evolves, which suits well our current goals of incrementally using types to find bugs in existing codebases, without changing them.
+
+Keep in mind this only applies to *type inference*. Once we introduce type signatures and you explicitly annotate your functions, type inference and the trade-offs above no longer play a role. Any function with an explicit type signature will be typed checked against the user-provided annotations, as in other statically typed languages.
 
 ### Type checking of protocol dispatch and implementations
 
