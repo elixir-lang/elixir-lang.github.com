@@ -7,6 +7,8 @@ category: Announcements
 excerpt: "Announcing the official Elixir Language Server team to work on the code intelligence infrastructure to be used across tools and editors"
 ---
 
+> Update: [the new language server is called Expert and is now available as open source](https://github.com/elixir-lang/expert).
+
 I am glad to welcome Elixir's official Language Server team, formed by (in alphabetical order):
 
 * [Jonatan Kłosko](https://github.com/jonatanklosko)
