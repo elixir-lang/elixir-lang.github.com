@@ -185,7 +185,7 @@ defmodule MyLib.SomeModule do
 end
 ```
 
-Because the spawned module is not visible by the compiler, it won't be able to load `MyLib.SomeOtherModule`. You have two options, either use [`Kernel.ParallelCompiler.pmap/2`](https://hexdocs.pm/elixir/Kernel.ParallelCompiler.html#pmap/2) or explicitly call [`Code.ensure_compiled!(MyLib.SomeOtherModule)`](https://hexdocs.pm/elixir/Code.html#ensure_compiled!/1) before spawning the process that uses said module.
+Because the spawned process is not visible to the compiler, it won't be able to load `MyLib.SomeOtherModule`. You have two options, either use [`Kernel.ParallelCompiler.pmap/2`](https://hexdocs.pm/elixir/Kernel.ParallelCompiler.html#pmap/2) or explicitly call [`Code.ensure_compiled!(MyLib.SomeOtherModule)`](https://hexdocs.pm/elixir/Code.html#ensure_compiled!/1) before spawning the process that uses said module.
 
 The second one is related to `@on_load` callbacks (typically used for [NIFs](https://www.erlang.org/doc/system/nif.html)) that invoke other modules defined within the same project. For example:
 
