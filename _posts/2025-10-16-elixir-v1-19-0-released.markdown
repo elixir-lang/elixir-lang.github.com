@@ -11,7 +11,7 @@ Elixir v1.19 brings further improvements to the type system and compilation time
 
 ## Type system improvements
 
-This release improves the type system around two key areas: type inference and type checking of anonymous functions and protocols. These enhancements seem simple on the surface but required us to go beyond existing literature by extending current theory and developing new techniques. We will outline the technical details in future articles. For now, let's look at what's new.
+This release improves the type system by adding type inference of anonymous functions and type checking of protocols. These enhancements seem simple on the surface but required us to go beyond existing literature by extending current theory and developing new techniques. We will outline the technical details in future articles. For now, let's look at what's new.
 
 ### Type checking of protocol dispatch and implementations
 
