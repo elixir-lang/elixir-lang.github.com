@@ -7,7 +7,7 @@ category: Announcements
 excerpt: "Announcing the official Elixir Language Server team to work on the code intelligence infrastructure to be used across tools and editors"
 ---
 
-> Update: [the new language server is called Expert and is now available as open source](https://github.com/elixir-lang/expert).
+> Update: [the new language server is called Expert and is currently available in alpha as open source](https://github.com/elixir-lang/expert). Companies wanting to directly sponsor work on Expert, please reach out to [Dan Janowski](mailto:sponsor+expert@erlef.org) from the [Erlang Ecosystem Foundation](https://erlef.org), which has kindly stepped in to manage and bring visibility into the project sponsorships.
 
 I am glad to welcome Elixir's official Language Server team, formed by (in alphabetical order):
 
