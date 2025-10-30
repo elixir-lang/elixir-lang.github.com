@@ -19,11 +19,11 @@ and [the Learning page](/learning.html) for books, courses, videos, and more.
     {% continue %}
   {% endif %}
 
-<h4 id="{{ version[1].name }}">
+<h3 id="{{ version[1].name }}">
   {{ version[1].name }}
   {% if version[1].version == stable.version %}<small>(stable)</small>{% endif %}
   <small>(<a href="https://github.com/elixir-lang/elixir/releases/download/v{{ version[1].version }}/Docs.zip">download</a>)</small>
-</h4>
+</h3>
 
 {% if version[1].otp_versions %}
 Supported Erlang/OTP versions: {% for otp in version[1].otp_versions reversed %}{{ otp }}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}.
