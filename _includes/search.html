@@ -1,23 +1,28 @@
+{% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable].version %}
+
 <div class="widget news">
   <h3>News: <a href="/blog/2025/10/16/elixir-v1-19-0-released/">Elixir v1.19.0 released</a></h3>
 </div>
 
 <div class="widget search">
   <form
-    method="post"
+    method="get"
     role="search"
     id="search-form"
     class="search-form"
-    action="https://duckduckgo.com/?kg=p"
-    onsubmit="document.getElementById('searchq').value = document.getElementById('searchfield').value + ' (site:elixir-lang.org | site:hexdocs.pm/elixir | site:hexdocs.pm/mix | site:hexdocs.pm/eex | site:hexdocs.pm/logger | site:hexdocs.pm/iex | site:hexdocs.pm/ex_unit)'; return true;"
+    action="https://hexdocs.pm/"
   >
-    <input type="hidden" id="searchq" name="q" value="" aria-hidden="true" />
-
+    <input
+      type="hidden"
+      name="packages"
+      value="elixir:{{ stable }},eex:{{ stable }},ex_unit:{{ stable }},iex:{{ stable }},logger:{{ stable }},mix:{{ stable }}"
+    />
     <input
       class="search-text"
       type="search"
       placeholder="Search..."
       id="searchfield"
+      name="q"
       aria-label="Search box"
     />
     <input
