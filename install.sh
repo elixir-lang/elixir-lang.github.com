@@ -204,7 +204,7 @@ install_otp_linux() {
   esac
 
   id=$(grep '^ID=' /etc/os-release | cut -d '=' -f 2)
-  if [[ "${id}" != ubuntu || "${id}" != pop ]]; then
+  if [ "${id}" != ubuntu ] && [ "${id}" != pop ]; then
     echo $id is not supported
     exit 1
   fi
