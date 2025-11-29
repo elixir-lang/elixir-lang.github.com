@@ -33,7 +33,16 @@ def intersection(dnf1, dnf2) do
 end
 ```
 
-The advantage of DNFs is their simple structure. Every type can be represented as a union of intersecting terms, making operations like checking if a type is empty simply a matter of checking if at least one intersection in all unions are empty.
+The advantage of DNFs is their simple structure. Every type can be represented as unions of intersecting terms, making operations like checking if a type is empty simply a matter of checking if all unions have at least one intersection that is empty:
+
+```elixir
+def empty?(dnf) do
+  Enum.all?(dnf, fn intersections ->
+    Enum.any?(intersections, &empty_component?/1)
+  end)
+end
+```
+
 
 However, from the snippets above, we can already see DNFs come with significant drawbacks: if we implement unions as simple list concatenations, those unions can have duplicate types and if we don't eliminate duplicates, we can have several repeated entries as unions are built during type checking.
 
