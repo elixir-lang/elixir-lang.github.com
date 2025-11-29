@@ -14,9 +14,9 @@ This article covers the implementation details of the type system. You don't nee
 
 ## DNFs - Disjunctive Normal Forms
 
-A Disjunctive Normal Form (DNF) is a standardized way of expressing logical formulas using only disjunctions (OR operations) of conjunctions (AND operations). In the context of set-theoretic type systems, DNFs provide a canonical representation for union and intersection types.
+A Disjunctive Normal Form (DNF) is a standardized way of expressing logical formulas using only disjunctions (unions) of conjunctions (intersections). In the context of set-theoretic type systems, DNFs provide a canonical representation for union and intersection types, represented respectively as `or` and `and` in Elixir.
 
-In Elixir, we would represent those as lists of lists. Consider a type expression like `(A and B) or (C and D)`. This is already in DNF, it's a union of intersections, and it would be represented as: `[[A, B], [C, D]]`. This means performing unions between two DNFs is a cheap list concatenation:
+In Elixir, we would represent those as lists of lists. Consider a type expression like `(A and B) or (C and D)`. This is already in DNF, it's a union of intersections, and it would be represented as: `[[A, B], [C, D]]`. This means performing unions between two DNFs is a simple list concatenation:
 
 ```elixir
 def union(dnf1, dnf2), do: dnf1 ++ dnf2
@@ -62,7 +62,7 @@ $ %{first_name: String.Chars.t(), last_name: String.Chars.t()} and not
 
 As you can see, in order to express this type, we need a negation (`not`). Or, more precisely, a difference since `A and not B` is the same as `A - B`.
 
-Implementing negations/differences in DNFs is relatively straight-forward. Instead of lists of lists, we now use lists of two-element tuples, where the first element is a list of positive types, and the second is a list of negative types. For example, previously we said `(A and B) or (C and D)` would be represented as `[[A, B], [C, D]]`, now it will be represented as:
+Implementing negations/differences in DNFs is relatively straightforward. Instead of lists of lists, we now use lists of two-element tuples, where the first element is a list of positive types, and the second is a list of negative types. For example, previously we said `(A and B) or (C and D)` would be represented as `[[A, B], [C, D]]`, now it will be represented as:
 
 ```elixir
 [{[A, B], []}, {[C, D], []}]
@@ -80,7 +80,7 @@ The difference between two DNFs is implemented similarly to intersections, excep
 
 Luckily, those exact issues are well documented in literature and are addressed by Binary Decision Diagrams (BDDs), introduced by [Alain Frisch (2004)](https://www.cduce.org/papers/frisch_phd.pdf) and later recalled and expanded by [Giuseppe Castagna (2016)](https://www.irif.fr/~gc/papers/covcon-again.pdf).
 
-BDDs represent set-theoretic operations as an ordered tree. This requires us to provide an order, any order, across all types. Given [all Elixir values have a total order](https://hexdocs.pm/elixir/Kernel.html#module-term-ordering), that's quite straight-forward. Furthermore, by ordering it, we can detect duplicates as we introduce nodes in the tree. The tree can have three distinct node types:
+BDDs represent set-theoretic operations as an ordered tree. This requires us to provide an order, any order, across all types. Given [all Elixir values have a total order](https://hexdocs.pm/elixir/Kernel.html#module-term-ordering), that's quite straightforward. Furthermore, by ordering it, we can detect duplicates as we introduce nodes in the tree. The tree can have three distinct node types:
 
 ```elixir
 type bdd() = :top or :bottom or {type(), constrained :: bdd(), dual :: bdd()}
@@ -154,7 +154,9 @@ type lazy_bdd() = :top or :bottom or
   {type(), constrained :: bdd(), uncertain :: bdd(), dual :: bdd()}
 ```
 
-And now, the type of each non-leaf node can be computed by `(type() and constrained()) or uncertain() or (not type() and dual())`. Here are some examples:
+We'll refer to the `uncertain` as unions going forward.
+
+The type of each non-leaf node can be computed by `(type() and constrained()) or uncertain() or (not type() and dual())`. Here are some examples:
 
 ```elixir
 A = {A, :top, :bottom, :bottom}
@@ -208,7 +210,7 @@ If you carefully look at the formulas above, you can see that intersections and 
 
 Notice how U1 and U2 now appear on both constrained and dual parts and the whole union part of the node disappeared, now listed simply as `:bottom`.
 
-In addition, considering the common case where `C1 = C2 = :top` and `D1 = D2 = :bottom`, the node above becomes `{a1, :top, :bottom, U1 and U2}`, which effectively moves the unions to the dual part. If you play close attention to it, since the union is now `:bottom`, this node is exactly how we represented unions in BDDs, which we know to be problematic.
+In addition, considering the common case where `C1 = C2 = :top` and `D1 = D2 = :bottom`, the node above becomes `{a1, :top, :bottom, U1 and U2}`, which effectively moves the unions to the dual part. If you play close attention to it, since the uncertain is now `:bottom`, we reverted back to the original BDD representation. Any further `union` on those nodes will behave exactly as in the non-lazy BDDs, which we know to be problematic.
 
 In other words, certain operations on lazy BDDs cause unions to revert to the previous BDD representation. So it seems lazy BDDs are not lazy enough? Could we stop this from happening?
 
