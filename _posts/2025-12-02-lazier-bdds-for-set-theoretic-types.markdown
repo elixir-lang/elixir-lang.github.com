@@ -44,9 +44,11 @@ end
 ```
 
 
-However, from the snippets above, we can already see DNFs come with significant drawbacks: if we implement unions as simple list concatenations, those unions can have duplicate types and if we don't eliminate duplicates, we can have several repeated entries as unions are built during type checking.
+On the other hand, the snippets above already help us build an intuition on the drawbacks of DNFs.
 
-Furthermore, we have already seen how intersections are Cartesian products, which can lead to exponential blow ups when performing the intersection of unions. For example, `(A₁ or A₂) and (B₁ or B₂) and (C₁ or C₂)` leads to `(A₁ and B₁ and C₁) or (A₁ and B₁ and C₂) or (A₁ and B₂ and C₁) or ...`, with 8 distinct unions.
+First, we have seen how intersections are Cartesian products, which can lead to exponential blow ups when performing the intersection of unions. For example, `(A₁ or A₂) and (B₁ or B₂) and (C₁ or C₂)` leads to `(A₁ and B₁ and C₁) or (A₁ and B₁ and C₂) or (A₁ and B₂ and C₁) or ...`, with 8 distinct unions.
+
+Furthermore, if we implement unions as simple list concatenations, those unions can end up with duplicated entries, which exacerbates the exponential blow up when we perform intersections of these unions. This forces us to aggressively remove duplicates in unions, making it more complex and expensive than a concatenation.
 
 Despite their limitations, DNFs served us well and were the data structure used as part of Elixir v1.17 and v1.18. However, since Elixir v1.19 introduced type inference of anonymous functions, negations became more prevalent in the type system, making exponential growth more frequent. Let's understand why.
 
@@ -156,7 +158,7 @@ While the above is correct, the issue is that C appears twice in our tree repres
 
 Luckily, the issue above was also forecast by Alain Frisch (2004), where he suggests an additional representation, called BDDs with lazy unions.
 
-In a nutshell, we introduce a new element to each non-leaf node to represent unions:
+In a nutshell, we introduce a new element, called `uncertain`, to each non-leaf node to represent unions:
 
 ```elixir
 type lazy_bdd() = :top or :bottom or
