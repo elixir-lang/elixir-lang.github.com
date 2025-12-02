@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lazier BDDs for set-theoretic types"
+title: "Lazier Binary Decision Diagrams (BDDs) for set-theoretic types"
 authors:
 - José Valim
 - Guillaume Duboc
