@@ -152,7 +152,11 @@ which can be expanded as:
 (A and B) or C
 ```
 
-While the above is correct, the issue is that C appears twice in our tree representation. As we perform further operations in it, it leads to redundant computations causing them to grow exponentially in size on consecutive unions. It seems we traded faster intersections/differences for slower unions. Perhaps we can have our cake and eat it too?
+As you can see, although the representation is correct, its expansion ends-up generating too many disjunctions. And while we can simplify them back to `(A and B) or C` symbolically, doing such simplications in practice are too expensive.
+
+In other words, the BDD expansion grows exponentially in size on consecutive unions, which is particularly troublesome because we must expand the BDD every time we check for emptiness or subtyping.
+
+At the end of the day, it seems we traded faster intersections/differences for slower unions. Perhaps we can have our cake and eat it too?
 
 ## BDDs with lazy unions (or ternary decision diagrams)
 
