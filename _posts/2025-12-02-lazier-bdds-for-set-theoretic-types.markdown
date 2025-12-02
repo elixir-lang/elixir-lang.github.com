@@ -166,7 +166,7 @@ In a nutshell, we introduce a new element, called `uncertain`, to each non-leaf 
 
 ```elixir
 type lazy_bdd() = :top or :bottom or
-  {type(), constrained :: bdd(), uncertain :: bdd(), dual :: bdd()}
+  {type(), constrained :: lazy_bdd(), uncertain :: lazy_bdd(), dual :: lazy_bdd()}
 ```
 
 We'll refer to the `uncertain` as unions going forward.
