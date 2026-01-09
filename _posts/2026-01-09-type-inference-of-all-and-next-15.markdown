@@ -17,13 +17,13 @@ In 2022, [we announced the effort to add set-theoretic types to Elixir](/blog/20
 
 Our goal is to introduce a type system which is:
 
-* **sound** - the inferred and assigned by the type system align with the behaviour of the program
+* **sound** - the types inferred and assigned by the type system align with the behaviour of the program
 
-* **gradual** - Elixir's type system includes the `dynamic()` type, which can be used when the type of a variable or expression is checked at runtime. In the absence of dynamic(), Elixir’s type system behaves as a static one
+* **gradual** - Elixir's type system includes the `dynamic()` type, which can be used when the type of a variable or expression is checked at runtime. In the absence of `dynamic()`, Elixir’s type system behaves as a static one
 
-* **developer friendly** - the types are described, implemented, and composed using basic set operations: unions, intersections, and negation (hence it is a set-theoretic type system)
+* **developer friendly** - the types are described, implemented, and composed using basic set operations: unions, intersections, and negations (hence it is a set-theoretic type system)
 
-However, I want to remark what the gradual typing means in Elixir. Many gradual type systems have the `any()` type, which from the point of view of the type system, it often means "anything goes" and no type violations are reported.
+However, I want to emphasize what the gradual typing means in Elixir. Many gradual type systems have the `any()` type, which from the point of view of the type system, it often means "anything goes" and no type violations are reported.
 
 On the other hand, Elixir's gradual type is called `dynamic()` and it works as a range. For example, you can say `dynamic(integer() or float())`, which means the type is either `integer() or float()` at runtime. Then if you proceed to pass it to a function that expects a `binary()`, you will get a typing violation. This allows the type system to emit warnings even in the presence of dynamism. Even if you declare a type as `dynamic()` and then proceed to use as `integer()` and then `binary()`, a type violation is still reported. We have also [developed new techniques that ensure our gradual typing is sound, without a need for additional runtime checks](/blog/2023/09/20/strong-arrows-gradual-typing/).
 
@@ -53,7 +53,7 @@ defmodule User do
 end
 ```
 
-Elixir’s type system will infer the drive function expects a User struct as input and returns either `{:ok, dynamic()}` or `{:error, :no_choice}` or `{:error, :not_allowed}`. Therefore, the following code
+Elixir’s type system will infer the drive function expects a `User` struct as input and returns either `{:ok, dynamic()}` or `{:error, :no_choice}` or `{:error, :not_allowed}`. Therefore, the following code
 
 ```elixir
 User.drive({:ok, %User{}}, car_choices)
@@ -202,7 +202,7 @@ Assuming all release candidates above go according to plan, we will officially c
 
 Our goal is to continue exploring the solution space in the future Elixir v1.21 (Nov/2026) and v1.22 (May/2027) releases. So while we don't have yet a conclusive answer, the road ahead of us is clear, and we are excited for the next 15 months.
 
-## TL;DR
+## Wrapping up
 
 The first release candidate for Elixir v1.20 is out and includes type inference of all constructs. We will have multiple release candidates before the final release in May/2026, and your feedback is very important:
 
