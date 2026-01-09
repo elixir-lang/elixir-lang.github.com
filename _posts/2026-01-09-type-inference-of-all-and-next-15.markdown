@@ -212,8 +212,8 @@ The first release candidate for Elixir v1.20 is out and includes type inference 
 
 Every release will have a thread in the [Elixir Forum](http://elixirforum.com) for discussion.
 
-Check our documentation to learn more about our [overall work on set-theoretic types](http://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://hexdocs.pm/elixir/main/types-cheat.html).
+Check our documentation to learn more about our [overall work on set-theoretic types](http://hexdocs.pm/elixir/1.20.0-rc.0/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://hexdocs.pm/elixir/1.20.0-rc.0/types-cheat.html).
 
-The [complete CHANGELOG for this release](https://github.com/elixir-lang/elixir/blob/main/CHANGELOG.md) is on GitHub.
+The [complete CHANGELOG for this release](https://github.com/elixir-lang/elixir/blob/v1.20.0-rc.0/CHANGELOG.md) is on GitHub.
 
 Happy coding!
