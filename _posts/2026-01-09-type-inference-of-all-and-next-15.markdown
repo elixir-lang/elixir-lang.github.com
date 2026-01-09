@@ -4,10 +4,10 @@ title: "Type inference of all constructs and the next 15 months"
 authors:
 - José Valim
 category: Announcements
-excerpt: "Today we celebrate 15 years since Elixir's first commit! To mark the occasion, we are glad to announce the first release candidate for Elixir v1.20, which peforms type inference of all language constructs, with increasing precision."
+excerpt: "Today we celebrate 15 years since Elixir's first commit! To mark the occasion, we are glad to announce the first release candidate for Elixir v1.20, which performs type inference of all language constructs, with increasing precision."
 ---
 
-Today we celebrate 15 years since [Elixir's first commit](https://github.com/elixir-lang/elixir/commit/337c3f2d569a42ebd5fcab6fef18c5e012f9be5b)! To mark the occasion, we are glad to announce the first release candidate for Elixir v1.20, which peforms type inference of all language constructs, with increasing precision.
+Today we celebrate 15 years since [Elixir's first commit](https://github.com/elixir-lang/elixir/commit/337c3f2d569a42ebd5fcab6fef18c5e012f9be5b)! To mark the occasion, we are glad to announce the first release candidate for Elixir v1.20, which performs type inference of all language constructs, with increasing precision.
 
 In this blog post, we will break down exactly what this means, and what to expect in the short and medium term of the language evolution (roughly the next 15 months).
 
@@ -155,7 +155,7 @@ case some_function_call() do
 end
 ```
 
-Today, we know `user` in the first clause has the `name` field (and potentially other fields). We know that `user` in the second clause has `first_name` and `last_name`. The code above also implies that `user` in the second clause **does not** have the `name` field (after all, if it had the `name` field, the first clause would have matched). In the first release candidate, the type system cannot infer this information yet, but it will be implemented in the following release candidate.
+Today, we know `user` in the first clause has the `name` field (and potentially other fields). We know that `user` in the second clause has `first_name` and `last_name`. The code above also implies that `user` in the second clause **does not** have the `name` field (after all, if it had the `name` field, the first clause would have matched). In other words, pattern matching order becomes a source of negative type information. In the first release candidate, the type system cannot infer this information yet, but it will be implemented in the following release candidate.
 
 Besides giving us more precise types, the above will also allow us to perform exhaustiveness checks as well as find redundant clauses (note we already warn for clauses that won't ever match since Elixir v1.18).
 
@@ -212,8 +212,8 @@ The first release candidate for Elixir v1.20 is out and includes type inference 
 
 Every release will have a thread in the [Elixir Forum](http://elixirforum.com) for discussion.
 
-Chech our documentation to learn more about our [overall work on set-theoretic types](http://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://hexdocs.pm/elixir/main/types-cheat.html).
+Check our documentation to learn more about our [overall work on set-theoretic types](http://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://hexdocs.pm/elixir/main/types-cheat.html).
 
-The [complete CHANGELOG for this release](https://github.com/elixir-lang/elixir/blob/main/CHANGELOG.md) in on GitHub.
+The [complete CHANGELOG for this release](https://github.com/elixir-lang/elixir/blob/main/CHANGELOG.md) is on GitHub.
 
 Happy coding!
