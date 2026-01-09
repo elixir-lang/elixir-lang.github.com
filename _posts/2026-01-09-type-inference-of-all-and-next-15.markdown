@@ -200,7 +200,7 @@ Assuming all release candidates above go according to plan, we will officially c
 
 * Performance: our current implementation does not yet support recursive and parametric types and those may also directly impact performance and make the type system unfeasible
 
-Our goal is to explore these problems and their solutions in the future Elixir v1.21 (Nov/2026) and v1.22 (May/2027) releases, by implementing these operations in the compiler and using it to internally type complex Elixir module, such as the `Enum` module. So while we don't have a precise date for when we will conclude these upcoming milesatones, we will likely continue to see gradual improvements on every release for the next 15 months.
+Our goal is to explore these problems and their solutions in the future Elixir v1.21 (Nov/2026) and v1.22 (May/2027) releases, by implementing these operations in the compiler and using it to internally type complex Elixir module, such as the `Enum` module. So while we don't have a precise date for when we will conclude these upcoming milestones, we will likely continue to see gradual improvements on every release for the next 15 months.
 
 ## Wrapping up
 
