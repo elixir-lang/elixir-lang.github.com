@@ -59,11 +59,11 @@ Elixir’s type system will infer the drive function expects a User struct as in
 User.drive({:ok, %User{}}, car_choices)
 ```
 
-will emit a warning stating that we are passing an invalid argument:
+will emit a warning stating that we are passing an invalid argument, both in your IDE and the shell:
 
 ![Example of a warning when passing wrong argument to a function](/images/contents/type-warning-function-clause.png)
 
-Now consider the expression below. We are expecting the `User.drive/2` call to return :error, which cannot possibly be true:
+Now consider the expression below. We are expecting the `User.drive/2` call to return `:error`, which cannot possibly be true:
 
 ```elixir
 case User.drive(user, car_choices) do
@@ -76,7 +76,7 @@ Therefore the code above would emit the following warning:
 
 ![Example of a warning when a case clause won't ever match](/images/contents/type-warning-case.png)
 
-However, Elixir v1.18 could only infer types from patterns. Therefore if you wrote this code:
+However, Elixir v1.18 could only infer types from patterns. If you wrote this code:
 
 ```elixir
 def user_age_to_string(user) do
@@ -84,7 +84,7 @@ def user_age_to_string(user) do
 end
 ```
 
-Elixir would not infer anything about the function arguments. As of Elixir v1.20-rc, Elixir correctly infers the function to be `%{..., age: integer()} -> binary()`, which means it expects a map with at least the `age` field (the leading `...` indicates other keys could be present) and it returns a `binary()`.
+Elixir would not infer anything about the function arguments. As of Elixir v1.20-rc, Elixir correctly infers the function to be `%{..., age: integer()} -> binary()`, which means it expects a map with at least the `age` field (the leading `...` indicates other keys may be present) and it returns a `binary()`.
 
 Or let's see another example:
 
@@ -140,7 +140,7 @@ As we work on the type system, we have been carefully monitoring the compiler pe
 
 The next Elixir release is scheduled for May. Until then, we plan to launch at least three release candidates with increased type checking.
 
-The first release candidate is out right now, with type inference of all Elixir constructs. Please give it a try. However, at this stage, we expect some false positives: the type system will report warnings which are not actual violations. We will explain exactly why in the next paragraphs. So don't change your programs yet. The most valuable feedback we want from you is performance! If everything compiles at roughly the same speed as before, then hoooray!
+The first release candidate is out right now, with type inference of all Elixir constructs. Please give it a try. However, at this stage, we expect some false positives: the type system will report warnings which are not actual violations. We will explain exactly why in the next paragraphs. So don't change your programs yet. The most valuable feedback we want from you is performance! If everything compiles at roughly the same speed as before, then hooray!
 
 The second release candidate will add type inference across clauses. Let's see some examples. Take this code:
 
@@ -151,7 +151,7 @@ case some_function_call() do
 end
 ```
 
-Today, we know `user` in the first clause has the `name` field (and potentially other fields). We know that `user` in the second clause has `first_name` and `last_name`. However, the code above also tells us that `user` in the second clause **does not** have the `name` field (after all, if it had the `name` field, the first clause would have matched). In the first release candidate, the type system cannot infer this information yet, but it will be implemented in a future release candidate.
+Today, we know `user` in the first clause has the `name` field (and potentially other fields). We know that `user` in the second clause has `first_name` and `last_name`. However, the code above also tells us that `user` in the second clause **does not** have the `name` field (after all, if it had the `name` field, the first clause would have matched). In the first release candidate, the type system cannot infer this information yet, but it will be implemented in the following release candidate.
 
 Besides giving us more precise types, the above will also allow us to perform exhaustiveness checks as well as find redundant clauses (note we already warn for clauses that won't ever match since Elixir v1.18).
 
@@ -209,5 +209,9 @@ The first release candidate for Elixir v1.20 is out and includes type inference 
 * Jan/2026: inference of all constructs, may have many false positives, assess performance!
 * Feb-Mar/2026: inference across clauses, few or none false positives, assess performance!
 * Apr-May/2026: inference across dependencies, assess performance!
+
+Chech our documentation to learn more about our [overall work on set-theoretic types](http://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://hexdocs.pm/elixir/main/types-cheat.html).
+
+The [complete CHANGELOG for this release](https://github.com/elixir-lang/elixir/blob/main/CHANGELOG.md) in on GitHub.
 
 Happy coding!
