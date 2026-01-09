@@ -140,7 +140,11 @@ As we work on the type system, we have been carefully monitoring the compiler pe
 
 The next Elixir release is scheduled for May. Until then, we plan to launch _at least three release candidates_ with increased type checking.
 
+### Jan/2026: inference of all constructs
+
 The first release candidate is out right now, with type inference of all Elixir constructs. Please give it a try. However, at this stage, we expect some false positives: the type system will report warnings which are not actual violations. We will explain exactly why in the next paragraphs. So don't change your programs yet. The most valuable feedback we want from you is performance! If everything compiles at roughly the same speed as before, then hooray!
+
+### Feb-Mar/2026: inference across clauses
 
 The second release candidate will add type inference across clauses. Let's see some examples. Take this code:
 
@@ -166,6 +170,8 @@ end
 
 Can we say the `user` in the second clause does not have the `age` field? No, we can't, because the first clause only matches if age is greater than or equal to 21. So the second clause will still match users with a lower age. This means we must distinguish between "surely accepted clauses" and "potentially accepted clauses".
 
+### Apr-May/2026: inference across dependencies
+
 Finally, we will ship a third release candidate, which enables type inference for function calls across your dependencies. In the current release candidate, Elixir can infer types from function calls, but such inference only applies to modules from Elixir's standard library. Take the following code:
 
 ```elixir
@@ -175,12 +181,6 @@ end
 ```
 
 In the code above, we will infer `x` is an `integer()`, but if instead you call `MyInteger.to_string(x)` from a dependency, we only perform type checking, we won't infer the `integer_to_string` function expects an integer. Once implemented, this step will drastically increase the amount of types flowing through the compiler, hence we are dedicating a release candidate for it.
-
-Summing up, we plan at least three release candidates:
-
-* Jan/2026: inference of all constructs, may have many false positives, assess performance!
-* Feb-Mar/2026: inference across clauses, few or none false positives, assess performance!
-* Apr-May/2026: inference across dependencies, assess performance!
 
 ## The next ~15 months
 
@@ -209,6 +209,8 @@ The first release candidate for Elixir v1.20 is out and includes type inference 
 * Jan/2026: inference of all constructs, may have many false positives, assess performance!
 * Feb-Mar/2026: inference across clauses, few or none false positives, assess performance!
 * Apr-May/2026: inference across dependencies, assess performance!
+
+Every release will have a thread in the [Elixir Forum](http://elixirforum.com) for discussion.
 
 Chech our documentation to learn more about our [overall work on set-theoretic types](http://hexdocs.pm/elixir/main/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://hexdocs.pm/elixir/main/types-cheat.html).
 
