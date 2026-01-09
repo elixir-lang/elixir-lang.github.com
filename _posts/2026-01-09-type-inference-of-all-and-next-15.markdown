@@ -9,7 +9,7 @@ excerpt: "Today we celebrate 15 years since Elixir's first commit! To mark the o
 
 Today we celebrate 15 years since [Elixir's first commit](https://github.com/elixir-lang/elixir/commit/337c3f2d569a42ebd5fcab6fef18c5e012f9be5b)! To mark the occasion, we are glad to announce the first release candidate for Elixir v1.20, which peforms type inference of all language constructs, with increasing precision.
 
-In this blog post, we will break down exactly what this means, and what to expect in the short and medium of the language evolution (roughly the next 15 months).
+In this blog post, we will break down exactly what this means, and what to expect in the short and medium term of the language evolution (roughly the next 15 months).
 
 ## Types, in my Elixir?
 
@@ -23,7 +23,7 @@ Our goal is to introduce a type system which is:
 
 * **developer friendly** - the types are described, implemented, and composed using basic set operations: unions, intersections, and negations (hence it is a set-theoretic type system)
 
-However, I want to emphasize what the gradual typing means in Elixir. Many gradual type systems have the `any()` type, which from the point of view of the type system, it often means "anything goes" and no type violations are reported.
+However, I want to emphasize what the gradual typing means in Elixir. Many gradual type systems have the `any()` type, which, from the point of view of the type system, often means "anything goes" and no type violations are reported.
 
 On the other hand, Elixir's gradual type is called `dynamic()` and it works as a range. For example, you can say `dynamic(integer() or float())`, which means the type is either `integer() or float()` at runtime. Then if you proceed to pass it to a function that expects a `binary()`, you will get a typing violation. This allows the type system to emit warnings even in the presence of dynamism. Even if you declare a type as `dynamic()` and then proceed to use as `integer()` and then `binary()`, a type violation is still reported. We have also [developed new techniques that ensure our gradual typing is sound, without a need for additional runtime checks](/blog/2023/09/20/strong-arrows-gradual-typing/).
 
@@ -94,9 +94,9 @@ def add_rem(a, b) do
 end
 ```
 
-While `a + b` works with both integers and floats, because the `remainder` operation works exclusively with integers, Elixir correctly infers that `a` and `b` must also both be integers. If you try calling the function above with a float, you will also get a type violation.
+While `a + b` works with both integers and floats, because the `rem` (remainder) function works exclusively with integers, Elixir correctly infers that `a` and `b` must also both be integers. If you try calling the function above with a float, you will also get a type violation.
 
-In a nutshell, we have been steadily increasing the amount of inference in Elixir programs. Our goal is to find typing violations in Elixir programs for free, without a need for developers to change existing code. And, in the last few days, we finally wrapped it all up by introducing inference of guards.
+In a nutshell, we have been steadily increasing the amount of inference in Elixir programs. Our goal is to find typing violations in Elixir programs for free, without a need for developers to change existing code. And, in the last few days, we finally wrapped up the last missing piece.
 
 ## Inference of guards
 
@@ -132,13 +132,13 @@ You can also have expressions that assert on the size of data structures:
 def example(x) when tuple_size(x) < 3
 ```
 
-Elixir will correctly track the tuple has at most two elements, and therefore accessing `elem(x, 3)` will emit a typing violation. In other words, Elixir can look at complex guards, infer types, and use this information to find bugs in our code!
+Elixir will correctly track that the tuple has at most two elements, and therefore accessing `elem(x, 3)` will emit a typing violation. In other words, Elixir can look at complex guards, infer types, and use this information to find bugs in our code!
 
 ## The next ~15 weeks
 
 As we work on the type system, we have been carefully monitoring the compiler performance. And while we have been able to [develop new techniques to keep everything running smoothly](/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/), the next weeks will dramatically ramp up the amount of type information flowing through the compiler, and therefore we need your feedback.
 
-The next Elixir release is scheduled for May. Until then, we plan to launch at least three release candidates with increased type checking.
+The next Elixir release is scheduled for May. Until then, we plan to launch _at least three release candidates_ with increased type checking.
 
 The first release candidate is out right now, with type inference of all Elixir constructs. Please give it a try. However, at this stage, we expect some false positives: the type system will report warnings which are not actual violations. We will explain exactly why in the next paragraphs. So don't change your programs yet. The most valuable feedback we want from you is performance! If everything compiles at roughly the same speed as before, then hooray!
 
@@ -151,7 +151,7 @@ case some_function_call() do
 end
 ```
 
-Today, we know `user` in the first clause has the `name` field (and potentially other fields). We know that `user` in the second clause has `first_name` and `last_name`. However, the code above also tells us that `user` in the second clause **does not** have the `name` field (after all, if it had the `name` field, the first clause would have matched). In the first release candidate, the type system cannot infer this information yet, but it will be implemented in the following release candidate.
+Today, we know `user` in the first clause has the `name` field (and potentially other fields). We know that `user` in the second clause has `first_name` and `last_name`. The code above also implies that `user` in the second clause **does not** have the `name` field (after all, if it had the `name` field, the first clause would have matched). In the first release candidate, the type system cannot infer this information yet, but it will be implemented in the following release candidate.
 
 Besides giving us more precise types, the above will also allow us to perform exhaustiveness checks as well as find redundant clauses (note we already warn for clauses that won't ever match since Elixir v1.18).
 
@@ -164,7 +164,7 @@ case some_function_call() do
 end
 ```
 
-Could we say the `user` in the second clause does not have the `age` field? No, we can't, because the first clause only matches if age is greater than or equal to 21. So the second clause will still match users with lower age. This means we must check distinguish between "surely accepted clauses" and "potentially accepted clauses".
+Can we say the `user` in the second clause does not have the `age` field? No, we can't, because the first clause only matches if age is greater than or equal to 21. So the second clause will still match users with a lower age. This means we must distinguish between "surely accepted clauses" and "potentially accepted clauses".
 
 Finally, we will ship a third release candidate, which enables type inference for function calls across your dependencies. In the current release candidate, Elixir can infer types from function calls, but such inference only applies to modules from Elixir's standard library. Take the following code:
 
@@ -194,13 +194,13 @@ When we [first announced the type system effort](/blog/2022/10/05/my-future-with
 
 3. Introduction of type signatures, including for parametric and protocol polymorphism
 
-Assuming all release candidates above go according to plan, we will officially conclude the first milestone as part of Elixir v1.20. However, I'd still not say Elixir will surely become a typed language, for two reasons:
+Assuming all release candidates above go according to plan, we will officially conclude the first milestone as part of Elixir v1.20 and start working on the subsequent ones. However, there are still challenges ahead that may prove the type system to be impractical:
 
 * Ergonomics: all of our improvements so far have happened behind the scenes, without changes to the language. While this has been very valuable to validate the feasibility and performance of the type system, we still need to assess its impact on the developer experience
 
 * Performance: our current implementation does not yet support recursive and parametric types and those may also directly impact performance and make the type system unfeasible
 
-Our goal is to continue exploring the solution space in the future Elixir v1.21 (Nov/2026) and v1.22 (May/2027) releases. So while we don't have yet a conclusive answer, the road ahead of us is clear, and we are excited for the next 15 months.
+Our goal is to explore these problems and their solutions in the future Elixir v1.21 (Nov/2026) and v1.22 (May/2027) releases, by implementing these operations in the compiler and using it to internally type complex Elixir module, such as the `Enum` module. So while we don't have a precise date for when we will conclude these upcoming milesatones, we will likely continue to see gradual improvements on every release for the next 15 months.
 
 ## Wrapping up
 
