@@ -138,7 +138,7 @@ Elixir will correctly track that the tuple has at most two elements, and therefo
 
 As we work on the type system, we have been carefully monitoring the compiler performance. And while we have been able to [develop new techniques to keep everything running smoothly](/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/), the next weeks will dramatically ramp up the amount of type information flowing through the compiler, and therefore we need your feedback.
 
-The next Elixir release is scheduled for May. Until then, we plan to launch _at least three release candidates_ with increased type checking.
+The next Elixir release is scheduled for May. We are shipping this release candidate earlier than usual for validation. We also plan to launch _at least two additional release candidates_ with increased type checking.
 
 ### Jan/2026: inference of all constructs
 
