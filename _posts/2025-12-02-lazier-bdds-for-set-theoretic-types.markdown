@@ -317,7 +317,7 @@ Unfortunately, we can't apply this for `a2 > a1`, as differences are asymmetric 
 {a2, B1 and not (C2 or U2), :bottom, B1 and not (D2 or U2)} when a1 > a2
 ```
 
-With these new formulas, all new typing features in Elixir v1.19 perform efficiently and most projects now type check faster than in Elixir v1.18. We have also been able to use the rules above to derive additional optimizations for differences, such as when `a1 == a2 and U2 == :bottom`, which will be part of future releases. Hooray!
+With these new formulas, all new typing features in Elixir v1.19 perform efficiently and most projects now type check faster than in Elixir v1.18. You can derive similar properties when `a1 == a2` and `(U1 == :bottom) or (U1 == U2)`. Give it a try!
 
 ## Acknowledgements
 
