@@ -7,8 +7,6 @@ category: Internals
 excerpt: "This article explores the latest batch of optimizations we did to set-theoretic types and their representation"
 ---
 
-# Lazy BDDs with eager literal intersections
-
 In [a previous article](/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/),
 we discussed how Elixir changed its set-theoretic types representation from
 Disjunctive Normal Forms (DNFs) to Lazy Binary Decision Diagrams (Lazy BDDs).
