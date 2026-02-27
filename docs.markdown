@@ -12,6 +12,11 @@ reference the documentation for the modules and functions in each of those
 applications. See also [our Getting Started guide](https://hexdocs.pm/elixir/introduction.html)
 and [the Learning page](/learning.html) for books, courses, videos, and more.
 
+In addition to the applications that make up Elixir the following libraries are maintained by the Elixir team:
+
+* [ExDoc](https://hexdocs.pm/ex_doc/) - documentation generator
+* [GenStage](https://hexdocs.pm/gen_stage/) - specification for exchanging events between producers and consumers
+
 {% assign stable = site.data.elixir-versions[site.data.elixir-versions.stable] %}
 
 {% for version in site.data.elixir-versions %}
