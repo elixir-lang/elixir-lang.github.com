@@ -84,8 +84,8 @@ explores these downsides and how we addressed them.
 ## The trouble with laziness
 
 As we described above, lazy BDDs allow us to represent set-theoretic 
-operations at any depth. And while this is extremely useful for unions
-and differences, they offer a downside when it comes to intersections.
+operations at any depth. And while this is useful in many cases,
+they offer a downside when it comes to intersections.
 For example, take this type:
 
 ```elixir
@@ -179,7 +179,7 @@ but that may not always be the case.
 To discuss exactly when these trade-offs may be problematic, let's talk about open vs
 closed types.
 
-### Open vs closed types
+## Open vs closed types
 
 Elixir's type system can represent both open and closed maps. When you write:
 
@@ -213,139 +213,6 @@ then it will generate a cartesian product of all combinations! However,
 if they were closed maps, the end result would be empty. For this reason,
 we recommend applying the eager literal intersection only when the
 intersection will often lead to empty types.
-
-## Optimizing differences
-
-The difference between `B1 \ B2` can always be expressed as the intersection
-between `B1` and `not B2`, which is precisely how we write differences in Elixir.
-
-Now take the following type:
-
-```elixir
-{:ok, integer()} and not {:error, integer()}
-```
-
-Currently, both `ok`-type and `error`-type are stored as nodes in the BDD.
-However, it is clear in the example above the types are disjoint and the
-result is `{:ok, integer()}`.
-
-If we know the literals `a1` and `a2` are disjoint (their intersection is
-empty), then it is likely we can avoid adding nodes to the tree.
-
-Furthermore, imagine this type:
-
-```elixir
-{:ok, integer()} and not (not {:error, integer()})
-```
-
-The difference will convert the negation into a positive, resulting in
-`{:ok, integer()} and {:error, integer()}`, which is empty. Therefore,
-if `B2` contains negations (which means its `D2` component is not bottom),
-then we can also apply the eager literal intersection optimization from
-the previous section.
-
-We will explore both scenarios next, starting with the one where D2
-is bottom.
-
-### When `D2` is bottom
-
-We start `B1 and not B2`:
-
-```elixir
-B1 and not B2
-```
-
-Next let's break `B1` into `(a1 and C1) or B1_no_C1`, where `B1_no_C1` is `U1 or (not a1 and D1)`:
-
-```elixir
-((a1 and C1) or B1_no_C1) and not B2
-```
-
-Now we distribute the difference:
-
-```elixir
-((a1 and C1) and not B2) or (B1_no_C1 and not B2)
-```
-
-Let's solve the left-hand side. We know `B2 = (a2 and C2) or U2` (remember `D2` is bottom), so let's add that:
-
-```elixir
-(a1 and C1 and not ((a2 and C2) or U2))
-or (B1_no_C1 and not B2)
-```
-
-Now distribute the `not` and remove the parenthesis:
-
-```elixir
-(a1 and C1 and not (a2 and C2) and not U2)
-or (B1_no_C1 and not B2)
-```
-
-Now, **if `a1` and `a2` are disjoint**, then `a1 and not (a2 and C2)` is the same as `a1`.
-This happens because if `a1` and `a2` are disjoint, `a2 and C2` is a subset of `a2`,
-which is then also disjoint with `a1`. So the first part simplifies to `a1 and C1 and not U2`:
-
-```elixir
-(a1 and C1 and not U2) or (B1_no_C1 and not B2)
-```
-
-Now by expanding `B1_no_C1` into `U1 or (not a1 and D1)` and distributed
-the union, we get:
-
-```elixir
-(a1 and C1 and not U2) or (U1 and not B2) or (not a1 and D1 and not B2)
-```
-
-which is in the BDD format! So we can rewrite the difference of disjoint literals as:
-
-```elixir
-{a1, C1 and not U2, U1 and not B2, D1 and not B2}
-```
-
-which completely avoids adding `a2` to the BDD and can then continue recursively.
-
-### When `D2` is not bottom
-
-When D2 is not bottom, it means B2 has a negated component.
-Since B2 itself is negated when part of a difference, the D2
-component of B2 becomes an intersection, and we can apply the
-same eager literal technique we applied to intersections.
-
-Once again, we start `B1 and not B2`:
-
-```elixir
-B1 and not B2
-```
-
-Now let's break `B2` into `(B2_no_D2 or (not a2 and D2))`, where `B2_no_D2` is `(a2 and C2) or U2`:
-
-```elixir
-(B1) and not (B2_no_D2 or (not a2 and D2))
-```
-
-Now we distribute the negation all the way through:
-
-```elixir
-(B1) and (not B2_no_D2 and (a2 or not D2))
-```
-
-And distribute `B1`'s intersection with `(a2 or not D2)`:
-
-```elixir
-((B1 and a2) or (B1 and not D2)) and not B2_no_D2
-```
-
-`B1 and a2` is an eager literal intersection from the previous section,
-which we can reuse!
-
-Furthermore, notice at the end we compute the difference between
-`((B1 and a2) or (B1 and not D2))` and `B2_no_D2`. Given `B2_no_D2`
-by definition has `D2 = bottom`, we can apply the optimized
-difference for when D2 is bottom.
-
-At the moment, we are not applying this optimization in Elixir,
-as the difference with negations on the right-hand side are uncommon.
-We may revisit this in the future.
 
 ## Results
 
