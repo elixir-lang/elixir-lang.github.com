@@ -318,7 +318,7 @@ and change the order of operations:
 (a_diff or (a1 and not C2)) and (a2 or not D2) and not U2
 ```
 
-We distribute the first intersection once again, so we end up with:
+We now distribute `(a_diff or (a1 and not C2)) and (a2 or not D2)`:
 
 ```
 ((a_diff and (a2 or not D2)) or
