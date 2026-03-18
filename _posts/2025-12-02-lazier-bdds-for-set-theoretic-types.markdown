@@ -277,26 +277,7 @@ The issues we outlined above for intersections are even worse for differences. L
 {a2, B1 and not (C2 or U2), :bottom, B1 and not (D2 or U2)} when a1 > a2
 ```
 
-As you can see, all operations shuffle the union nodes and return `:bottom`. But this time, we know how to improve it! Let's start with `a1 == a2`. If we expand the difference in the constrained part, we get:
-
-```elixir
-(C1 and not C2 and not U2) or (U1 and not C2 and not U2)
-```
-
-If we do the same in the dual part, we have:
-
-```elixir
-(D1 and not D2 and not U2) or (U1 and not D2 and not U2)
-```
-
-Unfortunately, there are no shared union terms between the constrained and dual parts, unless C2 and D2 are `:bottom`. Therefore, instead of fully rewriting the difference of equal nodes, we add the following special case:
-
-```elixir
-{a1, C1 and not U2, U1 and not U2, D1 and not U2}
-when a1 == a2 and C2 == :bottom and D2 == :bottom
-```
-
-We can apply a similar optimization when `a1 < a2`. The current formula:
+As you can see, all operations shuffle the union nodes and return `:bottom`. However, after analyzing each condition carefully, we can apply a similar optimization when `a1 < a2`. The current formula:
 
 ```elixir
 {a1, (C1 or U1) and not B2, :bottom, (D1 or U1) and not B2} when a1 < a2
@@ -311,13 +292,14 @@ The constrained part can be written as `(C1 and not B2) or (U1 and not B2)` and 
 Unfortunately, we can't apply this for `a2 > a1`, as differences are asymmetric and do not distribute over unions on the right side. Therefore, the updated formula for difference is:
 
 ```elixir
-{a1, C1 and not U2, U1 and not U2, D1 and not U2} when a1 == a2 and C2 == :bottom and D2 == :bottom
 {a1, (C1 or U1) and not (C2 or U2), :bottom, (D1 or U1) and not (D2 or U2)} when a1 == a2
 {a1, C1 and not B2, U1 and not B2, D1 and not B2} when a1 < a2
 {a2, B1 and not (C2 or U2), :bottom, B1 and not (D2 or U2)} when a1 > a2
 ```
 
-With these new formulas, all new typing features in Elixir v1.19 perform efficiently and most projects now type check faster than in Elixir v1.18. You can derive similar properties when `a1 == a2` and `(U1 == :bottom) or (U1 == U2)`. Give it a try!
+With these new formulas, all new typing features in Elixir v1.19 perform efficiently and most projects now type check faster than in Elixir v1.18.
+
+> Note from 2026-03-18: a previous version of this article provided special cases for `a1 == a2` but we noticed it led to a performance degradation in Elixir v1.20, therefore they have been removed from the article. The original formula can be found in Guillaume Duboc's thesis. The formulas above represent the ones found in the Elixir compiler as of the day of this note.
 
 ## Acknowledgements
 
