@@ -44,17 +44,18 @@ patterns and guards, **minus** the types of the previous clauses.
 Furthermore, we can now check if a clause is redundant by checking if its
 type definition is a subset/subtype of the previous ones. For example, if
 you have three clauses, each with type `clause1`, `clause2`, and `clause3`,
-you know `clause3` is redundant if:
+you know `clause3` is redundant if its type is contained in the union of
+the types of `clause1` and `clause2`:
 
 ```
 clause3 ⊆ (clause1 ∪ clause2)
 ```
 
-> In set-theoretic types, a type is a subtype of the other if it is a subset
-> of said type, so we will use these terms interchangeably.
-
-Or alternatively, the type is redundant if the difference between `clause3`
-and the union of the clauses is empty. In Elixir terms:
+In set-theoretic types, a type is a subtype of the other if it is a subset
+of said type, so we will use these terms interchangeably. Furthermore,
+checking if a type is a subset/subtype of another can be done by checking
+if the difference between `clause3` and the union of the clauses is empty.
+In Elixir terms:
 
 ```elixir
 empty?(difference(clause3, union(clause1, clause2)))
@@ -326,16 +327,19 @@ We now distribute `(a_diff or (a1 and not C2)) and (a2 or not D2)`:
 ```
 
 `a_diff and a2` is empty, so the first `and` becomes `a_diff and not D2`.
-Then we distribute the second `and`:
+Then we distribute the second `and` and, after replacing `a1 and a2` by
+`a_int`, we get the following:
 
 ```
 ((a_diff and not D2) or
- (a1 and a2 and not C2) or
+ (a_int and not C2) or
  (a1 and not C2 and not D2)) and not U2
 ```
 
-We know that `a1 and a2` is `a_int`. But we also know that `a1 = a_diff or a_int`,
-so we end up with:
+At this point, I thought no further simplifications were possible. That's
+when I reached to Claude Opus 4.6 to explore alternative variations and it
+suggested the following "obvious-only-in-hindsight" simplication.
+We know that `a1 = a_diff or a_int`, so let's slot that in:
 
 ```
 ((a_diff and not D2) or
@@ -343,11 +347,21 @@ so we end up with:
  ((a_diff or a_int) and not C2 and not D2)) and not U2
 ```
 
-If we distribute `(a_diff or a_int) and not C2 and not D2)`,
-we get two new terms `a_diff and not C2 and not D2` and
-`a_int and not C2 and not D2`, and those two new terms are
-subsets of `a_diff and not D2` and `a_int and not C2` respectively,
-which means they can be fully discarded, so we end up with:
+Now if we distribute `(a_diff or a_int) and not C2 and not D2)`, we get:
+
+```
+((a_diff and not D2) or
+ (a_int and not C2) or
+ (a_diff and not C2 and not D2) or
+ (a_int and not C2 and not D2)) and not U2
+```
+
+However, we know that `(a_diff and not D2 and not C2)` is
+a subtype of `(a_diff and not D2)` (as it is the same set
+minus C2), and the same applies to `(a_int and not C2 and not D2)`.
+And then union of two types `a or b`, when `b` is a subset,
+is always `a`. Therefore both terms can be fully discarded,
+so we end up with:
 
 ```
 ((a_diff and not D2) or (a_int and not C2)) and not U2
@@ -356,12 +370,12 @@ which means they can be fully discarded, so we end up with:
 ## Summary
 
 We implemented all simplifications above and they will be available
-in full in Elixir v1.20.0-rc4. At the moment, we have measured clear
-impact from the left-hand side optimizations, allowing us to drastically
-improve the type system performance when checking thousands of clauses
-or large structs. At the moment, we did not spot any scenarios where the
-right-hand side optimizations were useful, most likely because it does
-not show up in codebases (yet).
+in full as part of Elixir v1.20.0-rc4. At the moment, we have measured
+clear impact from the "literal on the left-hand side" optimizations,
+allowing us to drastically improve the type system performance when
+checking thousands of clauses or large structs. At the moment,
+we did not spot any scenarios where the right-hand side optimizations
+were useful, most likely because it does not show up in codebases (yet).
 
-We will continue assessing the performance of the type system based on
-community feedback as we add more features.
+We will continue assessing the performance of the type system as we add
+more features based on community feedback.
