@@ -4,7 +4,7 @@ title: "Lazy BDDs with eager literal differences"
 authors:
 - José Valim
 category: Internals
-excerpt: "This is a follow up to our batch of set-theoretic types optimizations, this time targetting differences"
+excerpt: "This is a follow up to our batch of set-theoretic types optimizations, this time targeting differences"
 ---
 
 In [a previous article](/blog/2026/02/26/eager-literal-intersections/),
@@ -62,7 +62,7 @@ empty?(difference(clause3, union(clause1, clause2)))
 ```
 
 Long story short: with Elixir v1.20.0-rc.2, the type system is seeing an
-increase number of differences. Projects where modules had 1000+ of clauses
+increasing number of differences. Projects where modules had 1000+ of clauses
 were taking too long to compile, so it was time to derive new formulas and
 optimizations.
 
@@ -139,7 +139,7 @@ one of the sides is exclusively a literal, which means that `C = :top`,
 
 ### Literal on the right-hand side
 
-We want to derive new formulas for difference when `B2` is a literal.
+We want to derive new formulas for the difference when `B2` is a literal.
 Let's start with the base formula:
 
 ```
@@ -178,7 +178,7 @@ eager literal difference recursively.
 
 ### Literal on the left-hand side
 
-Now let's derive new formulas for difference when `B1` is a literal.
+Now let's derive new formulas for the difference when `B1` is a literal.
 This means we want to compute:
 
 ```
