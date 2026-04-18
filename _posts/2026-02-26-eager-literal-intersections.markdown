@@ -154,7 +154,7 @@ If `a1 and a2` is empty, then the whole C1 node can be eliminated.
 
 Then we proceed recursively intersect `a2` with every literal node in `a2 and U1`
 and `a2 and D1`. And, if their literal nodes are empty, those subtrees are eliminated
-too. This allows us to dramatically cut down the size of tree! In our benchmarks,
+too. This may allows us to cut down the size of tree considerably! In our benchmarks,
 these optimizations allowed us to reduce type checking of a module from 10s to
 25ms.
 
@@ -162,22 +162,20 @@ The remaining terms of the union are `U2 and B1` and `(not a2 and D2) and B1`.
 If desired, we could apply the same eager literal intersection optimization to
 `U2 and B1` (as long as the constrained part in either `U2` or `B1 ` are `:top`).
 
-This optimization has worked quite well for us, but it is important to keep in
-mind since BDDs are ordered and the literal intersection may create a new literal
-value, this optimization must be applied semantically so we can recompute the
-position of intersected literals in the tree. We cannot apply it when we are
-already traversing the tree using the general lazy BDD formulas from the previous
-article.
+This optimization has worked quite well for us but there are some pitfalls one
+must be aware of. The first of them is to consider how expensive it is to compute
+that the literal intersection is empty. Since this is an optimization, the check
+itself does not have to be complete and you can optimize only certain idioms.
 
-Finally, note this optimization may eagerly reintroduce some of the complexity seen
-in DNFs if applied recursively. For instance, if you have `(foo or bar) and (baz or bat)`,
-the recursive application of eager literal intersections will yield
-`(foo and baz) or (foo and bat) or (bar and baz) or (bar and bat)`. If most of those
-intersections are eliminated, then applying eager literal intersections is still beneficial,
-but that may not always be the case.
+Another option is to have the "eager literal intersection" always compute a new
+literal, which is then reinserted into the BDD. This is the approach done by
+the Elixir compiler but one has to be additionally careful because, if a new
+literal node is computed, then it has to be resorted within the BDD, which may be
+too expensive. If most of the intersections are eliminated, then computing the eager
+literal intersections is still beneficial, but that may not always be the case.
 
-To discuss exactly when these trade-offs may be problematic, let's talk about open vs
-closed types.
+Let's explore one example where these trade-offs may be problematic by discussing
+open vs closed types.
 
 ## Open vs closed types
 
