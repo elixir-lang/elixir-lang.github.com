@@ -24,10 +24,10 @@ Install Elixir according to your operating system and tool of choice.
 
   - Using [install scripts](#install-scripts)
 
-  - Using [Homebrew](https://brew.sh/):
+  - Using [Homebrew](https://brew.sh):
     * Run: `brew install elixir`
 
-  - Using [Macports](https://www.macports.org/):
+  - Using [Macports](https://www.macports.org):
     * Run: `sudo port install elixir`
 
   - Using [version managers](#version-managers)
@@ -35,8 +35,6 @@ Install Elixir according to your operating system and tool of choice.
 ### GNU/Linux
 
 Below we list steps for installing Elixir in different distributions. If your distribution is not listed or the steps below do not work, you may consider using [version managers](#version-managers).
-
-#### Distributions
 
   - **Arch Linux** (Community repository)
     * Run: `pacman -S elixir`
@@ -53,23 +51,14 @@ Below we list steps for installing Elixir in different distributions. If your di
     * Run: `guix package -i elixir`
 
   - **Ubuntu**
-    * Use [install scripts](#install-scripts) (or alternatively [version managers](#version-managers))
+    * Using [install scripts](#install-scripts)
     * The packages in `apt` tend to lag several versions behind. You may use [RabbitMQ Packages](https://launchpad.net/~rabbitmq) outlined below, which are likely newer than `apt`:
 
-      ```bash
-      $ sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
-      $ sudo apt update
-      $ sudo apt install git elixir erlang
+      ```sh
+      sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
+      sudo apt update
+      sudo apt install git elixir erlang
       ```
-
-#### Version managers
-
-There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
-
-  * [asdf](https://github.com/asdf-vm/asdf) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
-  * [kerl](https://github.com/kerl/kerl) - install and manage different Erlang versions
-
-Keep in mind that each Elixir version supports specific Erlang/OTP versions. [See the supported versions alongside our docs](/docs).
 
 ### BSD
 
@@ -97,12 +86,14 @@ Keep in mind that each Elixir version supports specific Erlang/OTP versions. [Se
 
   - Using [install scripts](#install-scripts)
 
-  - Using [Scoop](https://scoop.sh/):
+  - Using [Scoop](https://scoop.sh):
     * Install Erlang: `scoop install erlang`
     * Install Elixir: `scoop install elixir`
 
-  - Using [Chocolatey](https://community.chocolatey.org/):
+  - Using [Chocolatey](https://community.chocolatey.org):
     * Install Elixir (installs Erlang as a dependency): `choco install elixir`
+
+  - Using [version managers](#version-managers)
 
 ### Raspberry Pi and embedded devices
 
@@ -149,9 +140,19 @@ iex.bat
 
 You may want to [set the $PATH environment variable](#setting-path-environment-variable) for your whole system. Use `install.sh --help` or `install.bat --help` to learn more about available arguments and options.
 
+## Version managers
+
+There are many tools that allow developers to install and manage multiple Erlang and Elixir versions. They are useful if you have multiple projects running on different Elixir or Erlang versions, can't install Erlang or Elixir as mentioned above or if the version provided by your package manager is outdated. Here are some of those tools:
+
+  * [asdf](https://asdf-vm.com) - install and manage different [Elixir](https://github.com/asdf-vm/asdf-elixir) and [Erlang](https://github.com/asdf-vm/asdf-erlang) versions
+  * [mise](https://mise.en.dev) - install and manage different Elixir and Erlang versions
+  * [kerl](https://github.com/kerl/kerl) - install and manage different Erlang versions
+
+Keep in mind that each Elixir version supports specific Erlang/OTP versions. [See the supported versions alongside our docs](/docs).
+
 ## Precompiled package
 
-Elixir provides a precompiled package for every release. First [install Erlang](/install.html#installing-erlang) and then download the appropriate precompiled Elixir below. You can consult your Erlang/OTP version by running `erl -s halt`:
+Elixir provides a precompiled package for every release. First [install Erlang](#installing-erlang) and then download the appropriate precompiled Elixir below. You can consult your Erlang/OTP version by running `erl -s halt`:
 
 {% for otp_version in stable.otp_versions %}
   * [Elixir {{ stable.version }} on Erlang/OTP {{ otp_version }}](https://github.com/elixir-lang/elixir/releases/download/v{{ stable.version }}/elixir-otp-{{ otp_version }}.zip){% endfor %}
@@ -178,7 +179,7 @@ For a list of all builds, use:
 
 ## Compiling from source
 
-You can download and compile Elixir in few steps. The first one is to [install Erlang](/install.html#installing-erlang). You will also need [make](https://www.gnu.org/software/make/) available.
+You can download and compile Elixir in few steps. The first one is to [install Erlang](#installing-erlang). You will also need [make](https://www.gnu.org/software/make/) available.
 
 Next you should download source code ([.zip](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.zip), [.tar.gz](https://github.com/elixir-lang/elixir/archive/v{{ stable.version }}.tar.gz)) of the [latest release](https://github.com/elixir-lang/elixir/releases/tag/v{{ stable.version }}), unpack it and then run `make` inside the unpacked directory (note: if you are running on Windows, [read this page on setting up your environment for compiling Elixir](https://github.com/elixir-lang/elixir/wiki/Windows)).
 
@@ -186,10 +187,10 @@ After compiling, you are ready to run the elixir and `iex` commands from the bin
 
 In case you are feeling a bit more adventurous, you can also compile from main:
 
-```bash
-$ git clone https://github.com/elixir-lang/elixir.git
-$ cd elixir
-$ make clean compile
+```sh
+git clone https://github.com/elixir-lang/elixir.git
+cd elixir
+make clean compile
 ```
 
 ## Installing Erlang
@@ -214,7 +215,7 @@ On Windows, there are [instructions for different versions](http://www.computerh
 
 On Unix systems, you need to [find your shell profile file](https://unix.stackexchange.com/a/117470/101951), and then add to the end of this file the following line reflecting the path to your Elixir installation:
 
-```bash
+```sh
 export PATH="$PATH:/path/to/elixir/bin"
 ```
 
