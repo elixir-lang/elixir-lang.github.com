@@ -145,9 +145,9 @@ if not exist "%otp_dir%\bin" (
 
   set otp_url=https://github.com/erlang/otp/releases/download/OTP-!otp_version!/%otp_zip%
   echo downloading !otp_url!...
-  curl.exe -fsSLo %tmp_dir%\%otp_zip% "!otp_url!" || exit /b 1
+  curl.exe -fsSLo "%tmp_dir%\%otp_zip%" "!otp_url!" || exit /b 1
 
-  echo unpacking %tmp_dir%\%otp_zip%
+  echo unpacking !tmp_dir!\!otp_zip!
   powershell -NoProfile -Command ^
     "$ErrorActionPreference='Stop';" ^
     "try {" ^
@@ -191,7 +191,7 @@ if not exist "%elixir_dir%\bin" (
   echo downloading !elixir_url!...
   curl.exe -fsSLo "%tmp_dir%\%elixir_zip%" "!elixir_url!" || exit /b 1
 
-  echo unpacking %tmp_dir%\%elixir_zip%
+  echo unpacking !tmp_dir!\!elixir_zip!
   powershell -NoProfile -Command ^
     "$ErrorActionPreference='Stop';" ^
     "try {" ^
@@ -202,6 +202,6 @@ if not exist "%elixir_dir%\bin" (
     "    Expand-Archive -LiteralPath '%tmp_dir%\%elixir_zip%' -DestinationPath '%elixir_dir%' -Force" ^
     "  }" ^
     "} catch { Write-Error $_; exit 1 }"
-  del /f /q %tmp_dir%\%elixir_zip%
+  del /f /q "%tmp_dir%\%elixir_zip%"
 )
 goto :eof
