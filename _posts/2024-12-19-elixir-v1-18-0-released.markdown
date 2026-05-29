@@ -114,7 +114,7 @@ Keep in mind the current implementation does not perform type inference of guard
 
 The next Elixir release should improve the typing of maps, tuples, and closures, allowing us to type even more constructs. We also plan to fully type the `with` construct, `for`-comprehensions, as well as protocols.
 
-But more importantly, we want to focus on complete type inference of guards, which in turn will allow us to explore ideas such as redundant pattern matching clauses and exhaustiveness checks. Our goal with inference is to strike the right balance between developer experience, compilation times, and the ability of finding provable errors in existing codebases. You can learn more [about the trade-offs we made for inference in our documentation](https://hexdocs.pm/elixir/1.18/gradual-set-theoretic-types.html#type-inference).
+But more importantly, we want to focus on complete type inference of guards, which in turn will allow us to explore ideas such as redundant pattern matching clauses and exhaustiveness checks. Our goal with inference is to strike the right balance between developer experience, compilation times, and the ability of finding provable errors in existing codebases. You can learn more [about the trade-offs we made for inference in our documentation](https://elixir.hexdocs.pm/1.18/gradual-set-theoretic-types.html#type-inference).
 
 Future Elixir versions will introduce user-supplied type signatures, which should bring the benefits of a static type system without relying on inference. [Check our previous article on the overall milestones for more information](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/).
 
@@ -139,9 +139,9 @@ These enhancements do not only improve editor tooling, but they also directly be
 
 ## Built-in JSON
 
-[Erlang/OTP 27 added built-in support for JSON](https://www.erlang.org/doc/apps/stdlib/json.html) and we are now bringing it to Elixir. A new module, called [`JSON`](https://hexdocs.pm/elixir/1.18/JSON.html), has been added with functions to encode and decode JSON. Its most basic APIs reflect the ones [from the Jason project](https://hexdocs.pm/jason/Jason.html) (the de-facto JSON library in the Elixir community up to this point).
+[Erlang/OTP 27 added built-in support for JSON](https://www.erlang.org/doc/apps/stdlib/json.html) and we are now bringing it to Elixir. A new module, called [`JSON`](https://elixir.hexdocs.pm/1.18/JSON.html), has been added with functions to encode and decode JSON. Its most basic APIs reflect the ones [from the Jason project](https://jason.hexdocs.pm/Jason.html) (the de-facto JSON library in the Elixir community up to this point).
 
-A new protocol, called [`JSON.Encoder`](https://hexdocs.pm/elixir/1.18/JSON.Encoder.html), is also provided for those who want to customize how their own data types are encoded to JSON. You can also derive protocols for structs, with a single-line of code:
+A new protocol, called [`JSON.Encoder`](https://elixir.hexdocs.pm/1.18/JSON.Encoder.html), is also provided for those who want to customize how their own data types are encoded to JSON. You can also derive protocols for structs, with a single-line of code:
 
 ```elixir
 @derive {JSON.Encoder, only: [:id, :name]}
@@ -152,9 +152,9 @@ The deriving API mirrors the one from `Jason`, helping those who want to migrate
 
 ## Parameterized tests and ExUnit groups
 
-[ExUnit now supports parameterized tests](https://hexdocs.pm/ex_unit/1.18/ExUnit.Case.html#module-parameterized-tests). This allows your test modules to run multiple times under different parameters.
+[ExUnit now supports parameterized tests](https://ex-unit.hexdocs.pm/1.18/ExUnit.Case.html#module-parameterized-tests). This allows your test modules to run multiple times under different parameters.
 
-For example, Elixir ships [a local, decentralized and scalable key-value process storage called `Registry`](https://hexdocs.pm/elixir/Registry.html). The registry can be partitioned and its implementation differs depending if partitioning is enabled or not. Therefore, during tests, we want to ensure both modes are exercised. With Elixir v1.18, we can achieve this by writing:
+For example, Elixir ships [a local, decentralized and scalable key-value process storage called `Registry`](https://elixir.hexdocs.pm/Registry.html). The registry can be partitioned and its implementation differs depending if partitioning is enabled or not. Therefore, during tests, we want to ensure both modes are exercised. With Elixir v1.18, we can achieve this by writing:
 
 ```elixir
 defmodule Registry.Test do
@@ -213,6 +213,6 @@ More migrations will be added in future releases to help us push towards more co
 
 ## Summary
 
-Other notable changes include [`PartitionSupervisor.resize!/2`](https://hexdocs.pm/elixir/1.18/PartitionSupervisor.html#resize!/2), for resizing the number of partitions (aka processes) of a supervisor at runtime, [Registry.lock/3](https://hexdocs.pm/elixir/1.18/Registry.html#lock/3) for simple in-process key locks, PowerShell versions of `elixir` and `elixirc` scripts for better DX on Windows, and more. [See the CHANGELOG](https://hexdocs.pm/elixir/1.18/changelog.html) for the complete release notes.
+Other notable changes include [`PartitionSupervisor.resize!/2`](https://elixir.hexdocs.pm/1.18/PartitionSupervisor.html#resize!/2), for resizing the number of partitions (aka processes) of a supervisor at runtime, [Registry.lock/3](https://elixir.hexdocs.pm/1.18/Registry.html#lock/3) for simple in-process key locks, PowerShell versions of `elixir` and `elixirc` scripts for better DX on Windows, and more. [See the CHANGELOG](https://elixir.hexdocs.pm/1.18/changelog.html) for the complete release notes.
 
 Happy coding!

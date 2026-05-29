@@ -31,7 +31,7 @@ See the [full release notes for more improvements](https://github.com/elixir-lan
 
 ## Improvements to sort-based APIs in Enum
 
-[`Enum.sort/1`](https://hexdocs.pm/elixir/Enum.html#sort/1) in Elixir by default sorts from lowest to highest:
+[`Enum.sort/1`](https://elixir.hexdocs.pm/Enum.html#sort/1) in Elixir by default sorts from lowest to highest:
 
 ```elixir
 iex> Enum.sort(["banana", "apple", "pineapple"])
@@ -139,7 +139,7 @@ In previous Elixir versions, Elixir would compile a database of cross references
 
 Although this database was not public, developers would still use it to run their own checks against their projects. With time, developers would request more data to be included in the database, which was problematic as Elixir itself did not have a use for the additional data, and the database was not meant to be used externally in the first place.
 
-In Elixir v1.10, we have addressed these problems by [introducing compiler tracing](https://hexdocs.pm/elixir/Code.html#module-compilation-tracers). The compiler tracing allows developers to listen to events as they are emitted by the compiler, so they can store all of the information they need - and only the information they need.
+In Elixir v1.10, we have addressed these problems by [introducing compiler tracing](https://elixir.hexdocs.pm/Code.html#module-compilation-tracers). The compiler tracing allows developers to listen to events as they are emitted by the compiler, so they can store all of the information they need - and only the information they need.
 
 Elixir itself is using the new compiler tracing to provide new functionality. One advantage of this approach is that developers can now disable undefined function warnings directly on the callsite. For example, imagine you have an optional dependency which may not be available in some cases. You can tell the compiler to skip warning on calls to optional modules with:
 
@@ -150,11 +150,11 @@ Previously, this information had to be added to the overall project configuratio
 
 ### Other enhancements
 
-Elixir's calendar data types got many improvements, such as sigil support for third-party calendars, as well as the additions of [`DateTime.now!/2`](https://hexdocs.pm/elixir/DateTime.html#now!/2), [`DateTime.shift_zone!/3`](https://hexdocs.pm/elixir/DateTime.html#shift_zone!/3), and [`NaiveDateTime.local_now/0`](https://hexdocs.pm/elixir/NaiveDateTime.html#local_now/0).
+Elixir's calendar data types got many improvements, such as sigil support for third-party calendars, as well as the additions of [`DateTime.now!/2`](https://elixir.hexdocs.pm/DateTime.html#now!/2), [`DateTime.shift_zone!/3`](https://elixir.hexdocs.pm/DateTime.html#shift_zone!/3), and [`NaiveDateTime.local_now/0`](https://elixir.hexdocs.pm/NaiveDateTime.html#local_now/0).
 
-There are many improvements related to Elixir's AST in this release too. [`Code.string_to_quoted/2`](https://hexdocs.pm/elixir/Code.html#string_to_quoted/2) has two new options, `:token_metadata` and `:literal_encoder`, that give more control over Elixir's parser. This information was already available to the Elixir code formatter and has now been made public. These changes alongside compiler tracing means tools like [Credo](https://github.com/rrrene/credo), [Boundary](https://github.com/sasa1977/boundary), and IDE integrations have an even better foundation to analyze the source code.
+There are many improvements related to Elixir's AST in this release too. [`Code.string_to_quoted/2`](https://elixir.hexdocs.pm/Code.html#string_to_quoted/2) has two new options, `:token_metadata` and `:literal_encoder`, that give more control over Elixir's parser. This information was already available to the Elixir code formatter and has now been made public. These changes alongside compiler tracing means tools like [Credo](https://github.com/rrrene/credo), [Boundary](https://github.com/sasa1977/boundary), and IDE integrations have an even better foundation to analyze the source code.
 
-[ExUnit](https://hexdocs.pm/ex_unit), our test framework, ships two small but important improvements: `ExUnit.CaptureIO` can now be used by tests that run concurrently and we have added "pattern-matching diffing". To understand the last feature, take this code:
+[ExUnit](https://ex-unit.hexdocs.pm), our test framework, ships two small but important improvements: `ExUnit.CaptureIO` can now be used by tests that run concurrently and we have added "pattern-matching diffing". To understand the last feature, take this code:
 
 ```elixir
 assert %{"status" => 200, "body" => %{"key" => "foo"}} = json_payload
@@ -166,6 +166,6 @@ Finally, this release also adds two new guards, `is_struct/1` and `is_map_key/2`
 
 To learn what else is new, you can read the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.10.0).
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Have fun!

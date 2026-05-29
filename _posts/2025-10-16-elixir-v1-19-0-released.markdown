@@ -145,7 +145,7 @@ defmodule MyLib.SomeModule do
 end
 ```
 
-Because the spawned process is not visible to the compiler, it won't be able to load `MyLib.SomeOtherModule`. You have two options, either use [`Kernel.ParallelCompiler.pmap/2`](https://hexdocs.pm/elixir/Kernel.ParallelCompiler.html#pmap/2) or explicitly call [`Code.ensure_compiled!(MyLib.SomeOtherModule)`](https://hexdocs.pm/elixir/Code.html#ensure_compiled!/1) before spawning the process that uses said module.
+Because the spawned process is not visible to the compiler, it won't be able to load `MyLib.SomeOtherModule`. You have two options, either use [`Kernel.ParallelCompiler.pmap/2`](https://elixir.hexdocs.pm/Kernel.ParallelCompiler.html#pmap/2) or explicitly call [`Code.ensure_compiled!(MyLib.SomeOtherModule)`](https://elixir.hexdocs.pm/Code.html#ensure_compiled!/1) before spawning the process that uses said module.
 
 The second one is related to `@on_load` callbacks (typically used for [NIFs](https://www.erlang.org/doc/system/nif.html)) that invoke other modules defined within the same project. For example:
 
@@ -214,6 +214,6 @@ This work was performed by [Jonatan Männchen](https://maennchen.dev) and sponso
 
 ## Summary
 
-There are many other goodies in this release, such as improved option parsing, better debuggability and performance in ExUnit, the addition of `mix help Mod`, `mix help Mod.fun`, `mix help Mod.fun/arity`, and `mix help app:package` to make documentation accessible via shell for humans and agents, and much more. [See the CHANGELOG](https://hexdocs.pm/elixir/1.19/changelog.html) for the complete release notes.
+There are many other goodies in this release, such as improved option parsing, better debuggability and performance in ExUnit, the addition of `mix help Mod`, `mix help Mod.fun`, `mix help Mod.fun/arity`, and `mix help app:package` to make documentation accessible via shell for humans and agents, and much more. [See the CHANGELOG](https://elixir.hexdocs.pm/1.19/changelog.html) for the complete release notes.
 
 Happy coding!

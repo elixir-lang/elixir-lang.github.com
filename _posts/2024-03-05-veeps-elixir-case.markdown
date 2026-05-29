@@ -71,7 +71,7 @@ Different parts of the Veeps system have different scalability requirements. For
 
 Say you have 250,000 people watching a concert: the Beaconing service needs to handle thousands of requests per second for a few hours at a time. As a result, it needs to scale differently from other parts of the system, such as the merchandise e-commerce or backstage management.
 
-To tackle this issue, they built a distributed system. They packaged each subsystem as an [Elixir release](https://hexdocs.pm/elixir/config-and-releases.html#releases), totaling five releases. For the communication layer, they used distributed Erlang, which is built into Erlang/OTP, allowing seamless inter-process communication across networked nodes.
+To tackle this issue, they built a distributed system. They packaged each subsystem as an [Elixir release](https://elixir.hexdocs.pm/config-and-releases.html#releases), totaling five releases. For the communication layer, they used distributed Erlang, which is built into Erlang/OTP, allowing seamless inter-process communication across networked nodes.
 
 In a nutshell, each node contains several processes with specific responsibilities. Each of these processes belongs to their respective [distributed process group](https://www.erlang.org/doc/man/pg.html). If node A needs billing information, it will reach out to any process within the "billing process group", which may be anywhere in the cluster.
 
@@ -80,9 +80,9 @@ When deploying a new version of the system, they deploy a new cluster altogether
 
 ### Service-oriented architecture within a monorepo
 
-Although they run a distributed system, they organize the code in only one repository, following the monorepo approach. To do that, they use the [Umbrella Project feature](https://hexdocs.pm/elixir/dependencies-and-umbrella-projects.html#content) from Mix, the build tool that ships with Elixir.
+Although they run a distributed system, they organize the code in only one repository, following the monorepo approach. To do that, they use the [Umbrella Project feature](https://elixir.hexdocs.pm/dependencies-and-umbrella-projects.html#content) from Mix, the build tool that ships with Elixir.
 
-Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all the structs sent as messages across the subsystems, guaranteeing that all subsystems use the same schemas for that exchanged data.
+Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://mix.hexdocs.pm/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all the structs sent as messages across the subsystems, guaranteeing that all subsystems use the same schemas for that exchanged data.
 
 > With umbrella projects, you can have the developer experience benefits of a single code repository, while being able to build a service-oriented architecture.
 >
@@ -91,7 +91,7 @@ Their umbrella project consists of 16 applications (at the time of writing), whi
 
 ### Reducing complexity with the Erlang/Elixir toolbox
 
-Veeps has an e-commerce platform that allows concert viewers to purchase artist merchandise. In e-commerce, a common concept is a shopping cart. Veeps associates each shopping cart as a [GenServer](https://hexdocs.pm/elixir/GenServer.html), which is a lightweight process managed by the Erlang VM.
+Veeps has an e-commerce platform that allows concert viewers to purchase artist merchandise. In e-commerce, a common concept is a shopping cart. Veeps associates each shopping cart as a [GenServer](https://elixir.hexdocs.pm/GenServer.html), which is a lightweight process managed by the Erlang VM.
 
 This decision made it easier for them to implement other business requirements, such as locking the cart during payments and shopping cart expiration. Since each cart is a process, the expiration is as simple as sending a message to a cart process based on a timer, which is easy to do using GenServers.
 

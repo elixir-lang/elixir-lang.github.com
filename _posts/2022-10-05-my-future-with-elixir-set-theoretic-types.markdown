@@ -29,7 +29,7 @@ Different programming languages and platforms extract different values from type
 
 For example, different languages can extract performance benefits from types. However, Elixir still runs on the Erlang VM, which is dynamically typed, so we should not expect any meaningful performance gain from typing Elixir code.
 
-Another benefit of types is to _aid_ documentation (emphasis on the word _aid_ as I don't believe types replace textual documentation). Elixir already reaps similar benefits from [typespecs](https://hexdocs.pm/elixir/typespecs.html) and I would expect an integrated type system to be even more valuable in this area.
+Another benefit of types is to _aid_ documentation (emphasis on the word _aid_ as I don't believe types replace textual documentation). Elixir already reaps similar benefits from [typespecs](https://elixir.hexdocs.pm/typespecs.html) and I would expect an integrated type system to be even more valuable in this area.
 
 However, the upsides and downsides of static typing become fuzzier and prone to exaggerations once we discuss them in the context of code maintenance, in particular when comparing types with other software verification techniques, such as tests. In those situations, it is common to hear unrealistic claims such as "a static type system would catch 80% of my Elixir bugs" or that "you need to write fewer tests once you have static types".
 
@@ -111,9 +111,9 @@ Personally, I find set-theoretical types an elegant and accessible approach to r
 
 Despite the initial fit between Elixir semantics and set-theoretic types, there are open questions and existing challenges in putting the two together. Here are some examples:
 
-  * Elixir has [an expressive collection of idioms used in pattern matching and guards](https://hexdocs.pm/elixir/patterns-and-guards.html), can we map them all to set-theoretic types?
+  * Elixir has [an expressive collection of idioms used in pattern matching and guards](https://elixir.hexdocs.pm/patterns-and-guards.html), can we map them all to set-theoretic types?
 
-  * Elixir associative data structures, [called maps](https://hexdocs.pm/elixir/Map.html), can be used both as records and as dictionaries. Would it be possible to also type them with a unified foundation?
+  * Elixir associative data structures, [called maps](https://elixir.hexdocs.pm/Map.html), can be used both as records and as dictionaries. Would it be possible to also type them with a unified foundation?
 
   * Gradual type systems must introduce runtime type checks in order to remain sound. However, those type checks will happen in addition to the checks already done by the Erlang VM, which can degrade performance. Therefore, is it possible to leverage the existing runtime checks done by the Erlang VM so the resulting type system is still sound?
 

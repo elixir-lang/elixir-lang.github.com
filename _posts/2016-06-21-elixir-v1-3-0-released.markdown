@@ -283,6 +283,6 @@ By restricting hierarchies in favor of named setups, it is straight-forward for 
 
 ## Summing up
 
-The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.3.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.3.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Happy coding!

@@ -100,7 +100,7 @@ While different developers will prefer certain idioms over others, I am not conv
 
 Thanks to set-theoretic types, we will most likely distinguish between empty lists and non-empty lists in Elixir's type system, since pattern matching on them is a common language idiom. Furthermore, several functions in Elixir, such as `String.split/2` are guaranteed to return non-empty lists, which can then be nicely encoded into a function's return type.
 
-Elixir also has the functions `hd` (for head) and `tl` (for tail) inherited from Erlang, which are [valid guards](https://hexdocs.pm/elixir/patterns-and-guards.html). They only accept non-empty lists as arguments, which will now be enforced by the type system too.
+Elixir also has the functions `hd` (for head) and `tl` (for tail) inherited from Erlang, which are [valid guards](https://elixir.hexdocs.pm/patterns-and-guards.html). They only accept non-empty lists as arguments, which will now be enforced by the type system too.
 
 This covers almost all use cases but one: what happens if you want to access the first element of a list, which has not been proven to be empty? You could use pattern matching and conditionals for those cases, but as seen above, this can lead to common boilerplate such as:
 
@@ -120,7 +120,7 @@ Now that we have discussed lists, we can talk about tuples. In a way, tuples are
 
 2. We natively access tuples by index, instead of its head and tail, such `elem(tuple, 0)`
 
-In the upcoming v1.18 release, Elixir's new type system will support tuple types, and they are written between curly brackets. For example, the [`File.read/1` function](https://hexdocs.pm/elixir/File.html#read/1) would have the return type `{:ok, binary()} or {:error, posix()}`, quite similar to today's typespecs.
+In the upcoming v1.18 release, Elixir's new type system will support tuple types, and they are written between curly brackets. For example, the [`File.read/1` function](https://elixir.hexdocs.pm/File.html#read/1) would have the return type `{:ok, binary()} or {:error, posix()}`, quite similar to today's typespecs.
 
 The tuple type can also specify a minimum size, as you can also write: `{atom(), integer(), ...} `. This means the tuple has at least two elements, the first being an `atom()` and the second being an `integer()`. This definition is required for type inference in patterns and guards. After all, a guard `is_integer(elem(tuple, 1))` tells you the tuple has at least two elements, with the second one being an integer, but nothing about the other elements and the tuple overall size.
 

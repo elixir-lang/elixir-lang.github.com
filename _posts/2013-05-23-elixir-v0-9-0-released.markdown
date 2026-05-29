@@ -124,11 +124,11 @@ A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implem
 We have also many other smaller improvements:
 
 * Our CLI now supports `--hidden` and `--cookie` flags which are useful for distributed modes;
-* Our test framework, ExUnit, is now able to capture all the communication that happens with a registered IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](https://hexdocs.pm/ex_unit/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts to some inputs and what it prints to the terminal;
+* Our test framework, ExUnit, is now able to capture all the communication that happens with a registered IO device, like `:stdio` and `:stderr`, via [`ExUnit.CaptureIO`](https://ex-unit.hexdocs.pm/ExUnit.CaptureIO.html). This is very useful for testing how your software reacts to some inputs and what it prints to the terminal;
 * `IEx` now allows files to be imported into the shell with `import_file` and also loads `~/.iex` on startup for custom configuration;
 * The `String`, `Enum` and `Dict` modules got more convenience functions that goes from checking unicode character validity to taking values out of a dictionary;
 * And many, many more!
 
 A huge thank you to our community for sending bug reports, providing bug fixes and contributing all those amazing features. And when are **you** joining us? :)
 
-Give Elixir a try! You can start with our [getting started guide](https://hexdocs.pm/elixir/introduction.html), or [check this 30 minute video from PragProg](https://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir).
+Give Elixir a try! You can start with our [getting started guide](https://elixir.hexdocs.pm/introduction.html), or [check this 30 minute video from PragProg](https://www.youtube.com/watch?v=a-off4Vznjs&feature=youtu.be) or buy the beta version of [Programming Elixir](https://pragprog.com/book/elixir/programming-elixir).

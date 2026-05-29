@@ -13,7 +13,7 @@ In this post we will cover the main additions. The complete [release notes](http
 
 ## Registry
 
-The [`Registry`](https://hexdocs.pm/elixir/Registry.html) is a new module in Elixir's standard library that allows Elixir developers to implement patterns such as name lookups, code dispatching or even a pubsub system in a simple and scalable way.
+The [`Registry`](https://elixir.hexdocs.pm/Registry.html) is a new module in Elixir's standard library that allows Elixir developers to implement patterns such as name lookups, code dispatching or even a pubsub system in a simple and scalable way.
 
 Broadly speaking, the Registry is a local, decentralized and scalable key-value process storage. Let's break this in parts:
 
@@ -130,6 +130,6 @@ It is also possible to install escripts and archives by providing a Git/GitHub r
 
 ## Summing up
 
-The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.4.0). Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Happy coding!

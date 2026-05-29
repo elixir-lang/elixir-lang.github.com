@@ -91,7 +91,7 @@ The difference between two DNFs is implemented similarly to intersections, excep
 
 Luckily, those exact issues are well documented in literature and are addressed by Binary Decision Diagrams (BDDs), introduced by [Alain Frisch (2004)](https://www.cduce.org/papers/frisch_phd.pdf) and later recalled and expanded by [Giuseppe Castagna (2016)](https://www.irif.fr/~gc/papers/covcon-again.pdf).
 
-BDDs represent set-theoretic operations as an ordered tree. This requires us to provide an order, any order, across all types. Given [all Elixir values have a total order](https://hexdocs.pm/elixir/Kernel.html#module-term-ordering), that's quite straightforward. Furthermore, by ordering it, we can detect duplicates as we introduce nodes in the tree. The tree can have three distinct node types:
+BDDs represent set-theoretic operations as an ordered tree. This requires us to provide an order, any order, across all types. Given [all Elixir values have a total order](https://elixir.hexdocs.pm/Kernel.html#module-term-ordering), that's quite straightforward. Furthermore, by ordering it, we can detect duplicates as we introduce nodes in the tree. The tree can have three distinct node types:
 
 ```elixir
 type bdd() = :top or :bottom or {type(), constrained :: bdd(), dual :: bdd()}

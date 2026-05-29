@@ -44,13 +44,13 @@ To give a more practical example, take a regular [Phoenix project](https://phoen
 
 ## Code fragments
 
-The [`Code`](https://hexdocs.pm/elixir/Code.html) module got a companion module called [`Code.Fragment`](https://hexdocs.pm/elixir/Code.Fragment.html).
+The [`Code`](https://elixir.hexdocs.pm/Code.html) module got a companion module called [`Code.Fragment`](https://elixir.hexdocs.pm/Code.Fragment.html).
 
 The `Code` module works with complete code. For example, its functions will consider the snippet `123 +` as invalid, since the right-hand side of `+` is missing. However, our tooling, such as editors, REPLs, and code notebooks must still parse and understand such snippets, in order to provide code completion, argument suggestion, etc.
 
 That's the goal of the `Code.Fragment` module. It contains different heuristics to analyze and return context informational of code fragments, which are code snippets that may be incomplete.
 
-To better show the benefits of said improvements, let's talk about IEx, Elixir's interactive shell. IEx has been rewritten to use `Code.Fragment` and, in the process, it gained new functionality as part of its autocompletion system (available by hitting TAB). For example, it can now autocomplete sigils, used to [create regexes](https://hexdocs.pm/elixir/Kernel.html#sigil_r/2) or [lists of words](https://hexdocs.pm/elixir/Kernel.html#sigil_w/2), and their terminators:
+To better show the benefits of said improvements, let's talk about IEx, Elixir's interactive shell. IEx has been rewritten to use `Code.Fragment` and, in the process, it gained new functionality as part of its autocompletion system (available by hitting TAB). For example, it can now autocomplete sigils, used to [create regexes](https://elixir.hexdocs.pm/Kernel.html#sigil_r/2) or [lists of words](https://elixir.hexdocs.pm/Kernel.html#sigil_w/2), and their terminators:
 
 <script id="asciicast-By0cGpu9xSUgflc24cVlLgPgY" src="https://asciinema.org/a/By0cGpu9xSUgflc24cVlLgPgY.js" async></script><noscript><p><a href="https://asciinema.org/a/By0cGpu9xSUgflc24cVlLgPgY">See the example in asciinema</a></p></noscript>
 
@@ -58,11 +58,11 @@ Similarly, you can now autocomplete struct names and their fields:
 
 <script id="asciicast-A44auZ00saSud3l7DbOL4IMYn" src="https://asciinema.org/a/A44auZ00saSud3l7DbOL4IMYn.js" async></script><noscript><p><a href="https://asciinema.org/a/A44auZ00saSud3l7DbOL4IMYn">See the example in asciinema</a></p></noscript>
 
-Overall, we hope the `Code.Fragment` module will become the shared foundation to power many of the tools in the ecosystem. We have also added new reflection APIs to [`Module`](https://hexdocs.pm/elixir/Module.html), which can then be used to power code intelligence features.
+Overall, we hope the `Code.Fragment` module will become the shared foundation to power many of the tools in the ecosystem. We have also added new reflection APIs to [`Module`](https://elixir.hexdocs.pm/Module.html), which can then be used to power code intelligence features.
 
 ## mix xref
 
-[`mix xref`](https://hexdocs.pm/mix/Mix.Tasks.Xref.html) is a tool that analyzes relationships between files. By analyzing the compile-time and runtime dependencies between them, it allows developers to understand what has to be recompiled whenever a file changes.
+[`mix xref`](https://mix.hexdocs.pm/Mix.Tasks.Xref.html) is a tool that analyzes relationships between files. By analyzing the compile-time and runtime dependencies between them, it allows developers to understand what has to be recompiled whenever a file changes.
 
 Elixir v1.13 comes with many improvements to `mix xref`, such as:
 
@@ -96,7 +96,7 @@ Or even [Zig](https://ziglang.org/), [via the Zigler project](https://github.com
     }
     """
 
-However, while you can format Elixir source code with [`mix format`](https://hexdocs.pm/mix/Mix.Tasks.Format.html), you could not format the code inside snippets.
+However, while you can format Elixir source code with [`mix format`](https://mix.hexdocs.pm/Mix.Tasks.Format.html), you could not format the code inside snippets.
 
 Elixir v1.13 solves this by adding plugins to `mix format`. Plugins can teach the formatter how to format new files and how to format sigils, via the `Mix.Tasks.Format` behaviour.
 
@@ -140,14 +140,14 @@ We are looking forward to see how this new functionality will be used by communi
       1 | hello + * world
         |         ^
 
-The `Code` module has also been augmented with two functions: [`Code.string_to_quoted_with_comments/2`](https://hexdocs.pm/elixir/Code.html#string_to_quoted_with_comments/2) and [`Code.quoted_to_algebra/2`](https://hexdocs.pm/elixir/Code.html#quoted_to_algebra/2). Those functions allow someone to retrieve the Elixir AST with their original source code comments, and then convert this AST to formatted code. In other words, those functions provide a wrapper around the Elixir Code Formatter, supporting developers who wish to create tools that directly manipulate and custom format Elixir source code.
+The `Code` module has also been augmented with two functions: [`Code.string_to_quoted_with_comments/2`](https://elixir.hexdocs.pm/Code.html#string_to_quoted_with_comments/2) and [`Code.quoted_to_algebra/2`](https://elixir.hexdocs.pm/Code.html#quoted_to_algebra/2). Those functions allow someone to retrieve the Elixir AST with their original source code comments, and then convert this AST to formatted code. In other words, those functions provide a wrapper around the Elixir Code Formatter, supporting developers who wish to create tools that directly manipulate and custom format Elixir source code.
 
-`elixir --short-version` has been added to quickly get the Elixir version, without booting the Erlang VM. The `Task` module includes performance optimizations and [new](https://hexdocs.pm/elixir/Task.html#ignore/1) [functions](https://hexdocs.pm/elixir/Task.html#completed/1). Finally, `mix test --profile-require=time` has been added to debug loading times of test suites and the recently added [`Mix.install/2`](https://hexdocs.pm/mix/Mix.html#install#2) has been improved with new options and environment variables.
+`elixir --short-version` has been added to quickly get the Elixir version, without booting the Erlang VM. The `Task` module includes performance optimizations and [new](https://elixir.hexdocs.pm/Task.html#ignore/1) [functions](https://elixir.hexdocs.pm/Task.html#completed/1). Finally, `mix test --profile-require=time` has been added to debug loading times of test suites and the recently added [`Mix.install/2`](https://mix.hexdocs.pm/Mix.html#install#2) has been improved with new options and environment variables.
 
 ## Learn more
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.13.0). You can also [watch my ElixirConf 2021 keynote about Elixir v1.13](https://youtu.be/ydjx2kKHzrM) to learn more.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Have fun!

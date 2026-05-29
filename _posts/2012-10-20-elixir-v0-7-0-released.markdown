@@ -16,4 +16,4 @@ This release also includes some backwards incompatible changes, but the majority
 
 For more information, read out the [CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.7.0/CHANGELOG.md).
 
-Thank you and don't forget to [give Elixir a try](https://hexdocs.pm/elixir/introduction.html)!
+Thank you and don't forget to [give Elixir a try](https://elixir.hexdocs.pm/introduction.html)!

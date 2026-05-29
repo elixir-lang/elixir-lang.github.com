@@ -100,7 +100,7 @@ references, tutorials, cheatsheets, and more](/blog/2022/12/22/cheatsheets-and-8
 However, because many of the language tutorials and reference documentation
 were written before ExDoc, they were maintained separately as part of the
 official website, separate from the language source code. With Elixir v1.16,
-[we have moved our learning material to the language repository](https://hexdocs.pm/elixir/introduction.html).
+[we have moved our learning material to the language repository](https://elixir.hexdocs.pm/introduction.html).
 This provides several benefits:
 
 1. Tutorials are versioned alongside their relevant Elixir version
@@ -110,15 +110,15 @@ This provides several benefits:
 3. ExDoc will autolink module and function names in tutorials to their relevant API documentation
 
 Another feature we have incorporated in this release is the addition
-of cheatsheets, starting with [a cheatsheet for the Enum module](https://hexdocs.pm/elixir/main/enum-cheat.html).
+of cheatsheets, starting with [a cheatsheet for the Enum module](https://elixir.hexdocs.pm/main/enum-cheat.html).
 If you would like to contribute future cheatsheets to Elixir itself,
 feel free to start a discussion and collect feedback on the
 [Elixir Forum](https://elixirforum.com/).
 
 Finally, we have started enriching our documentation with
 [Mermaid.js](https://mermaid.js.org/) diagrams. You can find examples
-in the [GenServer](https://hexdocs.pm/elixir/GenServer.html)
-and [Supervisor](https://hexdocs.pm/elixir/Supervisor.html) docs.
+in the [GenServer](https://elixir.hexdocs.pm/GenServer.html)
+and [Supervisor](https://elixir.hexdocs.pm/Supervisor.html) docs.
 
 Elixir has always been praised by its excellent documentation and
 we are glad to continue to raise the bar for the whole ecosystem.
@@ -128,7 +128,7 @@ we are glad to continue to raise the bar for the whole ecosystem.
 Elixir v1.16 incorporates and extends the work on [Understanding Code Smells
 in Elixir Functional Language](https://github.com/lucasvegi/Elixir-Code-Smells/blob/main/etc/2023-emse-code-smells-elixir.pdf),
 by Lucas Vegi and Marco Tulio Valente, from [ASERG/DCC/UFMG](http://aserg.labsoft.dcc.ufmg.br/),
-into [the official documention in the form of anti-patterns](https://hexdocs.pm/elixir/what-anti-patterns.html).
+into [the official documention in the form of anti-patterns](https://elixir.hexdocs.pm/what-anti-patterns.html).
 Our goal is to provide examples of potential pitfalls for library and
 application developers, with additional context and guidance on how
 to improve their codebases.
@@ -141,10 +141,10 @@ their prevalence in actual codebases).
 
 To incorporate the anti-patterns into the language, we trimmed the list down
 to keep only anti-patterns which are unambiguous and actionable, and divided
-them into four categories: [code-related](https://hexdocs.pm/elixir/code-anti-patterns.html),
-[design-related](https://hexdocs.pm/elixir/design-anti-patterns.html),
-[process-related](https://hexdocs.pm/elixir/process-anti-patterns.html),
-and [meta-programming](https://hexdocs.pm/elixir/macro-anti-patterns.html).
+them into four categories: [code-related](https://elixir.hexdocs.pm/code-anti-patterns.html),
+[design-related](https://elixir.hexdocs.pm/design-anti-patterns.html),
+[process-related](https://elixir.hexdocs.pm/process-anti-patterns.html),
+and [meta-programming](https://elixir.hexdocs.pm/macro-anti-patterns.html).
 Then we collected more community feedback during the release candidate
 period, further refining and removing unclear guidance.
 
@@ -173,9 +173,9 @@ and [Dashbit](https://dashbit.co).
 
 Other notable changes in this release are:
 
-* the addition of [`String.replace_invalid/2`](https://hexdocs.pm/elixir/String.html#replace_invalid/2), to help deal with invalid UTF-8 encoding
+* the addition of [`String.replace_invalid/2`](https://elixir.hexdocs.pm/String.html#replace_invalid/2), to help deal with invalid UTF-8 encoding
 
-* the addition of the `:limit` option in [`Task.yield_many/2`](https://hexdocs.pm/elixir/Task.html#yield_many/2) that limits the maximum number of tasks to yield
+* the addition of the `:limit` option in [`Task.yield_many/2`](https://elixir.hexdocs.pm/Task.html#yield_many/2) that limits the maximum number of tasks to yield
 
 * improved binary pattern matching by allowing prefix binary matches, such as `<<^prefix::binary, rest::binary>>`
 
@@ -183,7 +183,7 @@ For a complete list of all changes, see the
 [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.16.0).
 
 Check [the Install section](/install.html) to get Elixir installed and
-read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html)
+read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html)
 to learn more.
 
 Happy learning!

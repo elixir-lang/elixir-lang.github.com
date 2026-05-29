@@ -47,7 +47,7 @@ If the response body is larger than a single packet `stream/2` may return multip
 
 Note that if you send concurrent requests on a HTTP/2 connection responses can be returned interleaved from the requests using HTTP/2's stream multiplexing. Additionally, responses can be spread over multiple messages so we may need to continually receive messages and pass them to `stream/2`.
 
-See more examples on how to use Mint in the [documentation](https://hexdocs.pm/mint).
+See more examples on how to use Mint in the [documentation](https://mint.hexdocs.pm).
 
 ## Why process-less?
 

@@ -56,13 +56,13 @@ Elixir has had support for ranges from before its v1.0 release. Ranges support o
 
 Unfortunately, due to this inference, it is not possible to have empty ranges. For example, if you want to create a list of `n` elements, you cannot express it with a range from `1..n`, as `1..0` (for `n=0`) is a decreasing range with two elements.
 
-Elixir v1.12 supports stepped ranges via [the `first..last//step` notation](https://hexdocs.pm/elixir/1.12/Kernel.html#..///3). For example: `1..10//2` will emit the numbers `1`, `3`, `5`, `7`, and `9`. You can consider the `//` operator as an equivalent to "range division", as it effectively divides the number of elements in the range by `step`, rounding up on inexact scenarios. Steps can be either positive (increasing ranges) or negative (decreasing ranges). Stepped ranges bring more expressive power to Elixir ranges and they elegantly solve the empty range problem, as they allow the direction of the steps to be explicitly declared instead of inferred.
+Elixir v1.12 supports stepped ranges via [the `first..last//step` notation](https://elixir.hexdocs.pm/1.12/Kernel.html#..///3). For example: `1..10//2` will emit the numbers `1`, `3`, `5`, `7`, and `9`. You can consider the `//` operator as an equivalent to "range division", as it effectively divides the number of elements in the range by `step`, rounding up on inexact scenarios. Steps can be either positive (increasing ranges) or negative (decreasing ranges). Stepped ranges bring more expressive power to Elixir ranges and they elegantly solve the empty range problem, as they allow the direction of the steps to be explicitly declared instead of inferred.
 
-As of Elixir v1.12, implicitly decreasing ranges are soft-deprecated and warnings will be emitted in future Elixir versions based on our [deprecation policy](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#deprecations).
+As of Elixir v1.12, implicitly decreasing ranges are soft-deprecated and warnings will be emitted in future Elixir versions based on our [deprecation policy](https://elixir.hexdocs.pm/compatibility-and-deprecations.html#deprecations).
 
 ## `then/2` and `tap/2`
 
-Two new functions have been added to `Kernel` module, in order to ease working with pipelines. [`tap/2`](https://hexdocs.pm/elixir/1.12/Kernel.html#tap/2) passes the given argument to an anonymous function, returning the argument itself. [`then/2`](https://hexdocs.pm/elixir/1.12/Kernel.html#then/2) passes the given argument to an anonymous function, returning the result. The following:
+Two new functions have been added to `Kernel` module, in order to ease working with pipelines. [`tap/2`](https://elixir.hexdocs.pm/1.12/Kernel.html#tap/2) passes the given argument to an anonymous function, returning the argument itself. [`then/2`](https://elixir.hexdocs.pm/1.12/Kernel.html#then/2) passes the given argument to an anonymous function, returning the result. The following:
 
 ```elixir
 "hello world"
@@ -93,10 +93,10 @@ IEx got two important quality of life improvements in this release. Hitting tab 
 
 Elixir v1.12 has also added many functions across the standard library. The `Enum` module received additions such as `Enum.count_until/2`, `Enum.product/1`, `Enum.zip_with/2`, and more. The `Integer` module now includes `Integer.pow/2` and `Integer.extended_gcd/2`.
 
-The `Code` module got a [`cursor_context/2`](https://hexdocs.pm/elixir/1.12/Code.html#cursor_context/2) function, which is now used to power `IEx` autocompletion and it is [used by projects such as Livebook to provide intellisense](https://user-images.githubusercontent.com/17034772/115117125-533b2900-9f9d-11eb-94a9-a2cf2ccb7388.mp4).
+The `Code` module got a [`cursor_context/2`](https://elixir.hexdocs.pm/1.12/Code.html#cursor_context/2) function, which is now used to power `IEx` autocompletion and it is [used by projects such as Livebook to provide intellisense](https://user-images.githubusercontent.com/17034772/115117125-533b2900-9f9d-11eb-94a9-a2cf2ccb7388.mp4).
 
 The EEx application has also been extended to provide metadata on text segments. This has enabled the Surface and Phoenix LiveView teams to implement [a new template language called HEEx](https://github.com/phoenixframework/phoenix_live_view/pull/1440), which validates both HTML and EEx. Finally, the `Registry` module supports the `:compressed` option, which is useful for GraphQL applications managing hundreds of thousands of subscriptions via [Absinthe](http://absinthe-graphql.org/).
 
-For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Have fun!

@@ -203,9 +203,9 @@ Enum.map set, fn(x) -> x * 2 end
 #=> [2, 4, 6]
 ```
 
-Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](https://hexdocs.pm/elixir/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.
+Not only that, any developer can **extend** the `Enum` module to work with any data type as long as the data type implements [the `Enumerable` protocol](https://elixir.hexdocs.pm/Enumerable.html) (protocols in Elixir are based on Clojure's protocol). This is extremely convenient because the developer needs to know only the `Enum` API for enumeration, instead of memorizing specific APIs for sets, lists, dicts, etc.
 
-There are many other protocols exposed by the language, like [the `Inspect` protocol](https://hexdocs.pm/elixir/Inspect.html) for pretty printing data structures and [the `Access` protocol](https://hexdocs.pm/elixir/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
+There are many other protocols exposed by the language, like [the `Inspect` protocol](https://elixir.hexdocs.pm/Inspect.html) for pretty printing data structures and [the `Access` protocol](https://elixir.hexdocs.pm/Access.html) for accessing key-value data by key. By being extensible, Elixir ensures developers can work **with** the language, instead of **against** the language.
 
 ## Summing up
 
@@ -213,4 +213,4 @@ The goal of this post was to sumarize the language goals: compatibility, product
 
 We also hope to have clarified what Elixir brings to the Erlang VM, in particular, meta-programming through macros, polymorphic constructs for extensibility and a data-focused standard library with extensible and consistent APIs for diverse types, including strict and lazy enumeration, unicode handling, a test framework and more.
 
-Give Elixir a try! You can start with our [getting started guide](https://hexdocs.pm/elixir/introduction.html), or check out our sidebar for other learning resources.
+Give Elixir a try! You can start with our [getting started guide](https://elixir.hexdocs.pm/introduction.html), or check out our sidebar for other learning resources.

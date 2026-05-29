@@ -15,7 +15,7 @@ Note: this announcement contains [asciinema](https://asciinema.org) snippets. Yo
 
 ## `dbg`
 
-[`Kernel.dbg/2`](https://hexdocs.pm/elixir/Kernel.html#dbg/2) is a new macro that's somewhat similar to [`IO.inspect/2`](https://hexdocs.pm/elixir/IO.html#inspect/2), but specifically tailored for **debugging**.
+[`Kernel.dbg/2`](https://elixir.hexdocs.pm/Kernel.html#dbg/2) is a new macro that's somewhat similar to [`IO.inspect/2`](https://elixir.hexdocs.pm/IO.html#inspect/2), but specifically tailored for **debugging**.
 
 When called, it prints the value of whatever you pass to it, plus the debugged code itself as well as its location.
 
@@ -55,7 +55,7 @@ As an another example of the power behind `dbg`, the Livebook team has implement
 
 ## PartitionSupervisor
 
-[`PartitionSupervisor`](https://hexdocs.pm/elixir/PartitionSupervisor.html) implements a new supervisor type. It is designed to help when you have a single supervised process that becomes a bottleneck. If that process' state can be easily partitioned, then you can use `PartitionSupervisor` to supervise multiple isolated copies of that process running concurrently, each assigned its own partition.
+[`PartitionSupervisor`](https://elixir.hexdocs.pm/PartitionSupervisor.html) implements a new supervisor type. It is designed to help when you have a single supervised process that becomes a bottleneck. If that process' state can be easily partitioned, then you can use `PartitionSupervisor` to supervise multiple isolated copies of that process running concurrently, each assigned its own partition.
 
 For example, imagine you have a `ErrorReporter` process that you use to report errors to a monitoring service.
 
@@ -143,7 +143,7 @@ Enum.to_list(1..10//3)
 #=> [1, 4, 7, 10]
 ```
 
-Stepped ranges are particularly useful for numerical operations involving vectors and matrices (see [Nx](https://github.com/elixir-nx/nx), for example). However, the Elixir standard library was not making use of stepped ranges in its APIs. Elixir v1.14 starts to take advantage of steps with support for stepped ranges in a couple of functions. One of them is [`Enum.slice/2`](https://hexdocs.pm/elixir/Enum.html#slice/2):
+Stepped ranges are particularly useful for numerical operations involving vectors and matrices (see [Nx](https://github.com/elixir-nx/nx), for example). However, the Elixir standard library was not making use of stepped ranges in its APIs. Elixir v1.14 starts to take advantage of steps with support for stepped ranges in a couple of functions. One of them is [`Enum.slice/2`](https://elixir.hexdocs.pm/Enum.html#slice/2):
 
 ```elixir
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
@@ -151,7 +151,7 @@ Enum.slice(letters, 0..5//2)
 #=> ["a", "c", "e"]
 ```
 
-[`binary_slice/2`](https://hexdocs.pm/elixir/Kernel.html#binary_slice/2) (and [`binary_slice/3`](https://hexdocs.pm/elixir/Kernel.html#binary_slice/3) for completeness) has been added to the `Kernel` module, that works with bytes and also support stepped ranges:
+[`binary_slice/2`](https://elixir.hexdocs.pm/Kernel.html#binary_slice/2) (and [`binary_slice/3`](https://elixir.hexdocs.pm/Kernel.html#binary_slice/3) for completeness) has been added to the `Kernel` module, that works with bytes and also support stepped ranges:
 
 ```elixir
 binary_slice("Elixir", 1..5//2)
@@ -181,12 +181,12 @@ MapSet.put(fruits, :pear)
 
 The `MapSet.new/1` expression evaluates to exactly the struct that we're inspecting. This allows us to hide the internals of `MapSet`, while keeping it as valid Elixir code. This expression-based inspection has been implemented for `Version.Requirement`, `MapSet`, and `Date.Range`.
 
-Finally, we have improved the `Inspect` protocol for structs so that fields are inspected in the order they are declared in `defstruct`. The option `:optional` has also been added when deriving the `Inspect` protocol, giving developers more control over the struct representation. See [the updated documentation for `Inspect`](https://hexdocs.pm/elixir/Inspect.html) for a general rundown on the approaches and options available.
+Finally, we have improved the `Inspect` protocol for structs so that fields are inspected in the order they are declared in `defstruct`. The option `:optional` has also been added when deriving the `Inspect` protocol, giving developers more control over the struct representation. See [the updated documentation for `Inspect`](https://elixir.hexdocs.pm/Inspect.html) for a general rundown on the approaches and options available.
 
 ## Learn more
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.14.0).
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Happy debugging!
