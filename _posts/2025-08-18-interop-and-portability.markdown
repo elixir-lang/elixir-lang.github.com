@@ -173,7 +173,7 @@ rustler::init!("Elixir.Example");
 
 ### Zig
 
-[Zigler](https://hexdocs.pm/zigler) lets us write NIFs in Zig, a low-level programming language designed for maintaining robust, optimal, and reusable software. Zig removes hidden control flow, implicit memory allocation, and similar abstractions in favour of code that's explicit and predictable.
+[Zigler](https://zigler.hexdocs.pm) lets us write NIFs in Zig, a low-level programming language designed for maintaining robust, optimal, and reusable software. Zig removes hidden control flow, implicit memory allocation, and similar abstractions in favour of code that's explicit and predictable.
 
 Zigler compiles Zig code at build time and exposes it directly to Elixir, without external build scripts or glue. It tightly integrates with Elixir tooling: Zig code is formatted via `mix format` and documentation written in Zig appears in IEx via the `h` helper.
 

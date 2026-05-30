@@ -26,11 +26,11 @@ Metadata can be given to `@moduledoc`, `@typedoc` and `@doc`.
 
 We have updated [the ExDoc tool](https://github.com/elixir-lang/ex_doc) to start leveraging metadata in order to provide better documentation for developers. Some of the improvements include:
 
-  * Deprecated modules, functions, callbacks and types have a warning automatically attached to them. [See the deprecated `Behaviour` module as an example](https://hexdocs.pm/elixir/Behaviour.html)
+  * Deprecated modules, functions, callbacks and types have a warning automatically attached to them. [See the deprecated `Behaviour` module as an example](https://elixir.hexdocs.pm/Behaviour.html)
 
-  * Functions, macros, callbacks and types now include the version in which they were added. For example, [see the top right corner of the `defguard` docs](https://hexdocs.pm/elixir/Kernel.html#defguard/1)
+  * Functions, macros, callbacks and types now include the version in which they were added. For example, [see the top right corner of the `defguard` docs](https://elixir.hexdocs.pm/Kernel.html#defguard/1)
 
-  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://hexdocs.pm/elixir/main/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
+  * Future Elixir versions will [include its own section for guards in the documentation and in the sidebar](https://elixir.hexdocs.pm/main/Kernel.html#guards). We are currently exploring ways to [generalize this feature in ExDoc itself](https://github.com/elixir-lang/ex_doc/issues/876)
 
 Elixir's interactive shell, IEx, has also been updated to print metadata:
 
@@ -40,7 +40,7 @@ While Elixir allows any metadata to be given, those tools currently exhibit only
 
 Those improvements are not exclusive to the standard library, they are available to every Elixir library and application. We hope one day they will be available to all applications running on the Erlang VM too.
 
-To access the new documentation format, developers should use [`Code.fetch_docs/1`](https://hexdocs.pm/elixir/Code.html#fetch_docs/1). We have always been proud of treating documentation as a first-class citizen and the ability to add structured information to the documentation is a further step in this direction.
+To access the new documentation format, developers should use [`Code.fetch_docs/1`](https://elixir.hexdocs.pm/Code.html#fetch_docs/1). We have always been proud of treating documentation as a first-class citizen and the ability to add structured information to the documentation is a further step in this direction.
 
 ## The `__STACKTRACE__` construct
 
@@ -100,7 +100,7 @@ config :logger,
 
 ## ExUnit improvements
 
-[ExUnit](https://hexdocs.pm/ex_unit/) is Elixir's unit testing library. ExUnit has always leveraged Elixir macros to provide excellent error reports when a failure happens. For example, the following code:
+[ExUnit](https://ex-unit.hexdocs.pm/) is Elixir's unit testing library. ExUnit has always leveraged Elixir macros to provide excellent error reports when a failure happens. For example, the following code:
 
 ```elixir
 assert "fox jumps over the lazy dog" == "brown fox jumps over the dog"
@@ -116,7 +116,7 @@ However, sometimes we need to write assertions such as `assert some_function(exp
 
 ![ExUnit Bare Assertion Diff](/images/contents/exunit-bare-assertion-diff.png)
 
-We have also [added coloring and diffing to doctests](https://hexdocs.pm/ex_unit/ExUnit.DocTest.html#content).
+We have also [added coloring and diffing to doctests](https://ex-unit.hexdocs.pm/ExUnit.DocTest.html#content).
 
 While ExUnit is our test framework, Mix is our build tool. Developers typically run their tests by calling `mix test`.
 
@@ -154,4 +154,4 @@ We have also seen important developments in other areas not directly related to 
 
 Finally, don't forget [ElixirConf US](https://elixirconf.com/) is coming soon, in Bellevue, WA, September 4-7. Last year my keynote focused on the last 5 years with Elixir. This year we are ready to look into the 5 years ahead.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.

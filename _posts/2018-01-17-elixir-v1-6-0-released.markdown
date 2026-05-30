@@ -11,25 +11,25 @@ Elixir v1.6 includes new features, enhancements, and bug fixes. The main feature
 
 ## Code formatter
 
-The big feature in Elixir v1.6 is the addition of [a code formatter](https://hexdocs.pm/elixir/Code.html#format_string!/2) and an accompanying `mix format` task that adds automatic formatting to your projects.
+The big feature in Elixir v1.6 is the addition of [a code formatter](https://elixir.hexdocs.pm/Code.html#format_string!/2) and an accompanying `mix format` task that adds automatic formatting to your projects.
 
 The goal of the formatter is to automate the styling of codebases into a unique and consistent layout used across teams and the whole community. Code is now easier to write, as you no longer need to concern yourself with formatting rules. Code is also easier to read, as you no longer need to convert the styles of other developers in your mind.
 
 The formatter also helps new developers to learn the language by giving immediate feedback on code structure, and eases code reviews by allowing teams to focus on business rules and code quality rather than code style.
 
-To automatically format your codebase, you can run the [new `mix format` task](https://hexdocs.pm/mix/Mix.Tasks.Format.html). A `.formatter.exs` file may be added to your project root for rudimentary formatter configuration. The mix task also supports flags for CI integration. For instance, you can make your build or a Pull Request fail if the code is not formatted accordingly by using the `--check-formatted` flag. We also recommend developers to check their favorite editor and see if it already provides key bindings for `mix format`, allowing a file or a code snippet to be formatted without hassle.
+To automatically format your codebase, you can run the [new `mix format` task](https://mix.hexdocs.pm/Mix.Tasks.Format.html). A `.formatter.exs` file may be added to your project root for rudimentary formatter configuration. The mix task also supports flags for CI integration. For instance, you can make your build or a Pull Request fail if the code is not formatted accordingly by using the `--check-formatted` flag. We also recommend developers to check their favorite editor and see if it already provides key bindings for `mix format`, allowing a file or a code snippet to be formatted without hassle.
 
 The Elixir codebase itself [has already been fully formatted](https://github.com/elixir-lang/elixir/issues/6643) and all further contributions are expected to contain formatted code. We recommend existing codebases to be formatted in steps. While the formatter will correctly handle long lines and complex expressions, refactoring the code by breaking those into variables or smaller functions as you format them will lead to overall cleaner and more readable codebases.
 
 ## Dynamic Supervisor
 
-Supervisors in Elixir are responsible for starting, shutting down, and restarting child processes when things go wrong. Most of the interaction with supervisors happens through [the `Supervisor` module](https://hexdocs.pm/elixir/Supervisor.html) and it provides three main strategies: `:one_for_one`, `:rest_for_one` and `:one_for_all`.
+Supervisors in Elixir are responsible for starting, shutting down, and restarting child processes when things go wrong. Most of the interaction with supervisors happens through [the `Supervisor` module](https://elixir.hexdocs.pm/Supervisor.html) and it provides three main strategies: `:one_for_one`, `:rest_for_one` and `:one_for_all`.
 
 However, sometimes the children of a supervisor are not known upfront and are rather started dynamically. For example, if you are building a web server, you have each request being handled by a separate supervised process. Those cases were handled in the Supervisor module under a special strategy called `:simple_one_for_one`.
 
 Unfortunately, this special strategy changed the semantics of the supervisor in regards to initialization and shutdown. Plus some APIs expected different inputs or would be completely unavailable depending on the supervision strategy.
 
-Elixir v1.6 addresses this issue by introducing [a new `DynamicSupervisor` module](https://hexdocs.pm/elixir/DynamicSupervisor.html), which encapsulates the old `:simple_one_for_one` strategy and APIs in a proper module while allowing the documentation and API of the `Supervisor` module to focus on its main use cases. Having a separate `DynamicSupervisor` module also makes it simpler to add new features to the dynamic supervisor, such as the new `:max_children` option that limits the maximum number of children supervised dynamically.
+Elixir v1.6 addresses this issue by introducing [a new `DynamicSupervisor` module](https://elixir.hexdocs.pm/DynamicSupervisor.html), which encapsulates the old `:simple_one_for_one` strategy and APIs in a proper module while allowing the documentation and API of the `Supervisor` module to focus on its main use cases. Having a separate `DynamicSupervisor` module also makes it simpler to add new features to the dynamic supervisor, such as the new `:max_children` option that limits the maximum number of children supervised dynamically.
 
 ## `@deprecated` and `@since` attributes
 
@@ -60,7 +60,7 @@ end
 
 `%User{age: age}` is matching on a `User` struct with an age field and `when age >= 16` is the guard.
 
-Since only a handful of constructs are [allowed in guards](https://hexdocs.pm/elixir/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 16 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://hexdocs.pm/elixir/Kernel.html#defguard/1):
+Since only a handful of constructs are [allowed in guards](https://elixir.hexdocs.pm/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 16 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://elixir.hexdocs.pm/Kernel.html#defguard/1):
 
 ```elixir
 defguard is_old_to_drive(age) when age >= 16
@@ -82,11 +82,11 @@ Finally, the breakpoint functionality added [in Elixir v1.5](https://elixir-lang
 iex> break! SomeFunction.call(:foo, _, _)
 ```
 
-For more information, see [`IEx.break!/4`](https://hexdocs.pm/iex/IEx.html#break!/4).
+For more information, see [`IEx.break!/4`](https://iex.hexdocs.pm/IEx.html#break!/4).
 
 ## mix xref
 
-[`mix xref`](https://hexdocs.pm/mix/Mix.Tasks.Xref.html) is a task added in Elixir v1.3 which provides general information about how modules and files in an application depend on each other. This release brings many improvements to `xref`, extending the reach of the analysis and helping developers digest the vast amount of data it produces.
+[`mix xref`](https://mix.hexdocs.pm/Mix.Tasks.Xref.html) is a task added in Elixir v1.3 which provides general information about how modules and files in an application depend on each other. This release brings many improvements to `xref`, extending the reach of the analysis and helping developers digest the vast amount of data it produces.
 
 One of such additions is the `--include-siblings` option that can be given to all `xref` commands inside umbrella projects. For example, to find all of the callers of a given module or function of an application in an umbrella:
 
@@ -146,7 +146,7 @@ mix xref graph --format stats --label compile
 
 Those improvements will help developers better understand the relationship between files and reveal potentially complex parts of their systems.
 
-Other improvements in Mix include [better compiler diagnostics](https://hexdocs.pm/mix/Mix.Task.Compiler.html) for editor integration, support for [the `--slowest N` flag in `mix test`](https://hexdocs.pm/mix/Mix.Tasks.Test.html) that shows the slowest tests in your suite, and a new [`mix profile.eprof` task](https://hexdocs.pm/mix/Mix.Tasks.Eprof.html) that provides time based profiling, complementing the existing [`mix profile.cprof` (count based)](https://hexdocs.pm/mix/Mix.Tasks.Profile.Cprof.html) and [`mix profile.fprof` (flame based)](https://hexdocs.pm/mix/Mix.Tasks.Profile.Fprof.html).
+Other improvements in Mix include [better compiler diagnostics](https://mix.hexdocs.pm/Mix.Task.Compiler.html) for editor integration, support for [the `--slowest N` flag in `mix test`](https://mix.hexdocs.pm/Mix.Tasks.Test.html) that shows the slowest tests in your suite, and a new [`mix profile.eprof` task](https://mix.hexdocs.pm/Mix.Tasks.Eprof.html) that provides time based profiling, complementing the existing [`mix profile.cprof` (count based)](https://mix.hexdocs.pm/Mix.Tasks.Profile.Cprof.html) and [`mix profile.fprof` (flame based)](https://mix.hexdocs.pm/Mix.Tasks.Profile.Fprof.html).
 
 ## Summing up
 
@@ -154,4 +154,4 @@ The full list of changes is available in our [release notes](https://github.com/
 
 Work on Elixir v1.7 has already started. We still welcome developers to try out the [previously announced StreamData library](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/), that aims to bring data generation and property-based testing to Elixir. The other [features scheduled for v1.7 can be found in the issues tracker](https://github.com/elixir-lang/elixir/issues).
 
-Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.

@@ -17,7 +17,7 @@ If you are interested in the specific details for this release, [please check ou
 
 ## Logger
 
-Elixir now ships with a new application called logger. This application provides [the Logger module](https://hexdocs.pm/logger/Logger.html), which is the main API developers will use for logging:
+Elixir now ships with a new application called logger. This application provides [the Logger module](https://logger.hexdocs.pm/Logger.html), which is the main API developers will use for logging:
 
 ```elixir
 require Logger
@@ -71,7 +71,7 @@ Function: #Function<20.90072148/0 in :erl_eval.expr/5>
 As soon as we started working on Logger, we realized we could go further than simply translating Erlang messages and provide a fully featured logger library. At this moment, Logger also supports:
 
   * 4 log levels: debug, info, warn and error
-  * Custom formatting: you can specify a format string that tells exactly how messages should be logged. The default string is: "$time $metadata[$level] $message\n" but [many attributes are supported](https://hexdocs.pm/logger/Logger.Formatter.html)
+  * Custom formatting: you can specify a format string that tells exactly how messages should be logged. The default string is: "$time $metadata[$level] $message\n" but [many attributes are supported](https://logger.hexdocs.pm/Logger.Formatter.html)
   * Custom translators: so you can translate log messages coming from any Erlang application into Elixir syntax
   * Metadata: metadata allows developers to store information in the current process that will be available to all logged messages. For example, a web application can generate a `request_id`, store it as metadata, and all messages logged during that request will be properly identified with `request_id=...` in the log
 
@@ -137,7 +137,7 @@ In other words, aliases can be three different structures:
   2. An anonymous function (that is invoked passing the task arguments)
   3. A list containing strings or anonymous functions
 
-You can find more information about aliases by reading the [Mix documentation](https://hexdocs.pm/mix/) (there is a section about Aliases around the middle).
+You can find more information about aliases by reading the [Mix documentation](https://mix.hexdocs.pm/) (there is a section about Aliases around the middle).
 
 We also would like to thank [Anthony Grimes](https://github.com/raynes) for the support and [Phil Halgelberg](https://github.com/technomancy) for [the work on Lein](https://github.com/technomancy/leiningen) which Mix borrows a lot from.
 
@@ -163,4 +163,4 @@ Alexei is also interested in how we can extend our tooling to the Erlang ecosyst
 
 We are very close to launch Elixir v1.0! All planned features are already in Elixir's codebase and at the moment there are only [four open issues in our tracker tagged with the v1.0 milestone](https://github.com/elixir-lang/elixir/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.0).
 
-Our estimated date for the first release candidate for Elixir v1.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](https://hexdocs.pm/elixir/introduction.html) or by checking one of the many "Learning Resources" on the sidebar.
+Our estimated date for the first release candidate for Elixir v1.0 is August 30th. This means there is no better time to learn Elixir than now! If you haven't started yet, you can get started with Elixir by reading [our Getting Started guide](https://elixir.hexdocs.pm/introduction.html) or by checking one of the many "Learning Resources" on the sidebar.

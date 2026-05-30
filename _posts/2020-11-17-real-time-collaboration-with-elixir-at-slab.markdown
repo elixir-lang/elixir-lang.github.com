@@ -32,7 +32,7 @@ The trial went better than expected, and Jason's journey with Slab had officiall
 
 ## Growing with the platform
 
-Shortly after, Slab was in a private beta with a handful of companies as users. For each major feature they had along the way, Elixir and Phoenix provided the building blocks for it. When they implemented real-time comments, they used Phoenix Channels and Phoenix PubSub. The pattern goes on: "for asynchronous processing, we simply use [Elixir tasks](https://hexdocs.pm/elixir/Task.html)". Later on, to track users editing a document and give each a different cursor color, they used [Phoenix Presence](https://hexdocs.pm/phoenix/Phoenix.Presence.html), a tool that no other web framework offers out-of-the-box.
+Shortly after, Slab was in a private beta with a handful of companies as users. For each major feature they had along the way, Elixir and Phoenix provided the building blocks for it. When they implemented real-time comments, they used Phoenix Channels and Phoenix PubSub. The pattern goes on: "for asynchronous processing, we simply use [Elixir tasks](https://elixir.hexdocs.pm/Task.html)". Later on, to track users editing a document and give each a different cursor color, they used [Phoenix Presence](https://phoenix.hexdocs.pm/Phoenix.Presence.html), a tool that no other web framework offers out-of-the-box.
 
 Another leap in Jason's journey with Slab and Elixir was when he had to learn Erlang/OTP, a group of behaviors that ship as part of Erlang's standard library for building distributed and fault-tolerant applications.
 
@@ -44,7 +44,7 @@ One could try to solve this problem by keeping the server stateless. Every time 
 
 When working with Node.js, Jason tried a different approach. If Alice and Bob were writing to the same document, a load balancer would guarantee that both would be routed to the same node. After trying out both Apache and Nginx, he implemented the balancer in Node.js. The overall solution was time-consuming to get right and introduced operational complexities.
 
-Luckily, these problems are the bread and butter of Erlang/OTP. Jason knew he needed a stateful abstraction to keep this state on the server. He had already heard about the options the platform provides, but he was unsure which one to pick. Jason recalls: "I remember asking the community if I should use an [Agent](https://hexdocs.pm/elixir/Agent.html) or a [GenServer](https://hexdocs.pm/elixir/GenServer.html) and everyone was really helpful in providing guidance." They quickly landed on GenServer as their tool of choice.
+Luckily, these problems are the bread and butter of Erlang/OTP. Jason knew he needed a stateful abstraction to keep this state on the server. He had already heard about the options the platform provides, but he was unsure which one to pick. Jason recalls: "I remember asking the community if I should use an [Agent](https://elixir.hexdocs.pm/Agent.html) or a [GenServer](https://elixir.hexdocs.pm/GenServer.html) and everyone was really helpful in providing guidance." They quickly landed on GenServer as their tool of choice.
 
 By default, both GenServer and Agents are local to each node. However, they also support the `:global` option, which registers a given name across the cluster. To use this option, they need the Erlang distribution, which they were already using for Phoenix PubSub and Presence, so this was a straight-forward change. This guarantees both Alice and Bob talk to the same GenServer, regardless if they joined node X or node Y.
 

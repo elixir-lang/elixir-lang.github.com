@@ -114,7 +114,7 @@ at the top of your `mix.exs` to bring the old behaviour back.
 ## Integration with Erlang/OTP logger
 
 This release provides additional features such as global logger
-metadata and [file logging](https://hexdocs.pm/logger/Logger.html#module-erlang-otp-handlers) (with rotation and compression) out of the box!
+metadata and [file logging](https://logger.hexdocs.pm/Logger.html#module-erlang-otp-handlers) (with rotation and compression) out of the box!
 
 This release also soft-deprecates Elixir's Logger Backends in
 favor of Erlang's Logger handlers. Elixir will automatically
@@ -155,7 +155,7 @@ config :logger, :default_handler,
 Finally, the previous Logger Backends API is now soft-deprecated.
 If you implement your own backends, you want to consider migrating to
 [`:logger_backends`](https://github.com/elixir-lang/logger_backends)
-in the long term. See the new [`Logger`](https://hexdocs.pm/logger)
+in the long term. See the new [`Logger`](https://logger.hexdocs.pm)
 documentation for more information on the new features and compatibility.
 
 ## Learn more
@@ -164,7 +164,7 @@ For a complete list of all changes, see the
 [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.15.0).
 
 Check [the Install section](/install.html) to get Elixir installed and
-read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html)
+read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html)
 to learn more.
 
 Happy compiling!

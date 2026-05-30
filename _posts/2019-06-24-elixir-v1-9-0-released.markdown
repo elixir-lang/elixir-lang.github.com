@@ -15,7 +15,7 @@ Now let's take a look at what's new in this new version.
 
 ## Releases
 
-The main feature in Elixir v1.9 is the addition of releases. A release is a self-contained directory that consists of your application code, all of its dependencies, plus the whole Erlang Virtual Machine (VM) and runtime. Once a release is assembled, it can be packaged and deployed to a target as long as the target runs on the same operating system (OS) distribution and version as the machine running the [`mix release`](https://hexdocs.pm/mix/Mix.Tasks.Release.html) command.
+The main feature in Elixir v1.9 is the addition of releases. A release is a self-contained directory that consists of your application code, all of its dependencies, plus the whole Erlang Virtual Machine (VM) and runtime. Once a release is assembled, it can be packaged and deployed to a target as long as the target runs on the same operating system (OS) distribution and version as the machine running the [`mix release`](https://mix.hexdocs.pm/Mix.Tasks.Release.html) command.
 
 Releases have always been part of the Elixir community thanks to Paul Schoenfelder's work on [Distillery](https://github.com/bitwalker/distillery) (and EXRM before that). Distillery was announced in July 2016. Then in 2017, [DockYard](https://dockyard.com/) hired Paul to work on improving deployments, an effort that would lead to [Distillery 2.0](https://dockyard.com/blog/2018/08/23/announcing-distillery-2-0). Distillery 2.0 provided important answers in areas where the community was struggling to establish conventions and best practices, such as configuration.
 
@@ -71,13 +71,13 @@ Releases also provide built-in hooks for configuring almost every need of the pr
 
   * `rel/env.sh.eex` and `rel/env.bat.eex` - template files that are copied into every release and executed on every command to set up environment variables, including ones specific to the VM, and the general environment
 
-We have written [extensive documentation on releases](https://hexdocs.pm/mix/Mix.Tasks.Release.html), so we recommend checking it out for more information.
+We have written [extensive documentation on releases](https://mix.hexdocs.pm/Mix.Tasks.Release.html), so we recommend checking it out for more information.
 
 ## Configuration
 
 We also use the work on releases to streamline Elixir's configuration API. A new `Config` module has been added to Elixir. The previous configuration API, `Mix.Config`, was part of the Mix build tool. However, since releases provide runtime configuration and Mix is not included in releases, we ported the `Mix.Config` API to Elixir. In other words, `use Mix.Config` has been soft-deprecated in favor of `import Config`.
 
-Another important change related to configuration is that `mix new` will no longer generate a `config/config.exs` file. [Relying on configuration is undesired for most libraries](https://hexdocs.pm/elixir/library-guidelines.html#avoid-application-configuration) and the generated config files pushed library authors in the wrong direction. Furthermore, `mix new --umbrella` will no longer generate a configuration for each child app, instead all configuration should be declared in the umbrella root. That's how it has always behaved, we are now making it explicit.
+Another important change related to configuration is that `mix new` will no longer generate a `config/config.exs` file. [Relying on configuration is undesired for most libraries](https://elixir.hexdocs.pm/library-guidelines.html#avoid-application-configuration) and the generated config files pushed library authors in the wrong direction. Furthermore, `mix new --umbrella` will no longer generate a configuration for each child app, instead all configuration should be declared in the umbrella root. That's how it has always behaved, we are now making it explicit.
 
 ## Other improvements
 
@@ -97,6 +97,6 @@ First of all, Elixir is built on top of Erlang/OTP and we simply leverage all of
 
 Second, Elixir was designed to be an extensible language. The same tools and abstractions we used to create and enhance the language are also available to libraries and frameworks. This means the community can continue to improve the ecosystem without a need to change the language itself, which would effectively become a bottleneck for progress.
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more. We have also updated our [advanced Mix & OTP](https://hexdocs.pm/elixir/introduction-to-mix.html) to talk about releases. If you are looking for a more fast paced introduction to the language, see the [How I Start: Elixir](http://howistart.org/posts/elixir/1/index.html) tutorial, which has also been brought to the latest and greatest.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more. We have also updated our [advanced Mix & OTP](https://elixir.hexdocs.pm/introduction-to-mix.html) to talk about releases. If you are looking for a more fast paced introduction to the language, see the [How I Start: Elixir](http://howistart.org/posts/elixir/1/index.html) tutorial, which has also been brought to the latest and greatest.
 
 Have fun!

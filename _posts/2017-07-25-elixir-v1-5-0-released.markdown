@@ -29,7 +29,7 @@ saudação = "Bom dia!"
 
 Elixir follows the recommendations in [Unicode Annex #31](http://unicode.org/reports/tr31/) to make Elixir more accessible to other languages and communities. Identifiers must still be a sequence of letters, followed by digits and combining marks. This means symbols, such as mathematical notations and emoji, are not allowed in identifiers.
 
-For a complete reference on Elixir syntax, see the [Syntax Reference](https://hexdocs.pm/elixir/1.5/syntax-reference.html). For technical details on Unicode support, see [Unicode Syntax](https://hexdocs.pm/elixir/1.5/unicode-syntax.html).
+For a complete reference on Elixir syntax, see the [Syntax Reference](https://elixir.hexdocs.pm/1.5/syntax-reference.html). For technical details on Unicode support, see [Unicode Syntax](https://elixir.hexdocs.pm/1.5/unicode-syntax.html).
 
 ## IEx helpers and breakpoints
 
@@ -118,7 +118,7 @@ children = [
 
 The modules `Agent`, `Registry`, `Task`, and `Task.Supervisor` have been updated to include a `child_spec/1` function, allowing them to be used directly in a supervision tree similar to the examples above. `use Agent`, `use GenServer`, `use Supervisor`, and `use Task` have also been updated to automatically define an overridable `child_spec/1` function.
 
-Finally, child specifications are now provided as maps (data-structures) instead of the previous `Supervisor.Spec.worker/3` and `Supervisor.Spec.supervisor/3` APIs. This behaviour also aligns with how supervisors are configured in Erlang/OTP 18+. See the updated [`Supervisor`](https://hexdocs.pm/elixir/1.5/Supervisor.html) docs for more information, as well as the new `Supervisor.init/2` and `Supervisor.child_spec/2` functions.
+Finally, child specifications are now provided as maps (data-structures) instead of the previous `Supervisor.Spec.worker/3` and `Supervisor.Spec.supervisor/3` APIs. This behaviour also aligns with how supervisors are configured in Erlang/OTP 18+. See the updated [`Supervisor`](https://elixir.hexdocs.pm/1.5/Supervisor.html) docs for more information, as well as the new `Supervisor.init/2` and `Supervisor.child_spec/2` functions.
 
 ## @impl
 
@@ -176,4 +176,4 @@ Overall, using `@impl` has the following advantages:
 
 The full list of changes is available in our [release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.5.0). There are many other exciting changes, such as compiler enhancements that reduces compilation times by 10%-15% on averages. When taken into account with the compiler improvements in Erlang/OTP 20 itself, some applications have seen gains up to 30% in compilation times.
 
-Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Don't forget to check [the Install section](/install.html) to get Elixir installed and our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.

@@ -15,7 +15,7 @@ For now, let's focus on what's new in Elixir v1.11.
 
 ## Tighter Erlang integration
 
-On the footsteps of v1.10, we have further integrated with Erlang's new logger by adding four new log levels: `notice`, `critical`, `alert`, and `emergency`, matching all log levels found in the Syslog standard. The `Logger` module now supports structured logging by passing maps and keyword lists to its various functions. It is also possible to specify the log level per module, via the [`Logger.put_module_level/2`](https://hexdocs.pm/logger/Logger.html#put_module_level/2) function. Log levels per application will be added in future releases.
+On the footsteps of v1.10, we have further integrated with Erlang's new logger by adding four new log levels: `notice`, `critical`, `alert`, and `emergency`, matching all log levels found in the Syslog standard. The `Logger` module now supports structured logging by passing maps and keyword lists to its various functions. It is also possible to specify the log level per module, via the [`Logger.put_module_level/2`](https://logger.hexdocs.pm/Logger.html#put_module_level/2) function. Log levels per application will be added in future releases.
 
 IEx also has been improved to show the documentation for Erlang modules directly from your Elixir terminal. For example, here is a clip of me accessing the documentation for [Erlang's gen_server module](erlang.org/doc/man/gen_server.html):
 
@@ -182,7 +182,7 @@ Elixir v1.9 introduced a new configuration file called `config/releases.exs`. Ho
 
 This new configuration file was considered a very useful addition to releases. Therefore, we are also introducing `config/runtime.exs`, which is executed after the code compilation on all environments (dev, test, and prod) - for both Mix and releases. Our goal is to provide a better runtime configuration experience to developers, in contrast to our current configuration system which has been mostly compile-time centric.
 
-`config/runtime.exs` works the same as any other configuration file in Elixir. However, given `config/runtime.exs` is meant to run in production systems, where our `Mix` build tool is not available, developers must not use [`Mix.env()`](https://hexdocs.pm/mix/Mix.html#env/0) or [`Mix.target()`](https://hexdocs.pm/mix/Mix.html#target/0) in `config/runtime.exs`. Instead, they must use the new `config_env()` and `config_target()`, which have been added to the [`Config`](https://hexdocs.pm/elixir/Config.html) module.
+`config/runtime.exs` works the same as any other configuration file in Elixir. However, given `config/runtime.exs` is meant to run in production systems, where our `Mix` build tool is not available, developers must not use [`Mix.env()`](https://mix.hexdocs.pm/Mix.html#env/0) or [`Mix.target()`](https://mix.hexdocs.pm/Mix.html#target/0) in `config/runtime.exs`. Instead, they must use the new `config_env()` and `config_target()`, which have been added to the [`Config`](https://elixir.hexdocs.pm/Config.html) module.
 
 While `config/releases.exs` will continue to be supported, developers can migrate to `config/runtime.exs` without loss of functionality. For example, a `config/releases.exs` file such as this one
 
@@ -208,18 +208,18 @@ end
 
 If both files are available, releases will pick the now preferred `config/runtime.exs` instead of `config/releases.exs`.
 
-To wrap it all up, `Mix` also includes a new task called [`mix app.config`](https://hexdocs.pm/mix/Mix.Tasks.App.Config.html). This task loads all applications and configures them, without starting them. Whenever you write your own Mix tasks, you will typically want to invoke either `mix app.start` or `mix app.config` before running your own code. Which one is better depends if you want your applications running or only configured.
+To wrap it all up, `Mix` also includes a new task called [`mix app.config`](https://mix.hexdocs.pm/Mix.Tasks.App.Config.html). This task loads all applications and configures them, without starting them. Whenever you write your own Mix tasks, you will typically want to invoke either `mix app.start` or `mix app.config` before running your own code. Which one is better depends if you want your applications running or only configured.
 
 ## Other improvements
 
 Elixir v1.11 adds the `is_struct/2`, `is_exception/1`, and `is_exception/2` guards. It also adds support for the `map.field` syntax in guards.
 
-The Calendar module ships with a new [`Calendar.strftime/3`](https://hexdocs.pm/elixir/Calendar.html#strftime/3) function, which provides datetime formatting based on the `strftime` format. The [`Date`](https://hexdocs.pm/elixir/Date.html) module got new functions for working with weeks and months, such as `Date.beginning_of_month/1` and `Date.end_of_week/2`. Finally, all calendar types got conversion functions from and to gregorian timestamps, such as `Date.from_gregorian_days/2` and `NaiveDateTime.to_gregorian_seconds/1`.
+The Calendar module ships with a new [`Calendar.strftime/3`](https://elixir.hexdocs.pm/Calendar.html#strftime/3) function, which provides datetime formatting based on the `strftime` format. The [`Date`](https://elixir.hexdocs.pm/Date.html) module got new functions for working with weeks and months, such as `Date.beginning_of_month/1` and `Date.end_of_week/2`. Finally, all calendar types got conversion functions from and to gregorian timestamps, such as `Date.from_gregorian_days/2` and `NaiveDateTime.to_gregorian_seconds/1`.
 
-Finally, to bring visibility to the compiler tracking improvements described in previous sections, we have also added new features to [`mix xref`](https://hexdocs.pm/mix/Mix.Tasks.Xref.html). `mix xref` is a task that describes cross-references between files in your projects and can be helpful to diagnose large compilation cycles in projects.
+Finally, to bring visibility to the compiler tracking improvements described in previous sections, we have also added new features to [`mix xref`](https://mix.hexdocs.pm/Mix.Tasks.Xref.html). `mix xref` is a task that describes cross-references between files in your projects and can be helpful to diagnose large compilation cycles in projects.
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.11.0).
 
-Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://hexdocs.pm/elixir/introduction.html) to learn more.
+Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 
 Have fun!
