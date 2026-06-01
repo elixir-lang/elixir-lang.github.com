@@ -4,21 +4,21 @@ title: Elixir v0.5.0 released
 authors:
 -  José Valim
 category: Releases
-excerpt: We have finally released Elixir v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
+excerpt: Let's discuss the goals behind the language first release
 
 ---
 
-We have finally released [Elixir](/) v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss what we achieved during this time and what are the next steps!
+We have finally released Elixir v0.5.0! This marks the first release since the language was rewritten. In this blog post, we will discuss the goals behind the language and what are the next steps!
 
 If you don't care about any of these, you can go straight to our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html). If you do, keep on reading!
 
 ## Looking back
 
-I have started working in Elixir at the beginning of 2011. Around April that year, I had released the version v0.3.0 that was stable enough for me to start using in my own projects. However, after using it in a couple projects quickly reviewed that I was not happy with some of the design decisions taken early on.
+I have started working in Elixir at the beginning of 2011. Around April that year, I had tagged version v0.3.0 that was stable enough for me to start using in my own projects. However, after using it in a couple projects, I was not happy with some of the design decisions taken early on.
 
-At that time, Elixir attempted to be a considerable departure from Erlang and that revealed very fast to a bad design decision because, in order to use any Erlang module, we first would have to provide an Elixir wrapper for it. Any new function or module in new Erlang releases would have to be wrapped first in Elixir, which means we would always play catch up with Erlang.
+At that time, Elixir attempted to be a considerable departure from Erlang and that quickly revealed to be a poor choice: in order to use any Erlang module, we first would have to provide an Elixir wrapper for it. Any new function or module in new Erlang releases would have to be wrapped first in Elixir, which means we would always play catch up with Erlang.
 
-After not feeling productive enough with that Elixir version, I have decided to take a break from Elixir to study old, new and emerging languages. The challenge was to not re-invent Erlang as a language, but how to provide the productivity and flexibility I expect from Elixir while staying a 100% compatible with Erlang.
+After not feeling productive enough with that Elixir version, I have decided to take a break from Elixir to study old, new, and emerging languages. The challenge was to not re-invent Erlang as a language, but how to provide the productivity and flexibility I expect from Elixir while staying a 100% compatible with Erlang.
 
 It was around October 2011, during a short stay in San Francisco, that I came up with what would be [the foundation of Elixir's current version](https://github.com/josevalim/lego-lang) with the help of Yehuda Katz. Development of the new Elixir version started a few days before 2012 and continued steady when the new year came in.
 
@@ -28,17 +28,17 @@ Around February of that year, feeling confident enough about the direction the l
 
 One of the goals we have set was to have a good website and documentation before the next official release. With the help of the Plataformatec team, we created a logo for Elixir and put this website live.
 
-At the same time, [we were working on pygments support](https://web.archive.org/web/20160804045840/https://bitbucket.org/birkenfeld/pygments-main/pull-requests/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, GitHub was able to syntax highlight Elixir code and [our API documentation was online](/).
+[We also worked on pygments support](https://web.archive.org/web/20160804045840/https://bitbucket.org/birkenfeld/pygments-main/pull-requests/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, GitHub was able to syntax highlight Elixir code and our API documentation went live.
 
 At the same time, people started to gather around #elixir-lang channel on irc.freenode.net (now migrated to #elixir on irc.libera.chat) to [play with Elixir](https://github.com/elixir-lang/elixir/tree/main/lib/mix), [start their](https://github.com/guedes/exdate) [own projects](https://github.com/yrashk/validatex) and [tutorials](https://github.com/alco/elixir/wiki/Erlang-Syntax:-A-Crash-Course).
 
-Although the initial release was scheduled to April 2012, the feedback from such early developers forced us to review some design and syntax decisions and were extremely important to shape the language as it is today.
+Although the initial release was scheduled to April 2012, the feedback from early developers forced us to review some architectural and syntax decisions, which were extremely important to shape the language as it is today.
 
-With v0.5.0 finally out, we are committing to a stable syntax and a basic standard library. In the last couple days before the release, we have been working on streamlining the documentation and ensure Elixir works on Mac, Linux and Windows machines!
+With v0.5.0 finally out, we are committing to a stable syntax and a basic standard library. In the last couple days before the release, we have been working on streamlining the documentation and ensuring Elixir works out-of-the-box on Mac, Linux and Windows machines!
 
 ## Looking forward
 
-There are still many, many things to do! In the next months, we will continue working on growing our community, talks and other documentation material. A huge thanks to [Alexei Sholik](https://twitter.com/true_droid) who is moving this area forward.
+There are still many, many things to do! In the next months, we will continue working on growing our community, promoting talks, and other documentation material. A huge thanks to [Alexei Sholik](https://twitter.com/true_droid) who is moving this area forward.
 
 We will also work on better integration and documentation on building Erlang systems. Erlang ships with the [Open Telecom Platform](https://en.wikipedia.org/wiki/Open_Telecom_Platform) which provides many tools to build distributed applications. In v0.5.0, all these tools are already available but we want to make the build process even simpler.
 
