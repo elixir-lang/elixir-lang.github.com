@@ -25,9 +25,9 @@ We frequently say that **the Erlang VM is Elixir's strongest asset**.
 
 All Elixir code is executed inside light-weight processes (actors), each with its own state, that exchange messages between each other. The Erlang VM multiplexes those processes onto many cores, making it trivial to run code concurrently.
 
-In fact if you compile any Elixir code, including the Elixir source, you will see all cores on your machine being used out of the box. With [technologies like Parallella](http://www.parallella.org/board/) becoming more accessible and affordable, it is hard to ignore the power you can get out of the Erlang VM.
+In fact if you compile any Elixir code, including the Elixir source, you will see all cores on your machine being used out of the box. With [technologies like Parallella](https://www.parallella.org/board/) becoming more accessible and affordable, it is hard to ignore the power you can get out of the Erlang VM.
 
-Finally, the Erlang VM was designed to build systems that run forever, self-heal and scale. Joe Armstrong, one of Erlang's creators, has recently given an excellent talk [about the design decisions behind OTP and the VM](http://www.infoq.com/presentations/self-heal-scalable-system).
+Finally, the Erlang VM was designed to build systems that run forever, self-heal and scale. Joe Armstrong, one of Erlang's creators, has recently given an excellent talk [about the design decisions behind OTP and the VM](https://www.infoq.com/presentations/self-heal-scalable-system).
 
 Nothing that we are describing here is particularly new. Open source projects like CouchDB, Riak, RabbitMQ, Chef11 and companies like Ericsson, Heroku, Basho, Klarna and Wooga are already enjoying the benefits provided by the Erlang VM, some of them for quite a long time.
 

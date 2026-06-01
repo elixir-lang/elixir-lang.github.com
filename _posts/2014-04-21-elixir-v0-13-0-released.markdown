@@ -15,7 +15,7 @@ Before we go into the changes, let's briefly talk about ElixirConf!
 
 ## ElixirConf
 
-We are excited to announce [ElixirConf](http://elixirconf.com), the first ever Elixir conference, happening July 25-26, 2014 in Austin, TX. The Call For Proposals is open and we are waiting for your talks!
+We are excited to announce [ElixirConf](https://elixirconf.com), the first ever Elixir conference, happening July 25-26, 2014 in Austin, TX. The Call For Proposals is open and we are waiting for your talks!
 
 The registration is also open and we hope you will join us on this exciting event. We welcome Elixir developers and enthusiasts that are looking forward to be part of our thrilling community!
 
@@ -69,7 +69,7 @@ iex> %{"other" => value} = map
 
 A map pattern will match any map that has all the keys specified in the pattern. The values for the matching keys must also match. For example, `%{"hello" => world}` will match any map that has the key `"hello"` and assign the value to `world`, while `%{"hello" => "world"}` will match any map that has the key `"hello"` with value equals to `"world"`. An empty map pattern (`%{}`) will match all maps.
 
-Developers can use the functions in the [`Map` module](https://elixir.hexdocs.pm/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](https://elixir.hexdocs.pm/keywords-and-maps.html). Elixir Sips has also released two episodes that cover maps ([part 1](http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](http://elixirsips.com/episodes/055_maps_part_2.html)).
+Developers can use the functions in the [`Map` module](https://elixir.hexdocs.pm/Map.html) to work with maps. For more information on maps and how they compare to other associative data structures in the language, please check the [Maps chapter in our new Getting Started guide](https://elixir.hexdocs.pm/keywords-and-maps.html). Elixir Sips has also released two episodes that cover maps ([part 1](https://web.archive.org/web/20260514135945/http://elixirsips.com/episodes/054_maps_part_1.html) and [part 2](https://web.archive.org/web/20260514135945/http://elixirsips.com/episodes/055_maps_part_2.html)).
 
 Maps also provide special syntax for creating, accessing and updating maps with atom keys:
 
@@ -145,7 +145,7 @@ Since maps are meant to replace many cases of records in Erlang, we saw with the
 3. Compile-time structures with compile-time errors
 4. The basic foundation for polymorphism in Elixir
 
-Maps naturally solve issues `1.` and `2.` above. In particular, maps that have same keys share the same key-space in memory. That's why the update operation `%{map | ...}` we have seen above is relevant: if we know we are updating an existing key, the new map created as result of the update operation can share the same key space as the old map without extra checks. For more details on why Maps are efficient, I would recommend [reading Joe's blog post on the matter](http://joearms.github.io/2014/02/01/big-changes-to-erlang.html).
+Maps naturally solve issues `1.` and `2.` above. In particular, maps that have same keys share the same key-space in memory. That's why the update operation `%{map | ...}` we have seen above is relevant: if we know we are updating an existing key, the new map created as result of the update operation can share the same key space as the old map without extra checks. For more details on why Maps are efficient, I would recommend [reading Joe's blog post on the matter](https://web.archive.org/web/20161220040820/http://joearms.github.io/2014/02/01/big-changes-to-erlang.html).
 
 Structs were added to address features `3.` and `4.`. A struct needs to be explicitly defined via `defstruct`:
 
@@ -277,7 +277,7 @@ That said, in the next months we plan to:
 * Integrate applications configuration (provided by OTP) right into Mix;
 * Provide an Elixir logger that knows how to print and format Elixir exceptions and stacktraces;
 * Properly expose the functionality provided by Applications, Supervisors, GenServers and GenEvents and study how they can integrate with Elixir. For example, how to consume events from GenEvent as a [stream of data](https://elixir.hexdocs.pm/Stream.html)?
-* Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](http://e2project.org/erlang.html) and [functionality exposed by OTP itself](http://www.erlang.org/doc/man/rpc.html);
+* Study how patterns like tasks and agents can be integrated into the language, often picking up the lessons learned by libraries like [e2](https://e2project.org/erlang.html) and [functionality exposed by OTP itself](https://www.erlang.org/doc/man/rpc.html);
 * Rewrite the Mix and ExUnit guides to focus on applications and OTP as a whole, rebranding it to "Building Apps with Mix and OTP";
 
-You can learn more about Elixir in our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](http://elixirconf.com/) as well as pushing your packages to [hex.pm](https://hex.pm/).
+You can learn more about Elixir in our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) and download this release in the [v0.13 announcement](https://github.com/elixir-lang/elixir/releases/tag/v0.13.0). We hope to see you at [ElixirConf](https://elixirconf.com/) as well as pushing your packages to [hex.pm](https://hex.pm/).

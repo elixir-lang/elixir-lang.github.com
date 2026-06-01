@@ -27,9 +27,9 @@ Or:
 saudação = "Bom dia!"
 ```
 
-Elixir follows the recommendations in [Unicode Annex #31](http://unicode.org/reports/tr31/) to make Elixir more accessible to other languages and communities. Identifiers must still be a sequence of letters, followed by digits and combining marks. This means symbols, such as mathematical notations and emoji, are not allowed in identifiers.
+Elixir follows the recommendations in [Unicode Annex #31](https://unicode.org/reports/tr31/) to make Elixir more accessible to other languages and communities. Identifiers must still be a sequence of letters, followed by digits and combining marks. This means symbols, such as mathematical notations and emoji, are not allowed in identifiers.
 
-For a complete reference on Elixir syntax, see the [Syntax Reference](https://elixir.hexdocs.pm/1.5/syntax-reference.html). For technical details on Unicode support, see [Unicode Syntax](https://elixir.hexdocs.pm/1.5/unicode-syntax.html).
+For a complete reference on Elixir syntax, see the [Syntax Reference](https://elixir.hexdocs.pm/1.5.0/syntax-reference.html). For technical details on Unicode support, see [Unicode Syntax](https://elixir.hexdocs.pm/1.5.0/unicode-syntax.html).
 
 ## IEx helpers and breakpoints
 
@@ -118,7 +118,7 @@ children = [
 
 The modules `Agent`, `Registry`, `Task`, and `Task.Supervisor` have been updated to include a `child_spec/1` function, allowing them to be used directly in a supervision tree similar to the examples above. `use Agent`, `use GenServer`, `use Supervisor`, and `use Task` have also been updated to automatically define an overridable `child_spec/1` function.
 
-Finally, child specifications are now provided as maps (data-structures) instead of the previous `Supervisor.Spec.worker/3` and `Supervisor.Spec.supervisor/3` APIs. This behaviour also aligns with how supervisors are configured in Erlang/OTP 18+. See the updated [`Supervisor`](https://elixir.hexdocs.pm/1.5/Supervisor.html) docs for more information, as well as the new `Supervisor.init/2` and `Supervisor.child_spec/2` functions.
+Finally, child specifications are now provided as maps (data-structures) instead of the previous `Supervisor.Spec.worker/3` and `Supervisor.Spec.supervisor/3` APIs. This behaviour also aligns with how supervisors are configured in Erlang/OTP 18+. See the updated [`Supervisor`](https://elixir.hexdocs.pm/1.5.0/Supervisor.html) docs for more information, as well as the new `Supervisor.init/2` and `Supervisor.child_spec/2` functions.
 
 ## @impl
 

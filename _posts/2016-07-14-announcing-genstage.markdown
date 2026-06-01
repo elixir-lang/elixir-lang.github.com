@@ -9,7 +9,7 @@ excerpt: GenStage is a new Elixir behaviour for exchanging events with back-pres
 
 Today we are glad to announce the official release of GenStage. GenStage is a new Elixir behaviour for exchanging events with back-pressure between Elixir processes. In the short-term, we expect GenStage to replace the use cases for GenEvent as well as providing a composable abstraction for consuming data from third-party systems.
 
-In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. If instead you are looking for a quick reference, [check the project source code](https://github.com/elixir-lang/gen_stage) and [access its documentation](https://gen-stage.hexdocs.pm/GenStage.html).
+In this blog post we will cover the background that led us to GenStage, some example use cases, and what we are exploring for future releases. If instead you are looking for a quick reference, [check the project source code](https://github.com/elixir-lang/gen_stage) and [access its documentation](https://gen-stage.hexdocs.pm/0.3.0/Experimental.GenStage.html).
 
 ## Background
 
@@ -52,7 +52,7 @@ The solution above allows us to work with large datasets without loading them al
 
 That said, how could we leverage concurrency in the example above?
 
-During my ElixirConf 2015 keynote, [I discussed one of the most immediate solutions to this problem](http://confreaks.tv/videos/elixirconf2015-keynote) which was to convert parts of your pipeline to separate processes:
+During my ElixirConf 2015 keynote, [I discussed one of the most immediate solutions to this problem](https://www.youtube.com/watch?v=9RB1JCKe3GY) which was to convert parts of your pipeline to separate processes:
 
 ```elixir
 File.stream!("path/to/some/file")
@@ -193,7 +193,7 @@ Process.sleep(:infinity)
 
 By simply starting multiple consumers, the stage `B` will now receive demand from multiple stages and dispatch events to those stages which are now running concurrently, always picking the stage that is able to process more items. We can also leverage concurrency from the opposite direction: if the producer is the slow stage in a pipeline, you can start multiple producers and have each consumer subscribe to them.
 
-In order to know which consumer should receive a particular event, producer stages depend on a behaviour called [`GenStage.Dispatcher`](https://gen-stage.hexdocs.pm/Experimental.GenStage.Dispatcher.html). The default dispatcher is the `GenStage.DemandDispatcher` we have briefly described above: it will collect the demand from different consumers and dispatch to the one with highest demand. This means if one consumer is slow, maybe because we increased its sleeping time to 10 seconds, it will receive less items.
+In order to know which consumer should receive a particular event, producer stages depend on a behaviour called [`GenStage.Dispatcher`](https://gen-stage.hexdocs.pm/0.3.0/Experimental.GenStage.Dispatcher.html). The default dispatcher is the `GenStage.DemandDispatcher` we have briefly described above: it will collect the demand from different consumers and dispatch to the one with highest demand. This means if one consumer is slow, maybe because we increased its sleeping time to 10 seconds, it will receive less items.
 
 ### GenStage for data-ingestion
 
@@ -207,7 +207,7 @@ During the Elixir London Meetup, I have live-coded a short example that shows ho
 
 Another scenario where GenStage can be useful today is to replace cases where developers would have used [GenEvent](https://elixir.hexdocs.pm/GenEvent.html) in the past. For those unfamiliar with GenEvent, it is a behaviour where events are sent to an "event manager" which then proceeds to invoke "event handlers" for each event. GenEvent, however, has one big flaw: the event manager and all event handlers run in the same process. This means GenEvent handlers cannot easily leverage concurrency without forcing developers to implement those mechanisms themselves. Furthermore, GenEvent handlers have very awkward error semantics. Because event handlers are not separate processes, we cannot simply rely on supervisors restarting them.
 
-GenStage solves those problems by having a producer as the event manager. The producer itself should be configured to use [`GenStage.BroadcastDispatcher`](https://gen-stage.hexdocs.pm/Experimental.GenStage.BroadcastDispatcher.html) as its dispatcher. The broadcast dispatcher will guarantee events are dispatched to all consumers in a way that does not exceed the demand of any of the consumers. This allows us to leverage concurrency and having the "event manager" as a producer gives us much more flexibility in terms of buffering and reacting to failures.
+GenStage solves those problems by having a producer as the event manager. The producer itself should be configured to use [`GenStage.BroadcastDispatcher`](https://gen-stage.hexdocs.pm/0.3.0/Experimental.GenStage.BroadcastDispatcher.html) as its dispatcher. The broadcast dispatcher will guarantee events are dispatched to all consumers in a way that does not exceed the demand of any of the consumers. This allows us to leverage concurrency and having the "event manager" as a producer gives us much more flexibility in terms of buffering and reacting to failures.
 
 Let's see an example of building an event manager as a producer:
 
@@ -295,7 +295,7 @@ Such guarantees that, if a supervised `EventHandler` crashes, the supervisor wil
 
 With the release of GenStage v0.3.0, we have reached an important milestone as `GenStage` can be used as both event managers and a way to exchange events between processes, often external data sources, with back-pressure.
 
-The v0.3.0 release also includes the [`GenStage.stream`](https://gen-stage.hexdocs.pm/Experimental.GenStage.html#stream/1) function, which allows us to consume data from a GenStage as a stream, and [`GenStage.from_enumerable`](https://gen-stage.hexdocs.pm/Experimental.GenStage.html#from_enumerable/2) which allows us to use an enumerable or a stream, like `File.stream!`, as a producer. Closing the gap between stages and streams.
+The v0.3.0 release also includes the [`GenStage.stream`](https://gen-stage.hexdocs.pm/0.3.0/Experimental.GenStage.html#stream/1) function, which allows us to consume data from a GenStage as a stream, and [`GenStage.from_enumerable`](https://gen-stage.hexdocs.pm/0.3.0/Experimental.GenStage.html#from_enumerable/2) which allows us to use an enumerable or a stream, like `File.stream!`, as a producer. Closing the gap between stages and streams.
 
 However, we are far from done!
 
@@ -320,7 +320,7 @@ File.stream!("path/to/some/file")
 |> Enum.to_list()
 ```
 
-While the above is helpful when working with large or infinite collections, it still does not leverage concurrency. To address that, we are currently exploring a solution named [`GenStage.Flow`](https://gen-stage.hexdocs.pm/Experimental.Flow.html), that allows us to express our computations similarly to streams, except they will run across multiple stages instead of a single process:
+While the above is helpful when working with large or infinite collections, it still does not leverage concurrency. To address that, we are currently exploring a solution named [`GenStage.Flow`](https://gen-stage.hexdocs.pm/0.5.0/Experimental.Flow.html), that allows us to express our computations similarly to streams, except they will run across multiple stages instead of a single process:
 
 ```elixir
 alias Experimental.GenStage.Flow
@@ -351,12 +351,12 @@ File.stream!("path/to/some/file", read_ahead: 100_000) # NEW!
 |> Enum.to_list()
 ```
 
-Flow will look at the computations we want to perform and start a series of stages to execute our code while keeping the amount of data being transferred between processes to a minimum. If you are interested in `GenStage.Flow` and how the computations above are spread across multiple stages, [we have written some documentation based on the prototypes we have built so far](https://gen-stage.hexdocs.pm/Experimental.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
+Flow will look at the computations we want to perform and start a series of stages to execute our code while keeping the amount of data being transferred between processes to a minimum. If you are interested in `GenStage.Flow` and how the computations above are spread across multiple stages, [we have written some documentation based on the prototypes we have built so far](https://gen-stage.hexdocs.pm/0.5.0/Experimental.Flow.html). The code itself is coming in future GenStage releases. We will also have to consider how the `GenStage.Flow` API mirrors the functions in `Enum` and `Stream` to make the path from eager to concurrent clearer.
 
 For the word counting problem with a fixed data, early experiments show a linear increase in performance with a fixed overhead of 20%. In other words, a dataset that takes 60s with a single core, takes 36s on a machine with 2 cores and 18s in one with 4 cores. All of those gains by simply moving your computations from streams to Flow. We plan to benchmark on machines with over 40 cores soon.
 
-We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, Flows, and more will also be the topic of my keynote at ElixirConf 2016](http://www.elixirconf.com/) and we hope to see you there.
+We are very excited with the possibilities GenStage brings to developers and all new paths it allows us to explore and research. So give it a try and let us know! [GenStage, Flows, and more will also be the topic of my keynote at ElixirConf 2016](https://www.elixirconf.com/) and we hope to see you there.
 
-Finally, we want to thank the [akka-streams and reactive-streams projects](http://reactive-streams.io) which provided us guidance in implementing the demand-driven exchange between stages as well as the [Apache Spark](http://spark.apache.org/) and [Apache Beam](http://beam.incubator.apache.org/) initiatives that inspire the work behind `GenStage.Flow`.
+Finally, we want to thank the [akka-streams and reactive-streams projects](https://github.com/reactive-streams) which provided us guidance in implementing the demand-driven exchange between stages as well as the [Apache Spark](https://spark.apache.org/) and [Apache Beam](https://beam.incubator.apache.org/) initiatives that inspire the work behind `GenStage.Flow`.
 
 Happy coding!

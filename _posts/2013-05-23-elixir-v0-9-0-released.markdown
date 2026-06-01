@@ -25,7 +25,7 @@ defrecord User, name: nil, age: nil
 
 Records are a good scenario because they are implemented in Elixir, using Elixir macros, and they also define a module underneath, which exercises the Erlang VM compilation stack.
 
-We have used [fprof](http://www.erlang.org/doc/man/fprof.html) to identify the bottlenecks and made the compilation stack 35% faster. We have also identified bottlenecks coming from Erlang and [pushed some patches](https://github.com/erlang/otp/commit/32b194495f353dde014b00008a630eeff2a71056) that should benefit both Elixir and Erlang code.
+We have used [fprof](https://www.erlang.org/doc/man/fprof.html) to identify the bottlenecks and made the compilation stack 35% faster. We have also identified bottlenecks coming from Erlang and [pushed some patches](https://github.com/erlang/otp/commit/32b194495f353dde014b00008a630eeff2a71056) that should benefit both Elixir and Erlang code.
 
 A special thanks to [Yurii Rashkovskii](https://github.com/yrashk) for the data and profiling.
 
@@ -115,7 +115,7 @@ This approach solves all the problems above:
 * Reducers do not dictate how a type should be enumerated. This means types like `Range` and `HashDict` can provide a much faster implementation for Reducers;
 * Furthermore, the end result is a cleaner implementation of most of `Enum` functions (the [reducers pull request](https://github.com/elixir-lang/elixir/pull/1102) removes over 500LOC) and better performance!
 
-Reducers also opens up room for lazy and parallel enumeration, as [the Clojure community has already proven](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html) and something we are looking forward to explore on upcoming releases.
+Reducers also opens up room for lazy and parallel enumeration, as [the Clojure community has already proven](https://clojure.org/news/2012/05/08/reducers) and something we are looking forward to explore on upcoming releases.
 
 A special thanks to [Eric Meadows-Jonsson](https://github.com/ericmj) for implementing this feature!
 

@@ -40,7 +40,7 @@ This is particularly useful when your tests get stuck and you want to know which
 
 [Erlang/OTP 24 ships with JIT compilation](https://blog.erlang.org/My-OTP-24-Highlights/) and Elixir developers don't have to do anything to reap its benefits. There are many other features in Erlang/OTP 24 to look forwards to and Elixir v1.12 provides integration with many of them: such as support for 16bit floats in bitstrings as well as performance improvements in the compiler and during code evaluation.
 
-Another excellent feature in Erlang/OTP 24 is the implementation of [EEP 54](http://www.erlang.org/eeps/eep-0054.html), which provides extended error information for many functions in Erlang's stdlib. Elixir v1.12 fully leverages this feature to improve reporting for errors coming from Erlang. For example, in earlier OTP versions, inserting an invalid argument into an ETS table that no longer exists would simply error with `ArgumentError`:
+Another excellent feature in Erlang/OTP 24 is the implementation of [EEP 54](https://www.erlang.org/eeps/eep-0054.html), which provides extended error information for many functions in Erlang's stdlib. Elixir v1.12 fully leverages this feature to improve reporting for errors coming from Erlang. For example, in earlier OTP versions, inserting an invalid argument into an ETS table that no longer exists would simply error with `ArgumentError`:
 
 <script type="text/javascript" src="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm.js" id="asciicast-1s79Cwf2JvSLYihAahIobVyBm" async></script><noscript><p><a href="https://asciinema.org/a/1s79Cwf2JvSLYihAahIobVyBm">See the example in asciinema</a></p></noscript>
 
@@ -95,7 +95,7 @@ Elixir v1.12 has also added many functions across the standard library. The `Enu
 
 The `Code` module got a [`cursor_context/2`](https://elixir.hexdocs.pm/1.12/Code.html#cursor_context/2) function, which is now used to power `IEx` autocompletion and it is [used by projects such as Livebook to provide intellisense](https://user-images.githubusercontent.com/17034772/115117125-533b2900-9f9d-11eb-94a9-a2cf2ccb7388.mp4).
 
-The EEx application has also been extended to provide metadata on text segments. This has enabled the Surface and Phoenix LiveView teams to implement [a new template language called HEEx](https://github.com/phoenixframework/phoenix_live_view/pull/1440), which validates both HTML and EEx. Finally, the `Registry` module supports the `:compressed` option, which is useful for GraphQL applications managing hundreds of thousands of subscriptions via [Absinthe](http://absinthe-graphql.org/).
+The EEx application has also been extended to provide metadata on text segments. This has enabled the Surface and Phoenix LiveView teams to implement [a new template language called HEEx](https://github.com/phoenixframework/phoenix_live_view/pull/1440), which validates both HTML and EEx. Finally, the `Registry` module supports the `:compressed` option, which is useful for GraphQL applications managing hundreds of thousands of subscriptions via [Absinthe](https://absinthe.hexdocs.pm/).
 
 For a complete list of all changes, see the [full release notes](https://github.com/elixir-lang/elixir/releases/tag/v1.12.0). Check [the Install section](/install.html) to get Elixir installed and read our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html) to learn more.
 

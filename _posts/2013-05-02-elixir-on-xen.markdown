@@ -7,7 +7,7 @@ category: Announcements
 excerpt: The Erlang on Xen team has added support for Elixir and we will tell you how you can use it!
 ---
 
-Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir project can run on the recently revealed "OS-less" Erlang VM called LING VM. LING VM is the core technology of [Erlang on Xen](http://erlangonxen.org).
+Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir project can run on the recently revealed "OS-less" Erlang VM called LING VM. LING VM is the core technology of [Erlang on Xen](https://erlangonxen.org).
 
 ## Why Xen?
 
@@ -15,7 +15,7 @@ Elixir uses Erlang underneath, all the way down. Thanks to this, an Elixir proje
 
 Elixir on Xen runs on top of the Xen Hypervisor (via the LING VM) but with no traditional OS underneath it, taking away numerous administrative, scalability, and performance issues. This  limits options of a malicious attacker, making it an excellent choice for high-security applications, and reduces startup latency, allowing developers to spawn new VMs in less than 100 milliseconds.
 
-You can learn more about Xen and the LING VM on the [Erlang on Xen website](http://erlangonxen.org).
+You can learn more about Xen and the LING VM on the [Erlang on Xen website](https://erlangonxen.org).
 
 ## Getting started
 
@@ -41,7 +41,7 @@ to the mix tool (`lingex.build`, `lingex.image`, and `lingex.build_image`)
           			password: "test" ] ]
           end
 
-4. Optionally, you may register with the build service [here](http://build.erlangonxen.org/register) and update the credentials accordingly. For the complete list of recognized options see the build service documentation.
+4. Optionally, you may register with the build service [here](https://web.archive.org/web/20150227101849/http://build.erlangonxen.org/register) and update the credentials accordingly. For the complete list of recognized options see the build service documentation.
 
 5. Run `mix lingex.build_image`. This will archive all `*.beam` files of your project and submit them to the build service.
 
@@ -66,6 +66,6 @@ This will bring you to Interactive Elixir and you can execute Elixir expressions
 
 ## Summing up
 
-Running Elixir on Xen opens up many possibilities to Elixir developers. We are very thankful for the work done by [Erlang on Xen team](http://erlangonxen.org), who added support for Elixir and the `lingex` build tool.
+Running Elixir on Xen opens up many possibilities to Elixir developers. We are very thankful for the work done by [Erlang on Xen team](https://erlangonxen.org), who added support for Elixir and the `lingex` build tool.
 
-Erlang on Xen (and consequently Elixir on Xen) is still in active development, so don't forget to read more about its concepts, use cases and limitations on [Erlang on Xen website](http://erlangonxen.org/).
+Erlang on Xen (and consequently Elixir on Xen) is still in active development, so don't forget to read more about its concepts, use cases and limitations on [Erlang on Xen website](https://erlangonxen.org/).

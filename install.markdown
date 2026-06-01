@@ -197,7 +197,7 @@ make clean compile
 
 The only prerequisite for Elixir is Erlang, version {{ stable.minimum_otp }} or later. When installing Elixir, Erlang is generally installed automatically for you. However, if you want to install Erlang manually, you might check:
 
-  * [Source code distribution and Windows installers from Erlang's official website](http://www.erlang.org/downloads.html)
+  * [Source code distribution and Windows installers from Erlang's official website](https://www.erlang.org/downloads.html)
   * [Precompiled packages for some Unix-like installations](https://www.erlang-solutions.com/resources/download.html)
   * [A general list of installation methods from the Riak documentation](https://docs.riak.com/riak/kv/latest/setup/installing/source/erlang/)
 
@@ -211,7 +211,7 @@ Notice that depending on how you installed Erlang, Erlang binaries might not be 
 
 It is highly recommended to add Elixir's bin path to your PATH environment variable to ease development.
 
-On Windows, there are [instructions for different versions](http://www.computerhope.com/issues/ch000549.htm) explaining the process.
+On Windows, there are [instructions for different versions](https://www.computerhope.com/issues/ch000549.htm) explaining the process.
 
 On Unix systems, you need to [find your shell profile file](https://unix.stackexchange.com/a/117470/101951), and then add to the end of this file the following line reflecting the path to your Elixir installation:
 
@@ -224,8 +224,8 @@ export PATH="$PATH:/path/to/elixir/bin"
 After Elixir is up and running, it is common to have questions as you learn and use the language. There are many places where you can ask questions, here are some of them:
 
   * [#elixir on irc.libera.chat](irc://irc.libera.chat/elixir)
-  * [Elixir Forum](http://elixirforum.com)
-  * [Elixir on Slack](https://elixir-slack.community)
+  * [Elixir Forum](https://elixirforum.com)
+  * [Elixir on Slack](https://elixir-lang.slack.com/join/shared_invite/zt-eivteker-k_nArD59XHjjN_r8qeH6dw#/shared-invite/email)
   * [Elixir on Discord](https://discord.gg/elixir)
   * [elixir tag on StackOverflow](https://stackoverflow.com/questions/tagged/elixir)
 

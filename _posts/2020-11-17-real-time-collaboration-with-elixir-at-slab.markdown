@@ -54,7 +54,7 @@ Later on, when running the system in production, the platform continued to impre
 
 There are other few notable tools in Slab's stack.
 
-Back in 2017, they migrated to GraphQL [powered by Elixir's Absinthe](http://absinthe-graphql.org/). There were concerns about adopting the query language, as it was a relatively new technology. Still, they felt it would address a real issue: they had different components in the application needing distinct data, and managing all of these possible combinations was becoming complex. This was one of the main problems GraphQL was designed to solve.
+Back in 2017, they migrated to GraphQL [powered by Elixir's Absinthe](https://absinthe.hexdocs.pm/). There were concerns about adopting the query language, as it was a relatively new technology. Still, they felt it would address a real issue: they had different components in the application needing distinct data, and managing all of these possible combinations was becoming complex. This was one of the main problems GraphQL was designed to solve.
 
 They are also running on Google Cloud with Kubernetes (K8s), and, as many Elixir engineers, they wondered [how the Erlang VM fit in a world with Docker and K8s](https://dashbit.co/blog/kubernetes-and-the-erlang-vm-orchestration-on-the-large-and-the-small). Today they run on 6 nodes, 5 of them running application code. The sixth one handles [cron jobs](https://en.wikipedia.org/wiki/Cron) and stays on standby for new deployments. They use [the peerage library](https://github.com/mrluc/peerage) to establish Distributed Erlang connections between the nodes.
 

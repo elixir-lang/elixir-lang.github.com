@@ -43,7 +43,7 @@ Hubs Cloud launched in February 2020 and it has been a hit. [New York University
 
 Their cloud version uses Amazon CloudFormation to instantiate Hubs inside the user's account. This approach brought different challenges to the Hubs team: "we want Hubs Cloud to be as affordable and straightforward as possible. The Phoenix app has already been a massive help on this front. We have also moved some features to Amazon Lambda and made them optional, such as image resizing and video conversion" - details John.
 
-Since Hubs is also open source, developers can run their own Hubs instance in whatever platform they choose or change it however they want. That's the path Greg Fodor recently took when he announced [Jel](https://jel.app/): "Jel is the video game for work. It is a mashup of Minecraft and Discord, where everything is 3D. My goal is to spark new directions and ideas to get people excited about VR".
+Since Hubs is also open source, developers can run their own Hubs instance in whatever platform they choose or change it however they want. That's the path Greg Fodor recently took when he announced [Jel](https://web.archive.org/web/20220123203842/https://jel.app/): "Jel is the video game for work. It is a mashup of Minecraft and Discord, where everything is 3D. My goal is to spark new directions and ideas to get people excited about VR".
 
 ## Summing up
 

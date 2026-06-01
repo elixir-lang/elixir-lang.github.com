@@ -17,7 +17,7 @@ For now, let's focus on what's new in Elixir v1.11.
 
 On the footsteps of v1.10, we have further integrated with Erlang's new logger by adding four new log levels: `notice`, `critical`, `alert`, and `emergency`, matching all log levels found in the Syslog standard. The `Logger` module now supports structured logging by passing maps and keyword lists to its various functions. It is also possible to specify the log level per module, via the [`Logger.put_module_level/2`](https://logger.hexdocs.pm/Logger.html#put_module_level/2) function. Log levels per application will be added in future releases.
 
-IEx also has been improved to show the documentation for Erlang modules directly from your Elixir terminal. For example, here is a clip of me accessing the documentation for [Erlang's gen_server module](erlang.org/doc/man/gen_server.html):
+IEx also has been improved to show the documentation for Erlang modules directly from your Elixir terminal. For example, here is a clip of me accessing the documentation for [Erlang's gen_server module](https://www.erlang.org/doc/apps/stdlib/gen_server.html):
 
 <script id="asciicast-1Kqwwkn0wMl0feePvWQwHe85G" src="https://asciinema.org/a/1Kqwwkn0wMl0feePvWQwHe85G.js" async></script><noscript><p><a href="https://asciinema.org/a/iAOk0yaZtQDsuJqn2sXa1FRQW">See the example in asciinema</a></p></noscript>
 

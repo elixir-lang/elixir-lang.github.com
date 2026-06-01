@@ -163,4 +163,4 @@ With v0.14.0 we have reached many of the milestones [we have set in the previous
 
 That's all for now! Elixir developers can see [a summary of all changes in v0.14.0 in the release notes](https://github.com/elixir-lang/elixir/releases/tag/v0.14.0). In case you are new around here, you can get started with Elixir by reading [our Getting Started guide](https://elixir.hexdocs.pm/introduction.html).
 
-We hope to see you all this July at [ElixirConf](http://elixirconf.com/)!
+We hope to see you all this July at [ElixirConf](https://elixirconf.com/)!

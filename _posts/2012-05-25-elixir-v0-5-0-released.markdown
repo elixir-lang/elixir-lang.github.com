@@ -22,13 +22,13 @@ After not feeling productive enough with that Elixir version, I have decided to 
 
 It was around October 2011, during a short stay in San Francisco, that I came up with what would be [the foundation of Elixir's current version](https://github.com/josevalim/lego-lang) with the help of Yehuda Katz. Development of the new Elixir version started a few days before 2012 and continued steady when the new year came in.
 
-Around February of that year, feeling confident enough about the direction the language was moving (and initial benchmarks I had made at that point), I have pitched Elixir to [my company, Plataformatec](http://plataformatec.com.br/), and they have accepted to sponsor Elixir. With their help, Elixir developed even faster and that's what we are going to take a look next.
+Around February of that year, feeling confident enough about the direction the language was moving (and initial benchmarks I had made at that point), I have pitched Elixir to [my company, Plataformatec](https://plataformatec.com.br/), and they have accepted to sponsor Elixir. With their help, Elixir developed even faster and that's what we are going to take a look next.
 
 ## Where we are
 
 One of the goals we have set was to have a good website and documentation before the next official release. With the help of the Plataformatec team, we created a logo for Elixir and put this website live.
 
-At the same time, [we were working on pygments support](https://bitbucket.org/birkenfeld/pygments-main/pull-request/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, GitHub was able to syntax highlight Elixir code and [our API documentation was online](/).
+At the same time, [we were working on pygments support](https://web.archive.org/web/20160804045840/https://bitbucket.org/birkenfeld/pygments-main/pull-requests/57/add-elixir-and-elixir-console-lexers), a [documentation generation tool](https://github.com/elixir-lang/ex_doc) and many others. Soon, GitHub was able to syntax highlight Elixir code and [our API documentation was online](/).
 
 At the same time, people started to gather around #elixir-lang channel on irc.freenode.net (now migrated to #elixir on irc.libera.chat) to [play with Elixir](https://github.com/elixir-lang/elixir/tree/main/lib/mix), [start their](https://github.com/guedes/exdate) [own projects](https://github.com/yrashk/validatex) and [tutorials](https://github.com/alco/elixir/wiki/Erlang-Syntax:-A-Crash-Course).
 

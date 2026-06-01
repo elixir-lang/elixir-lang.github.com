@@ -210,7 +210,7 @@ The first release candidate for Elixir v1.20 is out and includes type inference 
 * Feb-Mar/2026: inference across clauses, few or none false positives, assess performance!
 * Apr-May/2026: inference across dependencies, assess performance!
 
-Every release will have a thread in the [Elixir Forum](http://elixirforum.com) for discussion.
+Every release will have a thread in the [Elixir Forum](https://elixirforum.com) for discussion.
 
 Check our documentation to learn more about our [overall work on set-theoretic types](https://elixir.hexdocs.pm/1.20.0-rc.0/gradual-set-theoretic-types.html). This release also includes [our official types cheatsheet](https://elixir.hexdocs.pm/1.20.0-rc.0/types-cheat.html).
 

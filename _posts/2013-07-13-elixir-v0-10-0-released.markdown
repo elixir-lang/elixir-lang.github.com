@@ -61,11 +61,11 @@ Stream.repeatedly(fn -> :random.uniform end) |> Enum.take(3)
 
 This release also adds [the Sets API](https://elixir.hexdocs.pm/Set.html) to Elixir and a HashSet implementation. The HashSet implementation follows [the same design goals as the HashDict implementation](/blog/2013/01/27/elixir-v0-8-0-released/) released at the beginning of this year, starting with a compact representation and expanding and contracting as needed.
 
-This feature was a contribution from [Joseph Wilk](https://github.com/josephwilk) and he talks about its implementation and provides some benchmarks [on his blog](http://blog.josephwilk.net/elixir/sets-in-elixir.html).
+This feature was a contribution from [Joseph Wilk](https://github.com/josephwilk) and he talks about its implementation and provides some benchmarks [on his blog](https://blog.josephwilk.net/elixir/sets-in-elixir.html).
 
 ## Pretty printing
 
-Another addition to this release is pretty printing. The pretty printing started as an implementation of the [Wadler paper](http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf) by [Jonns Mostovoys](https://github.com/manpages) which was then improved by [Gustavo Brunoro](https://github.com/brunoro) under his Google Summer of Code project as described in [Lindig's _Strictly Prettier_ paper](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.34.2200).
+Another addition to this release is pretty printing. The pretty printing started as an implementation of the [Wadler paper](https://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf) by [Jonns Mostovoys](https://github.com/manpages) which was then improved by [Gustavo Brunoro](https://github.com/brunoro) under his Google Summer of Code project as described in [Lindig's _Strictly Prettier_ paper](https://lindig.github.io/papers/strictly-pretty-2000.pdf).
 
 As soon as you upgrade to Elixir v0.10.0 and start IEx, you will get pretty printing for all data structures provided by Elixir. We have also added documentation to the `Inspect` module about [adding pretty printing to your own structures](https://elixir.hexdocs.pm/Inspect.html) as well as [using the document algebra for any other kind of formatting](https://elixir.hexdocs.pm/Inspect.Algebra.html).
 
@@ -81,6 +81,6 @@ Other notable improvements are:
 
 * Meta-programming in Elixir was also improved by the addition of the `binding/0` and `binding/1` macros plus the additions of `Macro.expand_once/2` and `Macro.expand_all/2` to the [`Macro` module](https://elixir.hexdocs.pm/Macro.html);
 
-There are also improvements to typespecs, error messages, many bug fixes and some backwards incompatible changes. We have posted a detailed [upgrade instructions on the mailing list](https://groups.google.com/forum/?fromgroups#!topic/elixir-lang-talk/ksrefrgK1eY). For a general overview, [check out the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.10.0/CHANGELOG.md).
+There are also improvements to typespecs, error messages, many bug fixes and some backwards incompatible changes. We have posted a detailed [upgrade instructions on the mailing list](https://groups.google.com/g/elixir-lang-talk/c/ksrefrgK1eY). For a general overview, [check out the CHANGELOG](https://github.com/elixir-lang/elixir/blob/v0.10.0/CHANGELOG.md).
 
 Give Elixir a try! You can start with our [getting started guide](https://elixir.hexdocs.pm/introduction.html), or check out our sidebar for other learning resources.
