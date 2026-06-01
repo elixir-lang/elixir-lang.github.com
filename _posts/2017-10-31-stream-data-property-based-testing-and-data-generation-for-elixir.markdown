@@ -173,11 +173,11 @@ The reasons for writing a new property-based testing library from scratch are be
 **Update Jun/2020:** after careful consideration, the Elixir team decided to not include `StreamData` in Elixir itself, and keep it as package, as it is able to provide all of the necessary features without a need for direct integration with the language.
 
 [stream_data]: https://github.com/whatyouhide/stream_data
-[quickcheck-paper]: http://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf
+[quickcheck-paper]: https://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf
 [test.check]: https://github.com/clojure/test.check
 [Hypothesis]: https://github.com/HypothesisWorks/hypothesis-python
-[QuickCheck]: http://quviq.com
-[propertesting.com]: http://propertesting.com
+[QuickCheck]: https://quviq.com
+[propertesting.com]: https://propertesting.com
 [PropEr]: https://github.com/manopapad/proper
 [quickcheck-pr]: https://github.com/elixir-lang/elixir/pull/5022#issuecomment-233195478
 [pollution]: https://github.com/pragdave/pollution

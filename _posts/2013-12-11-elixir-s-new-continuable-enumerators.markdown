@@ -98,7 +98,7 @@ producer "stop for now but be prepared to continue where you left off later".
 
 At CodeMeshIO José Valim and Jessica Kerr sat down and discussed this problem.
 They came up with a solution inspired by a [Monad.Reader
-article](http://themonadreader.files.wordpress.com/2010/05/issue16.pdf) (third
+article](https://themonadreader.files.wordpress.com/2010/05/issue16.pdf) (third
 article). It's an elegant extension of the old system, based on a simple idea.
 Instead of returning only an accumulator at every step (for every produced
 value) the consumer returns a combination of an accumulator and an instruction

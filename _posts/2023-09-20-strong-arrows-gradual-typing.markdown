@@ -100,7 +100,7 @@ def identity(arg), do: arg
 
 But at the end of the day it will simply expand to intersections. The important bit is that, at the semantic level, there is no need for additional constructs and representations.
 
-> Note: for the type-curious readers, set-theoretic types implement [a limited form of bounded quantification *à la* Kernel Fun](http://lucacardelli.name/Papers/OnUnderstanding.pdf). In a nutshell, it means we can only compare functions if they have the same bounds. For example, our type system states `a -> a when a: integer() or boolean()` is not a subtype of `a -> a when a: integer()`.
+> Note: for the type-curious readers, set-theoretic types implement [a limited form of bounded quantification *à la* Kernel Fun](https://web.archive.org/web/20260430221541/http://lucacardelli.name/Papers/OnUnderstanding.pdf). In a nutshell, it means we can only compare functions if they have the same bounds. For example, our type system states `a -> a when a: integer() or boolean()` is not a subtype of `a -> a when a: integer()`.
 
 We also get lower bounds for free. If intersections allow us to place an upper bound on a type variable, a union is equivalent to a lower bound as it specifies the type variable will always be augmented by the union-ed type. For example, `a or atom()` says the result will always include atoms plus whatever else specified by `a` (which may be an atom, `atom()` itself, or a completely disjoint type such as `integer()`).
 
@@ -289,5 +289,5 @@ In particular, we have been exploring a gradual set-theoretic type system for El
 While our efforts have officially moved from research into development, and [we have outlined an implementation plan](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/), we haven't yet fully implemented nor assessed the usability of set-theoretic types in existing Elixir codebases, either large or small. There is much to implement and validate, and we don't rule the possibility of finding unforeseen deal breakers that could send us back to square one. Yet we are pleased and cautiously excited with the new developments so far.
 
 The development of Elixir's type system is sponsored by [Fresha](https://www.fresha.com) ([they are hiring!](https://www.fresha.com/careers/openings?department=engineering)),
-[Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/jobs/experienced-elixir-developer)),
+[Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/)),
 and [Dashbit](https://dashbit.co).

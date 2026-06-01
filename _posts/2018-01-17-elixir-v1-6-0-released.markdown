@@ -60,7 +60,7 @@ end
 
 `%User{age: age}` is matching on a `User` struct with an age field and `when age >= 16` is the guard.
 
-Since only a handful of constructs are [allowed in guards](https://elixir.hexdocs.pm/guards.html#content), if you were in a situation where you had to check the age to be more than or equal to 16 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://elixir.hexdocs.pm/Kernel.html#defguard/1):
+Since only a handful of constructs are [allowed in guards](https://elixir.hexdocs.pm/1.6.0/guards.html), if you were in a situation where you had to check the age to be more than or equal to 16 in multiple places, extracting the guard to a separate function would be [less than obvious and error prone](https://github.com/elixir-lang/elixir/issues/2469). To address those issues, [this release introduces `defguard/1` and `defguardp/1`](https://elixir.hexdocs.pm/Kernel.html#defguard/1):
 
 ```elixir
 defguard is_old_to_drive(age) when age >= 16
@@ -146,7 +146,7 @@ mix xref graph --format stats --label compile
 
 Those improvements will help developers better understand the relationship between files and reveal potentially complex parts of their systems.
 
-Other improvements in Mix include [better compiler diagnostics](https://mix.hexdocs.pm/Mix.Task.Compiler.html) for editor integration, support for [the `--slowest N` flag in `mix test`](https://mix.hexdocs.pm/Mix.Tasks.Test.html) that shows the slowest tests in your suite, and a new [`mix profile.eprof` task](https://mix.hexdocs.pm/Mix.Tasks.Eprof.html) that provides time based profiling, complementing the existing [`mix profile.cprof` (count based)](https://mix.hexdocs.pm/Mix.Tasks.Profile.Cprof.html) and [`mix profile.fprof` (flame based)](https://mix.hexdocs.pm/Mix.Tasks.Profile.Fprof.html).
+Other improvements in Mix include [better compiler diagnostics](https://mix.hexdocs.pm/Mix.Task.Compiler.html) for editor integration, support for [the `--slowest N` flag in `mix test`](https://mix.hexdocs.pm/Mix.Tasks.Test.html) that shows the slowest tests in your suite, and a new [`mix profile.eprof` task](https://mix.hexdocs.pm/Mix.Tasks.Profile.Eprof.html) that provides time based profiling, complementing the existing [`mix profile.cprof` (count based)](https://mix.hexdocs.pm/Mix.Tasks.Profile.Cprof.html) and [`mix profile.fprof` (flame based)](https://mix.hexdocs.pm/Mix.Tasks.Profile.Fprof.html).
 
 ## Summing up
 

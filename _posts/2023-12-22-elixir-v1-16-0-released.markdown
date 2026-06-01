@@ -127,7 +127,7 @@ we are glad to continue to raise the bar for the whole ecosystem.
 
 Elixir v1.16 incorporates and extends the work on [Understanding Code Smells
 in Elixir Functional Language](https://github.com/lucasvegi/Elixir-Code-Smells/blob/main/etc/2023-emse-code-smells-elixir.pdf),
-by Lucas Vegi and Marco Tulio Valente, from [ASERG/DCC/UFMG](http://aserg.labsoft.dcc.ufmg.br/),
+by Lucas Vegi and Marco Tulio Valente, from [ASERG/DCC/UFMG](https://aserg.labsoft.dcc.ufmg.br/),
 into [the official documention in the form of anti-patterns](https://elixir.hexdocs.pm/what-anti-patterns.html).
 Our goal is to provide examples of potential pitfalls for library and
 application developers, with additional context and guidance on how
@@ -166,7 +166,7 @@ the initial core for set-theoretic types into the Elixir compiler, with the
 goal of running automated analysis in patterns and guards. This is [the first
 step outlined in a previous article](/blog/2023/06/22/type-system-updates-research-dev/)
 and is sponsored by [Fresha](https://www.fresha.com) ([they are hiring!](https://www.fresha.com/careers/openings?department=engineering)),
-[Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/jobs/experienced-elixir-developer)),
+[Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/)),
 and [Dashbit](https://dashbit.co).
 
 ## Learn more

@@ -442,7 +442,7 @@ HelloModule.Utils.priv()
 
 [This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, we briefly cover the main points and provide sample code both in Erlang and Elixir.
 
-[3]: http://learnyousomeerlang.com/syntax-in-functions
+[3]: https://learnyousomeerlang.com/syntax-in-functions
 
 ### Pattern matching
 

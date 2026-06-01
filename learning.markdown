@@ -50,7 +50,7 @@ Learn the best practices for the whole life of your application, from design and
 
 <h4 class="resource">Joy of Elixir</h4>
 
-<a class="cover" href="http://joyofelixir.com" title="Joy of Elixir"><img src="/images/learning/joy-of-elixir.jpg" alt="Joy of Elixir" width="190" /></a>
+<a class="cover" href="https://joyofelixir.com" title="Joy of Elixir"><img src="/images/learning/joy-of-elixir.jpg" alt="Joy of Elixir" width="190" /></a>
 
 <a href="https://joyofelixir.com">Joy of Elixir</a> is a gentle introduction to programming, aimed at people who already know some things about computers, but who have little-to-no programming experience.
 
@@ -69,9 +69,9 @@ Elixir's straightforward syntax and this guided tour give you a clean, simple pa
 
 <h4 class="resource">The Toy Robot Walkthrough</h4>
 
-<a class="cover" href="http://leanpub.com/elixir-toyrobot" title="The Toy Robot Walkthrough - Elixir Version"><img src="/images/learning/toy-robot.png" alt="Toy Robot" width="190" /></a>
+<a class="cover" href="https://leanpub.com/elixir-toyrobot" title="The Toy Robot Walkthrough - Elixir Version"><img src="/images/learning/toy-robot.png" alt="Toy Robot" width="190" /></a>
 
-<a href="http://leanpub.com/elixir-toyrobot">The Toy Robot</a> is a common interview exercise for new programmers. This short book will take you through how to implement it in Elixir in a BDD-style, with some great explanations and imagery along the way.
+<a href="https://leanpub.com/elixir-toyrobot">The Toy Robot</a> is a common interview exercise for new programmers. This short book will take you through how to implement it in Elixir in a BDD-style, with some great explanations and imagery along the way.
 
 If you're a new Elixir developer who's gone through some basic Elixir tutorials and you're looking for the next thing to build your skills, this book is a great start. It covers the Toy Robot exercise from start to finish, testing with Elixir features such as ExUnit and Doctests along the way.
 
@@ -115,7 +115,7 @@ Learn different ways of writing concurrent code in Elixir and increase your appl
 
 <h4 class="resource">Erlang in Anger<span class="free">free</span></h4>
 
-<a class="cover" href="http://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
+<a class="cover" href="https://www.erlang-in-anger.com" title="Erlang in Anger – by Fred Hebert"><img src="/images/learning/erlang-in-anger.png" alt="Erlang in Anger cover" width="190" /></a>
 
 This book intends to be a little guide about how to be the Erlang medic in a time of war. It is first and foremost a collection of tips and tricks to help understand where failures come from, and a dictionary of different code snippets and practices that helped developers debug production systems that were built in Erlang.
 
@@ -125,7 +125,7 @@ This book intends to be a little guide about how to be the Erlang medic in a tim
 
 <h4 class="resource">Elixir School<span class="free">free</span></h4>
 
-<a class="cover" href="http://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
+<a class="cover" href="https://elixirschool.com" title="Elixir School"><img src="/images/learning/elixir-school.jpg" alt="Elixir School" width="190" /></a>
 
 Elixir-School is an open and community driven effort inspired by Twitter's Scala School. The site's content consists of peer-reviewed lessons on various Elixir topics that range in difficulty. The lessons are currently available in over 10 languages to help make programming Elixir more accessible to non-English speakers.
 
@@ -177,7 +177,7 @@ The course covers getting setup with Elixir, the data types, how to pattern matc
 
 <h4 class="resource">LearnElixir.tv</h4>
 
-<a class="cover" href="http://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
+<a class="cover" href="https://www.learnelixir.tv" title="Your video guide to Elixir: Learn it step by step.">
   <img src="/images/learning/learn-elixir-tv.png" alt="LearnElixir.tv cover" width="190" />
 </a>
 
@@ -250,7 +250,7 @@ Episodes range from beginner focused to more moderate and advanced topics. Come 
 
 <h4 class="resource">Alchemist Camp<span class="free">free</span></h4>
 
-<a class="cover" href="http://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
+<a class="cover" href="https://alchemist.camp" title="Alchemist Camp: Learn Elixir and Phoenix by building things"><img src="/images/learning/alchemist-camp.png" alt="Alchemist Camp cover" width="190" /></a>
 
 Alchemist Camp is the largest producer of free Elixir screencasts and has dozens of hours of screencasts on YouTube. The videos are often longer-form and focused around projects, such as building a small Phoenix clone, or an OTP worker to regularly collect statistics from multiple APIs. Content is driven by viewer request.
 

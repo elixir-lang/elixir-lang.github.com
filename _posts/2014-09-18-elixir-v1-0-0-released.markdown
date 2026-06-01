@@ -19,7 +19,7 @@ Elixir leverages the Erlang VM, known for running low-latency, distributed and f
 
 This release is the consolidation of all the work done through the years. With v1.0, we have reached a stable milestone for the growth of software and projects written in Elixir.
 
-Elixir will follow [semantic versioning](http://semver.org), which means code written for Elixir v1.0 will continue to compile and run correctly for all versions under the v1 branch (e.g. v1.0.1, v1.1.0, v1.2.0).
+Elixir will follow [semantic versioning](https://semver.org), which means code written for Elixir v1.0 will continue to compile and run correctly for all versions under the v1 branch (e.g. v1.0.1, v1.1.0, v1.2.0).
 
 Elixir is composed of 6 applications, all under the same versioning constraints:
 
@@ -56,6 +56,6 @@ These expectations also apply to future releases under the v1 branch, except for
 
 You can get started with Elixir via our [Getting Started guide](https://elixir.hexdocs.pm/introduction.html). There are quite some Elixir books out there too, now getting sent to the presses, quite a few can be found in the sidebar, which also includes screencasts and other resources.
 
-You can also learn more about Elixir by checking out [the videos from ElixirConf 2014](http://www.confreaks.com/events/elixirconf2014), the first (and so far the best) Elixir conference ever! You can learn more about [the language history](http://www.confreaks.com/videos/4134-elixirconf2014-keynote-elixir), [how Elixir can change the way you code](http://www.confreaks.com/videos/4119-elixirconf2014-opening-keynote-think-different) or [even hear stories of how Elixir is being used in production](http://www.confreaks.com/videos/4131-elixirconf2014-otp-in-production-the-nitty-gritty-details-of-game-servers).
+You can also learn more about Elixir by checking out [the videos from ElixirConf 2014](https://www.youtube.com/playlist?list=PLE7tQUdRKcyakbmyFcmznq2iNtL80mCsT), the first (and so far the best) Elixir conference ever! You can learn more about [the language history](https://www.youtube.com/watch?v=aZXc11eOEpI), [how Elixir can change the way you code](https://www.youtube.com/watch?v=5hDVftaPQwY) or [even hear stories of how Elixir is being used in production](https://www.youtube.com/watch?v=5LRDICEETRE).
 
-Finally, by popular demand, we have [released some Elixir stickers](http://www.stickermule.com/user/1070631438/stickers), which are available with a discounted price to celebrate v1.0!
+Finally, by popular demand, we have [released some Elixir stickers](https://web.archive.org/web/20141231001621/https://www.stickermule.com/user/1070631438/stickers), which are available with a discounted price to celebrate v1.0!

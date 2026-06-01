@@ -8,7 +8,7 @@ category: Internals
 excerpt: "This article explores the data structures used to represent set-theoretic types and the recent optimizations we have applied to them"
 ---
 
-[The Elixir team and the CNRS are working on a set-theoretic type system for Elixir](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/) which, simply put, is a type-system powered by unions, intersections, and negations. As part of the implementation of said type systems, we need an efficient way of representing said operations. This article discusses the existing approaches found in theory and practice, as well as the improvements we have introduced as part of [Elixir v1.19](/blog/2025/10/16/elixir-v1-19-0-released.markdown/).
+[The Elixir team and the CNRS are working on a set-theoretic type system for Elixir](https://elixir-lang.org/blog/2023/06/22/type-system-updates-research-dev/) which, simply put, is a type-system powered by unions, intersections, and negations. As part of the implementation of said type systems, we need an efficient way of representing said operations. This article discusses the existing approaches found in theory and practice, as well as the improvements we have introduced as part of [Elixir v1.19](/blog/2025/10/16/elixir-v1-19-0-released/).
 
 This article covers the implementation details of the type system. You don't need to understand these internals to use the type system, just as you don't need to know virtual machine bytecodes or compiler passes to use a programming language. Our goal is to document our progress and provide guidance for future maintainers and implementers. Let's get started.
 

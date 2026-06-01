@@ -81,5 +81,5 @@ will be assumed to be of the `dynamic()` type. If successful, then we
 will effectively have introduced a type system into the language.
 
 This new exciting development stage is sponsored by [Fresha](https://www.fresha.com) ([they are hiring!](https://www.fresha.com/careers/openings?department=engineering)),
-[Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/jobs/experienced-elixir-developer)),
+[Starfish*](https://starfish.team) ([they are hiring!](https://starfish.team/)),
 and [Dashbit](https://dashbit.co).

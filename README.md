@@ -15,7 +15,7 @@ it, nice instructions are available
 #### 2. Install Ruby
 
 This website is compiled into a static website using
-[Jekyll](http://jekyllrb.com), a static-site generator written in Ruby. To
+[Jekyll](https://jekyllrb.com), a static-site generator written in Ruby. To
 install Ruby you can follow [this
 guide](https://www.ruby-lang.org/en/documentation/installation/). To check that
 Ruby is installed correctly, run `ruby --version` in your shell; it should be
@@ -23,7 +23,7 @@ Ruby is installed correctly, run `ruby --version` in your shell; it should be
 
 #### 3. Install Bundler to manage dependencies
 
-[Bundler](http://bundler.io) handles Ruby dependencies. To install it, simply
+[Bundler](https://bundler.io) handles Ruby dependencies. To install it, simply
 run:
 
 ```bash
@@ -63,8 +63,8 @@ guide](https://github.com/elixir-lang/elixir/#contributing).
 
 * "Elixir" and the Elixir logo are registered trademarks of the Elixir team. See [our trademark policy](https://elixir-lang.org/trademarks).
 
-* The HTML and CSS are copyrighted to [AlienWp](http://alienwp.com/) under [GPL license, version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+* The HTML and CSS are copyrighted to [AlienWp](https://alienwp.com/) under [GPL license, version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
 
-* The Social Icons are copyrighted to [Xeloader](http://xeloader.deviantart.com/art/Socialis-2-Freebie-213292616).
+* The Social Icons are copyrighted to [Xeloader](https://xeloader.deviantart.com/art/Socialis-2-Freebie-213292616).
 
-* The written textual contents available in the guides and blog are licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+* The written textual contents available in the guides and blog are licensed under [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).

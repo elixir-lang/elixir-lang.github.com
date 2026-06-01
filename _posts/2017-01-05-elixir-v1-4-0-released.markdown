@@ -30,7 +30,7 @@ iex> Registry.lookup(MyRegistry, "hello")
 [{self(), 1}]
 ```
 
-Finally, huge thanks to [Bram Verburg](https://twitter.com/voltonez) who has performed [extensive benchmarks](https://docs.google.com/spreadsheets/d/1MByRZJMCnZ1wPiLhBEnSRRSuy1QXp8kr27PIOXO3qqg/edit#gid=0) on the registry to show it scales linearly with the number of cores by increasing the number of partitions.
+Finally, huge thanks to [Bram Verburg](https://twitter.com/voltonez) who has performed [extensive benchmarks](https://docs.google.com/spreadsheets/d/1MByRZJMCnZ1wPiLhBEnSRRSuy1QXp8kr27PIOXO3qqg/edit) on the registry to show it scales linearly with the number of cores by increasing the number of partitions.
 
 ## Syntax coloring
 

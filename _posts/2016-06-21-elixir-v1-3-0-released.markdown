@@ -9,7 +9,7 @@ excerpt: Elixir v1.3 brings many improvements to the language, the compiler and 
 
 Elixir v1.3 brings many improvements to the language, the compiler and its tooling, specially Mix (Elixir's build tool) and ExUnit (Elixir's test framework). The most notable additions are the new Calendar types, the new cross-reference checker in Mix, and the assertion diffing in ExUnit. We will explore all of them and a couple more enhancements below.
 
-With this release, we also welcome [Andrea Leopardi](http://github.com/whatyouhide) to Elixir Core Team. He has contributed greatly to this release and maintains important packages in the community, like [Gettext](https://github.com/elixir-lang/gettext) and [Redix](https://github.com/whatyouhide/redix).
+With this release, we also welcome [Andrea Leopardi](https://github.com/whatyouhide) to Elixir Core Team. He has contributed greatly to this release and maintains important packages in the community, like [Gettext](https://github.com/elixir-lang/gettext) and [Redix](https://github.com/whatyouhide/redix).
 
 ## Language improvements
 
@@ -146,7 +146,7 @@ plug
     └── elixir
 ```
 
-The `--format dot` option can also be given to generate graph files to be opened by [GraphViz](http://www.graphviz.org). For example, here is the output of running `mix deps.tree --format dot --only prod` in the [Phoenix web framework](http://phoenixframework.org):
+The `--format dot` option can also be given to generate graph files to be opened by [GraphViz](https://www.graphviz.org). For example, here is the output of running `mix deps.tree --format dot --only prod` in the [Phoenix web framework](https://phoenixframework.org):
 
 <p style="text-align: center">
   <img src="/images/contents/deps-tree-phoenix.svg" alt="mix deps.tree for Phoenix in production">

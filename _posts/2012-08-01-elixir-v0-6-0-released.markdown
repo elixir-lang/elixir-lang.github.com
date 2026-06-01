@@ -15,7 +15,7 @@ We have finally released [Elixir](/) v0.6.0! This release includes a build tool 
 When [we released version v0.5.0](/blog/2012/05/25/elixir-v0-5-0-released/), we have set three major goals for release v0.6.0:
 
 1. Provide a build tool that makes it easy to create, compile and test Elixir projects;
-2. Support [Erlang typespecs](http://www.erlang.org/doc/reference_manual/typespec.html);
+2. Support [Erlang typespecs](https://www.erlang.org/doc/reference_manual/typespec.html);
 3. Improve IO and File modules to be more robust and complete.
 
 Our interactive shell (IEx) also had many improvements, thanks to the Elixir developer community. We now have easy access to documentation, remote shells, autocomplete and much more. In order to show you a bit of what you can do in this release, we have prepared a short (~6 min) screencast:

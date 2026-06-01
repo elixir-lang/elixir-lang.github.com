@@ -71,7 +71,7 @@ Different parts of the Veeps system have different scalability requirements. For
 
 Say you have 250,000 people watching a concert: the Beaconing service needs to handle thousands of requests per second for a few hours at a time. As a result, it needs to scale differently from other parts of the system, such as the merchandise e-commerce or backstage management.
 
-To tackle this issue, they built a distributed system. They packaged each subsystem as an [Elixir release](https://elixir.hexdocs.pm/config-and-releases.html#releases), totaling five releases. For the communication layer, they used distributed Erlang, which is built into Erlang/OTP, allowing seamless inter-process communication across networked nodes.
+To tackle this issue, they built a distributed system. They packaged each subsystem as an [Elixir release](https://elixir.hexdocs.pm/1.18.3/config-and-releases.html#releases), totaling five releases. For the communication layer, they used distributed Erlang, which is built into Erlang/OTP, allowing seamless inter-process communication across networked nodes.
 
 In a nutshell, each node contains several processes with specific responsibilities. Each of these processes belongs to their respective [distributed process group](https://www.erlang.org/doc/man/pg.html). If node A needs billing information, it will reach out to any process within the "billing process group", which may be anywhere in the cluster.
 
@@ -80,7 +80,7 @@ When deploying a new version of the system, they deploy a new cluster altogether
 
 ### Service-oriented architecture within a monorepo
 
-Although they run a distributed system, they organize the code in only one repository, following the monorepo approach. To do that, they use the [Umbrella Project feature](https://elixir.hexdocs.pm/dependencies-and-umbrella-projects.html#content) from Mix, the build tool that ships with Elixir.
+Although they run a distributed system, they organize the code in only one repository, following the monorepo approach. To do that, they use the [Umbrella Project feature](https://elixir.hexdocs.pm/1.18.3/dependencies-and-umbrella-projects.html#content) from Mix, the build tool that ships with Elixir.
 
 Their umbrella project consists of 16 applications (at the time of writing), which they [sliced into five OTP releases](https://mix.hexdocs.pm/Mix.Tasks.Release.html#module-umbrellas). The remaining applications contain code that needs to be shared between multiple applications. For example, one of the shared applications defines all the structs sent as messages across the subsystems, guaranteeing that all subsystems use the same schemas for that exchanged data.
 
