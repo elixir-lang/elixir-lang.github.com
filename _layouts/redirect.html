@@ -2,15 +2,9 @@
 <html>
 <head>
 {% if page.redirect_to %}
-{% if page.redirect_version %}
-<link rel="canonical" href="https://elixir.hexdocs.pm/{{ page.redirect_version }}/{{ page.redirect_to }}.html"/>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="0;url=https://elixir.hexdocs.pm/{{ page.redirect_version }}/{{ page.redirect_to }}.html" />
-{% else %}
 <link rel="canonical" href="https://elixir.hexdocs.pm/{{ page.redirect_to }}.html"/>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="0;url=https://elixir.hexdocs.pm/{{ page.redirect_to }}.html" />
-{% endif %}
 {% else %}
 <link rel="canonical" href="{{ page.redirect.to }}"/>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -20,13 +14,8 @@
 <body>
   <h3>Redirecting...</h3>
   {% if page.redirect_to %}
-  {% if page.redirect_version %}
-  <a href="https://elixir.hexdocs.pm/{{ page.redirect_version }}/{{ page.redirect_to }}.html">Click here if you are not redirected.</a>
-  <script>location='https://elixir.hexdocs.pm/{{ page.redirect_version }}/{{ page.redirect_to }}.html'</script>
-  {% else %}
   <a href="https://elixir.hexdocs.pm/{{ page.redirect_to }}.html">Click here if you are not redirected.</a>
   <script>location='https://elixir.hexdocs.pm/{{ page.redirect_to }}.html'</script>
-  {% endif %}
   {% else %}
   <a href="{{ page.redirect.to }}">Click here if you are not redirected.</a>
   <script>location='{{ page.redirect.to }}'</script>
