@@ -5,6 +5,7 @@ date: 2020-10-27
 author: "José Valim"
 category: "Elixir in Production"
 tags: ["social", "broadway"]
+slug: "delivering-social-change-with-elixir-at-change.org"
 ---
 
 *Welcome to our series of case studies about companies using Elixir in production. [See all cases](/cases.html) we have published so far.*

@@ -11,6 +11,7 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, summary, company, logo, logoAlt, url, tags } = entry.data;
+const logoClass = company === "Farmbot" ? "p-2" : undefined;
 
 const TAG_DISPLAY: Record<string, string> = {
   otp: "OTP",
@@ -52,7 +53,10 @@ function displayTag(raw: string): string {
       sizes="(min-width: 1024px) 400px, 80vw"
       loading="lazy"
       decoding="async"
-      class="block max-h-[95px] w-auto max-w-[55%] shrink-0 object-contain transition-transform duration-base ease-out-quart group-hover:scale-[1.02] md:max-h-[108px]"
+      class:list={[
+        "block max-h-[95px] w-auto max-w-[55%] shrink-0 object-contain transition-transform duration-base ease-out-quart group-hover:scale-[1.02] md:max-h-[108px]",
+        logoClass,
+      ]}
     />
   </a>
 

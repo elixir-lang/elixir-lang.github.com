@@ -43,13 +43,16 @@ export function blogPostUrl(post: CollectionEntry<"blog">): string {
   const y = d.getUTCFullYear();
   const m = String(d.getUTCMonth() + 1).padStart(2, "0");
   const day = String(d.getUTCDate()).padStart(2, "0");
-  return `/blog/${y}/${m}/${day}/${post.id}/`;
+  return `/blog/${y}/${m}/${day}/${post.data.slug ?? post.id}/`;
 }
 
 export async function loadCases(): Promise<CollectionEntry<"cases">[]> {
   const cases = await loadCollection("cases");
-  // Flagship cases first, then everything else, each group sorted by date desc.
+  // Priority first, then flagship status, then publish date.
   return cases.sort((a, b) => {
+    if (a.data.priority !== b.data.priority) {
+      return b.data.priority - a.data.priority;
+    }
     const aFlag = a.data.flagship ? 1 : 0;
     const bFlag = b.data.flagship ? 1 : 0;
     if (aFlag !== bFlag) return bFlag - aFlag;

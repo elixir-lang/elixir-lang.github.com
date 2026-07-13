@@ -19,6 +19,7 @@ const blog = defineCollection({
     /** Free-form tags (legacy Jekyll `tags: release announcement` field).
      *  Not surfaced in the index but kept for SEO + future filtering. */
     tags: z.array(z.string()).default([]),
+    slug: z.string().optional(),
     cover: z.string().optional(),
     coverAlt: z.string().optional(),
     draft: z.boolean().default(false),
@@ -80,6 +81,7 @@ const cases = defineCollection({
       date: z.coerce.date(),
       /** True for cases that should appear first regardless of date. */
       flagship: z.boolean().default(false),
+      priority: z.number().default(0),
       draft: z.boolean().default(false),
     }),
 });

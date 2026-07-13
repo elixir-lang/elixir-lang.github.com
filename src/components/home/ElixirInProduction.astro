@@ -1,12 +1,13 @@
 ---
-import adobeLogo from "@/assets/logos/elixir-in-production/adobe.svg";
-import appleLogo from "@/assets/logos/elixir-in-production/apple.png";
-import bbcLogo from "@/assets/logos/elixir-in-production/bbc.svg";
-import changeLogo from "@/assets/logos/elixir-in-production/change.png";
-import discordLogo from "@/assets/logos/elixir-in-production/discord.svg";
-import pagerDutyLogo from "@/assets/logos/elixir-in-production/pagerduty.svg";
-import royalBankOfCanadaLogo from "@/assets/logos/elixir-in-production/royal-bank-of-canada.svg";
-import supabaseLogo from "@/assets/logos/elixir-in-production/supabase.svg";
+import adobeLogo from "@/assets/logos/adobe.svg";
+import appleLogo from "@/assets/logos/apple.png";
+import bbcLogo from "@/assets/logos/bbc.svg";
+import changeLogo from "@/assets/logos/change.png";
+import discordLogo from "@/assets/logos/discord.svg";
+import pagerDutyLogo from "@/assets/logos/pagerduty.svg";
+import royalBankOfCanadaLogo from "@/assets/logos/rbc-black.svg";
+import spotifyLogo from "@/assets/logos/spotify.png";
+import supabaseLogo from "@/assets/logos/supabase.svg";
 import Button from "@/components/ui/Button.astro";
 import LogoMarquee from "@/components/ui/LogoMarquee.astro";
 import Reveal from "@/components/ui/Reveal.astro";
@@ -15,13 +16,21 @@ import SectionHeading from "@/components/ui/SectionHeading.astro";
 const logos = [
   { name: "Discord", src: discordLogo, width: 210, height: 34 },
   { name: "Adobe", src: adobeLogo, width: 190, height: 50 },
-  { name: "Apple", src: appleLogo, width: 190, height: 95 },
+  {
+    name: "Apple",
+    src: appleLogo,
+    width: 190,
+    height: 95,
+    preserveTones: true,
+  },
+  { name: "Spotify", src: spotifyLogo, width: 210, height: 58 },
   { name: "Supabase", src: supabaseLogo, width: 210, height: 41 },
   {
     name: "Royal Bank of Canada",
     src: royalBankOfCanadaLogo,
     width: 190,
     height: 63,
+    preserveTones: true,
   },
   { name: "Change.org", src: changeLogo, width: 210, height: 41 },
   { name: "PagerDuty", src: pagerDutyLogo, width: 210, height: 43 },
