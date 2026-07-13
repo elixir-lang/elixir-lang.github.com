@@ -4,7 +4,7 @@ summary: "Heroku provides services and tools to build, run, and scale web applic
 company: "Heroku"
 logo: "../../assets/cases/logos/heroku.png"
 logoAlt: "Heroku logo"
-url: "/blog/2020/09/24/paas-with-elixir-at-Heroku/"
+url: "/blog/2020/09/24/paas-with-elixir-at-heroku/"
 tags: ["paas", "phoenix"]
 date: 2020-09-24
 ---
