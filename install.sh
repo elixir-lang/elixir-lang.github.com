@@ -103,8 +103,11 @@ main() {
     1.19.*)
       [ "${elixir_otp_release}" -ge 28 ] && elixir_otp_release=28
       ;;
+    1.20.*)
+      [ "${elixir_otp_release}" -ge 29 ] && elixir_otp_release=29
+      ;;
     *)
-      [ "${elixir_otp_release}" -ge 28 ] && elixir_otp_release=28
+      [ "${elixir_otp_release}" -ge 29 ] && elixir_otp_release=29
       ;;
   esac
 
