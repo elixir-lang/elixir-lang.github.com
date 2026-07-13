@@ -3,8 +3,8 @@ import bbcLogo from "@/assets/logos/bbc.svg";
 import hcaHealthcareLogo from "@/assets/logos/hca-healthcare.svg";
 import muxLogo from "@/assets/logos/mux.svg";
 import plausibleLogo from "@/assets/logos/plausible.svg?url";
-import remoteLogo from "@/assets/logos/remote.png";
 import royalBankOfCanadaLogo from "@/assets/logos/rbc-blue.svg";
+import remoteLogo from "@/assets/logos/remote.png";
 import spotifyLogo from "@/assets/logos/spotify.png";
 import supabaseLogo from "@/assets/logos/supabase.svg";
 

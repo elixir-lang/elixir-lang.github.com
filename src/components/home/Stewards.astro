@@ -1,5 +1,6 @@
 ---
 import dashbitLogo from "@/assets/logos/dashbit.png";
+import jumpLogo from "@/assets/logos/jump.svg?raw";
 import softwareMansionLogo from "@/assets/logos/software-mansion.svg?raw";
 import BrandLogo from "@/components/ui/BrandLogo.astro";
 import Button from "@/components/ui/Button.astro";
@@ -25,21 +26,21 @@ import SectionHeading from "@/components/ui/SectionHeading.astro";
 
   <Reveal delay={1}>
     <div
-      class="mx-auto flex w-full max-w-[1440px] flex-col items-center px-4 pb-20 md:px-12 md:pb-[112px]"
+      class="mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 md:px-12 md:pb-[112px]"
     >
       <ul
         aria-label="Open source steward companies"
-        class="grid w-full grid-cols-1 border-t border-l border-gray-0 md:grid-cols-3"
+        class="grid w-full grid-cols-1 border-t border-l border-gray-0 md:grid-cols-2"
       >
-        <li class="flex h-66 border-r border-b border-gray-0">
+        <li class="flex h-58 border-r border-b border-gray-0">
           <a
             href="https://swmansion.com/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Software Mansion (opens in a new tab)"
-            class="flex h-full w-full flex-col gap-4 px-8 pt-8 pb-6 transition-colors duration-base ease-out-quart hover:bg-purple-0"
+            class="flex h-full w-full flex-col px-8 pt-8 pb-6 transition-colors duration-base ease-out-quart hover:bg-purple-0"
           >
-            <div class="flex h-24 shrink-0 items-center justify-center">
+            <div class="flex h-20 shrink-0 items-center justify-center">
               <span
                 role="img"
                 aria-label="Software Mansion"
@@ -47,24 +48,25 @@ import SectionHeading from "@/components/ui/SectionHeading.astro";
                 set:html={softwareMansionLogo}
               />
             </div>
-            <div class="flex h-24 shrink-0 items-center justify-center">
-              <p class="max-w-sm text-center font-sans text-body text-black/80">
-                A software consultancy improving DX and bringing their clients'
-                innovative ideas to life. The team behind Membrane and Popcorn.
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <p class="pt-4 text-center font-sans text-body text-black/80 lg:pt-0">
+                Membrane, Popcorn, LiveDebugger, Legion.<br
+                  class="hidden lg:block"
+                />{" "}Building Elixir tooling across the whole stack since 2016.
               </p>
             </div>
           </a>
         </li>
 
-        <li class="flex h-66 border-r border-b border-gray-0">
+        <li class="flex h-58 border-r border-b border-gray-0">
           <a
             href="https://dashbit.co/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Dashbit (opens in a new tab)"
-            class="flex h-full w-full flex-col gap-4 px-8 pt-8 pb-6 transition-colors duration-base ease-out-quart hover:bg-purple-0"
+            class="flex h-full w-full flex-col px-8 pt-8 pb-6 transition-colors duration-base ease-out-quart hover:bg-purple-0"
           >
-            <div class="flex h-24 shrink-0 items-center justify-center">
+            <div class="flex h-20 shrink-0 items-center justify-center">
               <div class="scale-[1.6] md:scale-[1.5] lg:scale-[1.2]">
                 <BrandLogo
                   src={dashbitLogo}
@@ -74,24 +76,51 @@ import SectionHeading from "@/components/ui/SectionHeading.astro";
                 />
               </div>
             </div>
-            <div class="flex h-24 shrink-0 items-center justify-center">
-              <p class="max-w-sm text-center font-sans text-body text-black/80">
-                Creators of Elixir, Plug, Livebook, and more.<br />Dashbit helps
-                companies adopt and grow Elixir in production.
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <p class="pt-4 text-center font-sans text-body text-black/80 lg:pt-0">
+                Creators of Elixir, Plug, Livebook, and more.<br
+                  class="hidden lg:block"
+                />{" "}Helping companies adopt and grow Elixir in production.
+              </p>
+            </div>
+          </a>
+        </li>
+
+        <li class="flex h-58 border-r border-b border-gray-0">
+          <a
+            href="https://jump.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Jump (opens in a new tab)"
+            class="flex h-full w-full flex-col px-8 pt-8 pb-6 transition-colors duration-base ease-out-quart hover:bg-purple-0"
+          >
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <span
+                role="img"
+                aria-label="Jump"
+                class="block w-40 [&_svg]:w-full"
+                set:html={jumpLogo}
+              />
+            </div>
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <p class="pt-4 text-center font-sans text-body text-black/80 lg:pt-0">
+                Trusted AI for advisors and financial professionals.<br
+                  class="hidden lg:block"
+                />{" "}Contributors to Expert LSP, Quokka, and more.
               </p>
             </div>
           </a>
         </li>
 
         <li
-          class="flex h-66 flex-col gap-4 border-r border-b border-gray-0 bg-black px-8 pt-8 pb-6 text-white"
+          class="flex h-58 flex-col gap-4 border-r border-b border-gray-0 bg-black px-8 pt-8 pb-6 text-white"
         >
-          <div class="flex h-24 shrink-0 items-center">
+          <div class="flex h-20 shrink-0 items-center">
             <h3 class="font-sans text-h3 font-medium leading-tight text-white">
               Your company
             </h3>
           </div>
-          <div class="flex h-24 shrink-0 items-center">
+          <div class="flex h-20 shrink-0 items-start">
             <Button
               href="/stewards/"
               variant="outline"
