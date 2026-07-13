@@ -1,0 +1,36 @@
+---
+import PageHero from "@/components/page/PageHero.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  seoDescription?: string;
+  developmentContent?: boolean;
+}
+
+const {
+  title,
+  description,
+  seoDescription = description,
+  developmentContent = false,
+} = Astro.props;
+---
+
+<BaseLayout seo={{ title, description: seoDescription }} headerTone="dark">
+  <PageHero title={title} description={description} />
+
+  <section class="bg-white-10 text-text-primary">
+    <div
+      class="mx-auto w-full max-w-[860px] px-6 pt-12 pb-20 md:px-12 md:pt-20 md:pb-28"
+    >
+      <article
+        data-reveal
+        data-development-content={developmentContent || undefined}
+        class="blog-prose"
+      >
+        <slot />
+      </article>
+    </div>
+  </section>
+</BaseLayout>

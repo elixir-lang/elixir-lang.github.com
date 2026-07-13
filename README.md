@@ -69,7 +69,7 @@ elixir-website/
 │   │   ├── home/              # homepage sections
 │   │   ├── blog/, cases/, install/, page/
 │   ├── content/               # markdown collections (blog, cases, learning,
-│   │                          #   legacy-pages, elixir-versions)
+│   │                          #   standalone-pages, elixir-versions)
 │   ├── content/config.ts      # Zod schemas
 │   ├── data/                  # navigation links, redirect map
 │   ├── layouts/BaseLayout.astro
@@ -149,7 +149,8 @@ Other collections:
 - `cases/` — Elixir-in-production case studies, link out via `url` field
 - `learning/` — books, courses, screencasts, interactive resources (the
   `Elixir Language Tour` tab is its own category)
-- `legacy-pages/` — sources for `/development` and `/trademarks`
+- `standalone-pages/` — sources for `/development`, `/stewards`, and
+  `/trademarks`
 - `elixir-versions/` — one file per released version (drives the
   current-stable hero + historical cards on `/docs`)
 

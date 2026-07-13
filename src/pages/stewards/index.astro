@@ -1,72 +1,16 @@
 ---
-import PageHero from "@/components/page/PageHero.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getEntry, render } from "astro:content";
+import StandalonePage from "@/components/page/StandalonePage.astro";
+
+const entry = await getEntry("standalonePages", "stewards");
+const Content = entry ? (await render(entry)).Content : null;
 
 const description =
   "Companies investing in the Elixir ecosystem by employing or sponsoring developers to work full-time on open-source tooling.";
 
-const seo = {
-  title: "Elixir Open Source Stewards",
-  description,
-};
+const title = "Elixir Open Source Stewards";
 ---
 
-<BaseLayout seo={seo} headerTone="dark">
-  <PageHero title="Elixir Open Source Stewards" description={description} />
-
-  <section class="bg-white-10 text-text-primary">
-    <div
-      class="mx-auto w-full max-w-4xl px-6 pt-12 pb-20 md:px-12 md:pt-20 md:pb-28"
-    >
-      <article data-reveal class="blog-prose">
-        <p>
-          The Elixir Open Source Stewards is a program that recognizes and
-          encourages companies making sustained investments in Elixir’s
-          open-source ecosystem.
-        </p>
-
-        <p>
-          Companies can participate by assigning members of their own team or
-          sponsoring external developers to work substantially on open-source
-          Elixir projects. To apply or recommend a company, contact <a
-            href="mailto:stewards@elixir-lang.org"
-            >stewards@elixir-lang.org</a
-          >.
-        </p>
-
-        <h2>Eligibility</h2>
-
-        <p>A participating company must meet one of the following commitments:</p>
-
-        <ul>
-          <li>
-            Support at least one developer working full-time on open-source
-            Elixir projects; or
-          </li>
-          <li>
-            Support at least two developers who each spend at least 60% of
-            their time on open-source Elixir projects.
-          </li>
-        </ul>
-
-        <p>
-          Eligible work includes libraries, frameworks, developer tools, and
-          other projects that benefit the broader Elixir ecosystem.
-        </p>
-
-        <p>
-          Open-source applications are not included in the program. While we
-          support companies that build Elixir applications in the open, as
-          they help the community learn from real-world usage and strengthen
-          the ecosystem, this program specifically recognizes investment in
-          reusable libraries, frameworks, and tooling.
-        </p>
-
-        <p>
-          The Elixir team will reach out to each participating company every
-          six months to ensure it continues to meet the program’s criteria.
-        </p>
-      </article>
-    </div>
-  </section>
-</BaseLayout>
+<StandalonePage title={title} description={description}>
+  {Content && <Content />}
+</StandalonePage>

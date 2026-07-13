@@ -1,48 +1,16 @@
 ---
 import { getEntry, render } from "astro:content";
-import PageHero from "@/components/page/PageHero.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import StandalonePage from "@/components/page/StandalonePage.astro";
 
 // Legal policy: do not paraphrase; preserve the original section anchors.
-const entry = await getEntry("legacyPages", "trademarks");
+const entry = await getEntry("standalonePages", "trademarks");
 const Content = entry ? (await render(entry)).Content : null;
 
-const seo = {
-  title: "Trademarks policy",
-  description:
-    'Policy for allowed usage of the "Elixir" word and the Elixir logo.',
-};
+const title = "Trademarks policy";
+const description =
+  'Policy for allowed usage of the "Elixir" word and the Elixir logo.';
 ---
 
-<BaseLayout seo={seo} headerTone="dark">
-  <PageHero
-    title="Trademarks policy"
-    description='Policy for allowed usage of the "Elixir" word and the Elixir logo.'
-  />
-
-  <section class="bg-white-10 text-text-primary">
-    <div
-      class="mx-auto w-full max-w-[860px] px-6 pt-12 pb-20 md:px-12 md:pt-20 md:pb-28"
-    >
-      <article data-reveal class="blog-prose">
-        {
-          Content ? (
-            <Content />
-          ) : (
-            <p>
-              For the current trademarks policy maintained by the Elixir Team,
-              see the canonical source at{" "}
-              <a
-                href="https://github.com/elixir-lang/elixir-lang.github.com/blob/main/trademarks.markdown"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                elixir-lang.github.com/trademarks.markdown
-              </a>.
-            </p>
-          )
-        }
-      </article>
-    </div>
-  </section>
-</BaseLayout>
+<StandalonePage title={title} description={description}>
+  {Content && <Content />}
+</StandalonePage>

@@ -1,48 +1,21 @@
 ---
 import { getEntry, render } from "astro:content";
-import PageHero from "@/components/page/PageHero.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import StandalonePage from "@/components/page/StandalonePage.astro";
 
 // Preserve the #development and #team anchors from the original page.
-const entry = await getEntry("legacyPages", "development");
+const entry = await getEntry("standalonePages", "development");
 const Content = entry ? (await render(entry)).Content : null;
 
-const seo = {
-  title: "Development & team",
-  description:
-    "How the Elixir programming language is developed - the contribution workflow, release process, and the team that maintains the language.",
-};
+const title = "Development & team";
+const description =
+  "How the Elixir programming language is developed - the contribution workflow, release process, and the team that maintains the language.";
 ---
 
-<BaseLayout seo={seo} headerTone="dark">
-  <PageHero
-    title="Development & team"
-    description="How Elixir is developed and the team behind the language."
-  />
-
-  <section class="bg-white-10 text-text-primary">
-    <div
-      class="mx-auto w-full max-w-[860px] px-6 pt-12 pb-20 md:px-12 md:pt-20 md:pb-28"
-    >
-      <article data-reveal data-development-content class="blog-prose">
-        {
-          Content ? (
-            <Content />
-          ) : (
-            <p>
-              For the full Elixir development workflow and team list, see the
-              canonical source at{" "}
-              <a
-                href="https://github.com/elixir-lang/elixir-lang.github.com/blob/main/development.markdown"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                elixir-lang.github.com/development.markdown
-              </a>.
-            </p>
-          )
-        }
-      </article>
-    </div>
-  </section>
-</BaseLayout>
+<StandalonePage
+  title={title}
+  description="How Elixir is developed and the team behind the language."
+  seoDescription={description}
+  developmentContent
+>
+  {Content && <Content />}
+</StandalonePage>

@@ -120,11 +120,10 @@ const learning = defineCollection({
     }),
 });
 
-// Standalone migrated pages (/development and /trademarks).
-const legacyPages = defineCollection({
+const standalonePages = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
-    base: "./src/content/legacy-pages",
+    base: "./src/content/standalone-pages",
   }),
   schema: z.object({
     title: z.string(),
@@ -136,5 +135,5 @@ export const collections = {
   cases,
   learning,
   elixirVersions,
-  legacyPages,
+  standalonePages,
 };
