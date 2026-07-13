@@ -1,0 +1,108 @@
+---
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import { cn } from "@/utilities/classname";
+
+// "secondary" and "white" are legacy aliases mapped to "outline" for back-compat.
+type Variant = "primary" | "outline" | "ghost" | "secondary" | "white";
+type Tone = "on-dark" | "on-light";
+type Size = "md" | "icon" | "sm" | "lg";
+
+interface Props {
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: Variant;
+  tone?: Tone;
+  size?: Size;
+  arrow?: boolean;
+  reverseIcon?: boolean;
+  external?: boolean;
+  class?: string;
+  id?: string;
+  ariaLabel?: string;
+  disabled?: boolean;
+}
+
+const {
+  href,
+  type = "button",
+  variant = "primary",
+  tone = "on-light",
+  size = "md",
+  arrow = false,
+  reverseIcon = false,
+  external = false,
+  class: className,
+  id,
+  ariaLabel,
+  disabled = false,
+} = Astro.props as Props;
+
+const Tag = href ? "a" : "button";
+
+const base =
+  "group inline-flex shrink-0 items-center justify-center transition-all duration-base ease-out-quart outline-none cursor-pointer select-none will-change-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100";
+
+const resolvedVariant: "primary" | "outline" | "ghost" =
+  variant === "secondary" || variant === "white"
+    ? "outline"
+    : (variant as "primary" | "outline" | "ghost");
+
+const resolvedSize: "md" | "icon" = size === "icon" ? "icon" : "md";
+
+const sizeClass =
+  resolvedSize === "icon"
+    ? "size-12 overflow-clip rounded-sm p-2.5"
+    : "rounded-sm px-6 py-4";
+
+let variantClass = "";
+if (resolvedVariant === "primary") {
+  variantClass = "bg-purple-60 text-white hover:bg-purple-70";
+} else if (resolvedVariant === "outline") {
+  variantClass =
+    tone === "on-dark"
+      ? "border border-gray-40 text-white hover:border-purple-60 hover:bg-white/5"
+      : "border border-gray-0 text-black hover:border-gray-20 hover:bg-purple-0";
+} else {
+  variantClass =
+    tone === "on-dark"
+      ? "text-white hover:text-purple-40"
+      : "text-black hover:text-purple-60";
+}
+
+const externalAttrs =
+  href && external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<Tag
+  id={id}
+  href={href}
+  type={Tag === "button" ? type : undefined}
+  aria-label={ariaLabel}
+  disabled={Tag === "button" ? disabled : undefined}
+  class={cn(base, sizeClass, variantClass, className)}
+  {...externalAttrs}
+>
+  {resolvedSize === "icon" ? (
+    <span
+      class:list={[
+        "inline-flex size-6 items-center justify-center",
+        reverseIcon && "-scale-x-100",
+      ]}
+    >
+      <ArrowRight size={24} />
+    </span>
+  ) : (
+    <>
+      <span class="inline-flex items-center justify-center px-2">
+        <span class="text-center font-sans text-body font-medium leading-6">
+          <slot />
+        </span>
+      </span>
+      {arrow && (
+        <span class="inline-flex size-6 items-center justify-center transition-transform duration-fast ease-out-quart group-hover:translate-x-0.5">
+          <ArrowRight size={24} />
+        </span>
+      )}
+    </>
+  )}
+</Tag>

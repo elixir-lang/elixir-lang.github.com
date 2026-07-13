@@ -1,0 +1,66 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Heading from "@/components/ui/Heading.astro";
+import Text from "@/components/ui/Text.astro";
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  title: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  tone?: "default" | "on-dark";
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  ctaLabel,
+  ctaHref,
+  tone = "default",
+  class: className,
+} = Astro.props as Props;
+
+const surfaceClass =
+  tone === "on-dark"
+    ? "bg-(--color-gray-100)/40 border-(--color-gray-100)"
+    : "bg-(--color-surface-muted) border-(--color-border-on-light)";
+---
+
+<div
+  class={cn(
+    "flex flex-col items-center justify-center gap-4 rounded-(--radius-lg) border p-12 text-center",
+    surfaceClass,
+    className,
+  )}
+>
+  <div
+    class="flex h-14 w-14 items-center justify-center rounded-full bg-(--color-purple-10) text-(--color-brand)"
+    aria-hidden="true"
+  >
+    <svg width={28} height={28} viewBox="0 0 28 28" fill="none">
+      <path
+        d="M9 14h10M14 9v10"
+        stroke="currentColor"
+        stroke-width={1.75}
+        stroke-linecap="round"></path>
+    </svg>
+  </div>
+
+  <Heading as="h3" size="h4" tone={tone === "on-dark" ? "on-dark" : "default"}>
+    {title}
+  </Heading>
+
+  {description && (
+    <Text tone={tone === "on-dark" ? "muted-on-dark" : "muted"} class="max-w-md">
+      {description}
+    </Text>
+  )}
+
+  {ctaLabel && ctaHref && (
+    <Button href={ctaHref} variant="primary" arrow class="mt-2">
+      {ctaLabel}
+    </Button>
+  )}
+</div>

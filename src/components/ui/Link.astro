@@ -1,0 +1,60 @@
+---
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  href: string;
+  external?: boolean;
+  arrow?: boolean;
+  underline?: "always" | "hover" | "none";
+  tone?: "default" | "on-dark" | "brand" | "muted";
+  class?: string;
+}
+
+const {
+  href,
+  external,
+  arrow = false,
+  underline = "hover",
+  tone = "default",
+  class: className,
+} = Astro.props as Props;
+
+const isExternal = external ?? /^https?:\/\//.test(href);
+
+const toneClass = {
+  default: "text-(--color-text-primary) hover:text-(--color-brand)",
+  "on-dark": "text-(--color-white) hover:text-(--color-purple-30)",
+  brand: "text-(--color-brand) hover:text-(--color-purple-70)",
+  muted: "text-(--color-text-muted-on-light) hover:text-(--color-text-primary)",
+}[tone];
+
+const underlineClass = {
+  always: "underline underline-offset-4 decoration-1",
+  hover:
+    "relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-(--duration-base) after:ease-(--ease-out-quart) hover:after:w-full",
+  none: "",
+}[underline];
+
+const externalAttrs = isExternal
+  ? { target: "_blank", rel: "noopener noreferrer" }
+  : {};
+---
+
+<a
+  href={href}
+  class={cn(
+    "group inline-flex items-center gap-1 transition-colors duration-(--duration-fast) ease-(--ease-out-quart)",
+    toneClass,
+    underlineClass,
+    className,
+  )}
+  {...externalAttrs}
+>
+  <slot />
+  {arrow && (
+    <span class="inline-flex h-5 w-5 items-center justify-center transition-transform duration-(--duration-fast) ease-(--ease-out-quart) group-hover:translate-x-0.5">
+      <ArrowRight />
+    </span>
+  )}
+</a>

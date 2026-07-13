@@ -1,0 +1,54 @@
+---
+import HeroCodeEditor from "@/components/home/HeroCodeEditor";
+import Button from "@/components/ui/Button.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+---
+
+<section class="bg-black text-white">
+  <div class="mx-auto max-w-[1440px] px-6 pt-12 pb-16 md:px-10 md:pt-16 md:pb-20 xl:px-12 xl:pt-24 xl:pb-30">
+    <div class="flex flex-col items-stretch gap-12 lg:items-center xl:flex-row xl:items-start xl:justify-between xl:gap-12">
+      <div class="flex w-full flex-col items-start gap-10 md:gap-12 lg:max-w-[600px] xl:w-[580px] xl:max-w-none xl:shrink-0 xl:gap-14">
+        <div class="flex w-full flex-col gap-6">
+          <div class="flex flex-col gap-6">
+            <Reveal eager delay={0} class="w-fit">
+              <a
+                href="/blog/2026/06/03/elixir-v1-20-0-released/"
+                class="inline-flex w-fit items-center justify-center overflow-clip rounded-full border border-gray-60 bg-gray-100 px-4 py-2 font-sans text-small font-normal text-white-10 transition-colors duration-fast ease-out-quart hover:border-gray-40 md:text-body"
+              >
+                Elixir v1.20 released
+              </a>
+            </Reveal>
+            <Reveal eager delay={2}>
+              <h1
+                class="font-sans text-[2.25rem] font-medium leading-[1.1] text-white-10 sm:text-[2.75rem] md:text-[3.5rem] md:leading-[1.08] xl:text-display xl:leading-[1.0625]"
+              >
+                Simple from zero to scale
+              </h1>
+            </Reveal>
+          </div>
+
+          <Reveal eager delay={4} as="ul"
+            class="list-disc font-sans text-body font-normal text-white-10 md:text-lead"
+          >
+            <li class="mb-1 ms-6 md:ms-[30px]">Fast development with robust practices</li>
+            <li class="mb-1 ms-6 md:ms-[30px]">Grows from solo developers to teams of hundreds</li>
+            <li class="mb-1 ms-6 md:ms-[30px]">Scales from single servers to global networks</li>
+            <li class="ms-6 md:ms-[30px]">Built on decades of Erlang reliability and fault-tolerance</li>
+          </Reveal>
+        </div>
+
+        <Reveal eager delay={6}
+          class="flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:flex-wrap sm:items-start"
+        >
+          <Button href="/install/" variant="primary" arrow class="w-full sm:w-auto">Install now</Button>
+          <Button href="https://hexdocs.pm/elixir/introduction.html" variant="outline" tone="on-dark" external arrow class="w-full sm:w-auto">Get started</Button>
+        </Reveal>
+      </div>
+
+      <Reveal eager delay={8} variant="right"
+        class="w-full max-w-[544px] xl:w-[544px] xl:shrink-0">
+        <HeroCodeEditor client:idle />
+      </Reveal>
+    </div>
+  </div>
+</section>

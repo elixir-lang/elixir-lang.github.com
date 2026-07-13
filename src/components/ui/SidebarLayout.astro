@@ -1,0 +1,73 @@
+---
+type AsideWidth = "260" | "360";
+type Gap = "0" | "12" | "16";
+type StickyTop = "20" | "32";
+
+interface Props {
+  asideWidth?: AsideWidth;
+  gap?: Gap;
+  stickyTop?: StickyTop;
+  centerOnLg?: boolean;
+  asidePadTopLg?: boolean;
+  asideLabel?: string;
+  showAsideOnMobile?: boolean;
+  class?: string;
+  asideClass?: string;
+}
+
+const {
+  asideWidth = "260",
+  gap = "16",
+  stickyTop = "20",
+  centerOnLg = false,
+  asidePadTopLg = false,
+  asideLabel,
+  showAsideOnMobile = true,
+  class: className,
+  asideClass,
+} = Astro.props as Props;
+
+const ASIDE_WIDTH: Record<AsideWidth, string> = {
+  "260": "lg:w-[260px]",
+  "360": "lg:w-[360px]",
+};
+
+const GAP_LG: Record<Gap, string> = {
+  "0": "lg:gap-0",
+  "12": "lg:gap-12",
+  "16": "lg:gap-16",
+};
+
+const STICKY_TOP: Record<StickyTop, string> = {
+  "20": "lg:top-20",
+  "32": "lg:top-32",
+};
+
+const mobileGap = showAsideOnMobile ? "gap-12" : "gap-0";
+---
+
+<div
+  class:list={[
+    "flex flex-col items-start lg:flex-row",
+    mobileGap,
+    GAP_LG[gap],
+    centerOnLg && "lg:justify-center",
+    className,
+  ]}
+>
+  <slot name="main" />
+  <aside
+    aria-label={asideLabel}
+    class:list={[
+      "shrink-0 lg:self-start",
+      ASIDE_WIDTH[asideWidth],
+      "lg:sticky",
+      STICKY_TOP[stickyTop],
+      asidePadTopLg && "lg:pt-1",
+      showAsideOnMobile ? "w-full" : "hidden lg:flex lg:flex-col",
+      asideClass,
+    ]}
+  >
+    <slot name="aside" />
+  </aside>
+</div>

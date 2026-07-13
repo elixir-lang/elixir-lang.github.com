@@ -1,0 +1,90 @@
+---
+import Button from "@/components/ui/Button.astro";
+
+// The card carries only its right + bottom borders; the parent grid provides the
+// top + left edges so the perimeter is exactly 1px across rows.
+type Tone = "light" | "dark";
+
+export interface FeatureCta {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Props {
+  title: string;
+  body: string;
+  bodyLinks?: Record<string, string>;
+  tone?: Tone;
+  cta?: FeatureCta;
+  as?: "h2" | "h3" | "h4";
+  class?: string;
+}
+
+const {
+  title,
+  body,
+  bodyLinks = {},
+  tone = "light",
+  cta,
+  as: As = "h3",
+  class: className,
+} = Astro.props as Props;
+
+const isDark = tone === "dark";
+const bodyParts = body.split(/(\[[^\]]+\])/g);
+---
+
+<article
+  class:list={[
+    "flex h-full flex-col gap-4 border-r border-b border-(--color-border-on-light) p-8 md:p-12",
+    isDark && "justify-between bg-(--color-black) text-(--color-white)",
+    className,
+  ]}
+>
+  <div class="flex flex-col gap-4">
+    <As
+      class:list={[
+        "font-(family-name:--font-display) text-[1.75rem] font-medium md:text-[2rem]",
+        isDark ? "text-(--color-white)" : "text-(--color-black)",
+      ]}
+    >
+      {title}
+    </As>
+    <p
+      class:list={[
+        "text-[1.125rem] leading-[1.5]",
+        isDark ? "text-(--color-white-10)" : "text-(--color-black)/80",
+      ]}
+    >
+      {bodyParts.map((part) => {
+        const label = part.match(/^\[([^\]]+)\]$/)?.[1];
+        const href = label ? bodyLinks[label] : undefined;
+        const external = href?.startsWith("http");
+        return href ? (
+          <a
+            href={href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+            class="text-purple-70 underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-80"
+            set:text={label}
+          />
+        ) : (
+          part
+        );
+      })}
+    </p>
+  </div>
+  {cta && (
+    <Button
+      href={cta.href}
+      variant="outline"
+      tone={isDark ? "on-dark" : "on-light"}
+      external={cta.external}
+      arrow
+      class="w-fit"
+    >
+      {cta.label}
+    </Button>
+  )}
+</article>

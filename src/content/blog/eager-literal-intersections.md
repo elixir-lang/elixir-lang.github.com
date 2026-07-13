@@ -1,0 +1,226 @@
+---
+title: "Lazy BDDs with eager literal intersections"
+excerpt: "This article explores the latest batch of optimizations we did to set-theoretic types and their representation."
+date: 2026-02-26
+author: "José Valim"
+category: "Internals"
+tags: []
+---
+
+In [a previous article](/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/),
+we discussed how Elixir changed its set-theoretic types representation from
+Disjunctive Normal Forms (DNFs) to Lazy Binary Decision Diagrams (Lazy BDDs).
+
+In a nutshell, DNFs allow us to represent unions, intersections,
+and negations as a flat data structure:
+
+```elixir
+(c1 and not d1) or (c2 and not d2) or (c3 and not d3) or ...
+```
+
+This meant that any operation between complex types was immediately
+flattened. For example, intersections of unions, such as
+`(foo or bar) and (baz or bat)`, had to be immediately flatten into the
+cartesian production `(foo and baz) or (foo and bat) or (bar and baz) or (bar and bat)`.
+Even worse, unions of differences could lead to exponential expansion.
+
+Elixir v1.19 then introduced BDDs with lazy unions (in short, lazy BDDs).
+They are trees which allow us to represent set-theoretic operations of any
+arbitrary depth, without flattening them, while also detecting duplicate types.
+A lazy BDD has type
+
+```elixir
+type lazy_bdd() = :top or :bottom or
+  {type(), constrained :: lazy_bdd(), uncertain :: lazy_bdd(), dual :: lazy_bdd()}
+```
+
+where `type()` is the representation of the actual type. For example,
+if the type being represented is a `tuple`, `type()` would be a list of
+all elements in the tuple. In literature, `type()` is known as literal.
+
+Throughout this article, we will use the following notation to represent
+lazy BDDs:
+
+```elixir
+B = {a, C, U, D}
+```
+
+where `B` stands for BDD, `a` is the literal, `C` is constrained, `U`
+is uncertain, and `D` is dual. Semantically, the BDD above is the same as:
+
+```elixir
+B = (a and C) or U or (not a and D)
+```
+
+Which means the following expression, where `foo`, `bar`, `baz`,
+and `bat` below represent types:
+
+```elixir
+(foo and not (bar or (baz and bat))
+```
+
+will be stored as:
+
+```elixir
+{foo,
+ {bar, :bottom, :bottom,
+  {baz, :bottom,
+   {bat, :bottom, :bottom, :top}, :top}, :bottom, :bottom}
+```
+
+The conversion to lazy BDDs and a few optimizations we added to their
+formulation in literature allowed us to type check Elixir programs faster,
+despite Elixir v1.19 performing more type checks than v1.18!
+
+However, when working on Elixir v1.20, which introduced type inference of
+all constructs, we noticed some of the downsides of lazy BDDs. This article
+explores these downsides and how we addressed them.
+
+> As with previous articles, we discuss implementation details of the
+> type system. You don’t need to understand these internals to use the type
+> system. Our goal is simply to document our progress and provide guidance
+> for future maintainers and implementers. Let’s get started.
+
+## The trouble with laziness
+
+As we described above, lazy BDDs allow us to represent set-theoretic 
+operations at any depth. And while this is useful in many cases,
+they offer a downside when it comes to intersections.
+For example, take this type:
+
+```elixir
+(%Foo{} or %Bar{} or %Baz{} or %Bat{}) and %Bar{}
+```
+
+While we could store the above as a BDD, it is also clear that the
+above can only be equal to `%Bar{}`. In other words, if we
+resolve intersections eagerly, we will most likely reduce the tree
+size, speeding up all future operations! To do this, we need
+to compute the intersection between literal types (the first element of
+the BDD node), rather than intersections between BDDs. So we are naming
+these new optimizations **eager literal intersections**.
+
+## Eager literal intersections
+
+Our goal is to apply intersections between literals as soon as possible
+as it helps us reduce the size of the tree whenever literal intersections
+are empty.
+
+Take two BDDs:
+
+```elixir
+B1 = {a1, C1, U1, D1}
+B2 = {a2, C2, U2, D2}
+```
+
+And imagine there is a function that can compute the intersection between
+`a1` and `a2` (which is the intersection of literals, not BDDs). The optimization
+works as long as one of `C1` or `C2` are `:top`. In this case, let's choose `C2`,
+so we have:
+
+```elixir
+B1 = (a1 and C1) or U1 or (not a1 and D1)
+B2 = a2 or U2 or (not a2 and D2)
+```
+
+The intersection of `B1` and `B2` can be computed as:
+
+```elixir
+B1 and (a2 or U2 or (not a2 and D2))
+```
+
+Let's distribute it:
+
+```elixir
+(a2 and B1) or (U2 and B1) or ((not a2 and D2) and B1)
+```
+
+And expand the first `B1`:
+
+```elixir
+(a2 and ((a1 and C1) or U1 or (not a1 and D1))) or
+  (U2 and B1) or ((not a2 and D2) and B1)
+```
+
+And now let's distribute `a2` while reordering the arguments:
+
+```elixir
+(((a1 and a2) and C1) or (a2 and U1) or ((a2 and D1) and not a1) or
+  (U2 and B1) or ((not a2 and D2) and B1)
+```
+
+In the first term of the union, we have `a1 and a2` as a literal intersection.
+If `a1 and a2` is empty, then the whole C1 node can be eliminated.
+
+Then we proceed recursively intersect `a2` with every literal node in `a2 and U1`
+and `a2 and D1`. And, if their literal nodes are empty, those subtrees are eliminated
+too. This may allows us to cut down the size of tree considerably! In our benchmarks,
+these optimizations allowed us to reduce type checking of a module from 10s to
+25ms.
+
+The remaining terms of the union are `U2 and B1` and `(not a2 and D2) and B1`.
+If desired, we could apply the same eager literal intersection optimization to
+`U2 and B1` (as long as the constrained part in either `U2` or `B1 ` are `:top`).
+
+This optimization has worked quite well for us but there are some pitfalls one
+must be aware of. The first of them is to consider how expensive it is to compute
+that the literal intersection is empty. Since this is an optimization, the check
+itself does not have to be complete and you can optimize only certain idioms.
+
+Another option is to have the "eager literal intersection" always compute a new
+literal, which is then reinserted into the BDD. This is the approach done by
+the Elixir compiler but one has to be additionally careful because, if a new
+literal node is computed, then it has to be resorted within the BDD, which may be
+too expensive. If most of the intersections are eliminated, then computing the eager
+literal intersections is still beneficial, but that may not always be the case.
+
+Let's explore one example where these trade-offs may be problematic by discussing
+open vs closed types.
+
+## Open vs closed types
+
+Elixir's type system can represent both open and closed maps. When you write:
+
+```elixir
+user = %{name: "john", age: 42}
+```
+
+We are certain the map has keys `:name` and `:age` and only those keys.
+We say this map is closed, as it has no other keys, and it would have
+the type `%{name: binary(), age: integer()}`.
+
+However, when you pattern match on it:
+
+```elixir
+def can_drive?(%{age: age}) when is_integer(age) and age >= 18
+```
+
+Because pattern matching only validates the `age` key, a map given as
+argument may have other keys! Therefore, we say the map is open and
+it has the type `%{..., age: integer()}`. This type says the map may
+have any keys but we are sure the `age` is `integer()`.
+
+The trouble is that, when we are intersecting two maps, because the
+open map is very broad, their intersection rarely eliminate entries.
+For example, the intersection between `%{..., age: integer()}` and
+`%{..., name: binary()}` is the map `%{..., name: binary(), age: integer()}`.
+
+So when we have to compute the intersection between `(foo or bar) and (baz or bat)`
+and `foo`, `bar`, `baz`, and `bat` are open maps with different keys,
+then it will generate a cartesian product of all combinations! However,
+if they were closed maps, the end result would be empty. For this reason,
+we recommend applying the eager literal intersection only when the
+intersection will often lead to empty types.
+
+## Results
+
+We initially [implemented eager literal intersections as part of
+Elixir v1.20 release](
+https://github.com/elixir-lang/elixir/compare/995f7fc2c4080d2c0d1f78a7d896366b0c715178...0e3d22fd7997004ad23ff02d9ee935160869522f),
+which reduced the type checking time of one of the pathological cases
+from 10 seconds to 25ms!
+
+However, our initial implementation also caused a performance regression,
+as we did not distinguish between open and closed maps. This regression was
+addressed by [applying the optimization only to closed maps](https://github.com/elixir-lang/elixir/commit/e5dc69398ef172b4a590e7e4e20f9d52b4b7ab59), as discussed
+in the article.

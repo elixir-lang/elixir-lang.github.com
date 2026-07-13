@@ -1,0 +1,149 @@
+---
+import discordIcon from "@/assets/icons/community/discord-footer.svg?raw";
+import slackIcon from "@/assets/icons/community/slack-footer.svg?raw";
+import twitterIcon from "@/assets/icons/community/twitter-x.svg?raw";
+import Logo from "@/components/ui/Logo.astro";
+import { footerColumns, footerSocials } from "@/data/navigation";
+
+const year = new Date().getFullYear();
+
+const importantLinks = footerColumns[0];
+const community = footerColumns[1];
+
+const socialIcons: Record<string, string> = {
+  "Twitter / X": twitterIcon,
+  Slack: slackIcon,
+  Discord: discordIcon,
+};
+---
+
+<footer
+  transition:persist
+  transition:name="site-footer"
+  class="bg-black text-white"
+>
+  <div
+    data-reveal
+    data-reveal-eager
+    class:list={[
+      "footer-grid mx-auto w-full max-w-[1440px] py-10",
+      "flex flex-col items-stretch gap-y-6",
+      "md:gap-y-0",
+      "lg:grid lg:grid-cols-[1fr_1fr_1fr] lg:items-stretch lg:py-10",
+    ]}
+    style={`grid-template-areas:
+      "logo links community"
+      "copy links community";`}
+  >
+    <div
+      class="order-1 flex flex-col items-start px-6 pt-8 md:px-12 md:pt-12 lg:order-none lg:items-start lg:pt-12 lg:px-12"
+      style="grid-area: logo;"
+    >
+      <a href="/" aria-label="Elixir home" class="inline-flex">
+        <Logo theme="light" class="h-14 w-auto md:h-20" />
+      </a>
+    </div>
+
+    <div
+      class="order-2 flex flex-col items-start gap-6 px-6 pt-4 md:px-12 md:py-12 lg:order-none lg:flex-1 lg:px-12 lg:pt-12 lg:pb-6"
+      style="grid-area: links;"
+    >
+      <h3 class="font-sans text-lead font-normal text-white/70">
+        {importantLinks.title}
+      </h3>
+      <ul class="flex flex-col items-start gap-5">
+        {importantLinks.items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+              class="font-sans text-small font-normal text-white transition-colors duration-fast ease-out-quart hover:text-purple-40 md:text-body"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div
+      class="order-3 flex flex-col items-start gap-6 pt-4 md:pt-0 px-6 md:px-12 md:py-12 lg:order-none lg:px-12 lg:py-12"
+      style="grid-area: community;"
+    >
+      <h3 class="font-sans text-lead font-normal text-white/70">
+        {community.title}
+      </h3>
+      <ul class="flex flex-col items-start gap-5">
+        {community.items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+              class="font-sans text-small font-normal text-white transition-colors duration-fast ease-out-quart hover:text-purple-40 md:text-body"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <ul
+        class="mt-auto flex items-center justify-start gap-5 pt-3 lg:gap-4"
+        aria-label="Social media"
+      >
+        {footerSocials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              class="inline-flex size-6 items-center justify-center text-white transition-opacity duration-fast ease-out-quart hover:opacity-70"
+            >
+              <span
+                class="block size-6"
+                aria-hidden="true"
+                set:html={socialIcons[s.label]}
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div
+      class="order-4 flex flex-col gap-2 px-6 pb-8 md:px-12 md:pb-12 lg:order-none lg:self-end lg:px-12 lg:pt-0 lg:pb-12"
+      style="grid-area: copy;"
+    >
+      <p class="font-sans text-body font-normal text-white">
+        © 2012-{year} The Elixir Team.
+      </p>
+      <p class="font-sans text-body font-normal text-white">
+        Elixir and the Elixir logo are <a
+          href="/trademarks/"
+          class="underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-40"
+          >registered trademarks of The Elixir Team</a
+        >.
+      </p>
+      <p class="font-sans text-body font-normal text-white">
+        Website designed and developed by <a
+          href="https://swmansion.com"
+          class="underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-40"
+          >Software Mansion</a
+        >.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Tailwind v4 doesn't reliably generate arbitrary min-[1440px]:grid-cols-[...]
+     utilities, so the 720+360+360 column lock is declared here directly. */
+  @media (min-width: 90rem) {
+    .footer-grid {
+      grid-template-columns: 720px 360px 360px;
+    }
+  }
+</style>

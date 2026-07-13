@@ -1,0 +1,361 @@
+---
+import {
+  bodyP,
+  bulletRow,
+  bulletSub,
+  codeBlock,
+  codeInline,
+  h3,
+  h4,
+  linkInline,
+  sectionWrap,
+} from "./_install-tokens";
+
+interface Props {
+  version: string;
+  otpVersions: number[];
+}
+
+const { version, otpVersions } = Astro.props;
+---
+
+<div class:list={[sectionWrap]}>
+  <div class="flex w-full flex-col gap-6">
+    <h3 class={h3}>macOS</h3>
+    <ul class="flex flex-col gap-4">
+      <li>
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="#install-scripts" class={linkInline}>install scripts</a>
+        </span>
+      </li>
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="https://brew.sh" target="_blank" rel="noopener noreferrer" class={linkInline}>Homebrew</a>
+        </span>
+        <span class={bulletSub}>
+          <span class="text-black/80" aria-hidden="true">◦</span>
+          Run:
+          <code class={codeInline}>brew install elixir</code>
+        </span>
+      </li>
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="https://www.macports.org" target="_blank" rel="noopener noreferrer" class={linkInline}>Macports</a>
+        </span>
+        <span class={bulletSub}>
+          <span class="text-black/80" aria-hidden="true">◦</span>
+          Run:
+          <code class={codeInline}>sudo port install elixir</code>
+        </span>
+      </li>
+      <li>
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="#version-managers" class={linkInline}>version managers</a>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex w-full flex-col gap-12">
+    <div class="flex flex-col gap-4">
+      <h3 class={h3}>GNU/Linux</h3>
+      <p class={bodyP}>
+        Below we list steps for installing Elixir in different distributions.
+        If your distribution is not listed or the steps below do not work, you
+        may consider using <a href="#version-managers" class={linkInline}>version managers</a>.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <h4 class={h4}>Distributions</h4>
+      <ul class="flex flex-col gap-3">
+        <li class="flex flex-col gap-2">
+          <span class={bulletRow}>
+            <span aria-hidden="true">-</span>
+            <strong>Arch Linux</strong>
+            <span class="font-normal">(Community repository)</span>
+          </span>
+          <span class={bulletSub}>
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Run:
+            <code class={codeInline}>pacman -S elixir</code>
+          </span>
+        </li>
+
+        <li class="flex flex-col gap-2">
+          <span class={bulletRow}>
+            <span aria-hidden="true">-</span>
+            <strong>Fedora</strong>
+          </span>
+          <div class="flex flex-col gap-2 pl-5 md:pl-7">
+            <span class="flex flex-wrap items-center gap-2 font-sans text-body font-normal text-black">
+              <span class="text-black/80" aria-hidden="true">◦</span>
+              Rawhide keeps more recent versions:
+              <code class={codeInline}>sudo dnf --repo=rawhide install elixir elixir-doc erlang erlang-doc</code>
+            </span>
+            <span class="flex flex-wrap items-center gap-2 font-sans text-body font-normal text-black">
+              <span class="text-black/80" aria-hidden="true">◦</span>
+              The default distribution lags behind:
+              <code class={codeInline}>sudo dnf install elixir erlang</code>
+            </span>
+            <span class="flex flex-wrap items-center gap-2 font-sans text-body font-normal text-black">
+              <span class="text-black/80" aria-hidden="true">◦</span>
+              Documentation packages:
+              <code class={codeInline}>sudo dnf install elixir-doc erlang-doc</code>
+            </span>
+          </div>
+        </li>
+
+        <li class="flex flex-col gap-2">
+          <span class={bulletRow}>
+            <span aria-hidden="true">-</span>
+            <strong>Gentoo</strong>
+          </span>
+          <span class={bulletSub}>
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Run:
+            <code class={codeInline}>emerge --ask dev-lang/elixir</code>
+          </span>
+        </li>
+
+        <li class="flex flex-col gap-2">
+          <span class={bulletRow}>
+            <span aria-hidden="true">-</span>
+            <strong>GNU Guix</strong>
+          </span>
+          <span class={bulletSub}>
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Run:
+            <code class={codeInline}>guix package -i elixir</code>
+          </span>
+        </li>
+
+        <li class="flex flex-col gap-2">
+          <span class={bulletRow}>
+            <span aria-hidden="true">-</span>
+            <strong>Ubuntu</strong>
+          </span>
+          <div class="flex flex-col gap-3 pl-5 md:pl-7">
+            <span class="flex items-baseline gap-2 font-sans text-body font-normal text-black">
+              <span class="text-black/80" aria-hidden="true">◦</span>
+              Using <a href="#install-scripts" class={linkInline}>install scripts</a>
+            </span>
+            <p class="flex flex-col gap-2 font-sans text-body font-normal text-black">
+              <span class="flex items-baseline gap-2">
+                <span class="text-black/80" aria-hidden="true">◦</span>
+                <span>
+                  The packages in <code class="font-mono">apt</code> tend to lag several versions behind. You may
+                  use <a href="https://launchpad.net/~rabbitmq" target="_blank" rel="noopener noreferrer" class={linkInline}>RabbitMQ Packages</a>,
+                  which are likely newer than <code class="font-mono">apt</code>:
+                </span>
+              </span>
+              <code class:list={[codeBlock]} tabindex="0">{`sudo add-apt-repository ppa:rabbitmq/rabbitmq-erlang
+sudo apt update
+sudo apt install git elixir erlang`}</code>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="flex w-full flex-col gap-6">
+    <h3 class={h3}>BSD</h3>
+    <ul class="flex flex-col gap-3">
+      <li class="flex flex-col gap-3">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          <strong>FreeBSD</strong>
+        </span>
+        <p class="pl-5 font-sans text-body font-normal text-black md:pl-7">
+          <span class="text-black/80" aria-hidden="true">◦ </span>
+          The latest Elixir release is named{" "}
+          <a href="https://freshports.org/lang/elixir-devel" target="_blank" rel="noopener noreferrer" class={linkInline}>lang/elixir-devel</a>.
+          The default Elixir,{" "}
+          <a href="https://freshports.org/lang/elixir" target="_blank" rel="noopener noreferrer" class={linkInline}>lang/elixir</a>,
+          may lag slightly as dependent ports are often not able to be updated
+          to the newest Elixir release immediately.
+        </p>
+        <div class="flex flex-col gap-3 pl-5 md:pl-7">
+          <span class="font-sans text-body font-medium text-black">
+            <span class="text-black/80" aria-hidden="true">◦ </span>
+            Using ports
+          </span>
+          <span class={bulletSub}>
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Run:
+            <code class={codeInline}>cd /usr/ports/lang/elixir && make install clean</code>
+          </span>
+        </div>
+        <div class="flex flex-col gap-3 pl-5 md:pl-7">
+          <span class="font-sans text-body font-medium text-black">
+            <span class="text-black/80" aria-hidden="true">◦ </span>
+            Using pkg
+          </span>
+          <span class={bulletSub}>
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Run:
+            <code class={codeInline}>pkg install elixir</code>
+            <span>or</span>
+            <code class={codeInline}>pkg install elixir-devel</code>
+          </span>
+        </div>
+      </li>
+
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          <strong>OpenBSD</strong>
+        </span>
+        <span class={bulletSub}>
+          <span class="text-black/80" aria-hidden="true">◦</span>
+          Run:
+          <code class={codeInline}>pkg_add elixir</code>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex w-full flex-col gap-6">
+    <h3 class={h3}>Windows</h3>
+    <ul class="flex flex-col gap-3">
+      <li class="flex flex-col gap-3">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          <strong>Using Windows installers</strong>
+        </span>
+        <div class="flex flex-col gap-2 pl-5 md:pl-7">
+          <span class="flex items-baseline gap-2 font-sans text-body font-normal text-black">
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            <a href="https://www.erlang.org/downloads.html" target="_blank" rel="noopener noreferrer" class={linkInline}>
+              Download and run the Erlang installer
+            </a>
+          </span>
+          <span class="flex items-baseline gap-2 font-sans text-body font-normal text-black">
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Download and run the Elixir installer compatible with your Erlang/OTP version:
+          </span>
+          <ul class="ml-7 flex flex-col gap-1 md:ml-9">
+            {otpVersions.map((otp) => (
+              <li class="font-sans text-body font-normal text-black">
+                <a
+                  href={`https://github.com/elixir-lang/elixir/releases/download/v${version}/elixir-otp-${otp}.exe`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={linkInline}
+                >Elixir {version} on Erlang {otp}</a>
+              </li>
+            ))}
+          </ul>
+          <p class="font-sans text-body font-normal text-black/80">
+            Run <code class="font-mono">erl</code> in the terminal if you are unsure of your Erlang/OTP version.
+            Previous Elixir versions are available on the{" "}
+            <a href="https://github.com/elixir-lang/elixir/releases" target="_blank" rel="noopener noreferrer" class={linkInline}>Releases</a> page.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="#install-scripts" class={linkInline}>install scripts</a>
+        </span>
+      </li>
+
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="https://scoop.sh" target="_blank" rel="noopener noreferrer" class={linkInline}>Scoop</a>
+        </span>
+        <div class="flex flex-col gap-2 pl-5 md:pl-7">
+          <span class="flex flex-wrap items-center gap-2 font-sans text-body font-normal text-black">
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Install Erlang:
+            <code class={codeInline}>scoop install erlang</code>
+          </span>
+          <span class="flex flex-wrap items-center gap-2 font-sans text-body font-normal text-black">
+            <span class="text-black/80" aria-hidden="true">◦</span>
+            Install Elixir:
+            <code class={codeInline}>scoop install elixir</code>
+          </span>
+        </div>
+      </li>
+
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="https://community.chocolatey.org" target="_blank" rel="noopener noreferrer" class={linkInline}>Chocolatey</a>
+        </span>
+        <span class={bulletSub}>
+          <span class="text-black/80" aria-hidden="true">◦</span>
+          Install Elixir (installs Erlang as a dependency):
+          <code class={codeInline}>choco install elixir</code>
+        </span>
+      </li>
+
+      <li>
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Using <a href="#version-managers" class={linkInline}>version managers</a>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex w-full flex-col gap-4">
+    <h3 class={h3}>Raspberry Pi and embedded devices</h3>
+    <p class="font-sans text-body font-normal text-black">
+      To build and package an Elixir application, with the whole operating
+      system, and burn that into a disk or deploy it elsewhere,{" "}
+      <a href="https://www.nerves-project.org" target="_blank" rel="noopener noreferrer" class={linkInline}>check out the Nerves project</a>.
+    </p>
+    <p class={bodyP}>
+      If you want to install Elixir as part of an existing Operating System,
+      please follow the relevant steps above for your Operating System or
+      install from precompiled/source.
+    </p>
+  </div>
+
+  <div class="flex w-full flex-col gap-4">
+    <h3 class={h3}>Docker</h3>
+    <p class={bodyP}>
+      If you are familiar with Docker you can use the official Docker image to
+      get started quickly with Elixir.
+    </p>
+    <ul class="flex flex-col gap-4">
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Enter interactive mode
+        </span>
+        <span class={bulletSub}>
+          <span class="text-black/80" aria-hidden="true">◦</span>
+          Run:
+          <code class={codeInline}>docker run -it --rm elixir</code>
+        </span>
+      </li>
+      <li class="flex flex-col gap-2">
+        <span class={bulletRow}>
+          <span aria-hidden="true">-</span>
+          Enter bash within container with installed <code class="font-mono">elixir</code>
+        </span>
+        <span class={bulletSub}>
+          <span class="text-black/80" aria-hidden="true">◦</span>
+          Run:
+          <code class={codeInline}>docker run -it --rm elixir bash</code>
+        </span>
+      </li>
+    </ul>
+    <p class={bodyP}>
+      The above will automatically point to the latest Erlang and Elixir
+      available. For production usage, we recommend using{" "}
+      <a href="https://hub.docker.com/r/hexpm/elixir" target="_blank" rel="noopener noreferrer" class={linkInline}>Hex.pm Docker images</a>,
+      which are immutable and point to a specific Erlang and Elixir version.
+    </p>
+  </div>
+</div>

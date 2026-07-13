@@ -1,0 +1,207 @@
+---
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+
+// `<elixir-pagination>` custom element. Update via data-total/data-page
+// attributes; listen for `change` events with `{ page }` detail.
+interface Props {
+  name: string;
+  total: number;
+  page?: number;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  name,
+  total,
+  page = 1,
+  ariaLabel = "Pagination",
+  class: className,
+} = Astro.props as Props;
+---
+
+<elixir-pagination
+  data-name={name}
+  data-total={total}
+  data-page={page}
+  aria-label={ariaLabel}
+  class:list={[
+    "flex flex-wrap items-center justify-center gap-1.5 sm:gap-2",
+    className,
+  ]}
+>
+  <button
+    type="button"
+    data-prev
+    aria-label="Previous page"
+    class="group inline-flex size-14 cursor-pointer items-center justify-center rounded-[8px] border border-gray-20 text-black transition-all duration-base ease-out-quart hover:scale-[1.02] hover:bg-purple-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-gray-0 disabled:text-black/40 disabled:hover:scale-100 disabled:hover:bg-transparent"
+  >
+    <span class="-scale-x-100"><ArrowRight size={20} /></span>
+  </button>
+  <div data-list class="flex items-center gap-0.5 sm:gap-1"></div>
+  <button
+    type="button"
+    data-next
+    aria-label="Next page"
+    class="group inline-flex size-14 cursor-pointer items-center justify-center rounded-[8px] border border-gray-20 text-black transition-all duration-base ease-out-quart hover:scale-[1.02] hover:bg-purple-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-gray-0 disabled:text-black/40 disabled:hover:scale-100 disabled:hover:bg-transparent"
+  >
+    <ArrowRight size={20} />
+  </button>
+</elixir-pagination>
+
+<script>
+  // Desktop (>=sm) packs up to 7 chips (first/last/current±1 + start/end
+  // pads); mobile compacts to first/current/last with ellipses (max 5).
+  function buildLabels(
+    current: number,
+    total: number,
+    compact: boolean,
+  ): (number | "...")[] {
+    if (total <= (compact ? 5 : 7)) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const pages = new Set<number>([1, total]);
+
+    if (compact) {
+      if (current <= 2) {
+        pages.add(2);
+      } else if (current >= total - 1) {
+        pages.add(total - 1);
+      } else {
+        pages.add(current);
+      }
+    } else {
+      for (let i = current - 1; i <= current + 1; i++) {
+        if (i > 1 && i < total) pages.add(i);
+      }
+      if (current <= 4) {
+        for (let i = 2; i <= 5; i++) pages.add(i);
+      }
+      if (current >= total - 3) {
+        for (let i = total - 4; i < total; i++) pages.add(i);
+      }
+    }
+
+    const sorted = [...pages].sort((a, b) => a - b);
+    const out: (number | "...")[] = [];
+    for (let i = 0; i < sorted.length; i++) {
+      if (i > 0 && sorted[i] - sorted[i - 1] > 1) out.push("...");
+      out.push(sorted[i]);
+    }
+    return out;
+  }
+
+  class ElixirPagination extends HTMLElement {
+    static get observedAttributes() {
+      return ["data-total", "data-page"];
+    }
+
+    private prevBtn!: HTMLButtonElement;
+    private nextBtn!: HTMLButtonElement;
+    private list!: HTMLElement;
+    private mounted = false;
+    private compactMq = window.matchMedia("(max-width: 639.98px)");
+    private onMqChange = () => this.render();
+
+    connectedCallback() {
+      if (this.mounted) return;
+      this.mounted = true;
+
+      this.prevBtn = this.querySelector("[data-prev]") as HTMLButtonElement;
+      this.nextBtn = this.querySelector("[data-next]") as HTMLButtonElement;
+      this.list = this.querySelector("[data-list]") as HTMLElement;
+
+      this.prevBtn.addEventListener("click", () => {
+        const cur = this.getActivePage();
+        if (cur > 1) this.dispatchPageChange(cur - 1);
+      });
+      this.nextBtn.addEventListener("click", () => {
+        const cur = this.getActivePage();
+        if (cur < this.getTotalPages()) this.dispatchPageChange(cur + 1);
+      });
+
+      this.compactMq.addEventListener("change", this.onMqChange);
+
+      this.render();
+    }
+
+    disconnectedCallback() {
+      this.compactMq.removeEventListener("change", this.onMqChange);
+    }
+
+    attributeChangedCallback() {
+      if (!this.mounted) return;
+      this.render();
+    }
+
+    private getTotalPages(): number {
+      const n = Number(this.getAttribute("data-total") ?? 1);
+      return Number.isFinite(n) && n > 0 ? n : 1;
+    }
+
+    private getActivePage(): number {
+      const n = Number(this.getAttribute("data-page") ?? 1);
+      return Number.isFinite(n) && n > 0 ? n : 1;
+    }
+
+    private dispatchPageChange(page: number) {
+      this.dispatchEvent(
+        new CustomEvent("change", {
+          detail: { page },
+          bubbles: true,
+        }),
+      );
+    }
+
+    private render() {
+      const total = this.getTotalPages();
+      const active = Math.min(this.getActivePage(), total);
+      const compact = this.compactMq.matches;
+      const labels = buildLabels(active, total, compact);
+
+      const chipSize = "size-14";
+      const chipBase = `inline-flex ${chipSize} items-center justify-center rounded-[8px] font-sans text-body font-normal transition-all duration-base ease-out-quart`;
+
+      this.list.innerHTML = "";
+      for (const label of labels) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        if (label === "...") {
+          btn.disabled = true;
+          btn.setAttribute("aria-hidden", "true");
+          btn.tabIndex = -1;
+          // Tailwind v4 Preflight no longer sets button { cursor: pointer },
+          // so every chip needs an explicit cursor class.
+          btn.className = `${chipBase} cursor-default text-black/40`;
+          btn.textContent = "...";
+        } else {
+          const page = label;
+          const isActive = page === active;
+          btn.dataset.page = String(page);
+          btn.setAttribute("aria-label", `Page ${page}`);
+          btn.setAttribute("aria-current", isActive ? "page" : "false");
+          btn.className = [
+            chipBase,
+            "cursor-pointer hover:scale-[1.02] active:scale-[0.98]",
+            isActive
+              ? "bg-purple-50 text-white hover:bg-purple-60"
+              : "text-black/80 hover:bg-purple-0",
+          ].join(" ");
+          btn.textContent = String(page);
+          btn.addEventListener("click", () => this.dispatchPageChange(page));
+        }
+        this.list.appendChild(btn);
+      }
+
+      this.prevBtn.disabled = active <= 1;
+      this.nextBtn.disabled = active >= total;
+
+      this.style.display = total <= 1 ? "none" : "";
+    }
+  }
+
+  if (!customElements.get("elixir-pagination")) {
+    customElements.define("elixir-pagination", ElixirPagination);
+  }
+</script>

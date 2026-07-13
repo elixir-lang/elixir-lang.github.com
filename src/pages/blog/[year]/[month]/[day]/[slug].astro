@@ -1,0 +1,151 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import bookIconSvg from "@/assets/icons/blog/book.svg?raw";
+import ArticleMeta from "@/components/blog/ArticleMeta.astro";
+import AsideCard from "@/components/ui/AsideCard.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import SidebarLayout from "@/components/ui/SidebarLayout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { blogPostUrl, loadBlogPosts } from "@/lib/content-loaders";
+import { articleJsonLd, breadcrumbJsonLd } from "@/utilities/seo";
+
+// URL shape `/blog/YYYY/MM/DD/<slug>/` matches the legacy elixir-lang.org
+// structure 1:1 so historical inbound links keep working without redirects.
+
+export async function getStaticPaths() {
+  const posts = await loadBlogPosts();
+  return posts.map((post) => {
+    const url = blogPostUrl(post);
+    const segs = url.replace(/^\/blog\/|\/$/g, "").split("/");
+    const [year, month, day, ...slugParts] = segs;
+    return {
+      params: { year, month, day, slug: slugParts.join("/") },
+      props: { post },
+    };
+  });
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props as Props;
+const { Content } = await render(post);
+
+const siteOrigin = Astro.site?.origin ?? "https://elixir-lang.org";
+const url = `${siteOrigin}${blogPostUrl(post)}`;
+
+const seo = {
+  title: post.data.title,
+  description: post.data.excerpt,
+  canonicalUrl: url,
+  ogType: "article" as const,
+  article: {
+    publishedTime: post.data.date.toISOString(),
+    author: post.data.author,
+    tags: post.data.tags,
+  },
+};
+
+const jsonLd = [
+  articleJsonLd({
+    title: post.data.title,
+    description: post.data.excerpt,
+    url,
+    author: post.data.author,
+    datePublished: post.data.date.toISOString(),
+  }),
+  breadcrumbJsonLd([
+    { name: "Home", url: siteOrigin },
+    { name: "Blog", url: `${siteOrigin}/blog/` },
+    { name: post.data.title, url },
+  ]),
+];
+
+const moreCategories: { label: string; href: string }[] = [
+  { label: "Releases", href: "/blog/?category=Releases" },
+  { label: "Announcements", href: "/blog/?category=Announcements" },
+  {
+    label: "Elixir in Production",
+    href: "/blog/?category=Elixir+in+Production",
+  },
+  { label: "Internals", href: "/blog/?category=Internals" },
+];
+---
+
+<BaseLayout
+  seo={seo}
+  jsonLd={jsonLd}
+  headerTone="dark"
+>
+  <article class="bg-white-10 text-text-primary">
+    <div class="mx-auto w-full max-w-[1440px] px-6 pt-12 pb-20 md:px-12 md:pt-20 md:pb-24 lg:pt-24 lg:pb-28">
+      <SidebarLayout
+        asideWidth="260"
+        gap="16"
+        stickyTop="32"
+        centerOnLg
+        asidePadTopLg
+      >
+        {/* min-w-0 so long code blocks or words don't blow the row out. */}
+        <div slot="main" class="flex w-full min-w-0 flex-1 flex-col gap-12">
+          <Reveal eager delay={0}>
+            <header class="flex flex-col gap-8">
+              <h1 class="font-sans text-[2.25rem] font-medium leading-tight text-black sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] lg:leading-[1.14]">
+                {post.data.title}
+              </h1>
+
+              <div class="flex flex-col gap-6">
+                <ArticleMeta
+                  date={post.data.date}
+                  author={post.data.author}
+                  category={post.data.category}
+                  tone="muted"
+                  dateFormat="long-numeric"
+                />
+                <hr class="border-gray-0" />
+              </div>
+            </header>
+          </Reveal>
+
+          {/* .blog-prose rules live in styles/style.css */}
+          <Reveal eager delay={2}>
+            <div class="blog-prose">
+              <Content />
+            </div>
+          </Reveal>
+        </div>
+
+        <div slot="aside" class="flex w-full flex-col gap-8">
+          <Reveal eager delay={2} variant="right">
+            <AsideCard
+              icon={bookIconSvg}
+              title="What is Elixir?"
+              body="Elixir is a functional programming language built for scalable, fault-tolerant applications, powered by the Erlang VM."
+            />
+          </Reveal>
+
+          <Reveal eager delay={4} variant="right" class="flex flex-col gap-4">
+            <hr class="border-gray-0" />
+            <p class="font-sans text-small font-medium text-gray-40">
+              More categories
+            </p>
+            <ul class="flex flex-col gap-3">
+              {moreCategories.map((c) => (
+                <li>
+                  <a
+                    href={c.href}
+                    class="font-sans text-small font-medium text-purple-70 transition-colors duration-fast ease-out-quart hover:text-purple-80"
+                  >
+                    {c.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </SidebarLayout>
+    </div>
+  </article>
+</BaseLayout>

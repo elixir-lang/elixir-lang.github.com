@@ -1,0 +1,167 @@
+---
+// `<elixir-tab-filter>` custom element. Pages listen for `change` events
+// ({ id } detail) and push new selections via setAttribute('data-active', id).
+export interface TabItem {
+  /** Stable, URL-safe id used in URLs + event detail. */
+  id: string;
+  label: string;
+}
+
+interface Props {
+  name: string;
+  tabs: TabItem[];
+  active: string;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  name,
+  tabs,
+  active,
+  ariaLabel = "Filter",
+  class: className,
+} = Astro.props as Props;
+---
+
+<elixir-tab-filter
+  data-name={name}
+  data-active={active}
+  role="tablist"
+  aria-label={ariaLabel}
+  class:list={[
+    "scrollbar-none relative flex items-stretch overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain",
+    className,
+  ]}
+>
+  <div class="flex shrink-0 items-stretch border-b-2 border-gray-0">
+    {tabs.map((t) => (
+      <button
+        type="button"
+        role="tab"
+        data-id={t.id}
+        data-active={t.id === active ? "" : undefined}
+        aria-selected={t.id === active ? "true" : "false"}
+        class="group relative shrink-0 cursor-pointer px-6 py-4 transition-colors duration-fast ease-out-quart"
+      >
+        <span
+          class="block whitespace-nowrap font-sans text-body font-normal text-black/60 transition-colors duration-fast ease-out-quart group-data-[active]:font-semibold group-data-[active]:text-black group-hover:text-black"
+        >
+          {t.label}
+        </span>
+        <span
+          class="absolute -bottom-1 left-0 right-0 hidden h-1 rounded-full bg-purple-60 group-data-[active]:block"
+          aria-hidden="true"
+        ></span>
+      </button>
+    ))}
+  </div>
+  <div
+    class="hidden flex-1 self-end border-b-2 border-gray-0 lg:block"
+    aria-hidden="true"
+  ></div>
+</elixir-tab-filter>
+
+<script>
+  class ElixirTabFilter extends HTMLElement {
+    static get observedAttributes() {
+      return ["data-active"];
+    }
+    private mounted = false;
+    // First sync uses behavior:"auto" so the strip doesn't smooth-scroll from
+    // offset=0 when the URL specifies a non-default tab on page load.
+    private firstSync = true;
+
+    // Browsers convert vertical wheel deltaY on overflow-x:auto into
+    // scrollLeft; intercept to keep vertical scroll on the page.
+    private onWheel = (e: WheelEvent) => {
+      if (this.scrollWidth <= this.clientWidth) return;
+      e.preventDefault();
+      const absX = Math.abs(e.deltaX);
+      const absY = Math.abs(e.deltaY);
+      if (absY > 0.5) {
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: "auto" });
+        return;
+      }
+      if (absX > 0.5) {
+        this.scrollLeft += e.deltaX;
+      }
+    };
+
+    connectedCallback() {
+      if (this.mounted) return;
+      this.mounted = true;
+      this.querySelectorAll<HTMLButtonElement>("button[data-id]").forEach(
+        (btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            if (!id || id === this.getAttribute("data-active")) return;
+            this.setAttribute("data-active", id);
+            this.dispatchEvent(
+              new CustomEvent("change", {
+                detail: { id },
+                bubbles: true,
+              }),
+            );
+          });
+        },
+      );
+      // passive: false because onWheel calls preventDefault.
+      this.addEventListener("wheel", this.onWheel, { passive: false });
+      this.syncActiveStyling();
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener("wheel", this.onWheel);
+    }
+
+    attributeChangedCallback() {
+      if (!this.mounted) return;
+      this.syncActiveStyling();
+    }
+
+    private syncActiveStyling() {
+      const active = this.getAttribute("data-active");
+      this.querySelectorAll<HTMLButtonElement>("button[data-id]").forEach(
+        (btn) => {
+          const match = btn.getAttribute("data-id") === active;
+          if (match) btn.setAttribute("data-active", "");
+          else btn.removeAttribute("data-active");
+          btn.setAttribute("aria-selected", match ? "true" : "false");
+        },
+      );
+      this.scrollActiveIntoView();
+    }
+
+    // scrollTo on `this` only - never scrollIntoView, which can walk up to
+    // ancestors and shift vertical scroll.
+    private scrollActiveIntoView() {
+      const active = this.querySelector<HTMLButtonElement>(
+        "button[data-active]",
+      );
+      if (!active) return;
+      if (this.scrollWidth <= this.clientWidth + 1) return;
+
+      const containerRect = this.getBoundingClientRect();
+      const btnRect = active.getBoundingClientRect();
+      const offset =
+        btnRect.left +
+        btnRect.width / 2 -
+        (containerRect.left + containerRect.width / 2);
+      if (Math.abs(offset) < 4) return;
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      this.scrollBy({
+        left: offset,
+        behavior: this.firstSync || reduceMotion ? "auto" : "smooth",
+      });
+      this.firstSync = false;
+    }
+  }
+
+  if (!customElements.get("elixir-tab-filter")) {
+    customElements.define("elixir-tab-filter", ElixirTabFilter);
+  }
+</script>

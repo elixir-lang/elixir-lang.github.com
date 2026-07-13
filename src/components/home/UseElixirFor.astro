@@ -1,0 +1,813 @@
+---
+import { Image } from "astro:assets";
+import broadwayLogo from "@/assets/icons/use-elixir-for/broadway.png";
+import buildIllustration from "@/assets/icons/use-elixir-for/build-illustration.png";
+import erlangLogo from "@/assets/icons/use-elixir-for/erlang.png";
+import nervesLogo from "@/assets/icons/use-elixir-for/nerves.png";
+import nxLogo from "@/assets/icons/use-elixir-for/nx.png";
+import phoenixSvg from "@/assets/icons/use-elixir-for/phoenix.svg?raw";
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { TOKEN_CLASS, tokenizeElixir } from "@/utilities/elixir-tokens";
+
+type CodeLine = { text: string; comment?: boolean };
+
+type CategoryDef = {
+  id: string;
+  label: string;
+  icon: string;
+  activeRow: number;
+  code: CodeLine[];
+};
+
+// Icons use currentColor so the sidebar can tint them with each category's
+// brand colour (set on the wrapping span via CATEGORY_COLORS).
+const ICONS = {
+  web: `<path d="M12 17V21M8 21H16M4 3H20C21.1046 3 22 3.89543 22 5V15C22 16.1046 21.1046 17 20 17H4C2.89543 17 2 16.1046 2 15V5C2 3.89543 2.89543 3 4 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />`,
+  embedded: `<rect x="5" y="5" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5" /><rect x="9" y="9" width="6" height="6" stroke="currentColor" stroke-width="1.5" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />`,
+  ml: `<circle cx="6" cy="6" r="2.25" stroke="currentColor" stroke-width="1.5" /><circle cx="18" cy="6" r="2.25" stroke="currentColor" stroke-width="1.5" /><circle cx="6" cy="18" r="2.25" stroke="currentColor" stroke-width="1.5" /><circle cx="18" cy="18" r="2.25" stroke="currentColor" stroke-width="1.5" /><circle cx="12" cy="12" r="2.75" stroke="currentColor" stroke-width="1.5" /><path d="M7.75 7.5l2.5 3M16.25 7.5l-2.5 3M7.75 16.5l2.5-3M16.25 16.5l-2.5-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />`,
+  data: `<path d="M4 4v16h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><rect x="8" y="13" width="2.5" height="5" rx="0.5" stroke="currentColor" stroke-width="1.5" /><rect x="12.75" y="9" width="2.5" height="9" rx="0.5" stroke="currentColor" stroke-width="1.5" /><rect x="17.5" y="5.5" width="2.5" height="12.5" rx="0.5" stroke="currentColor" stroke-width="1.5" />`,
+  iot: `<circle cx="12" cy="12" r="1.75" fill="currentColor" /><path d="M8.5 15.5a5 5 0 0 1 0-7M15.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path d="M5.5 18.5a9 9 0 0 1 0-13M18.5 5.5a9 9 0 0 1 0 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />`,
+} as const;
+
+const categoriesData: CategoryDef[] = [
+  {
+    id: "web",
+    label: "Web development",
+    icon: ICONS.web,
+    activeRow: 0,
+    code: [
+      {
+        text: "# Update server state from browser events",
+        comment: true,
+      },
+      { text: "defmodule MyAppWeb.CounterLive do" },
+      { text: "  use MyAppWeb, :live_view" },
+      { text: "" },
+      { text: "  def mount(_params, _session, socket) do" },
+      { text: "    {:ok, assign(socket, count: 0)}" },
+      { text: "  end" },
+      { text: "" },
+      { text: '  def handle_event("increment", _, socket) do' },
+      { text: "    {:noreply, update(socket, :count, &(&1 + 1))}" },
+      { text: "  end" },
+      { text: "end" },
+    ],
+  },
+  {
+    id: "embedded",
+    label: "Embedded systems",
+    icon: ICONS.embedded,
+    activeRow: 1,
+    code: [
+      { text: "# Control hardware from a supervised process", comment: true },
+      { text: "def handle_info(:toggle_led, %{led: led} = state) do" },
+      { text: "  next_level = 1 - state.level" },
+      { text: "" },
+      { text: "  :ok = Circuits.GPIO.write(led, next_level)" },
+      { text: "  Process.send_after(self(), :toggle_led, 500)" },
+      { text: "" },
+      { text: "  {:noreply, %{state | level: next_level}}" },
+      { text: "end" },
+    ],
+  },
+  {
+    id: "ml",
+    label: "Machine Learning",
+    icon: ICONS.ml,
+    activeRow: 2,
+    code: [
+      { text: "# Run a pre-trained model with Nx acceleration", comment: true },
+      { text: "{:ok, model} =" },
+      {
+        text: '  Bumblebee.load_model({:hf, "google/vit"})',
+      },
+      { text: "{:ok, featurizer} =" },
+      {
+        text: '  Bumblebee.load_featurizer({:hf, "google/vit"})',
+      },
+      { text: "" },
+      { text: "serving =" },
+      { text: "  Bumblebee.Vision.image_classification(model, featurizer," },
+      { text: "    compile: [batch_size: 1]," },
+      { text: "    defn_options: [compiler: EXLA]" },
+      { text: "  )" },
+      { text: "" },
+      { text: "Nx.Serving.run(serving, image)" },
+    ],
+  },
+  {
+    id: "data",
+    label: "Data and media",
+    icon: ICONS.data,
+    activeRow: 3,
+    code: [
+      {
+        text: "# Broadway controls demand and applies backpressure",
+        comment: true,
+      },
+      { text: "Broadway.start_link(MyPipeline," },
+      { text: "  producer: [" },
+      { text: "    module: BroadwaySQS.Producer" },
+      { text: "  ]," },
+      { text: "  processors: [" },
+      { text: "    default: [concurrency: 50]" },
+      { text: "  ]," },
+      { text: "  batchers: [" },
+      { text: "    storage: [batch_size: 100, batch_timeout: 1_000]" },
+      { text: "  ]" },
+      { text: ")" },
+    ],
+  },
+  {
+    id: "iot",
+    label: "IoT & Distributed Systems",
+    icon: ICONS.iot,
+    activeRow: 4,
+    code: [
+      { text: "# Connect nodes through Erlang distribution", comment: true },
+      { text: 'edge_nodes = [:"edge@factory-1", :"edge@factory-2"]' },
+      { text: "" },
+      { text: "Enum.each(edge_nodes, &Node.connect/1)" },
+      { text: "" },
+      {
+        text: "# Execute concurrently across every connected node",
+        comment: true,
+      },
+      { text: ":erpc.multicall(" },
+      { text: "  edge_nodes," },
+      { text: "  Sensor, :read_temperature, []" },
+      { text: ")" },
+    ],
+  },
+];
+
+type LogoMeta =
+  | {
+      kind: "svg";
+      svg: string;
+      width: number;
+      height: number;
+      alt: string;
+      url: string;
+    }
+  | {
+      kind: "image";
+      src: ImageMetadata;
+      width: number;
+      height: number;
+      alt: string;
+      url: string;
+      // Dark logos (Erlang) need a white plate to be visible on the dark card.
+      boxed?: boolean;
+    };
+
+type CardRow = {
+  logo: LogoMeta;
+  description: string;
+  tags: PackageName[];
+};
+
+const PACKAGE_URLS = {
+  Phoenix: "https://www.phoenixframework.org/",
+  LiveView: "https://github.com/phoenixframework/phoenix_live_view",
+  Ecto: "https://github.com/elixir-ecto/ecto",
+  Plug: "https://github.com/elixir-plug/plug",
+  Nerves: "https://nerves-project.org/",
+  AtomVM: "https://atomvm.org/",
+  Nx: "https://github.com/elixir-nx",
+  Livebook: "https://livebook.dev/",
+  Bumblebee: "https://github.com/elixir-nx/bumblebee",
+  Axon: "https://github.com/elixir-nx/axon",
+  Broadway: "https://elixir-broadway.org/",
+  Membrane: "https://membrane.stream/",
+  EMQX: "https://www.emqx.com/en",
+  RabbitMQ: "https://www.rabbitmq.com/",
+  Riak: "https://riak.com/",
+} as const;
+
+type PackageName = keyof typeof PACKAGE_URLS;
+
+const rows: CardRow[] = [
+  {
+    logo: {
+      kind: "svg",
+      svg: phoenixSvg,
+      width: 70,
+      height: 48,
+      alt: "Phoenix",
+      url: PACKAGE_URLS.Phoenix,
+    },
+    description:
+      "The Phoenix web framework delivers rapid development, LiveView adds real-time features with minimal code, and Ecto makes your data layer a joy to work with. Ship faster, at scale.",
+    tags: ["Phoenix", "LiveView", "Ecto", "Plug"],
+  },
+  {
+    logo: {
+      kind: "image",
+      src: nervesLogo,
+      width: 59,
+      height: 48,
+      alt: "Nerves",
+      url: PACKAGE_URLS.Nerves,
+    },
+    description:
+      "Nerves packages your entire application into compact firmware, with over-the-air updates and telecom-grade fault-tolerance, while AtomVM brings Elixir to devices as small as microcontrollers.",
+    tags: ["Nerves", "AtomVM"],
+  },
+  {
+    logo: {
+      kind: "image",
+      src: nxLogo,
+      width: 44,
+      height: 48,
+      alt: "Nx",
+      url: PACKAGE_URLS.Nx,
+    },
+    description:
+      "Numerical Elixir (Nx) brings GPU-accelerated tensors to Elixir, while Livebook makes exploration interactive: run pre-trained models, visualize data, and deploy - all in one place.",
+    tags: ["Nx", "Livebook", "Bumblebee", "Axon"],
+  },
+  {
+    logo: {
+      kind: "image",
+      src: broadwayLogo,
+      width: 167,
+      height: 48,
+      alt: "Broadway",
+      url: PACKAGE_URLS.Broadway,
+    },
+    description:
+      "Process data at scale with backpressure built in. Broadway handles millions of events from queues, while Membrane gives you composable pipelines for audio, video, and beyond.",
+    tags: ["Broadway", "Membrane"],
+  },
+  {
+    logo: {
+      kind: "image",
+      src: erlangLogo,
+      width: 55,
+      height: 48,
+      alt: "Erlang",
+      url: "https://www.erlang.org/",
+      boxed: true,
+    },
+    description:
+      "Thanks to the Erlang VM, Elixir also excels at IoT, distributed systems, and everything the Erlang VM is renowned for. Explore some excellent Erlang projects below.",
+    tags: ["EMQX", "RabbitMQ", "Riak"],
+  },
+];
+
+const DEFAULT_TAB = "web";
+const defaultEntry = categoriesData.find((c) => c.id === DEFAULT_TAB);
+if (!defaultEntry) {
+  throw new Error(`DEFAULT_TAB "${DEFAULT_TAB}" not in categoriesData`);
+}
+const defaultActiveRow = defaultEntry.activeRow;
+
+const tabConfig = JSON.stringify(
+  Object.fromEntries(categoriesData.map((c) => [c.id, c.activeRow])),
+);
+
+const CATEGORY_COLORS: Record<
+  string,
+  {
+    panel: string;
+    panelActive: string;
+    panelOnCard: string;
+    chrome: string;
+    chromeActive: string;
+    chromeOnCard: string;
+    comment: string;
+    commentActive: string;
+    commentOnCard: string;
+    iconBox: string;
+    tab: string;
+    star: string;
+  }
+> = {
+  web: {
+    panel: "bg-[#f0682a]",
+    panelActive: "data-[active]:bg-[#f0682a]",
+    panelOnCard: "group-data-[active]/card:bg-[#f0682a]",
+    chrome: "bg-[#ca3f00]",
+    chromeActive: "group-data-[active]:bg-[#ca3f00]",
+    chromeOnCard: "group-data-[active]/card:bg-[#ca3f00]",
+    comment: "text-[#f47c46]",
+    commentActive: "group-data-[active]:text-[#f47c46]",
+    commentOnCard: "group-data-[active]/card:text-[#f47c46]",
+    iconBox: "bg-[#f0682a]/24 text-[#f0682a]",
+    tab: "data-[active]:border-[#f0682a] data-[active]:bg-[#f0682a]/10 data-[active]:text-white",
+    star: "#f0682a",
+  },
+  embedded: {
+    panel: "bg-[#3ba7c6]",
+    panelActive: "data-[active]:bg-[#3ba7c6]",
+    panelOnCard: "group-data-[active]/card:bg-[#3ba7c6]",
+    chrome: "bg-[#0a7695]",
+    chromeActive: "group-data-[active]:bg-[#0a7695]",
+    chromeOnCard: "group-data-[active]/card:bg-[#0a7695]",
+    comment: "text-[#5bbfdc]",
+    commentActive: "group-data-[active]:text-[#5bbfdc]",
+    commentOnCard: "group-data-[active]/card:text-[#5bbfdc]",
+    iconBox: "bg-[#3ba7c6]/24 text-[#3ba7c6]",
+    tab: "data-[active]:border-[#3ba7c6] data-[active]:bg-[#3ba7c6]/10 data-[active]:text-white",
+    star: "#3ba7c6",
+  },
+  ml: {
+    panel: "bg-[#ff87a7]",
+    panelActive: "data-[active]:bg-[#ff87a7]",
+    panelOnCard: "group-data-[active]/card:bg-[#ff87a7]",
+    chrome: "bg-[#c24063]",
+    chromeActive: "group-data-[active]:bg-[#c24063]",
+    chromeOnCard: "group-data-[active]/card:bg-[#c24063]",
+    comment: "text-[#ff87a7]",
+    commentActive: "group-data-[active]:text-[#ff87a7]",
+    commentOnCard: "group-data-[active]/card:text-[#ff87a7]",
+    iconBox: "bg-[#ff87a7]/24 text-[#ff87a7]",
+    tab: "data-[active]:border-[#ff87a7] data-[active]:bg-[#ff87a7]/10 data-[active]:text-white",
+    star: "#ff87a7",
+  },
+  data: {
+    panel: "bg-[#ffc267]",
+    panelActive: "data-[active]:bg-[#ffc267]",
+    panelOnCard: "group-data-[active]/card:bg-[#ffc267]",
+    chrome: "bg-[#f79200]",
+    chromeActive: "group-data-[active]:bg-[#f79200]",
+    chromeOnCard: "group-data-[active]/card:bg-[#f79200]",
+    comment: "text-[#ffc267]",
+    commentActive: "group-data-[active]:text-[#ffc267]",
+    commentOnCard: "group-data-[active]/card:text-[#ffc267]",
+    iconBox: "bg-[#ffc267]/24 text-[#ffc267]",
+    tab: "data-[active]:border-[#ffc267] data-[active]:bg-[#ffc267]/10 data-[active]:text-white",
+    star: "#ffc267",
+  },
+  iot: {
+    panel: "bg-[#a90533]",
+    panelActive: "data-[active]:bg-[#a90533]",
+    panelOnCard: "group-data-[active]/card:bg-[#a90533]",
+    chrome: "bg-[#730020]",
+    chromeActive: "group-data-[active]:bg-[#730020]",
+    chromeOnCard: "group-data-[active]/card:bg-[#730020]",
+    comment: "text-[#ff2461]",
+    commentActive: "group-data-[active]:text-[#ff2461]",
+    commentOnCard: "group-data-[active]/card:text-[#ff2461]",
+    iconBox: "bg-[#ff2461]/24 text-[#ff2461]",
+    tab: "data-[active]:border-[#ff2461] data-[active]:bg-[#ff2461]/10 data-[active]:text-white",
+    star: "#ff2461",
+  },
+};
+
+const starConfig = JSON.stringify(
+  Object.fromEntries(
+    Object.entries(CATEGORY_COLORS).map(([id, c]) => [id, c.star]),
+  ),
+);
+---
+
+<section class="bg-black text-white" data-use-elixir>
+  <div class="mx-auto w-full max-w-[1440px] pb-20">
+    <Reveal>
+      <div class="flex items-center px-6 pt-16 pb-8 md:px-12 md:pt-20 md:pb-16">
+        <SectionHeading title="Use Elixir for" size="lg" tone="dark" />
+      </div>
+    </Reveal>
+
+    <div class="scrollbar-none hidden overflow-x-auto px-6 pb-6 md:block lg:hidden" data-mobile-tabs>
+      <div class="flex min-w-max gap-2">
+        {categoriesData.map((cat) => (
+          <button
+            type="button"
+            data-tab={cat.id}
+            data-active={cat.id === DEFAULT_TAB ? "" : undefined}
+            class:list={[
+              "shrink-0 cursor-pointer rounded-full border border-gray-60 px-4 py-2 font-sans text-small font-medium text-white/60 transition-colors",
+              CATEGORY_COLORS[cat.id].tab,
+            ]}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="flex w-full items-start">
+      <aside
+        class="hidden w-[330px] shrink-0 flex-col gap-6 self-start border-t border-gray-60 p-12 lg:sticky lg:top-20 lg:flex"
+        data-sidebar
+      >
+        {categoriesData.map((cat) => (
+          <button
+            type="button"
+            data-tab={cat.id}
+            data-active={cat.id === DEFAULT_TAB ? "" : undefined}
+            class="group flex cursor-pointer items-center text-left transition-colors duration-fast ease-out-quart"
+            aria-pressed={cat.id === DEFAULT_TAB ? "true" : "false"}
+          >
+            {/* Width + margin + opacity all tween together so the label
+               slides into place instead of jumping when the icon appears. */}
+            <span
+              class:list={[
+                "flex h-10 w-0 mr-0 shrink-0 items-center justify-center overflow-hidden rounded-[6px] opacity-0 transition-[width,margin,opacity] duration-base ease-out-quart group-data-[active]:w-10 group-data-[active]:mr-4 group-data-[active]:opacity-100",
+                CATEGORY_COLORS[cat.id].iconBox,
+              ]}
+              aria-hidden="true"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                set:html={cat.icon}
+              />
+            </span>
+            <span
+              class="whitespace-nowrap font-sans text-body font-normal text-white/60 transition-colors duration-fast ease-out-quart group-data-[active]:font-medium group-data-[active]:text-white group-hover:text-white/80 group-data-[active]:group-hover:text-white"
+            >
+              {cat.label}
+            </span>
+          </button>
+        ))}
+      </aside>
+
+      <div class="flex min-w-0 flex-1 flex-col">
+        {rows.map((row, i) => (
+          <Reveal delay={Math.min(i, 3)} class={i !== 0 ? "-mt-px" : undefined}>
+            <article
+              data-card={i}
+              data-active={i === defaultActiveRow ? "" : undefined}
+              class="group/card flex w-full flex-col justify-between gap-8 overflow-clip border border-gray-60 p-6 opacity-70 transition-opacity duration-base ease-out-quart data-[active]:opacity-100 md:p-12 xl:h-[400px] xl:gap-0"
+            >
+              <div class="flex flex-col items-start gap-8">
+                <div
+                  class="flex h-12 shrink-0 items-center grayscale transition-[filter] duration-base ease-out-quart group-data-[active]/card:grayscale-0"
+                  data-card-logo
+                >
+                  <a
+                    href={row.logo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${row.logo.alt} website (opens in a new tab)`}
+                    class="transition-opacity duration-fast ease-out-quart hover:opacity-75"
+                  >
+                    {row.logo.kind === "svg" ? (
+                      <span
+                        class="block h-12"
+                        style={`width: ${row.logo.width}px`}
+                        aria-hidden="true"
+                        set:html={row.logo.svg}
+                      />
+                    ) : row.logo.boxed ? (
+                      <span class="flex items-center bg-white p-1">
+                        <Image
+                          src={row.logo.src}
+                          width={row.logo.width}
+                          height={row.logo.height}
+                          densities={[1, 2]}
+                          alt=""
+                          loading="lazy"
+                          class="block h-10 w-auto max-w-none"
+                        />
+                      </span>
+                    ) : (
+                      <Image
+                        src={row.logo.src}
+                        width={row.logo.width}
+                        height={row.logo.height}
+                        densities={[1, 2]}
+                        alt=""
+                        loading="lazy"
+                        class="block h-12 w-auto max-w-none"
+                      />
+                    )}
+                  </a>
+                </div>
+                <div class="max-w-[500px]">
+                  <p class="font-sans text-lead font-normal text-white">
+                    {row.description}
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-8">
+                <span class="block h-px w-8 bg-gray-60" aria-hidden="true"></span>
+                <ul class="flex flex-wrap items-center gap-3">
+                  {row.tags.map((tag, idx) => (
+                    <Fragment>
+                      <li>
+                        <a
+                          href={PACKAGE_URLS[tag]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="font-sans text-lead font-medium text-white transition-colors duration-fast ease-out-quart hover:text-purple-30"
+                        >
+                          {tag}
+                        </a>
+                      </li>
+                      {idx < row.tags.length - 1 && (
+                        <li aria-hidden="true">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            data-star
+                          >
+                            <path
+                              d="M7 0L8.89064 5.10936L14 7L8.89064 8.89064L7 14L5.10936 8.89064L0 7L5.10936 5.10936L7 0Z"
+                              fill="#746284"
+                              class="transition-[fill] duration-[450ms] ease-out-quart"
+                            />
+                          </svg>
+                        </li>
+                      )}
+                    </Fragment>
+                  ))}
+                </ul>
+              </div>
+
+              <div
+                class:list={[
+                  "flex w-full items-end justify-center overflow-clip px-3 pt-3 sm:px-4 sm:pt-4 md:px-6 md:pt-6 md:h-[300px] xl:hidden transition-colors duration-base ease-out-quart",
+                  "bg-gray-100",
+                  CATEGORY_COLORS[categoriesData[i].id].panelOnCard,
+                ]}
+                aria-hidden="true"
+              >
+                <div
+                  class:list={[
+                    "flex min-w-0 flex-1 flex-col items-start self-stretch overflow-clip rounded-tl-[22px] rounded-tr-[22px] px-1.5 pt-1.5 transition-colors duration-base ease-out-quart",
+                    "bg-gray-80",
+                    CATEGORY_COLORS[categoriesData[i].id].chromeOnCard,
+                  ]}
+                >
+                  <div class="flex w-full min-w-0 flex-1 flex-col items-start self-stretch overflow-clip rounded-tl-[16px] rounded-tr-[16px] bg-black">
+                    <div class="flex w-full items-center gap-1.5 border-b border-gray-60 p-3 md:p-4">
+                      <span class="size-2 rounded-full bg-gray-60"></span>
+                      <span class="size-2 rounded-full bg-gray-60"></span>
+                      <span class="size-2 rounded-full bg-gray-60"></span>
+                    </div>
+                    <div class="flex w-full flex-1 items-start overflow-x-auto p-3 sm:p-4 md:p-6">
+                      <pre class="whitespace-pre font-mono text-[0.8125rem] font-light leading-[1.45] text-white sm:text-caption md:text-small md:leading-normal"><code>{categoriesData[i].code.map((line, li) => (
+                        <Fragment>
+                          {line.comment ? (
+                            <span class:list={["text-white/80", CATEGORY_COLORS[categoriesData[i].id].commentOnCard]}>{line.text}</span>
+                          ) : (
+                            tokenizeElixir(line.text).map((t) => (
+                              <span class={TOKEN_CLASS[t.kind]}>{t.text}</span>
+                            ))
+                          )}
+                          {li < categoriesData[i].code.length - 1 && "\n"}
+                        </Fragment>
+                      ))}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+
+        <Reveal delay={3} class="lg:-mt-px">
+          <article
+            class="flex w-full flex-col justify-between gap-8 overflow-clip border border-gray-60 p-6 md:p-12 xl:h-[400px] xl:gap-0 xl:border-r-0"
+          >
+            <div class="flex flex-col items-start gap-5">
+              <h3
+                class="font-sans text-[2rem] font-medium leading-tight text-white sm:text-[2.25rem] md:text-[2.625rem]"
+              >
+                What will you build?
+              </h3>
+              <p class="font-sans text-body font-normal text-white">
+                The ecosystem grows every day. Explore thousands of community
+                packages on Hex and find the tools for your next project.
+              </p>
+            </div>
+            <div class="flex flex-wrap items-start gap-4">
+              <a
+                href="/install/"
+                class="group inline-flex items-center justify-center rounded-sm bg-purple-60 px-6 py-4 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:bg-purple-70 active:scale-[0.98]"
+              >
+                <span class="inline-flex items-center justify-center px-2">
+                  <span class="text-center font-sans text-body font-medium leading-6 text-white">
+                    Install now
+                  </span>
+                </span>
+                <span class="inline-flex size-6 items-center justify-center transition-transform duration-fast ease-out-quart group-hover:translate-x-0.5">
+                  <ArrowRight size={24} />
+                </span>
+              </a>
+              <a
+                href="https://hex.pm/packages"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center rounded-sm border border-gray-40 px-6 py-4 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 active:scale-[0.98]"
+              >
+                <span class="inline-flex items-center justify-center px-2">
+                  <span class="text-center font-sans text-body font-medium leading-6 text-white">
+                    See all packages
+                  </span>
+                </span>
+              </a>
+            </div>
+          </article>
+        </Reveal>
+      </div>
+
+      <div class="hidden w-[600px] shrink-0 flex-col xl:-ml-px xl:flex">
+        {rows.map((_, i) => {
+          const owner = categoriesData.find((c) => c.activeRow === i);
+          if (!owner) return null;
+          const initialActive = owner.id === DEFAULT_TAB;
+          const colors = CATEGORY_COLORS[owner.id];
+          return (
+            <Reveal delay={Math.min(i, 3)} class={i !== 0 ? "-mt-px" : undefined}>
+              <div data-panel={i} class="relative flex h-[400px] w-full flex-col">
+                <div
+                  data-panel-cat={owner.id}
+                  data-active={initialActive ? "" : undefined}
+                  aria-hidden={initialActive ? "false" : "true"}
+                  class:list={[
+                    "group flex h-full w-full items-end justify-center overflow-clip px-12 pt-8 opacity-70 transition-[opacity,background-color,border-color] duration-[450ms] ease-out-expo data-[active]:opacity-100",
+                    "border border-gray-60 bg-gray-100 data-[active]:border-transparent",
+                    colors.panelActive,
+                  ]}
+                >
+                  <div
+                    class:list={[
+                      "flex h-full min-w-0 flex-1 flex-col items-start overflow-clip rounded-tl-[22px] rounded-tr-[22px] px-1.5 pt-1.5 transition-colors duration-[450ms] ease-out-expo bg-gray-80",
+                      colors.chromeActive,
+                    ]}
+                  >
+                    <div
+                      class="flex h-full w-full min-w-0 flex-1 flex-col items-start overflow-clip rounded-tl-[16px] rounded-tr-[16px] bg-black"
+                    >
+                      <div
+                        class="flex w-full items-center gap-1.5 border-b border-gray-60 p-4"
+                        aria-hidden="true"
+                      >
+                        <span class="size-2 rounded-full bg-gray-60"></span>
+                        <span class="size-2 rounded-full bg-gray-60"></span>
+                        <span class="size-2 rounded-full bg-gray-60"></span>
+                      </div>
+                      <div class="flex w-full flex-1 items-start px-8 py-5">
+                        <pre class="whitespace-pre font-mono text-small font-light text-white"><code>{owner.code.map((line, li) => (
+                          <Fragment>
+                            {line.comment ? (
+                              <span class:list={["text-white/80", colors.commentActive]}>{line.text}</span>
+                            ) : (
+                              tokenizeElixir(line.text).map((t) => (
+                                <span class={TOKEN_CLASS[t.kind]}>{t.text}</span>
+                              ))
+                            )}
+                            {li < owner.code.length - 1 && "\n"}
+                          </Fragment>
+                        ))}</code></pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          );
+        })}
+
+        <Reveal delay={3} class="-mt-px">
+          <div
+            class="relative flex h-[400px] w-full items-end justify-end overflow-clip border border-l-0 border-gray-60"
+          >
+            <img
+              src={buildIllustration.src}
+              width="600"
+              height="393"
+              loading="lazy"
+              alt=""
+              class="block h-auto w-full max-w-none opacity-80"
+            />
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline define:vars={{ tabConfig, starConfig }}>
+  (() => {
+    let cleanup = null;
+
+    function init() {
+      cleanup?.();
+      cleanup = null;
+
+      const config = JSON.parse(tabConfig);
+      const stars = JSON.parse(starConfig);
+      const root = document.querySelector("[data-use-elixir]");
+      if (!root) return;
+
+      const tabs = root.querySelectorAll("[data-tab]");
+      const cards = root.querySelectorAll("[data-card]");
+      const panels = root.querySelectorAll("[data-panel]");
+
+      function setActive(catId) {
+        const activeRow = config[catId];
+        if (activeRow == null) return;
+        const activeStar = stars[catId] ?? "#746284";
+
+        tabs.forEach((t) => {
+          const match = t.getAttribute("data-tab") === catId;
+          if (match) {
+            t.setAttribute("data-active", "");
+            t.setAttribute("aria-pressed", "true");
+          } else {
+            t.removeAttribute("data-active");
+            t.setAttribute("aria-pressed", "false");
+          }
+        });
+
+        cards.forEach((c, i) => {
+          if (i === activeRow) c.setAttribute("data-active", "");
+          else c.removeAttribute("data-active");
+          const starPaths = c.querySelectorAll("[data-star] path");
+          starPaths.forEach((path) => {
+            path.setAttribute("fill", i === activeRow ? activeStar : "#746284");
+          });
+        });
+
+        panels.forEach((p) => {
+          const panel = p.querySelector("[data-panel-cat]");
+          if (!panel) return;
+          const match = panel.getAttribute("data-panel-cat") === catId;
+          panel.toggleAttribute("data-active", match);
+          panel.setAttribute("aria-hidden", match ? "false" : "true");
+        });
+      }
+
+      function scrollToActiveCard(catId) {
+        const activeRow = config[catId];
+        if (activeRow == null) return;
+        const card = root.querySelector(`[data-card="${activeRow}"]`);
+        if (!card) return;
+        const target = window.scrollY + card.getBoundingClientRect().top - 104;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: target, behavior: reduceMotion ? "auto" : "smooth" });
+      }
+
+      let suppressSpyUntil = 0;
+
+      tabs.forEach((t) => {
+        t.addEventListener("click", () => {
+          const cat = t.getAttribute("data-tab");
+          if (!cat) return;
+          suppressSpyUntil = performance.now() + 1000;
+          setActive(cat);
+          scrollToActiveCard(cat);
+        });
+      });
+
+      const reverseConfig = {};
+      for (const [catId, row] of Object.entries(config)) reverseConfig[row] = catId;
+
+      let lastSpyIdx = -1;
+      let spyScheduled = false;
+
+      function runSpy() {
+        spyScheduled = false;
+        if (performance.now() < suppressSpyUntil) return;
+
+        // Card becomes active once at least half the viewport is filled with it.
+        const triggerY = window.innerHeight * 0.5;
+        let bestIdx = -1;
+        let bestOffset = -Infinity;
+        cards.forEach((card, idx) => {
+          const offset = card.getBoundingClientRect().top - triggerY;
+          if (offset <= 0 && offset > bestOffset) {
+            bestOffset = offset;
+            bestIdx = idx;
+          }
+        });
+
+        if (bestIdx === -1) bestIdx = 0;
+        if (bestIdx === lastSpyIdx) return;
+        lastSpyIdx = bestIdx;
+        const catId = reverseConfig[bestIdx];
+        if (catId) setActive(catId);
+      }
+
+      function onScroll() {
+        if (spyScheduled) return;
+        spyScheduled = true;
+        requestAnimationFrame(runSpy);
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      cleanup = () => {
+        window.removeEventListener("scroll", onScroll);
+      };
+    }
+
+    document.addEventListener("astro:page-load", init);
+  })();
+</script>

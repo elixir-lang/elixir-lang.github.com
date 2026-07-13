@@ -1,0 +1,71 @@
+# GitHub Pages deploy. Build base path = `/elixir`; post-build pass
+# prefixes hardcoded internal hrefs with it. Settings -> Pages ->
+# Source = "GitHub Actions" (auto-enabled on first run if possible).
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BASE_PATH: /elixir
+      GH_PAGES_SITE: https://bartoszgrajdek.github.io
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Auto-enable Pages on first run; needs repo admin or it'll
+          # fail and you'll have to flip the Settings -> Pages toggle.
+          enablement: true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Build Astro site
+        run: pnpm run build
+
+      - name: Patch hardcoded internal hrefs with base path
+        run: node scripts/gh-pages-fix-hrefs.mjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

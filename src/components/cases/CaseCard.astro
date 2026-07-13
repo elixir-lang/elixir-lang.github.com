@@ -1,0 +1,107 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+
+type Case = CollectionEntry<"cases">;
+
+interface Props {
+  entry: Case;
+}
+
+const { entry } = Astro.props;
+const { title, summary, company, logo, logoAlt, url, tags } = entry.data;
+
+const TAG_DISPLAY: Record<string, string> = {
+  otp: "OTP",
+  mqtt: "MQTT",
+  iot: "IOT",
+  paas: "PaaS",
+  udp: "UDP",
+  xml: "XML",
+  api: "API",
+  gov: "Gov",
+  "real-time": "Real-Time",
+  "biz-intelligence": "Biz-Intelligence",
+  "open-data": "Open-Data",
+  "virtual-spaces": "Virtual-Spaces",
+  "computer-vision": "Computer-Vision",
+};
+
+function displayTag(raw: string): string {
+  if (TAG_DISPLAY[raw]) return TAG_DISPLAY[raw];
+  return raw
+    .split("-")
+    .map((part) =>
+      part.length === 0 ? part : part[0].toUpperCase() + part.slice(1),
+    )
+    .join("-");
+}
+---
+
+<article class="group flex flex-col gap-6 md:gap-8">
+  <a
+    href={url}
+    aria-label={`Read case: ${title}`}
+    class="relative flex h-[175px] w-full items-center justify-center overflow-hidden border border-gray-0 bg-white-10 p-6 transition-all duration-base ease-out-quart hover:border-gray-20 md:h-[210px]"
+  >
+    <Image
+      src={logo}
+      alt={logoAlt ?? `${company} logo`}
+      widths={[300, 600]}
+      sizes="(min-width: 1024px) 400px, 80vw"
+      loading="lazy"
+      decoding="async"
+      class="block max-h-[95px] w-auto max-w-[55%] shrink-0 object-contain transition-transform duration-base ease-out-quart group-hover:scale-[1.02] md:max-h-[108px]"
+    />
+  </a>
+
+  <div class="flex flex-col gap-3">
+    {tags.length > 0 && (
+      <ul class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        {tags.map((tag: string, idx: number) => (
+          <li class="inline-flex items-center gap-3">
+            <span class="font-sans text-body font-normal text-purple-60">
+              {displayTag(tag)}
+            </span>
+            {idx < tags.length - 1 && (
+              <span
+                class="inline-block size-1.5 rounded-full bg-purple-60"
+                aria-hidden="true"
+              ></span>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <h3 class="font-sans text-h3 font-medium leading-tight text-black">
+      <a
+        href={url}
+        class="transition-colors duration-fast ease-out-quart hover:text-purple-60"
+      >
+        {title}
+      </a>
+    </h3>
+
+    <p class="line-clamp-3 font-sans text-body font-normal text-black/80">
+      {summary}
+    </p>
+  </div>
+
+  <div class="mt-auto pt-2">
+    <a
+      href={url}
+      class="group/btn inline-flex shrink-0 items-center justify-center rounded-sm border border-gray-20 px-6 py-4 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-gray-40 hover:bg-purple-0 active:scale-[0.98]"
+    >
+      <span class="inline-flex items-center justify-center px-2">
+        <span class="text-center font-sans text-body font-medium leading-6 text-black">
+          Read more
+        </span>
+      </span>
+      <span class="inline-flex size-6 items-center justify-center transition-transform duration-fast ease-out-quart group-hover/btn:translate-x-0.5">
+        <ArrowRight size={24} />
+      </span>
+    </a>
+  </div>
+</article>

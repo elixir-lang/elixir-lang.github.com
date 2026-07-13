@@ -1,0 +1,34 @@
+---
+import CaseCard from "@/components/cases/CaseCard.astro";
+import PageHero from "@/components/page/PageHero.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { loadCases } from "@/lib/content-loaders";
+
+const cases = await loadCases();
+
+const seo = {
+  title: "Case studies",
+  description:
+    "Explore in-depth stories created in collaboration with the Elixir team about how companies across different industries use Elixir and its ecosystem to start and grow their businesses.",
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <PageHero
+    title="Case studies"
+    description="Explore in-depth stories created in collaboration with the Elixir team about how companies across different industries use Elixir and its ecosystem to start and grow their businesses."
+  />
+
+  <section class="bg-white-10 text-text-primary">
+    <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 md:gap-16 md:px-12 md:pt-20 md:pb-24 lg:gap-20 lg:pt-20 lg:pb-28">
+      <ul class="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2 md:gap-y-20 lg:gap-x-16">
+        {cases.map((entry, i) => (
+          <Reveal as="li" delay={i % 2}>
+            <CaseCard entry={entry} />
+          </Reveal>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

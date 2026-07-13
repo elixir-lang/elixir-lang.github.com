@@ -1,0 +1,260 @@
+---
+// `<elixir-filtered-listing>` owns URL state + emits `filterchange`
+// { activeTab, activePage }; row rendering is up to the consuming page.
+interface Props {
+  name: string;
+  tabFilterName?: string;
+  paginationName?: string;
+  defaultTab: string;
+  pageSize: number;
+  counts: Record<string, number>;
+  validTabIds: string[];
+  paramTab: string;
+  paramPage: string;
+  class?: string;
+}
+
+const {
+  name,
+  tabFilterName,
+  paginationName,
+  defaultTab,
+  pageSize,
+  counts,
+  validTabIds,
+  paramTab,
+  paramPage,
+  class: className,
+} = Astro.props as Props;
+
+const resolvedTabFilterName = tabFilterName ?? `${name}-tab`;
+const resolvedPaginationName = paginationName ?? name;
+
+const config = JSON.stringify({
+  pageSize,
+  counts,
+  defaultTab,
+  validTabIds,
+  paramTab,
+  paramPage,
+  tabFilterName: resolvedTabFilterName,
+  paginationName: resolvedPaginationName,
+});
+---
+
+<elixir-filtered-listing
+  data-name={name}
+  data-config={config}
+  class:list={[className]}
+>
+  <slot />
+</elixir-filtered-listing>
+
+<script>
+  type Config = {
+    pageSize: number;
+    counts: Record<string, number>;
+    defaultTab: string;
+    validTabIds: string[];
+    paramTab: string;
+    paramPage: string;
+    tabFilterName: string;
+    paginationName: string;
+  };
+
+  class ElixirFilteredListing extends HTMLElement {
+    private config!: Config;
+    private activeTab = "";
+    private activePage = 1;
+    private tabFilter: HTMLElement | null = null;
+    private pagination: HTMLElement | null = null;
+    private onTabChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ id: string }>).detail;
+      const id = detail?.id;
+      if (typeof id !== "string" || id === this.activeTab) return;
+      this.activeTab = id;
+      this.activePage = 1;
+      this.emitChange();
+      this.refreshChildren();
+      this.writeURL();
+      this.scrollToFilter();
+    };
+    private onPageChange = (e: Event) => {
+      const detail = (e as CustomEvent<{ page: number }>).detail;
+      const page = detail?.page;
+      if (typeof page !== "number" || page === this.activePage) return;
+      this.activePage = page;
+      this.emitChange();
+      this.refreshChildren();
+      this.writeURL();
+      this.scrollToFilter();
+    };
+    private onPopState = () => {
+      this.readURL();
+      this.refreshChildren();
+      this.emitChange();
+    };
+
+    connectedCallback() {
+      const raw = this.getAttribute("data-config");
+      if (!raw) return;
+      this.config = JSON.parse(raw) as Config;
+      this.activeTab = this.config.defaultTab;
+      this.activePage = 1;
+
+      this.tabFilter = this.querySelector(
+        `elixir-tab-filter[data-name="${this.config.tabFilterName}"]`,
+      );
+      this.pagination = this.querySelector(
+        `elixir-pagination[data-name="${this.config.paginationName}"]`,
+      );
+
+      this.tabFilter?.addEventListener("change", this.onTabChange);
+      this.pagination?.addEventListener("change", this.onPageChange);
+      window.addEventListener("popstate", this.onPopState);
+
+      // Hard-load sync. SPA navs go through the page-load listener below.
+      this.refreshFromURL();
+    }
+
+    refreshFromURL() {
+      if (!this.config) return;
+      this.readURL();
+      this.refreshChildren();
+    }
+
+    get state(): { activeTab: string; activePage: number } {
+      return { activeTab: this.activeTab, activePage: this.activePage };
+    }
+
+    disconnectedCallback() {
+      this.tabFilter?.removeEventListener("change", this.onTabChange);
+      this.pagination?.removeEventListener("change", this.onPageChange);
+      window.removeEventListener("popstate", this.onPopState);
+    }
+
+    private totalPages(tab: string): number {
+      const c = this.config.counts[tab] ?? 0;
+      return Math.max(1, Math.ceil(c / this.config.pageSize));
+    }
+
+    private readURL() {
+      const url = new URL(window.location.href);
+      const t = url.searchParams.get(this.config.paramTab);
+      this.activeTab =
+        t && this.config.validTabIds.includes(t) ? t : this.config.defaultTab;
+      const raw = url.searchParams.get(this.config.paramPage) ?? "1";
+      const p = parseInt(raw, 10);
+      const max = this.totalPages(this.activeTab);
+      this.activePage =
+        Number.isFinite(p) && p >= 1 ? Math.min(p, max) : 1;
+    }
+
+    private writeURL() {
+      const url = new URL(window.location.href);
+      if (this.activeTab === this.config.defaultTab) {
+        url.searchParams.delete(this.config.paramTab);
+      } else {
+        url.searchParams.set(this.config.paramTab, this.activeTab);
+      }
+      if (this.activePage === 1) {
+        url.searchParams.delete(this.config.paramPage);
+      } else {
+        url.searchParams.set(this.config.paramPage, String(this.activePage));
+      }
+      const next = url.pathname + url.search + url.hash;
+      const current =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
+      if (next !== current) {
+        // Preserve history.state - ClientRouter stores {index,scrollX,scrollY}
+        // there and needs it for popstate; passing null breaks browser-back.
+        window.history.replaceState(window.history.state, "", next);
+      }
+    }
+
+    private refreshChildren() {
+      if (this.tabFilter) {
+        this.tabFilter.setAttribute("data-active", this.activeTab);
+      }
+      if (this.pagination) {
+        this.pagination.setAttribute(
+          "data-total",
+          String(this.totalPages(this.activeTab)),
+        );
+        this.pagination.setAttribute("data-page", String(this.activePage));
+      }
+    }
+
+    private scrollToFilter() {
+      if (!this.tabFilter) return;
+
+      // Sticky filter (mobile) is already at top:80, so scroll to the first
+      // row instead. Desktop's in-flow filter keeps the original behaviour.
+      const filterParent = this.tabFilter.parentElement;
+      const stickyHost =
+        filterParent &&
+        window.getComputedStyle(filterParent).position === "sticky"
+          ? filterParent
+          : window.getComputedStyle(this.tabFilter).position === "sticky"
+            ? this.tabFilter
+            : null;
+
+      let target: number;
+      if (stickyHost) {
+        /* First visible row, not the rows container - parent gap + row
+         * top padding would otherwise leave a 32-48px gap above the item. */
+        const firstItem = this.querySelector<HTMLElement>(
+          "[data-rows] > :not(.hidden)",
+        );
+        if (!firstItem) return;
+        const filterBottom = stickyHost.getBoundingClientRect().bottom;
+        target =
+          window.scrollY +
+          firstItem.getBoundingClientRect().top -
+          filterBottom -
+          16;
+      } else {
+        target =
+          window.scrollY + this.tabFilter.getBoundingClientRect().top - 100;
+      }
+
+      if (Math.abs(target - window.scrollY) < 4) return;
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      window.scrollTo({
+        top: Math.max(0, target),
+        behavior: reduce ? "auto" : "smooth",
+      });
+    }
+
+    private emitChange() {
+      this.dispatchEvent(
+        new CustomEvent("filterchange", {
+          detail: {
+            activeTab: this.activeTab,
+            activePage: this.activePage,
+          },
+          bubbles: true,
+        }),
+      );
+    }
+  }
+
+  if (!customElements.get("elixir-filtered-listing")) {
+    customElements.define("elixir-filtered-listing", ElixirFilteredListing);
+  }
+
+  // ClientRouter upgrades custom elements before location.href commits,
+  // so we re-sync from astro:page-load (fires after the URL has settled).
+  if (!(window as unknown as { __elixirFLBound?: boolean }).__elixirFLBound) {
+    (window as unknown as { __elixirFLBound?: boolean }).__elixirFLBound = true;
+    document.addEventListener("astro:page-load", () => {
+      document
+        .querySelectorAll<ElixirFilteredListing>("elixir-filtered-listing")
+        .forEach((el) => el.refreshFromURL?.());
+    });
+  }
+</script>

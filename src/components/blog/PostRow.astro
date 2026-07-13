@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ArticleMeta from "@/components/blog/ArticleMeta.astro";
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import { blogPostUrl } from "@/lib/content-loaders";
+
+type Post = CollectionEntry<"blog">;
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props as Props;
+const { title, excerpt, date, author, category } = post.data;
+
+const href = blogPostUrl(post);
+---
+
+<article
+  class="flex flex-col items-stretch gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8"
+>
+  <div class="flex min-w-0 flex-1 flex-col gap-6">
+    <div class="flex flex-col gap-3">
+      <h2 class="font-sans text-h3 font-medium leading-tight text-black">
+        <a
+          href={href}
+          class="transition-colors duration-fast ease-out-quart hover:text-purple-60"
+        >
+          {title}
+        </a>
+      </h2>
+
+      <ArticleMeta
+        date={date}
+        author={author}
+        category={category}
+        tone="accent"
+      />
+    </div>
+
+    {excerpt && (
+      <p
+        class="max-w-[800px] font-sans text-body font-normal text-black/80"
+      >
+        {excerpt}
+      </p>
+    )}
+  </div>
+
+  <div class="shrink-0">
+    <a
+      href={href}
+      class="group inline-flex shrink-0 items-center justify-center rounded-sm border border-gray-20 px-6 py-4 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-gray-40 hover:bg-purple-0 active:scale-[0.98]"
+    >
+      <span class="inline-flex items-center justify-center px-2">
+        <span
+          class="text-center font-sans text-body font-medium leading-6 text-black"
+        >
+          Read the article
+        </span>
+      </span>
+      <span
+        class="inline-flex size-6 items-center justify-center transition-transform duration-fast ease-out-quart group-hover:translate-x-0.5"
+      >
+        <ArrowRight size={24} />
+      </span>
+    </a>
+  </div>
+</article>

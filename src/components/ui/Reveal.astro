@@ -1,0 +1,44 @@
+---
+import { cn } from "@/utilities/classname";
+
+// Markup contract; paint/IO in scripts/reveal.ts, offsets in styles/style.css.
+// `delay` is a stagger index (0, 1, 2 ...) -> N * 15ms in CSS.
+
+type Props = {
+  delay?: number;
+  variant?: "up" | "down" | "left" | "right" | "fade" | "scale";
+  eager?: boolean;
+  as?:
+    | "div"
+    | "section"
+    | "article"
+    | "li"
+    | "ul"
+    | "ol"
+    | "header"
+    | "footer"
+    | "aside"
+    | "nav"
+    | "span";
+  class?: string;
+};
+
+const props = Astro.props as Props;
+const {
+  delay = 0,
+  variant = "up",
+  eager = false,
+  as: Tag = "div",
+  class: className,
+} = props;
+---
+
+<Tag
+  data-reveal
+  data-reveal-variant={variant !== "up" ? variant : undefined}
+  data-reveal-eager={eager ? "" : undefined}
+  style={`--reveal-delay: ${delay}`}
+  class={cn(className)}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,63 @@
+---
+import DotSeparator from "@/components/ui/DotSeparator.astro";
+
+type Tone = "accent" | "muted";
+
+interface Props {
+  date: Date;
+  author: string;
+  category: string;
+  categoryHref?: string;
+  tone?: Tone;
+  dateFormat?: "long" | "long-numeric";
+  class?: string;
+}
+
+const {
+  date,
+  author,
+  category,
+  categoryHref,
+  tone = "accent",
+  dateFormat = "long",
+  class: className,
+} = Astro.props as Props;
+
+const formattedDate = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: dateFormat === "long-numeric" ? "numeric" : "2-digit",
+});
+
+const href = categoryHref ?? `/blog/?category=${encodeURIComponent(category)}`;
+
+const textClass = tone === "muted" ? "text-black/80" : "text-purple-60";
+const dotTone = tone === "muted" ? "black-muted" : "purple";
+const categoryHoverClass =
+  tone === "muted" ? "hover:text-purple-70" : "hover:text-purple-70";
+---
+
+<p
+  class:list={[
+    "flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-body font-normal",
+    textClass,
+    className,
+  ]}
+>
+  <span>{formattedDate}</span>
+  <DotSeparator tone={dotTone} />
+  <span>by {author}</span>
+  <DotSeparator tone={dotTone} />
+  <span>
+    in{" "}
+    <a
+      href={href}
+      class:list={[
+        "underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart",
+        categoryHoverClass,
+      ]}
+    >
+      {category}
+    </a>
+  </span>
+</p>
