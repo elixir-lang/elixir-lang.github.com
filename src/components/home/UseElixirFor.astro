@@ -9,7 +9,12 @@ import phoenixSvg from "@/assets/icons/use-elixir-for/phoenix.svg?raw";
 import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
 import Reveal from "@/components/ui/Reveal.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
-import { TOKEN_CLASS, tokenizeElixir } from "@/utilities/elixir-tokens";
+import {
+  getElixirHighlighter,
+  type HighlightedLine,
+  highlightElixir,
+} from "@/utilities/elixir-highlight";
+import { tokenStyle } from "@/utilities/highlight-style";
 
 type CodeLine = { text: string; comment?: boolean };
 
@@ -257,6 +262,17 @@ const rows: CardRow[] = [
     tags: ["EMQX", "RabbitMQ", "Riak"],
   },
 ];
+
+// Each snippet is highlighted as a whole (comment lines included, so
+// line indices stay aligned); comment lines are rendered separately
+// with the category accent colour instead of their shiki tokens.
+const highlighter = await getElixirHighlighter();
+const highlightedCode: Record<string, HighlightedLine[]> = Object.fromEntries(
+  categoriesData.map((cat) => [
+    cat.id,
+    highlightElixir(highlighter, cat.code.map((line) => line.text).join("\n")),
+  ]),
+);
 
 const DEFAULT_TAB = "web";
 const defaultEntry = categoriesData.find((c) => c.id === DEFAULT_TAB);
@@ -555,8 +571,8 @@ const starConfig = JSON.stringify(
                           {line.comment ? (
                             <span class:list={["text-white/80", CATEGORY_COLORS[categoriesData[i].id].commentOnCard]}>{line.text}</span>
                           ) : (
-                            tokenizeElixir(line.text).map((t) => (
-                              <span class={TOKEN_CLASS[t.kind]}>{t.text}</span>
+                            highlightedCode[categoriesData[i].id][li].map((t) => (
+                              <span style={tokenStyle(t)}>{t.text}</span>
                             ))
                           )}
                           {li < categoriesData[i].code.length - 1 && "\n"}
@@ -658,8 +674,8 @@ const starConfig = JSON.stringify(
                             {line.comment ? (
                               <span class:list={["text-white/80", colors.commentActive]}>{line.text}</span>
                             ) : (
-                              tokenizeElixir(line.text).map((t) => (
-                                <span class={TOKEN_CLASS[t.kind]}>{t.text}</span>
+                              highlightedCode[owner.id][li].map((t) => (
+                                <span style={tokenStyle(t)}>{t.text}</span>
                               ))
                             )}
                             {li < owner.code.length - 1 && "\n"}

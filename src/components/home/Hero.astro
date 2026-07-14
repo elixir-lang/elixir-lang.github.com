@@ -1,7 +1,20 @@
 ---
 import HeroCodeEditor from "@/components/home/HeroCodeEditor";
+import { EXAMPLES } from "@/components/home/hero-examples";
 import Button from "@/components/ui/Button.astro";
 import Reveal from "@/components/ui/Reveal.astro";
+import {
+  getElixirHighlighter,
+  highlightElixir,
+} from "@/utilities/elixir-highlight";
+
+// The editor island highlights the pristine examples from this
+// build-time output; shiki is only loaded in the browser once the
+// user edits the code.
+const highlighter = await getElixirHighlighter();
+const highlightedExamples = EXAMPLES.map((example) =>
+  highlightElixir(highlighter, example.code),
+);
 ---
 
 <section class="bg-black text-white">
@@ -47,7 +60,7 @@ import Reveal from "@/components/ui/Reveal.astro";
 
       <Reveal eager delay={8} variant="right"
         class="w-full max-w-[544px] xl:w-[544px] xl:shrink-0">
-        <HeroCodeEditor client:idle />
+        <HeroCodeEditor client:idle highlightedExamples={highlightedExamples} />
       </Reveal>
     </div>
   </div>
