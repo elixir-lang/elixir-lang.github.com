@@ -9,7 +9,6 @@ export interface MarqueeLogoEntry {
   width: number;
   height: number;
   square?: boolean;
-  preserveTones?: boolean;
 }
 
 interface Props {
@@ -63,7 +62,7 @@ const FADE_FROM_RIGHT: Record<"white" | "black", string> = {
           width={logo.width}
           height={logo.height}
           cropFrom={logo.square ? logo.width : undefined}
-          class={logo.preserveTones ? "grayscale" : "brightness-0"}
+          class="brightness-0"
         />
       </li>
     ))}
