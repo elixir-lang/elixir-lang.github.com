@@ -50,7 +50,9 @@ const FADE_FROM_RIGHT: Record<"white" | "black", string> = {
   aria-label={ariaLabel}
   style={marqueeStyle}
 >
-  <ul class="logo-marquee-track flex w-max items-center gap-3">
+  <ul
+    class="logo-marquee-track ml-4 flex w-max items-center gap-3 md:ml-6 lg:ml-12"
+  >
     {track.map((logo, i) => (
       <li
         class="flex h-[100px] w-[200px] shrink-0 items-center justify-center rounded-[16px] px-4 py-3 md:h-[120px] md:w-[260px] md:rounded-[20px] md:px-5 md:py-4 lg:h-[140px] lg:w-[324px] lg:px-6"
