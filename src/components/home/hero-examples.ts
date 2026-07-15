@@ -8,10 +8,12 @@ export type Example = {
 
 export const EXAMPLES: Example[] = [
   {
-    title: "Code as data transformations",
+    title: "Composable data transformations",
     code: `"hello world"
 |> String.split()
-|> Enum.map(&String.capitalize/1)
+|> Enum.map(fn word ->
+  String.capitalize(word)
+end)
 |> Enum.join(" ")`,
     precanned: { value: `"Hello World"` },
   },
@@ -26,7 +28,7 @@ end`,
     precanned: { value: `{:pixels, 42}` },
   },
   {
-    title: "Lightweight concurrent processes",
+    title: "Concurrency via lightweight processes",
     code: `for i <- 1..1000 do
   spawn(fn ->
     IO.puts("Hi")

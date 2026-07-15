@@ -84,7 +84,7 @@ export default function HeroCodeEditor({
       {/* Title + prev/next row (above the editor frame) */}
       <div className="flex w-full items-center justify-between gap-4 md:gap-6">
         <p
-          className="min-w-0 flex-1 font-sans text-body font-normal text-white-10 md:text-h4"
+          className="min-w-0 flex-1 font-sans text-body font-normal text-white-10 text-xl"
           aria-live="polite"
         >
           {example.title}
