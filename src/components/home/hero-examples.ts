@@ -1,5 +1,4 @@
-// Shared between Hero.astro (which pre-highlights the code at build
-// time) and the HeroCodeEditor island (which runs it).
+// Shared between Hero.astro and the client-side example carousel.
 
 export type Example = {
   title: string;
