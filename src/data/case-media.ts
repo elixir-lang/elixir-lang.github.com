@@ -109,7 +109,7 @@ export const caseTalks: CaseMediaEntry[] = [
     source: "ElixirConf EU 2026",
     excerpt:
       "Jeff Weiss explores how Frame.io uses Elixir to deliver AI-powered search at scale.",
-    url: "https://www.elixirconf.eu/schedule/",
+    url: "https://www.youtube.com/watch?v=-a4A33hDtzA",
     logo: adobeLogo,
   },
   {
