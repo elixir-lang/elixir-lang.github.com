@@ -480,11 +480,11 @@ export default function HeroCodeEditor({
           <label className="sr-only" htmlFor="hero-elixir-code">
             Editable Elixir code
           </label>
-          <div className="relative flex min-h-50 flex-1 flex-col">
+          <div className="relative flex min-h-52 flex-1 flex-col">
             <pre
               ref={highlightRef}
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 m-0 overflow-hidden whitespace-pre-wrap break-words px-5 py-4 font-mono text-body font-light leading-[26px] text-white-10 [scrollbar-gutter:stable] sm:px-5 sm:py-5"
+              className="pointer-events-none absolute inset-0 m-0 overflow-hidden whitespace-pre-wrap break-words px-4 py-2 font-mono text-body font-light leading-[26px] text-white-10 [scrollbar-gutter:stable] sm:py-3"
             >
               {highlightedLines.map((line, li) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: pre is aria-hidden cosmetic backdrop, no React state survives a re-tokenise
@@ -511,7 +511,7 @@ export default function HeroCodeEditor({
               autoCorrect="off"
               autoCapitalize="off"
               placeholder="Type here..."
-              className="relative block h-full w-full flex-1 resize-none whitespace-pre-wrap break-words bg-transparent px-5 py-4 font-mono text-body font-light leading-[26px] text-transparent caret-white-10 outline-none placeholder:text-white-10/70 selection:bg-purple-60/40 [scrollbar-gutter:stable] sm:px-5 sm:py-5"
+              className="relative block h-full w-full flex-1 resize-none whitespace-pre-wrap break-words bg-transparent px-4 py-2 font-mono text-body font-light leading-[26px] text-transparent caret-white-10 outline-none placeholder:text-white-10/70 selection:bg-purple-60/40 [scrollbar-gutter:stable] sm:py-3"
             />
           </div>
 

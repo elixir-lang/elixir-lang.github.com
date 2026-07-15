@@ -18,13 +18,13 @@ export const EXAMPLES: Example[] = [
   },
   {
     title: "Control-flow with pattern matching",
-    code: `case Base.decode64("SGVsbG8gUm9iZXJ0") do
-  {:ok, message} ->
-    message
-  :error ->
-    raise "wrong encoding"
+    code: `case Integer.parse("42px") do
+  {number, "px"} -> {:pixels, number}
+  {number, "pt"} -> {:points, number}
+  {_number, _unit} -> {:error, :unknown_unit}
+  :error -> {:error, :not_a_number}
 end`,
-    precanned: { value: `"Hello Robert"` },
+    precanned: { value: `{:pixels, 42}` },
   },
   {
     title: "Lightweight concurrent processes",
@@ -44,8 +44,9 @@ Hi`,
   {
     title: "Distributed message passing",
     code: `parent = self()
-spawn(fn -> send(parent, {:greeter, "Joe"}) end)
-
+Node.spawn(node(), fn ->
+  send(parent, {:greeter, "Joe"})
+end)
 receive do
   {:greeter, name} -> "Hello #{name}"
 end`,
