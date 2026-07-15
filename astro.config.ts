@@ -38,7 +38,7 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      themes: { light: "github-light", dark: "one-dark-pro" },
+      themes: { light: "github-light", dark: "github-dark" },
       // Shiki accepts these as bundled-language ids at runtime, but the
       // exported LanguageRegistration type doesn't model the string form.
       langs: [

@@ -1,57 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { TOKEN_CLASS, tokenizeElixir } from "@/utilities/elixir-tokens";
-
-type Example = {
-  title: string;
-  code: string;
-  precanned: { value: string; stdout?: string };
-};
-
-const EXAMPLES: Example[] = [
-  {
-    title: "Code as data transformations",
-    code: `"hello world"
-|> String.split()
-|> Enum.map(&String.capitalize/1)
-|> Enum.join(" ")`,
-    precanned: { value: `"Hello World"` },
-  },
-  {
-    title: "Control-flow with pattern matching",
-    code: `case Base.decode64("SGVsbG8gUm9iZXJ0") do
-  {:ok, message} ->
-    message
-  :error ->
-    raise "wrong encoding"
-end`,
-    precanned: { value: `"Hello Robert"` },
-  },
-  {
-    title: "Lightweight concurrent processes",
-    code: `for i <- 1..1000 do
-  spawn(fn ->
-    IO.puts("Hi")
-  end)
-end`,
-    precanned: {
-      value: `[1000 process identifiers]`,
-      stdout: `Hi
-Hi
-…
-Hi`,
-    },
-  },
-  {
-    title: "Distributed message passing",
-    code: `parent = self()
-spawn(fn -> send(parent, {:greeter, "Joe"}) end)
-
-receive do
-  {:greeter, name} -> "Hello #{name}"
-end`,
-    precanned: { value: `"Hello Joe"` },
-  },
-];
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { EXAMPLES } from "@/components/home/hero-examples";
+import type { HighlightedLine } from "@/utilities/elixir-highlight";
+import { tokenStyle } from "@/utilities/highlight-style";
 
 type RunStatus = "idle" | "running" | "success" | "error";
 type Output = {
@@ -110,6 +67,27 @@ async function loadPopcorn(): Promise<PopcornInstance | null> {
     }
   })();
   return popcornPromise;
+}
+
+type Highlight = (code: string) => HighlightedLine[];
+
+// The pristine examples are highlighted at build time (see Hero.astro),
+// so shiki is only fetched once the user starts editing code.
+let highlightPromise: Promise<Highlight | null> | null = null;
+
+function loadHighlight(): Promise<Highlight | null> {
+  highlightPromise ??= import("@/utilities/elixir-highlight")
+    .then(async (mod) => {
+      const highlighter = await mod.getElixirHighlighter();
+      return (code: string) => mod.highlightElixir(highlighter, code);
+    })
+    .catch((error) => {
+      // Drop the cached promise so the next keystroke retries.
+      highlightPromise = null;
+      console.error("Live syntax highlighting unavailable:", error);
+      return null;
+    });
+  return highlightPromise;
 }
 
 function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
@@ -219,8 +197,14 @@ function Spinner() {
   );
 }
 
-export default function HeroCodeEditor() {
+export default function HeroCodeEditor({
+  highlightedExamples,
+}: {
+  // Per example, per line: shiki tokens produced at build time.
+  highlightedExamples: HighlightedLine[][];
+}) {
   const [idx, setIdx] = useState(0);
+  const [highlight, setHighlight] = useState<Highlight | null>(null);
   const [code, setCode] = useState(EXAMPLES[0].code);
   const [executedCode, setExecutedCode] = useState(EXAMPLES[0].code);
   const [stdout, setStdout] = useState(EXAMPLES[0].precanned.stdout ?? "");
@@ -391,17 +375,34 @@ export default function HeroCodeEditor() {
     setIsMac(/Mac|iPhone|iPad|iPod/i.test(platform));
   }, []);
 
+  const ensureHighlight = useCallback(() => {
+    loadHighlight().then((fn) => {
+      if (fn) setHighlight(() => fn);
+    });
+  }, []);
+
+  const onCodeChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setCode(e.target.value);
+      // Covers focus events missed around hydration and retries after
+      // a failed load.
+      if (!highlight) ensureHighlight();
+    },
+    [highlight, ensureHighlight],
+  );
+
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
     const onFocus = () => {
       loadPopcorn();
+      ensureHighlight();
     };
     el.addEventListener("focus", onFocus, { once: true });
     return () => {
       el.removeEventListener("focus", onFocus);
     };
-  }, []);
+  }, [ensureHighlight]);
 
   useEffect(() => clearStdoutListener, [clearStdoutListener]);
 
@@ -412,6 +413,14 @@ export default function HeroCodeEditor() {
   }, [stdout, output.value]);
 
   const example = EXAMPLES[idx];
+
+  const highlightedLines = useMemo<HighlightedLine[]>(() => {
+    if (code === example.code) return highlightedExamples[idx];
+    if (highlight) return highlight(code);
+    // Shiki is still loading (or unavailable): render the edited code
+    // unstyled; it inherits the base <pre> colour.
+    return code.split("\n").map((text) => [{ text }]);
+  }, [code, example, idx, highlight, highlightedExamples]);
 
   return (
     <div className="flex w-full max-w-[544px] flex-col gap-6 [color-scheme:dark] xl:w-[544px] xl:shrink-0 xl:self-stretch xl:justify-end">
@@ -477,11 +486,17 @@ export default function HeroCodeEditor() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 m-0 overflow-hidden whitespace-pre-wrap break-words px-5 py-4 font-mono text-body font-light leading-[26px] text-white-10 [scrollbar-gutter:stable] sm:px-5 sm:py-5"
             >
-              {tokenizeElixir(code).map((t, i) => (
+              {highlightedLines.map((line, li) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: pre is aria-hidden cosmetic backdrop, no React state survives a re-tokenise
-                <span key={i} className={TOKEN_CLASS[t.kind]}>
-                  {t.text}
-                </span>
+                <Fragment key={li}>
+                  {li > 0 && "\n"}
+                  {line.map((t, ti) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: see above
+                    <span key={ti} style={tokenStyle(t)}>
+                      {t.text}
+                    </span>
+                  ))}
+                </Fragment>
               ))}
               {code.endsWith("\n") && " "}
             </pre>
@@ -489,7 +504,7 @@ export default function HeroCodeEditor() {
               id="hero-elixir-code"
               ref={textareaRef}
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={onCodeChange}
               onKeyDown={onKeyDown}
               onScroll={onEditorScroll}
               spellCheck={false}

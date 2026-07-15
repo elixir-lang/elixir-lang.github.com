@@ -12,8 +12,8 @@ Static Astro site, content authored in Markdown, deployed with GitHub Pages.
 - [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite`
 - Astro content collections + Zod schemas for blog posts, case studies,
   learning resources and version data
-- Shiki for prose code highlighting; a small in-house regex tokenizer
-  (`src/utilities/elixir-tokens.ts`) for the homepage marketing components
+- Shiki for code highlighting: prose via the markdown pipeline, the
+  homepage snippets at build time (`src/utilities/elixir-highlight.ts`)
 - [Popcorn](https://github.com/software-mansion/popcorn) (AtomVM + Elixir
   in WebAssembly) powering the interactive hero code editor
 - Biome for lint and format
@@ -77,7 +77,7 @@ elixir-website/
 │   ├── pages/                 # routes
 │   ├── scripts/reveal.ts      # scroll-reveal + SPA transition glue
 │   ├── styles/style.css       # design tokens + global styles
-│   └── utilities/             # cn helper, SEO builder, elixir tokenizer
+│   └── utilities/             # cn helper, SEO builder, elixir highlighter
 └── tests/                     # Playwright specs
 ```
 
