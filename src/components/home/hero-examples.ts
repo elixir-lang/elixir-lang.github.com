@@ -20,8 +20,8 @@ end)
   {
     title: "Control-flow with pattern matching",
     code: `case Integer.parse("42px") do
-  {number, "px"} -> {:pixels, number}
   {number, "pt"} -> {:points, number}
+  {number, "px"} -> {:pixels, number}
   {_number, _unit} -> {:error, :unknown_unit}
   :error -> {:error, :not_a_number}
 end`,
@@ -29,7 +29,8 @@ end`,
   },
   {
     title: "Concurrency via lightweight processes",
-    code: `for i <- 1..1000 do
+    code: `# Spawn thousands of concurrent processes
+for i <- 1..1000 do
   spawn(fn ->
     IO.puts("Hi")
   end)
