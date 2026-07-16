@@ -732,9 +732,9 @@ const starConfig = JSON.stringify(
         const activeStar = stars[catId] ?? "#746284";
 
         tabs.forEach((t) => {
-          const match = t.getAttribute("data-tab") === catId;
+          const match = t.dataset.tab === catId;
           if (match) {
-            t.setAttribute("data-active", "");
+            t.dataset.active = "";
             t.setAttribute("aria-pressed", "true");
           } else {
             t.removeAttribute("data-active");
@@ -743,7 +743,7 @@ const starConfig = JSON.stringify(
         });
 
         cards.forEach((c, i) => {
-          if (i === activeRow) c.setAttribute("data-active", "");
+          if (i === activeRow) c.dataset.active = "";
           else c.removeAttribute("data-active");
           const starPaths = c.querySelectorAll("[data-star] path");
           starPaths.forEach((path) => {
@@ -754,7 +754,7 @@ const starConfig = JSON.stringify(
         panels.forEach((p) => {
           const panel = p.querySelector("[data-panel-cat]");
           if (!panel) return;
-          const match = panel.getAttribute("data-panel-cat") === catId;
+          const match = panel.dataset.panelCat === catId;
           panel.toggleAttribute("data-active", match);
           panel.setAttribute("aria-hidden", match ? "false" : "true");
         });
@@ -774,7 +774,7 @@ const starConfig = JSON.stringify(
 
       tabs.forEach((t) => {
         t.addEventListener("click", () => {
-          const cat = t.getAttribute("data-tab");
+          const cat = t.dataset.tab;
           if (!cat) return;
           suppressSpyUntil = performance.now() + 1000;
           setActive(cat);

@@ -59,7 +59,7 @@ if (document.readyState === "loading") {
 }
 
 document.addEventListener("astro:before-swap", () => {
-  document.documentElement.setAttribute("data-spa-nav", "");
+  document.documentElement.dataset.spaNav = "";
 });
 
 document.addEventListener("astro:page-load", () => {

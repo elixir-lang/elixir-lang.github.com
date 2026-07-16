@@ -113,11 +113,11 @@ const seo = {
     if (!root) return;
 
     const caseLists = root.querySelectorAll("[data-case-list]");
-    const config = JSON.parse(root.getAttribute("data-config") || "{}");
+    const config = JSON.parse(root.dataset.config || "{}");
 
     function renderCases(activeTab) {
       caseLists.forEach((list) => {
-        const match = list.getAttribute("data-category") === activeTab;
+        const match = list.dataset.category === activeTab;
         list.classList.toggle("hidden", !match);
         list.classList.toggle("grid", match);
       });
