@@ -92,8 +92,10 @@ if "%elixir_major_minor%" == "1.14" (
   if %elixir_otp_release% GEQ 27 set "elixir_otp_release=27"
 ) else if "%elixir_major_minor%" == "1.19" (
   if %elixir_otp_release% GEQ 28 set "elixir_otp_release=28"
+) else if "%elixir_major_minor%" == "1.20" (
+  if %elixir_otp_release% GEQ 29 set "elixir_otp_release=29"
 ) else (
-  if %elixir_otp_release% GEQ 28 set "elixir_otp_release=28"
+  if %elixir_otp_release% GEQ 29 set "elixir_otp_release=29"
 )
 
 set "root_dir=%USERPROFILE%\.elixir-install"
