@@ -1,0 +1,306 @@
+---
+import { Image } from "astro:assets";
+import PageHero from "@/components/page/PageHero.astro";
+import EmptyState from "@/components/ui/EmptyState.astro";
+import FilteredListing from "@/components/ui/FilteredListing.astro";
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import TabFilter from "@/components/ui/TabFilter.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { loadLearning } from "@/lib/content-loaders";
+
+const items = await loadLearning();
+
+type TabId = "books" | "courses" | "screencasts" | "other";
+
+const tabs: { id: TabId; label: string }[] = [
+  { id: "books", label: "Books" },
+  { id: "courses", label: "Courses" },
+  { id: "screencasts", label: "Screencasts" },
+  { id: "other", label: "Other resources" },
+];
+
+const DEFAULT_TAB: TabId = "books";
+
+const countsByTab: Record<TabId, number> = {
+  books: 0,
+  courses: 0,
+  screencasts: 0,
+  other: 0,
+};
+for (const item of items) {
+  const tab =
+    item.data.category === "in-depth-books" ? "books" : item.data.category;
+  countsByTab[tab as TabId]++;
+}
+
+const displayItems = [
+  ...items.filter((item) => item.data.category === "books"),
+  ...items.filter((item) => item.data.category === "in-depth-books"),
+  ...items.filter(
+    (item) =>
+      item.data.category !== "books" && item.data.category !== "in-depth-books",
+  ),
+];
+
+const validTabIds = tabs.map((t) => t.id);
+
+const HTML_ESCAPES: Record<string, string> = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+};
+const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]);
+
+// Expands Markdown `[label](url)` segments to <a> tags; plain text otherwise.
+function descriptionToHtml(text: string): string {
+  return escapeHtml(text).replace(
+    /\[([^\]]+)\]\(([^)\s]+)\)/g,
+    (_, label, href) =>
+      `<a href="${href}" target="_blank" rel="noopener noreferrer" class="font-medium text-purple-70 underline decoration-from-font underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-80">${label}</a>`,
+  );
+}
+
+const seo = {
+  title: "Learning",
+  description:
+    "There are many ways to learn Elixir and explore the different domains it excels at. We hope you will find a resource that suits your pace and goals.",
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <FilteredListing
+    name="learning"
+    tabFilterName="learning-tab"
+    defaultTab={DEFAULT_TAB}
+    pageSize={Math.max(items.length, 1)}
+    counts={countsByTab}
+    validTabIds={validTabIds}
+    paramTab="tab"
+    paramPage="page"
+    class="block"
+  >
+    <PageHero
+      title="Learning"
+      description="There are many ways to learn Elixir and explore the different domains it excels at. We hope you will find a resource that suits your pace and goals."
+      resources={{
+        title: "Official resources",
+        items: [
+          {
+            label: "Getting Started guide",
+            href: "https://hexdocs.pm/elixir/introduction.html",
+            external: true,
+          },
+          {
+            label: "Build your first project with Mix and OTP",
+            href: "https://hexdocs.pm/elixir/introduction-to-mix.html",
+            external: true,
+          },
+          {
+            label: "API documentation",
+            href: "https://hexdocs.pm/elixir/",
+            external: true,
+          },
+        ],
+      }}
+    />
+
+    <section class="bg-white-10 text-text-primary">
+      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 pt-12 pb-20 md:px-12 md:gap-16 md:pt-20 md:pb-28">
+        {/* Mobile-only sticky tab strip; -mx-6 + px-6 makes the bg edge-to-edge. */}
+        <div
+          class="sticky top-20 z-30 -mx-6 bg-white-10 px-6 md:static md:z-auto md:mx-0 md:bg-transparent md:px-0"
+        >
+          <TabFilter
+            name="learning-tab"
+            tabs={tabs}
+            active={DEFAULT_TAB}
+            ariaLabel="Resource categories"
+          />
+        </div>
+
+        <div class="flex flex-col gap-16 md:gap-24" data-rows>
+          {items.length === 0 ? (
+            <EmptyState
+              title="No learning resources yet"
+              description="The library is being curated. Check back soon."
+            />
+          ) : (
+            displayItems.map((item, i) => {
+              const showInDepthHeading =
+                item.data.category === "in-depth-books" &&
+                displayItems[i - 1]?.data.category !== "in-depth-books";
+              const isBook =
+                item.data.category === "books" ||
+                item.data.category === "in-depth-books";
+
+              return (
+                <Fragment>
+                  {showInDepthHeading && (
+                    <h2
+                      data-book-heading
+                      class="font-sans text-h2 font-medium leading-tight text-black"
+                    >
+                      In-depth books
+                    </h2>
+                  )}
+
+                  {/* `group` wires the cover scale to hover anywhere on the row. */}
+                  <article
+                    data-resource
+                    data-reveal
+                    data-category={item.data.category}
+                    style={`--reveal-delay: ${i % 5}`}
+                    class="group flex flex-col items-center gap-10 xl:flex-row xl:items-center xl:gap-20"
+                  >
+                    <div
+                      class:list={[
+                        "flex shrink-0 items-center justify-center",
+                        isBook
+                          ? [
+                              "w-full max-w-[540px]",
+                              item.data.coverBleed
+                                ? "xl:w-[540px]"
+                                : "aspect-square bg-purple-5 p-12 xl:size-[540px]",
+                            ]
+                          : "aspect-square w-1/3 max-w-[180px] bg-purple-5 p-4 xl:size-[180px]",
+                      ]}
+                    >
+                      {item.data.cover ? (
+                        <Image
+                          src={item.data.cover}
+                          alt={item.data.coverAlt ?? item.data.title}
+                          widths={isBook ? [540, 1080] : [180, 360]}
+                          sizes={
+                            isBook
+                              ? "(min-width: 1024px) 540px, 80vw"
+                              : "(min-width: 1024px) 180px, 27vw"
+                          }
+                          loading="lazy"
+                          class:list={[
+                            "block object-contain transition-transform duration-base ease-out-quart will-change-transform group-hover:scale-[1.04]",
+                            isBook && item.data.coverBleed
+                              ? "h-auto w-full"
+                              : isBook
+                                ? "h-auto w-auto max-h-[380px] max-w-full shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
+                                : "h-auto w-auto max-h-full max-w-full",
+                          ]}
+                        />
+                      ) : (
+                        <div
+                          class="flex h-full max-h-[380px] w-full max-w-[280px] items-center justify-center rounded-[6px] bg-purple-90 p-6 text-center text-white shadow-[0_10px_20px_rgba(0,0,0,0.1)] transition-transform duration-base ease-out-quart will-change-transform group-hover:scale-[1.04]"
+                        >
+                          <span class="font-sans text-h4 font-medium leading-tight">
+                            {item.data.title}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div class="flex w-full flex-1 flex-col items-start gap-10">
+                      <div class="flex w-full flex-col items-start gap-6">
+                        <h3 class="font-sans text-h3 font-medium leading-tight text-black">
+                          {item.data.title}
+                        </h3>
+                        <p
+                          class="font-sans text-body font-normal whitespace-pre-line text-black/80"
+                          set:html={descriptionToHtml(item.data.description)}
+                        />
+                      </div>
+                      {item.data.url && (
+                        <a
+                          href={item.data.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="group inline-flex items-center justify-center rounded-sm border border-gray-20 px-6 py-4 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-gray-40 hover:bg-purple-0 active:scale-[0.98]"
+                        >
+                          <span class="inline-flex items-center justify-center px-2">
+                            <span class="text-center font-sans text-body font-medium leading-6 text-black">
+                              Read more
+                            </span>
+                          </span>
+                          <span class="inline-flex size-6 items-center justify-center transition-transform duration-fast ease-out-quart group-hover:translate-x-0.5">
+                            <ArrowRight size={24} />
+                          </span>
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                </Fragment>
+              );
+            })
+          )}
+
+          <div data-empty-state class="hidden">
+            <EmptyState
+              title="No resources in this category yet"
+              description="The library is being curated. Check back soon."
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </FilteredListing>
+</BaseLayout>
+
+<script is:inline>
+  // URL state, popstate, and TabFilter sync are owned by <FilteredListing>.
+  function initLearning() {
+    const root = document.querySelector(
+      'elixir-filtered-listing[data-name="learning"]',
+    );
+    if (!root) return;
+
+    const resources = root.querySelectorAll("[data-resource]");
+    const bookHeadings = root.querySelectorAll("[data-book-heading]");
+    const emptyState = root.querySelector("[data-empty-state]");
+    const config = JSON.parse(root.getAttribute("data-config") || "{}");
+    const counts = config.counts || {};
+
+    let firstRender = true;
+
+    function renderResources(activeTab) {
+      let matchIdx = 0;
+      bookHeadings.forEach((heading) => {
+        heading.classList.toggle("hidden", activeTab !== "books");
+      });
+      resources.forEach((el) => {
+        const category = el.getAttribute("data-category");
+        const match =
+          category === activeTab ||
+          (activeTab === "books" && category === "in-depth-books");
+        if (!match) {
+          el.classList.add("hidden");
+          el.classList.remove("xl:flex-row-reverse");
+          return;
+        }
+        el.classList.remove("hidden");
+        if (!firstRender && !el.hasAttribute("data-revealed")) {
+          el.setAttribute("data-revealed", "true");
+        }
+        el.classList.toggle("xl:flex-row-reverse", matchIdx % 2 === 1);
+        matchIdx++;
+      });
+      firstRender = false;
+      if (emptyState) {
+        emptyState.classList.toggle("hidden", (counts[activeTab] ?? 0) > 0);
+      }
+    }
+
+    root.addEventListener("filterchange", (e) => {
+      renderResources(e.detail.activeTab);
+    });
+
+    // Wait for the custom element to be upgraded so the state getter
+    // reflects the URL the user actually arrived at on SPA navigations.
+    customElements.whenDefined("elixir-filtered-listing").then(() => {
+      const { activeTab } = root.state ?? {
+        activeTab: config.defaultTab || "books",
+      };
+      renderResources(activeTab);
+    });
+  }
+
+  document.addEventListener("astro:page-load", initLearning);
+</script>

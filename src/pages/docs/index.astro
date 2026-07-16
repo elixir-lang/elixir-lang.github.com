@@ -1,0 +1,210 @@
+---
+import bookIconSvg from "@/assets/icons/docs/book.svg?raw";
+import downloadIconSvg from "@/assets/icons/docs/download.svg?raw";
+import PageHero from "@/components/page/PageHero.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  getStableElixirVersion,
+  loadElixirVersions,
+} from "@/lib/content-loaders";
+
+type ModuleDef = { slug: string; name: string; description: string };
+type VersionCard = {
+  name: string;
+  docsVersion: string;
+  downloadVersion?: string;
+  supportingText: string;
+};
+
+const MODULES: ModuleDef[] = [
+  { slug: "elixir", name: "Elixir", description: "standard library" },
+  { slug: "eex", name: "EEx", description: "templating library" },
+  { slug: "ex_unit", name: "ExUnit", description: "unit test library" },
+  { slug: "iex", name: "IEx", description: "interactive shell" },
+  { slug: "logger", name: "Logger", description: "built-in Logger" },
+  { slug: "mix", name: "Mix", description: "build tool" },
+];
+
+const versions = await loadElixirVersions();
+const stable = getStableElixirVersion(versions);
+const versionCards: VersionCard[] = [
+  ...versions.slice(1).map((version) => ({
+    name: version.data.name,
+    docsVersion: version.data.version,
+    downloadVersion: version.data.version,
+    supportingText: otpList(version.data.otpVersions) ?? "",
+  })),
+  {
+    name: "Development",
+    docsVersion: "main",
+    supportingText: "Documentation for the main development branch.",
+  },
+];
+
+function moduleUrl(version: string, slug: string) {
+  return `https://hexdocs.pm/${slug}/${version}/`;
+}
+
+function downloadUrl(version: string) {
+  return `https://github.com/elixir-lang/elixir/releases/download/v${version}/Docs.zip`;
+}
+
+function otpList(otps: number[]) {
+  return otps.length > 0
+    ? `Supported Erlang/OTP versions: ${[...otps].sort((a, b) => a - b).join(", ")}.`
+    : null;
+}
+
+const seo = {
+  title: "Documentation",
+  description:
+    "The Elixir programming language is broken into 6 applications. The links below reference the documentation for the modules and functions in each of those applications.",
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <PageHero
+    title="Documentation"
+    description="The Elixir programming language is broken into 6 applications. The links below reference the documentation for the modules and functions in each of those applications."
+    note='See also our <a href="https://hexdocs.pm/elixir/getting-started.html" target="_blank" rel="noopener noreferrer">Getting Started guide</a> and the <a href="/learning/">Learning page</a> for books, courses, videos, and more.'
+  />
+
+  {/* Stays inside the dark hero block. Negative top margin trims PageHero's
+     py-24 down so the heading-to-"Latest version" gap lands on 64px. */}
+  <section class="bg-black text-white md:-mt-4 lg:-mt-8">
+    <div class="mx-auto w-full max-w-[1440px] px-6 pb-16 md:px-12 md:pb-20 lg:pb-24">
+      <h2 data-reveal class="font-sans text-h3 font-medium text-white">
+        Latest version
+      </h2>
+
+      <article
+        data-reveal
+        style="--reveal-delay: 1"
+        class="mt-6 flex w-full flex-col items-stretch gap-10 border border-gray-60 bg-gray-100 p-8 md:p-12"
+      >
+        <header class="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-x-6">
+          <div class="flex items-center gap-4 sm:col-start-1 sm:row-start-1">
+            <span
+              class="inline-flex size-10 shrink-0 items-center justify-center text-purple-30"
+              aria-hidden="true"
+              set:html={bookIconSvg}
+            />
+            <h3 class="font-sans text-h3 font-medium text-white">
+              {stable.data.version ? `v${stable.data.version}` : stable.data.name}{" "}
+              <span class="font-light text-white/80">(stable)</span>
+            </h3>
+          </div>
+          {otpList(stable.data.otpVersions) && (
+            <p class="font-sans text-body font-normal text-white-10 sm:col-span-2 sm:row-start-2">
+              {otpList(stable.data.otpVersions)}
+            </p>
+          )}
+          {stable.data.version && (
+            <a
+              href={downloadUrl(stable.data.version)}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group inline-flex w-full shrink-0 items-center justify-center rounded-sm border border-gray-40 px-6 py-4 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 active:scale-[0.98] sm:col-start-2 sm:row-start-1 sm:w-auto"
+            >
+              <span class="inline-flex items-center justify-center px-2">
+                <span class="text-center font-sans text-body font-medium leading-6 text-white">
+                  Download
+                </span>
+              </span>
+              <span
+                class="inline-flex size-6 items-center justify-center text-white"
+                aria-hidden="true"
+                set:html={downloadIconSvg}
+              />
+            </a>
+          )}
+        </header>
+
+        {/* Column-first flow: col 1 = Elixir/EEx, col 2 = ExUnit/IEx, col 3 = Logger/Mix. */}
+        <ul class="grid grid-cols-1 justify-start gap-x-16 gap-y-4 sm:grid-cols-[max-content_max-content] sm:grid-rows-3 sm:grid-flow-col lg:grid-cols-[max-content_max-content_max-content] lg:grid-rows-2">
+          {MODULES.map((m) => (
+            <li class="text-body leading-[23px]">
+              <a
+                href={moduleUrl(stable.data.version, m.slug)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-sans font-normal leading-[23px] text-purple-40 underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-30"
+              >
+                {m.name}
+              </a>
+              <span class="font-sans font-normal leading-[23px] text-white-10">
+                {" "}- {m.description}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-white-10 text-text-primary">
+    <div class="mx-auto w-full max-w-[1440px] px-6 pt-16 pb-8 md:px-12 md:pt-24 md:pb-16">
+      <h2
+        data-reveal
+        class="text-center font-sans text-h1 font-medium leading-tight text-black"
+      >
+        More versions
+      </h2>
+    </div>
+
+    <div class="mx-auto w-full max-w-[1440px] pb-20 md:px-12 md:pb-28">
+      <ul class="grid grid-cols-1 border-t border-l border-gray-0 md:grid-cols-2">
+        {versionCards.map((version, i) => {
+          return (
+            <li
+              data-reveal
+              style={`--reveal-delay: ${i % 2}`}
+              class="flex flex-col gap-10 border-r border-b border-gray-0 p-6 md:p-12"
+            >
+              <div class="flex flex-col gap-3">
+                <div class="flex min-h-12 items-center justify-between gap-4">
+                  <h3 class="font-sans text-h3 font-medium text-black">
+                    {version.name}
+                  </h3>
+                  {version.downloadVersion && (
+                    <a
+                      href={downloadUrl(version.downloadVersion)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Download ${version.name} docs`}
+                      class="group inline-flex size-12 shrink-0 items-center justify-center rounded-sm text-black transition-all duration-base ease-out-quart hover:scale-[1.02] hover:bg-purple-0 active:scale-[0.98]"
+                    >
+                      <span
+                        class="inline-flex size-4.5 items-center justify-center"
+                        aria-hidden="true"
+                        set:html={downloadIconSvg}
+                      />
+                    </a>
+                  )}
+                </div>
+                <p class="font-sans text-body font-normal text-black/80">
+                  {version.supportingText}
+                </p>
+              </div>
+
+              <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+                {MODULES.map((m) => (
+                  <li>
+                    <a
+                      href={moduleUrl(version.docsVersion, m.slug)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-sans text-body font-normal text-purple-60 underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-70"
+                    >
+                      {m.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

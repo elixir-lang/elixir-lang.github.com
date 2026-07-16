@@ -1,0 +1,110 @@
+---
+// Scroll-linked step nav; `step.id` must match the target section id.
+// `variant="mobile"` for the top pill row, `"desktop"` for the sidebar aside.
+export interface StepItem {
+  id: string;
+  number: string;
+  label: string;
+  hasContent: boolean;
+}
+
+interface Props {
+  steps: StepItem[];
+  activeId?: string;
+  mobileAriaLabel?: string;
+  variant: "mobile" | "desktop";
+  mobileLayout?: "scroll" | "stack";
+  class?: string;
+}
+
+const {
+  steps,
+  activeId,
+  mobileAriaLabel = "Sections",
+  variant,
+  mobileLayout = "scroll",
+  class: className,
+} = Astro.props as Props;
+
+const defaultActive =
+  activeId ?? steps.find((s) => s.hasContent)?.id ?? steps[0]?.id ?? "";
+---
+
+{variant === "mobile" && (
+  <nav
+    aria-label={mobileAriaLabel}
+    data-stepped-nav-mobile
+    class:list={[
+      mobileLayout === "scroll"
+        ? "scrollbar-none overflow-x-auto pb-2 lg:hidden"
+        : "pb-2 lg:hidden",
+      className,
+    ]}
+  >
+    <div
+      class:list={[
+        mobileLayout === "scroll"
+          ? "flex min-w-max gap-2"
+          : "flex flex-col items-stretch gap-2",
+      ]}
+    >
+      {steps.map((s) => (
+        <button
+          type="button"
+          data-tab={s.id}
+          data-active={s.id === defaultActive ? "" : undefined}
+          disabled={!s.hasContent}
+          class:list={[
+            "rounded-full border border-gray-0 px-4 py-2 font-sans text-small font-medium transition-colors",
+            mobileLayout === "scroll" ? "shrink-0" : "w-full text-left",
+            s.hasContent
+              ? "text-black/60 data-[active]:border-purple-60 data-[active]:bg-purple-60/10 data-[active]:text-black"
+              : "cursor-not-allowed text-black/30",
+          ]}
+        >
+          {s.number}. {s.label}
+        </button>
+      ))}
+    </div>
+  </nav>
+)}
+
+{variant === "desktop" && (
+  <Fragment>
+    {steps.map((s) => (
+      <button
+        type="button"
+        data-tab={s.id}
+        data-active={s.id === defaultActive ? "" : undefined}
+        disabled={!s.hasContent}
+        class:list={[
+          "group flex items-center gap-4 text-left transition-colors duration-fast ease-out-quart",
+          !s.hasContent && "cursor-not-allowed",
+        ]}
+        aria-pressed={s.id === defaultActive ? "true" : "false"}
+      >
+        <span
+          class:list={[
+            "inline-flex size-9 shrink-0 items-center justify-center rounded-[6px] font-sans text-body font-medium transition-colors duration-base ease-out-quart",
+            s.hasContent
+              ? "bg-gray-0 text-black/40 group-data-[active]:bg-purple-60/[0.24] group-data-[active]:text-purple-70"
+              : "bg-gray-0/60 text-black/20",
+          ]}
+          aria-hidden="true"
+        >
+          {s.number}
+        </span>
+        <span
+          class:list={[
+            "whitespace-nowrap font-sans text-body font-normal transition-colors duration-fast ease-out-quart group-data-[active]:font-medium",
+            s.hasContent
+              ? "text-black/60 group-data-[active]:text-black group-hover:text-black"
+              : "text-black/30",
+          ]}
+        >
+          {s.label}
+        </span>
+      </button>
+    ))}
+  </Fragment>
+)}

@@ -1,0 +1,16 @@
+---
+import { getEntry, render } from "astro:content";
+import StandalonePage from "@/components/page/StandalonePage.astro";
+
+const entry = await getEntry("standalonePages", "stewards");
+const Content = entry ? (await render(entry)).Content : null;
+
+const description =
+  "Companies investing in the Elixir ecosystem by employing or sponsoring developers to work full-time on open-source tooling.";
+
+const title = "Elixir Open Source Stewards";
+---
+
+<StandalonePage title={title} description={description}>
+  {Content && <Content />}
+</StandalonePage>

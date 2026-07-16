@@ -1,0 +1,55 @@
+---
+import { bodyP, codeBlock, linkInline, proseWrap } from "./_install-tokens";
+
+interface Props {
+  version: string;
+  recommendedOtp: string;
+}
+
+const { version, recommendedOtp } = Astro.props;
+
+// DO NOT add whitespace between <pre> and its `{...}` expression: `whitespace-pre`
+// would surface source indentation as visible leading space on the first code line.
+const stableArtifact = `${version}-otp-${recommendedOtp.split(".")[0]}`;
+---
+
+<div class:list={[proseWrap]}>
+  <p class={bodyP}>
+    Elixir and Erlang/OTP can be quickly installed for macOS, Windows, or
+    Ubuntu using an <code class="font-mono">install.sh</code> /
+    <code class="font-mono">install.bat</code> script.
+  </p>
+
+  <div class="flex flex-col gap-4">
+    <p class="font-sans text-body font-medium text-black">
+      If you are using bash (macOS / Ubuntu / Windows), run:
+    </p>
+    <pre class={codeBlock} tabindex="0">{`curl -fsSO https://elixir-lang.org/install.sh
+sh install.sh elixir@${version} otp@${recommendedOtp}
+installs_dir=$HOME/.elixir-install/installs
+export PATH=$installs_dir/otp/${recommendedOtp}/bin:$PATH
+export PATH=$installs_dir/elixir/${stableArtifact}/bin:$PATH
+iex`}</pre>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <p class="font-sans text-body font-medium text-black">
+      If you are using PowerShell (Windows), run:
+    </p>
+    <pre class={codeBlock} tabindex="0">{`curl.exe -fsSO https://elixir-lang.org/install.bat
+.\\install.bat elixir@${version} otp@${recommendedOtp}
+$installs_dir = "$env:USERPROFILE\\.elixir-install\\installs"
+$env:PATH = "$installs_dir\\otp\\${recommendedOtp}\\bin;$env:PATH"
+$env:PATH = "$installs_dir\\elixir\\${stableArtifact}\\bin;$env:PATH"
+iex.bat`}</pre>
+  </div>
+
+  <p class={bodyP}>
+    You may want to{" "}
+    <a href="#set-path" class={linkInline}>set the <code class="font-mono">$PATH</code> environment variable</a>
+    {" "}for your whole system. Use{" "}
+    <code class="font-mono">install.sh --help</code> or{" "}
+    <code class="font-mono">install.bat --help</code> to learn more about
+    available arguments and options.
+  </p>
+</div>

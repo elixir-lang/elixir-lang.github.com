@@ -1,0 +1,209 @@
+---
+import PostRow from "@/components/blog/PostRow.astro";
+import PageHero from "@/components/page/PageHero.astro";
+import EmptyState from "@/components/ui/EmptyState.astro";
+import FilteredListing from "@/components/ui/FilteredListing.astro";
+import Pagination from "@/components/ui/Pagination.astro";
+import TabFilter from "@/components/ui/TabFilter.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { loadBlogPosts } from "@/lib/content-loaders";
+
+const allPosts = await loadBlogPosts();
+
+const PAGE_SIZE = 20;
+
+type Category =
+  | "All"
+  | "Releases"
+  | "Announcements"
+  | "Elixir in Production"
+  | "Internals";
+
+const tabs: { id: Category; label: string }[] = [
+  { id: "All", label: "All" },
+  { id: "Releases", label: "Releases" },
+  { id: "Announcements", label: "Announcements" },
+  { id: "Elixir in Production", label: "Elixir in Production" },
+  { id: "Internals", label: "Internals" },
+];
+
+const DEFAULT_TAB: Category = "All";
+
+const counts: Record<Category, number> = {
+  All: allPosts.length,
+  Releases: 0,
+  Announcements: 0,
+  "Elixir in Production": 0,
+  Internals: 0,
+};
+for (const p of allPosts) {
+  const cat = p.data.category as Category;
+  counts[cat] = (counts[cat] ?? 0) + 1;
+}
+
+const validTabIds = tabs.map((t) => t.id);
+
+const seo = {
+  title: "Blog",
+  description:
+    "Announcements, release notes, internals deep-dives, and stories from teams running Elixir in production. Updates from the Elixir core team and community.",
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <FilteredListing
+    name="blog"
+    tabFilterName="blog-category"
+    paginationName="blog"
+    defaultTab={DEFAULT_TAB}
+    pageSize={PAGE_SIZE}
+    counts={counts}
+    validTabIds={validTabIds}
+    paramTab="category"
+    paramPage="page"
+    class="block"
+  >
+    <PageHero
+      title="Blog"
+      description="Read about the latest stuff that's happening."
+    />
+
+    <section class="bg-white-10 text-text-primary">
+      <div
+        class="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 pt-12 pb-20 md:px-12 md:gap-16 md:pt-20 md:pb-28 lg:gap-20"
+      >
+        <div class="flex flex-col gap-8 md:gap-12 lg:gap-16">
+          {/* Mobile-only sticky: -mx-6 + px-6 + bg-white-10 lets the row span
+             edge-to-edge when pinned below the navbar. */}
+          <div
+            class="sticky top-20 z-30 -mx-6 bg-white-10 px-6 md:static md:z-auto md:mx-0 md:bg-transparent md:px-0"
+          >
+            <TabFilter
+              name="blog-category"
+              tabs={tabs}
+              active={DEFAULT_TAB}
+              ariaLabel="Post categories"
+            />
+          </div>
+
+          <div class="flex flex-col" data-rows>
+            {allPosts.length === 0 ? (
+              <EmptyState
+                title="No posts yet"
+                description="The blog is brand new - check back soon."
+                ctaLabel="Visit GitHub"
+                ctaHref="https://github.com/elixir-lang/elixir"
+              />
+            ) : (
+              allPosts.map((post, i) => (
+                <div
+                  data-post
+                  data-reveal
+                  data-category={post.data.category}
+                  style={`--reveal-delay: ${i % 5}`}
+                  class:list={[
+                    i === 0 ? "pb-12" : "py-12 border-t border-gray-0",
+                  ]}
+                >
+                  <PostRow post={post} />
+                </div>
+              ))
+            )}
+
+            <div data-empty-state class="hidden py-12">
+              <EmptyState
+                title="No posts in this category yet"
+                description="Try a different category or check back soon."
+              />
+            </div>
+          </div>
+        </div>
+
+        {allPosts.length > 0 && (
+          <Pagination
+            name="blog"
+            total={Math.max(1, Math.ceil(allPosts.length / PAGE_SIZE))}
+            page={1}
+          />
+        )}
+      </div>
+    </section>
+  </FilteredListing>
+</BaseLayout>
+
+<script is:inline>
+  // <FilteredListing> owns URL state + child sync; this handler only
+  // paints rows when it fires `filterchange`.
+  function initBlog() {
+    const root = document.querySelector(
+      'elixir-filtered-listing[data-name="blog"]',
+    );
+    if (!root) return;
+
+    const posts = root.querySelectorAll("[data-post]");
+    const emptyState = root.querySelector("[data-empty-state]");
+    const config = JSON.parse(root.getAttribute("data-config") || "{}");
+    const pageSize = config.pageSize || 5;
+    const counts = config.counts || {};
+
+    let firstRender = true;
+
+    function renderPosts(activeTab, activePage) {
+      const start = (activePage - 1) * pageSize;
+      const end = start + pageSize;
+      let matchIdx = 0;
+      posts.forEach((el) => {
+        const cat = el.getAttribute("data-category");
+        const match = activeTab === "All" || cat === activeTab;
+        if (!match) {
+          el.classList.add("hidden");
+          return;
+        }
+        const visible = matchIdx >= start && matchIdx < end;
+        el.classList.toggle("hidden", !visible);
+        if (!firstRender && visible && !el.hasAttribute("data-revealed")) {
+          el.setAttribute("data-revealed", "true");
+        }
+        matchIdx++;
+      });
+      firstRender = false;
+
+      // First visible row drops its top border; subsequent rows keep py-12
+      // + border-t for the 1px separator.
+      let seen = false;
+      posts.forEach((el) => {
+        if (el.classList.contains("hidden")) return;
+        if (!seen) {
+          el.classList.remove("border-t", "border-gray-0", "pt-12", "py-12");
+          el.classList.add("pb-12");
+          seen = true;
+        } else {
+          el.classList.remove("pb-12");
+          el.classList.add("py-12", "border-t", "border-gray-0");
+        }
+      });
+
+      if (emptyState) {
+        const total = counts[activeTab] ?? 0;
+        emptyState.classList.toggle("hidden", total > 0);
+      }
+    }
+
+    root.addEventListener("filterchange", (e) => {
+      const { activeTab, activePage } = e.detail;
+      renderPosts(activeTab, activePage);
+    });
+
+    // Wait for upgrade so the state getter reflects the URL the user
+    // actually arrived at (matters on SPA navigations).
+    customElements.whenDefined("elixir-filtered-listing").then(() => {
+      const { activeTab, activePage } = root.state ?? {
+        activeTab: "All",
+        activePage: 1,
+      };
+      renderPosts(activeTab, activePage);
+    });
+  }
+
+  document.addEventListener("astro:page-load", initBlog);
+</script>

@@ -1,0 +1,134 @@
+---
+import dashbitLogo from "@/assets/logos/dashbit.png";
+import jumpLogo from "@/assets/logos/jump.svg?raw";
+import softwareMansionLogo from "@/assets/logos/software-mansion.svg?raw";
+import BrandLogo from "@/components/ui/BrandLogo.astro";
+import Button from "@/components/ui/Button.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+---
+
+<section class="bg-white-10 text-text-primary">
+  <Reveal>
+    <div
+      class="mx-auto flex w-full max-w-[1440px] flex-col items-center justify-center gap-6 px-6 pb-10 md:px-12 md:pb-16"
+    >
+      <SectionHeading
+        title="Elixir Open Source Stewards"
+        description="Companies investing in the Elixir ecosystem by employing or sponsoring developers to work full-time on open-source tooling."
+        size="md"
+        tone="light"
+        align="center"
+        descriptionClass="max-w-2xl"
+      />
+    </div>
+  </Reveal>
+
+  <Reveal delay={1}>
+    <div
+      class="mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 md:px-12 md:pb-[112px]"
+    >
+      <ul
+        aria-label="Open source steward companies"
+        class="grid w-full grid-cols-1 border-t border-l border-gray-0 md:grid-cols-2 xl:grid-cols-3"
+      >
+        <li class="flex h-66 border-r border-b border-gray-0">
+          <a
+            href="https://swmansion.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Software Mansion (opens in a new tab)"
+            class="flex h-full w-full flex-col gap-4 px-8 pt-12 pb-10 transition-colors duration-base ease-out-quart hover:bg-purple-0"
+          >
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <span
+                role="img"
+                aria-label="Software Mansion"
+                class="block w-40"
+                set:html={softwareMansionLogo}
+              />
+            </div>
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <p class="pt-4 text-center font-sans text-body text-black/80 lg:pt-0">
+                Membrane, Popcorn, LiveDebugger, Legion. Building Elixir tooling
+                across the whole stack since 2016.
+              </p>
+            </div>
+          </a>
+        </li>
+
+        <li class="flex h-66 border-r border-b border-gray-0">
+          <a
+            href="https://dashbit.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dashbit (opens in a new tab)"
+            class="flex h-full w-full flex-col gap-4 px-8 pt-12 pb-10 transition-colors duration-base ease-out-quart hover:bg-purple-0"
+          >
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <div class="scale-[1.6] md:scale-[1.5] lg:scale-[1.2]">
+                <BrandLogo
+                  src={dashbitLogo}
+                  alt="Dashbit"
+                  width={192}
+                  height={40}
+                />
+              </div>
+            </div>
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <p class="pt-4 text-center font-sans text-body text-black/80 lg:pt-0">
+                Creators of Elixir, Livebook, Broadway, Plug, and more. Dashbit
+                helps companies adopt and grow Elixir in production.
+              </p>
+            </div>
+          </a>
+        </li>
+
+        <li class="flex h-66 border-r border-b border-gray-0">
+          <a
+            href="https://jump.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Jump (opens in a new tab)"
+            class="flex h-full w-full flex-col gap-4 px-8 pt-12 pb-10 transition-colors duration-base ease-out-quart hover:bg-purple-0"
+          >
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <span
+                role="img"
+                aria-label="Jump"
+                class="block w-40 [&_svg]:w-full"
+                set:html={jumpLogo}
+              />
+            </div>
+            <div class="flex h-20 shrink-0 items-center justify-center">
+              <p class="pt-4 text-center font-sans text-body text-black/80 lg:pt-0">
+                Trusted AI for advisors and financial professionals. Contributors
+                to Expert LSP, Quokka, and more.
+              </p>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="flex h-66 flex-col gap-4 border-r border-b border-gray-0 bg-black px-8 pt-12 pb-10 text-white"
+        >
+          <div class="flex h-20 shrink-0 items-center">
+            <h3 class="font-sans text-h3 font-medium leading-tight text-white">
+              Your company
+            </h3>
+          </div>
+          <div class="flex h-20 shrink-0 items-start">
+            <Button
+              href="/stewards/"
+              variant="outline"
+              tone="on-dark"
+              arrow
+            >
+              Learn more
+            </Button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </Reveal>
+</section>

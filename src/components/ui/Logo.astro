@@ -1,0 +1,31 @@
+---
+import logoDark from "@/assets/icons/logo-elixir-dark.svg?raw";
+import logoLight from "@/assets/icons/logo-elixir-light.svg?raw";
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  // "dark" is for light backgrounds; "light" is for dark backgrounds.
+  theme?: "light" | "dark";
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  theme = "dark",
+  class: className,
+  ariaLabel = "Elixir",
+} = Astro.props as Props;
+
+const rawSvg = theme === "light" ? logoLight : logoDark;
+const svg = rawSvg
+  .replace(/\swidth="[^"]*"/, "")
+  .replace(/\sheight="[^"]*"/, "")
+  .replace(/\spreserveAspectRatio="[^"]*"/, "");
+---
+
+<span
+  role="img"
+  aria-label={ariaLabel}
+  class={cn("inline-flex items-center [&>svg]:h-full [&>svg]:w-auto", className)}
+  set:html={svg}
+/>

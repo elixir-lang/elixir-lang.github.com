@@ -1,7 +1,38 @@
-/_site
-/.jekyll-metadata
-/downloads/cheatsheets/*.aux
-/downloads/cheatsheets/*.log
-/.bundle
-/vendor
-/tmp
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+.pnpm-store/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.local
+.env.production
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+# Visual-regression baselines: large (tens of MB) and platform-specific
+# (the locally generated ones are macOS "-darwin"; Linux CI can't use them).
+# Keep them out of git - regenerate locally with
+# `pnpm test:visual --update-snapshots`. For CI visual regression, generate
+# "-linux" baselines inside the Playwright Docker image and store them there.
+tests/**/*-snapshots/
+
+# macOS-specific files
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.iml

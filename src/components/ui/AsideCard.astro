@@ -1,0 +1,30 @@
+---
+interface Props {
+  /** Raw inline SVG markup (24x24, currentColor). */
+  icon: string;
+  title: string;
+  body: string;
+  class?: string;
+}
+
+const { icon, title, body, class: className } = Astro.props as Props;
+---
+
+<div
+  class:list={[
+  "flex w-full flex-col gap-4 bg-purple-10 p-6",
+  className,
+  ]}
+>
+  <div class="flex items-center gap-3">
+  <span
+  class="inline-flex size-6 shrink-0 items-center justify-center text-gray-60"
+  aria-hidden="true"
+  set:html={icon}
+  />
+  <p class="font-sans text-body font-medium text-black">{title}</p>
+  </div>
+  <p class="font-sans text-small font-normal italic text-gray-60">
+  {body}
+  </p>
+</div>

@@ -1,0 +1,46 @@
+---
+import BrandLogo from "@/components/ui/BrandLogo.astro";
+
+// Borders: ul carries top + left; each li carries right + bottom, so all
+// seams are exactly 1px no matter how many columns the grid breaks into.
+export interface LogoEntry {
+  name: string;
+  src: ImageMetadata;
+  width: number;
+  height: number;
+  /** Source is a square that must be cropped to a horizontal strip. */
+  square?: boolean;
+}
+
+interface Props {
+  logos: LogoEntry[];
+  ariaLabel?: string;
+  class?: string;
+}
+
+const { logos, ariaLabel, class: className } = Astro.props as Props;
+---
+
+<ul
+  aria-label={ariaLabel}
+  class:list={[
+    "grid w-full grid-cols-2 border-t border-l border-gray-0 lg:grid-cols-4",
+    className,
+  ]}
+>
+  {logos.map((logo) => (
+    <li
+      class="flex h-[120px] flex-col items-start border-r border-b border-gray-0 p-6 md:h-[140px] md:p-8 lg:h-[160px] lg:p-12"
+    >
+      <div class="flex h-full w-full flex-col items-center justify-center">
+        <BrandLogo
+          src={logo.src}
+          alt={logo.name}
+          width={logo.width}
+          height={logo.height}
+          cropFrom={logo.square ? logo.width : undefined}
+        />
+      </div>
+    </li>
+  ))}
+</ul>

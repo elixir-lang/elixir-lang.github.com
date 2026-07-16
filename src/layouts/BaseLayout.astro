@@ -1,0 +1,137 @@
+---
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import SiteFooter from "@/components/layout/SiteFooter.astro";
+import SiteHeader from "@/components/layout/SiteHeader.astro";
+import TopBanner from "@/components/layout/TopBanner.astro";
+import { buildSeo, organizationJsonLd, type SeoInput } from "@/utilities/seo";
+
+import "@/styles/style.css";
+
+interface Props {
+  seo?: SeoInput;
+  headerTone?: "light" | "dark";
+  bodyClass?: string;
+  showTopBanner?: boolean;
+  /** Banner placement relative to the header. Blog posts use "below". */
+  bannerPosition?: "above" | "below";
+  showFooter?: boolean;
+  transitions?: boolean;
+  jsonLd?: object[];
+}
+
+const {
+  seo,
+  headerTone = "light",
+  bodyClass,
+  showTopBanner = true,
+  bannerPosition = "above",
+  showFooter = true,
+  transitions = true,
+  jsonLd,
+} = Astro.props;
+
+const resolved = buildSeo(seo ?? {}, Astro.site, Astro.url);
+const baseJsonLd = [
+  organizationJsonLd(Astro.site?.origin ?? "https://elixir-lang.org"),
+];
+const allJsonLd = jsonLd ? [...baseJsonLd, ...jsonLd] : baseJsonLd;
+
+// Set PROD=true (or 1) only for the official deployment.
+const prodFlag = process.env.PROD;
+const isProd =
+  import.meta.env.PROD && (prodFlag === "true" || prodFlag === "1");
+const forceNoindex = !isProd;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{resolved.title || "Elixir"}</title>
+    <meta name="description" content={resolved.description} />
+    <meta name="keywords" content={resolved.keywords} />
+    <meta name="author" content="The Elixir Team" />
+    <link rel="canonical" href={resolved.canonicalUrl} />
+
+    {forceNoindex || resolved.noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta name="robots" content="index, follow" />
+    )}
+
+    <meta property="og:site_name" content={resolved.siteName} />
+    <meta property="og:locale" content={resolved.ogLocale} />
+    <meta property="og:type" content={resolved.ogType} />
+    <meta property="og:title" content={resolved.ogTitle} />
+    <meta property="og:description" content={resolved.ogDescription} />
+    <meta property="og:url" content={resolved.canonicalUrl} />
+    <meta property="og:image" content={resolved.ogImage} />
+
+    <meta name="twitter:card" content={resolved.twitterCard} />
+    <meta name="twitter:site" content={resolved.twitterSite} />
+    <meta name="twitter:creator" content={resolved.twitterSite} />
+    <meta name="twitter:title" content={resolved.ogTitle} />
+    <meta name="twitter:description" content={resolved.ogDescription} />
+    <meta name="twitter:image" content={resolved.ogImage} />
+    {resolved.article?.publishedTime && (
+      <meta property="article:published_time" content={resolved.article.publishedTime} />
+    )}
+    {resolved.article?.modifiedTime && (
+      <meta property="article:modified_time" content={resolved.article.modifiedTime} />
+    )}
+    {resolved.article?.author && (
+      <meta property="article:author" content={resolved.article.author} />
+    )}
+    {resolved.article?.tags?.map((tag) => (
+      <meta property="article:tag" content={tag} />
+    ))}
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/seo/favicon-16-elixir.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/seo/favicon-32-elixir.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/images/seo/favicon-64-elixir.png" />
+    <link rel="apple-touch-icon" sizes="256x256" href="/images/seo/favicon-256-elixir.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/seo/favicon-512-elixir.png" />
+
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Elixir blog"
+      href="/atom.xml"
+    />
+    <meta name="theme-color" content="#380F57" />
+
+    <Font cssVariable="--font-dm-sans" preload />
+    <Font cssVariable="--font-dm-mono" />
+
+    {transitions && <ClientRouter />}
+
+    {allJsonLd.map((data) => (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(data)}
+      />
+    ))}
+  </head>
+  <body class:list={["min-h-screen bg-(--color-white-10) text-(--color-text-primary)", bodyClass]}>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    {showTopBanner && bannerPosition === "above" && <TopBanner />}
+    <SiteHeader tone={headerTone} />
+    {showTopBanner && bannerPosition === "below" && <TopBanner />}
+
+    <main id="main" transition:animate="none">
+      <slot />
+    </main>
+
+    {showFooter && <SiteFooter />}
+
+    <script>
+      import "@/scripts/reveal";
+    </script>
+  </body>
+</html>

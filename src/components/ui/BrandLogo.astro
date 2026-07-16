@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+
+// Brand logo with optional vertical crop for square source assets that
+// should display as a horizontal strip. Wrapper is CSS-scaled per breakpoint.
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  width: number;
+  height: number;
+  /** When set, render the image at cropFrom x cropFrom and crop to
+   *  width x height (vertically centered). */
+  cropFrom?: number;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  cropFrom,
+  class: className,
+} = Astro.props as Props;
+
+const isCropped = typeof cropFrom === "number";
+const cropOffset = isCropped ? -(cropFrom - height) / 2 : 0;
+---
+
+<div
+  class:list={[
+  "origin-center scale-[0.6] md:scale-[0.8] lg:scale-100",
+  className,
+  ]}
+>
+  {isCropped ? (
+  <div
+  class="relative overflow-hidden"
+  style={`width: ${width}px; height: ${height}px;`}
+  >
+  <Image
+  src={src}
+  alt={alt}
+  width={cropFrom}
+  height={cropFrom}
+  densities={[1, 2]}
+  loading="lazy"
+  class="absolute left-0 block max-w-none"
+  style={`top: ${cropOffset}px; width: ${cropFrom}px; height: ${cropFrom}px;`}
+  />
+  </div>
+  ) : (
+  <Image
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  densities={[1, 2]}
+  loading="lazy"
+  class="block max-w-none"
+  style={`width: ${width}px; height: ${height}px;`}
+  />
+  )}
+</div>

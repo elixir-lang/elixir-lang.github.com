@@ -1,0 +1,77 @@
+---
+import adobeLogo from "@/assets/logos/adobe.svg";
+import appleLogo from "@/assets/logos/apple.svg";
+import bbcLogo from "@/assets/logos/bbc.svg";
+import changeLogo from "@/assets/logos/change.png";
+import discordLogo from "@/assets/logos/discord.svg";
+import pagerDutyLogo from "@/assets/logos/pagerduty.svg";
+import royalBankOfCanadaLogo from "@/assets/logos/rbc-black.svg";
+import spotifyLogo from "@/assets/logos/spotify.png";
+import supabaseLogo from "@/assets/logos/supabase.svg";
+import Button from "@/components/ui/Button.astro";
+import LogoMarquee from "@/components/ui/LogoMarquee.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+
+const logos = [
+  { name: "Discord", src: discordLogo, width: 210, height: 34 },
+  { name: "Adobe", src: adobeLogo, width: 190, height: 50 },
+  {
+    name: "Apple",
+    src: appleLogo,
+    width: 170,
+    height: 58,
+  },
+  { name: "Spotify", src: spotifyLogo, width: 210, height: 58 },
+  { name: "Supabase", src: supabaseLogo, width: 210, height: 41 },
+  { name: "BBC", src: bbcLogo, width: 170, height: 49 },
+  { name: "Change.org", src: changeLogo, width: 210, height: 41 },
+  { name: "PagerDuty", src: pagerDutyLogo, width: 210, height: 43 },
+  {
+    name: "Royal Bank of Canada",
+    src: royalBankOfCanadaLogo,
+    width: 190,
+    height: 63,
+  },
+];
+---
+
+<section class="bg-white-10 text-text-primary">
+  <div class="mx-auto w-full max-w-[1536px] pb-20 md:pb-24 lg:pb-28">
+    <Reveal>
+      <div
+        class="mx-auto flex max-w-[1000px] flex-col items-center gap-5 px-6 text-center md:px-12"
+      >
+        <SectionHeading
+          title="Elixir in production"
+          description="Elixir is used by solopreneurs and Fortune 500 companies alike, supporting teams that value developer happiness as well as large-scale operations, across diverse industries and applications."
+          size="lg"
+          tone="light"
+          align="center"
+          descriptionClass="md:text-lead"
+        />
+      </div>
+    </Reveal>
+
+    <Reveal class="mt-8 block">
+      <LogoMarquee
+        logos={logos}
+        ariaLabel="Companies using Elixir in production"
+      />
+    </Reveal>
+
+    <Reveal delay={1}>
+      <div class="mt-8 flex justify-center px-6 md:px-12">
+        <Button
+          href="/cases/"
+          variant="outline"
+          tone="on-light"
+          arrow
+          class="border-gray-20 hover:border-gray-40 hover:bg-purple-0"
+        >
+          See our cases
+        </Button>
+      </div>
+    </Reveal>
+  </div>
+</section>

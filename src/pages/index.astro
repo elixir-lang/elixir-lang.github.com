@@ -1,0 +1,24 @@
+---
+import ElixirInProduction from "@/components/home/ElixirInProduction.astro";
+import Hero from "@/components/home/Hero.astro";
+import ShapedByMany from "@/components/home/ShapedByMany.astro";
+import Stewards from "@/components/home/Stewards.astro";
+import UseElixirFor from "@/components/home/UseElixirFor.astro";
+import WhyElixir from "@/components/home/WhyElixir.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const seo = {
+  title: undefined,
+  description:
+    "Elixir is a dynamic, functional language designed for building scalable and maintainable applications. Simple from zero to scale, running on the battle-tested Erlang VM.",
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <Hero />
+  <WhyElixir />
+  <ElixirInProduction />
+  <UseElixirFor />
+  <ShapedByMany />
+  <Stewards />
+</BaseLayout>

@@ -1,0 +1,68 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Container from "@/components/ui/Container.astro";
+import Heading from "@/components/ui/Heading.astro";
+import Link from "@/components/ui/Link.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import Text from "@/components/ui/Text.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const seo = {
+  title: "Page not found",
+  description: "The page you were looking for doesn't exist.",
+  noindex: true,
+};
+
+const suggestions = [
+  { label: "Homepage", href: "/" },
+  { label: "Install Elixir", href: "/install/" },
+  { label: "Docs", href: "/docs/" },
+  { label: "Blog", href: "/blog/" },
+];
+---
+
+<BaseLayout seo={seo} headerTone="dark" showTopBanner={false}>
+  <section class="relative flex min-h-[calc(100vh-14rem)] items-center bg-(--color-black) py-20 text-(--color-white)">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(110,46,158,0.4),transparent_55%)]"
+      aria-hidden="true"
+    ></div>
+    <Container size="wide" class="relative z-10">
+      <div class="mx-auto max-w-2xl text-center">
+        <Reveal eager delay={0} variant="scale">
+          <p class="font-(family-name:--font-display) text-[6rem] font-black leading-none text-(--color-purple-50) md:text-[8rem]">
+            404
+          </p>
+        </Reveal>
+        <Reveal eager delay={2}>
+          <Heading as="h1" size="h1" tone="on-dark" class="mt-6">
+            This page took a different path.
+          </Heading>
+        </Reveal>
+        <Reveal eager delay={4}>
+          <Text size="lead" tone="muted-on-dark" class="mx-auto mt-6 max-w-md">
+            The page you were looking for has moved or never existed. Try one of the routes below - or head back home.
+          </Text>
+        </Reveal>
+
+        <Reveal eager delay={6} class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <Button href="/" variant="primary" arrow>Back to home</Button>
+          <Button href="/docs/" variant="outline" tone="on-dark" arrow>Browse docs</Button>
+        </Reveal>
+
+        <Reveal eager delay={8} class="mt-16">
+          <p class="text-[0.75rem] font-bold uppercase tracking-[0.12em] text-(--color-purple-30)">
+            Maybe looking for...
+          </p>
+          <ul class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {suggestions.map((s) => (
+              <li>
+                <Link href={s.href} tone="on-dark" arrow>{s.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

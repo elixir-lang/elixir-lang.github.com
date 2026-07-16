@@ -1,0 +1,98 @@
+---
+import { MobileMenu } from "@/components/layout/MobileMenu.tsx";
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import Logo from "@/components/ui/Logo.astro";
+import { headerCta, primaryNav } from "@/data/navigation";
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  tone?: "light" | "dark";
+}
+
+const { tone = "light" } = Astro.props as Props;
+const pathname = Astro.url.pathname;
+
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+};
+
+const isDark = tone === "dark";
+
+const headerClass = isDark
+  ? "bg-black text-white border-gray-60"
+  : "bg-white-10 text-black border-gray-0";
+
+const navTextColor = isDark ? "text-white" : "text-black";
+const hoverColor = isDark ? "hover:text-purple-40" : "hover:text-purple-60";
+const activeColor = isDark ? "text-purple-40" : "text-purple-60";
+---
+
+<header class={cn("sticky top-0 z-40 w-full border-b border-solid", headerClass)}>
+  <div class="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12">
+    <a
+      href="/"
+      class="inline-flex items-center justify-center py-4"
+      aria-label="Elixir home"
+    >
+      <Logo
+        theme={isDark ? "light" : "dark"}
+        class="h-[46px] w-[109.46px]"
+      />
+    </a>
+
+    <nav
+      aria-label="Primary"
+      class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:flex"
+    >
+      <ul class="flex items-center gap-10">
+        {primaryNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={cn(
+                "whitespace-nowrap text-center font-sans text-body font-light leading-normal transition-colors duration-fast ease-out-quart",
+                navTextColor,
+                hoverColor,
+                isActive(item.href) && activeColor,
+              )}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="hidden h-full items-center py-4 lg:flex">
+      <a
+        href={headerCta.href}
+        target={headerCta.external ? "_blank" : undefined}
+        rel={headerCta.external ? "noopener noreferrer" : undefined}
+        class={cn(
+          "group inline-flex items-center gap-1 transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] active:scale-[0.98]",
+          navTextColor,
+          hoverColor,
+        )}
+      >
+        <span class="whitespace-nowrap text-center font-sans text-body font-light leading-normal">
+          {headerCta.label}
+        </span>
+        <span class="inline-flex size-5 items-center justify-center transition-transform duration-fast ease-out-quart group-hover:translate-x-0.5">
+          <ArrowRight size={20} />
+        </span>
+      </a>
+    </div>
+
+    <div class="flex lg:hidden">
+      <MobileMenu
+        client:load
+        items={primaryNav}
+        ctaLabel={headerCta.label}
+        ctaHref={headerCta.href}
+        ctaExternal={headerCta.external}
+        tone={tone}
+      />
+    </div>
+  </div>
+</header>

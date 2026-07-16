@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from "astro:content";
+import StandalonePage from "@/components/page/StandalonePage.astro";
+
+// Preserve the #development and #team anchors from the original page.
+const entry = await getEntry("standalonePages", "development");
+const Content = entry ? (await render(entry)).Content : null;
+
+const title = "Development & team";
+const description =
+  "How the Elixir programming language is developed - the contribution workflow, release process, and the team that maintains the language.";
+---
+
+<StandalonePage
+  title={title}
+  description="How Elixir is developed and the team behind the language."
+  seoDescription={description}
+  developmentContent
+>
+  {Content && <Content />}
+</StandalonePage>

@@ -1,0 +1,25 @@
+---
+import { bodyP, codeBlock, linkInline, proseWrap } from "./_install-tokens";
+---
+
+<div class:list={[proseWrap]}>
+  <p class={bodyP}>
+    It is highly recommended to add Elixir's bin path to your PATH environment
+    variable to ease development.
+  </p>
+
+  <p class={bodyP}>
+    On Windows, there are{" "}
+    <a href="http://www.computerhope.com/issues/ch000549.htm" target="_blank" rel="noopener noreferrer" class={linkInline}>instructions for different versions</a>
+    {" "}explaining the process.
+  </p>
+
+  <p class={bodyP}>
+    On Unix systems, you need to{" "}
+    <a href="https://unix.stackexchange.com/a/117470/101951" target="_blank" rel="noopener noreferrer" class={linkInline}>find your shell profile file</a>,
+    and then add to the end of this file the following line reflecting the path
+    to your Elixir installation:
+  </p>
+
+  <pre class={codeBlock} tabindex="0">export PATH="$PATH:/path/to/elixir/bin"</pre>
+</div>

@@ -1,0 +1,83 @@
+---
+type Size = "hero" | "lg" | "md" | "sm";
+type Tone = "light" | "dark";
+type Align = "left" | "center";
+type FontFamily = "sans" | "display";
+
+interface Props {
+  as?: "h1" | "h2" | "h3";
+  title: string;
+  description?: string;
+  size?: Size;
+  tone?: Tone;
+  align?: Align;
+  font?: FontFamily;
+  class?: string;
+  descriptionClass?: string;
+}
+
+const {
+  as: As = "h2",
+  title,
+  description,
+  size = "lg",
+  tone = "light",
+  align = "left",
+  font = "sans",
+  class: className,
+  descriptionClass,
+} = Astro.props as Props;
+
+const SIZE_CLASS: Record<Size, string> = {
+  hero: "text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]",
+  lg: "text-[2.25rem] leading-[1.1] sm:text-[2.75rem] md:text-[3rem] lg:text-h1",
+  md: "text-[1.875rem] leading-[1.15] sm:text-[2.25rem] md:text-[2.5rem] lg:text-h2",
+  sm: "text-[2rem] leading-tight md:text-[2.5rem]",
+};
+
+const TONE_CLASS: Record<Tone, string> = {
+  light: "text-black",
+  dark: "text-white",
+};
+
+const TONE_DESCRIPTION: Record<Tone, string> = {
+  light: "text-black/80",
+  dark: "text-white-10",
+};
+
+const ALIGN_CLASS: Record<Align, string> = {
+  left: "",
+  center: "text-center",
+};
+
+const FONT_CLASS: Record<FontFamily, string> = {
+  sans: "font-sans",
+  display: "font-(family-name:--font-display)",
+};
+---
+
+<As
+  class:list={[
+    "font-medium",
+    FONT_CLASS[font],
+    SIZE_CLASS[size],
+    TONE_CLASS[tone],
+    ALIGN_CLASS[align],
+    className,
+  ]}
+>
+  {title}
+</As>
+
+{description && (
+  <p
+    class:list={[
+      "font-sans text-body font-normal",
+      TONE_DESCRIPTION[tone],
+      ALIGN_CLASS[align],
+      descriptionClass,
+    ]}
+  >
+    {description}
+  </p>
+)}

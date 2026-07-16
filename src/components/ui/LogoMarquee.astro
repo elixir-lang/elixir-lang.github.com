@@ -1,0 +1,132 @@
+---
+import BrandLogo from "@/components/ui/BrandLogo.astro";
+
+// Track is the logos duplicated end-to-end (second half aria-hidden) so the
+// loop seams cleanly. Keyframe distance per breakpoint lives in <style> below.
+export interface MarqueeLogoEntry {
+  name: string;
+  src: ImageMetadata;
+  width: number;
+  height: number;
+  square?: boolean;
+}
+
+interface Props {
+  logos: MarqueeLogoEntry[];
+  ariaLabel?: string;
+  /** Must match the surface behind the marquee so the edge fade dissolves cleanly. */
+  fadeColor?: "white" | "black";
+  class?: string;
+}
+
+const {
+  logos,
+  ariaLabel = "Logo marquee",
+  fadeColor = "white",
+  class: className,
+} = Astro.props as Props;
+
+const track = [...logos, ...logos];
+const marqueeStyle = [
+  `--logo-marquee-mobile-distance: -${logos.length * 212}px`,
+  `--logo-marquee-md-distance: -${logos.length * 272}px`,
+  `--logo-marquee-lg-distance: -${logos.length * 336}px`,
+  `--logo-marquee-duration: ${logos.length * 5.5}s`,
+].join("; ");
+
+// Literal class strings per fade colour so Tailwind JIT picks them up.
+const FADE_FROM_LEFT: Record<"white" | "black", string> = {
+  white: "bg-gradient-to-r from-white via-white/80 to-transparent",
+  black: "bg-gradient-to-r from-black via-black/80 to-transparent",
+};
+const FADE_FROM_RIGHT: Record<"white" | "black", string> = {
+  white: "bg-gradient-to-l from-white via-white/80 to-transparent",
+  black: "bg-gradient-to-l from-black via-black/80 to-transparent",
+};
+---
+
+<div
+  class:list={["logo-marquee relative w-full overflow-hidden", className]}
+  aria-label={ariaLabel}
+  style={marqueeStyle}
+>
+  <ul
+    class="logo-marquee-track ml-4 flex w-max items-center gap-3 md:ml-6 lg:ml-12"
+  >
+    {track.map((logo, i) => (
+      <li
+        class="flex h-[100px] w-[200px] shrink-0 items-center justify-center rounded-[16px] px-4 py-3 md:h-[120px] md:w-[260px] md:rounded-[20px] md:px-5 md:py-4 lg:h-[140px] lg:w-[324px] lg:px-6"
+        aria-hidden={i >= logos.length ? "true" : undefined}
+      >
+        <BrandLogo
+          src={logo.src}
+          alt={logo.name}
+          width={logo.width}
+          height={logo.height}
+          cropFrom={logo.square ? logo.width : undefined}
+          class="brightness-0"
+        />
+      </li>
+    ))}
+  </ul>
+
+  {/* Gradient overlays instead of CSS mask-image: Safari masking is buggy
+     with overflow:hidden + animated children. */}
+  <div
+    class:list={[
+      "pointer-events-none absolute inset-y-0 left-0 z-10 w-16 md:w-24 lg:w-36",
+      FADE_FROM_LEFT[fadeColor],
+    ]}
+    aria-hidden="true"
+  ></div>
+  <div
+    class:list={[
+      "pointer-events-none absolute inset-y-0 right-0 z-10 w-16 md:w-24 lg:w-36",
+      FADE_FROM_RIGHT[fadeColor],
+    ]}
+    aria-hidden="true"
+  ></div>
+</div>
+
+<style>
+  .logo-marquee-track {
+    animation: logo-marquee-mobile var(--logo-marquee-duration) linear infinite;
+    will-change: transform;
+  }
+
+  .logo-marquee:hover .logo-marquee-track,
+  .logo-marquee:focus-within .logo-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes logo-marquee-mobile {
+    from { transform: translateX(0); }
+    to   { transform: translateX(var(--logo-marquee-mobile-distance)); }
+  }
+
+  @media (min-width: 48rem) {
+    .logo-marquee-track {
+      animation-name: logo-marquee-md;
+    }
+    @keyframes logo-marquee-md {
+      from { transform: translateX(0); }
+      to   { transform: translateX(var(--logo-marquee-md-distance)); }
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .logo-marquee-track {
+      animation-name: logo-marquee-lg;
+    }
+    @keyframes logo-marquee-lg {
+      from { transform: translateX(0); }
+      to   { transform: translateX(var(--logo-marquee-lg-distance)); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee-track {
+      animation: none;
+    }
+  }
+</style>

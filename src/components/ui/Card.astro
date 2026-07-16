@@ -1,0 +1,42 @@
+---
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  as?: "article" | "div" | "a" | "li";
+  href?: string;
+  tone?: "default" | "muted" | "outline" | "dark";
+  hoverable?: boolean;
+  class?: string;
+}
+
+const {
+  as,
+  href,
+  tone = "default",
+  hoverable = false,
+  class: className,
+} = Astro.props as Props;
+
+const Tag = href ? "a" : (as ?? "article");
+const isInteractive = !!href || hoverable;
+
+const toneClass = {
+  default: "bg-(--color-white) border border-(--color-border-on-light)",
+  muted: "bg-(--color-surface-muted) border border-transparent",
+  outline: "bg-transparent border border-(--color-border-on-light)",
+  dark: "bg-(--color-gray-100) border border-(--color-border-on-dark) text-(--color-text-on-dark)",
+}[tone];
+---
+
+<Tag
+  href={href}
+  class={cn(
+    "group block rounded-(--radius-lg) p-6 md:p-8 transition-all duration-(--duration-base) ease-(--ease-out-quart)",
+    toneClass,
+    isInteractive &&
+      "cursor-pointer hover:-translate-y-1 hover:shadow-(--shadow-elevated)",
+    className,
+  )}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,43 @@
+---
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  as?:
+    | "div"
+    | "section"
+    | "header"
+    | "footer"
+    | "main"
+    | "article"
+    | "aside"
+    | "nav";
+  size?: "default" | "narrow" | "wide" | "full";
+  class?: string;
+  id?: string;
+}
+
+const {
+  as: Tag = "div",
+  size = "default",
+  class: className,
+  id,
+} = Astro.props as Props;
+
+const sizeClass = {
+  default: "max-w-[var(--container-max-content)]",
+  narrow: "max-w-[48rem]",
+  wide: "max-w-[var(--container-max)]",
+  full: "max-w-none",
+}[size];
+---
+
+<Tag
+  id={id}
+  class={cn(
+    "mx-auto w-full px-[var(--container-padding-mobile)] md:px-[var(--container-padding-tablet)] xl:px-[var(--container-padding-desktop)]",
+    sizeClass,
+    className,
+  )}
+>
+  <slot />
+</Tag>

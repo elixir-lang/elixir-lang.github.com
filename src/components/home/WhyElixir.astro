@@ -1,0 +1,70 @@
+---
+import FeatureCard from "@/components/ui/FeatureCard.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+
+type WhyCard = {
+  title: string;
+  body: string;
+  bodyLinks?: Record<string, string>;
+  tone: "light" | "dark";
+  cta?: { label: string; href: string };
+};
+
+const cards: WhyCard[] = [
+  {
+    title: "Maintenance",
+    body: "Elixir helps developers write clear and purposeful code that focuses on your data and your domain. Thanks to immutability, memory safety, and Elixir's [gradual type system], you can build systems that recover from failures and are easy to maintain.",
+    bodyLinks: {
+      "gradual type system": "/blog/2026/06/03/elixir-v1-20-0-released/",
+    },
+    tone: "light",
+  },
+  {
+    title: "Scalability",
+    body: "A single Elixir codebase can scale vertically (on multi-core machines) and horizontally (communicating across nodes), excelling at message-oriented and web real-time systems. Combined with projects like [Numerical Elixir], Elixir scales across cores, clusters, and GPUs.",
+    bodyLinks: { "Numerical Elixir": "https://github.com/elixir-nx" },
+    tone: "light",
+  },
+  {
+    title: "Loved by developers",
+    body: "Voted one of the world's most admired languages several years in a row.",
+    tone: "dark",
+    cta: { label: "Go to survey", href: "https://survey.stackoverflow.co/" },
+  },
+  {
+    title: "Productivity",
+    body: "Elixir ships with a package manager, code formatter, and best in class documentation. Projects like IEx (interactive shell) and [Livebook] (interactive notebooks) enable rapid prototyping and live-debugging of running systems.",
+    bodyLinks: { Livebook: "https://livebook.dev/" },
+    tone: "light",
+  },
+];
+---
+
+<section class="bg-(--color-white-10) text-(--color-text-primary)">
+  <div class="mx-auto flex w-full max-w-[1536px] flex-col px-6 md:px-12">
+    <Reveal>
+      <SectionHeading
+        title="Why Elixir?"
+        size="hero"
+        tone="light"
+        align="center"
+        font="display"
+        class="pb-12 pt-12 md:pb-16 md:pt-16"
+      />
+    </Reveal>
+    <Reveal delay={1}>
+      <div class="grid border-t border-l border-(--color-border-on-light) mb-20 md:grid-cols-2 md:mb-24 lg:mb-28">
+        {cards.map((card) => (
+          <FeatureCard
+            title={card.title}
+            body={card.body}
+            bodyLinks={card.bodyLinks}
+            tone={card.tone}
+            cta={card.cta ? { ...card.cta, external: true } : undefined}
+          />
+        ))}
+      </div>
+    </Reveal>
+  </div>
+</section>

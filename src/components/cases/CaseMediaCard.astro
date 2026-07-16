@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/ui/Button.astro";
+import type { CaseMediaEntry } from "@/data/case-media";
+
+interface Props extends CaseMediaEntry {
+  action: "Listen" | "Watch";
+}
+
+const { company, title, source, excerpt, url, logo, action } =
+  Astro.props as Props;
+const logoClass = company === "Mux" ? "p-2" : undefined;
+---
+
+<article class="group flex h-full flex-col items-start gap-6">
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`${action}: ${title} (opens in a new tab)`}
+    class="relative flex h-[175px] w-full items-center justify-center overflow-hidden border border-gray-0 bg-white-10 p-6 transition-all duration-base ease-out-quart hover:border-gray-20 md:h-[210px]"
+  >
+    {typeof logo === "string" ? (
+      <img
+        src={logo}
+        alt={`${company} logo`}
+        width="246"
+        height="60"
+        loading="lazy"
+        decoding="async"
+        class:list={[
+          "block max-h-[95px] w-auto max-w-[55%] shrink-0 object-contain transition-transform duration-base ease-out-quart group-hover:scale-[1.02] md:max-h-[108px]",
+          logoClass,
+        ]}
+      />
+    ) : (
+      <Image
+        src={logo}
+        alt={`${company} logo`}
+        widths={[300, 600]}
+        sizes="(min-width: 1024px) 400px, 80vw"
+        loading="lazy"
+        decoding="async"
+        class:list={[
+          "block max-h-[95px] w-auto max-w-[55%] shrink-0 object-contain transition-transform duration-base ease-out-quart group-hover:scale-[1.02] md:max-h-[108px]",
+          logoClass,
+        ]}
+      />
+    )}
+  </a>
+
+  <div class="flex flex-col gap-3">
+    <p class="font-sans text-body font-normal text-purple-60">{source}</p>
+    <h3 class="font-sans text-h3 font-medium leading-tight text-black">
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition-colors duration-fast ease-out-quart hover:text-purple-60"
+      >
+        {title}
+      </a>
+    </h3>
+    <p class="font-sans text-body font-normal text-black/80">{excerpt}</p>
+  </div>
+
+  <div class="mt-auto pt-2">
+    <Button
+      href={url}
+      variant="outline"
+      external
+      arrow
+      class="border-gray-20"
+      ariaLabel={`${action}: ${company} (opens in a new tab)`}
+    >
+      {action}
+    </Button>
+  </div>
+</article>

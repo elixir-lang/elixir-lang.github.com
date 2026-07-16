@@ -1,0 +1,50 @@
+---
+import { bodyP, bulletRow, linkInline, proseWrap } from "./_install-tokens";
+---
+
+<div class:list={[proseWrap]}>
+  <p class={bodyP}>
+    After Elixir is up and running, it is common to have questions as you learn
+    and use the language. There are many places where you can ask questions,
+    here are some of them:
+  </p>
+
+  <ul class="flex flex-col gap-3">
+    <li class={bulletRow}>
+      <span aria-hidden="true">-</span>
+      <a href="irc://irc.libera.chat/elixir" class={linkInline}>#elixir on irc.libera.chat</a>
+    </li>
+    <li class={bulletRow}>
+      <span aria-hidden="true">-</span>
+      <a href="http://elixirforum.com" target="_blank" rel="noopener noreferrer" class={linkInline}>Elixir Forum</a>
+    </li>
+    <li class={bulletRow}>
+      <span aria-hidden="true">-</span>
+      <a href="https://elixir-slack.community" target="_blank" rel="noopener noreferrer" class={linkInline}>Elixir on Slack</a>
+    </li>
+    <li class={bulletRow}>
+      <span aria-hidden="true">-</span>
+      <a href="https://discord.gg/elixir" target="_blank" rel="noopener noreferrer" class={linkInline}>Elixir on Discord</a>
+    </li>
+  </ul>
+
+  <p class={bodyP}>When asking questions, remember these two tips:</p>
+
+  <ul class="flex flex-col gap-4">
+    <li class="font-sans text-body font-normal text-black/80">
+      <span aria-hidden="true">- </span>
+      Instead of asking <em>"how to do X in Elixir"</em>, ask{" "}
+      <em>"how to solve Y in Elixir"</em>. In other words, don't ask how to
+      implement a particular solution, instead describe the problem at hand.
+      Stating the problem gives more context and less bias for a correct answer.
+    </li>
+    <li class="font-sans text-body font-normal text-black/80">
+      <span aria-hidden="true">- </span>
+      In case things are not working as expected, please include as much
+      information as you can in your report - for example, your Elixir version,
+      the code snippet, and the error message alongside the error stacktrace.
+    </li>
+  </ul>
+
+  <p class="font-sans text-body font-medium text-black">Enjoy!</p>
+</div>

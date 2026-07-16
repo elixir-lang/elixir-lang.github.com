@@ -1,0 +1,44 @@
+---
+import { cn } from "@/utilities/classname";
+
+interface Props {
+  as?: "p" | "span" | "div";
+  size?: "lead" | "body" | "small" | "caption";
+  weight?: "regular" | "medium" | "bold";
+  tone?: "default" | "on-dark" | "muted" | "muted-on-dark" | "brand";
+  class?: string;
+}
+
+const {
+  as: Tag = "p",
+  size = "body",
+  weight = "regular",
+  tone = "default",
+  class: className,
+} = Astro.props as Props;
+
+const sizeClass = {
+  lead: "text-[1.125rem] md:text-[1.25rem] leading-[1.5]",
+  body: "text-[1rem] leading-[1.6]",
+  small: "text-[0.875rem] leading-[1.5]",
+  caption: "text-[0.75rem] leading-[1.4]",
+}[size];
+
+const weightClass = {
+  regular: "font-normal",
+  medium: "font-medium",
+  bold: "font-bold",
+}[weight];
+
+const toneClass = {
+  default: "text-(--color-text-primary)",
+  "on-dark": "text-(--color-text-on-dark)",
+  muted: "text-(--color-text-muted-on-light)",
+  "muted-on-dark": "text-(--color-text-muted-on-dark)",
+  brand: "text-(--color-brand)",
+}[tone];
+---
+
+<Tag class={cn(sizeClass, weightClass, toneClass, className)}>
+  <slot />
+</Tag>

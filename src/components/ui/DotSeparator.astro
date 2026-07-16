@@ -1,0 +1,25 @@
+---
+type Tone = "purple" | "purple-soft" | "black-muted";
+
+interface Props {
+  tone?: Tone;
+  class?: string;
+}
+
+const { tone = "purple", class: className } = Astro.props as Props;
+
+const TONE_CLASS: Record<Tone, string> = {
+  purple: "bg-purple-60",
+  "purple-soft": "bg-purple-40",
+  "black-muted": "bg-black/40",
+};
+---
+
+<span
+  aria-hidden="true"
+  class:list={[
+    "inline-block size-1.5 shrink-0 rounded-full",
+    TONE_CLASS[tone],
+    className,
+  ]}
+></span>

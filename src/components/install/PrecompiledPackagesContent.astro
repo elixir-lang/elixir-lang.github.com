@@ -1,0 +1,96 @@
+---
+import { bodyP, codeBlock, h4, linkInline, proseWrap } from "./_install-tokens";
+
+interface Props {
+  version: string;
+  otpVersions: number[];
+}
+
+const { version, otpVersions } = Astro.props;
+---
+
+<div class:list={[proseWrap]}>
+  <p class={bodyP}>
+    Elixir provides a precompiled package for every release. First{" "}
+    <a href="#install-erlang" class={linkInline}>install Erlang</a> and then
+    download the appropriate precompiled Elixir below. You can consult your
+    Erlang/OTP version by running <code class="font-mono">erl -s halt</code>:
+  </p>
+
+  <ul class="flex flex-col gap-3">
+    {otpVersions.map((otp) => (
+      <li class="font-sans text-body font-medium text-black">
+        <span aria-hidden="true">- </span>
+        <a
+          href={`https://github.com/elixir-lang/elixir/releases/download/v${version}/elixir-otp-${otp}.zip`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={linkInline}
+        >Elixir {version} on Erlang/OTP {otp}</a>
+      </li>
+    ))}
+  </ul>
+
+  <p class={bodyP}>
+    Once you download the release, unpack it, and you are ready to run the{" "}
+    <code class="font-mono">elixir</code> and <code class="font-mono">iex</code>
+    commands from the <code class="font-mono">bin</code> directory. However,
+    we recommend you to{" "}
+    <a href="#set-path" class={linkInline}>add Elixir's bin path to your PATH environment variable</a> to ease development.
+  </p>
+
+  <div class="flex flex-col gap-4">
+    <h4 class={h4}>Mirrors and nightly builds</h4>
+    <p class={bodyP}>
+      The links above point directly to the GitHub release. We also host and
+      mirror precompiled packages and nightly builds globally via{" "}
+      <code class="font-mono">builds.hex.pm</code> using the following URL
+      scheme:
+    </p>
+    <pre class={codeBlock} tabindex="0">https://builds.hex.pm/builds/elixir/${`{ELIXIR_VERSION}`}-otp-${`{OTP_VERSION}`}.zip</pre>
+    <p class={bodyP}>
+      For example, to use Elixir v1.13.3 with Erlang/OTP 24.x, use:
+    </p>
+    <pre class={codeBlock} tabindex="0">https://builds.hex.pm/builds/elixir/v1.13.3-otp-24.zip</pre>
+    <p class={bodyP}>
+      To use nightly for a given Erlang/OTP version (such as 25), use:
+    </p>
+    <pre class={codeBlock} tabindex="0">https://builds.hex.pm/builds/elixir/main-otp-25.zip</pre>
+    <p class={bodyP}>
+      For a list of all builds, use:
+    </p>
+    <pre class={codeBlock} tabindex="0">https://builds.hex.pm/builds/elixir/builds.txt</pre>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <h4 class={h4}>Compiling from source</h4>
+    <p class={bodyP}>
+      You can download and compile Elixir in a few steps. The first one is to{" "}
+      <a href="#install-erlang" class={linkInline}>install Erlang</a>. You will
+      also need <a href="https://www.gnu.org/software/make/" target="_blank" rel="noopener noreferrer" class={linkInline}>make</a> available.
+    </p>
+    <p class={bodyP}>
+      Next download the source code (
+      <a href={`https://github.com/elixir-lang/elixir/archive/v${version}.zip`} target="_blank" rel="noopener noreferrer" class={linkInline}>.zip</a>,{" "}
+      <a href={`https://github.com/elixir-lang/elixir/archive/v${version}.tar.gz`} target="_blank" rel="noopener noreferrer" class={linkInline}>.tar.gz</a>
+      ) of the{" "}
+      <a href={`https://github.com/elixir-lang/elixir/releases/tag/v${version}`} target="_blank" rel="noopener noreferrer" class={linkInline}>latest release</a>,
+      unpack it and then run <code class="font-mono">make</code> inside the
+      unpacked directory. If you are running on Windows,{" "}
+      <a href="https://github.com/elixir-lang/elixir/wiki/Windows" target="_blank" rel="noopener noreferrer" class={linkInline}>read this page on setting up your environment for compiling Elixir</a>.
+    </p>
+    <p class={bodyP}>
+      After compiling, you are ready to run the <code class="font-mono">elixir</code>
+      and <code class="font-mono">iex</code> commands from the{" "}
+      <code class="font-mono">bin</code> directory. We recommend you to{" "}
+      <a href="#set-path" class={linkInline}>add Elixir's bin path to your PATH environment variable</a> to ease development.
+    </p>
+    <p class={bodyP}>
+      In case you are feeling a bit more adventurous, you can also compile from
+      main:
+    </p>
+    <pre class={codeBlock} tabindex="0">{`git clone https://github.com/elixir-lang/elixir.git
+cd elixir
+make clean compile`}</pre>
+  </div>
+</div>

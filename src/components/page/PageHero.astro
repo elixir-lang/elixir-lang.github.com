@@ -1,0 +1,152 @@
+---
+import Reveal from "@/components/ui/Reveal.astro";
+
+interface ResourceLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  callout?: {
+    title: string;
+    description: string;
+  };
+  resources?: {
+    title: string;
+    items: ResourceLink[];
+  };
+  /** Right-column body text rendered as raw HTML so callers can include <a> tags. */
+  note?: string;
+}
+
+const { title, description, callout, resources, note } = Astro.props as Props;
+const hasAside = Boolean(callout || resources || note);
+---
+
+<section class="bg-black text-white">
+  <div class="mx-auto w-full max-w-[1440px] px-6 py-16 md:px-12 md:py-20 lg:py-24">
+    <div class:list={[
+      "flex flex-col items-stretch gap-12",
+      hasAside && "lg:flex-row lg:items-end lg:gap-36",
+    ]}>
+      {/* Cap description width when there's no aside so long copy wraps to ~60-65
+         chars instead of stretching across the full width. With an aside, the
+         aside already bounds the left column. */}
+      <div class="flex flex-1 flex-col items-start gap-6">
+        <Reveal eager delay={0}>
+          <h1 class="font-sans text-[2.5rem] font-medium leading-[1.1] text-white md:text-[3rem] lg:text-[4rem] lg:leading-[1.09]">
+            {title}
+          </h1>
+        </Reveal>
+        <Reveal eager delay={2}>
+          <p
+            class:list={[
+              "font-sans text-lead font-normal text-white-10",
+              !hasAside && "lg:max-w-[600px]",
+            ]}
+          >
+            {description}
+          </p>
+        </Reveal>
+      </div>
+
+      {callout && (
+        <Reveal eager delay={4} variant="right" class="flex flex-1 items-start justify-start lg:justify-end">
+          <aside
+            class="flex w-full max-w-[500px] items-start gap-3 rounded-[12px] border border-gray-60 bg-gray-100 p-4"
+          >
+            <span
+              class="inline-flex size-6 shrink-0 items-center justify-center text-gray-0"
+              aria-hidden="true"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M12 7.5v5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+                <circle cx="12" cy="16" r="1" fill="currentColor" />
+              </svg>
+            </span>
+            <div class="flex flex-1 flex-col gap-2">
+              <p class="font-sans text-lead font-medium text-gray-0">
+                {callout.title}
+              </p>
+              <p class="font-sans text-body font-normal text-gray-20">
+                {callout.description}
+              </p>
+            </div>
+          </aside>
+        </Reveal>
+      )}
+
+      {note && (
+        <Reveal eager delay={4} variant="right" class="flex flex-1 items-start justify-start lg:justify-end">
+          <aside class="flex w-full max-w-[600px] items-stretch gap-8 lg:pl-8">
+            <span
+              class="hidden w-px shrink-0 self-stretch bg-gray-60 lg:block"
+              aria-hidden="true"
+            ></span>
+            <p
+              class="font-sans text-body font-normal text-white lg:max-w-[400px] [&_a]:text-purple-40 [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors [&_a]:duration-fast [&_a:hover]:text-purple-30"
+              set:html={note}
+            />
+          </aside>
+        </Reveal>
+      )}
+
+      {resources && (
+        <Reveal eager delay={4} variant="right" class="flex flex-1 items-start justify-start lg:justify-end">
+          <aside
+            class="flex w-full max-w-[600px] items-stretch gap-8 lg:pl-8"
+          >
+            <span
+              class="hidden w-px shrink-0 self-stretch bg-gray-60 lg:block"
+              aria-hidden="true"
+            ></span>
+            <div class="flex w-full flex-col gap-6 lg:max-w-[400px]">
+              <p class="font-sans text-lead font-medium text-white">
+                {resources.title}
+              </p>
+              <ul class="flex flex-col gap-2">
+                {resources.items.map((r) => (
+                  <li class="flex items-baseline gap-3">
+                    <span
+                      class="inline-block size-1.5 shrink-0 translate-y-[-3px] rounded-full bg-purple-40"
+                      aria-hidden="true"
+                    ></span>
+                    <a
+                      href={r.href}
+                      target={r.external ? "_blank" : undefined}
+                      rel={r.external ? "noopener noreferrer" : undefined}
+                      class="font-sans text-body font-normal text-white underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-40"
+                    >
+                      {r.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </Reveal>
+      )}
+    </div>
+  </div>
+</section>

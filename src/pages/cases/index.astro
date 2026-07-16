@@ -1,0 +1,139 @@
+---
+import CaseCard from "@/components/cases/CaseCard.astro";
+import CaseMediaCard from "@/components/cases/CaseMediaCard.astro";
+import PageHero from "@/components/page/PageHero.astro";
+import FilteredListing from "@/components/ui/FilteredListing.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+import TabFilter from "@/components/ui/TabFilter.astro";
+import { casePodcasts, caseTalks } from "@/data/case-media";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { loadCases } from "@/lib/content-loaders";
+
+const cases = await loadCases();
+
+type TabId = "articles" | "talks" | "podcasts";
+
+const tabs: { id: TabId; label: string }[] = [
+  { id: "articles", label: "Articles" },
+  { id: "talks", label: "Talks" },
+  { id: "podcasts", label: "Podcasts" },
+];
+
+const DEFAULT_TAB: TabId = "articles";
+const countsByTab: Record<TabId, number> = {
+  articles: cases.length,
+  talks: caseTalks.length,
+  podcasts: casePodcasts.length,
+};
+const validTabIds = tabs.map((tab) => tab.id);
+
+const description =
+  "Explore in-depth articles created in collaboration with the Elixir team plus handpicked talks and podcasts about how companies across different industries use Elixir and its ecosystem to start and expand their businesses.";
+
+const seo = {
+  title: "Case studies",
+  description,
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <FilteredListing
+    name="cases"
+    tabFilterName="cases-tab"
+    defaultTab={DEFAULT_TAB}
+    pageSize={Math.max(cases.length, caseTalks.length, casePodcasts.length, 1)}
+    counts={countsByTab}
+    validTabIds={validTabIds}
+    paramTab="tab"
+    paramPage="page"
+    class="block"
+  >
+    <PageHero title="Case studies" description={description} />
+
+    <section class="bg-white-10 text-text-primary">
+      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 py-16 md:gap-16 md:px-12 md:pt-20 md:pb-24 lg:gap-20 lg:pt-20 lg:pb-28">
+        <div
+          class="sticky top-20 z-30 -mx-6 bg-white-10 px-6 md:static md:z-auto md:mx-0 md:bg-transparent md:px-0"
+        >
+          <TabFilter
+            name="cases-tab"
+            tabs={tabs}
+            active={DEFAULT_TAB}
+            ariaLabel="Case study categories"
+          />
+        </div>
+
+        <div data-rows>
+          <ul
+            data-case-list
+            data-category="articles"
+            class="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2 md:gap-y-20 lg:gap-x-16"
+          >
+            {cases.map((entry, i) => (
+              <Reveal as="li" delay={i % 2}>
+                <CaseCard entry={entry} />
+              </Reveal>
+            ))}
+          </ul>
+
+          <ul
+            data-case-list
+            data-category="talks"
+            class="hidden grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2 md:gap-y-20 lg:gap-x-16"
+          >
+            {caseTalks.map((entry) => (
+              <li>
+                <CaseMediaCard {...entry} action="Watch" />
+              </li>
+            ))}
+          </ul>
+
+          <ul
+            data-case-list
+            data-category="podcasts"
+            class="hidden grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2 md:gap-y-20 lg:gap-x-16"
+          >
+            {casePodcasts.map((entry) => (
+              <li>
+                <CaseMediaCard {...entry} action="Listen" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </FilteredListing>
+</BaseLayout>
+
+<script is:inline>
+  function initCases() {
+    const root = document.querySelector(
+      'elixir-filtered-listing[data-name="cases"]',
+    );
+    if (!root) return;
+
+    const caseLists = root.querySelectorAll("[data-case-list]");
+    const config = JSON.parse(root.getAttribute("data-config") || "{}");
+
+    function renderCases(activeTab) {
+      caseLists.forEach((list) => {
+        const match = list.getAttribute("data-category") === activeTab;
+        list.classList.toggle("hidden", !match);
+        list.classList.toggle("grid", match);
+      });
+    }
+
+    root.addEventListener("filterchange", (event) => {
+      renderCases(event.detail.activeTab);
+    });
+
+    customElements.whenDefined("elixir-filtered-listing").then(() => {
+      const { activeTab } = root.state ?? {
+        activeTab: config.defaultTab || "articles",
+      };
+      renderCases(activeTab);
+    });
+  }
+
+  document.addEventListener("astro:page-load", initCases);
+</script>

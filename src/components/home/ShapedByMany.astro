@@ -1,0 +1,132 @@
+---
+import discordIcon from "@/assets/icons/community/discord-icon.svg?raw";
+import eefLogo from "@/assets/icons/community/eef-logo.svg?raw";
+import slackSqBl from "@/assets/icons/community/slack-sq-bl.svg?raw";
+import slackSqBr from "@/assets/icons/community/slack-sq-br.svg?raw";
+import slackSqTl from "@/assets/icons/community/slack-sq-tl.svg?raw";
+import slackSqTr from "@/assets/icons/community/slack-sq-tr.svg?raw";
+import Button from "@/components/ui/Button.astro";
+import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import Reveal from "@/components/ui/Reveal.astro";
+
+const links = [
+  { label: "Team", href: "/development/", icon: "none" as const },
+  {
+    label: "Slack",
+    href: "https://elixir-lang.slack.com",
+    icon: "slack" as const,
+    external: true,
+  },
+  {
+    label: "Forum",
+    href: "https://elixirforum.com",
+    icon: "none" as const,
+    external: true,
+  },
+  {
+    label: "Discord",
+    href: "https://discord.gg/elixir",
+    icon: "discord" as const,
+    external: true,
+  },
+];
+---
+
+<section class="bg-white-10 text-text-primary">
+  <Reveal>
+    <div
+      class="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-5 px-6 pt-10 pb-10 md:px-12 md:pt-16 md:pb-16"
+    >
+      <h2
+        class="text-center font-sans text-[2.25rem] font-medium leading-[1.1] text-black sm:text-[2.75rem] md:text-[3rem] lg:text-h1"
+      >
+        Shaped by many
+      </h2>
+      <p
+        class="max-w-[900px] text-center font-sans text-body font-normal text-black/80 md:text-lead"
+      >
+        Elixir is shaped by the contributions of many. The Elixir Team steers
+        the language and the Erlang Ecosystem Foundation supports Elixir and
+        the broader Erlang community.
+      </p>
+    </div>
+  </Reveal>
+
+  <Reveal delay={1}>
+    <div class="mx-auto flex w-full max-w-7xl items-start px-4 pb-20 md:px-12 md:pb-[112px]">
+      <div class="flex w-full flex-col items-stretch xl:h-[306px] xl:flex-row xl:items-center">
+        <article
+          class="flex w-full shrink-0 flex-col items-start gap-12 self-stretch border border-gray-0 bg-black p-8 text-white md:p-12 xl:w-1/2"
+        >
+          <div class="flex w-full flex-col items-start gap-6">
+            <span
+              class="block h-8 w-20 md:h-10 md:w-24"
+              role="img"
+              aria-label="Erlang Ecosystem Foundation"
+              set:html={eefLogo}
+            />
+            <h3
+              class="font-sans text-[1.75rem] font-medium leading-tight text-white md:text-h3"
+            >
+              Erlang Ecosystem Foundation
+            </h3>
+          </div>
+          <Button
+            href="https://erlef.org"
+            variant="outline"
+            tone="on-dark"
+            external
+            arrow
+          >
+            Join the foundation
+          </Button>
+        </article>
+
+        {/* Borders: the ul provides top + left edges; each cell provides right + bottom.
+           Negative margin overlaps the ul's top/left with the EEF card's bottom/right
+           so the shared perimeter stays 1px. */}
+        <ul class="grid w-full flex-1 -mt-px grid-cols-2 grid-rows-2 self-stretch border-t border-l border-gray-0 xl:mt-0 xl:-ml-px">
+          {links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                target={l.external ? "_blank" : undefined}
+                rel={l.external ? "noopener noreferrer" : undefined}
+                class="group flex h-full min-h-[120px] items-center justify-between gap-4 border-r border-b border-gray-0 p-6 transition-colors duration-fast ease-out-quart hover:bg-purple-0 md:p-12"
+              >
+                <span class="flex items-center gap-3 md:gap-4">
+                  {l.icon === "slack" && (
+                    <span
+                      class="grid h-6 w-6 shrink-0 grid-cols-2 grid-rows-2 gap-[1.3px] md:h-8 md:w-8 md:gap-[1.72px]"
+                      aria-hidden="true"
+                    >
+                      <span class="size-full" set:html={slackSqTl} />
+                      <span class="size-full" set:html={slackSqTr} />
+                      <span class="size-full" set:html={slackSqBl} />
+                      <span class="size-full" set:html={slackSqBr} />
+                    </span>
+                  )}
+                  {l.icon === "discord" && (
+                    <span
+                      class="block size-6 shrink-0 md:size-8"
+                      aria-hidden="true"
+                      set:html={discordIcon}
+                    />
+                  )}
+                  <span class="font-sans text-body font-medium text-black md:text-lead">
+                    {l.label}
+                  </span>
+                </span>
+                <span
+                  class="inline-flex size-6 items-center justify-center text-black transition-transform duration-fast ease-out-quart group-hover:translate-x-0.5 group-hover:text-purple-60"
+                >
+                  <ArrowRight size={24} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Reveal>
+</section>

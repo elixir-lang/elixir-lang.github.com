@@ -1,0 +1,37 @@
+---
+import { bodyP, linkInline, linkStrong, proseWrap } from "./_install-tokens";
+---
+
+<div class:list={[proseWrap]}>
+  <p class={bodyP}>
+    There are many tools that allow developers to install and manage multiple
+    Erlang and Elixir versions. They are useful if you have multiple projects
+    running on different Elixir or Erlang versions, can't install Erlang or
+    Elixir as mentioned above, or if the version provided by your package
+    manager is outdated. Here are some of those tools:
+  </p>
+  <ul class="flex flex-col gap-3">
+    <li class="flex items-baseline gap-2 font-sans text-body font-medium text-black">
+      <span aria-hidden="true">-</span>
+      <a href="https://asdf-vm.com" target="_blank" rel="noopener noreferrer" class={linkInline}>asdf</a>
+      <span class="font-normal text-black">
+        - install and manage different Elixir and Erlang versions
+      </span>
+    </li>
+    <li class="flex items-baseline gap-2 font-sans text-body font-medium text-black">
+      <span aria-hidden="true">-</span>
+      <a href="https://mise.en.dev" target="_blank" rel="noopener noreferrer" class={linkInline}>mise</a>
+      <span class="font-normal text-black"> - install and manage different Elixir and Erlang versions</span>
+    </li>
+    <li class="flex items-baseline gap-2 font-sans text-body font-medium text-black">
+      <span aria-hidden="true">-</span>
+      <a href="https://github.com/kerl/kerl" target="_blank" rel="noopener noreferrer" class={linkInline}>kerl</a>
+      <span class="font-normal text-black"> - install and manage different Erlang versions</span>
+    </li>
+  </ul>
+  <p class={bodyP}>
+    Keep in mind that each Elixir version supports specific Erlang/OTP
+    versions.{" "}
+    <a href="/docs" class={linkStrong}>See the supported versions alongside our docs.</a>
+  </p>
+</div>

@@ -1,0 +1,348 @@
+---
+import AskQuestionsContent from "@/components/install/AskQuestionsContent.astro";
+import InstallErlangContent from "@/components/install/InstallErlangContent.astro";
+import InstallScriptsContent from "@/components/install/InstallScriptsContent.astro";
+import OsInstallContent from "@/components/install/OsInstallContent.astro";
+import PrecompiledPackagesContent from "@/components/install/PrecompiledPackagesContent.astro";
+import SetPathContent from "@/components/install/SetPathContent.astro";
+import VersionManagersContent from "@/components/install/VersionManagersContent.astro";
+import PageHero from "@/components/page/PageHero.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import SidebarLayout from "@/components/ui/SidebarLayout.astro";
+import SteppedNav from "@/components/ui/SteppedNav.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  getStableElixirVersion,
+  loadElixirVersions,
+} from "@/lib/content-loaders";
+
+const stable = getStableElixirVersion(await loadElixirVersions());
+if (
+  !stable.data.version ||
+  !stable.data.minimumOtp ||
+  !stable.data.recommendedOtp ||
+  stable.data.otpVersions.length === 0
+) {
+  throw new Error(
+    "The stable Elixir version must define version, OTP versions, minimumOtp, and recommendedOtp.",
+  );
+}
+
+const version = stable.data.version;
+const minimumOtp = stable.data.minimumOtp;
+const recommendedOtp = stable.data.recommendedOtp;
+const otpVersions = [...stable.data.otpVersions].sort((a, b) => b - a);
+
+const sidebar = [
+  {
+    id: "install-by-os",
+    number: "01",
+    label: "Install by Operating System",
+    hasContent: true,
+  },
+  {
+    id: "install-scripts",
+    number: "02",
+    label: "Install Scripts",
+    hasContent: true,
+  },
+  {
+    id: "version-managers",
+    number: "03",
+    label: "Version Managers",
+    hasContent: true,
+  },
+  {
+    id: "precompiled-packages",
+    number: "04",
+    label: "Precompiled Packages",
+    hasContent: true,
+  },
+  {
+    id: "install-erlang",
+    number: "05",
+    label: "Install Erlang",
+    hasContent: true,
+  },
+  {
+    id: "set-path",
+    number: "06",
+    label: "Set the PATH Environment Variable",
+    hasContent: true,
+  },
+  {
+    id: "ask-questions",
+    number: "07",
+    label: "Ask Questions",
+    hasContent: true,
+  },
+];
+
+const spyIds = sidebar.filter((s) => s.hasContent).map((s) => s.id);
+const spyConfig = JSON.stringify(spyIds);
+
+const seo = {
+  title: "Install Elixir",
+  description:
+    "The fastest way to install Elixir is via install scripts, your operating system's package manager, or dedicated installers. All installation methods are explained in detail.",
+};
+---
+
+<BaseLayout seo={seo} headerTone="dark">
+  <div data-install-page>
+    <PageHero
+      title="Install Elixir"
+      description="The fastest way to install Elixir is via install scripts, your operating system's package manager, or dedicated installers. If those aren't viable options, we recommend using precompiled packages or compiling the language from source yourself. All of these installation methods are explained in detail below."
+      callout={{
+        title: `Elixir v${stable.data.version} requires Erlang ${stable.data.minimumOtp} or later.`,
+        description:
+          'Many of the instructions below will automatically install Erlang for you. If they do not, the "Install Erlang" section has you covered.',
+      }}
+    />
+
+    <section class="bg-white-10 text-text-primary">
+      <div class="mx-auto w-full max-w-[1440px] pt-12 pb-20 md:px-12 md:pt-20 md:pb-28">
+        <SteppedNav
+          steps={sidebar}
+          variant="mobile"
+          mobileLayout="stack"
+          mobileAriaLabel="Install sections"
+          activeId={sidebar[0].id}
+          class="mb-8 px-6 md:px-0"
+        />
+
+        <SidebarLayout
+          asideWidth="360"
+          gap="0"
+          stickyTop="20"
+          showAsideOnMobile={false}
+          asideLabel="Install steps"
+          asideClass="flex-col gap-6 border-t border-gray-0 p-12"
+        >
+          {/* lg:min-w-0 is required: flex items default to min-width:auto, and
+             the long shell-command lines inside the code blocks would otherwise
+             push the sticky sidebar off-viewport between 1024 and 1279px. */}
+          <div slot="main" class="flex w-full flex-col border border-gray-0 lg:min-w-0 lg:flex-1">
+            <article
+              id="install-by-os"
+              data-section="install-by-os"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col border-b border-gray-0"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Install by Operating System"
+                  description="Install Elixir according to your operating system and tool of choice."
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <OsInstallContent version={version} otpVersions={otpVersions} />
+            </article>
+
+            <article
+              id="install-scripts"
+              data-section="install-scripts"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col border-b border-gray-0"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Install Scripts"
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <InstallScriptsContent
+                version={version}
+                recommendedOtp={recommendedOtp}
+              />
+            </article>
+
+            <article
+              id="version-managers"
+              data-section="version-managers"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col border-b border-gray-0"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Version Managers"
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <VersionManagersContent />
+            </article>
+
+            <article
+              id="precompiled-packages"
+              data-section="precompiled-packages"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col border-b border-gray-0"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Precompiled Packages"
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <PrecompiledPackagesContent
+                version={version}
+                otpVersions={otpVersions}
+              />
+            </article>
+
+            <article
+              id="install-erlang"
+              data-section="install-erlang"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col border-b border-gray-0"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Install Erlang"
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <InstallErlangContent minimumOtp={minimumOtp} />
+            </article>
+
+            <article
+              id="set-path"
+              data-section="set-path"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col border-b border-gray-0"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Set the PATH Environment Variable"
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <SetPathContent />
+            </article>
+
+            <article
+              id="ask-questions"
+              data-section="ask-questions"
+              data-reveal
+              class="flex scroll-mt-[104px] flex-col"
+            >
+              <header class="flex flex-col items-start gap-4 p-6 pb-0 md:p-12 md:pb-0">
+                <SectionHeading
+                  title="Ask Questions"
+                  size="sm"
+                  tone="light"
+                />
+              </header>
+              <AskQuestionsContent />
+            </article>
+          </div>
+
+          <Fragment slot="aside">
+            <SteppedNav
+              steps={sidebar}
+              variant="desktop"
+              activeId={sidebar[0].id}
+            />
+          </Fragment>
+        </SidebarLayout>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script is:inline define:vars={{ spyConfig }}>
+  // Re-run on every astro:page-load so SPA navigations rebind cleanly;
+  // cleanup removes the previous run's scroll listener.
+  (() => {
+    let cleanup = null;
+
+    function init() {
+      cleanup?.();
+      cleanup = null;
+
+      const ids = JSON.parse(spyConfig);
+      const root = document.querySelector("[data-install-page]");
+      if (!root) return;
+
+      const tabs = root.querySelectorAll("[data-tab]");
+
+      function setActive(id) {
+        tabs.forEach((t) => {
+          const match = t.getAttribute("data-tab") === id;
+          if (match) {
+            t.setAttribute("data-active", "");
+            t.setAttribute("aria-pressed", "true");
+          } else {
+            t.removeAttribute("data-active");
+            t.setAttribute("aria-pressed", "false");
+          }
+        });
+      }
+
+      function scrollToSection(id) {
+        const target = document.getElementById(id);
+        if (!target) return;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        target.scrollIntoView({
+          behavior: reduceMotion ? "auto" : "smooth",
+          block: "start",
+        });
+      }
+
+      let suppressSpyUntil = 0;
+      tabs.forEach((t) => {
+        t.addEventListener("click", () => {
+          const id = t.getAttribute("data-tab");
+          if (!id) return;
+          suppressSpyUntil = performance.now() + 1000;
+          setActive(id);
+          scrollToSection(id);
+        });
+      });
+
+      let lastSpy = "";
+      let scheduled = false;
+
+      function runSpy() {
+        scheduled = false;
+        if (performance.now() < suppressSpyUntil) return;
+        const triggerY = window.innerHeight * 0.5;
+        let bestId = "";
+        let bestOffset = -Infinity;
+        ids.forEach((id) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const offset = el.getBoundingClientRect().top - triggerY;
+          if (offset <= 0 && offset > bestOffset) {
+            bestOffset = offset;
+            bestId = id;
+          }
+        });
+        if (!bestId) bestId = ids[0];
+        if (bestId === lastSpy) return;
+        lastSpy = bestId;
+        setActive(bestId);
+      }
+
+      function onScroll() {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(runSpy);
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      cleanup = () => {
+        window.removeEventListener("scroll", onScroll);
+      };
+    }
+
+    document.addEventListener("astro:page-load", init);
+  })();
+</script>
