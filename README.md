@@ -177,11 +177,11 @@ and its local destination.
 ## Deployment
 
 GitHub Pages builds the site through `.github/workflows/deploy.yml`. The
-workflow sets `BASE_PATH` for project-page hosting, runs `pnpm build`, and
-uses `scripts/gh-pages-fix-hrefs.mjs` to prefix hardcoded root-relative links.
+workflow builds the canonical `https://elixir-lang.org` site and deploys the
+generated `dist` directory.
 
 The Popcorn WASM hero editor needs cross-origin isolation. Because GitHub
-Pages cannot configure COOP/COEP response headers, project-page builds load
+Pages cannot configure COOP/COEP response headers, production builds load
 `public/coi-serviceworker.js` from `BaseLayout.astro`.
 
 Preview builds emit `noindex, nofollow`. Set `PROD=true` only in the official

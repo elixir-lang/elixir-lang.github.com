@@ -5,14 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import { toAstroRedirects } from "./src/data/redirects";
 
-// CI sets BASE_PATH + GH_PAGES_SITE for the GitHub Pages build.
-// Production builds leave them unset and use the canonical site URL.
-const BASE_PATH = process.env.BASE_PATH || undefined;
-const SITE = process.env.GH_PAGES_SITE || "https://elixir-lang.org";
-
 export default defineConfig({
-  site: SITE,
-  base: BASE_PATH,
+  site: "https://elixir-lang.org",
   trailingSlash: "always",
   redirects: toAstroRedirects(),
   build: { concurrency: 8 },

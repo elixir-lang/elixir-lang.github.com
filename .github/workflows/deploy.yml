@@ -1,6 +1,4 @@
-# GitHub Pages deploy. Build base path = `/elixir`; post-build pass
-# prefixes hardcoded internal hrefs with it. Settings -> Pages ->
-# Source = "GitHub Actions" (auto-enabled on first run if possible).
+# Settings -> Pages -> Source must be "GitHub Actions".
 name: Deploy to GitHub Pages
 
 on:
@@ -21,8 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      BASE_PATH: /elixir
-      GH_PAGES_SITE: https://bartoszgrajdek.github.io
+      PROD: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,9 +47,6 @@ jobs:
 
       - name: Build Astro site
         run: pnpm run build
-
-      - name: Patch hardcoded internal hrefs with base path
-        run: node scripts/gh-pages-fix-hrefs.mjs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

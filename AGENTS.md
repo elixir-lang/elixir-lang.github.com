@@ -11,14 +11,13 @@ single `//` line instead of `/** ... */`.
 ## Stack
 
 Astro 5 + React 19 islands + Tailwind v4 + TypeScript. Biome for lint/format,
-2-space indent, double quotes (see `biome.json`). Run `pnpm check` to autofix
-formatting before `pnpm lint` / `pnpm build`.
+2-space indent, double quotes (see `biome.json`). `pnpm check` applies Biome
+fixes; use `pnpm lint` for the equivalent read-only check.
 
 ## Deployment
 
-- GitHub Pages: see `BUNDLE_AVM.md` and the `coi-serviceworker` setup; base
-  paths are handled by Astro and `scripts/gh-pages-fix-hrefs.mjs` when
-  `BASE_PATH` is set.
+- GitHub Pages: see `BUNDLE_AVM.md`, `.github/workflows/deploy.yml`, and the
+  `coi-serviceworker` setup.
 
 ## Popcorn (homepage hero editor)
 
