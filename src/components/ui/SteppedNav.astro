@@ -79,7 +79,7 @@ const defaultActive =
         disabled={!s.hasContent}
         class:list={[
           "group flex items-center gap-4 text-left transition-colors duration-fast ease-out-quart",
-          !s.hasContent && "cursor-not-allowed",
+          s.hasContent ? "cursor-pointer" : "cursor-not-allowed",
         ]}
         aria-pressed={s.id === defaultActive ? "true" : "false"}
       >
