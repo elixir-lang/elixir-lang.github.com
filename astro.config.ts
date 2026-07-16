@@ -51,20 +51,5 @@ export default defineConfig({
   integrations: [react(), mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
-    // Match the cross-origin isolation provided by the Pages service worker.
-    server: {
-      headers: {
-        "Cross-Origin-Opener-Policy": "same-origin",
-        "Cross-Origin-Embedder-Policy": "require-corp",
-        "Cross-Origin-Resource-Policy": "same-origin",
-      },
-    },
-    preview: {
-      headers: {
-        "Cross-Origin-Opener-Policy": "same-origin",
-        "Cross-Origin-Embedder-Policy": "require-corp",
-        "Cross-Origin-Resource-Policy": "same-origin",
-      },
-    },
   },
 });

@@ -51,11 +51,6 @@ const forceNoindex = !isProd;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
 
-    {/* Project Pages cannot set COOP/COEP headers, so use a service worker. */}
-    {import.meta.env.BASE_URL !== "/" && (
-      <script is:inline src={`${import.meta.env.BASE_URL}coi-serviceworker.js`}></script>
-    )}
-
     <title>{resolved.title || "Elixir"}</title>
     <meta name="description" content={resolved.description} />
     <meta name="keywords" content={resolved.keywords} />
