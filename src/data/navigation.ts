@@ -79,7 +79,7 @@ export const footerSocials: NavItem[] = [
     href: "https://twitter.com/elixirlang",
     external: true,
   },
-  { label: "Slack", href: "https://elixir-lang.slack.com", external: true },
+  { label: "Slack", href: "https://elixir-slack.community", external: true },
   { label: "Discord", href: "https://discord.gg/elixir", external: true },
 ];
 
