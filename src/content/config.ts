@@ -35,24 +35,18 @@ const elixirVersions = defineCollection({
     base: "./src/content/elixir-versions",
   }),
   schema: z.object({
-    /** Display label, e.g. "v1.20" or "Development". */
+    /** Display label, e.g. "v1.20". */
     name: z.string(),
-    /** Sortable numeric value: 1.19, 1.18, etc. Use 0 for "Development". */
+    /** Sortable numeric value: 1.20, 1.19, etc. */
     sortKey: z.number(),
-    /** Concrete patch version used in hexdocs URLs (e.g. "1.19.5").
-     *  Omit for the Development build (it uses "main" instead). */
-    version: z.string().optional(),
+    /** Concrete patch version used in HexDocs URLs (e.g. "1.20.2"). */
+    version: z.string(),
     /** Supported OTP majors, ascending order (e.g. [26, 27, 28]). */
     otpVersions: z.array(z.number()).default([]),
     /** Minimum supported OTP release, preserving the minor component. */
     minimumOtp: z.string().optional(),
     /** Recommended OTP release for new installations. */
     recommendedOtp: z.string().optional(),
-    /** True for the single currently-stable version - drives the hero card. */
-    stable: z.boolean().default(false),
-    /** True for the in-development branch - uses "main" in URLs and shows
-     *  no download button. */
-    development: z.boolean().default(false),
   }),
 });
 

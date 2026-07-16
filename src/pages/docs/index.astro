@@ -4,12 +4,17 @@ import downloadIconSvg from "@/assets/icons/docs/download.svg?raw";
 import PageHero from "@/components/page/PageHero.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
-  type ElixirVersion,
   getStableElixirVersion,
   loadElixirVersions,
 } from "@/lib/content-loaders";
 
 type ModuleDef = { slug: string; name: string; description: string };
+type VersionCard = {
+  name: string;
+  docsVersion: string;
+  downloadVersion?: string;
+  supportingText: string;
+};
 
 const MODULES: ModuleDef[] = [
   { slug: "elixir", name: "Elixir", description: "standard library" },
@@ -22,12 +27,22 @@ const MODULES: ModuleDef[] = [
 
 const versions = await loadElixirVersions();
 const stable = getStableElixirVersion(versions);
-const others = versions.filter((version) => version !== stable);
+const versionCards: VersionCard[] = [
+  ...versions.slice(1).map((version) => ({
+    name: version.data.name,
+    docsVersion: version.data.version,
+    downloadVersion: version.data.version,
+    supportingText: otpList(version.data.otpVersions) ?? "",
+  })),
+  {
+    name: "Development",
+    docsVersion: "main",
+    supportingText: "Documentation for the main development branch.",
+  },
+];
 
-function moduleUrl(version: string | undefined, isDev: boolean, slug: string) {
-  return isDev
-    ? `https://hexdocs.pm/${slug}/main/`
-    : `https://hexdocs.pm/${slug}/${version}/`;
+function moduleUrl(version: string, slug: string) {
+  return `https://hexdocs.pm/${slug}/${version}/`;
 }
 
 function downloadUrl(version: string) {
@@ -110,7 +125,7 @@ const seo = {
           {MODULES.map((m) => (
             <li class="text-body leading-[23px]">
               <a
-                href={moduleUrl(stable.data.version, false, m.slug)}
+                href={moduleUrl(stable.data.version, m.slug)}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="font-sans font-normal leading-[23px] text-purple-40 underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-30"
@@ -139,8 +154,7 @@ const seo = {
 
     <div class="mx-auto w-full max-w-[1440px] pb-20 md:px-12 md:pb-28">
       <ul class="grid grid-cols-1 border-t border-l border-gray-0 md:grid-cols-2">
-        {others.map((v: ElixirVersion, i: number) => {
-          const isDev = v.data.development;
+        {versionCards.map((version, i) => {
           return (
             <li
               data-reveal
@@ -148,38 +162,36 @@ const seo = {
               class="flex flex-col gap-10 border-r border-b border-gray-0 p-6 md:p-12"
             >
               <div class="flex flex-col gap-3">
-                <div class="flex items-center justify-between gap-4">
+                <div class="flex min-h-12 items-center justify-between gap-4">
                   <h3 class="font-sans text-h3 font-medium text-black">
-                    {v.data.name}
+                    {version.name}
                   </h3>
-                  {v.data.version && (
+                  {version.downloadVersion && (
                     <a
-                      href={downloadUrl(v.data.version)}
+                      href={downloadUrl(version.downloadVersion)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Download ${v.data.name} docs`}
+                      aria-label={`Download ${version.name} docs`}
                       class="group inline-flex size-12 shrink-0 items-center justify-center rounded-sm text-black transition-all duration-base ease-out-quart hover:scale-[1.02] hover:bg-purple-0 active:scale-[0.98]"
                     >
                       <span
-                        class="inline-flex size-6 items-center justify-center"
+                        class="inline-flex size-4.5 items-center justify-center"
                         aria-hidden="true"
                         set:html={downloadIconSvg}
                       />
                     </a>
                   )}
                 </div>
-                {otpList(v.data.otpVersions) && (
-                  <p class="font-sans text-body font-normal text-black/80">
-                    {otpList(v.data.otpVersions)}
-                  </p>
-                )}
+                <p class="font-sans text-body font-normal text-black/80">
+                  {version.supportingText}
+                </p>
               </div>
 
               <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
                 {MODULES.map((m) => (
                   <li>
                     <a
-                      href={moduleUrl(v.data.version, isDev, m.slug)}
+                      href={moduleUrl(version.docsVersion, m.slug)}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="font-sans text-body font-normal text-purple-60 underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-70"

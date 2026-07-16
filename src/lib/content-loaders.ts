@@ -26,14 +26,14 @@ export type ElixirVersion = CollectionEntry<"elixirVersions">;
 
 export async function loadElixirVersions(): Promise<ElixirVersion[]> {
   const versions = await loadCollection("elixirVersions");
-  return versions.sort((a, b) => b.data.sortKey - a.data.sortKey);
+  return versions.sort((a, b) => b.data.sortKey - a.data.sortKey).slice(0, 6);
 }
 
 export function getStableElixirVersion(
   versions: ElixirVersion[],
 ): ElixirVersion {
-  const stable = versions.find((version) => version.data.stable);
-  if (!stable) throw new Error("No stable Elixir version defined.");
+  const stable = versions[0];
+  if (!stable) throw new Error("No released Elixir version defined.");
   return stable;
 }
 
