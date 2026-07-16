@@ -136,13 +136,13 @@ const {
     }
 
     private getTotalPages(): number {
-      const n = Number(this.getAttribute("data-total") ?? 1);
-      return Number.isFinite(n) && n > 0 ? n : 1;
+      const n = Number(this.dataset.total ?? 1);
+      return Number.isInteger(n) && n > 0 ? n : 1;
     }
 
     private getActivePage(): number {
-      const n = Number(this.getAttribute("data-page") ?? 1);
-      return Number.isFinite(n) && n > 0 ? n : 1;
+      const n = Number(this.dataset.page ?? 1);
+      return Number.isInteger(n) && n > 0 ? n : 1;
     }
 
     private dispatchPageChange(page: number) {

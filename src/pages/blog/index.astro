@@ -142,7 +142,7 @@ const seo = {
 
     const posts = root.querySelectorAll("[data-post]");
     const emptyState = root.querySelector("[data-empty-state]");
-    const config = JSON.parse(root.getAttribute("data-config") || "{}");
+    const config = JSON.parse(root.dataset.config || "{}");
     const pageSize = config.pageSize || 5;
     const counts = config.counts || {};
 
@@ -153,7 +153,7 @@ const seo = {
       const end = start + pageSize;
       let matchIdx = 0;
       posts.forEach((el) => {
-        const cat = el.getAttribute("data-category");
+        const cat = el.dataset.category;
         const match = activeTab === "All" || cat === activeTab;
         if (!match) {
           el.classList.add("hidden");
@@ -162,7 +162,7 @@ const seo = {
         const visible = matchIdx >= start && matchIdx < end;
         el.classList.toggle("hidden", !visible);
         if (!firstRender && visible && !el.hasAttribute("data-revealed")) {
-          el.setAttribute("data-revealed", "true");
+          el.dataset.revealed = "true";
         }
         matchIdx++;
       });

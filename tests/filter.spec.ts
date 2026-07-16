@@ -25,7 +25,7 @@ function visiblePosts(page: Page) {
 /** Assert every visible post belongs to `category`. */
 async function expectAllVisibleInCategory(page: Page, category: string) {
   const cats = await visiblePosts(page).evaluateAll((els) =>
-    els.map((e) => e.getAttribute("data-category")),
+    els.map((e) => e.dataset.category),
   );
   expect(cats.length).toBeGreaterThan(0);
   for (const c of cats) expect(c).toBe(category);
@@ -137,7 +137,7 @@ test.describe("Learning filtering", () => {
     ).toBeVisible();
     const cats = await page
       .locator("[data-resource]:not(.hidden)")
-      .evaluateAll((els) => els.map((e) => e.getAttribute("data-category")));
+      .evaluateAll((els) => els.map((e) => e.dataset.category));
     expect(cats.length).toBeGreaterThan(0);
     for (const c of cats) expect(c).toBe("courses");
   });

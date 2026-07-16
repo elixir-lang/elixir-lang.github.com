@@ -96,7 +96,7 @@ const config = JSON.stringify({
     };
 
     connectedCallback() {
-      const raw = this.getAttribute("data-config");
+      const raw = this.dataset.config;
       if (!raw) return;
       this.config = JSON.parse(raw) as Config;
       this.activeTab = this.config.defaultTab;
@@ -176,14 +176,14 @@ const config = JSON.stringify({
 
     private refreshChildren() {
       if (this.tabFilter) {
-        this.tabFilter.setAttribute("data-active", this.activeTab);
+        this.tabFilter.dataset.active = this.activeTab;
       }
       if (this.pagination) {
         this.pagination.setAttribute(
           "data-total",
           String(this.totalPages(this.activeTab)),
         );
-        this.pagination.setAttribute("data-page", String(this.activePage));
+        this.pagination.dataset.page = String(this.activePage);
       }
     }
 

@@ -274,9 +274,9 @@ const seo = {
 
       function setActive(id) {
         tabs.forEach((t) => {
-          const match = t.getAttribute("data-tab") === id;
+          const match = t.dataset.tab === id;
           if (match) {
-            t.setAttribute("data-active", "");
+            t.dataset.active = "";
             t.setAttribute("aria-pressed", "true");
           } else {
             t.removeAttribute("data-active");
@@ -298,7 +298,7 @@ const seo = {
       let suppressSpyUntil = 0;
       tabs.forEach((t) => {
         t.addEventListener("click", () => {
-          const id = t.getAttribute("data-tab");
+          const id = t.dataset.tab;
           if (!id) return;
           suppressSpyUntil = performance.now() + 1000;
           setActive(id);

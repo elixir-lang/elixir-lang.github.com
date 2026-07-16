@@ -94,9 +94,9 @@ const {
       this.querySelectorAll<HTMLButtonElement>("button[data-id]").forEach(
         (btn) => {
           btn.addEventListener("click", () => {
-            const id = btn.getAttribute("data-id");
-            if (!id || id === this.getAttribute("data-active")) return;
-            this.setAttribute("data-active", id);
+            const id = btn.dataset.id;
+            if (!id || id === this.dataset.active) return;
+            this.dataset.active = id;
             this.dispatchEvent(
               new CustomEvent("change", {
                 detail: { id },
@@ -121,12 +121,11 @@ const {
     }
 
     private syncActiveStyling() {
-      const active = this.getAttribute("data-active");
+      const active = this.dataset.active;
       this.querySelectorAll<HTMLButtonElement>("button[data-id]").forEach(
         (btn) => {
-          const match = btn.getAttribute("data-id") === active;
-          if (match) btn.setAttribute("data-active", "");
-          else btn.removeAttribute("data-active");
+          const match = btn.dataset.id === active;
+          btn.toggleAttribute("data-active", match);
           btn.setAttribute("aria-selected", match ? "true" : "false");
         },
       );

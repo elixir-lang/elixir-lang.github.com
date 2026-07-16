@@ -255,7 +255,7 @@ const seo = {
     const resources = root.querySelectorAll("[data-resource]");
     const bookHeadings = root.querySelectorAll("[data-book-heading]");
     const emptyState = root.querySelector("[data-empty-state]");
-    const config = JSON.parse(root.getAttribute("data-config") || "{}");
+    const config = JSON.parse(root.dataset.config || "{}");
     const counts = config.counts || {};
 
     let firstRender = true;
@@ -266,7 +266,7 @@ const seo = {
         heading.classList.toggle("hidden", activeTab !== "books");
       });
       resources.forEach((el) => {
-        const category = el.getAttribute("data-category");
+        const category = el.dataset.category;
         const match =
           category === activeTab ||
           (activeTab === "books" && category === "in-depth-books");
@@ -277,7 +277,7 @@ const seo = {
         }
         el.classList.remove("hidden");
         if (!firstRender && !el.hasAttribute("data-revealed")) {
-          el.setAttribute("data-revealed", "true");
+        el.dataset.revealed = "true";
         }
         el.classList.toggle("xl:flex-row-reverse", matchIdx % 2 === 1);
         matchIdx++;
