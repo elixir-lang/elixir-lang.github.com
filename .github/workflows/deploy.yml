@@ -35,13 +35,6 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          # Auto-enable Pages on first run; needs repo admin or it'll
-          # fail and you'll have to flip the Settings -> Pages toggle.
-          enablement: true
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
