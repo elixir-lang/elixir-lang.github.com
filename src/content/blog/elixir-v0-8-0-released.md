@@ -13,11 +13,15 @@ On the last 9th January, we celebrated [two years since Elixir's first commit](h
 
 One of the goals for the v0.8 release was better integration with OTP applications. By passing the `--sup` option to Mix, you can start a new OTP Application containing application callbacks and a supervisor:
 
-    mix new my_app --sup
+```bash
+mix new my_app --sup
+```
 
 And applications can be started directly from the command line as well:
 
-    elixir --app my_app
+```bash
+elixir --app my_app
+```
 
 We have written a whole [guide chapter about creating OTP applications, supervisors and servers](https://hexdocs.pm/elixir/supervisor-and-application.html). Give it a try!
 

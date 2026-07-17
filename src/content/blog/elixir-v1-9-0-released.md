@@ -43,9 +43,11 @@ Releases allow developers to precompile and package all of their code and the ru
 
 You can start a new project and assemble a release for it in three easy steps:
 
-    $ mix new my_app
-    $ cd my_app
-    $ MIX_ENV=prod mix release
+```bash
+$ mix new my_app
+$ cd my_app
+$ MIX_ENV=prod mix release
+```
 
 A release will be assembled in `_build/prod/rel/my_app`. Inside the release, there will be a `bin/my_app` file which is the entry point to your system. It supports multiple commands, such as:
 

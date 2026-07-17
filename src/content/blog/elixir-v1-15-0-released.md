@@ -89,15 +89,19 @@ sure more feedback is reported to developers before compilation is aborted.
 
 In Elixir v1.14, an undefined function would be reported as:
 
-    ** (CompileError) undefined function foo/0 (there is no such import)
-        my_file.exs:1
+```
+** (CompileError) undefined function foo/0 (there is no such import)
+    my_file.exs:1
+```
 
 In Elixir v1.15, the new reports will look like:
 
-    error: undefined function foo/0 (there is no such import)
-      my_file.exs:1
+```
+error: undefined function foo/0 (there is no such import)
+  my_file.exs:1
 
-    ** (CompileError) my_file.exs: cannot compile file (errors have been logged)
+** (CompileError) my_file.exs: cannot compile file (errors have been logged)
+```
 
 A new function, called `Code.with_diagnostics/2`, has been added so this
 information can be leveraged by editors, allowing them to point to several

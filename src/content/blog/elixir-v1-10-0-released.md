@@ -97,7 +97,9 @@ end
 
 This approach has one big limitation: if you change the value of the application environment after the code is compiled, the value used at runtime is not going to change! For example, if you are using `mix release` and your `config/releases.exs` has:
 
-    config :my_app, :db_host, "db.production"
+```elixir
+config :my_app, :db_host, "db.production"
+```
 
 Because `config/releases.exs` is read after the code is compiled, the new value will have no effect as the code was compiled to connect to "db.local".
 
@@ -143,8 +145,10 @@ In Elixir v1.10, we have addressed these problems by [introducing compiler traci
 
 Elixir itself is using the new compiler tracing to provide new functionality. One advantage of this approach is that developers can now disable undefined function warnings directly on the callsite. For example, imagine you have an optional dependency which may not be available in some cases. You can tell the compiler to skip warning on calls to optional modules with:
 
-    @compile {:no_warn_undefined, OptionalDependency}
-    defdelegate my_function_call(arg), to: OptionalDependency
+```elixir
+@compile {:no_warn_undefined, OptionalDependency}
+defdelegate my_function_call(arg), to: OptionalDependency
+```
 
 Previously, this information had to be added to the overall project configuration, which was far away from where the optional call effectively happened.
 

@@ -30,7 +30,9 @@ end
 
 Now all user structs will be printed with all remaining fields collapsed:
 
-    #User<id: 1, name: "Jane", age: 33, ...>
+```elixir
+#User<id: 1, name: "Jane", age: 33, ...>
+```
 
 You can also pass `@derive {Inspect, except: [...]}` in case you want to keep all fields by default and exclude only some.
 
@@ -58,13 +60,17 @@ For example, we recommend developers to always start tasks under a supervisor. T
 
 In Elixir v1.8, we now track the relationship between your code and the task via the `$callers` key in the process dictionary, which aligns well with the existing `$ancestors` key. Therefore, assuming the `Task.Supervisor` call above, we have:
 
-    [your code] -- calls --> [supervisor] ---- spawns --> [task]
+```
+[your code] -- calls --> [supervisor] ---- spawns --> [task]
+```
 
 which means we store the following relationships:
 
-    [your code]              [supervisor] <-- ancestor -- [task]
-         ^                                                  |
-         |--------------------- caller ---------------------|
+```
+[your code]              [supervisor] <-- ancestor -- [task]
+     ^                                                  |
+     |--------------------- caller ---------------------|
+```
 
 When a task is spawned directly from your code, without a supervisor, then the process running your code will be listed under both `$ancestors` and `$callers`.
 

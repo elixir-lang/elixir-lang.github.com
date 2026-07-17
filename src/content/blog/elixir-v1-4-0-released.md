@@ -17,9 +17,9 @@ The [`Registry`](https://hexdocs.pm/elixir/Registry.html) is a new module in Eli
 
 Broadly speaking, the Registry is a local, decentralized and scalable key-value process storage. Let's break this in parts:
 
-  * Local because keys and values are only accessible to the current node (opposite to distributed)
-  * Decentralized because there is no single entity responsible for managing the registry
-  * Scalable because performance scales linearly with the addition of more cores upon partitioning
+- Local because keys and values are only accessible to the current node (opposite to distributed)
+- Decentralized because there is no single entity responsible for managing the registry
+- Scalable because performance scales linearly with the addition of more cores upon partitioning
 
 A registry may have unique or duplicate keys. Every key-value pair is associated to the process registering the key. Keys are automatically removed once the owner process terminates. Starting, registering and looking up keys is quite straight-forward:
 
@@ -106,7 +106,9 @@ With the above, Mix will automatically build your application list based on your
 
 Finally, if there is a dependency you don't want to include in the application runtime list, you can do so by specifying the `runtime: false` option:
 
-    {:distillery, "> 0.0.0", runtime: false}
+```elixir
+{:distillery, "> 0.0.0", runtime: false}
+```
 
 We hope this feature provides a more streamlined workflow for developers who are building releases for their Elixir projects.
 
@@ -118,11 +120,15 @@ This makes it possible to distribute CLI applications written in Elixir by publi
 
 Simply running:
 
-    mix escript.install hex ex_doc
+```bash
+mix escript.install hex ex_doc
+```
 
 will fetch `ex_doc` and its dependencies, build them, and then install `ex_doc` to `~/.mix/escripts` (by default). After adding `~/.mix/escripts` to your `PATH`, running `ex_doc` is as simple as:
 
-    ex_doc
+```bash
+ex_doc
+```
 
 You can now also install archives from Hex in this way. Since they are fetched and built on the user's machine, they do not have the same limitations as pre-built archives. However, keep in mind archives are loaded on every Mix command and may conflict with modules or dependencies in your projects. For this reason, escripts is the preferred format for sharing executables.
 

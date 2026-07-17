@@ -43,9 +43,11 @@ $ mix new my_project --umbrella
 
 The generated project will have the following structure:
 
-    apps/
-    mix.exs
-    README.md
+```
+apps/
+mix.exs
+README.md
+```
 
 Now, inside the `apps` directory, you can create as many applications as you want and running `mix compile` inside the umbrella project will automatically compile all applications. The [original discussion for this feature](https://github.com/elixir-lang/elixir/issues/667) contains more details about how it all works.
 
