@@ -82,19 +82,23 @@ Those improvements came from direct feedback from the community. A special shout
 
 Thanks to its sigils, Elixir provides the ability of embedding snippets in other languages inside its source code. One could use it to embed XML:
 
-    ~X"""
-    <?xml version="1.0" encoding="UTF-8"?>
-    <text><![CDATA[Hello World]]></text>
-    """
+```elixir
+~X"""
+<?xml version="1.0" encoding="UTF-8"?>
+<text><![CDATA[Hello World]]></text>
+"""
+```
 
 Or even [Zig](https://ziglang.org/), [via the Zigler project](https://github.com/ityonemo/zigler):
 
-    ~Z"""
-    /// nif: example_fun/2
-    fn example_fun(value1: f64, value2: f64) bool {
-      return value1 > value2;
-    }
-    """
+```elixir
+~Z"""
+/// nif: example_fun/2
+fn example_fun(value1: f64, value2: f64) bool {
+  return value1 > value2;
+}
+"""
+```
 
 However, while you can format Elixir source code with [`mix format`](https://hexdocs.pm/mix/Mix.Tasks.Format.html), you could not format the code inside snippets.
 
@@ -134,11 +138,13 @@ We are looking forward to see how this new functionality will be used by communi
 
 `SyntaxError` and `TokenMissingError` were improved to show a code snippet whenever possible:
 
-    $ elixir -e "hello + * world"
-    ** (SyntaxError) nofile:1:9: syntax error before: '*'
-        |
-      1 | hello + * world
-        |         ^
+```bash
+$ elixir -e "hello + * world"
+** (SyntaxError) nofile:1:9: syntax error before: '*'
+    |
+  1 | hello + * world
+    |         ^
+```
 
 The `Code` module has also been augmented with two functions: [`Code.string_to_quoted_with_comments/2`](https://hexdocs.pm/elixir/Code.html#string_to_quoted_with_comments/2) and [`Code.quoted_to_algebra/2`](https://hexdocs.pm/elixir/Code.html#quoted_to_algebra/2). Those functions allow someone to retrieve the Elixir AST with their original source code comments, and then convert this AST to formatted code. In other words, those functions provide a wrapper around the Elixir Code Formatter, supporting developers who wish to create tools that directly manipulate and custom format Elixir source code.
 

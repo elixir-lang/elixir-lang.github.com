@@ -255,7 +255,7 @@ In particular, with structs.
 When working with a struct in Elixir, the fields will most often
 have the same type, except for one. For example:
 
-```
+```elixir
 def example(%MyStruct{x: x}) when is_binary(x)
 def example(%MyStruct{x: x}) when is_integer(x)
 def example(%MyStruct{x: x})

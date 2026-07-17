@@ -15,23 +15,25 @@ The idea of the parallel compiler is very simple: for each file we want to compi
 
 In Elixir, we could write this code as follows:
 
-    def spawn_compilers([current | files], output) do
-      parent = Process.self()
-      child  = spawn_link(fn ->
-        :elixir_compiler.file_to_path(current, output)
-        send parent, { :compiled, Process.self() }
-      end)
-      receive do
-        { :compiled, ^child } ->
-          spawn_compilers(files, output)
-        { :EXIT, ^child, { reason, where } } ->
-          :erlang.raise(:error, reason, where)
-      end
-    end
+```elixir
+def spawn_compilers([current | files], output) do
+  parent = Process.self()
+  child  = spawn_link(fn ->
+    :elixir_compiler.file_to_path(current, output)
+    send parent, { :compiled, Process.self() }
+  end)
+  receive do
+    { :compiled, ^child } ->
+      spawn_compilers(files, output)
+    { :EXIT, ^child, { reason, where } } ->
+      :erlang.raise(:error, reason, where)
+  end
+end
 
-    def spawn_compilers([], _output) do
-      :done
-    end
+def spawn_compilers([], _output) do
+  :done
+end
+```
 
 In the first line, we define a function named `spawn_compilers` that receives two arguments, the first is a list of files to compile and the second is a string telling us where to write the compiled file. The first argument is represented as a list with head and tail (`[current | files]`) where the top of the list is assigned to `current` and the remaining items to `files`. If the list is empty, the first clause of `spawn_compilers` is not going to match, the clause `spawn_compilers([], _output)` defined at the end will instead.
 
@@ -53,19 +55,21 @@ With this code, we were able to compile each file inside a different process. Ho
 
 Imagine that we have two files, `a.ex` and `b.ex`, with the following contents:
 
-    # a.ex
-    defmodule A do
-      B.define
-    end
+```elixir
+# a.ex
+defmodule A do
+  B.define
+end
 
-    # b.ex
-    defmodule B do
-      defmacro define do
-        quote do
-          def one, do: 1
-        end
-      end
+# b.ex
+defmodule B do
+  defmacro define do
+    quote do
+      def one, do: 1
     end
+  end
+end
+```
 
 In order to compile `A`, we need to ensure that `B` is already compiled and loaded so we can invoke the `define` macro. This means the file `a.ex` depends on the file `b.ex`. When compiling files in parallel, we want to be able to detect such cases and automatically handle them.
 
@@ -79,30 +83,32 @@ By default, Elixir (and Erlang) code is autoloaded. This means that, if we invok
 
 As discussed in the previous section, we want to extend the error handler to actually stop the currently running process whenever a module is not found and resume the process only after we ensure the module is compiled. To do that, we can simply define our own error handler and ask Erlang to use it. Our custom error handler is defined as follows:
 
-    defmodule Elixir.ErrorHandler do
-      def undefined_function(module, fun, args) do
-        ensure_loaded(module)
-        :error_handler.undefined_function(module, fun, args)
-      end
+```elixir
+defmodule Elixir.ErrorHandler do
+  def undefined_function(module, fun, args) do
+    ensure_loaded(module)
+    :error_handler.undefined_function(module, fun, args)
+  end
 
-      def undefined_lambda(module, fun, args) do
-        ensure_loaded(module)
-        :error_handler.undefined_lambda(module, fun, args)
-      end
+  def undefined_lambda(module, fun, args) do
+    ensure_loaded(module)
+    :error_handler.undefined_lambda(module, fun, args)
+  end
 
-      defp ensure_loaded(module) do
-        case Code.ensure_loaded(module) do
-          { :module, _ } ->
-            []
-          { :error, _ } ->
-            parent = Process.get(:elixir_parent_compiler)
-            send parent, { :waiting, Process.self, module }
-            receive do
-              { :release, ^parent } -> ensure_loaded(module)
-            end
+  defp ensure_loaded(module) do
+    case Code.ensure_loaded(module) do
+      { :module, _ } ->
+        []
+      { :error, _ } ->
+        parent = Process.get(:elixir_parent_compiler)
+        send parent, { :waiting, Process.self, module }
+        receive do
+          { :release, ^parent } -> ensure_loaded(module)
         end
-      end
     end
+  end
+end
+```
 
 Our error handler defines two public functions. Both those functions are callbacks required to be implemented by the error handler. They simply call `ensure_loaded(module)` and then delegate the remaining logic to Erlang's original `error_handler`.
 
@@ -110,56 +116,62 @@ The private `ensure_loaded` function calls `Code.ensure_loaded(module)` which ch
 
 With our error handler code in place, the first thing we need to do is to change the function given to `spawn_link` to use the new error handler:
 
-    spawn_link(fn ->
-      Process.put(:elixir_parent_compiler, parent)
-      Process.flag(:error_handler, Elixir.ErrorHandler)
+```elixir
+spawn_link(fn ->
+  Process.put(:elixir_parent_compiler, parent)
+  Process.flag(:error_handler, Elixir.ErrorHandler)
 
-      :elixir_compiler.file_to_path(current, output)
-      send parent, { :compiled, Process.self() }
-    end)
+  :elixir_compiler.file_to_path(current, output)
+  send parent, { :compiled, Process.self() }
+end)
+```
 
 Notice that we have two small additions. First we store the `:elixir_parent_compiler` PID in the process dictionary so we are able to read it from the error handler and then we proceed to configure a flag in our process so our new error handler is invoked whenever a module or function cannot be found.
 
 Second, our main process can now receive a new `{ :waiting, child, module }` message, so we need to extend it to account for those messages. Not only that, we need to control which PIDs we have spawned so we can notify them whenever a new module is compiled, forcing us to add a new argument to the `spawn_compilers` function. `spawn_compilers` would then be rewritten as follows:
 
-    def spawn_compilers([current | files], output, stack) do
-      parent = Process.self()
-      child  = spawn_link(fn ->
-        :elixir_compiler.file_to_path(current, output)
-        send parent, { :compiled, Process.self() }
-      end)
-      wait_for_messages(files, output, [child | stack])
-    end
+```elixir
+def spawn_compilers([current | files], output, stack) do
+  parent = Process.self()
+  child  = spawn_link(fn ->
+    :elixir_compiler.file_to_path(current, output)
+    send parent, { :compiled, Process.self() }
+  end)
+  wait_for_messages(files, output, [child | stack])
+end
 
-    # No more files and stack is empty, we are done
-    def spawn_compilers([], _output, []) do
-      :done
-    end
+# No more files and stack is empty, we are done
+def spawn_compilers([], _output, []) do
+  :done
+end
 
-    # No more files and stack is not empty, wait for all messages
-    def spawn_compilers([], output, stack) do
-      wait_for_messages([], output, stack)
-    end
+# No more files and stack is not empty, wait for all messages
+def spawn_compilers([], output, stack) do
+  wait_for_messages([], output, stack)
+end
+```
 
 Notice we added an extra clause to `spawn_compilers` so we can properly handle the case where we don't have more files to spawn but we are still waiting for processes in the stack. We have also moved our `receive` logic to a new private function called `wait_for_messages`, implemented as follows:
 
-    defp wait_for_messages(files, output, stack) do
-      receive do
-        { :compiled, child } ->
-          new_stack = List.delete(stack, child)
-          Enum.each new_stack, fn(pid) ->
-            send pid, { :release, Process.self }
-          end
-          spawn_compilers(files, output, new_stack)
-        { :waiting, _child, _module } ->
-          spawn_compilers(files, output, stack)
-        { :EXIT, _child, { reason, where } } ->
-          :erlang.raise(:error, reason, where)
-      after
-        10_000 ->
-          raise "dependency on nonexistent module or possible deadlock"
+```elixir
+defp wait_for_messages(files, output, stack) do
+  receive do
+    { :compiled, child } ->
+      new_stack = List.delete(stack, child)
+      Enum.each new_stack, fn(pid) ->
+        send pid, { :release, Process.self }
       end
-    end
+      spawn_compilers(files, output, new_stack)
+    { :waiting, _child, _module } ->
+      spawn_compilers(files, output, stack)
+    { :EXIT, _child, { reason, where } } ->
+      :erlang.raise(:error, reason, where)
+  after
+    10_000 ->
+      raise "dependency on nonexistent module or possible deadlock"
+  end
+end
+```
 
 The implementation for `wait_for_messages` is now broken into 4 clauses:
 

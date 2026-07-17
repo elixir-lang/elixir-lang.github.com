@@ -78,7 +78,7 @@ The autocomplete mechanism also got smarter, being able to provide context autoc
 
 Finally, the breakpoint functionality added [in Elixir v1.5](https://elixir-lang.org/blog/2017/07/25/elixir-v1-5-0-released/) has been improved to support pattern matching and guards. For example, to pattern match on a function call when the first argument is the atom `:foo`, you may do:
 
-```
+```elixir
 iex> break! SomeFunction.call(:foo, _, _)
 ```
 
@@ -90,13 +90,13 @@ For more information, see [`IEx.break!/4`](https://hexdocs.pm/iex/IEx.html#break
 
 One of such additions is the `--include-siblings` option that can be given to all `xref` commands inside umbrella projects. For example, to find all of the callers of a given module or function of an application in an umbrella:
 
-```
+```bash
 $ mix xref callers SomeModule --include-siblings
 ```
 
 The `graph` command in `mix xref` now can also output general statistics about the graph. In [the hexpm project](https://github.com/hexpm/hexpm), you would get:
 
-```
+```bash
 $ mix xref graph --format stats
 Tracked files: 129 (nodes)
 Compile dependencies: 256 (edges)
@@ -130,7 +130,7 @@ Top 10 files with most incoming dependencies:
 
 `mix xref graph` also got the `--only-nodes` and `--label` options. The former asks Mix to only output file names (nodes) without the edges. The latter allows you to focus on certain relationships:
 
-```
+```bash
 # To get all files that depend on lib/foo.ex
 mix xref graph --sink lib/foo.ex --only-nodes
 

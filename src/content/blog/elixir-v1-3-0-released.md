@@ -167,7 +167,7 @@ Elixir v1.3 includes improvements to the option parser, including `OptionParser.
 
 For example, invoking `mix test --unknown` in earlier Elixir versions would silently discard the `--unknown` option. Now `mix test` correctly reports such errors:
 
-```
+```bash
 $ mix test --unknown
 ** (Mix) Could not invoke task "test": 1 error found!
 --unknown : Unknown option
@@ -251,7 +251,7 @@ end
 
 Every test inside a describe block will be tagged with the describe block name. This allows developers to run tests that belong to particular blocks, be them in the same file or across many files:
 
-```
+```bash
 $ mix test --only describe:"String.capitalize/2"
 ```
 
