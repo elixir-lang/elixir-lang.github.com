@@ -6,50 +6,21 @@ function revealImmediately(els: HTMLElement[]) {
 
 function initReveal() {
   const all = document.querySelectorAll<HTMLElement>(
-    "[data-reveal]:not([data-revealed])",
+    "[data-reveal-eager]:not([data-revealed])",
   );
   if (all.length === 0) return;
 
+  const reveals = Array.from(all);
   if (!isFirstLoad) {
-    revealImmediately(Array.from(all));
+    revealImmediately(reveals);
     return;
   }
 
-  const eager: HTMLElement[] = [];
-  const scrolled: HTMLElement[] = [];
-  for (const el of all) {
-    if (el.hasAttribute("data-reveal-eager")) eager.push(el);
-    else scrolled.push(el);
-  }
-
-  if (eager.length > 0) {
+  requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        revealImmediately(eager);
-      });
+      revealImmediately(reveals);
     });
-  }
-
-  if (scrolled.length === 0) return;
-
-  if (typeof IntersectionObserver === "undefined") {
-    revealImmediately(scrolled);
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const el = entry.target as HTMLElement;
-        el.dataset.revealed = "true";
-        observer.unobserve(el);
-      }
-    },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
-  );
-
-  for (const el of scrolled) observer.observe(el);
+  });
 }
 
 if (document.readyState === "loading") {

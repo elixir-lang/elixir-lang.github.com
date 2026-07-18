@@ -180,7 +180,7 @@
 }
 
 @layer utilities {
-  [data-reveal] {
+  [data-reveal-eager] {
     opacity: 0;
     transform: translateY(12px);
     transition:
@@ -190,46 +190,46 @@
     will-change: opacity, transform;
   }
 
-  html[data-spa-nav] [data-reveal] {
+  html[data-spa-nav] [data-reveal-eager] {
     transition-duration: 250ms;
     transition-delay: 0ms;
   }
-  html[data-spa-nav] [data-reveal] {
+  html[data-spa-nav] [data-reveal-eager] {
     transform: translateY(6px);
   }
-  html[data-spa-nav] [data-reveal][data-reveal-variant="down"] {
+  html[data-spa-nav] [data-reveal-eager][data-reveal-variant="down"] {
     transform: translateY(-6px);
   }
-  html[data-spa-nav] [data-reveal][data-reveal-variant="left"] {
+  html[data-spa-nav] [data-reveal-eager][data-reveal-variant="left"] {
     transform: translateX(-8px);
   }
-  html[data-spa-nav] [data-reveal][data-reveal-variant="right"] {
+  html[data-spa-nav] [data-reveal-eager][data-reveal-variant="right"] {
     transform: translateX(8px);
   }
-  html[data-spa-nav] [data-reveal][data-reveal-variant="fade"] {
+  html[data-spa-nav] [data-reveal-eager][data-reveal-variant="fade"] {
     transform: none;
   }
-  html[data-spa-nav] [data-reveal][data-reveal-variant="scale"] {
+  html[data-spa-nav] [data-reveal-eager][data-reveal-variant="scale"] {
     transform: scale(0.98);
   }
 
-  [data-reveal][data-reveal-variant="down"] {
+  [data-reveal-eager][data-reveal-variant="down"] {
     transform: translateY(-12px);
   }
-  [data-reveal][data-reveal-variant="left"] {
+  [data-reveal-eager][data-reveal-variant="left"] {
     transform: translateX(-16px);
   }
-  [data-reveal][data-reveal-variant="right"] {
+  [data-reveal-eager][data-reveal-variant="right"] {
     transform: translateX(16px);
   }
-  [data-reveal][data-reveal-variant="fade"] {
+  [data-reveal-eager][data-reveal-variant="fade"] {
     transform: none;
   }
-  [data-reveal][data-reveal-variant="scale"] {
+  [data-reveal-eager][data-reveal-variant="scale"] {
     transform: scale(0.96);
   }
 
-  [data-reveal][data-revealed="true"] {
+  [data-reveal-eager][data-revealed="true"] {
     opacity: 1;
     transform: none;
   }
@@ -458,8 +458,8 @@
     scroll-behavior: auto !important;
   }
 
-  [data-reveal],
-  [data-reveal][data-reveal-variant] {
+  [data-reveal-eager],
+  [data-reveal-eager][data-reveal-variant] {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

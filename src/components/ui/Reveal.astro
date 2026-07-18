@@ -1,7 +1,7 @@
 ---
 import { cn } from "@/utilities/classname";
 
-// Markup contract; paint/IO in scripts/reveal.ts, offsets in styles/style.css.
+// Eager entrance markup; paint/IO in reveal.ts, offsets in style.css.
 // `delay` is a stagger index (0, 1, 2 ...) -> N * 15ms in CSS.
 
 type Props = {
@@ -34,10 +34,10 @@ const {
 ---
 
 <Tag
-  data-reveal
-  data-reveal-variant={variant !== "up" ? variant : undefined}
+  data-reveal={eager ? "" : undefined}
   data-reveal-eager={eager ? "" : undefined}
-  style={`--reveal-delay: ${delay}`}
+  data-reveal-variant={variant !== "up" ? variant : undefined}
+  style={eager ? `--reveal-delay: ${delay}` : undefined}
   class={cn(className)}
 >
   <slot />
