@@ -455,7 +455,7 @@ const starConfig = JSON.stringify(
               data-active={i === defaultActiveRow ? "" : undefined}
               class="group/card flex w-full flex-col justify-between gap-8 overflow-clip border border-gray-60 p-6 opacity-70 transition-opacity duration-base ease-out-quart data-[active]:opacity-100 md:p-12 xl:h-[400px] xl:gap-0"
             >
-              <div class="flex flex-col items-start gap-8">
+              <div class="flex flex-col items-start gap-6 md:gap-8">
                 <div
                   class="flex h-12 shrink-0 items-center grayscale transition-[filter] duration-base ease-out-quart group-data-[active]/card:grayscale-0"
                   data-card-logo
@@ -499,8 +499,11 @@ const starConfig = JSON.stringify(
                     )}
                   </a>
                 </div>
-                <div class="max-w-[500px]">
-                  <p class="font-sans text-lead font-normal text-white">
+                <div class="flex max-w-[500px] flex-col gap-4">
+                  <h3 class="font-sans text-lead font-medium text-white lg:hidden">
+                    {categoriesData[i].label}
+                  </h3>
+                  <p class="font-sans text-body font-normal text-white md:text-lead">
                     {row.description}
                   </p>
                 </div>
