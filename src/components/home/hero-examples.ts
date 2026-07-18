@@ -9,13 +9,15 @@ export type Example = {
 export const EXAMPLES: Example[] = [
   {
     title: "Composable data transformations",
-    code: `"hello world"
+    code: `"Fun to learn, delightful to ship"
+|> String.downcase()
+|> String.replace(",", "")
 |> String.split()
-|> Enum.map(fn word ->
-  String.capitalize(word)
-end)
-|> Enum.join(" ")`,
-    precanned: { value: `"Hello World"` },
+|> Enum.frequencies()`,
+    precanned: {
+      value: `%{"delightful" => 1, "fun" => 1,
+  "learn" => 1, "ship" => 1, "to" => 2}`,
+    },
   },
   {
     title: "Control-flow with pattern matching",
