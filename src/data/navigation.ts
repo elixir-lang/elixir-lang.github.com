@@ -30,8 +30,8 @@ export const footerColumns: { title: string; items: NavItem[] }[] = [
       },
       { label: "Development & team", href: "/development/" },
       {
-        label: "Source code & issues tracker",
-        href: "https://github.com/elixir-lang/elixir",
+        label: "Issues tracker",
+        href: "https://github.com/elixir-lang/elixir/issues",
         external: true,
       },
       {
@@ -75,8 +75,8 @@ export const footerColumns: { title: string; items: NavItem[] }[] = [
 
 export const footerSocials: NavItem[] = [
   {
-    label: "Twitter / X",
-    href: "https://twitter.com/elixirlang",
+    label: "Source",
+    href: "https://github.com/elixir-lang/elixir",
     external: true,
   },
   { label: "Slack", href: "https://elixir-slack.community", external: true },

@@ -1,7 +1,7 @@
 ---
 import discordIcon from "@/assets/icons/community/discord-footer.svg?raw";
 import slackIcon from "@/assets/icons/community/slack-footer.svg?raw";
-import twitterIcon from "@/assets/icons/community/twitter-x.svg?raw";
+import Github from "@/components/ui/icons/Github.astro";
 import Logo from "@/components/ui/Logo.astro";
 import { footerColumns, footerSocials } from "@/data/navigation";
 
@@ -11,7 +11,6 @@ const importantLinks = footerColumns[0];
 const community = footerColumns[1];
 
 const socialIcons: Record<string, string> = {
-  "Twitter / X": twitterIcon,
   Slack: slackIcon,
   Discord: discordIcon,
 };
@@ -91,7 +90,7 @@ const socialIcons: Record<string, string> = {
 
       <ul
         class="mt-auto flex items-center justify-start gap-5 pt-3 lg:gap-4"
-        aria-label="Social media"
+        aria-label="Community links"
       >
         {footerSocials.map((s) => (
           <li>
@@ -102,11 +101,15 @@ const socialIcons: Record<string, string> = {
               aria-label={s.label}
               class="inline-flex size-6 items-center justify-center text-white transition-opacity duration-fast ease-out-quart hover:opacity-70"
             >
-              <span
-                class="block size-6"
-                aria-hidden="true"
-                set:html={socialIcons[s.label]}
-              />
+              {s.label === "Source" ? (
+                <Github size={24} class="size-6" />
+              ) : (
+                <span
+                  class="block size-6"
+                  aria-hidden="true"
+                  set:html={socialIcons[s.label]}
+                />
+              )}
             </a>
           </li>
         ))}
@@ -132,6 +135,10 @@ const socialIcons: Record<string, string> = {
           href="https://swmansion.com"
           class="underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-40"
           >Software Mansion</a
+        >. See <a
+          href="https://github.com/elixir-lang/elixir-lang.github.com"
+          class="underline decoration-solid underline-offset-2 transition-colors duration-fast ease-out-quart hover:text-purple-40"
+          >source</a
         >.
       </p>
     </div>

@@ -7,10 +7,17 @@ import slackSqTl from "@/assets/icons/community/slack-sq-tl.svg?raw";
 import slackSqTr from "@/assets/icons/community/slack-sq-tr.svg?raw";
 import Button from "@/components/ui/Button.astro";
 import ArrowRight from "@/components/ui/icons/ArrowRight.astro";
+import Forum from "@/components/ui/icons/Forum.astro";
+import Github from "@/components/ui/icons/Github.astro";
 import Reveal from "@/components/ui/Reveal.astro";
 
 const links = [
-  { label: "Team", href: "/development/", icon: "none" as const },
+  {
+    label: "Source",
+    href: "https://github.com/elixir-lang/elixir",
+    icon: "github" as const,
+    external: true,
+  },
   {
     label: "Slack",
     href: "https://elixir-slack.community",
@@ -20,7 +27,7 @@ const links = [
   {
     label: "Forum",
     href: "https://elixirforum.com",
-    icon: "none" as const,
+    icon: "forum" as const,
     external: true,
   },
   {
@@ -112,6 +119,12 @@ const links = [
                       aria-hidden="true"
                       set:html={discordIcon}
                     />
+                  )}
+                  {l.icon === "github" && (
+                    <Github size={32} class="size-6 shrink-0 md:size-8" />
+                  )}
+                  {l.icon === "forum" && (
+                    <Forum size={32} class="size-6 shrink-0 md:size-8" />
                   )}
                   <span class="font-sans text-body font-medium text-black md:text-lead">
                     {l.label}

@@ -1,10 +1,6 @@
 ---
 title: "Development & team"
-# Imported from https://raw.githubusercontent.com/elixir-lang/elixir-lang.github.com/main/development.markdown @ main
 ---
-This page outlines the language's past and future development.
-
-## Development
 
 José Valim created Elixir in 2012 as a Research and Development project inside Plataformatec. Elixir's goal is to be [a productive and extensible language](/blog/2013/08/08/elixir-design-goals/) for writing maintainable and reliable software.
 
@@ -12,9 +8,9 @@ Elixir runs on top of the Erlang Virtual Machine, which provides a scalable and 
 
 Elixir's source code is under the [Apache 2 License](https://github.com/elixir-lang/elixir/blob/main/LICENSE) and is maintained by the [Elixir Team](#team). The source code and contribution guidelines can be found on [the language repository](https://github.com/elixir-lang/elixir).
 
-Elixir v1.0 was released in September 2014 and a new minor version is released every 6 months, around May and November of every year. New releases are announced in the read-only [announcements mailing list](https://groups.google.com/group/elixir-lang-ann) with a link to the complete CHANGELOG. All security releases [will be tagged with "[security]"](https://groups.google.com/forum/#!searchin/elixir-lang-ann/%5Bsecurity%5D%7Csort:date). Security vulnerabilities should be disclosed to [elixir-security@googlegroups.com](mailto:elixir-security@googlegroups.com). Our [compatibility and deprecation policies](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#content) are also documented.
+Elixir v1.0 was released in September 2014 and a new minor version is released every 6 months, around June and December of every year. New releases are announced in the read-only [announcements mailing list](https://groups.google.com/group/elixir-lang-ann) and on the [GitHub releases page](https://github.com/elixir-lang/elixir/releases). Our [security policy](https://github.com/elixir-lang/elixir/security) and [compatibility and deprecation policies](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#content) are also documented.
 
-Since v1.0, the language development has become focused to provide a compact and consistent core. The Elixir team focuses on language features that:
+Since v1.0, the language development has become focused to provide a stable and consistent core. The Elixir team focuses on language features that:
 
   1. are necessary for developing the language itself
   2. bring important concepts/features to the community in a way its effect can only be maximized or leveraged by making it part of the language

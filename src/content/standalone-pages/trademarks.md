@@ -1,6 +1,5 @@
 ---
 title: "Trademarks policy"
-# Imported from https://raw.githubusercontent.com/elixir-lang/elixir-lang.github.com/main/trademarks.markdown @ main
 ---
 This document outlines the policy for allowed usage of the "Elixir" word and the Elixir logo by other parties.
 
