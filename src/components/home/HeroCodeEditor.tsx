@@ -144,7 +144,7 @@ export default function HeroCodeEditor({
         </p>
         <div className="flex max-h-80 w-full flex-col gap-2 overflow-auto">
           {example.precanned.stdout && (
-            <pre className="whitespace-pre-wrap break-words font-mono text-body font-normal leading-[26px] text-gray-20">
+            <pre className="whitespace-pre-wrap break-words font-mono text-small font-normal text-gray-20 md:text-body">
               {example.precanned.stdout}
             </pre>
           )}
@@ -156,7 +156,7 @@ export default function HeroCodeEditor({
               >
                 <ArrowIcon direction="right" />
               </span>
-              <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-lead font-normal leading-[normal] text-purple-40">
+              <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-body font-normal text-purple-40 md:text-lead">
                 {example.precanned.value}
               </pre>
             </div>
