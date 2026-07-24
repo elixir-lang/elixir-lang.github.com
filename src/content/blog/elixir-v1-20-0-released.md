@@ -7,7 +7,7 @@ category: "Releases"
 tags: []
 ---
 
-In 2022, [we announced the effort to add set-theoretic types to Elixir](/blog/my-future-with-elixir-set-theoretic-types/). In June 2023, we [published an award winning paper on Elixir's type system design](https://arxiv.org/abs/2306.06391) and said our work was transitioning [from research to development](/blog/type-system-updates-research-dev/).
+In 2022, [we announced the effort to add set-theoretic types to Elixir](/blog/2022/10/05/my-future-with-elixir-set-theoretic-types/). In June 2023, we [published an award winning paper on Elixir's type system design](https://arxiv.org/abs/2306.06391) and said our work was transitioning [from research to development](/blog/2023/06/22/type-system-updates-research-dev/).
 
 With Elixir v1.20, we have completed our first development milestone which is to perform type inference and gradually type check every Elixir program, without introducing type annotations. This means Elixir increasingly reports dead code and *verified bugs*: typing violations that are guaranteed to fail at runtime if executed. Elixir can find verified bugs in existing programs efficiently, without introducing developer overhead, and with an extremely low false positives rate.
 
@@ -154,7 +154,7 @@ It also introduces a new compiler option called `:module_definition`, which spec
 
 The biggest question ahead of us is: when will Elixir introduce new type signatures that leverage set-theoretic types? As recently discussed [in my ElixirConf EU 2026 keynote](https://youtu.be/Ay-gnCqDw9o?t=2389), we still have both research and development work ahead of us. We will only introduce type signatures:
 
-  * if we are satisfied with the type system performance in Elixir v1.20 (and we have done [extensive](/blog/lazier-bdds-for-set-theoretic-types/) [work](/blog/eager-literal-intersections/) [optimizing](/blog/lazy-bdds-with-eager-literal-differences/) it)
+  * if we are satisfied with the type system performance in Elixir v1.20 (and we have done [extensive](/blog/2025/12/02/lazier-bdds-for-set-theoretic-types/) [work](/blog/2026/02/26/eager-literal-intersections/) [optimizing](/blog/2026/03/19/lazy-bdds-with-eager-literal-differences/) it)
   * if we can implement recursive types efficiently
   * if we can implement parametric types efficiently
   * if we can implement traversing key-value pairs of maps as an enumerable efficiently (we are still researching the possible solutions here)
