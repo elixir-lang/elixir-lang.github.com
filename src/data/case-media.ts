@@ -2,6 +2,7 @@ import adobeLogo from "@/assets/logos/adobe.svg";
 import bbcLogo from "@/assets/logos/bbc.svg";
 import hcaHealthcareLogo from "@/assets/logos/hca-healthcare.svg";
 import muxLogo from "@/assets/logos/mux.svg";
+import pagerDutyLogo from "@/assets/logos/pagerduty.svg";
 import plausibleLogo from "@/assets/logos/plausible.svg?url";
 import royalBankOfCanadaLogo from "@/assets/logos/rbc-blue.svg";
 import remoteLogo from "@/assets/logos/remote.png";
@@ -111,6 +112,16 @@ export const caseTalks: CaseMediaEntry[] = [
       "Jeff Weiss explores how Frame.io uses Elixir to deliver AI-powered search at scale.",
     url: "https://www.youtube.com/watch?v=-a4A33hDtzA",
     logo: adobeLogo,
+  },
+  {
+    company: "PagerDuty",
+    title:
+      "Elixir + CQRS: Architecting for Availability, Operability, and Maintainability at PagerDuty",
+    source: "ElixirConf 2019",
+    excerpt:
+      "Jon Grieman explains how PagerDuty combines Elixir, OTP, and CQRS to build an always-available incident timeline service that can evolve safely.",
+    url: "https://www.youtube.com/watch?v=-d2NPc8cEnw",
+    logo: pagerDutyLogo,
   },
   {
     company: "HCA Healthcare / Waterpark",
