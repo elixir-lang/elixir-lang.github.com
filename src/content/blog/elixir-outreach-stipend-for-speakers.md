@@ -7,6 +7,8 @@ category: "Announcements"
 tags: []
 ---
 
+> **Update:** The Elixir Outreach stipend program is now closed. Thank you to everyone who took part!
+
 [Dashbit](https://dashbit.co), [Oban](https://oban.pro), and the [Erlang Ecosystem Foundation (EEF)](https://erlef.org) are glad to announce a new program, which we will trial over the next 12 months, called "Elixir Outreach". Our goal is to provide funds to community members who want to present Elixir and Erlang to other ecosystems and communities, while respecting our joint values.
 
 In a nutshell:
