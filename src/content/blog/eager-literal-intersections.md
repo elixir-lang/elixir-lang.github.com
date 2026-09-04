@@ -224,3 +224,9 @@ However, our initial implementation also caused a performance regression,
 as we did not distinguish between open and closed maps. This regression was
 addressed by [applying the optimization only to closed maps](https://github.com/elixir-lang/elixir/commit/e5dc69398ef172b4a590e7e4e20f9d52b4b7ab59), as discussed
 in the article.
+
+> **Update Sep/2026:** We later removed the recursive eager literal intersection
+> optimization after further improvements made its benefits negligible.
+> We still eagerly intersect literals when both sides of the BDD are leaves.
+> We have also published an article on [eager literal differences](/blog/2026/03/19/lazy-bdds-with-eager-literal-differences/),
+> and most operations described there remain in our latest implementation.
