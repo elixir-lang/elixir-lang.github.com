@@ -146,7 +146,7 @@ Furthermore, we have typed many functions in the standard library that work with
 
 ## Compilation time improvements
 
-Elixir v1.20 also improves compilation times once more, especially on applications running on machines with many cores. [Even though BEAM languages are efficient to compile in general, our synthetic benchmarks now place Elixir's build tool as the fastest among them](https://github.com/josevalim/langcompilebench). If you would like to contribute more examples and scenarios, please start a discussion so we can provide a transparent suite of benchmarks and results.
+Elixir v1.20 also improves compilation times once more, especially on applications running on machines with many cores. [Even though BEAM languages are efficient to compile in general, our synthetic benchmarks now place Elixir's build tool as the fastest when measuring the common "compile + boot + test" lifecycle](https://github.com/josevalim/langcompilebench). See the repository for more benchmarks and scenarios.
 
 It also introduces a new compiler option called `:module_definition`, which specifies if the module definition should be `:compiled` (the default) or `:interpreted`. This may improve compilation times in large projects and it does not affect the `.beam` files written to disk, only how the contents inside `defmodule` are executed. You can enable it by setting `elixirc_options: [module_definition: :interpreted]` in your `mix.exs`. [Read the documentation to learn more](https://elixir.hexdocs.pm/1.20.0/Code.html#put_compiler_option/2).
 
