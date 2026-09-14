@@ -83,4 +83,4 @@ export const footerSocials: NavItem[] = [
   { label: "Discord", href: "https://discord.gg/elixir", external: true },
 ];
 
-export const topBannerHref = "https://elixirconf.com";
+export const topBannerHref = "https://goatmire.com";
