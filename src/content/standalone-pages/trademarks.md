@@ -11,6 +11,8 @@ You must not visually combine the Elixir logo with any other images, or change t
 
 The Elixir logo is available as SVGs for [light backgrounds](/downloads/logos/elixir-dark.svg) and [dark backgrounds](/downloads/logos/elixir-light.svg).
 
+The Elixir brand color is purple `#8847B9`. Use it wherever a single color is needed to represent Elixir, such as language badges, icon sets, and syntax highlighting themes.
+
 ## Nominative use
 
 The "nominative use" (or "nominative fair use") is a legal doctrine that authorizes everyone (even commercial companies) to use or refer to the trademark of another if:
