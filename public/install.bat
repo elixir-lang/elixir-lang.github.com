@@ -100,7 +100,7 @@ if "%elixir_major_minor%" == "1.14" (
 
 set "root_dir=%USERPROFILE%\.elixir-install"
 set "tmp_dir=%root_dir%\tmp"
-mkdir %tmp_dir% 2>nul
+mkdir "%tmp_dir%" 2>nul
 set "otp_dir=%root_dir%\installs\otp\%otp_version%"
 set "elixir_dir=%root_dir%\installs\elixir\%elixir_version%-otp-%elixir_otp_release%"
 
