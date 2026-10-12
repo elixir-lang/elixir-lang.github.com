@@ -91,7 +91,7 @@ end
 
 In other words, the `dynamic()` type in Elixir effectively works as a range, which can be refined as it is used throughout the program and reports violations whenever type checks fall outside of the range. This is a contrast to other gradual type systems, which use the dynamic type to discard all type information.
 
-Behind the scenes, our type inference and type checking algorithms behave as if we annotated all argument types as `dynamic()`. Once we introduce user-supplied type annotations, Elixir's type system will behave as any statically typed language as long as `dynamic()` is not used. And whenever you cross the static-dynamic boundary, we [developed new techniques that ensure our gradual typing is sound, without a need for additional runtime checks](/blog/strong-arrows-gradual-typing/).
+Behind the scenes, our type inference and type checking algorithms behave as if we annotated all argument types as `dynamic()`. Once we introduce user-supplied type annotations, Elixir's type system will behave as any statically typed language as long as `dynamic()` is not used. And whenever you cross the static-dynamic boundary, we [developed new techniques that ensure our gradual typing is sound, without a need for additional runtime checks](/blog/2023/09/20/strong-arrows-gradual-typing/).
 
 ## Typing guards, clauses, and more
 
