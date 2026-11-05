@@ -29,11 +29,13 @@ function ExampleDots({
   activeIdx,
   onSelect,
   titles,
+  disabled,
 }: {
   count: number;
   activeIdx: number;
   onSelect: (i: number) => void;
   titles: string[];
+  disabled: boolean;
 }) {
   return (
     <div
@@ -52,6 +54,7 @@ function ExampleDots({
             aria-current={active ? "true" : undefined}
             aria-label={`Example ${i + 1}: ${title}`}
             onClick={() => onSelect(i)}
+            disabled={disabled}
             className={
               active
                 ? "size-2.5 shrink-0 cursor-pointer rounded-full bg-white-10 outline-none transition-colors duration-fast ease-out-quart focus-visible:ring-2 focus-visible:ring-purple-40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
@@ -72,6 +75,10 @@ export default function HeroCodeEditor({
 }) {
   const { example, runtime, actions } = useExampleEditor();
   const { idx } = example;
+  let error = example.output.error ?? "";
+  if (runtime.error !== "") {
+    error = runtime.error;
+  }
 
   return (
     <div className="flex w-full max-w-[544px] flex-col gap-6 [color-scheme:dark] xl:w-[544px] xl:shrink-0 xl:self-stretch xl:justify-end">
@@ -87,6 +94,7 @@ export default function HeroCodeEditor({
           <button
             type="button"
             onClick={actions.previous}
+            disabled={runtime.disabled}
             aria-label="Previous example"
             className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
           >
@@ -95,6 +103,7 @@ export default function HeroCodeEditor({
           <button
             type="button"
             onClick={actions.next}
+            disabled={runtime.disabled}
             aria-label="Next example"
             className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
           >
@@ -105,14 +114,25 @@ export default function HeroCodeEditor({
 
       {/* Editor frame */}
       <div className="w-full rounded-[22px] bg-purple-60 p-1.5">
-        <div className="flex flex-col overflow-hidden rounded-2xl bg-black">
-          <div className="flex min-h-10 items-center border-b border-gray-80 px-4 py-2">
+        <div
+          className="flex flex-col overflow-hidden rounded-2xl bg-black"
+          aria-busy={runtime.busy}
+        >
+          <div className="flex min-h-10 items-center justify-between border-b border-gray-80 px-4 py-2">
             <ExampleDots
               count={EXAMPLES.length}
               activeIdx={idx}
               onSelect={actions.select}
               titles={EXAMPLES.map((e) => e.title)}
+              disabled={runtime.disabled}
             />
+            <button
+              type="button"
+              disabled={runtime.disabled}
+              onClick={actions.execute}
+            >
+              Run
+            </button>
           </div>
 
           <HighlightedCode
@@ -122,6 +142,12 @@ export default function HeroCodeEditor({
             readOnly={runtime.disabled}
             onChange={actions.changeSource}
           />
+          {error !== "" && <p role="alert">{error}</p>}
+          {runtime.error !== "" && (
+            <button type="button" onClick={actions.retry}>
+              Retry
+            </button>
+          )}
         </div>
       </div>
 
@@ -130,12 +156,12 @@ export default function HeroCodeEditor({
           Output
         </p>
         <div className="flex max-h-80 w-full flex-col gap-2 overflow-auto">
-          {example.precanned.stdout && (
+          {(example.output.stdout ?? "") !== "" && (
             <pre className="whitespace-pre-wrap break-words font-mono text-small font-normal text-gray-20 md:text-body">
-              {example.precanned.stdout}
+              {example.output.stdout}
             </pre>
           )}
-          {example.precanned.value && (
+          {(example.output.value ?? "") !== "" && (
             <div className="flex w-full items-start gap-2">
               <span
                 className="inline-flex size-6 shrink-0 items-center justify-center text-purple-40"
@@ -144,7 +170,7 @@ export default function HeroCodeEditor({
                 <ArrowIcon direction="right" />
               </span>
               <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-body font-normal text-purple-40 md:text-lead">
-                {example.precanned.value}
+                {example.output.value}
               </pre>
             </div>
           )}
