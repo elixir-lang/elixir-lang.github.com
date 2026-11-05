@@ -8,9 +8,7 @@ import {
   highlightElixir,
 } from "@/utilities/elixir-highlight";
 
-// The editor island highlights the pristine examples from this
-// build-time output; shiki is only loaded in the browser once the
-// user edits the code.
+// Highlight pristine examples at build time; editing uses a native textarea.
 const highlighter = await getElixirHighlighter();
 const highlightedExamples = EXAMPLES.map((example) =>
   highlightElixir(highlighter, example.code),

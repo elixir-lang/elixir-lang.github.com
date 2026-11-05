@@ -1,8 +1,7 @@
-import { Fragment } from "react";
 import { EXAMPLES } from "@/components/home/hero-examples";
 import { useExampleEditor } from "@/components/home/use-example-editor";
 import type { HighlightedLine } from "@/utilities/elixir-highlight";
-import { tokenStyle } from "@/utilities/highlight-style";
+import HighlightedCode from "./HighlightedCode";
 
 function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
   return (
@@ -71,9 +70,8 @@ export default function HeroCodeEditor({
   // Per example, per line: shiki tokens produced at build time.
   highlightedExamples: HighlightedLine[][];
 }) {
-  const { example, actions } = useExampleEditor();
+  const { example, runtime, actions } = useExampleEditor();
   const { idx } = example;
-  const highlightedLines = highlightedExamples[idx];
 
   return (
     <div className="flex w-full max-w-[544px] flex-col gap-6 [color-scheme:dark] xl:w-[544px] xl:shrink-0 xl:self-stretch xl:justify-end">
@@ -117,20 +115,13 @@ export default function HeroCodeEditor({
             />
           </div>
 
-          <pre className="m-0 min-h-52 overflow-hidden whitespace-pre-wrap break-words px-4 py-2 font-mono text-body font-light leading-[26px] text-white-10 sm:py-3">
-            {highlightedLines.map((line, li) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: static highlighted lines have no stateful children
-              <Fragment key={li}>
-                {li > 0 && "\n"}
-                {line.map((token, ti) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: see above
-                  <span key={ti} style={tokenStyle(token)}>
-                    {token.text}
-                  </span>
-                ))}
-              </Fragment>
-            ))}
-          </pre>
+          <HighlightedCode
+            source={example.source}
+            originalSource={example.code}
+            initialLines={highlightedExamples[idx]}
+            readOnly={runtime.disabled}
+            onChange={actions.changeSource}
+          />
         </div>
       </div>
 
