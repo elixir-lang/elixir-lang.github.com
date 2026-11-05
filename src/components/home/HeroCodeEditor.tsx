@@ -1,5 +1,6 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { EXAMPLES } from "@/components/home/hero-examples";
+import { useExampleEditor } from "@/components/home/use-example-editor";
 import type { HighlightedLine } from "@/utilities/elixir-highlight";
 import { tokenStyle } from "@/utilities/highlight-style";
 
@@ -70,14 +71,9 @@ export default function HeroCodeEditor({
   // Per example, per line: shiki tokens produced at build time.
   highlightedExamples: HighlightedLine[][];
 }) {
-  const [idx, setIdx] = useState(0);
-  const example = EXAMPLES[idx];
+  const { example, actions } = useExampleEditor();
+  const { idx } = example;
   const highlightedLines = highlightedExamples[idx];
-  const showExample = (nextRaw: number) => {
-    const next =
-      ((nextRaw % EXAMPLES.length) + EXAMPLES.length) % EXAMPLES.length;
-    setIdx(next);
-  };
 
   return (
     <div className="flex w-full max-w-[544px] flex-col gap-6 [color-scheme:dark] xl:w-[544px] xl:shrink-0 xl:self-stretch xl:justify-end">
@@ -92,7 +88,7 @@ export default function HeroCodeEditor({
         <div className="flex shrink-0 items-center justify-end gap-3">
           <button
             type="button"
-            onClick={() => showExample(idx - 1)}
+            onClick={actions.previous}
             aria-label="Previous example"
             className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
           >
@@ -100,7 +96,7 @@ export default function HeroCodeEditor({
           </button>
           <button
             type="button"
-            onClick={() => showExample(idx + 1)}
+            onClick={actions.next}
             aria-label="Next example"
             className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
           >
@@ -116,7 +112,7 @@ export default function HeroCodeEditor({
             <ExampleDots
               count={EXAMPLES.length}
               activeIdx={idx}
-              onSelect={showExample}
+              onSelect={actions.select}
               titles={EXAMPLES.map((e) => e.title)}
             />
           </div>
