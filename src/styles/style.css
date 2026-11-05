@@ -75,6 +75,8 @@
   --text-small--line-height: 1.5;
   --text-caption: 0.8125rem;
   --text-caption--line-height: 1.4;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
 
   --container-padding-mobile: 1rem;
   --container-padding-tablet: 1.5rem;
@@ -102,6 +104,9 @@
   --duration-base: 250ms;
   --duration-slow: 450ms;
   --duration-reveal: 700ms;
+  --animate-popcorn-result: popcorn-result var(--duration-reveal) var(--ease-out-quart);
+  --animate-popcorn-busy: popcorn-busy 1.2s linear infinite;
+  --animate-popcorn-enter: popcorn-enter var(--duration-reveal) var(--ease-out-quart);
 
   --breakpoint-xs: 30rem;
   --breakpoint-sm: 40rem;
@@ -109,6 +114,21 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 96rem;
+}
+
+@keyframes popcorn-result {
+  from { color: var(--color-white-10); }
+  to { color: var(--color-purple-40); }
+}
+
+@keyframes popcorn-busy {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+@keyframes popcorn-enter {
+  from { opacity: 0; transform: translateY(var(--spacing)) scale(0.9); }
+  to { opacity: 1; transform: none; }
 }
 
 @layer base {
@@ -462,6 +482,16 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Subtle run feedback, kept on purpose; beats the `*` reset by specificity. */
+  .animate-popcorn-result {
+    animation-duration: var(--duration-reveal) !important;
+  }
+
+  .animate-popcorn-busy {
+    animation-duration: 1.2s !important;
+    animation-iteration-count: infinite !important;
   }
 
   [data-reveal-eager],

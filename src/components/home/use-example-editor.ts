@@ -14,8 +14,25 @@ export function useExampleEditor() {
   }, []);
   const { status, error, outputs, start, run } = useExampleRuntime(resume);
   const busy = status === "loading" || status === "running";
+  const [activity, setActivity] = useState<{
+    kind: "loading" | "running";
+    shownAt: number;
+  } | null>(null);
 
   useEffect(() => setInteractive(true), []);
+  useEffect(() => {
+    if (status === "loading" || status === "running") {
+      if (activity?.kind === status) return;
+      const timer = setTimeout(() => {
+        setActivity({ kind: status, shownAt: performance.now() });
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+    if (activity === null) return;
+    const remaining = Math.max(0, 400 - (performance.now() - activity.shownAt));
+    const timer = setTimeout(() => setActivity(null), remaining);
+    return () => clearTimeout(timer);
+  }, [status, activity]);
 
   const select = (next: number) => {
     if (busy) return;
@@ -36,6 +53,14 @@ export function useExampleEditor() {
   const retry = async () => {
     await start({ idx, sources, runOnResume: false });
   };
+  let activityLabel = "";
+  if (activity?.kind === "loading") {
+    activityLabel = "Starting Elixir…";
+  }
+  if (activity?.kind === "running") {
+    activityLabel = "Running…";
+  }
+
   return {
     example: {
       idx,
@@ -45,9 +70,12 @@ export function useExampleEditor() {
       output: outputs[idx],
     },
     runtime: {
+      started: status !== "idle",
       error,
       busy,
       disabled: !interactive || busy,
+      activity: activityLabel,
+      working: activity !== null,
     },
     actions: {
       select,

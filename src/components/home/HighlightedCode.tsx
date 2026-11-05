@@ -8,12 +8,14 @@ export default function HighlightedCode({
   initialLines,
   readOnly,
   onChange,
+  onRun,
 }: {
   source: string;
   originalSource: string;
   initialLines: HighlightedLine[];
   readOnly: boolean;
   onChange: (source: string) => void;
+  onRun: () => Promise<void>;
 }) {
   const node = useRef<HTMLTextAreaElement>(null);
   const display = useRef<HTMLPreElement>(null);
@@ -55,6 +57,13 @@ export default function HighlightedCode({
         readOnly={readOnly}
         value={source}
         onChange={(event) => onChange(event.target.value)}
+        onKeyDown={async (event) => {
+          const hasRunModifier = event.ctrlKey || event.metaKey;
+          const isRunShortcut = hasRunModifier && event.key === "Enter";
+          if (!isRunShortcut || readOnly) return;
+          event.preventDefault();
+          await onRun();
+        }}
         onScroll={(event) => {
           const element = display.current as HTMLPreElement;
           element.scrollTop = event.currentTarget.scrollTop;
