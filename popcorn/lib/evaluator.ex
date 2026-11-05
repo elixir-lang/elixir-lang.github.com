@@ -11,9 +11,9 @@ defmodule WebsiteExamples.Evaluator do
     task = Task.async(fn -> evaluate(source) end)
 
     result =
-      case Task.yield(task, 5_000) || Task.shutdown(task, :brutal_kill) do
+      case Task.yield(task, 10_000) || Task.shutdown(task, :brutal_kill) do
         {:ok, result} -> result
-        nil -> %{error: "Execution timed out after 5 seconds."}
+        nil -> %{error: "Execution timed out after 10 seconds."}
       end
 
     {:reply, result, state}

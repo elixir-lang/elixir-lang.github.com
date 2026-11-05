@@ -10,6 +10,7 @@ const ISOLATION_TIMEOUT =
 export async function ensureIsolation(
   resume: string,
   resumed: boolean,
+  signal: AbortSignal,
 ): Promise<"ready" | "reloading"> {
   if (crossOriginIsolated) return "ready";
   if (resumed) {
@@ -43,6 +44,7 @@ export async function ensureIsolation(
     });
   }
 
+  signal.throwIfAborted();
   sessionStorage.setItem(RESUME_KEY, resume);
   location.reload();
   return "reloading";

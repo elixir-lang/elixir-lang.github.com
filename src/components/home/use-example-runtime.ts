@@ -14,13 +14,14 @@ type EditorState = { idx: number; sources: string[]; runOnResume: boolean };
 
 export function useExampleRuntime(onResume: (state: EditorState) => void) {
   const [status, setStatus] = useState<
-    "idle" | "loading" | "ready" | "running" | "error"
+    "idle" | "loading" | "ready" | "running" | "cancelled" | "error"
   >("idle");
   const [error, setError] = useState("");
   const [outputs, setOutputs] = useState<Output[]>(
     EXAMPLES.map((example) => example.precanned),
   );
   const runtime = useRef<Popcorn | null>(null);
+  const startup = useRef<AbortController | null>(null);
   const mounted = useRef(true);
   const evaluation = useRef<{
     idx: number;
@@ -29,6 +30,9 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
   } | null>(null);
 
   const start = useCallback(async (state: EditorState, resumed = false) => {
+    startup.current?.abort();
+    const attempt = new AbortController();
+    startup.current = attempt;
     setStatus("loading");
     setError("");
     runtime.current?.deinit();
@@ -36,12 +40,18 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
     evaluation.current = null;
     try {
       const serializedState = JSON.stringify(state);
-      const isolation = await ensureIsolation(serializedState, resumed);
+      const isolation = await ensureIsolation(
+        serializedState,
+        resumed,
+        attempt.signal,
+      );
       const isReloading = isolation === "reloading";
+      attempt.signal.throwIfAborted();
       if (isReloading || !mounted.current) return false;
       const { Popcorn } = await import("@swmansion/popcorn");
-      if (!mounted.current) return false;
+      if (attempt.signal.aborted || !mounted.current) return false;
       const appendOutput = (text: string) => {
+        if (attempt.signal.aborted) return;
         const active = evaluation.current;
         if (active === null) return;
         active.stdout = `${active.stdout}${text}`.slice(0, 16_000);
@@ -57,7 +67,7 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
         onStdout: appendOutput,
         onStderr: appendOutput,
         onError: (event) => {
-          if (!mounted.current) return;
+          if (attempt.signal.aborted || !mounted.current) return;
           console.error("Popcorn runtime stopped:", event);
           setError("Elixir stopped.");
           setStatus("error");
@@ -65,10 +75,11 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
       });
       runtime.current = instance;
       await instance.boot();
-      if (!mounted.current) return false;
+      if (attempt.signal.aborted || !mounted.current) return false;
       setStatus((current) => (current === "error" ? current : "ready"));
       return true;
     } catch (cause) {
+      if (attempt.signal.aborted) return false;
       runtime.current?.deinit();
       runtime.current = null;
       if (mounted.current) {
@@ -86,7 +97,7 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
     const active = { idx, stdout: "", finished: false };
     evaluation.current = active;
     const result = await instance.tryCall("evaluator", ["eval", source], {
-      timeoutMs: 10_000,
+      timeoutMs: 15_000,
     });
     if (!result.ok && result.error.t === "vm:exited") return;
     let reply: Output;
@@ -110,6 +121,15 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
     setStatus((current) => (current === "error" ? current : "ready"));
   }, []);
 
+  const cancel = useCallback(() => {
+    startup.current?.abort();
+    runtime.current?.deinit();
+    runtime.current = null;
+    evaluation.current = null;
+    setError("");
+    setStatus("cancelled");
+  }, []);
+
   useEffect(() => {
     mounted.current = true;
     async function resume() {
@@ -131,9 +151,10 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
     resume();
     return () => {
       mounted.current = false;
+      startup.current?.abort();
       runtime.current?.deinit();
     };
   }, [onResume, start, run]);
 
-  return { status, error, outputs, start, run };
+  return { status, error, outputs, start, run, cancel };
 }

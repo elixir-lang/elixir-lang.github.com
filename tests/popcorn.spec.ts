@@ -26,7 +26,7 @@ test.describe("homepage examples", () => {
     expect(
       await page.evaluate(() => navigator.serviceWorker.controller),
     ).toBeNull();
-    await code.press("Control+Enter");
+    await code.press("Meta+Enter");
     await expect(result).toHaveText("{:pixels, 43}", { timeout: 75_000 });
     await expect(code).toHaveValue(/Integer.parse\("43px"\)/);
     await expect(code).not.toBeFocused();
@@ -197,10 +197,10 @@ test.describe("homepage examples", () => {
     await expect(alert).not.toContainText(
       /validated_eval_string|WebsiteExamples|Task.Supervised/,
     );
-    await code.fill("Process.sleep(6_000)");
+    await code.fill("Process.sleep(11_000)");
     await run.click();
-    await expect(alert).toHaveText("Execution timed out after 5 seconds.", {
-      timeout: 10_000,
+    await expect(alert).toHaveText("Execution timed out after 10 seconds.", {
+      timeout: 15_000,
     });
     await code.fill("2 + 2");
     await run.click();
@@ -289,5 +289,77 @@ test.describe("homepage examples", () => {
     await expect(page.getByRole("alert")).toHaveText("Elixir could not start.");
     await expect(code).toBeEditable();
     await expect(code).toHaveValue("21 * 2");
+  });
+
+  test("cancels a slow startup without letting it finish later", async ({
+    page,
+    context,
+  }) => {
+    await page.clock.install();
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await context.route("**/worker-*.js", async (route) => {
+      await gate;
+      await route.continue();
+    });
+    await page.goto("/");
+    const code = page.getByRole("textbox", { name: "Elixir example code" });
+    const run = page.getByRole("button", { name: "Run", exact: true });
+    const cancel = page.getByRole("button", { name: "Cancel", exact: true });
+    const activity = page.getByRole("status", {
+      name: "Elixir runtime status",
+    });
+    await code.fill("System.halt(0)");
+    await run.click();
+    await expect(activity).toHaveText("Starting Elixir…", { timeout: 30_000 });
+    await expect(cancel).toHaveCount(0);
+    await page.clock.fastForward(3_000);
+    await expect(cancel).toBeVisible();
+    await code.press("Meta+Enter");
+    await cancel.click();
+    await expect(activity).toHaveText("Cancelled.");
+    await expect(code).toHaveValue("System.halt(0)");
+    await code.fill("21 * 2");
+    await run.click();
+    release();
+    await expect(
+      page.getByRole("figure", { name: "Result", exact: true }).locator("pre"),
+    ).toHaveText("42", { timeout: 75_000 });
+    await expect(page.getByRole("alert")).toHaveCount(0);
+  });
+
+  test("cancels a slow run and preserves the previous output", async ({
+    page,
+  }) => {
+    await page.clock.install();
+    await page.goto("/");
+    const code = page.getByRole("textbox", { name: "Elixir example code" });
+    const run = page.getByRole("button", { name: "Run", exact: true });
+    const cancel = page.getByRole("button", { name: "Cancel", exact: true });
+    const result = page
+      .getByRole("figure", { name: "Result", exact: true })
+      .locator("pre");
+    await code.fill("43");
+    await run.click();
+    await expect(result).toHaveText("43", { timeout: 75_000 });
+    await expect(cancel).toHaveCount(0);
+    await page.clock.pauseAt(new Date(Date.now() + 1_000));
+    await code.fill("Process.sleep(9_000)\n44");
+    await code.press("Control+Enter");
+    await page.clock.runFor(2_999);
+    await expect(cancel).toHaveCount(0);
+    await page.clock.runFor(1);
+    await expect(cancel).toBeVisible();
+    await cancel.click();
+    await expect(code).toHaveValue("Process.sleep(9_000)\n44");
+    await expect(result).toHaveText("43");
+    await expect(run).toBeEnabled();
+    await expect(cancel).toHaveCount(0);
+    await code.fill("6 * 7");
+    await code.press("Control+Enter");
+    await expect(result).toHaveText("42", { timeout: 75_000 });
+    await expect(page.getByRole("alert")).toHaveCount(0);
   });
 });

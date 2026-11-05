@@ -12,14 +12,22 @@ export function useExampleEditor() {
     setIdx(saved.idx);
     setSources(saved.sources);
   }, []);
-  const { status, error, outputs, start, run } = useExampleRuntime(resume);
+  const { status, error, outputs, start, run, cancel } =
+    useExampleRuntime(resume);
   const busy = status === "loading" || status === "running";
+  const [canCancel, setCanCancel] = useState(false);
   const [activity, setActivity] = useState<{
     kind: "loading" | "running";
     shownAt: number;
   } | null>(null);
 
   useEffect(() => setInteractive(true), []);
+  useEffect(() => {
+    setCanCancel(false);
+    if (!busy) return;
+    const timer = setTimeout(() => setCanCancel(true), 3_000);
+    return () => clearTimeout(timer);
+  }, [busy]);
   useEffect(() => {
     if (status === "loading" || status === "running") {
       if (activity?.kind === status) return;
@@ -53,7 +61,7 @@ export function useExampleEditor() {
   const retry = async () => {
     await start({ idx, sources, runOnResume: false });
   };
-  let activityLabel = "";
+  let activityLabel = status === "cancelled" ? "Cancelled." : "";
   if (activity?.kind === "loading") {
     activityLabel = "Starting Elixir…";
   }
@@ -73,6 +81,7 @@ export function useExampleEditor() {
       started: status !== "idle",
       error,
       busy,
+      canCancel: busy && canCancel,
       disabled: !interactive || busy,
       activity: activityLabel,
       working: activity !== null,
@@ -84,6 +93,7 @@ export function useExampleEditor() {
       changeSource,
       execute,
       retry,
+      cancel,
     },
   };
 }

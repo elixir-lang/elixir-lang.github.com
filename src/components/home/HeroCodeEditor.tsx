@@ -68,9 +68,11 @@ function ExampleDots({
 function RuntimeFeedback({
   runtime,
   onRetry,
+  onCancel,
 }: {
   runtime: ReturnType<typeof useExampleEditor>["runtime"];
   onRetry: () => Promise<void>;
+  onCancel: () => void;
 }) {
   const { activity, error, started, working } = runtime;
   const hasError = error !== "";
@@ -97,7 +99,7 @@ function RuntimeFeedback({
   }
 
   return (
-    <div className="relative flex min-h-10 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-gray-80 px-4 py-2 text-small text-gray-20">
+    <div className="relative flex min-h-10 items-center justify-between gap-3 border-t border-gray-80 px-2 py-2 text-caption text-gray-20 sm:px-4 sm:text-small">
       {working && !hasError && (
         <span
           aria-hidden="true"
@@ -106,7 +108,18 @@ function RuntimeFeedback({
           <span className="block h-full w-1/3 bg-purple-40 animate-popcorn-busy" />
         </span>
       )}
-      <div className="flex min-w-0 items-center gap-3">{feedback}</div>
+      <div className="flex min-w-0 items-center gap-2">
+        {feedback}
+        {runtime.canCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="shrink-0 cursor-pointer rounded-xs px-1 text-white-10 hover:text-purple-40 focus-visible:outline-2 focus-visible:outline-purple-40"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
       {started && (
         <a
           href="https://popcorn.swmansion.com/"
@@ -272,7 +285,11 @@ export default function HeroCodeEditor({
             onChange={actions.changeSource}
             onRun={actions.execute}
           />
-          <RuntimeFeedback runtime={runtime} onRetry={actions.retry} />
+          <RuntimeFeedback
+            runtime={runtime}
+            onRetry={actions.retry}
+            onCancel={actions.cancel}
+          />
         </div>
       </div>
 
