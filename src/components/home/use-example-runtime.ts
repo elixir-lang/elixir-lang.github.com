@@ -1,5 +1,6 @@
 import type { Popcorn } from "@swmansion/popcorn";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePopcorn } from "@/hooks/use-popcorn";
 import { EXAMPLES } from "./hero-examples";
 import { ensureIsolation, RESUME_KEY } from "./popcorn-isolation";
 
@@ -14,124 +15,110 @@ type EditorState = { idx: number; sources: string[]; runOnResume: boolean };
 
 export function useExampleRuntime(onResume: (state: EditorState) => void) {
   const [status, setStatus] = useState<
-    "idle" | "loading" | "ready" | "running" | "cancelled" | "error"
+    "idle" | "loading" | "ready" | "running" | "cancelled"
   >("idle");
   const [error, setError] = useState("");
   const [outputs, setOutputs] = useState<Output[]>(
     EXAMPLES.map((example) => example.precanned),
   );
-  const runtime = useRef<Popcorn | null>(null);
+  const { runtime, error: failure, start: boot, stop } = usePopcorn();
   const startup = useRef<AbortController | null>(null);
-  const mounted = useRef(true);
   const evaluation = useRef<{
     idx: number;
     stdout: string;
     finished: boolean;
   } | null>(null);
 
-  const start = useCallback(async (state: EditorState, resumed = false) => {
-    startup.current?.abort();
-    const attempt = new AbortController();
-    startup.current = attempt;
-    setStatus("loading");
-    setError("");
-    runtime.current?.deinit();
-    runtime.current = null;
-    evaluation.current = null;
-    try {
-      const serializedState = JSON.stringify(state);
-      const isolation = await ensureIsolation(
-        serializedState,
-        resumed,
-        attempt.signal,
-      );
-      const isReloading = isolation === "reloading";
-      attempt.signal.throwIfAborted();
-      if (isReloading || !mounted.current) return false;
-      const { Popcorn } = await import("@swmansion/popcorn");
-      if (attempt.signal.aborted || !mounted.current) return false;
-      const appendOutput = (text: string) => {
-        if (attempt.signal.aborted) return;
-        const active = evaluation.current;
-        if (active === null) return;
-        active.stdout = `${active.stdout}${text}`.slice(0, 16_000);
-        if (!active.finished) return;
-        setOutputs((current) =>
-          current.map((item, i) => {
-            if (i !== active.idx) return item;
-            return { ...item, stdout: active.stdout };
-          }),
+  const start = useCallback(
+    async (state: EditorState, resumed = false) => {
+      startup.current?.abort();
+      const attempt = new AbortController();
+      startup.current = attempt;
+      setStatus("loading");
+      setError("");
+      stop();
+      evaluation.current = null;
+      try {
+        const serializedState = JSON.stringify(state);
+        const isolation = await ensureIsolation(
+          serializedState,
+          resumed,
+          attempt.signal,
         );
-      };
-      const instance = new Popcorn({
-        onStdout: appendOutput,
-        onStderr: appendOutput,
-        onError: (event) => {
-          if (attempt.signal.aborted || !mounted.current) return;
-          console.error("Popcorn runtime stopped:", event);
-          setError("Elixir stopped.");
-          setStatus("error");
-        },
-      });
-      runtime.current = instance;
-      await instance.boot();
-      if (attempt.signal.aborted || !mounted.current) return false;
-      setStatus((current) => (current === "error" ? current : "ready"));
-      return true;
-    } catch (cause) {
-      if (attempt.signal.aborted) return false;
-      runtime.current?.deinit();
-      runtime.current = null;
-      if (mounted.current) {
+        const isReloading = isolation === "reloading";
+        attempt.signal.throwIfAborted();
+        if (isReloading) return null;
+        const appendOutput = (text: string) => {
+          if (attempt.signal.aborted) return;
+          const active = evaluation.current;
+          if (active === null) return;
+          active.stdout = `${active.stdout}${text}`.slice(0, 16_000);
+          if (!active.finished) return;
+          setOutputs((current) =>
+            current.map((item, i) => {
+              if (i !== active.idx) return item;
+              return { ...item, stdout: active.stdout };
+            }),
+          );
+        };
+        const instance = await boot({
+          onStdout: appendOutput,
+          onStderr: appendOutput,
+        });
+        if (instance === null || attempt.signal.aborted) return null;
+        setStatus("ready");
+        return instance;
+      } catch (cause) {
+        if (attempt.signal.aborted) return null;
         console.error("Popcorn startup failed:", cause);
         setError("Elixir could not start.");
-        setStatus("error");
+        return null;
       }
-      return false;
-    }
-  }, []);
+    },
+    [boot, stop],
+  );
 
-  const run = useCallback(async (idx: number, source: string) => {
-    const instance = runtime.current as Popcorn;
-    setStatus("running");
-    const active = { idx, stdout: "", finished: false };
-    evaluation.current = active;
-    const result = await instance.tryCall("evaluator", ["eval", source], {
-      timeoutMs: 15_000,
-    });
-    if (!result.ok && result.error.t === "vm:exited") return;
-    let reply: Output;
-    if (result.ok) {
-      reply = result.data as Output;
-    } else {
-      reply = { error: result.error.message };
-    }
-    active.finished = true;
-    setOutputs((current) =>
-      current.map((item, i) => {
-        if (i !== idx) return item;
-        return {
-          ...reply,
-          stdout: active.stdout,
-          source,
-          runId: (item.runId ?? 0) + 1,
-        };
-      }),
-    );
-    setStatus((current) => (current === "error" ? current : "ready"));
-  }, []);
+  const run = useCallback(
+    async (instance: Popcorn, idx: number, source: string) => {
+      setStatus("running");
+      const active = { idx, stdout: "", finished: false };
+      evaluation.current = active;
+      const result = await instance.tryCall("evaluator", ["eval", source], {
+        timeoutMs: 15_000,
+      });
+      if (!result.ok && result.error.t === "vm:exited") return;
+      let reply: Output;
+      if (result.ok) {
+        reply = result.data as Output;
+      } else {
+        reply = { error: result.error.message };
+      }
+      active.finished = true;
+      setOutputs((current) =>
+        current.map((item, i) => {
+          if (i !== idx) return item;
+          return {
+            ...reply,
+            stdout: active.stdout,
+            source,
+            runId: (item.runId ?? 0) + 1,
+          };
+        }),
+      );
+      setStatus("ready");
+    },
+    [],
+  );
 
   const cancel = useCallback(() => {
     startup.current?.abort();
-    runtime.current?.deinit();
-    runtime.current = null;
+    stop();
     evaluation.current = null;
     setError("");
     setStatus("cancelled");
-  }, []);
+  }, [stop]);
 
   useEffect(() => {
-    mounted.current = true;
     async function resume() {
       let saved: EditorState;
       try {
@@ -143,18 +130,33 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
         return;
       }
       onResume(saved);
-      const ready = await start(saved, true);
-      if (ready && saved.runOnResume) {
-        await run(saved.idx, saved.sources[saved.idx]);
+      const instance = await start(saved, true);
+      if (instance !== null && saved.runOnResume) {
+        await run(instance, saved.idx, saved.sources[saved.idx]);
       }
     }
     resume();
     return () => {
-      mounted.current = false;
       startup.current?.abort();
-      runtime.current?.deinit();
     };
   }, [onResume, start, run]);
 
-  return { status, error, outputs, start, run, cancel };
+  let runtimeError = error;
+  if (failure !== null) {
+    runtimeError = "Elixir stopped.";
+    if (failure.phase === "startup") {
+      runtimeError = "Elixir could not start.";
+    }
+  }
+  const visibleStatus = runtimeError === "" ? status : "error";
+
+  return {
+    status: visibleStatus,
+    error: runtimeError,
+    runtime,
+    outputs,
+    start,
+    run,
+    cancel,
+  };
 }

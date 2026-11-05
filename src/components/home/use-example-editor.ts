@@ -12,7 +12,7 @@ export function useExampleEditor() {
     setIdx(saved.idx);
     setSources(saved.sources);
   }, []);
-  const { status, error, outputs, start, run, cancel } =
+  const { status, error, runtime, outputs, start, run, cancel } =
     useExampleRuntime(resume);
   const busy = status === "loading" || status === "running";
   const [canCancel, setCanCancel] = useState(false);
@@ -52,11 +52,12 @@ export function useExampleEditor() {
     );
   };
   const execute = async () => {
+    let instance = runtime;
     if (status !== "ready") {
-      const ready = await start({ idx, sources, runOnResume: true });
-      if (!ready) return;
+      instance = await start({ idx, sources, runOnResume: true });
     }
-    await run(idx, sources[idx]);
+    if (instance === null) return;
+    await run(instance, idx, sources[idx]);
   };
   const retry = async () => {
     await start({ idx, sources, runOnResume: false });
