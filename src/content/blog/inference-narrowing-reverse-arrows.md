@@ -8,10 +8,13 @@ tags: []
 ---
 
 This article explains how Elixir implements type inference and type narrowing
-using reverse arrows. The upcoming Elixir release, v1.21, passes all tests in the
+using reverse arrows: a small set of composable ideas, rather than special cases
+hardcoded into the type checker.
+
+Thanks to this work, the upcoming Elixir v1.21 passes all tests in the
 [If-T: Type Narrowing Benchmark by Guo et al.](https://github.com/utahplt/ifT-benchmark).
-This means v1.21 can find even more bugs in existing Elixir programs and, when type
-signatures are introduced, type narrowing will give us more precise types and avoid
+This means v1.21 can find even more sure bugs in existing Elixir programs and, once
+type signatures are introduced, narrowing will give us more precise types and fewer
 false positives.
 
 > The type system was made possible thanks to a partnership between [CNRS](https://www.cnrs.fr/)
@@ -78,7 +81,7 @@ functions. In other words, we go through the following steps:
 
 1. `x` starts as `dynamic(term())`
 
-2. `x` is given to `x * 2`. The left operand of `*` is `integer() or float()`,
+2. `x` is given to `x * 2`. The left operand of `*` expects `integer() or float()`,
    which we then intersect with `term()`, and therefore `x` gains the type
    `dynamic(integer() or float())`
 
@@ -142,9 +145,9 @@ the unary negation operator. However, `x` will once again be inferred to be
 `dynamic(integer())`, because Elixir reverse propagates types through the arrows.
 Let's break it down.
 
-1. We start type checking the function and we find `rem(a, b)`, which has a type
-   signature of `integer(), integer() -> integer()`. Because we have a single arrow,
-   we know that `a` and `b` have to be `integer()` for this to type check
+1. We start type checking the function and we find `rem(-x, 2)`. `rem` has the type
+   signature `integer(), integer() -> integer()`. Because it has a single arrow,
+   we know that `-x` must be `integer()` for this to type check
 
 2. Now we type check `-x`. We know that `-` has two arrows: `integer() -> integer()`
    and `float() -> float()`. We also know that, because the result of `-x` is given to
@@ -192,16 +195,16 @@ Therefore, to infer the types of `when is_integer(x) and is_bitstring(y)`,
 we start with `true`, which is the only result for which a guard succeeds,
 and propagate it through the arrows in reverse:
 
-1. The only clause of `and` that can return `true` is `true, true -> true`,
+1. The only arrow of `and` that can return `true` is `true, true -> true`,
    therefore we know that both operands must be `true`
 
-2. The only clause of `is_integer` that can return `true` is `integer() -> true`,
+2. The only arrow of `is_integer` that can return `true` is `integer() -> true`,
    therefore we know `x` must be an integer
 
-3. The only clause of `is_bitstring` that can return `true` is `bitstring() -> true`,
+3. The only arrow of `is_bitstring` that can return `true` is `bitstring() -> true`,
    therefore we know `y` must be a bitstring
 
-If multiple clauses could return `true`, we would then simply union their domains.
+If multiple arrows could return `true`, we would then simply union their domains.
 
 It is worth emphasizing that this behaviour is not hardcoded to a handful of
 functions the type checker knows about. It works with any function, in any context.
@@ -209,8 +212,9 @@ Let's see more examples.
 
 ## Type narrowing (also known as occurrence typing)
 
-Occurrence typing allows us to refine the type of variables and expressions
-based on the different branches of a conditional. For example:
+Occurrence typing refines the type of variables and expressions based on
+the branch taken in a conditional or pattern match, so the same variable may
+have different types in different branches. For example:
 
 ```elixir
 if is_bitstring(x) do
@@ -241,7 +245,7 @@ defp parse(x) when is_bitstring(x), do: :error
 ```
 
 The [If-T benchmark](https://github.com/utahplt/ifT-benchmark) is a collection of
-test scenarios designed to evaluate how well type checkers handle type narrowing.
+test scenarios designed to evaluate both the precision and soundness of type narrowing.
 Elixir v1.20 already handled 12 out of the 13 tests, but it could not infer the
 proper types for this example:
 
@@ -297,3 +301,16 @@ end
 
 In the program above, even though `foo` is set as the value of a map,
 refining the map still refines the original variable.
+
+## Summary
+
+Elixir's approach to type inference and narrowing is built on a few ideas that
+compose well. Dynamic types are refined as variables are used, multiple arrows
+give precise types to functions, and propagating types through those arrows in
+reverse lets us infer and narrow types across conditionals, patterns, and assignments,
+all without hardcoding knowledge about specific functions.
+
+In Elixir v1.21, we use these techniques to find sure bugs in existing Elixir programs,
+without requiring any changes to your code. The same mechanisms will apply once type
+signatures are introduced: the more precise the signatures, the more precise the
+narrowing and the fewer false positives.
