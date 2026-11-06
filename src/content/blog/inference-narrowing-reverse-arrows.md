@@ -21,10 +21,10 @@ false positives.
 ## Type inference
 
 Elixir performs type inference by refining the dynamic type. This is quite different
-from how inference and gradual typing is implemented in most type systems, so let's
+from how inference and gradual typing are implemented in most type systems, so let's
 break it down.
 
-In many gradual languages, the dynamic type, often known as `any`, is a "black-box" and
+In many gradual languages, the dynamic type, often known as `any`, is a "black box" and
 can be used in any context. For example, imagine this Elixir function, where `x` starts
 with type `dynamic()`, as there is no type signature:
 
@@ -33,7 +33,7 @@ def using_x_as_number_and_binary(x) do
   IO.puts x * 2
   IO.puts byte_size(x)
   :ok
-end 
+end
 ```
 
 The program above uses `x` both as a number (more precisely, as `integer() or float()`
@@ -79,12 +79,12 @@ functions. In other words, we go through the following steps:
 1. `x` starts as `dynamic(term())`
 
 2. `x` is given to `x * 2`. The left operand of `*` is `integer() or float()`,
-  which we then intersect with `term()`, and therefore `x` gains the type
-  `dynamic(integer() or float())`
+   which we then intersect with `term()`, and therefore `x` gains the type
+   `dynamic(integer() or float())`
 
 3. `x` is given to `byte_size(x)`, which expects a bitstring. The intersection
-  of `integer() or float()` with `bitstring()` is empty, which will lead to a
-  typing violation
+   of `integer() or float()` with `bitstring()` is empty, which will lead to a
+   typing violation
 
 Now, let's take a look at this program:
 
@@ -93,17 +93,17 @@ def using_x_as_integer(x) do
   IO.puts x * 2
   IO.puts rem(x, 2)
   :ok
-end 
+end
 ```
 
 This time, we pass `x` to the remainder function, `rem`, which expects all of its
-inputs to be integer. This means that, at the end of this function, Elixir will
+inputs to be integers. This means that, at the end of this function, Elixir will
 correctly infer that `x` can only be an integer, because `x` was refined from
 `dynamic(term())` to `dynamic(integer() or float())` and then only to `dynamic(integer())`.
 The inferred type for `using_x_as_integer` is `dynamic(integer()) -> :ok`.
 
 The best part is that all dynamic types in Elixir are refined and therefore the type
-system is always doing its best to find sure bug, even in the presence of dynamism.
+system is always doing its best to find bugs, even in the presence of dynamism.
 And the refinement itself is often quite precise, thanks to reverse arrows, which we
 will explore next.
 
@@ -134,11 +134,11 @@ to type functions with multiple clauses, which are common in both Erlang and Eli
 With this in mind, what do you believe is the inferred type of `x` in the function below?
 
 ```elixir
-def negated_halt_remainder(x), do: rem(-x, 2)
+def negated_half_remainder(x), do: rem(-x, 2)
 ```
 
 You may think `x` is `dynamic(integer() or float())`, because that's the domain of
-the unary negation operator, however, `x` will once again be inferred to be
+the unary negation operator. However, `x` will once again be inferred to be
 `dynamic(integer())`, because Elixir reverse propagates types through the arrows.
 Let's break it down.
 
@@ -151,18 +151,18 @@ Let's break it down.
    `rem` which expects an integer, we can discard the `float() -> float()` arrow,
    and the only valid type for the argument of `-` is `integer()`
 
-3. Now we type check `x` itself. `x` starts with type of `dynamic(term())`. We then
+3. Now we type check `x` itself. `x` starts with the type `dynamic(term())`. We then
    intersect it with `integer()`, resulting in `dynamic(integer())`
 
 In other words, as we give precise type signatures to our programs using multiple
 arrows, the type system will use these same arrows to infer precise types. As we will
-learn next, Elixir uses this technique to infers types from guards and performs type
-narrowing (also known as occurence typing).
+learn next, Elixir uses this technique to infer types from guards and to perform type
+narrowing (also known as occurrence typing).
 
 ## Guards
 
 Now we have the foundation to understand how Elixir performs type inference of guards.
-Take this function clause
+Take this function clause:
 
 ```elixir
 def something(x, y) when is_integer(x) and is_bitstring(y) do
@@ -189,7 +189,7 @@ def is_bitstring(value)
 ```
 
 Therefore, to infer the types of `when is_integer(x) and is_bitstring(y)`,
-we start with `true`, which is the only condition a guard would be accepted,
+we start with `true`, which is the only result for which a guard succeeds,
 and propagate it through the arrows in reverse:
 
 1. The only clause of `and` that can return `true` is `true, true -> true`,
@@ -201,7 +201,7 @@ and propagate it through the arrows in reverse:
 3. The only clause of `is_bitstring` that can return `true` is `bitstring() -> true`,
    therefore we know `y` must be a bitstring
 
-If multiple clauses could return true, we would then simply union their domains.
+If multiple clauses could return `true`, we would then simply union their domains.
 
 It is worth emphasizing that this behaviour is not hardcoded to a handful of
 functions the type checker knows about. It works with any function, in any context.
@@ -220,12 +220,12 @@ else
 end
 ```
 
-The mechanism we use to perform occurrence typing is quite similar to the ones
+The mechanism we use to perform occurrence typing is quite similar to the one
 from the previous sections. Within the `do`-branch, we consider the scenarios
-where `is_bitstring(x)` will return `true`. Within the `else`-branch, where it
-returns `false`.
+where `is_bitstring(x)` will return `true`. Within the `else`-branch, we consider
+the ones where it returns `false`.
 
-And since our foundation is built on reverse arrows, the narrowing applies to
+And since our foundation is built on reverse arrows, the narrowing also applies to
 patterns and `case`-expressions! For example:
 
 ```elixir
@@ -240,9 +240,9 @@ defp parse(x) when is_integer(x), do: {:ok, x}
 defp parse(x) when is_bitstring(x), do: :error
 ```
 
-The [If-T benchmarks](https://github.com/utahplt/ifT-benchmark) is a collection of
+The [If-T benchmark](https://github.com/utahplt/ifT-benchmark) is a collection of
 test scenarios designed to evaluate how well type checkers handle type narrowing.
-Elixir v1.20 already handled 12 out of the 13 tests but it could not infer the
+Elixir v1.20 already handled 12 out of the 13 tests, but it could not infer the
 proper types for this example:
 
 ```elixir
@@ -256,9 +256,9 @@ end
 ```
 
 In other words, Elixir could only narrow the types in the expressions given to
-`if` and `case`. If the expression was moved to an assignment, we could not longer
-narrow it. That would be quite harmful once we added type signatures, because it
-meant trivial refactoring techniques, such as extracting an expression into a variable,
+`if` and `case`. If the expression was moved to an assignment, we could no longer
+narrow it. That would be quite harmful once we add type signatures, because it
+means trivial refactoring techniques, such as extracting an expression into a variable,
 could lead to false positives.
 
 Elixir v1.21 solves it by narrowing even across assignments, as in the example below:
@@ -274,13 +274,13 @@ else
 end
 ```
 
-Our implementation also performs the narrowing lazily, by cross references the variables
-in the `if`-expression and `case`-expression with the variables used in each clause.
+Our implementation also performs the narrowing lazily, by cross-referencing the variables
+in the `if` and `case` expressions with the variables used in each clause.
 For example, if the clauses above do not access `z`, `y`, or `x`, then no narrowing is
 performed.
 
 Finally, because Elixir defines reverse arrows for almost all operations, it can refine
-expressions [which are not currently refined in TypeScript](https://www.typescriptlang.org/fr/play/?#code/PTAEHUFMBsGMHsC2lQBd5oBYoCoE8AHSAZVgCcBLA1UABWgEM8BzM+AVwDsATAGiwoBnUENANQAd0gAjQRVSQAUCEmYKsTKGYUAbpGF4OY0BoadYKdJMoL+gzAzIoz3UNEiPOofEVKVqAHSKigBmXLCoFPBeBGxEZKh4APoM0BQMgkmC7LAWgoIAFHgAXKCCqJSczKAAPqCc7IjSkGQAlKUNTS2gAN6KoCbR5aAAHqAAvL2gIfDwpXigAL4A3P0iIaAFiUTwGyMBMxjjx6AAROWVzKetvWsDTqjsZF54Ae5VqJirA4ugMIIoPoDe6QR7PUALADUoAAjN8lopFkA),
+expressions [which are not currently refined in TypeScript](https://www.typescriptlang.org/play/?#code/PTAEHUFMBsGMHsC2lQBd5oBYoCoE8AHSAZVgCcBLA1UABWgEM8BzM+AVwDsATAGiwoBnUENANQAd0gAjQRVSQAUCEmYKsTKGYUAbpGF4OY0BoadYKdJMoL+gzAzIoz3UNEiPOofEVKVqAHSKigBmXLCoFPBeBGxEZKh4APoM0BQMgkmC7LAWgoIAFHgAXKCCqJSczKAAPqCc7IjSkGQAlKUNTS2gAN6KoCbR5aAAHqAAvL2gIfDwpXigAL4A3P0iIaAFiUTwGyMBMxjjx6AAROWVzKetvWsDTqjsZF54Ae5VqJirA4ugMIIoPoDe6QR7PUALADUoAAjN8lopFkA),
 such as data constructors:
 
 ```elixir
@@ -295,5 +295,5 @@ def f(foo) when is_bitstring(foo) or is_integer(foo) do
 end
 ```
 
-In the program below, even though `foo` is set as the value of a map,
+In the program above, even though `foo` is set as the value of a map,
 refining the map still refines the original variable.
