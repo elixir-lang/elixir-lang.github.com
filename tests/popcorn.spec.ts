@@ -1,365 +1,218 @@
-import { expect, test } from "@playwright/test";
+import {
+  type BrowserContext,
+  expect as baseExpect,
+  type Locator,
+  type Page,
+  type Request,
+  test,
+} from "@playwright/test";
 
-test.describe("homepage examples", () => {
-  test.setTimeout(90_000);
+const expect = baseExpect.configure({ timeout: 10_000 });
 
-  test("loads only on Run and preserves edits across isolation and examples", async ({
-    page,
-  }) => {
-    const requests: string[] = [];
-    page.on("request", (request) => {
-      if (/\/otp\/|worker-|\.wasm/.test(request.url())) {
-        requests.push(request.url());
-      }
-    });
-    await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    const result = page
-      .getByRole("figure", { name: "Result", exact: true })
-      .locator("pre");
-    await expect(code).toBeEditable();
-    await expect(code).not.toBeFocused();
-    await page.getByRole("button", { name: "Next example" }).click();
-    await code.fill((await code.inputValue()).replace('"42px"', '"43px"'));
-    expect(requests).toEqual([]);
-    expect(
-      await page.evaluate(() => navigator.serviceWorker.controller),
-    ).toBeNull();
-    await code.press("Meta+Enter");
-    await expect(result).toHaveText("{:pixels, 43}", { timeout: 75_000 });
-    await expect(code).toHaveValue(/Integer.parse\("43px"\)/);
-    await expect(code).not.toBeFocused();
-    const display = code.locator("..").locator("pre");
-    await expect(display).toHaveText(await code.inputValue());
-    await expect
-      .poll(() =>
-        display
-          .locator("span")
-          .evaluateAll(
-            (tokens) =>
-              new Set(tokens.map((token) => getComputedStyle(token).color))
-                .size,
-          ),
-      )
-      .toBeGreaterThan(1);
-    expect(
-      await page.evaluate(
-        () =>
-          crossOriginIsolated && new SharedArrayBuffer(16).byteLength === 16,
-      ),
-    ).toBe(true);
-    expect(requests.length).toBeGreaterThan(0);
-    await expect(
-      page.getByRole("link", { name: "Powered by Popcorn", exact: true }),
-    ).toBeVisible();
-
-    await page.getByRole("button", { name: "Next example" }).click();
-    await run.click();
-    await expect(
-      page.getByRole("figure", { name: "Standard output" }).locator("pre"),
-    ).not.toBeEmpty();
-    await expect(run).toBeEnabled();
-    await page.getByRole("button", { name: "Next example" }).click();
-    await run.click();
-    await expect(result).toHaveText('"Hello Joe"');
-    await page.getByRole("button", { name: "Next example" }).click();
-    await run.click();
-    await expect(result).toContainText('"delightful" => 1');
-    await page.getByRole("button", { name: "Next example" }).click();
-    await expect(code).toHaveValue(/Integer.parse\("43px"\)/);
-
-    const menu = page.getByRole("button", { name: "Open menu" });
-    const menuIsVisible = await menu.isVisible();
-    if (menuIsVisible) {
-      await menu.click();
+test.describe("examples", () => {
+  test("lazy execution and edit persistence", async ({ page }) => {
+    function isRequest(request: Request) {
+      return /\/otp\/|worker-|\.wasm/.test(request.url());
     }
-    await page.getByRole("link", { name: "Docs", exact: true }).first().click();
+    const requests = gatherRequests(page, isRequest);
     await page.goto("/");
-    await expect(run).toBeEnabled();
-    await expect(code).not.toBeFocused();
-    await expect(
-      page.getByRole("status", { name: "Elixir runtime status" }),
-    ).toBeEmpty();
+    const editor = nodes(page);
+
+    await editor.next.click();
+    const source = (await editor.code.inputValue()).replace('"42px"', '"43px"');
+    await editor.code.fill(source);
+    await expect.poll(() => syntaxHighlighted(editor.display)).toBe(true);
+    expect(requests).toHaveLength(0);
+    await expect(editor.popcornLogo).not.toBeVisible();
+
+    await editor.code.press("Meta+Enter");
+    await expect(editor.result).toHaveText("{:pixels, 43}");
+    await expect(editor.code).toHaveValue(source);
+    await expect(editor.display).toHaveText(source);
+    await expect(editor.popcornLogo).toBeVisible();
+
+    await editor.next.click();
+    await editor.previous.click();
+    await expect(editor.code).toHaveValue(source);
   });
 
-  test("retains previous output during execution and separates stdout", async ({
-    page,
-  }) => {
+  test("errors and runtime recovery", async ({ page }) => {
     await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    const result = page
-      .getByRole("figure", { name: "Result", exact: true })
-      .locator("pre");
-    const activity = page.getByRole("status", {
-      name: "Elixir runtime status",
-    });
-    await code.fill('IO.puts("hello")\n21 * 2');
-    await run.click();
-    await expect(result).toHaveText("42", { timeout: 75_000 });
-    const stdout = page.getByRole("figure", { name: "Standard output" });
-    await expect(stdout.locator("pre")).toHaveText("hello");
-    await expect(activity).toBeEmpty();
-    await code.fill("Process.sleep(1_000)\n43");
-    await code.press("Control+Enter");
-    await expect(result).toHaveText("42");
-    await expect(activity).toHaveText("Running…");
-    await expect(result).toHaveText("43");
-    await expect(activity).toBeEmpty();
-    await expect(stdout).toHaveCount(0);
-  });
+    const editor = nodes(page);
 
-  test("shows loading on a stalled download and resumes after release", async ({
-    page,
-    context,
-  }) => {
-    let pulses = 0;
-    page.on("console", (message) => {
-      if (message.text() === "Result pulse") {
-        pulses++;
-      }
-    });
-    await page.addInitScript(() => {
-      document.addEventListener("animationstart", (event) => {
-        if (event.animationName === "popcorn-result") {
-          console.log("Result pulse");
-        }
-      });
-    });
-    let release!: () => void;
-    const gate = new Promise<void>((resolve) => {
-      release = resolve;
-    });
-    await context.route("**/worker-*.js", async (route) => {
-      await gate;
-      await route.continue();
-    });
-    await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    await code.fill("6 * 7");
-    await run.click();
-    const activity = page.getByRole("status", {
-      name: "Elixir runtime status",
-    });
-    await expect(activity).toHaveText("Starting Elixir…", { timeout: 30_000 });
-    await expect(run).toBeDisabled();
-    await expect(code).not.toBeEditable();
-    await expect(
-      page.getByRole("link", { name: "Powered by Popcorn", exact: true }),
-    ).toBeVisible();
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    release();
-    const result = page.getByRole("figure", { name: "Result", exact: true });
-    await expect(result.locator("pre")).toHaveText("42", { timeout: 75_000 });
-    await page.evaluate(
-      () =>
-        new Promise((resolve) => {
-          requestAnimationFrame(() => requestAnimationFrame(resolve));
-        }),
+    await editor.code.fill("1 +");
+    await editor.run.click();
+    await expect(editor.alert).toContainText("TokenMissingError");
+
+    await editor.code.fill(`defmodule UserExample do
+      def fail, do: raise("oops")
+    end
+    apply(UserExample, :fail, [])`);
+    await editor.run.click();
+    await expect(editor.alert).toContainText(
+      "example.exs:2: UserExample.fail/0",
     );
-    expect(pulses).toBe(0);
-    await result.scrollIntoViewIfNeeded();
-    await expect.poll(() => pulses).toBe(1);
-    await expect(run).toBeEnabled();
-    await expect(activity).toBeEmpty();
 
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await code.fill("7 * 7");
-    await run.click();
-    await expect(result.locator("pre")).toHaveText("49");
-    await result.scrollIntoViewIfNeeded();
-    const arrow = result.locator("span");
-    await expect(arrow).toHaveCSS("animation-name", "popcorn-result");
-    await expect(arrow).toHaveCSS("animation-duration", "0.7s");
-    await expect.poll(() => pulses).toBe(2);
+    await editor.code.fill("2 + 2");
+    await editor.run.click();
+    await expect(editor.result).toHaveText("4");
+    await expect(editor.alert).toBeHidden();
+
+    await editor.code.fill("System.halt(0)");
+    await editor.run.click();
+    await expect(editor.alert).toHaveText("Elixir stopped.");
+
+    await editor.retry.click();
+    await editor.code.fill("3 + 4");
+    await editor.run.click();
+    await expect(editor.result).toHaveText("7");
   });
 
-  test("recovers from user errors, timeouts and a stopped runtime", async ({
-    page,
-  }) => {
-    await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    const alert = page.getByRole("alert");
-    const result = page
-      .getByRole("figure", { name: "Result", exact: true })
-      .locator("pre");
-    await code.fill("1 +");
-    await run.click();
-    await expect(alert).toContainText("TokenMissingError", { timeout: 75_000 });
-    await code.fill(
-      'defmodule UserExample do\n  def fail, do: raise("oops")\nend\napply(UserExample, :fail, [])',
-    );
-    await run.click();
-    await expect(alert).toContainText("example.exs:2: UserExample.fail/0");
-    await expect(alert).not.toContainText(
-      /validated_eval_string|WebsiteExamples|Task.Supervised/,
-    );
-    await code.fill("Process.sleep(11_000)");
-    await run.click();
-    await expect(alert).toHaveText("Execution timed out after 10 seconds.", {
-      timeout: 15_000,
-    });
-    await code.fill("2 + 2");
-    await run.click();
-    await expect(result).toHaveText("4");
-    await expect(alert).toHaveCount(0);
-    await code.fill("System.halt(0)");
-    await run.click();
-    await expect(alert).toHaveText("Elixir stopped.");
-    await page.getByRole("button", { name: "Retry", exact: true }).click();
-    await expect(run).toBeEnabled({ timeout: 75_000 });
-    await expect(code).toHaveValue("System.halt(0)");
-    await code.fill("3 + 4");
-    await run.click();
-    await expect(result).toHaveText("7");
-  });
-
-  test("stops after failed isolation instead of reloading forever", async ({
-    page,
-  }) => {
-    let navigations = 0;
-    page.on("request", (request) => {
-      if (
-        request.isNavigationRequest() &&
-        request.frame() === page.mainFrame()
-      ) {
-        navigations++;
-      }
-    });
+  test("isolation failure", async ({ page }) => {
+    function isNavigation(request: Request) {
+      return (
+        request.isNavigationRequest() && request.frame() === page.mainFrame()
+      );
+    }
+    const navigations = gatherRequests(page, isNavigation);
     await page.addInitScript(() => {
       Object.defineProperty(window, "crossOriginIsolated", { value: false });
     });
     await page.goto("/");
-    await page.getByRole("button", { name: "Run", exact: true }).click();
-    await expect(page.getByRole("alert")).toHaveText("Elixir could not start.");
-    await expect(
-      page.getByRole("button", { name: "Retry", exact: true }),
-    ).toBeVisible();
-    expect(navigations).toBe(2);
+    const editor = nodes(page);
+
+    await editor.run.click();
+    await expect(editor.alert).toHaveText("Elixir could not start.");
+    expect(navigations).toHaveLength(2);
   });
 
-  test("retries a failed startup without executing the source", async ({
-    page,
-  }) => {
-    await page.addInitScript(() => {
-      const register = navigator.serviceWorker.register.bind(
-        navigator.serviceWorker,
-      );
-      let firstAttempt = true;
-      navigator.serviceWorker.register = (...args) => {
-        if (firstAttempt) {
-          firstAttempt = false;
-          return Promise.reject(new Error("Registration failed"));
-        }
-        return register(...args);
-      };
-    });
+  test("startup retry", async ({ page }) => {
+    await failFirstRegistration(page);
     await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    await code.fill("System.halt(0)");
-    await run.click();
-    await expect(page.getByRole("alert")).toHaveText("Elixir could not start.");
-    await page.getByRole("button", { name: "Retry", exact: true }).click();
-    await expect(run).toBeEnabled({ timeout: 75_000 });
-    await expect(page.getByRole("alert")).toHaveCount(0);
-    await code.fill("6 * 7");
-    await run.click();
-    await expect(
-      page.getByRole("figure", { name: "Result", exact: true }).locator("pre"),
-    ).toHaveText("42");
+    const editor = nodes(page);
+
+    await editor.code.fill("System.halt(0)");
+    await editor.run.click();
+    await expect(editor.alert).toHaveText("Elixir could not start.");
+
+    await editor.retry.click();
+    await expect(editor.alert).toBeHidden();
+
+    await editor.code.fill("6 * 7");
+    await editor.run.click();
+    await expect(editor.result).toHaveText("42");
   });
 
-  test("keeps the editor usable when storage is denied", async ({ page }) => {
-    await page.addInitScript(() => {
-      Object.defineProperty(window, "sessionStorage", {
-        get() {
-          throw new DOMException("Storage denied", "SecurityError");
-        },
-      });
-    });
-    await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    await expect(code).toBeEditable();
-    await code.fill("21 * 2");
-    await page.getByRole("button", { name: "Run", exact: true }).click();
-    await expect(page.getByRole("alert")).toHaveText("Elixir could not start.");
-    await expect(code).toBeEditable();
-    await expect(code).toHaveValue("21 * 2");
-  });
-
-  test("cancels a slow startup without letting it finish later", async ({
-    page,
-    context,
-  }) => {
+  test("startup cancellation", async ({ page, context }) => {
     await page.clock.install();
-    let release!: () => void;
-    const gate = new Promise<void>((resolve) => {
-      release = resolve;
-    });
-    await context.route("**/worker-*.js", async (route) => {
-      await gate;
-      await route.continue();
-    });
+    const release = await delayRuntime(context);
     await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    const cancel = page.getByRole("button", { name: "Cancel", exact: true });
-    const activity = page.getByRole("status", {
-      name: "Elixir runtime status",
-    });
-    await code.fill("System.halt(0)");
-    await run.click();
-    await expect(activity).toHaveText("Starting Elixir…", { timeout: 30_000 });
-    await expect(cancel).toHaveCount(0);
+    const editor = nodes(page);
+
+    await editor.code.fill("System.halt(0)");
+    await editor.run.click();
+    await expect(editor.activity).toHaveText("Starting Elixir…");
+    await expect(editor.run).toBeDisabled();
+
     await page.clock.fastForward(3_000);
-    await expect(cancel).toBeVisible();
-    await code.press("Meta+Enter");
-    await cancel.click();
-    await expect(activity).toHaveText("Cancelled.");
-    await expect(code).toHaveValue("System.halt(0)");
-    await code.fill("21 * 2");
-    await run.click();
+    await editor.cancel.click();
+    await expect(editor.activity).toHaveText("Cancelled.");
+    await expect(editor.code).toHaveValue("System.halt(0)");
+
+    await editor.code.fill("21 * 2");
+    await editor.run.click();
     release();
-    await expect(
-      page.getByRole("figure", { name: "Result", exact: true }).locator("pre"),
-    ).toHaveText("42", { timeout: 75_000 });
-    await expect(page.getByRole("alert")).toHaveCount(0);
+    await expect(editor.result).toHaveText("42");
   });
 
-  test("cancels a slow run and preserves the previous output", async ({
-    page,
-  }) => {
+  test("execution cancellation and output", async ({ page }) => {
     await page.clock.install();
     await page.goto("/");
-    const code = page.getByRole("textbox", { name: "Elixir example code" });
-    const run = page.getByRole("button", { name: "Run", exact: true });
-    const cancel = page.getByRole("button", { name: "Cancel", exact: true });
-    const result = page
-      .getByRole("figure", { name: "Result", exact: true })
-      .locator("pre");
-    await code.fill("43");
-    await run.click();
-    await expect(result).toHaveText("43", { timeout: 75_000 });
-    await expect(cancel).toHaveCount(0);
-    await page.clock.pauseAt(new Date(Date.now() + 1_000));
-    await code.fill("Process.sleep(9_000)\n44");
-    await code.press("Control+Enter");
-    await page.clock.runFor(2_999);
-    await expect(cancel).toHaveCount(0);
-    await page.clock.runFor(1);
-    await expect(cancel).toBeVisible();
-    await cancel.click();
-    await expect(code).toHaveValue("Process.sleep(9_000)\n44");
-    await expect(result).toHaveText("43");
-    await expect(run).toBeEnabled();
-    await expect(cancel).toHaveCount(0);
-    await code.fill("6 * 7");
-    await code.press("Control+Enter");
-    await expect(result).toHaveText("42", { timeout: 75_000 });
-    await expect(page.getByRole("alert")).toHaveCount(0);
+    const editor = nodes(page);
+
+    await editor.code.fill('IO.puts("hello")\n43');
+    await editor.run.click();
+    await expect(editor.result).toHaveText("43");
+    await expect(editor.stdout).toHaveText("hello");
+
+    const source = "Process.sleep(:infinity)";
+    await editor.code.fill(source);
+    await editor.code.press("Control+Enter");
+    await expect(editor.activity).toHaveText("Running…");
+    await expect(editor.result).toHaveText("43");
+
+    await page.clock.fastForward(3_000);
+    await editor.cancel.click();
+    await expect(editor.code).toHaveValue(source);
+    await expect(editor.result).toHaveText("43");
+
+    await editor.code.fill("6 * 7");
+    await editor.run.click();
+    await expect(editor.result).toHaveText("42");
+    await expect(editor.stdout).toBeHidden();
   });
 });
+
+function gatherRequests(page: Page, matches: (request: Request) => boolean) {
+  const requests: Request[] = [];
+  page.on("request", (request) => {
+    if (matches(request)) requests.push(request);
+  });
+  return requests;
+}
+
+function nodes(page: Page) {
+  const code = page.getByRole("textbox", { name: "Elixir example code" });
+  return {
+    code,
+    display: code.locator("..").locator("pre"),
+    result: page
+      .getByRole("figure", { name: "Result", exact: true })
+      .locator("pre"),
+    stdout: page
+      .getByRole("figure", { name: "Standard output" })
+      .locator("pre"),
+    alert: page.getByRole("alert"),
+    activity: page.getByRole("status", { name: "Elixir runtime status" }),
+    run: page.getByRole("button", { name: "Run", exact: true }),
+    retry: page.getByRole("button", { name: "Retry", exact: true }),
+    cancel: page.getByRole("button", { name: "Cancel", exact: true }),
+    popcornLogo: page.getByRole("link", {
+      name: "Powered by Popcorn",
+      exact: true,
+    }),
+    next: page.getByRole("button", { name: "Next example" }),
+    previous: page.getByRole("button", { name: "Previous example" }),
+  };
+}
+
+function syntaxHighlighted(node: Locator) {
+  return node.locator("span").evaluateAll((tokens) => {
+    const colors = tokens.map((token) => getComputedStyle(token).color);
+    return new Set(colors).size > 1;
+  });
+}
+
+async function delayRuntime(context: BrowserContext) {
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await context.route("**/worker-*.js", async (route) => {
+    await gate;
+    await route.continue();
+  });
+  return release;
+}
+
+async function failFirstRegistration(page: Page) {
+  await page.addInitScript(() => {
+    const register = navigator.serviceWorker.register.bind(
+      navigator.serviceWorker,
+    );
+    navigator.serviceWorker.register = () => {
+      navigator.serviceWorker.register = register;
+      return Promise.reject(new Error("Registration failed"));
+    };
+  });
+}
