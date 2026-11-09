@@ -1,6 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { EXAMPLES } from "./hero-examples";
+import { RESUME_KEY } from "./popcorn-isolation";
 import { useExampleRuntime } from "./use-example-runtime";
+
+type EditorResumeState = {
+  idx: number;
+  sources: string[];
+  runOnResume: boolean;
+};
 
 export function useExampleEditor() {
   const [interactive, setInteractive] = useState(false);
@@ -8,12 +15,8 @@ export function useExampleEditor() {
   const [sources, setSources] = useState(
     EXAMPLES.map((example) => example.code),
   );
-  const resume = useCallback((saved: { idx: number; sources: string[] }) => {
-    setIdx(saved.idx);
-    setSources(saved.sources);
-  }, []);
   const { status, error, runtime, outputs, start, run, cancel } =
-    useExampleRuntime(resume);
+    useExampleRuntime();
   const busy = status === "loading" || status === "running";
   let activityLabel: string | null = null;
   if (status === "loading") activityLabel = "Starting Elixir…";
@@ -22,6 +25,20 @@ export function useExampleEditor() {
   const cancelDelay = useDelayedValue(busy ? true : null, 3_000);
 
   useEffect(() => setInteractive(true), []);
+  useEffect(() => {
+    const saved = takeSessionValue<EditorResumeState>(RESUME_KEY);
+    if (saved === null) return;
+    setIdx(saved.idx);
+    setSources(saved.sources);
+
+    const resume = async () => {
+      const instance = await start(JSON.stringify(saved), true);
+      if (instance !== null && saved.runOnResume) {
+        await run(instance, saved.idx, saved.sources[saved.idx]);
+      }
+    };
+    resume();
+  }, [start, run]);
 
   const select = (next: number) => {
     if (busy) return;
@@ -34,14 +51,16 @@ export function useExampleEditor() {
   };
   const execute = async () => {
     let instance = runtime;
-    if (status !== "ready") {
-      instance = await start({ idx, sources, runOnResume: true });
+    if (instance === null) {
+      const resumeState = { idx, sources, runOnResume: true };
+      instance = await start(JSON.stringify(resumeState));
     }
     if (instance === null) return;
     await run(instance, idx, sources[idx]);
   };
   const retry = async () => {
-    await start({ idx, sources, runOnResume: false });
+    const resumeState = { idx, sources, runOnResume: false };
+    await start(JSON.stringify(resumeState));
   };
   return {
     example: {
@@ -102,4 +121,15 @@ function useDelayedValue<T>(value: T | null, delayMs: number, minimumMs = 0) {
 
   if (value === null && minimumMs === 0) return null;
   return displayed?.value ?? null;
+}
+
+function takeSessionValue<T>(key: string): T | null {
+  try {
+    const value = sessionStorage.getItem(key);
+    if (value === null) return null;
+    sessionStorage.removeItem(key);
+    return JSON.parse(value) as T;
+  } catch {
+    return null;
+  }
 }

@@ -2,7 +2,7 @@ import type { Popcorn, PopcornOpts } from "@swmansion/popcorn";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { assert } from "@/utilities/assert";
 import { EXAMPLES } from "./hero-examples";
-import { ensureIsolation, RESUME_KEY } from "./popcorn-isolation";
+import { ensureIsolation } from "./popcorn-isolation";
 
 const ERROR_MESSAGES = {
   startup: "Elixir could not start.",
@@ -10,7 +10,6 @@ const ERROR_MESSAGES = {
 };
 
 type Result = { value?: string; error?: string };
-type EditorState = { idx: number; sources: string[]; runOnResume: boolean };
 type RuntimeState =
   | { status: "idle" | "loading" | "cancelled" }
   | { status: "ready" | "running"; runtime: Popcorn }
@@ -42,7 +41,7 @@ function transition(state: RuntimeState, event: RuntimeEvent): RuntimeState {
   }
 }
 
-export function useExampleRuntime(onResume: (state: EditorState) => void) {
+export function useExampleRuntime() {
   const [state, dispatch] = useReducer(transition, { status: "idle" });
   const { outputs, begin, append, complete, clear } = useRunOutputs<Result>(
     EXAMPLES.map((example) => example.precanned),
@@ -58,7 +57,7 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
   }, [clear]);
 
   const start = useCallback(
-    async (editor: EditorState, resumed = false) => {
+    async (serializedResumeState: string, resumed = false) => {
       dispose();
       dispatch({ type: "start" });
       const attempt = createPopcornController({
@@ -78,7 +77,7 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
 
       try {
         const isolation = await ensureIsolation(
-          JSON.stringify(editor),
+          serializedResumeState,
           resumed,
           attempt.signal,
         );
@@ -120,26 +119,7 @@ export function useExampleRuntime(onResume: (state: EditorState) => void) {
     dispatch({ type: "cancel" });
   }, [dispose]);
 
-  useEffect(() => {
-    async function resume() {
-      let saved: EditorState;
-      try {
-        const pending = sessionStorage.getItem(RESUME_KEY);
-        if (pending === null) return;
-        sessionStorage.removeItem(RESUME_KEY);
-        saved = JSON.parse(pending) as EditorState;
-      } catch {
-        return;
-      }
-      onResume(saved);
-      const runtime = await start(saved, true);
-      if (runtime !== null && saved.runOnResume) {
-        await run(runtime, saved.idx, saved.sources[saved.idx]);
-      }
-    }
-    resume();
-    return dispose;
-  }, [onResume, start, run, dispose]);
+  useEffect(() => dispose, [dispose]);
 
   let error = "";
   if (state.status === "error") {
