@@ -14,7 +14,7 @@ Static Astro site, content authored in Markdown, deployed with GitHub Pages.
   learning resources and version data
 - Shiki for code highlighting: prose via the markdown pipeline, the
   homepage snippets at build time (`src/utilities/elixir-highlight.ts`)
-- [Popcorn](https://github.com/software-mansion/popcorn) (AtomVM + Elixir
+- [Popcorn](https://github.com/software-mansion/popcorn) (Erlang/OTP + Elixir
   in WebAssembly) powering the interactive hero code editor
 - Biome for lint and format
 - Playwright for smoke, visual and accessibility tests
@@ -182,40 +182,12 @@ GitHub Pages builds the site through `.github/workflows/deploy.yml`. The
 workflow builds the canonical `https://elixir-lang.org` site and deploys the
 generated `dist` directory.
 
-Publish the whole `dist/` tree, including the generated workers, Wasm and
-`_astro/otp/` archives. Popcorn 1.0.1 is pinned in npm and Mix. Its threaded
-OTP runtime needs `SharedArrayBuffer` and these response headers:
-
-```http
-Cross-Origin-Opener-Policy: same-origin
-Cross-Origin-Embedder-Policy: require-corp
-```
-
-GitHub Pages cannot set these headers. The first Run registers
-`public/coi-serviceworker.js` and reloads once to enable isolation, preserving
-edits and the requested execution. The worker persists across later visits.
-Production requires HTTPS; localhost is a secure-context exception. Hosts
-that supply the headers directly need no worker or reload.
-
-### React lifecycle hook
-
-`src/hooks/use-popcorn.ts` owns the VM lifecycle. `start(options)` replaces any
-previous VM and returns the booted instance, or `null` on failure or cancellation.
-Options apply to that start only. The hook exposes status and failures, stops
-the VM on unmount, and provides `stop()` for explicit shutdown. Isolation,
-evaluation, output formatting and UI timing stay in the homepage hooks.
-
-### Homepage examples
-
-Code is editable without autofocus. Editing loads syntax highlighting, not
-the runtime. Run, Ctrl+Enter or Cmd+Enter boots Popcorn and evaluates with
-fresh bindings. Loading and execution feedback appears after 350 ms; previous
-output stays visible until execution completes. Results and stdout are separate, and terminal output is
-limited to 16,000 characters. A task enforces a ten-second execution timeout;
-JavaScript waits up to fifteen seconds for its reply. Cancel appears after
-three seconds and stops the VM without discarding edits or previous output.
-Run starts a fresh VM after cancellation. Retry restarts a failed runtime
-without executing the source. Leaving the homepage stops the VM.
+Publish the whole `dist/` tree, including Popcorn's generated runtime assets.
+The runtime requires cross-origin isolation. On GitHub Pages, the first Run
+registers `public/coi-serviceworker.js` and reloads once, preserving edits and
+the requested execution. The worker persists across visits and requires
+HTTPS (or localhost). Hosts that set `Cross-Origin-Opener-Policy: same-origin`
+and `Cross-Origin-Embedder-Policy: require-corp` need no worker or reload.
 
 Preview builds emit `noindex, nofollow`. Set `PROD=true` only in the official
 deployment workflow to allow search engines to index the site.
