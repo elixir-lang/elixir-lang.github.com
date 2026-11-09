@@ -45,7 +45,7 @@ Brotli dependency also requires `make` and a C compiler.
 | `pnpm lint` | Biome lint only |
 | `pnpm typecheck` | `astro check` (TypeScript across `.astro` and `.ts(x)`) |
 | `pnpm test` | All Playwright specs |
-| `pnpm test:popcorn` | Service-worker checks and built homepage examples |
+| `pnpm test:popcorn` | Built homepage examples |
 | `pnpm test:smoke` | Route smoke checks |
 | `pnpm test:visual` | Visual regression snapshots |
 | `pnpm test:a11y` | axe-core accessibility scan |
