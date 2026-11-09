@@ -121,6 +121,7 @@ test.describe("examples", () => {
 
     await editor.code.fill("21 * 2");
     await editor.run.click();
+    await expect(editor.cancel).toBeHidden();
     release();
     await expect(editor.result).toHaveText("42");
   });

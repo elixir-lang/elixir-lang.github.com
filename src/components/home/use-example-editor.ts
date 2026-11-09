@@ -15,32 +15,13 @@ export function useExampleEditor() {
   const { status, error, runtime, outputs, start, run, cancel } =
     useExampleRuntime(resume);
   const busy = status === "loading" || status === "running";
-  const [canCancel, setCanCancel] = useState(false);
-  const [activity, setActivity] = useState<{
-    kind: "loading" | "running";
-    shownAt: number;
-  } | null>(null);
+  let activityLabel: string | null = null;
+  if (status === "loading") activityLabel = "Starting Elixir…";
+  if (status === "running") activityLabel = "Running…";
+  const activity = useDelayedValue(activityLabel, 350, 400);
+  const cancelDelay = useDelayedValue(busy ? true : null, 3_000);
 
   useEffect(() => setInteractive(true), []);
-  useEffect(() => {
-    setCanCancel(false);
-    if (!busy) return;
-    const timer = setTimeout(() => setCanCancel(true), 3_000);
-    return () => clearTimeout(timer);
-  }, [busy]);
-  useEffect(() => {
-    if (status === "loading" || status === "running") {
-      if (activity?.kind === status) return;
-      const timer = setTimeout(() => {
-        setActivity({ kind: status, shownAt: performance.now() });
-      }, 350);
-      return () => clearTimeout(timer);
-    }
-    if (activity === null) return;
-    const remaining = Math.max(0, 400 - (performance.now() - activity.shownAt));
-    const timer = setTimeout(() => setActivity(null), remaining);
-    return () => clearTimeout(timer);
-  }, [status, activity]);
 
   const select = (next: number) => {
     if (busy) return;
@@ -62,14 +43,6 @@ export function useExampleEditor() {
   const retry = async () => {
     await start({ idx, sources, runOnResume: false });
   };
-  let activityLabel = status === "cancelled" ? "Cancelled." : "";
-  if (activity?.kind === "loading") {
-    activityLabel = "Starting Elixir…";
-  }
-  if (activity?.kind === "running") {
-    activityLabel = "Running…";
-  }
-
   return {
     example: {
       idx,
@@ -82,10 +55,10 @@ export function useExampleEditor() {
       started: status !== "idle",
       error,
       busy,
-      canCancel: busy && canCancel,
       disabled: !interactive || busy,
-      activity: activityLabel,
+      activity: activity ?? (status === "cancelled" ? "Cancelled." : ""),
       working: activity !== null,
+      canCancel: busy && cancelDelay === true,
     },
     actions: {
       select,
@@ -97,4 +70,36 @@ export function useExampleEditor() {
       cancel,
     },
   };
+}
+
+// Shows values after delayMs; null clears them after at least minimumMs on screen.
+function useDelayedValue<T>(value: T | null, delayMs: number, minimumMs = 0) {
+  const [displayed, setDisplayed] = useState<{
+    value: T;
+    shownAt: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (value !== null) {
+      if (displayed?.value === value) return;
+      const timer = setTimeout(() => {
+        setDisplayed({ value, shownAt: performance.now() });
+      }, delayMs);
+      return () => clearTimeout(timer);
+    }
+    if (displayed === null) return;
+    const remaining = Math.max(
+      0,
+      minimumMs - (performance.now() - displayed.shownAt),
+    );
+    if (remaining === 0) {
+      setDisplayed(null);
+      return;
+    }
+    const timer = setTimeout(() => setDisplayed(null), remaining);
+    return () => clearTimeout(timer);
+  }, [value, delayMs, minimumMs, displayed]);
+
+  if (value === null && minimumMs === 0) return null;
+  return displayed?.value ?? null;
 }
