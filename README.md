@@ -14,7 +14,7 @@ Static Astro site, content authored in Markdown, deployed with GitHub Pages.
   learning resources and version data
 - Shiki for code highlighting: prose via the markdown pipeline, the
   homepage snippets at build time (`src/utilities/elixir-highlight.ts`)
-- [Popcorn](https://github.com/software-mansion/popcorn) (AtomVM + Elixir
+- [Popcorn](https://github.com/software-mansion/popcorn) (Erlang/OTP + Elixir
   in WebAssembly) powering the interactive hero code editor
 - Biome for lint and format
 - Playwright for smoke, visual and accessibility tests
@@ -24,13 +24,15 @@ Static Astro site, content authored in Markdown, deployed with GitHub Pages.
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:4321
+mise install --cd popcorn
+mise exec --cd popcorn -- mix deps.get --check-locked
+mise exec elixir@1.20.4-otp-29 erlang@29.0.6 -- pnpm dev
 ```
 
-The Popcorn hero editor uses the AVM bundle at `public/bundle.avm`. The
-file is committed (~7 MB) so the editor "just works" after `pnpm install`.
-If it's missing the editor gracefully falls back to pre-canned outputs.
-Regeneration instructions live in [`BUNDLE_AVM.md`](./BUNDLE_AVM.md).
+Use the same Elixir/OTP toolchain for `pnpm build`, `pnpm preview`, and
+`pnpm typecheck`. Popcorn's Vite plugin compiles and packages the evaluator
+in `popcorn/`; no generated runtime binaries are committed. Building its
+Brotli dependency also requires `make` and a C compiler.
 
 ## Scripts
 
@@ -43,6 +45,7 @@ Regeneration instructions live in [`BUNDLE_AVM.md`](./BUNDLE_AVM.md).
 | `pnpm lint` | Biome lint only |
 | `pnpm typecheck` | `astro check` (TypeScript across `.astro` and `.ts(x)`) |
 | `pnpm test` | All Playwright specs |
+| `pnpm test:popcorn` | Built homepage examples |
 | `pnpm test:smoke` | Route smoke checks |
 | `pnpm test:visual` | Visual regression snapshots |
 | `pnpm test:a11y` | axe-core accessibility scan |
@@ -56,10 +59,9 @@ elixir-website/
 ├── biome.json
 ├── tsconfig.json
 ├── package.json
-├── BUNDLE_AVM.md              # how to (re)build public/bundle.avm
 ├── AGENTS.md                  # conventions for AI assistants
-├── public/                    # favicon, OG fallback, robots.txt,
-│                              #   bundle.avm (Popcorn runtime)
+├── popcorn/                   # evaluator, locked dependencies and toolchain
+├── public/                    # favicon, OG fallback, robots.txt, isolation worker
 ├── scripts/                   # Deployment and SVG optimization utilities
 ├── src/
 │   ├── assets/                # fonts, icons, logos, images
@@ -180,9 +182,12 @@ GitHub Pages builds the site through `.github/workflows/deploy.yml`. The
 workflow builds the canonical `https://elixir-lang.org` site and deploys the
 generated `dist` directory.
 
-The Popcorn WASM hero editor needs cross-origin isolation. Because GitHub
-Pages cannot configure COOP/COEP response headers, production builds load
-`public/coi-serviceworker.js` from `BaseLayout.astro`.
+Publish the whole `dist/` tree, including Popcorn's generated runtime assets.
+The runtime requires cross-origin isolation. On GitHub Pages, the first Run
+registers `public/coi-serviceworker.js` and reloads once, preserving edits and
+the requested execution. The worker persists across visits and requires
+HTTPS (or localhost). Hosts that set `Cross-Origin-Opener-Policy: same-origin`
+and `Cross-Origin-Embedder-Policy: require-corp` need no worker or reload.
 
 Preview builds emit `noindex, nofollow`. Set `PROD=true` only in the official
 deployment workflow to allow search engines to index the site.

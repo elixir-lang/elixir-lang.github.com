@@ -1,6 +1,7 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import { popcorn } from "@swmansion/popcorn/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import { toAstroRedirects } from "./src/data/redirects";
@@ -50,6 +51,6 @@ export default defineConfig({
   },
   integrations: [react(), mdx(), sitemap()],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), popcorn({ rootDir: "./popcorn" })],
   },
 });

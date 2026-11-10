@@ -31,8 +31,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
+      - name: Setup Elixir and OTP
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: "1.20.4"
+          otp-version: "29.0.6"
+
+      - name: Install evaluator dependencies
+        working-directory: popcorn
+        run: mix deps.get --check-locked
+
       - name: Check
         run: |
           pnpm lint
           pnpm typecheck
           pnpm build
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Test homepage examples on a static server
+        run: pnpm test:popcorn

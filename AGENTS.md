@@ -16,18 +16,8 @@ fixes; use `pnpm lint` for the equivalent read-only check.
 
 ## Deployment
 
-- GitHub Pages: see `BUNDLE_AVM.md`, `.github/workflows/deploy.yml`, and the
-  `coi-serviceworker` setup.
-
-## Popcorn (homepage hero editor)
-
-- AVM bundle lives at `public/bundle.avm` (~7 MB, committed). Rebuild recipe
-  in `BUNDLE_AVM.md`.
-- Vite plugin is conditionally registered in `astro.config.ts` based on the
-  bundle's presence so dev setups without it still build.
-- The runtime requires `Cross-Origin-Opener-Policy: same-origin` +
-  `Cross-Origin-Embedder-Policy: require-corp` headers. On hosts that can't
-  set them, the `coi-serviceworker` workaround is used.
+- GitHub Pages and Popcorn setup: see `README.md` and
+  `.github/workflows/deploy.yml`.
 
 ## Reveal animation system
 
