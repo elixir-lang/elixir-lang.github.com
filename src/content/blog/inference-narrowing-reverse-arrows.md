@@ -75,9 +75,9 @@ to any function that accepts at least one of `float()` or `integer()`. However,
 because `byte_size(x)` expects a bitstring, we have a typing violation.
 
 This is possible because `dynamic()` in Elixir actually means `dynamic(term())`,
-where `term()` is the top type. Then, as a variable is used throughout a function,
-its dynamic type is refined by intersecting its type with the domain of the invoked
-functions. In other words, we go through the following steps:
+where `term()` is the top type. Then, as a variable is used throughout the code,
+its dynamic type is refined by intersecting its type with the arguments of the
+functions the code invokes. In other words, we go through the following steps:
 
 1. `x` starts as `dynamic(term())`
 
@@ -103,7 +103,8 @@ This time, we pass `x` to the remainder function, `rem`, which expects all of it
 inputs to be integers. This means that, at the end of this function, Elixir will
 correctly infer that `x` can only be an integer, because `x` was refined from
 `dynamic(term())` to `dynamic(integer() or float())` and then only to `dynamic(integer())`.
-The inferred type for `using_x_as_integer` is `dynamic(integer()) -> :ok`.
+The inferred type for `using_x_as_integer` is a function, commonly written using
+the arrow notation: `dynamic(integer()) -> :ok`.
 
 The best part is that all dynamic types in Elixir are refined and therefore the type
 system is always doing its best to find bugs, even in the presence of dynamism.
@@ -112,52 +113,71 @@ will explore next.
 
 ## Reverse arrows
 
-Functions in Elixir can be typed with multiple arrows. As an exercise, let's take the
-unary negation operator. You could give it this type signature:
+An arrow is the type of a function: `integer() -> boolean()` is an arrow that
+says "given an integer, this function returns a boolean". The type on the left
+of the arrow is its domain (what it accepts) and the type on the right is its
+codomain (what it returns). Every function has arrows, whether they come from
+a type signature you wrote or are inferred by Elixir from the function's clauses.
+
+Functions in Elixir can be typed with multiple arrows. As an exercise, let's take
+a function that negates numbers, such as `negate(1)` returning `-1`:
+
+```elixir
+def negate(number) when is_integer(number), do: 0 - number
+def negate(number) when is_float(number), do: 0.0 - number
+```
+
+You could give it this type signature with a single arrow:
 
 ```elixir
 $ integer() or float() -> integer() or float()
-def -number
+def negate(number)
 ```
 
 However, this type says that, if you give it an integer, it may return a
 float, which is never the case! This signature is too broad. Instead, we
-could give it this signature:
+could give it this signature with two arrows:
 
 ```elixir
 $ integer() -> integer()
 $ float() -> float()
-def -number
+def negate(number)
 ```
 
 This precisely captures that, if you give it an integer, it returns an integer.
 If you give it a float, it returns a float. Multiple arrows are an excellent way
 to type functions with multiple clauses, which are common in both Erlang and Elixir.
 
-With this in mind, what do you believe is the inferred type of `x` in the function below?
+With this in mind, and remembering that `rem` only works on integers (its type is
+`integer(), integer() -> integer()`), what do you believe is the inferred type of
+`x` in the function below?
 
 ```elixir
-def negated_half_remainder(x), do: rem(-x, 2)
+def negated_remainder(x), do: rem(negate(x), 2)
 ```
 
 You may think `x` is `dynamic(integer() or float())`, because that's the domain of
-the unary negation operator. However, `x` will once again be inferred to be
-`dynamic(integer())`, because Elixir reverse propagates types through the arrows.
-Let's break it down.
+`negate`. However, `x` will once again be inferred to be `dynamic(integer())`,
+because Elixir propagates types through the arrows in reverse: it starts from
+what the outermost call expects and walks inwards, from results to arguments,
+until it reaches the variables. Let's break it down.
 
-1. We start type checking the function and we find `rem(-x, 2)`. `rem` has the type
-   signature `integer(), integer() -> integer()`. Because it has a single arrow,
-   we know that `-x` must be `integer()` for this to type check
+1. We start type checking the function and we find `rem(negate(x), 2)`. `rem` has
+   a single arrow, `integer(), integer() -> integer()`, so we know that `negate(x)`
+   must return an `integer()` for this to type check
 
-2. Now we type check `-x`. We know that `-` has two arrows: `integer() -> integer()`
-   and `float() -> float()`. We also know that, because the result of `-x` is given to
-   `rem` which expects an integer, we can discard the `float() -> float()` arrow,
-   and the only valid type for the argument of `-` is `integer()`
+2. Now we type check `negate(x)`. `negate` has two arrows: `integer() -> integer()`
+   and `float() -> float()`. Since its result must be an integer, we can discard
+   the `float() -> float()` arrow, as it never returns an integer. The only remaining
+   arrow is `integer() -> integer()`, so the argument of `negate` must be `integer()`
 
 3. Now we type check `x` itself. `x` starts with the type `dynamic(term())`. We then
    intersect it with `integer()`, resulting in `dynamic(integer())`
 
-In other words, as we give precise type signatures to our programs using multiple
+In other words, inference goes in two directions. Going forward, from arguments to
+results, arrows tell us what each call returns. Going in reverse, from results to
+arguments, arrows tell us what each argument must have been for the call to produce
+the expected result. As we give precise type signatures to our programs using multiple
 arrows, the type system will use these same arrows to infer precise types. As we will
 learn next, Elixir uses this technique to infer types from guards and to perform type
 narrowing (also known as occurrence typing).
@@ -244,6 +264,11 @@ defp parse(x) when is_integer(x), do: {:ok, x}
 defp parse(x) when is_bitstring(x), do: :error
 ```
 
+Here, `parse` has no type signature, but Elixir infers its arrows from its clauses:
+`integer() -> {:ok, integer()}` and `bitstring() -> :error`. Within the first branch,
+we know `parse(x)` returned a tuple, and the only arrow that returns a tuple has
+`integer()` as its domain, so `x` must be an integer.
+
 The [If-T benchmark](https://github.com/utahplt/ifT-benchmark) is a collection of
 test scenarios designed to evaluate both the precision and soundness of type narrowing.
 Elixir v1.20 already handled 12 out of the 13 tests, but it could not infer the
@@ -259,13 +284,20 @@ else
 end
 ```
 
-In other words, Elixir could only narrow the types in the expressions given to
-`if` and `case`. If the expression was moved to an assignment, we could no longer
-narrow it. That would be quite harmful once we add type signatures, because it
-means trivial refactoring techniques, such as extracting an expression into a variable,
-could lead to false positives.
+To narrow `x`, we need to reverse the arrows of `is_integer(x)`. In Elixir v1.20, we
+only did so for the expression given directly to `if` or `case`. Here, the expression
+given to `if` is the variable `y`. All v1.20 knew about `y` is that it was a `boolean()`.
+Inside the `do`-branch, `y` is `true`, but by then the connection between `y` and
+`is_integer(x)` had been lost at the assignment, so there were no arrows to reverse.
 
-Elixir v1.21 solves it by narrowing even across assignments, as in the example below:
+This would be quite harmful once we add type signatures, because it means trivial
+refactoring techniques, such as extracting an expression into a variable, could lead
+to false positives.
+
+Elixir v1.21 solves this by keeping track of the expression each variable was assigned
+to. Now, when `y` is narrowed to `true`, we know `y` came from `is_integer(x)`, so we
+continue propagating `true` in reverse through the arrows of `is_integer`, narrowing `x`
+to `integer()`. This works across any number of assignments:
 
 ```elixir
 y = is_integer(x)
@@ -279,9 +311,9 @@ end
 ```
 
 Our implementation also performs the narrowing lazily, by cross-referencing the variables
-in the `if` and `case` expressions with the variables used in each clause.
-For example, if the clauses above do not access `z`, `y`, or `x`, then no narrowing is
-performed.
+in the `if` and `case` expressions with the variables used in each clause, trying to find
+any assignment they share with each other. If the clauses above do not access `z`, `y`, or
+`x`, then no narrowing is performed.
 
 Finally, because Elixir defines reverse arrows for almost all operations, it can refine
 expressions [which are not currently refined in TypeScript](https://www.typescriptlang.org/play/?#code/PTAEHUFMBsGMHsC2lQBd5oBYoCoE8AHSAZVgCcBLA1UABWgEM8BzM+AVwDsATAGiwoBnUENANQAd0gAjQRVSQAUCEmYKsTKGYUAbpGF4OY0BoadYKdJMoL+gzAzIoz3UNEiPOofEVKVqAHSKigBmXLCoFPBeBGxEZKh4APoM0BQMgkmC7LAWgoIAFHgAXKCCqJSczKAAPqCc7IjSkGQAlKUNTS2gAN6KoCbR5aAAHqAAvL2gIfDwpXigAL4A3P0iIaAFiUTwGyMBMxjjx6AAROWVzKetvWsDTqjsZF54Ae5VqJirA4ugMIIoPoDe6QR7PUALADUoAAjN8lopFkA),
