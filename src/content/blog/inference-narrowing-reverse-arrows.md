@@ -19,7 +19,8 @@ false positives.
 
 > The type system was made possible thanks to a partnership between [CNRS](https://www.cnrs.fr/)
 > and [Remote](https://remote.com/). The development work is currently sponsored by
-> [Supermethod](https://www.supermethod.com/) and [Dashbit](https://dashbit.co/).
+> [Fresha](https://www.fresha.com/), [Supermethod](https://www.supermethod.com/) and
+> [Dashbit](https://dashbit.co/).
 
 ## Type inference
 
