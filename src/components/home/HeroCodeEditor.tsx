@@ -1,7 +1,9 @@
-import { Fragment, useState } from "react";
+import popcornLogo from "@/assets/icons/popcorn.svg?url";
 import { EXAMPLES } from "@/components/home/hero-examples";
+import { useExampleEditor } from "@/components/home/use-example-editor";
+import { useResultAnimation } from "@/components/home/use-result-animation";
 import type { HighlightedLine } from "@/utilities/elixir-highlight";
-import { tokenStyle } from "@/utilities/highlight-style";
+import HighlightedCode from "./HighlightedCode";
 
 function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
   return (
@@ -25,15 +27,13 @@ function ArrowIcon({ direction = "right" }: { direction?: "left" | "right" }) {
 }
 
 function ExampleDots({
-  count,
   activeIdx,
   onSelect,
-  titles,
+  disabled,
 }: {
-  count: number;
   activeIdx: number;
   onSelect: (i: number) => void;
-  titles: string[];
+  disabled: boolean;
 }) {
   return (
     <div
@@ -41,8 +41,12 @@ function ExampleDots({
       role="tablist"
       aria-label="Code examples"
     >
-      {titles.slice(0, count).map((title, i) => {
+      {EXAMPLES.map(({ title }, i) => {
         const active = i === activeIdx;
+        let background = "bg-gray-60 hover:bg-gray-40";
+        if (active) {
+          background = "bg-white-10";
+        }
         return (
           <button
             key={title}
@@ -52,11 +56,8 @@ function ExampleDots({
             aria-current={active ? "true" : undefined}
             aria-label={`Example ${i + 1}: ${title}`}
             onClick={() => onSelect(i)}
-            className={
-              active
-                ? "size-2.5 shrink-0 cursor-pointer rounded-full bg-white-10 outline-none transition-colors duration-fast ease-out-quart focus-visible:ring-2 focus-visible:ring-purple-40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                : "size-2.5 shrink-0 cursor-pointer rounded-full bg-gray-60 outline-none transition-colors duration-fast ease-out-quart hover:bg-gray-40 focus-visible:ring-2 focus-visible:ring-purple-40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            }
+            disabled={disabled}
+            className={`size-2.5 cursor-pointer rounded-full outline-none transition-colors duration-fast ease-out-quart focus-visible:ring-2 focus-visible:ring-purple-40 focus-visible:ring-offset-2 focus-visible:ring-offset-black ${background}`}
           />
         );
       })}
@@ -64,105 +65,235 @@ function ExampleDots({
   );
 }
 
+function RuntimeFeedback({
+  runtime,
+  onRetry,
+  onCancel,
+}: {
+  runtime: ReturnType<typeof useExampleEditor>["runtime"];
+  onRetry: () => Promise<void>;
+  onCancel: () => void;
+}) {
+  const { activity, error, started, working } = runtime;
+  const hasError = error !== "";
+  let feedback = (
+    <output aria-label="Elixir runtime status" className="truncate">
+      {activity}
+    </output>
+  );
+  if (hasError) {
+    feedback = (
+      <>
+        <p role="alert" className="min-w-0 text-orange-50">
+          {error}
+        </p>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="shrink-0 cursor-pointer rounded-xs px-1 text-white-10 hover:text-purple-40 focus-visible:outline-2 focus-visible:outline-purple-40"
+        >
+          Retry
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <div className="relative flex min-h-10 items-center justify-between gap-3 border-t border-gray-80 px-2 py-2 text-caption text-gray-20 sm:px-4 sm:text-small">
+      {working && !hasError && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 -top-px h-0.5 overflow-hidden"
+        >
+          <span className="block h-full w-1/3 bg-purple-40 animate-popcorn-busy" />
+        </span>
+      )}
+      <div className="flex min-w-0 items-center gap-2">
+        {feedback}
+        {runtime.canCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="shrink-0 cursor-pointer rounded-xs px-1 text-white-10 hover:text-purple-40 focus-visible:outline-2 focus-visible:outline-purple-40"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
+      {started && (
+        <a
+          href="https://popcorn.swmansion.com/"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-xs text-micro sm:text-caption transition-colors duration-base hover:text-white-10 focus-visible:outline-2 focus-visible:outline-purple-40"
+        >
+          <img
+            src={popcornLogo}
+            alt=""
+            className="h-3.5 w-2 brightness-0 sm:h-4 sm:w-2.5 invert motion-safe:animate-popcorn-enter"
+          />
+          Powered by Popcorn
+        </a>
+      )}
+    </div>
+  );
+}
+
+function ExampleOutput({
+  example,
+  runtimeError,
+}: {
+  example: ReturnType<typeof useExampleEditor>["example"];
+  runtimeError: string;
+}) {
+  const { idx, source, output } = example;
+  const preview = output.source !== source;
+  const hasError = (output.error ?? "") !== "" && runtimeError === "";
+  const hasValue = (output.value ?? "") !== "";
+  const hasStdout = (output.stdout ?? "") !== "";
+  let previewBorder = "border-transparent";
+  if (preview) {
+    previewBorder = "border-dashed border-gray-60";
+  }
+  const resultColor = preview ? "text-gray-20" : "text-purple-40";
+  let runKey = null;
+  if (hasValue && !preview && output.runId !== undefined) {
+    runKey = `${idx}-${output.runId}`;
+  }
+  const arrow = useResultAnimation(runKey);
+
+  return (
+    <div className="flex flex-col gap-3">
+      <h2 className="font-sans text-body leading-code text-white-10">Output</h2>
+      <div
+        className={`elixir-scrollbar flex max-h-80 flex-col gap-3 overflow-auto border-l pl-3 ${previewBorder}`}
+      >
+        {preview && (
+          <span className="sr-only">
+            Preview output. Run the code to update it.
+          </span>
+        )}
+        {hasError && (
+          <pre
+            role="alert"
+            className="whitespace-pre-wrap break-words font-mono text-small text-orange-50"
+          >
+            {output.error}
+          </pre>
+        )}
+        {hasValue && (
+          <figure
+            aria-label="Result"
+            className={`flex items-start gap-2 ${resultColor}`}
+          >
+            <span
+              ref={arrow}
+              key={`${idx}-${output.runId ?? 0}`}
+              aria-hidden="true"
+              className="inline-flex size-6 shrink-0 items-center justify-center"
+            >
+              <ArrowIcon direction="right" />
+            </span>
+            <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-body md:text-lead">
+              {output.value}
+            </pre>
+          </figure>
+        )}
+      </div>
+      {hasStdout && (
+        <figure aria-label="Standard output" className="flex flex-col gap-3">
+          <figcaption>
+            <h2 className="font-sans text-body leading-code text-white-10">
+              Standard output
+            </h2>
+          </figcaption>
+          <pre
+            className={`elixir-scrollbar max-h-40 overflow-auto whitespace-pre-wrap break-words border-l pl-3 font-mono text-body text-gray-20 md:text-lead ${previewBorder}`}
+          >
+            {output.stdout}
+          </pre>
+        </figure>
+      )}
+    </div>
+  );
+}
+
 export default function HeroCodeEditor({
   highlightedExamples,
 }: {
-  // Per example, per line: shiki tokens produced at build time.
   highlightedExamples: HighlightedLine[][];
 }) {
-  const [idx, setIdx] = useState(0);
-  const example = EXAMPLES[idx];
-  const highlightedLines = highlightedExamples[idx];
-  const showExample = (nextRaw: number) => {
-    const next =
-      ((nextRaw % EXAMPLES.length) + EXAMPLES.length) % EXAMPLES.length;
-    setIdx(next);
-  };
+  const { example, runtime, actions } = useExampleEditor();
 
   return (
-    <div className="flex w-full max-w-[544px] flex-col gap-6 [color-scheme:dark] xl:w-[544px] xl:shrink-0 xl:self-stretch xl:justify-end">
-      {/* Title + prev/next row (above the editor frame) */}
-      <div className="flex w-full items-center justify-between gap-4 md:gap-6">
+    <div className="flex flex-col gap-6 [color-scheme:dark]">
+      <div className="flex items-center justify-between gap-4 md:gap-6">
         <p
-          className="min-w-0 flex-1 font-sans text-body font-normal text-white-10 text-xl"
+          className="min-w-0 flex-1 text-lead text-white-10"
           aria-live="polite"
         >
           {example.title}
         </p>
-        <div className="flex shrink-0 items-center justify-end gap-3">
+        <div className="flex shrink-0 gap-3">
           <button
             type="button"
-            onClick={() => showExample(idx - 1)}
+            onClick={actions.previous}
+            disabled={runtime.disabled}
             aria-label="Previous example"
-            className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
+            className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition duration-base ease-out-quart hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
           >
             <ArrowIcon direction="left" />
           </button>
           <button
             type="button"
-            onClick={() => showExample(idx + 1)}
+            onClick={actions.next}
+            disabled={runtime.disabled}
             aria-label="Next example"
-            className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition-all duration-base ease-out-quart will-change-transform hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
+            className="inline-flex size-12 cursor-pointer items-center justify-center rounded-sm border border-gray-40 text-white-10 outline-none transition duration-base ease-out-quart hover:scale-[1.02] hover:border-purple-60 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-purple-50 active:scale-[0.98]"
           >
             <ArrowIcon direction="right" />
           </button>
         </div>
       </div>
 
-      {/* Editor frame */}
-      <div className="w-full rounded-[22px] bg-purple-60 p-1.5">
-        <div className="flex flex-col overflow-hidden rounded-2xl bg-black">
-          <div className="flex min-h-10 items-center border-b border-gray-80 px-4 py-2">
+      <div className="rounded-lg bg-purple-60 p-1.5">
+        <div
+          className="flex flex-col overflow-hidden rounded-md bg-black"
+          aria-busy={runtime.busy}
+        >
+          <div className="flex h-12 items-center justify-between border-b border-gray-80 px-4 py-2">
             <ExampleDots
-              count={EXAMPLES.length}
-              activeIdx={idx}
-              onSelect={showExample}
-              titles={EXAMPLES.map((e) => e.title)}
+              activeIdx={example.idx}
+              onSelect={actions.select}
+              disabled={runtime.disabled}
             />
+            <button
+              type="button"
+              disabled={runtime.disabled}
+              onClick={actions.execute}
+              className="h-8 min-w-14 cursor-pointer rounded-xs bg-purple-60 px-3 text-small text-white-10 hover:bg-purple-70 focus-visible:outline-2 focus-visible:outline-purple-40 disabled:cursor-wait disabled:opacity-50"
+            >
+              Run
+            </button>
           </div>
 
-          <pre className="m-0 min-h-52 overflow-hidden whitespace-pre-wrap break-words px-4 py-2 font-mono text-body font-light leading-[26px] text-white-10 sm:py-3">
-            {highlightedLines.map((line, li) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: static highlighted lines have no stateful children
-              <Fragment key={li}>
-                {li > 0 && "\n"}
-                {line.map((token, ti) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: see above
-                  <span key={ti} style={tokenStyle(token)}>
-                    {token.text}
-                  </span>
-                ))}
-              </Fragment>
-            ))}
-          </pre>
+          <HighlightedCode
+            source={example.source}
+            originalSource={example.code}
+            initialLines={highlightedExamples[example.idx]}
+            readOnly={runtime.disabled}
+            onChange={actions.changeSource}
+            onRun={actions.execute}
+          />
+          <RuntimeFeedback
+            runtime={runtime}
+            onRetry={actions.retry}
+            onCancel={actions.cancel}
+          />
         </div>
       </div>
 
-      <div className="flex w-full flex-col gap-3">
-        <p className="font-sans text-body font-normal leading-[26px] text-white-10">
-          Output
-        </p>
-        <div className="flex max-h-80 w-full flex-col gap-2 overflow-auto">
-          {example.precanned.stdout && (
-            <pre className="whitespace-pre-wrap break-words font-mono text-small font-normal text-gray-20 md:text-body">
-              {example.precanned.stdout}
-            </pre>
-          )}
-          {example.precanned.value && (
-            <div className="flex w-full items-start gap-2">
-              <span
-                className="inline-flex size-6 shrink-0 items-center justify-center text-purple-40"
-                aria-hidden="true"
-              >
-                <ArrowIcon direction="right" />
-              </span>
-              <pre className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-body font-normal text-purple-40 md:text-lead">
-                {example.precanned.value}
-              </pre>
-            </div>
-          )}
-        </div>
-      </div>
+      <ExampleOutput example={example} runtimeError={runtime.error} />
     </div>
   );
 }

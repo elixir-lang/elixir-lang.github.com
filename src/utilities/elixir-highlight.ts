@@ -1,8 +1,4 @@
-// Elixir syntax highlighting via shiki, using the github-dark theme.
-//
-// Used at build time by the homepage Astro components, and lazily on
-// the client by the hero editor (dynamically imported, so shiki stays
-// out of the initial island bundle).
+// Shared by build-time examples and the lazily loaded editor highlighter.
 
 import { createHighlighterCore, type HighlighterCore } from "@shikijs/core";
 import { createJavaScriptRegexEngine } from "@shikijs/engine-javascript";
@@ -45,7 +41,11 @@ export function highlightElixir(
       const italic = fontStyle > 0 && (fontStyle & 1) !== 0;
       const color = themed.color;
       const prev = tokens[tokens.length - 1];
-      if (prev && prev.color === color && (prev.italic ?? false) === italic) {
+      if (
+        prev !== undefined &&
+        prev.color === color &&
+        (prev.italic ?? false) === italic
+      ) {
         prev.text += themed.content;
       } else {
         tokens.push({
